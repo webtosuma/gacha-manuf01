@@ -79,4 +79,14 @@ class User extends Authenticatable
         {
             return $this->hasMany(UserAddress::class,'user_id');
         }
+
+
+        /**
+         * PointHistoryモデル リレーション ($user->address)
+         * @return \App\Models\PointHistory
+        */
+        public function point_histories()
+        {
+            return $this->hasMany(PointHistory::class,'user_id');
+        }
 }
