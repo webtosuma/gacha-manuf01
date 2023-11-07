@@ -25,7 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'payjp_customer_id',
-        'is_admin',
+        'point',
+        'image',
     ];
 
     /**
@@ -58,4 +59,24 @@ class User extends Authenticatable
         return \Database\Factories\UserFactory::new();
     }
 
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * UserAddressモデル リレーション ($user->address)
+         * @return \App\Models\UserAddress
+        */
+        public function addresses()
+        {
+            return $this->hasMany(UserAddress::class,'user_id');
+        }
 }
