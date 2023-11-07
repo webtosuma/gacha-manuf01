@@ -70,6 +70,14 @@ class User extends Authenticatable
     |
     |
     */
+        /**
+         * Adminモデル リレーション ($user->admin)
+         * @return \App\Models\Admin
+        */
+        public function admin()
+        {
+            return $this->hasOne(Admin::class,'user_id');
+        }
 
         /**
          * UserAddressモデル リレーション ($user->address)

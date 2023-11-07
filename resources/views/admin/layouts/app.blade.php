@@ -27,20 +27,18 @@
     @yield('style')
 
 </head>
-<body style=" background: no-repeat center center / cover fixed;
-background-image: url({{asset('storage/site/image/bg01.jpg')}});
-">
+<body style="">
 
 
 
     <div id="app">
-        @include('includes.header')
+        {{-- @include('includes.header') --}}
 
         <main class="py-" style="min-height: 80vh">
             @yield('content')
         </main>
 
-        @include('includes.footer')
+        {{-- @include('includes.footer') --}}
 
 
         <!-- フェードインアラート -->
