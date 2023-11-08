@@ -29,9 +29,15 @@ class AdminAuthController extends Controller
         {
             # 既にログイン中の時は、homeへリダイレクト
             if( Auth::check() && Auth::user()->admin ){
+
                 return redirect()->route('admin.home');
-            }else{
+
+            }
+            # ログインページの表示
+            else{
+
                 return view('admin_auth.login_form');
+
             }
         }
 
@@ -46,7 +52,10 @@ class AdminAuthController extends Controller
 
             # ログイン成功処理（求職者のアカウントが照合された時）
             $remember = true;
+
             Auth::attempt( $request->only('email','password'), $remember );
+
+            // dd(Auth::check() && Auth::user()->admin);
 
             if( Auth::check() && Auth::user()->admin )
             {

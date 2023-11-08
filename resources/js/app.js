@@ -7,6 +7,28 @@ Vue.component('example-component',
 require('./components/ExampleComponent.vue').default);
 
 
+
+/*
+|=============================================
+| ユーザーページ　コンポーネント
+|=============================================
+*/
+    /* 会員登録フォーム */
+    Vue.component('u-register-form',
+    require('./components/auth/RegisterFormConpornent.vue').default);
+
+
+/*
+|=============================================
+| サイト管理者ページ　コンポーネント
+|=============================================
+*/
+
+/*
+|=============================================
+| アイテムコンポーネント
+|=============================================
+*/
     /* コピー ボタン */
     Vue.component('coppy-button-component',
     require('./components/Items/CoppyButtonComponent.vue').default);

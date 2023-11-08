@@ -5231,14 +5231,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {
-      btn_text: '',
-      disabled: false
-    };
+    return {};
   },
   props: {
     //最初に表示する画像のパス
-    text: {
+    disabled: {
+      type: Boolean,
+      "default": false
+    },
+    btn_text: {
       type: String,
       "default": 'ボタン'
     },
@@ -5257,20 +5258,10 @@ __webpack_require__.r(__webpack_exports__);
     type: {
       type: String,
       "default": 'submit'
-    },
-    btn_disabled: {
-      type: [Boolean, Number, String],
-      "default": false
     }
   },
-  mounted: function mounted() {
-    this.btn_text = this.text;
-  },
-  methods: {
-    click: function click() {
-      this.disabled = true;
-    }
-  }
+  mounted: function mounted() {},
+  methods: {}
 });
 
 /***/ }),
@@ -5647,6 +5638,118 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    submit_route: {
+      type: String,
+      "default": ''
+    },
+    privacy_policy_route: {
+      type: String,
+      "default": ''
+    },
+    trems_route: {
+      type: String,
+      "default": ''
+    },
+    login_route: {
+      type: String,
+      "default": ''
+    },
+    gacha_route: {
+      type: String,
+      "default": ''
+    },
+    point_sail_route: {
+      type: String,
+      "default": ''
+    }
+  },
+  data: function data() {
+    return {
+      loading: false,
+      /* 通信中 */
+      inputs: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      },
+      errors: {},
+      card_num: 1 /* 表示中カード番号 */
+    };
+  },
+  mounted: function mounted() {
+    /* トークンの保存 */
+    this.inputs = _objectSpread(_objectSpread({}, this.inputs), {}, {
+      _token: this.token
+    });
+  },
+  methods: {
+    /* データ送信 */
+    submit: function submit() {
+      var _this = this;
+      this.loading = true; // 通信中
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.submit_route, this.inputs).then(function (json) {
+        // console.log(json.data);
+
+        _this.addCardNum();
+      })["catch"](function (error) {
+        //バリデーション結果の受け取り
+        if (error.response.status == 422) {
+          // console.log( error.response.data.errors );
+          _this.errors = error.response.data.errors;
+          _this.loading = false; // 通信中終了
+        }
+        //その他のエラー
+        else {
+          alert('データ送信エラーが発生しました。');
+        }
+        console.log(error.response.data);
+      });
+    },
+    /* 次へメソッド */
+    addCardNum: function addCardNum() {
+      this.card_num++;
+      window.scroll({
+        top: 0,
+        behavior: 'smooth'
+      });
+    },
+    /* 別タブでページを開く */
+    windowOpen: function windowOpen(url) {
+      window.open(url, '_blank');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e ***!
@@ -5933,13 +6036,9 @@ var render = function render() {
     }],
     "class": _vm.style_class,
     attrs: {
-      disabled: _vm.btn_disabled,
       type: _vm.type,
       name: _vm.name,
       value: _vm.value
-    },
-    on: {
-      click: _vm.click
     }
   }, [_vm._v(_vm._s(_vm.btn_text))]), _vm._v(" "), _c("button", {
     directives: [{
@@ -6285,6 +6384,258 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=template&id=546c17a1":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=template&id=546c17a1 ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "w-100"
+  }, [_vm.card_num === 1 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_vm.card_num === 1 ? _c("form", {
+    staticClass: "w-100",
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.submit();
+      }
+    }
+  }, [_c("h2", {
+    staticClass: "h3 mb-3 fw-bold text-center"
+  }, [_vm._v("会員登録（無料）")]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("label", {
+    staticClass: "col-form-label text-start",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v(_vm._s("アカウント名"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.name,
+      expression: "inputs.name"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.errors.name
+    },
+    attrs: {
+      name: "name",
+      id: "name",
+      type: "text",
+      autocomplete: "name",
+      autofocus: ""
+    },
+    domProps: {
+      value: _vm.inputs.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.name ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("label", {
+    staticClass: "col-form-label text-start",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v(_vm._s("メールアドレス"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.email,
+      expression: "inputs.email"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.errors.email
+    },
+    attrs: {
+      name: "email",
+      id: "email",
+      type: "text",
+      autocomplete: "email",
+      autofocus: ""
+    },
+    domProps: {
+      value: _vm.inputs.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "email", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.email ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("label", {
+    staticClass: "col-form-label text-start",
+    attrs: {
+      "for": "password"
+    }
+  }, [_vm._v(_vm._s("パスワード"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password,
+      expression: "inputs.password"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.errors.password
+    },
+    attrs: {
+      name: "password",
+      id: "password",
+      type: "text",
+      autocomplete: "password",
+      autofocus: ""
+    },
+    domProps: {
+      value: _vm.inputs.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "password", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.password ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.password[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("label", {
+    staticClass: "col-form-label text-start",
+    attrs: {
+      "for": "password_confirmation"
+    }
+  }, [_vm._v(_vm._s("確認用パスワード"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password_confirmation,
+      expression: "inputs.password_confirmation"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.errors.password_confirmation
+    },
+    attrs: {
+      name: "password_confirmation",
+      id: "password_confirmation",
+      type: "text",
+      autocomplete: "password_confirmation",
+      autofocus: ""
+    },
+    domProps: {
+      value: _vm.inputs.password_confirmation
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "password_confirmation", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.password_confirmation ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.password_confirmation[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "p3"
+  }, [_vm._v("\n                本サービスの\n                "), _c("a", {
+    attrs: {
+      href: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.windowOpen(_vm.trems_route);
+      }
+    }
+  }, [_vm._v("利用規約")]), _vm._v("と\n                "), _c("a", {
+    attrs: {
+      href: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.windowOpen(_vm.privacy_policy_route);
+      }
+    }
+  }, [_vm._v("プライバシーポリシー")]), _vm._v("に\n                同意した時のみ、登録を行なってください。登録後は、同意したものとみなされます。\n\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "row my-5"
+  }, [_c("div", {
+    staticClass: "col-md-6 mx-auto"
+  }, [_c("disabled-button-component", {
+    attrs: {
+      style_class: "btn btn-lg btn-primary w-100",
+      disabled: _vm.loading,
+      btn_text: "登録する"
+    }
+  })], 1)])]) : _vm._e(), _vm._v(" "), _c("hr", {
+    staticClass: "my-4 w-100"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "text-center w-100"
+  }, [_c("div", {
+    staticClass: "col-md-6 mx-auto"
+  }, [_c("small", {
+    staticClass: "text-body-secondary"
+  }, [_vm._v("既にアカウントをお持ちの方はこちら")]), _vm._v(" "), _c("a", {
+    staticClass: "w-100 py-2 mb-2 btn btn-outline-primary rounded-3",
+    attrs: {
+      href: _vm.login_route
+    }
+  }, [_vm._v("ログイン")])])])]) : _vm._e(), _vm._v(" "), _vm.card_num === 2 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_c("div", {
+    staticClass: "card shadow-sm border-0 w-100 p-3 mb-3"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "text-secondary fw-bold mb-3 text-center"
+  }, [_vm._v("会員登録が完了しました。")]), _vm._v(" "), _c("h3", {
+    staticClass: "text-secondary fw-bold mb-3 text-center"
+  }, [_vm._v("\n                    ようこそ、" + _vm._s(_vm.inputs.name) + " さん\n                ")]), _vm._v(" "), _c("div", {
+    staticClass: "row g-3 mt-5 mb-3"
+  }, [_c("div", {
+    staticClass: "col-md-8 offset-md-2"
+  }, [_c("a", {
+    staticClass: "w-100 py-2 mb-2 btn btn-lg btn-primary rounded-pill shadow",
+    attrs: {
+      href: _vm.gacha_route
+    }
+  }, [_vm._v("ガチャで遊ぶ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8 offset-md-2"
+  }, [_c("a", {
+    staticClass: "w-100 py-2 mb-2 btn btn-lg btn-warning rounded-pill shadow",
+    attrs: {
+      href: _vm.point_sail_route
+    }
+  }, [_vm._v("ポイントを購入する")])])])])])]) : _vm._e()]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -6295,6 +6646,25 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
 
+/*
+|=============================================
+| ユーザーページ　コンポーネント
+|=============================================
+*/
+/* 会員登録フォーム */
+Vue.component('u-register-form', (__webpack_require__(/*! ./components/auth/RegisterFormConpornent.vue */ "./resources/js/components/auth/RegisterFormConpornent.vue")["default"]));
+
+/*
+|=============================================
+| サイト管理者ページ　コンポーネント
+|=============================================
+*/
+
+/*
+|=============================================
+| アイテムコンポーネント
+|=============================================
+*/
 /* コピー ボタン */
 Vue.component('coppy-button-component', (__webpack_require__(/*! ./components/Items/CoppyButtonComponent.vue */ "./resources/js/components/Items/CoppyButtonComponent.vue")["default"]));
 
@@ -29363,6 +29733,45 @@ component.options.__file = "resources/js/components/Items/ReplaceTextComponent.v
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/RegisterFormConpornent.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/auth/RegisterFormConpornent.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegisterFormConpornent.vue?vue&type=template&id=546c17a1 */ "./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=template&id=546c17a1");
+/* harmony import */ var _RegisterFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RegisterFormConpornent.vue?vue&type=script&lang=js */ "./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RegisterFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__.render,
+  _RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auth/RegisterFormConpornent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js ***!
@@ -29536,6 +29945,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplaceTextComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReplaceTextComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReplaceTextComponent.vue?vue&type=script&lang=js");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplaceTextComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RegisterFormConpornent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -29722,6 +30147,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplaceTextComponent_vue_vue_type_template_id_5f3f4794__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplaceTextComponent_vue_vue_type_template_id_5f3f4794__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReplaceTextComponent.vue?vue&type=template&id=5f3f4794 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReplaceTextComponent.vue?vue&type=template&id=5f3f4794");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=template&id=546c17a1":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=template&id=546c17a1 ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RegisterFormConpornent.vue?vue&type=template&id=546c17a1 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=template&id=546c17a1");
 
 
 /***/ }),

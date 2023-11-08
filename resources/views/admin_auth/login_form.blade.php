@@ -27,7 +27,7 @@
 
 </head>
 <body class="">
-    <header class="mx-auto" style="max-width:600px">
+    <header class="container">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
 
@@ -37,7 +37,6 @@
 
                     <h1 class="m-0  d-flex align-items-center fs-6" style="height: 2.4rem">
                         <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name', 'Laravel') }}" class="d-block h-100">
-                        <span class="fw-bold ms-3 text-dark mt-1" style="font-size:.8rem;">サイト管理者</span>
                     </h1>
 
                 </div>
@@ -45,55 +44,52 @@
             </div>
         </nav>
     </header>
-    <main class="mx-auto" style="max-width:600px">
+    <main>
+        <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3"
+        style="min-height: 80vh; max-width:600px;">
 
-        <div class="card">
-            <h5 class="card-header bg-dark text-white">{{ __('ログイン') }}</h5>
+            <form method="POST" action="{{ route('admin_auth.login') }}" class="w-100 text-center">
+                @csrf
+                <h2 class="h3 mb-3 fw-normal">サイト管理者ログイン</h2>
 
-            <div class="card-body">
-                <form method="POST" action="{{ route('admin_auth.login') }}">
-                    @csrf
-
-                    @if (session('login_error'))
+                @if (session('login_error'))
                     <div class="text-danger mb-3 text-center">※{{ session('login_error') }}</div>
-                    @endif
+                @endif
 
-                    <div class="row mb-3">
-                        <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('メールアドレス') }}</label>
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="floatingInput" autofocus
+                  name="email"
+                  value="{{ session('email') ? session('email') : '' }}">
+                  <label for="floatingInput">メールアドレス</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="floatingPassword"
+                  name="password"
+                  value="{{ session('password') ? session('password') : '' }}">
+                  <label for="floatingPassword">パスワード</label>
+                </div>
 
-                        <div class="col-md-6">
-                            <input id="email" type="email" class="form-control" name="email"
-                            value="{{ old('email', session('email') ) }}" required autocomplete="email" autofocus>
-                        </div>
-                    </div>
+                <div class="col-md- mx-auto mb-3">
+                    <button class="w-100 btn btn-lg btn-dark" type="submit">ログイン</button>
+                </div>
+                <a href="" class="text-decoration-none"
+                >パスワードをお忘れの方はこちら</a>
+            </form>
 
-                    <div class="row mb-3">
-                        <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('パスワード') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="password" type="password" class="form-control" name="password"
-                            value="{{ old('password', session('password') ) }}"  required autocomplete="current-password">
-                        </div>
-                    </div>
-
-                    <div class="row mb-0">
-                        <div class="col-md-8 offset-md-4">
-                            <button type="submit" class="btn btn-dark text-white">
-                                {{ __('ログイン') }}
-                            </button>
-
-                        </div>
-                    </div>
-
-                </form>
+            <hr class="my-4 w-100">
+            <div class="text-center w-100">
+                <small class="text-body-secondary">ユーザーログインはこちら</small>
+                <a href="{{ route('login') }}"
+                class="w-100 py-2 mb-2 btn btn-primary rounded-3"
+                >ユーザーログイン</a>
             </div>
+
         </div>
 
-
     </main>
-    <footer class="mx-auto" style="max-width:600px">
+    {{-- <footer class="container">
         <p class="m-0 ">&copy; Next Arrow Inc. All Rights Reserved.</p>
-    </footer>
+    </footer> --}}
 
 
     <!-- JavaScript -->

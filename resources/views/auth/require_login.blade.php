@@ -1,4 +1,5 @@
-@extends('layouts.600_simple_base')
+{{-- @extends('layouts.600_simple_base') --}}
+@extends('layouts.app')
 
 
 <!----- title ----->
@@ -15,9 +16,9 @@
 
 
 <!----- contents ----->
-@section('contents')
+@section('content')
 
-    <section class="my-5">
+    <section class="mx-auto my-5" style="max-width:600px;">
         <div class="card card-body text-secondary mb-5">
             <h5 class="fw-bold">こちらのページはログイン後にご利用いただけます。</h5>
             <p>会員登録がお済みでない方は、

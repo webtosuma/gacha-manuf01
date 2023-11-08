@@ -18,8 +18,8 @@ style="max-width:90vw; min-width:30vw;">
         </div>
     @else
         <div class="d-flex justify-content-between align-items-center p-3 bg-white">
-            <div class="">所持ポイント：{{ _('800').'ポイント' }}</div>
-            <a href="" class="btn btn-warning rounded-pill shadow">ポイント購入</a>
+            <div class="">所持ポイント：{{ Auth::user()->point.'ポイント' }}</div>
+            <a href="{{ route('point_sail') }}" class="btn btn-warning rounded-pill shadow">ポイント購入</a>
         </div>
     @endguest
 

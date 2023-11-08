@@ -33,17 +33,6 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
-
 
     /**
      * ログイン処理(login)
@@ -58,25 +47,36 @@ class LoginController extends Controller
         $remember = true; //$request->remember(ログイン状態の維持)
         Auth::attempt( $request->only('email','password'), $remember );
 
-        # ログイン失敗
-        if( !Auth::check() ){ dd('NG!'); }
+        # ログイン処理
+        if( Auth::check() ){
+
+            # ログイン成功処理（求職者のアカウントが照合された時）
+            // ユーザー情報をセッションに保存
+            $request->session()->regenerate();
+
+            # ログイン前に訪れたページがある場合、前のページに戻る
+            if(session('before_worker_url'))
+            {
+                return redirect( session('before_worker_url') )
+                ->with('alert-primary','ログインしました。');
+            }
 
 
-        # ログイン成功処理（求職者のアカウントが照合された時）
-        // ユーザー情報をセッションに保存
-        $request->session()->regenerate();
+            // マイページTOPへリダイレクト
+            return redirect()->route('home')
+            ->with('alert-primary','ログインしました。');
 
-        # ログイン前に訪れたページがある場合、前のページに戻る
-        if(session('before_worker_url'))
-        {
-            return redirect( session('before_worker_url') )
-            ->with('alert-success','ログインしました。');
         }
 
+        # [ ログイン失敗の処理 ] -------
+        $message = 'メールアドレスかパスワードが間違っています。';//管理者アカウント
 
-        // マイページTOPへリダイレクト
-        return redirect()->route('home')
-        ->with('alert-success','ログインしました。');
+        // ログインフォームへ戻る
+        return redirect()->route('login')
+        ->with('login_error',$message)
+        ->with('email',$request->email)
+        ->with('password',$request->password);
+
     }
 
 
@@ -98,7 +98,7 @@ class LoginController extends Controller
 
         # へリダイレクト
         return redirect()->route('home')
-        ->with('alert-warning','ログアウトしました。');
+        ->with('alert-secondary','ログアウトしました。');
     }
 
 }
