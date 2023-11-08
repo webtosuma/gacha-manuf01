@@ -19,7 +19,6 @@ class PaymentController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user = User::first();
         $cardList = [];
 
 
@@ -58,8 +57,6 @@ class PaymentController extends Controller
         try {
             // ログインユーザー取得
             $user = Auth::user();
-            $user = User::first();
-
 
             // シークレットキーを設定
             Payjp::setApiKey(config('payjp.secret_key'));

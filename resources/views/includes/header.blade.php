@@ -11,9 +11,8 @@
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="ポイントを購入する"
                 class="d-block text-decoration-none text-dark">
                     <div class="d-flex align-items-center gap-2">
-                        <div class="rounded-circle bg-warning fw-bold fs-5
-                        d-flex align-items-center justify-content-center
-                        " style="width:1.6rem; height:1.6rem;">P</div>
+
+                        @include('includes.point_icon')
 
                         <div class="rounded-pill bg-light text- fw-bold
                         d-flex align-items-center justify-content-end px-2
@@ -52,9 +51,8 @@
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="ポイントを購入する"
                 class="d-block text-decoration-none text-dark">
                     <div class="d-flex align-items-center gap-2">
-                        <div class="rounded-circle bg-warning fw-bold fs-5
-                        d-flex align-items-center justify-content-center
-                        " style="width:1.6rem; height:1.6rem;">P</div>
+
+                        @include('includes.point_icon')
 
                         <div class="rounded-pill bg-light text- fw-bold
                         d-flex align-items-center justify-content-end px-2

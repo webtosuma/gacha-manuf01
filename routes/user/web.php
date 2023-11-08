@@ -32,10 +32,17 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
     Route::middleware(['auth'])->group(function () {
 
         /* ポイント購入 */
-        Route::get( 'point_sail',
+        Route::get('point_sail',
         [Controllers\PointSailController::class, 'index'])
         ->name('point_sail');
 
+        Route::get('point_sail/payment/{point_sail}',
+        [Controllers\PointSailController::class, 'payment'])
+        ->name('point_sail.payment');
+
+        Route::post('point_sail/payment/{point_sail}',
+        [Controllers\PointSailController::class, 'payment_post'])
+        ->name('point_sail.payment_post');
 
         Route::get( 'payment', [Controllers\PaymentController::class, 'index'])->name('payment');
         Route::post('payment', [Controllers\PaymentController::class, 'payment']);
