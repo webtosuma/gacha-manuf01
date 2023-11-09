@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <!-- bootstrap CSS の読み込み-->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
     @yield('style')
 
 </head>
-<body class="bg-white">
+<body class="bg-">
     <header class="mx-auto" style="max-width:600px;">
         <h1 class="m-0 fs-6">
             <a href="{{route('home')}}" class="navbar-brand  fs-2 fw-bold">
@@ -27,15 +27,18 @@
             </a>
         </h1>
     </header>
-    <main class="mx-auto p-3" style="max-width:600px;">
+    <main >
 
+        <div id="app" class="mx-auto p-3" style="max-width:600px;">
 
-        @yield('content')
+            @yield('content')
+
+        </div>
 
 
     </main>
-    <footer cclass="mx-auto" style="max-width:600px;">
-        {{-- <p class="m-0 text-secondary">&copy; TOSUMA Co.,Ltd.</p> --}}
+    <footer cclass="bg-dark py-3">
+        <p class="m-0 text-secondary text-center">copy;& TOSUMA Co.,Ltd.</p>
     </footer>
 
     <!-- bootstrap JavaScript -->

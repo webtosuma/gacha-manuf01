@@ -2,20 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePointHistoryRequest;
-use App\Http\Requests\UpdatePointHistoryRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\PointHistory;
-
+/*
+| =============================================
+|  ポイント購入履歴 コントローラー
+| =============================================
+*/
 class PointHistoryController extends Controller
 {
+
+    /** ログイン中のみ処理可能 @return void */
+    public function __construct(){ $this->middleware('auth');}
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * ポイント購入履歴 一覧
+     * @param String $month
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index( $month='' )
     {
-        //
+        $user = Auth::user();
+        $point_histories = PointHistory::where('user_id',$user->id)
+        // ->orderByDesc('id')
+        ->get();
+
+        return view('point_history.index',compact('point_histories'));
     }
 
     /**

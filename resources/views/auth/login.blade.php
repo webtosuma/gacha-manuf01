@@ -40,7 +40,7 @@ style="min-height: 80vh; max-width:600px;">
         </div>
 
         <div class="col-md- mx-auto mt-5 my-3">
-            <button class="w-100 btn btn-lg btn-primary" type="submit">ログイン</button>
+            <button class="w-100 btn btn-lg btn-primary text-white" type="submit">ログイン</button>
         </div>
         <a href="{{route('password.request')}}" class="text-decoration-none"
         >パスワードをお忘れの方はこちら</a>
@@ -51,7 +51,7 @@ style="min-height: 80vh; max-width:600px;">
     <div class="text-center w-100">
         <small class="text-body-secondary">新規登録はこちら</small>
         <a href="{{ route('register') }}"
-        class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
+        class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
         >会員登録</a>
     </div>
 </div>

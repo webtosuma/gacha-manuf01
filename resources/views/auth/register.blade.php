@@ -1,16 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.small')
 
 <!----- title ----->
 @section('title','会員登録')
+
+@section('script')
+<script src="{{ asset('js/app.js') }}" defer></script>
+@endsection
 
 @section('content')
 <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5"
 style="min-height: 80vh; max-width:600px;">
 
 
-{{-- <form method="POST" action="{{ route('register') }}" class="w-100 text-center">
-    @csrf <button>test</button>
-</form> --}}
 
     <u-register-form
     token                = "{{ csrf_token() }}"

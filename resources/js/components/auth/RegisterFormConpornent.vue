@@ -59,7 +59,7 @@
                     <div class="col-md-6 mx-auto">
 
                         <disabled-button-component
-                        style_class="btn btn-lg btn-primary w-100"
+                        style_class="btn btn-lg btn-primary text-white w-100"
                         :disabled="loading" btn_text="登録する" />
 
                     </div>
@@ -72,7 +72,7 @@
                 <div class="col-md-6 mx-auto">
                     <small class="text-body-secondary">既にアカウントをお持ちの方はこちら</small>
                     <a :href="login_route"
-                    class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
+                    class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
                     >ログイン</a>
                 </div>
             </div>
@@ -91,12 +91,12 @@
                     <div class="row g-3 mt-5 mb-3">
                         <div class="col-md-8 offset-md-2">
                             <a :href="gacha_route"
-                            class="w-100 py-2 mb-2 btn btn-lg btn-primary rounded-pill shadow"
+                            class="w-100 py-2 mb-2 btn btn-lg text-white btn-primary rounded-pill shadow"
                             >ガチャで遊ぶ</a>
                         </div>
                         <div class="col-md-8 offset-md-2">
                             <a :href="point_sail_route"
-                            class="w-100 py-2 mb-2 btn btn-lg btn-warning rounded-pill shadow"
+                            class="w-100 py-2 mb-2 btn btn-lg text-white btn-warning rounded-pill shadow"
                             >ポイントを購入する</a>
                         </div>
                     </div>

@@ -13,8 +13,10 @@ return [
     |
     */
 
-    // 'name' => env('APP_NAME', 'card Festa'),
-    'name' => 'card Festa',
+    'name' => env('APP_NAME', 'card Festa'),
+    // 'name' => 'card Festa',
+
+    'copy' => "",
 
     /*
     |--------------------------------------------------------------------------

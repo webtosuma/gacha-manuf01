@@ -17,6 +17,9 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-register-form',
     require('./components/auth/RegisterFormConpornent.vue').default);
 
+    /* パスワード変更フォーム */
+    Vue.component('u-reset-password-form',
+    require('./components/auth/ResetPasswordFormConpornent.vue').default);
 
 /*
 |=============================================

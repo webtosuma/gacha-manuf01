@@ -5261,7 +5261,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {},
-  methods: {}
+  methods: {
+    /* ボタンをクリックしたとき */
+    click: function click() {
+      this.$emit('btn-click');
+    }
+  }
 });
 
 /***/ }),
@@ -5750,6 +5755,166 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    step01_route: {
+      type: String,
+      "default": ''
+    },
+    step02_route: {
+      type: String,
+      "default": ''
+    },
+    login_route: {
+      type: String,
+      "default": ''
+    }
+  },
+  data: function data() {
+    return {
+      test: false,
+      /* test用フォーム・データの利用 */
+
+      card_num: 1,
+      /* 表示中カード番号 */
+
+      /* 入力内容 */
+      inputs: {
+        email: '',
+        reset_pass_code: '',
+        //認証コード(入力)
+        reset_pass_code_confirmation: '',
+        //認証コード
+        password: '',
+        password_confirmation: ''
+      },
+      errors: {},
+      /* エラー内容 */
+
+      loading: false,
+      /* 通信中 */
+
+      /* オプションデータ */
+      form_option: {
+        // パスワード入力の表示形式
+        input_password: {
+          type: 'password',
+          text: 'パスワードを表示'
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    /* テストデータの挿入 */
+    if (this.test) {
+      this.inputs = {
+        email: 'contact@tosucare.com',
+        reset_pass_code: '',
+        //認証コード(入力)
+        reset_pass_code_confirmation: '000000',
+        //認証コード
+        password: 'password',
+        password_confirmation: 'password'
+      };
+    }
+
+    /* トークンの保存 */
+    this.inputs = _objectSpread(_objectSpread({}, this.inputs), {}, {
+      _token: this.token
+    });
+  },
+  methods: {
+    /* 次のステップメソッド */
+    nextToStep: function nextToStep(route) {
+      var _this = this;
+      var addCard = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      this.loading = true; // 通信中
+      axios.post(route, this.inputs).then(function (json) {
+        // console.log(json.data);
+
+        // // 認証コードの保存
+        var verification_code = json.data.verification_code;
+        if (verification_code) {
+          _this.inputs.reset_pass_code_confirmation = verification_code;
+        }
+        if (addCard) {
+          //パスワード再発行の時はスキップ
+          _this.addCardNum();
+          _this.errors = {};
+        }
+        _this.loading = false; // 通信中終了
+      })["catch"](function (error) {
+        //バリデーション結果の受け取り
+        if (error.response.status == 422) {
+          // console.log(error.response.data);
+          _this.errors = error.response.data.errors;
+          _this.loading = false;
+        }
+        //その他のエラー
+        else {
+          alert('データ送信エラーが発生しました。');
+        }
+        console.log(error.response.data);
+        _this.loading = false; // 通信中終了
+      });
+    },
+    /* 認証メールの再送 */resendVerificationEmail: function resendVerificationEmail() {
+      this.inputs.reset_pass_code_confirmation = ''; //認証コードが空のとき、再発行
+      this.nextToStep(this.step01_route, false);
+    },
+    /* 次へメソッド */
+    addCardNum: function addCardNum() {
+      this.card_num++;
+      window.scroll({
+        top: 0,
+        behavior: 'smooth'
+      });
+    },
+    /* パスワード入力の表示切替 */
+    toggleDisplayPassword: function toggleDisplayPassword() {
+      var type = this.form_option.input_password.type;
+      if (type === 'password') {
+        this.form_option.input_password.text = 'パスワードを非表示';
+        this.form_option.input_password.type = 'text';
+      } else {
+        this.form_option.input_password.text = 'パスワードを表示';
+        this.form_option.input_password.type = 'password';
+      }
+    },
+    /* 前のページに戻る */
+    historyBack: function historyBack() {
+      history.back();
+    },
+    /* 離脱防止アラートの解除 */
+    stopOnbeforeunload: function stopOnbeforeunload() {
+      window.onbeforeunload = null;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e ***!
@@ -6039,6 +6204,11 @@ var render = function render() {
       type: _vm.type,
       name: _vm.name,
       value: _vm.value
+    },
+    on: {
+      click: function click($event) {
+        return _vm.click();
+      }
     }
   }, [_vm._v(_vm._s(_vm.btn_text))]), _vm._v(" "), _c("button", {
     directives: [{
@@ -6585,7 +6755,7 @@ var render = function render() {
     staticClass: "col-md-6 mx-auto"
   }, [_c("disabled-button-component", {
     attrs: {
-      style_class: "btn btn-lg btn-primary w-100",
+      style_class: "btn btn-lg btn-primary text-white w-100",
       disabled: _vm.loading,
       btn_text: "登録する"
     }
@@ -6598,7 +6768,7 @@ var render = function render() {
   }, [_c("small", {
     staticClass: "text-body-secondary"
   }, [_vm._v("既にアカウントをお持ちの方はこちら")]), _vm._v(" "), _c("a", {
-    staticClass: "w-100 py-2 mb-2 btn btn-outline-primary rounded-3",
+    staticClass: "w-100 py-2 mb-2 btn btn-outline-secondary rounded-3",
     attrs: {
       href: _vm.login_route
     }
@@ -6617,20 +6787,457 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-md-8 offset-md-2"
   }, [_c("a", {
-    staticClass: "w-100 py-2 mb-2 btn btn-lg btn-primary rounded-pill shadow",
+    staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-primary rounded-pill shadow",
     attrs: {
       href: _vm.gacha_route
     }
   }, [_vm._v("ガチャで遊ぶ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 offset-md-2"
   }, [_c("a", {
-    staticClass: "w-100 py-2 mb-2 btn btn-lg btn-warning rounded-pill shadow",
+    staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-warning rounded-pill shadow",
     attrs: {
       href: _vm.point_sail_route
     }
   }, [_vm._v("ポイントを購入する")])])])])])]) : _vm._e()]);
 };
 var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020 ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "w-100"
+  }, [_vm.test ? _c("form", {
+    attrs: {
+      action: _vm.step01_route,
+      method: "get"
+    }
+  }, [_vm._v("\n        " + _vm._s(_vm.inputs) + "\n        "), _vm._l(_vm.inputs, function (value, name) {
+    return _c("input", {
+      key: name,
+      attrs: {
+        type: "hidden"
+      },
+      domProps: {
+        value: value
+      }
+    });
+  }), _vm._v(" "), _c("input", {
+    attrs: {
+      type: "hidden",
+      name: "_token",
+      value: "NxQ1Dctw51Ghle95hC3bcLmhaKOzRLxgcYhZFyf9"
+    }
+  }), _vm._v(" "), _c("button", {
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("step01送信")])], 2) : _vm._e(), _vm._v(" "), _vm.card_num === 1 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_c("div", {
+    staticClass: "card shadow border-0 w-100 p-3 mb-3"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "mb-5"
+  }, [_c("label", {
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("アカウントのメールアドレス")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.email,
+      expression: "inputs.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "email",
+      type: "email",
+      name: "email",
+      required: "",
+      autocomplete: "email",
+      autofocus: ""
+    },
+    domProps: {
+      value: _vm.inputs.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "email", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.email ? _c("div", {
+    staticClass: "text-danger",
+    attrs: {
+      role: "alert"
+    }
+  }, [_vm._v("※" + _vm._s(_vm.errors.email))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col-sm-8 offset-sm-2"
+  }, [_c("disabled-button-component", {
+    attrs: {
+      style_class: "btn btn-lg btn-primary text-white w-100",
+      disabled: _vm.loading,
+      btn_text: "次へ"
+    },
+    on: {
+      "btn-click": function btnClick($event) {
+        return _vm.nextToStep(_vm.step01_route);
+      }
+    }
+  })], 1)])])])]) : _vm._e(), _vm._v(" "), _vm.card_num === 2 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_c("div", {
+    staticClass: "card shadow border-0 w-100 p-3 mb-3"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "mb-5"
+  }, [_vm._m(0), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "reset_pass_code"
+    }
+  }, [_vm._v(_vm._s("認証番号（半角数字）"))]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex gap-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.reset_pass_code,
+      expression: "inputs.reset_pass_code"
+    }],
+    staticClass: "form-control w-50",
+    attrs: {
+      id: "reset_pass_code",
+      type: "text",
+      name: "reset_pass_code",
+      required: "",
+      autocomplete: "current-reset_pass_code"
+    },
+    domProps: {
+      value: _vm.inputs.reset_pass_code
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "reset_pass_code", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("input", {
+    staticClass: "btn btn-outline-secondary",
+    attrs: {
+      type: "button",
+      value: "認証メール再送"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.resendVerificationEmail();
+      }
+    }
+  })]), _vm._v(" "), _vm.errors.reset_pass_code ? _c("div", _vm._l(_vm.errors.reset_pass_code, function (error, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "text-danger",
+      attrs: {
+        role: "alert"
+      }
+    }, [_vm._v("※" + _vm._s(error))]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "d-flex justify-content-between align-items-center",
+    attrs: {
+      "for": "password"
+    }
+  }, [_vm._v("\n                        " + _vm._s("パスワード") + "\n                        "), _c("a", {
+    staticClass: "btn btn-link",
+    staticStyle: {
+      "font-size": ".5rem",
+      "text-decoration": "none"
+    },
+    attrs: {
+      href: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.toggleDisplayPassword.apply(null, arguments);
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.form_option.input_password.text))])]), _vm._v(" "), _c("p", {
+    staticClass: "mb-0",
+    staticStyle: {
+      "font-size": ".8rem"
+    }
+  }, [_vm._v("※8文字以上20文字以下の半角英数字")]), _vm._v(" "), _vm.form_option.input_password.type === "checkbox" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password,
+      expression: "inputs.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password",
+      name: "password",
+      required: "",
+      autocomplete: "current-password",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.inputs.password) ? _vm._i(_vm.inputs.password, null) > -1 : _vm.inputs.password
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.inputs.password,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.inputs, "password", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.inputs, "password", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.inputs, "password", $$c);
+        }
+      }
+    }
+  }) : _vm.form_option.input_password.type === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password,
+      expression: "inputs.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password",
+      name: "password",
+      required: "",
+      autocomplete: "current-password",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.inputs.password, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.inputs, "password", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password,
+      expression: "inputs.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password",
+      name: "password",
+      required: "",
+      autocomplete: "current-password",
+      type: _vm.form_option.input_password.type
+    },
+    domProps: {
+      value: _vm.inputs.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "password", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.password ? _c("div", _vm._l(_vm.errors.password, function (error, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "text-danger",
+      attrs: {
+        role: "alert"
+      }
+    }, [_vm._v("※" + _vm._s(error))]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-5"
+  }, [_c("label", {
+    attrs: {
+      "for": "password_confirmation"
+    }
+  }, [_vm._v(_vm._s("パスワードの確認"))]), _vm._v(" "), _c("p", {
+    staticClass: "mb-0",
+    staticStyle: {
+      "font-size": ".8rem"
+    }
+  }, [_vm._v("※8文字以上20文字以下の半角英数字")]), _vm._v(" "), _vm.form_option.input_password.type === "checkbox" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password_confirmation,
+      expression: "inputs.password_confirmation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password_confirmation",
+      name: "password_confirmation",
+      required: "",
+      autocomplete: "current-password_confirmation",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.inputs.password_confirmation) ? _vm._i(_vm.inputs.password_confirmation, null) > -1 : _vm.inputs.password_confirmation
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.inputs.password_confirmation,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.inputs, "password_confirmation", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.inputs, "password_confirmation", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.inputs, "password_confirmation", $$c);
+        }
+      }
+    }
+  }) : _vm.form_option.input_password.type === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password_confirmation,
+      expression: "inputs.password_confirmation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password_confirmation",
+      name: "password_confirmation",
+      required: "",
+      autocomplete: "current-password_confirmation",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.inputs.password_confirmation, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.inputs, "password_confirmation", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password_confirmation,
+      expression: "inputs.password_confirmation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password_confirmation",
+      name: "password_confirmation",
+      required: "",
+      autocomplete: "current-password_confirmation",
+      type: _vm.form_option.input_password.type
+    },
+    domProps: {
+      value: _vm.inputs.password_confirmation
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "password_confirmation", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.password_confirmation ? _c("div", _vm._l(_vm.errors.password_confirmation, function (error, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "text-danger",
+      attrs: {
+        role: "alert"
+      }
+    }, [_vm._v("※" + _vm._s(error))]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col-sm-8 offset-sm-2"
+  }, [_c("button", {
+    staticClass: "btn btn-curve btn-primary text-white w-100",
+    "class": {
+      disabled: _vm.loading
+    },
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.nextToStep(_vm.step02_route);
+      }
+    }
+  }, [!_vm.loading ? _c("span", [_vm._v(_vm._s("次へ"))]) : _c("span", [_vm._v(_vm._s("通信中・・・"))])])])])])])]) : _vm._e(), _vm._v(" "), _vm.card_num === 3 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_c("div", {
+    staticClass: "card shadow border-0 w-100 p-3 mb-3"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "text-secondary fw-bold text-center mt-3"
+  }, [_vm._v("新しいパスワードに変更しました。")]), _vm._v(" "), _c("div", {
+    staticClass: "row g-3 mt-5 mb-3"
+  }, [_c("div", {
+    staticClass: "col-md-8 offset-md-2"
+  }, [_c("a", {
+    staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-primary rounded-pill shadow",
+    attrs: {
+      href: _vm.login_route
+    }
+  }, [_vm._v("ログインする")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8 offset-md-2"
+  }, [_c("a", {
+    staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-warning rounded-pill shadow",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.historyBack();
+      }
+    }
+  }, [_vm._v("前のページに戻る")])])])])])]) : _vm._e()]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "bg-light p-3"
+  }, [_vm._v("\n                        入力されたメールアドレス宛にメールをお送りしました。"), _c("br"), _vm._v("\n                        メールに記載された6ケタの認証番号を入力してください。\n                    ")]);
+}];
 render._withStripped = true;
 
 
@@ -6653,6 +7260,9 @@ Vue.component('example-component', (__webpack_require__(/*! ./components/Example
 */
 /* 会員登録フォーム */
 Vue.component('u-register-form', (__webpack_require__(/*! ./components/auth/RegisterFormConpornent.vue */ "./resources/js/components/auth/RegisterFormConpornent.vue")["default"]));
+
+/* パスワード変更フォーム */
+Vue.component('u-reset-password-form', (__webpack_require__(/*! ./components/auth/ResetPasswordFormConpornent.vue */ "./resources/js/components/auth/ResetPasswordFormConpornent.vue")["default"]));
 
 /*
 |=============================================
@@ -6762,7 +7372,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/index.js");
 /* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
 /*!
-  * Bootstrap v5.3.2 (https://getbootstrap.com/)
+  * Bootstrap v5.3.0 (https://getbootstrap.com/)
   * Copyright 2011-2023 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
@@ -7407,7 +8017,7 @@ class Config {
  * Constants
  */
 
-const VERSION = '5.3.2';
+const VERSION = '5.3.0';
 
 /**
  * Class definition
@@ -7488,9 +8098,9 @@ const getSelector = element => {
     if (hrefAttribute.includes('#') && !hrefAttribute.startsWith('#')) {
       hrefAttribute = `#${hrefAttribute.split('#')[1]}`;
     }
-    selector = hrefAttribute && hrefAttribute !== '#' ? parseSelector(hrefAttribute.trim()) : null;
+    selector = hrefAttribute && hrefAttribute !== '#' ? hrefAttribute.trim() : null;
   }
-  return selector;
+  return parseSelector(selector);
 };
 const SelectorEngine = {
   find(selector, element = document.documentElement) {
@@ -10778,15 +11388,13 @@ const ARROW_LEFT_KEY = 'ArrowLeft';
 const ARROW_RIGHT_KEY = 'ArrowRight';
 const ARROW_UP_KEY = 'ArrowUp';
 const ARROW_DOWN_KEY = 'ArrowDown';
-const HOME_KEY = 'Home';
-const END_KEY = 'End';
 const CLASS_NAME_ACTIVE = 'active';
 const CLASS_NAME_FADE$1 = 'fade';
 const CLASS_NAME_SHOW$1 = 'show';
 const CLASS_DROPDOWN = 'dropdown';
 const SELECTOR_DROPDOWN_TOGGLE = '.dropdown-toggle';
 const SELECTOR_DROPDOWN_MENU = '.dropdown-menu';
-const NOT_SELECTOR_DROPDOWN_TOGGLE = `:not(${SELECTOR_DROPDOWN_TOGGLE})`;
+const NOT_SELECTOR_DROPDOWN_TOGGLE = ':not(.dropdown-toggle)';
 const SELECTOR_TAB_PANEL = '.list-group, .nav, [role="tablist"]';
 const SELECTOR_OUTER = '.nav-item, .list-group-item';
 const SELECTOR_INNER = `.nav-link${NOT_SELECTOR_DROPDOWN_TOGGLE}, .list-group-item${NOT_SELECTOR_DROPDOWN_TOGGLE}, [role="tab"]${NOT_SELECTOR_DROPDOWN_TOGGLE}`;
@@ -10886,19 +11494,13 @@ class Tab extends BaseComponent {
     this._queueCallback(complete, element, element.classList.contains(CLASS_NAME_FADE$1));
   }
   _keydown(event) {
-    if (![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY, HOME_KEY, END_KEY].includes(event.key)) {
+    if (![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key)) {
       return;
     }
     event.stopPropagation(); // stopPropagation/preventDefault both added to support up/down keys without scrolling the page
     event.preventDefault();
-    const children = this._getChildren().filter(element => !isDisabled(element));
-    let nextActiveElement;
-    if ([HOME_KEY, END_KEY].includes(event.key)) {
-      nextActiveElement = children[event.key === HOME_KEY ? 0 : children.length - 1];
-    } else {
-      const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key);
-      nextActiveElement = getNextActiveElement(children, event.target, isNext, true);
-    }
+    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key);
+    const nextActiveElement = getNextActiveElement(this._getChildren().filter(element => !isDisabled(element)), event.target, isNext, true);
     if (nextActiveElement) {
       nextActiveElement.focus({
         preventScroll: true
@@ -29772,6 +30374,45 @@ component.options.__file = "resources/js/components/auth/RegisterFormConpornent.
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/ResetPasswordFormConpornent.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/auth/ResetPasswordFormConpornent.vue ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020 */ "./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020");
+/* harmony import */ var _ResetPasswordFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResetPasswordFormConpornent.vue?vue&type=script&lang=js */ "./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ResetPasswordFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__.render,
+  _ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auth/ResetPasswordFormConpornent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js ***!
@@ -29961,6 +30602,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RegisterFormConpornent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=script&lang=js");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ResetPasswordFormConpornent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -30164,6 +30821,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterFormConpornent_vue_vue_type_template_id_546c17a1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RegisterFormConpornent.vue?vue&type=template&id=546c17a1 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterFormConpornent.vue?vue&type=template&id=546c17a1");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020 ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020");
 
 
 /***/ }),

@@ -24,17 +24,27 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
     Route::get('/require_login', function () { return view('auth.require_login'); })
     ->name('require_login');
 
+    # パスワード変更API ステップ01(reset_pass_step01)
+    Route::post('reset_pass_step01',
+    [Controllers\UserController::class, 'reset_pass_step01'])
+    ->name('reset_pass_step01');
+
+    # パスワード変更API ステップ02(reset_pass_step02)
+    Route::post('user/reset_pass_step02',
+    [Controllers\UserController::class, 'reset_pass_step02'])
+    ->name('reset_pass_step02');
 
 
 
 
 
-    Route::middleware(['auth'])->group(function () {
 
-        /* ポイント購入 */
-        Route::get('point_sail',
-        [Controllers\PointSailController::class, 'index'])
-        ->name('point_sail');
+Route::middleware(['auth'])->group(function () {
+
+    # ポイント購入　
+    Route::get('point_sail',
+    [Controllers\PointSailController::class, 'index'])
+    ->name('point_sail');
 
         Route::get('point_sail/payment/{point_sail}',
         [Controllers\PointSailController::class, 'payment'])
@@ -47,7 +57,15 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
         Route::get( 'payment', [Controllers\PaymentController::class, 'index'])->name('payment');
         Route::post('payment', [Controllers\PaymentController::class, 'payment']);
 
-    });
+
+    # ポイント購入履歴
+    Route::get('point_history/{month?}',
+    [Controllers\PointHistoryController::class, 'index'])
+    ->name('point_history');
+
+    //
+
+});
 
 
 

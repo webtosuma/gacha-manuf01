@@ -3,7 +3,7 @@
         <div class="container">
             <div class="d-flex align-items-center gap-3">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <h1>{{ config('app.name', 'Laravel') }}</h1>
                 </a>
 
                 {{-- @if(Auth::check())
@@ -33,7 +33,7 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="btn btn-primary rounded-pill shadow-sm fw-bold border-warning border-3 me-2"
+                            <a class="btn btn-primary text-white rounded-pill shadow-sm fw-bold border-warning border-3 me-2"
                             href="{{ route('register') }}">{{ __('会員登録') }}</a>
                         </li>
                         <li class="nav-item">
@@ -50,14 +50,14 @@
                 <a href="{{route('point_sail')}}"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="ポイントを購入する"
                 class="d-block text-decoration-none text-dark">
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-1">
 
                         @include('includes.point_icon')
 
-                        <div class="rounded-pill bg-light text- fw-bold
+                        <div class="rounded-pill bg- text- fw-bold border
                         d-flex align-items-center justify-content-end px-2
                         " style="width:6rem; height:1.6rem;">
-                            {{ Auth::user()->point }}
+                            {{ Auth::user()->point }}pt
                         </div>
                     </div>
                 </a>

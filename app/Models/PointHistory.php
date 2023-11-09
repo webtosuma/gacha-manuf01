@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /*
 | =============================================
 |  ポイント購入履歴　モデル
@@ -54,8 +56,8 @@ class PointHistory extends Model
          * PointSailモデル リレーション
          * @return \App\Models\PointSail
         */
-        public function point_sail(){
-            return $this->belongsTo(PointSail::class);
+        public function sail(){
+            return $this->belongsTo(PointSail::class,'point_sail_id');
         }
 
 }

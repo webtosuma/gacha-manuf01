@@ -1,6 +1,7 @@
 <template>
     <div>
         <button v-show="!disabled"
+        @click="click()"
         :class="style_class"
         :type="type" :name="name" :value="value"
         >{{btn_text}}</button>
@@ -24,6 +25,9 @@ import { valueToNode } from '@babel/types';
             type:     { type: String, default: 'submit', },
         },
         mounted() { },
-        methods:{ }
+        methods:{
+            /* ボタンをクリックしたとき */
+            click: function(){ this.$emit('btn-click'); },
+        }
     }
 </script>
