@@ -12,7 +12,7 @@
 <style>
     /* サイトデフォルト背景 */
     body{
-        background-image: url({{asset('storage/site/image/bg03.png')}});
+        background-image: url({{ $bg_image }});
     }
 </style>
 <style>
@@ -63,45 +63,45 @@
     <section class="bg-dark overflow-hidden" style="
     background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
     ">
-        <div class="container" style="">
+        <div class="container px-0" style="">
             <div class="col-md-8 mx-auto py-">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators mb-0">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
+                <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
-
+                    <!--image-->
                     <div class="carousel-inner anm_opasity_e01" style="max-height:90vh;">
-                        <a href="{{route('gacha','ex_gacha')}}" class="carousel-item pb- bg-dark active ">
-                            <ratio-image-component
-                            style_class="ratio ratio-4x3"
-                            url="https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2F2_min_4ae1a498be.jpg&w=1200&q=75"
-                            ></ratio-image-component>
-                        </a>
-                        <a href="{{route('gacha','ex_gacha')}}" class="carousel-item pb- bg-dark">
-                            <ratio-image-component
-                            style_class="ratio ratio-4x3"
-                            url="https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2FLomance_cf4889ed08.jpg&w=1200&q=75"
-                            ></ratio-image-component>
-                        </a>
-                        <a href="{{route('gacha','ex_gacha')}}" class="carousel-item pb- bg-dark">
-                            <ratio-image-component
-                            style_class="ratio ratio-4x3"
-                            url="https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2Fonly_7eacc89593.jpg&w=1200&q=75"
-                            ></ratio-image-component>
-                        </a>
+                        @foreach ($gachas as $gi => $gacha)
+                            <a href="{{ route('gacha','ex_gacha') }}" class="carousel-item pb- bg-dark
+                            {{ $gi==0 ? 'active' : ''}}">
+
+                                <ratio-image-component
+                                style_class="ratio ratio-4x3"
+                                url="{{ $gacha->image_path }}"
+                                ></ratio-image-component>
+
+                            </a>
+                        @endforeach
                     </div>
 
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+
+                    <!--side menu-->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                     </button>
+
+
+                    <!--bottom menu-->
+                    <div class="carousel-indicators mb-0">
+                        @foreach ($gachas as $gi => $gacha)
+                            <button type="button" data-bs-target="#carouselIndicators"
+                            class="{{ $gi==0 ? 'active' : ''}}"
+                            data-bs-slide-to="{{$gi}}" aria-current="true" aria-label="{{'Slide '.($gi+1)}}x"></button>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,12 +133,22 @@
     <section class="p-3 bg-dark">
         <div class="container overflow-auto">
             <nav class="nav gap-3 flex-nowrap" style="min-width:900px;">
-                <a class="col-md fs-5 fw-bold btn btn-light rounded-pill disabled" aria-current="page" href="#"
-                >ワンピース</a>
-                <a class="col-md fs-5 fw-bold btn btn-light rounded-pill border-dark border-2" href="#">ポケモン</a>
-                <a class="col-md fs-5 fw-bold btn btn-light rounded-pill border-dark border-2" href="#">遊戯王</a>
-                <a class="col-md fs-5 fw-bold btn btn-light rounded-pill border-dark border-2" href="#">ドラゴンボール</a>
-                {{-- <a class="col fs-5 fw-bold btn btn-light rounded-pill border-dark border-2 disabled" href="#" tabindex="-1" aria-disabled="true">準備中</a> --}}
+                @php
+                $sc = "col-md fs-5 fw-bold btn btn-light rounded-pill border-dark border-2";
+                $style_class = $category_code=='all' ? $sc.' disabled' : $sc;
+                @endphp
+                <a  href="{{ route('gacha_category','all') }}"
+                class="{{ $style_class }}">{{ 'すべて' }}</a>
+
+
+                @foreach ($categories as $category)
+                    @php
+                    $style_class = $category_code == $category->code_name ? $sc.' disabled' : $sc;
+                    @endphp
+
+                    <a  href="{{ route('gacha_category', $category->code_name ) }}"
+                    class="{{ $style_class }}">{{ $category->name }}</a>
+                @endforeach
             </nav>
         </div>
     </section>
@@ -148,16 +158,6 @@
 
             <!--card-->
             <div class="row gy-5 my-3 overflow-hidden">
-                @php
-                $gachas = [
-                    ['url'=>'https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2F2_min_4ae1a498be.jpg&w=1200&q=75'],
-                    ['url'=>'https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2FLomance_cf4889ed08.jpg&w=1200&q=75'],
-                    ['url'=>'https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2Fonly_7eacc89593.jpg&w=1200&q=75'],
-                    ['url'=>'https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2FACE_b1742db956.jpg&w=1200&q=75'],
-                    ['url'=>'https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2F1_754b55d72a.jpg&w=1200&q=75'],
-                    ['url'=>'https://japan-toreca.com/_next/image?url=https%3A%2F%2Fjapan-toreca-strapi.imgix.net%2F3_cfa94dab25.jpg&w=1200&q=75'],
-                ];
-                @endphp
                 @foreach ($gachas as $gacha)
                     <div class="col-12 col-md-6 col-lg-4 ">
 
@@ -166,8 +166,9 @@
                         hover_anime" style="border-radius:1rem;">
 
                             <!--image-->
+                            {{-- {{$gacha->image_path}} --}}
                             <ratio-image-component
-                            url="{{$gacha['url']}}" style_class="ratio ratio-4x3"
+                            url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
                             ></ratio-image-component>
 
                             <!--metter-->

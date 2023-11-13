@@ -65,7 +65,7 @@
 
 
     <!--トップー-->
-    <section class="p-2 pb-md-5">
+    <section class="p- pb-md-5">
         <div class="mx-auto overflow-auto px-0" style="max-width:1200px;">
             {{-- <div class="d-flex align-items-center bg-succes" style="min-height: 80vh"> --}}
 

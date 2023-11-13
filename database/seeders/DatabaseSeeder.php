@@ -17,9 +17,12 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);//テスト用
         $this->call(AdminSeeder::class);
 
-
+        /* 本番利用 */
         $this->call(PointSailSeeder::class);//販売用ポイント
 
+        /* テスト用 */
+        $this->call(GachaCategorySeeder::class);//ガチャのカテゴリーグループ
+        $this->call(GachaSeeder::class);//ガチャ
 
     }
 }

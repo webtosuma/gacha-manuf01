@@ -5,10 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 /*
 | =============================================
-|  ガチャ　テーブル
+|  ガチャの景品　テーブル
 | =============================================
 */
-class CreateGachasTable extends Migration
+class CreateGachaPrizesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,17 +17,15 @@ class CreateGachasTable extends Migration
      */
     public function up()
     {
-        Schema::create('gachas', function (Blueprint $table) {
+        Schema::create('gacha_prizes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('gacha_categories')
+            $table->foreignId('gacha_id')->constrained('gachas')//ガチャリレーション
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
-
-            $table->string('name' );//ガチャ名
+            $table->string('name' );//名
             $table->string('image');//画像
-            $table->integer('one_play_point')->default(0);//1回PLAYポイント数
-            $table->integer('ten_play_point')->default(0);//10回PLAYポイント数
-            $table->dateTime('published_at' )->nullable()->default(NULL);//公開日時
-            $table->string('key'  );//'認証キー'
+            $table->integer('rank_id');//ランクID
+            $table->integer('max_count')->default(0);       //景品総数
+            $table->integer('remaining_count')->default(0); //景品残数
             $table->softDeletes();//論理削除
             $table->timestamps();
         });
@@ -40,6 +38,6 @@ class CreateGachasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gachas');
+        Schema::dropIfExists('gacha_prizes');
     }
 }

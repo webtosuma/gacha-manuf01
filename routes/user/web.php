@@ -16,7 +16,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 |--------------------------------------------------------------------------
 */
     # ガチャカのテゴリー選択
-    Route::get('/gacha_category',
+    Route::get('/g/{category_code?}',
     [App\Http\Controllers\GachaController::class, 'index'])
     ->name('gacha_category');
 

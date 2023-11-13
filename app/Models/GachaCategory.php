@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /*
 | =============================================
 |  ガチャのカテゴリーグループ　モデル
@@ -12,12 +15,16 @@ use Illuminate\Database\Eloquent\Model;
 class GachaCategory extends Model
 {
     use HasFactory;
+    use SoftDeletes; //論理削除の利用
+
     public $timestamps = true;
     protected $fillable = [
-        'name',  //名前
-        'cord',  //ルーティング用コード
-        'is_published',//公開設定(利用しない->非公開*消さない)
+        'name',        //名前
+        'code_name',   //'コードネーム（ルーティング用）'
+        'bg_image' ,   //'背景画像'
+        'is_published',//公開(bool)
     ];
+
 
 
     /**
@@ -29,4 +36,46 @@ class GachaCategory extends Model
     {
         return \Database\Factories\GachaCategoryFactory::new();
     }
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * Gachaモデル リレーション
+         * @return \App\Models\UserAddress
+        */
+        public function gachas()
+        {
+            return $this->hasMany(Gacha::class,'category_id');
+        }
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /** 画像なしの時の画像 */
+        public static function noImage(){ return asset( 'storage/'.'site/image/bg04.jpg' );}
+
+        /**
+         * 画像ファイルパス bg_image_path
+         * @return String
+        */
+        public function getBgImagePathAttribute()
+        {
+            return $this->bg_image && Storage::exists($this->bg_image) ?
+            asset( 'storage/'.$this->bg_image ) : self::noImage();
+        }
 }
