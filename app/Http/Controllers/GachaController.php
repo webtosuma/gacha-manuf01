@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreGachaRequest;
-use App\Http\Requests\UpdateGachaRequest;
+use Illuminate\Http\Request;
 use App\Models\Gacha;
-
+/*
+| =============================================
+|  ガチャ コントローラー
+| =============================================
+*/
 class GachaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * カテゴリー選択・一覧表示
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,68 +22,36 @@ class GachaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreGachaRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreGachaRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
+     * 詳細表示
      * @param  \App\Models\Gacha  $gacha
      * @return \Illuminate\Http\Response
      */
-    public function show(Gacha $gacha)
+    public function show($gacha)
     {
-        //
+        return view('gacha.show');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
+     * PLAYガチャで遊ぶ
+     * @param \Illuminate\Http\Request $request
      * @param  \App\Models\Gacha  $gacha
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gacha $gacha)
+    public function play(Request $request)
     {
-        //
+        return view('gacha.play');
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateGachaRequest  $request
+     * PLAYガチャのガチャカの結果表示
+     * @param \Illuminate\Http\Request $request
      * @param  \App\Models\Gacha  $gacha
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGachaRequest $request, Gacha $gacha)
+    public function result(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Gacha  $gacha
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Gacha $gacha)
-    {
-        //
+        return view('gacha.result');
     }
 }

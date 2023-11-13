@@ -17,7 +17,7 @@ class UserAddress extends Model
     protected $fillable = [
         'postal_code',//'郵便番号'
         'todohuken' , //'住所-都道府県'
-        'shikushoson',//'住所-市町村'
+        'shikuchoson',//'住所-市町村'
         'number',     //'住所-番地'
         'user_id',         //リレーションID
     ];

@@ -9,7 +9,7 @@
     @yield('meta')
 
 
-    <title>@yield('title') - {{ config('app.name') }}</title>
+    <title>@yield('title') - {{ config('app.name') }} サイト管理者ページ</title>
 
 
 
@@ -28,17 +28,39 @@
 
 </head>
 <body style="">
-
-
-
     <div id="app">
-        {{-- @include('includes.header') --}}
 
-        <main class="py-" style="min-height: 80vh">
-            @yield('content')
+
+        @include('admin.includes.header')
+
+        <main class="row mx-0 bg-body g-0">
+
+
+            <!--flex-c1-->
+            <aside class="d-none d-lg-block col-auto pe-0 bg-white">
+                <div class="position-sticky ps-2" style="top: 2rem; ">
+
+
+                    @include('admin.includes.side_menu')
+
+                </div>
+            </aside>
+            <!--flex-c2-->
+            <div class="col bg-body">
+
+                <div style="min-height:90vh;">
+                    @yield('content')
+                </div>
+
+
+                <!-- Footer -->
+                <footer class="p-3 bg-dark text-center">
+                    footer
+                </footer>
+                {{-- @include('includes.footer') --}}
+            </div>
         </main>
 
-        {{-- @include('includes.footer') --}}
 
 
         <!-- フェードインアラート -->

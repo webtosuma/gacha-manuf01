@@ -21,7 +21,7 @@ class CreateUserAddressesTable extends Migration
             $table->id();
             $table->string('postal_code')->nullable()->default(NULL);//'郵便番号'
             $table->string('todohuken'  )->nullable()->default(NULL);//'住所-都道府県'
-            $table->string('shikushoson')->nullable()->default(NULL);//'住所-市町村'
+            $table->string('shikuchoson')->nullable()->default(NULL);//'住所-市町村'
             $table->string('number'     )->nullable()->default(NULL);//'住所-番地'
 
             $table->foreignId('user_id')->constrained('users')

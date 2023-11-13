@@ -1,18 +1,23 @@
 @extends('admin.layouts.app')
 
+
+@section('title','Admin TOP')
+
+
 @section('content')
-<div class="container py-4">
-
-    admin
+    <div class="container mb-4">
 
 
-    @if ( Auth::check() )
-        <form action="{{ route('admin_auth.logout') }}" method="POST">
-            @csrf
-            <button class="list-group-item list-group-item-action py-3"
-            type="submit">{{ __('ログアウト') }}</button>
-        </form>
-    @endif
+        {{-- パンくずリスト --}}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">{{ 'Top' }}</li>
+            </ol>
+        </nav>
 
-</div>
+
+
+        <h2 class="my-5 py-3 border-bottom">Admin TOP</h2>
+
+    </div>
 @endsection

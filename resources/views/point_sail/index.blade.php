@@ -44,7 +44,7 @@
 
                 <!--購入ボタン-->
                 <a href="{{ route('point_sail.payment', $point_sail) }}"
-                class="btn btn-lg btn-warning rounded-pill shadow py-1" style="width:8rem;">
+                class="btn btn-lg btn-warning text-white rounded-pill shadow py-1" style="width:8rem;">
                     <div class="d-flex align-items-center justify-content-between w-100">
                         <span>¥</span>
                         <h5 class="m-0 fw-bold">{{ $point_sail->price }}</h5>

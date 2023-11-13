@@ -44,4 +44,24 @@ use \App\Http\Controllers;
         Route::get('/admin', function () { return view('admin.home'); })
         ->name('admin.home');
 
+        # 景品管理
+        Route::get('/admin/prize', function () { return view('admin.prize.index'); })
+        ->name('admin.prize');
+
+        # ガチャ管理
+        Route::get('/admin/gacha', function () { return view('admin.gacha.index'); })
+        ->name('admin.gacha');
+
+        # ポイント管理
+        Route::get('/admin/point', function () { return view('admin.point.index'); })
+        ->name('admin.point');
+
+        # 発送受付け
+        Route::get('/admin/shipped', function () { return view('admin.shipped.index'); })
+        ->name('admin.shipped');
+
+        # 登録ユーザー一覧
+        Route::get('/admin/user', function () { return view('admin.user.index'); })
+        ->name('admin.user');
+
     });//end middleware

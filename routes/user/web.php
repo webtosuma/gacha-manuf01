@@ -10,8 +10,30 @@ use App\Http\Controllers;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| ガチャ
+|--------------------------------------------------------------------------
+*/
+    # ガチャカのテゴリー選択
+    Route::get('/gacha_category',
+    [App\Http\Controllers\GachaController::class, 'index'])
+    ->name('gacha_category');
 
+    # ガチャカの詳細表示
+    Route::get('/gacha_category/{gacha}',
+    [App\Http\Controllers\GachaController::class, 'show'])
+    ->name('gacha');
 
+    # ガチャカで遊ぶ
+    Route::post('/gacha_category/{gacha}/play',
+    [App\Http\Controllers\GachaController::class, 'play'])
+    ->name('gacha.play');
+
+    # ガチャカの結果表示
+    Route::post('/gacha_category/{gacha}/resurl',
+    [App\Http\Controllers\GachaController::class, 'result'])
+    ->name('gacha.result');
 
 /*
 |--------------------------------------------------------------------------

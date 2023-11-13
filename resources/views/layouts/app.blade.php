@@ -25,16 +25,18 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
+    <style>
+        /* サイトデフォルト背景 */
+        body{
+            background: no-repeat center center / cover fixed;
+            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+        }
+    </style>
 
     @yield('style')
 
 </head>
-<body style=" background: no-repeat center center / cover fixed;
-background-image: url({{asset('storage/site/image/bg01.jpg')}});
-">
-
-
-
+<body class="">
     <div id="app">
         @include('includes.header')
 
