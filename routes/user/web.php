@@ -79,6 +79,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get( 'payment', [Controllers\PaymentController::class, 'index'])->name('payment');
         Route::post('payment', [Controllers\PaymentController::class, 'payment']);
 
+        // ポイント購入完了
+        Route::get('point_sail/comp/{point_history}',
+        [Controllers\PointSailController::class, 'comp'])
+        ->name('point_sail.comp');
 
     # ポイント購入履歴
     Route::get('point_history/{month?}',

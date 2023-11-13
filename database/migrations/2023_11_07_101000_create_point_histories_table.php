@@ -19,10 +19,12 @@ class CreatePointHistoriesTable extends Migration
     {
         Schema::create('point_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('point_sail_id')->constrained('point_sails')
-            ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
             $table->foreignId('user_id')->constrained('users')
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+            $table->integer('value')->default(0);      //ポイント数
+            $table->integer('price')->default(0);      //販売価格(税込み)＊ポイント販売時
+            $table->integer('reason_id')->default(11); //入出理由ID
 
             $table->softDeletes();//論理削除
             $table->timestamps();

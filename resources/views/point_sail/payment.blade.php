@@ -11,9 +11,9 @@
         padding: .35rem .375rem !important;
         font-size: .9rem  !important;
         border-radius: .375rem !important;
-        border: 1px solid #0d6efd !important;
+        border: 1px solid #55b5d8 !important;
         color: #fff !important;
-        background-color: #0d6efd !important;
+        background-color: #55b5d8; !important;
         background-image: none !important;
     }
 </style>
@@ -69,7 +69,7 @@
                     </div>
                 @endforeach
                 <div class="col-md-8 mx-auto">
-                    <input type="submit" class="btn btn-primary w-100"
+                    <input type="submit" class="btn btn-primary text-white w-100"
                     value="選択したクレジットカードで購入する">
                 </div>
 

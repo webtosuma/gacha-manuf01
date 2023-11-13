@@ -25,7 +25,6 @@ class User extends Authenticatable
         'email',
         'password',
         'payjp_customer_id',
-        'point',
         'image',
     ];
 
@@ -97,4 +96,23 @@ class User extends Authenticatable
         {
             return $this->hasMany(PointHistory::class,'user_id');
         }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * ポイント残数 $user->point
+         * @return String
+        */
+        public function getPointAttribute() {
+            return $this->point_histories->sum('value');
+        }
+
+
 }

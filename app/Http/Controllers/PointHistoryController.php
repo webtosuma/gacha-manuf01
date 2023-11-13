@@ -25,8 +25,17 @@ class PointHistoryController extends Controller
     {
         $user = Auth::user();
         $point_histories = PointHistory::where('user_id',$user->id)
-        // ->orderByDesc('id')
+        ->orderByDesc('id')
         ->get();
+
+
+
+        $totalPoints = $user->point_histories->sum('value');
+        // dd($totalPoints);
+
+
+
+
 
         return view('point_history.index',compact('point_histories'));
     }

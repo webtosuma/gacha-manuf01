@@ -79,23 +79,21 @@ class PointSailController extends Controller
             DB::beginTransaction();
             try {
 
-                # ポイント購入履歴の登録
+                # ポイント履歴の登録
                 $point_history = new PointHistory([
-                    'user_id'       => $user->id,        //ユーザー　リレーション
-                    'point_sail_id' => $point_sail->id,  //販売ポイント　リレーション
+                    'user_id'   => $user->id,          //ユーザー　リレーション
+                    'value'     => $point_sail->value, //ポイント数
+                    'price'     => $point_sail->price, //販売価格(税込み)
+                    'reason_id' => 11 //入出理由ID
                 ]);
                 $point_history->save();
 
-
-                # ポイント加算処理
-                $user->point = $user->point + $point_sail->value;
-                $user->save();
 
                 # カード情報の取得と支払い処理
                 self::PayjpCharge( $request, $amount=$point_sail->price );
 
                 DB::commit();
-                return redirect(route('point_sail'))->with('message', '支払いが完了しました');
+                return redirect(route('point_sail.comp',$point_history));
 
 
             } catch (\Exception $e) {
@@ -113,6 +111,17 @@ class PointSailController extends Controller
         }
 
 
+
+
+        /**
+         * ポイント購入　クレジットカード入力or選択
+         * @param \App\Models\PointHistory $point_history
+         * @return \Illuminate\View\View
+        */
+        public function comp(PointHistory $point_history)
+        {
+            return view('point_sail.comp', compact('point_history'));
+        }
     /*
     |--------------------------------------------------------------------------
     | クラス内で利用するメソッド

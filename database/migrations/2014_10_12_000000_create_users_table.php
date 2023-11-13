@@ -20,8 +20,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('payjp_customer_id')->nullable()->default(NULL)->comment('payjp ID');
-
-            $table->integer('point')->default(0);
             $table->string('image')->nullable()->default(NULL);
 
             $table->rememberToken();

@@ -14,7 +14,6 @@ class PointHistoryFactory extends Factory
     public function definition()
     {
         return [
-            'point_sail_id'=>1,  //販売ポイント　リレーション
             'user_id'=>1,        //ユーザー　リレーション
         ];
     }

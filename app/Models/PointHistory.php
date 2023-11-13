@@ -15,10 +15,13 @@ class PointHistory extends Model
 {
     use HasFactory;
     use SoftDeletes; //論理削除の利用
+
     public $timestamps = true;
     protected $fillable = [
-        'point_sail_id',  //販売ポイント　リレーション
-        'user_id',        //ユーザー　リレーション
+        'user_id',   //ユーザー　リレーション
+        'value',     //ポイント数
+        'price',     //販売価格(税込み)＊ポイント販売時
+        'reason_id', //入出理由ID
     ];
 
 
@@ -30,6 +33,24 @@ class PointHistory extends Model
     protected static function newFactory()
     {
         return \Database\Factories\PointHistoryFactory::new();
+    }
+
+    /**
+     * ポイントの入出理由　一覧
+     *
+     * @return Array　
+     */
+    public static function resons()
+    {
+        return [
+            //ポイント加算
+            11 => 'ポイント購入',
+            12 => '景品のポイント交換',
+
+            //ポイント減算
+            21 => 'ガチャる',
+            22 => '景品発送',
+        ];
     }
 
 
@@ -50,14 +71,6 @@ class PointHistory extends Model
         */
         public function user(){
             return $this->belongsTo(User::class);
-        }
-
-        /**
-         * PointSailモデル リレーション
-         * @return \App\Models\PointSail
-        */
-        public function sail(){
-            return $this->belongsTo(PointSail::class,'point_sail_id');
         }
 
 }
