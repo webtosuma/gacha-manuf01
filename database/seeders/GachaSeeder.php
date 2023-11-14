@@ -6,9 +6,10 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
+use App\Models\GachaDiscription;
 /*
 | =============================================
-|  ガチャ　シーダー
+|  ガチャ　シーダー　
 | =============================================
 */
 class GachaSeeder extends Seeder
@@ -29,14 +30,26 @@ class GachaSeeder extends Seeder
             foreach ($datalist as $data)
             {
                 $data['category_id'] = $category->id;
-                $data['key'] = Str::random(40);
+                $data['key'] = Str::random(16);
 
-                $create = new Gacha($data);
-                $create->save();
+                # ガチャの登録
+                $gacha = new Gacha($data);
+                $gacha->save();
+
+
+
+                // # ガチャの詳細説明登録
+                // self::CreateDiscriptions( $gacha );
             }
         }
-    }
 
+        // # ガチャの詳細説明登録
+        // $gachas = Gacha::all();
+        // foreach ($gachas as $gacha) {
+        //     self::CreateDiscriptions( $gacha );
+        // }
+
+    }
 
 
     /**

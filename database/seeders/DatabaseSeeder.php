@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
         /* テスト用 */
         $this->call(GachaCategorySeeder::class);//ガチャのカテゴリーグループ
         $this->call(GachaSeeder::class);//ガチャ
+        $this->call(GachaDiscriptionSeeder::class);//ガチャ詳細情報
+        $this->call(PrizeSeeder::class);//景品
+        $this->call(GachaPrizeSeeder::class);//各ガチャの景品
+
+
 
     }
 }

@@ -8,7 +8,7 @@
                     <div class="modal-header justify-content-center border-0 pb-0">
 
                         <h5 id="AlertModalLabel" class="modal-title" style="font-size: 6rem;">
-                            <i class="bi bi-check-circle" :class="'text-'+color"></i>
+                            <i class="bi" :class="icon+' text-'+color"></i>
                         </h5>
 
                     </div>
@@ -40,6 +40,7 @@
         props: {
             color: { type: String, default: '',},
             body:  { type: String, default: '',},
+            icon:  { type: String, default: 'bi-check-circle',},
         },
         mounted() {
             this.show = this.color!='';

@@ -21,9 +21,10 @@ class CreateGachaDiscriptionsTable extends Migration
             $table->id();
             $table->foreignId('gacha_id')->constrained('gachas')//ガチャリレーション
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
             $table->string('image');//画像
             $table->string('sorce')->nullable()->default(NULL);//説明文
-            $table->integer('rank_id');//ランクID
+            $table->string('rank_id');//ランクID
 
             $table->timestamps();
         });

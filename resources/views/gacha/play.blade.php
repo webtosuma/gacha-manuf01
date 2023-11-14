@@ -20,10 +20,11 @@
 
 
 @section('content')
+    {{-- <div class="bg-white p-3">{{ 'テスト中...'.$movie_path }}</div> --}}
+
     <div class="mx-auto p-3" style="max-width:600px; height:100vh;">
         <div class="position-relative
         d-flex align-items-center align-items-center h-100 bg-">
-
 
 
             <!-- 動画 -->
@@ -34,7 +35,7 @@
                     muted width="100%" height=""
                     poster="{{asset('storage/site/image/video.png')}}"
                     >
-                        <source src="{{asset('storage/site/movie/gacha01.mp4')}}"></source>
+                        <source src="{{ $movie_path }}"></source>
                     </video>
 
                 </div>
@@ -42,7 +43,12 @@
 
             <!--スキップボタン-->
             <div class="position-absolute top-0 end-0 p-3">
-                <form action="{{ route('gacha.result', 'ex_gacha') }}" method="post">
+                @php $params = [
+                    'category_code'=>$user_gacha_history->gacha->category->code_name,
+                    'user_gacha_history'=>$user_gacha_history
+                ]; @endphp
+
+                <form action="{{ route('gacha.result', $params ) }}" method="post">
                     @csrf
                     <button type="submit"
                     class="btn btn-light btn-sm flort-right">動画をスキップ >> </button>

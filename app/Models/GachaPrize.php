@@ -17,8 +17,8 @@ class GachaPrize extends Model
 
     public $timestamps = true;
     protected $fillable = [
-       'gacha_id', //ガチャリレーション
-       'prize_id', //景品リレーション
+        'gacha_id', //ガチャの種類リレーション
+        'prize_id', //景品リレーション
 
         'rank_id',        //ランクID
         'max_count',      //景品総数

@@ -5,23 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 /*
 | =============================================
-|  ポイント収支履歴　モデル
+|  ユーザー取得景品　モデル
 | =============================================
 */
-class PointHistory extends Model
+
+class UserPrize extends Model
 {
     use HasFactory;
     use SoftDeletes; //論理削除の利用
 
     public $timestamps = true;
     protected $fillable = [
-        'user_id',   //ユーザー　リレーション
-        'value',     //ポイント数
-        'price',     //販売価格(税込み)＊ポイント販売時
-        'reason_id', //入出理由ID
+        'user_id',    //ユーザー　リレーション
+        'prize_id',   //景品リレーション
+        'gacha_history_id',//主テーブルに関連する従テーブルのレコードを削除
+        'point_history_id',//ポイント収支履歴リレーション（ポイント交換した時のみ）
+        'shipped_id',//発送履歴（発送した時のみ）
     ];
 
 
@@ -32,28 +33,8 @@ class PointHistory extends Model
      */
     protected static function newFactory()
     {
-        return \Database\Factories\PointHistoryFactory::new();
+        return \Database\Factories\UserPrizeFactory::new();
     }
-
-    /**
-     * ポイントの入出理由　一覧
-     *
-     * @return Array　
-     */
-    public static function resons()
-    {
-        return [
-            //ポイント加算
-            11 => 'ポイント購入',
-            12 => '景品のポイント交換',
-
-            //ポイント減算
-            21 => 'ガチャる',
-            22 => '景品発送',
-        ];
-    }
-
-
 
 
 
@@ -72,5 +53,26 @@ class PointHistory extends Model
         public function user(){
             return $this->belongsTo(User::class);
         }
+
+
+        /**
+         * PointHistoryモデル リレーション
+         * @return \App\Models\PointHistory
+        */
+        public function point_history(){
+            return $this->belongsTo(PointHistory::class);
+        }
+
+
+        /**
+         * Prizeモデル リレーション
+         * @return \App\Models\Prize
+        */
+        public function prize(){
+            return $this->belongsTo(Prize::class);
+        }
+
+
+
 
 }

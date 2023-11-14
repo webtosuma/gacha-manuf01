@@ -9,12 +9,13 @@ $session_alerts = [ 'alert-primary','alert-success','alert-info','alert-warning'
         @php
          $body  = session( $alert_name );
          $color = str_replace('alert-','', $alert_name);
+         $icon = session( 'icon' ) ? session( 'icon' ) : 'bi-check-circle';
         @endphp
         {{-- @php
         $body  = 'alert-primary';
         $color = 'primary';
         @endphp --}}
-        <alert-modal-comp-component color="{{$color}}" body="{{$body}}" />
+        <alert-modal-comp-component color="{{$color}}" body="{{$body}}" icon="{{$icon}}" />
 
     @endif
 @endforeach

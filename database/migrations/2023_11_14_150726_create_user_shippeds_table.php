@@ -5,10 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 /*
 | =============================================
-|  ポイント収支履歴　テーブル
+|  景品発送履歴　テーブル
 | =============================================
 */
-class CreatePointHistoriesTable extends Migration
+class CreateUserShippedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,14 +17,18 @@ class CreatePointHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('point_histories', function (Blueprint $table) {
+        Schema::create('user_shippeds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
 
-            $table->integer('value')->default(0);      //ポイント数
-            $table->integer('price')->default(0);      //販売価格(税込み)＊ポイント販売時
-            $table->integer('reason_id')->default(11); //入出理由ID
+            $table->foreignId('user_address_id')->constrained('user_addresses')//ユーザーアドレス
+            ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+            $table->foreignId('point_history_id')->constrained('point_histories')//ポイント収支履歴リレーション
+            ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+            $table->integer('state_id');//発送状況
 
             $table->softDeletes();//論理削除
             $table->timestamps();
@@ -38,6 +42,6 @@ class CreatePointHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('point_histories');
+        Schema::dropIfExists('user_shippeds');
     }
 }

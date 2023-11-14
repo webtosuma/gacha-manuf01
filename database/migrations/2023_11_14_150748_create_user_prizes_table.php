@@ -5,10 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 /*
 | =============================================
-|  ガチャの景品　テーブル
+|  ユーザー取得景品　テーブル
 | =============================================
 */
-class CreateGachaPrizesTable extends Migration
+class CreateUserPrizesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,17 +17,23 @@ class CreateGachaPrizesTable extends Migration
      */
     public function up()
     {
-        Schema::create('gacha_prizes', function (Blueprint $table) {
+        Schema::create('user_prizes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('gacha_id')->constrained('gachas')//ガチャリレーション
+            $table->foreignId('user_id')->constrained('users')
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
 
             $table->foreignId('prize_id')->constrained('prizes')//景品リレーション
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
 
-            $table->string('rank_id');//ランクID
-            $table->integer('max_count')->default(0);       //景品総数
-            $table->integer('remaining_count')->default(0); //景品残数
+            $table->foreignId('gacha_history_id')->constrained('user_gacha_histories')//ガチャ履歴
+            ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+            $table->integer('point_history_id')->nullable()->default(NULL);
+            //ポイント収支履歴リレーション（ポイント交換した時のみ）
+
+            $table->integer('shipped_id')->nullable()->default(NULL);
+            //発送履歴（発送した時のみ）
+
             $table->softDeletes();//論理削除
             $table->timestamps();
         });
@@ -40,6 +46,6 @@ class CreateGachaPrizesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gacha_prizes');
+        Schema::dropIfExists('user_prizes');
     }
 }

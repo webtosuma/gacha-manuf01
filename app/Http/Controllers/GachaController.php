@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\GachaCategory;
 use App\Models\Gacha;
+use App\Models\UserGachaHistory;
 use App\Models\PointHistory;
-
 /*
 | =============================================
 |  ガチャ コントローラー
@@ -24,15 +24,12 @@ class GachaController extends Controller
      */
     public function index( $category_code='all' )
     {
-
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
         if( $category_code!='all' && !$category ){ return \App::abort(404); }
 
-        #
-
-
         # 変数
+
             ## 背景画像
             $bg_image = $category ? $category->bg_image_path : GachaCategory::noImage();
 
@@ -83,57 +80,49 @@ class GachaController extends Controller
 
 
             # ID配列を指定して、ガチャの取得
-            return Gacha::find($id_array);
+            return Gacha::orderBy('published_at','desc')->find($id_array);
         }
-
+    //
 
 
 
 
     /**
      * 詳細表示
+     * @param String $category_code      //カテゴリーコード名
      * @param  \App\Models\Gacha  $gacha
+     * @param String $key                //ガチャモデル・キー
      * @return \Illuminate\Http\Response
      */
-    public function show($gacha)
+    public function show( $category_code, Gacha $gacha, $key)
     {
-        return view('gacha.show');
+        if( $gacha->key!=$key ){ return \App::abort(404); }
+
+        return view('gacha.show', compact( 'gacha' ));
     }
 
-    /**
-     * PLAYガチャで遊ぶ
-     * @param \Illuminate\Http\Request $request
-     * @param  \App\Models\Gacha  $gacha
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function play(Request $request)
-    {
-        # 変数
-        $user = Auth::user(); //ログインユーザー取得
-        $play_point = 100;    //ガチャの1回プレー使用ポイント　＊<------あとで修正
-        $play_count = $request->play_count; //プレイ数
 
-        # ポイント履歴の登録
-        $point_history = new PointHistory([
-            'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => - ( $play_point * $play_count ), //使用ポイント数
-            'reason_id' => 21 //入出理由ID
-        ]);
-        $point_history->save();
 
-        return view('gacha.play');
-    }
 
     /**
      * PLAYガチャのガチャカの結果表示
      * @param \Illuminate\Http\Request $request
-     * @param  \App\Models\Gacha  $gacha
+     * @param String $category_code      //カテゴリーコード名
+     * @param  \App\Models\UserGachaHistory $user_gacha_history
      *
      * @return \Illuminate\Http\Response
      */
-    public function result(Request $request)
+    public function result(Request $request, $category_code, UserGachaHistory $user_gacha_history)
     {
-        return view('gacha.result');
+        # ユーザの結果のみを表示
+        $user = Auth::user();
+        if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
+
+        # ユーザー取得景品
+        $user_prizes = $user_gacha_history->user_prizes;
+
+        # ガチャ
+        $gacha = $user_gacha_history->gacha;
+        return view('gacha.result',compact('gacha','user_prizes'));
     }
 }

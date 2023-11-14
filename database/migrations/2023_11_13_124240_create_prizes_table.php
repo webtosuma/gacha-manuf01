@@ -25,7 +25,7 @@ class CreatePrizesTable extends Migration
             $table->string('code'  )->nullable()->default(NULL);//景品コード
             $table->string('name' );//名
             $table->string('image');//画像
-            $table->integer('rank_id')->nullable()->default(NULL);//ランクID
+            $table->string('rank_id')->nullable()->default(NULL);//ランクID
             $table->integer('point')->default(0); //交換ポイント値
             $table->dateTime('point_updated_at' );//交換ポイント値更新日時
             $table->dateTime('published_at' )->nullable()->default(NULL);//公開日時

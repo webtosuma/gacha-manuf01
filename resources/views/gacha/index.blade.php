@@ -70,7 +70,9 @@
                     <!--image-->
                     <div class="carousel-inner anm_opasity_e01" style="max-height:90vh;">
                         @foreach ($gachas as $gi => $gacha)
-                            <a href="{{ route('gacha','ex_gacha') }}" class="carousel-item pb- bg-dark
+
+                            @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+                            <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
                             {{ $gi==0 ? 'active' : ''}}">
 
                                 <ratio-image-component
@@ -161,55 +163,94 @@
                 @foreach ($gachas as $gacha)
                     <div class="col-12 col-md-6 col-lg-4 ">
 
-                        <a href="{{route('gacha','ex_gacha')}}" class="card border-secondary border-3 shadow bg-white
+                        @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+                        <a href="{{route('gacha',$params)}}"
+                        class="card border-secondary border-3 shadow bg-white
                         text-dark text-center overflow-hidden text-decoration-none
                         hover_anime" style="border-radius:1rem;">
 
+
                             <!--image-->
-                            {{-- {{$gacha->image_path}} --}}
-                            <ratio-image-component
-                            url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
-                            ></ratio-image-component>
+                            <div class="position-relative">
+                                <ratio-image-component
+                                url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
+                                ></ratio-image-component>
+
+                                @if ($gacha->remaining_count==0)
+                                <div class="position-absolute top-0 start-0 w-100 h-100"
+                                style="z-index:10; background: rgba(0, 0, 0, .7);"
+                                ><div class="d-flex align-items-center justify-content-center h-100 fs-1 text-white"
+                                >売り切れました</div></div>
+                                @endif
+                            </div>
 
                             <!--metter-->
                             <div class="card-body">
                                 <h6 class="d-flex justify-content-between align-items-end">
                                     <p class="card-text m-0">
-                                        残り 4,000/10,000
+                                        {{ '残り'.$gacha->remaining_count.'/'.$gacha->max_count }}
                                     </p>
 
                                     <div class="d-flex align-items-center gap-2">
                                         @include('includes.point_icon')
 
                                         <div class="">
-                                            1回×<span class="fs-3">500</span>pt
+                                            1回×<span class="fs-1">{{ $gacha->one_play_point }}</span>pt
                                         </div>
                                     </div>
                                 </h6>
-
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
-                                    style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                                    @php
+                                    $ratio = $gacha->remaining_ratio;
+                                    $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
+                                    $style_class = 'progress-bar progress-bar-striped '.$bg_color
+                                    @endphp
+                                    <div class="{{ $style_class }}" role="progressbar"
+                                    style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
                                 </div>
                             </div>
                         </a>
 
 
                         <div class="row g-2 mt-1">
+                            @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+
                             <div class="col-6">
-                                <form action="{{ route('gacha.play', 'ex_gacha') }}" method="post">
+                                <form action="{{ route('gacha.play', $params) }}" method="post">
                                     @csrf
-                                    <button type="submit" name="play_count" value="{{ 1 }}"
-                                    class="btn btn-light fw-bold w-100 rounded-pill border-secondary border-2"
-                                    >1回ガチャる</button>
+
+                                    @if ($gacha->remaining_count >=1) {{--  --}}
+                                        <button type="submit" name="play_count" value="{{ 1 }}"
+                                        class="btn btn-light bg-gradient fw-bold w-100
+                                        rounded-pill border-secondary border-3"
+                                        >1回ガチャる</button>
+                                    @else
+                                        <button type="submit" name="play_count" disabled
+                                        class="btn btn-light bg-gradient fw-bold w-100 text-danger
+                                        rounded-pill border-secondary border-3"
+                                        >売り切れ</button>
+                                    @endif
+
                                 </form>
                             </div>
+
+
                             <div class="col-6">
-                                <form action="{{ route('gacha.play', 'ex_gacha') }}" method="post">
+                                <form action="{{ route('gacha.play', $params) }}" method="post">
                                     @csrf
-                                    <button type="submit" name="play_count" value="{{ 10 }}"
-                                    class="btn btn-dark text- fw-bold w-100 rounded-pill border-secondary border-2"
-                                    >10連ガチャる</button>
+
+                                    @if ($gacha->remaining_count >=10) {{--  --}}
+                                        <button type="submit" name="play_count" value="{{ 10 }}"
+                                        class="btn btn-dark bg-gradient text- fw-bold w-100
+                                        rounded-pill border-secondary border-3"
+                                        >10連ガチャる</button>
+                                    @else
+                                        <button type="submit" name="play_count" disabled
+                                        class="btn btn-dark bg-gradient text- fw-bold w-100 text-danger
+                                        rounded-pill border-secondary border-3"
+                                        >売り切れ</button>
+                                    @endif
+
                                 </form>
                             </div>
                         </div>

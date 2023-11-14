@@ -9,7 +9,11 @@ use App\Http\Controllers;
 ==========================================================================
 */
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', function(){
+    return redirect()->route('gacha_category','onepiece');
+} )->name('home');
+
 /*
 |--------------------------------------------------------------------------
 | ガチャ
@@ -21,17 +25,17 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
     ->name('gacha_category');
 
     # ガチャカの詳細表示
-    Route::get('/gacha_category/{gacha}',
+    Route::get('/g/{category_code}/{gacha}/{key}',
     [App\Http\Controllers\GachaController::class, 'show'])
     ->name('gacha');
 
     # ガチャカで遊ぶ
-    Route::post('/gacha_category/{gacha}/play',
-    [App\Http\Controllers\GachaController::class, 'play'])
+    Route::post('/g/play/{category_code}/{gacha}/{key}',
+    [App\Http\Controllers\GachaPlayController::class, 'play'])
     ->name('gacha.play');
 
     # ガチャカの結果表示
-    Route::post('/gacha_category/{gacha}/resurl',
+    Route::post('/g/result/{category_code}/{user_gacha_history}',
     [App\Http\Controllers\GachaController::class, 'result'])
     ->name('gacha.result');
 

@@ -7,7 +7,10 @@
 <style>
     /* サイトデフォルト背景 */
     body{
-        background-image: url({{asset('storage/site/image/bg03.png')}});
+        /* background-image: url({{asset('storage/site/image/bg03.png')}}); */
+        background-image: url({{ $gacha->category->bg_image_path }});
+
+
     }
 </style>
 @endsection
@@ -23,40 +26,61 @@
                     @include('includes.point_icon')
 
                     <div class="">
-                        1回×<span class="fs-1">500</span>pt
+                        1回×<span class="fs-1">{{ $gacha->one_play_point }}</span>pt
                     </div>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
-                    style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                    @php
+                    $ratio = $gacha->remaining_ratio;
+                    $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
+                    $style_class = 'progress-bar progress-bar-striped '.$bg_color
+                    @endphp
+                    <div class="{{ $style_class }}" role="progressbar"
+                    style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
                 </div>
                 <p class="fs-5 text-center m-0">
-                    残り 4,000/10,000
+                    {{ '残り'.$gacha->remaining_count.'/'.$gacha->max_count }}
                 </p>
 
             </div>
             <div class="row g-2 mt-1">
+                @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+
                 <div class="col-6">
-
-                    <form action="{{ route('gacha.play', 'ex_gacha') }}" method="post">
+                    <form action="{{ route('gacha.play', $params) }}" method="post">
                         @csrf
-                        <button type="submit" name="play_count" value="{{ 1 }}"
-                        class="btn btn-lg py-3 btn-light bg-gradient fw-bold w-100
-                        rounded-pill border-secondary border-3"
-                        >1回ガチャる</button>
-                    </form>
 
+                        @if ($gacha->remaining_count >=1) {{--  --}}
+                            <button type="submit" name="play_count" value="{{ 1 }}"
+                            class="btn btn-lg py-3 btn-light bg-gradient fw-bold w-100
+                            rounded-pill border-secondary border-3"
+                            >1回ガチャる</button>
+                        @else
+                            <button type="submit" name="play_count" disabled
+                            class="btn btn-lg py-3 btn-light bg-gradient fw-bold w-100 text-danger
+                            rounded-pill border-secondary border-3"
+                            >売り切れ</button>
+                        @endif
+
+                    </form>
                 </div>
+
+
                 <div class="col-6">
-
-                    <form action="{{ route('gacha.play', 'ex_gacha') }}" method="post">
+                    <form action="{{ route('gacha.play', $params) }}" method="post">
                         @csrf
-                        <button type="submit" name="play_count" value="{{ 10 }}"
-                        class="btn btn-lg py-3 btn-dark bg-gradient text- fw-bold w-100
-                        rounded-pill border-secondary border-3"
-                        >10連ガチャる</button>
+                        @if ($gacha->remaining_count >=10) {{--  --}}
+                            <button type="submit" name="play_count" value="{{ 10 }}"
+                            class="btn btn-lg py-3 btn-dark bg-gradient text- fw-bold w-100
+                            rounded-pill border-secondary border-3"
+                            >10連ガチャる</button>
+                        @else
+                            <button type="submit" name="play_count" disabled
+                            class="btn btn-lg py-3 btn-dark bg-gradient text- fw-bold w-100 text-danger
+                            rounded-pill border-secondary border-3"
+                            >売り切れ</button>
+                        @endif
                     </form>
-
                 </div>
             </div>
         </div>
@@ -67,81 +91,72 @@
     <!--トップー-->
     <section class="p- pb-md-5">
         <div class="mx-auto overflow-auto px-0" style="max-width:1200px;">
-            {{-- <div class="d-flex align-items-center bg-succes" style="min-height: 80vh"> --}}
 
 
-                <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                src="{{asset('storage/site/image/sample-gacha/top.png')}}" alt="トップ画像">
+            <img class="d-block w-100 shadow" style="border-radius:1rem;"
+            src="{{$gacha->image_path}}" alt="トップ画像">
 
 
-            {{-- </div> --}}
         </div>
     </section>
+    <!--各賞-->
     <div class="row justify-content-center mx-auto" style="max-width:1200px;">
-        <!--01 等賞ー-->
-        <section class="py-5 col-12">
-            <div class="container overflow-auto" style="max-width:600px;">
+        @foreach ($gacha->discriptions as $discription)
+            <section class="py-5 col-12">
 
-                <div class="col-8 mx-auto mb-3">
-                    <img class="d-block w-100"
-                    src="{{asset('storage/site/image/gacha/01prize.png')}}" alt="1等賞">
+                <div class="container overflow-auto" style="max-width:600px;">
+
+                    <!-- 賞ラベル -->
+                    @switch( $discription->rank_id )
+                        @case('XA')
+                            <!--01 等賞ー-->
+                            <div class="col-8 mx-auto mb-3">
+                                <img class="d-block w-100"
+                                src="{{asset('storage/site/image/gacha/01prize.png')}}" alt="1等賞">
+                            </div>
+                            @break
+                        @case('XB')
+                            <!--02 等賞ー-->
+                            <div class="col-8 mx-auto mb-3">
+                                <img class="d-block w-100"
+                                src="{{asset('storage/site/image/gacha/02prize.png')}}" alt="2等賞">
+                            </div>
+                            @break
+                        @case('XC')
+                            <!--03 等賞ー-->
+                            <div class="col-8 mx-auto mb-3">
+                                <img class="d-block w-100"
+                                src="{{asset('storage/site/image/gacha/03prize.png')}}" alt="3等賞">
+                            </div>
+                            @break
+                        @case('XD')
+                            <!--04 等賞ー-->
+                            <div class="col-8 mx-auto mb-3">
+                                <img class="d-block w-100"
+                                src="{{asset('storage/site/image/gacha/04prize.png')}}" alt="4等賞">
+                            </div>
+                            @break
+                    @endswitch
+
+                    <!-- 景品画像 -->
+                    @if ( $discription->image_path )
+                        <img class="d-block w-100 shadow" style="border-radius:1rem;"
+                        src="{{$discription->image_path }}" alt="景品画像">
+                    @endif
+
+                    <!-- 景品説明文 -->
+                    @if ( $discription->sorce )
+                    <p class="p-3 mt-2 form-text text-secondary" style="border-radius:1rem; background:rgb(255, 255, 255, .9);"
+                    ><replace-text-component text="{{$discription->sorce_text }}"></replace-text-component></p>
+                    @endif
+
                 </div>
-
-                <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                src="{{asset('storage/site/image/sample-gacha/01prize.png')}}" alt="商品画像">
-
-
-            </div>
-        </section>
-        <!--02 等賞ー-->
-        <section class="py-5 col-md-4">
-            <div class="container overflow-auto" style="max-width:600px;">
-
-                <div class="col-8 mx-auto mb-3">
-                    <img class="d-block w-100"
-                    src="{{asset('storage/site/image/gacha/02prize.png')}}" alt="2等賞">
-                </div>
-
-                <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                src="{{asset('storage/site/image/sample-gacha/02prize.png')}}" alt="商品画像">
-
-
-            </div>
-        </section>
-        <!--03 等賞ー-->
-        <section class="py-5 col-md-4">
-            <div class="container overflow-auto" style="max-width:600px;">
-
-                <div class="col-8 mx-auto mb-3">
-                    <img class="d-block w-100"
-                    src="{{asset('storage/site/image/gacha/03prize.png')}}" alt="3等賞">
-                </div>
-
-                <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                src="{{asset('storage/site/image/sample-gacha/03prize.png')}}" alt="商品画像">
-
-
-            </div>
-        </section>
-        <!--04 等賞ー-->
-        <section class="py-5 col-md-4">
-            <div class="container overflow-auto" style="max-width:600px;">
-
-                <div class="col-8 mx-auto mb-3">
-                    <img class="d-block w-100"
-                    src="{{asset('storage/site/image/gacha/04prize.png')}}" alt="4等賞">
-                </div>
-
-                <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                src="{{asset('storage/site/image/sample-gacha/04prize.png')}}" alt="商品画像">
-
-
-            </div>
-        </section>
+            </section>
+        @endforeach
     </div>
     <!--注意事項ー-->
     <section class="py-5">
-        <div class="container overflow-auto">
+        <div class="container px-0 overflow-auto">
             <div class="p-3" style="border-radius:1rem; background:rgb(255, 255, 255, .9);">
 
                 <h6 class="border border-danger border-2 p-2 text-danger text-center">

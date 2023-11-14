@@ -29,42 +29,41 @@
             <div class="row justify-content-center g-3 gy-4" style="min-height: 80vh;" >
 
 
-                @for ($i = 0; $i < 10; $i++)
+                @foreach ($user_prizes as $user_prize)
                     <div class="col-3 col-md-3">
                         <div class="d-flex align-items-center justify-content-center h-100">
 
 
                             <label class="w-100">
-                                <!--カード名-->
-                                {{-- <div class="text-center text-white fw-bold" style="font-size:11px;"
-                                >すごいルフィー...</div> --}}
 
                                 <div class="position-relative">
                                     <!--チェックボックス-->
                                     <div class="position-absolute top-0 start-0" style="z-index:100">
                                         <input class="form-check-input float-xl-none m-0"
-                                        type="checkbox" name="" value="">
+                                        type="checkbox" name="user_prize_ids[]" value="{{ $user_prize->id }}">
                                     </div>
 
                                     <!--カード画像-->
                                     <ratio-image-component
                                     style_class="ratio ratio-3x4 rounded-3"
-                                    url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZiXl24gnOwOvXztlKMck7B5PMSPBdsRhvzg&usqp=CAU"
+                                    url="{{ $user_prize->prize->image_path }}"
                                     ></ratio-image-component>
                                 </div>
 
                                 <!--ポイント表示-->
-                                <div >
-                                    <div class="bg-dark text-warning fw-bold text-center mt-1 px-1 rounded">
-                                        100pt
-                                    </div>
+                                <div class="bg-white text- fw-bold text-center mt-1 px-1 rounded">
+                                    {{ $user_prize->prize->point.'pt' }}
                                 </div>
-                            </label>
+                                <div class="bg-dark text-primary fw-bold text-center mt-1 px-1 rounded">
+                                    {{ 'ランク '.$user_prize->prize->rank_id }}
+                                </div>
+
+                        </label>
 
 
                         </div>
                     </div>
-                @endfor
+                @endforeach
 
                 <div class="col-12 rounded-3 p-3" style="background: rgb(0, 0, 0, .7;">
                     <div class="col-md-8 mx-auto">
@@ -80,12 +79,20 @@
     </section>
     <section class="py-5 bg-dark border-bottom border-right">
         <div class="container">
+            @php
+            $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key];
+            @endphp
+
             <div class="row g-3">
                 <div class="col-md">
-                    <button class="btn btn-light border-dark rounded-pill w-100">同じガチャでガチャる</button>
+                    <a href="{{ route('gacha', $params ) }}"
+                    class="btn btn-light border-dark rounded-pill w-100"
+                    >{{ 'もう一度ガチャる' }}</a>
                 </div>
                 <div class="col-md">
-                    <button class="btn btn-light border-dark rounded-pill w-100">別のガチャでガチャる</button>
+                    <a href="{{ route('gacha_category', $gacha->category->code_name ) }}"
+                    class="btn btn-light border-dark rounded-pill w-100"
+                    >{{ '他のガチャを選ぶ' }}</a>
                 </div>
                 <div class="col-md">
                     <button class="btn btn-light border-dark rounded-pill w-100">取得カード一覧を見る</button>

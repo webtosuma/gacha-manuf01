@@ -49,7 +49,7 @@ class GachaCategory extends Model
     */
         /**
          * Gachaモデル リレーション
-         * @return \App\Models\UserAddress
+         * @return \App\Models\Gacha
         */
         public function gachas()
         {

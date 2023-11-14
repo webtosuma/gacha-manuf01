@@ -42,6 +42,43 @@ class Gacha extends Model
 
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * GachaCategoryモデル リレーション
+         * @return \App\Models\GachaCategory
+        */
+        public function category(){
+            return $this->belongsTo(GachaCategory::class, 'category_id');
+        }
+
+
+        /**
+         * GachaDiscriptionモデル リレーション
+         * @return \App\Models\GachaDiscription
+        */
+        public function discriptions()
+        {
+            return $this->hasMany(GachaDiscription::class,'gacha_id')
+            ->orderBy('rank_id','asc'); //ランク順
+        }
+
+
+        /**
+         * GachaPrizeモデル リレーション
+         * @return \App\Models\GachaPrize
+        */
+        public function g_prizes()
+        {
+            return $this->hasMany(GachaPrize::class,'gacha_id')
+            ->orderBy('rank_id','asc'); //ランク順
+        }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -59,10 +96,41 @@ class Gacha extends Model
         */
         public function getImagePathAttribute()
         {
-            // return Storage::exists($this->image);
-            $noimage_path = '';
-
             return $this->image && Storage::exists($this->image) ?
             asset( 'storage/'.$this->image ) :  self::noImage();
         }
+
+
+
+        /**
+         * 景品・総数 max_count
+         * @return String
+        */
+        public function getMaxCountAttribute()
+        {
+            return $this->g_prizes->sum('max_count');
+        }
+
+
+        /**
+         * 景品・残り数 remaining_count
+         * @return String
+        */
+        public function getRemainingCountAttribute()
+        {
+            return $this->g_prizes->sum('remaining_count');
+        }
+
+
+        /**
+         * 景品・残り割合 remaining_ratio
+         * @return String
+        */
+        public function getRemainingRatioAttribute()
+        {
+            $max       = $this->max_count;
+            $remaining = $this->remaining_count;
+            return ($remaining/$max) * 100;
+        }
+
 }

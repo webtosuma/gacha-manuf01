@@ -5103,6 +5103,10 @@ __webpack_require__.r(__webpack_exports__);
     body: {
       type: String,
       "default": ''
+    },
+    icon: {
+      type: String,
+      "default": 'bi-check-circle'
     }
   },
   mounted: function mounted() {
@@ -5996,8 +6000,8 @@ var render = function render() {
       id: "AlertModalLabel"
     }
   }, [_c("i", {
-    staticClass: "bi bi-check-circle",
-    "class": "text-" + _vm.color
+    staticClass: "bi",
+    "class": _vm.icon + " text-" + _vm.color
   })])]), _vm._v(" "), _c("div", {
     staticClass: "modal-body text-center fs-5"
   }, [_c("replace-text-component", {
