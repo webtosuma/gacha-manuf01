@@ -39,20 +39,17 @@ style="max-width:90vw; min-width:30vw;">
             <a href="" class="list-group-item list-group-item-action py-3"
             >お知らせ</a>
 
-            <a href="" class="list-group-item list-group-item-action py-3"
-            >最近ゲットしたカード</a>
+            {{-- <a href="" class="list-group-item list-group-item-action py-3"
+            >最近取得した景品</a> --}}
 
-            <a href="" class="list-group-item list-group-item-action py-3"
-            >取得カード履歴</a>
-
-            <a href="" class="list-group-item list-group-item-action py-3"
-            >LOSEカード履歴</a>
-
-            <a href="" class="list-group-item list-group-item-action py-3"
-            >発送カード履歴</a>
+            <a href="{{ route('user_prize') }}" class="list-group-item list-group-item-action py-3"
+            >取得した景品</a>
 
             <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3"
             >ポイント履歴</a>
+
+            <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3"
+            >発送申請履歴</a>
 
             <a href="" class="list-group-item list-group-item-action py-3"
             >会員情報設定</a>

@@ -1,0 +1,225 @@
+<template>
+    <div class="">
+
+        <!--ボトムメニュー-->
+        <div class="position-fixed bottom-0 end-0 w-100 pb-3 bg-white border" style="border-radius: 1rem 1rem 0 0; z-index:1000;">
+            <div class="container py-3" style="max-width:900px;">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-check mb-3" style="cursor:pointer;">
+                        <input v-model="allCheck" @change="changeAll()"
+                        class="form-check-input" type="checkbox">
+                        <span class="form-check-label fs-5">
+                            全て選択
+                        </span>
+                    </label>
+
+                    <div class="form-check mb-3">
+                        <span class="fs-1 fw-bold">{{ totalPoint ? '+'+totalPoint : 0 }}</span>pt
+                    </div>
+                </div>
+
+
+                <div class="row g-2">
+                    <div class="col-6">
+
+                        <!--選択した景品をポイント交換 r_exchange_points -->
+                        <button type="button" :disabled="disabled"
+                        data-bs-toggle="modal" data-bs-target="#exchangeModal"
+                        class="btn btn-lg btn-warning rounded-pill w-100"
+                        >ポイント交換</button>
+
+                    </div>
+                    <div class="col-6">
+
+                        <!-- 選択した景品の発送申請 r_shipped_appli -->
+                        <form :action="r_shipped_appli">
+
+                            <button type="submit" :disabled="disabled"
+                            class="btn btn-lg btn-light border rounded-pill w-100"
+                            >発送申請</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!--景品一覧-->
+        <ul class="row px-3 bg-white rounded-3" style="list-style:none;">
+
+            <li v-for="(userPrize, key) in userPrizes" :key="key"
+            class="col-6 col-lg-4"><label class="d-block p-3" style="cursor:pointer;">
+                <div class="row">
+                    <div class="col-6 p-0 pe-2 position-relative">
+                        <!--チェックボックス-->
+                        <div class="position-absolute top-0 start-0" style="z-index:5">
+
+                            <input @change="changeChildren()"
+                            v-model="ids" :value="userPrize.id"
+                            class="form-check-input float-xl-none m-0 rounded-pill"
+                            style="width:2em; height:2em;"
+                            type="checkbox" name="user_prize_ids[]" >
+
+                        </div>
+
+                        <ratio-image-component
+                        style_class="ratio ratio-3x4 rounded-3"
+                        :url=" userPrize.prize.image_path " />
+
+                    </div>
+                    <div class="col-6 p-0">
+                        <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
+                        <div class="">{{ userPrize.prize.rank_id }}</div>
+                        <div class="form-text">{{ formatDate(userPrize.created_at) }}</div>
+
+                        <div class="mt-3 px-3 text-center border rounded-pill d-inline-block">{{ userPrize.prize.point+'pt' }}</div>
+
+                    </div>
+                </div>
+            </label></li>
+
+            <li v-if="userPrizes.length==0"
+            class="list-group-item bg-white py-5 fs-5 text-secondary">*取得した景品はありません。</li>
+
+        </ul>
+
+
+        <!-- ポイント交換Modal -->
+        <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="exchangeModalLabel"
+                        >選択した景品をポイントと交換します。<br />よろしいですか？</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-2">
+                            <div class="col-6">
+
+                                <!--選択した景品をポイント交換 r_exchange_points -->
+                                <form :action="r_exchange_points" method="post">
+                                    <input type="hidden" name="_token" :value="token">
+                                    <input type="hidden" name="_method" value="patch">
+
+                                    <input v-for="(id, key) in ids" :key="key"
+                                    type="hidden" name="user_prize_ids[]" :value="id">
+
+                                    <button type="submit"
+                                    class="btn btn-lg btn-warning rounded-pill w-100"
+                                    >ポイント交換</button>
+                                </form>
+
+                            </div>
+                            <div class="col-6">
+                                <button type="button"
+                                class="btn btn-lg btn-light border rounded-pill w-100"
+                                data-bs-dismiss="modal"
+                                >やめる</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+<script>
+    import axios from 'axios'
+
+    export default {
+        props: {
+            token:{ type: String,  default: '', },
+            r_api_user_prize:{ type: String,  default: '', },
+            r_api_user_prize:{ type: String,  default: '', },//データ取得ルート
+            r_exchange_points:{ type: String,  default: '', },//ポイント交換ルート
+            r_shipped_appli:  { type: String,  default: '', },//発送申請ルート
+        },
+        data() { return {
+
+
+            userPrizes: [],/* ユーザー取得景品 */
+
+            ids: [],/*チェックボックスのID*/
+
+            allCheck: false,/*全てチェック*/
+
+            totalPoint: 0,/*チェック中のユーザー景品の合計ポイント*/
+
+            disabled: true,
+        } },
+        mounted() {
+
+            /* データ取得 */
+            this.getData();
+
+        },
+        methods:{
+
+            /* データ取得 */
+            getData :function(){
+
+                const route = this.r_api_user_prize;
+                axios.post( route )
+                .then(json => {
+                    console.log(json.data);
+
+                    this.userPrizes = json.data;
+                })
+                .catch(error => {
+                    alert('通信エラーが発生しました。')
+                    console.log( error.response.data );
+
+                });
+
+            },
+
+
+
+            /** 全て選択をクリック */
+            changeAll: function(){
+                const ids = this.userPrizes.map( value => { return value.id; } );
+                this.ids  = this.allCheck ? ids : [];
+
+                this.calcTotalPoint(); //ポイント合計値の計算
+            },
+
+            /** 子チェックをクリック */
+            changeChildren: function(){
+                const ids = this.userPrizes.map( value => { return value.id; } );
+                this.allCheck = this.ids.length == ids.length;
+
+                this.calcTotalPoint(); //ポイント合計値の計算
+            },
+
+            /** ポイント合計値の計算 */
+            calcTotalPoint: function(){
+                this.totalPoint = 0;
+
+                this.userPrizes.forEach( userPrize => {
+                    if( this.ids.some( id => id === userPrize.id) ){
+                        this.totalPoint += userPrize.prize.point;
+                    }
+                } );
+
+                this.disabled = this.totalPoint==0;
+            },
+
+
+            /** 日付データをテクスト変換  */
+            formatDate: function(inputString) {
+                const date = new Date(inputString);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
+                const day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
+
+                return `${year}/${month}/${day}`;
+            },
+
+        },
+
+    };
+</script>

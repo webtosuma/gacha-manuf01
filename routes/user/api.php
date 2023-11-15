@@ -18,3 +18,19 @@ use App\Http\Controllers;
     Route::post('user/reset_pass_step02',
     [Controllers\UserController::class, 'reset_pass_step02'])
     ->name('reset_pass_step02');
+
+
+/*
+|--------------------------------------------------------------------------
+| 取得した景品
+|  UserPrizeController
+|--------------------------------------------------------------------------
+*/
+    Route::middleware(['auth'])->group(function () {
+
+        # ユーザーの取得積み景品（ポイント交換・発送済みを除く）
+        Route::post('user_prize',
+        [Controllers\UserPrizeAPIController::class, 'index'])
+        ->name('api_user_prize');
+
+    });

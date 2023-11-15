@@ -41,8 +41,8 @@ class PrizeSeeder extends Seeder
         for ($i=1; $i <= 8; $i++) {
             $prize = new Prize([
                 'category_id'     => 1,//リレーション
-                'code'            => sprintf('xa-%02d',$i),//景品コード
-                'name'            => sprintf('xa-%02dカード名',$i),//名前
+                'code'            => sprintf('xb-%02d',$i),//景品コード
+                'name'            => sprintf('xb-%02dカード名',$i),//名前
                 'image'           => sprintf($path.'%02d.png',$i),//画像
                 'rank_id'         => 'XB',//ランクID
                 'point'           => 500,//交換ポイント値
@@ -53,12 +53,12 @@ class PrizeSeeder extends Seeder
         }
 
         # XCランク景品の登録
-        $path = 'sample/prizes/a';
+        $path = 'sample/prizes/b';
         for ($i=1; $i <= 8; $i++) {
             $prize = new Prize([
                 'category_id'     => 1,//リレーション
-                'code'            => sprintf('xa-%02d',$i),//景品コード
-                'name'            => sprintf('xa-%02dカード名',$i),//名前
+                'code'            => sprintf('xc-%02d',$i),//景品コード
+                'name'            => sprintf('xc-%02dカード名',$i),//名前
                 'image'           => sprintf($path.'%02d.png',$i),//画像
                 'rank_id'         => 'XC',//ランクID
                 'point'           => 100,//交換ポイント値
@@ -69,12 +69,12 @@ class PrizeSeeder extends Seeder
         }
 
         # XDランク景品の登録
-        $path = 'sample/prizes/a';
+        $path = 'sample/prizes/c';
         for ($i=1; $i <= 8; $i++) {
             $prize = new Prize([
                 'category_id'     => 1,//リレーション
-                'code'            => sprintf('xa-%02d',$i),//景品コード
-                'name'            => sprintf('xa-%02dカード名',$i),//名前
+                'code'            => sprintf('xd-%02d',$i),//景品コード
+                'name'            => sprintf('xd-%02dカード名',$i),//名前
                 'image'           => sprintf($path.'%02d.png',$i),//画像
                 'rank_id'         => 'XD',//ランクID
                 'point'           => 50,//交換ポイント値

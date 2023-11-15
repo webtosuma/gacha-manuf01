@@ -33,8 +33,8 @@
 
     .carousel-control-prev, .carousel-control-next {
         width: 3rem;
+        opacity: .8;
     }
-
 
     /* タブメニュー */
     .nav-link{
@@ -64,7 +64,7 @@
     background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
     ">
         <div class="container px-0" style="">
-            <div class="col-md-8 mx-auto py-">
+            <div class="col-md-12 mx-auto">
                 <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
                     <!--image-->
@@ -75,10 +75,20 @@
                             <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
                             {{ $gi==0 ? 'active' : ''}}">
 
-                                <ratio-image-component
-                                style_class="ratio ratio-4x3"
-                                url="{{ $gacha->image_path }}"
-                                ></ratio-image-component>
+                                <div class="d-none d-md-block">
+                                    <!--pc-->
+                                    <ratio-image-component
+                                    style_class="ratio ratio-16x9"
+                                    url="{{ $gacha->image_path }}"
+                                    ></ratio-image-component>
+                                </div>
+                                <div class="d-md-none">
+                                    <!--mobile-->
+                                    <ratio-image-component
+                                    style_class="ratio ratio-4x3"
+                                    url="{{ $gacha->image_path }}"
+                                    ></ratio-image-component>
+                                </div>
 
                             </a>
                         @endforeach

@@ -21,6 +21,14 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-reset-password-form',
     require('./components/auth/ResetPasswordFormConpornent.vue').default);
 
+    /* ガチャ結果フォーム */
+    Vue.component('u-gacha-result-form',
+    require('./components/gacha/ResultFormComponent.vue').default);
+
+    /* ガチャ結果フォーム */
+    Vue.component('u-user-prize-form',
+    require('./components/user_prize/FormComponent.vue').default);
+
 /*
 |=============================================
 | サイト管理者ページ　コンポーネント

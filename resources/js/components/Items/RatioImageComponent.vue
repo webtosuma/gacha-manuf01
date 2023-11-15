@@ -36,5 +36,10 @@
         background-position: center center;
         width: 100%;
     }
+    /* トレカの比率 */
+    .ratio-3x4 {
+        --bs-aspect-ratio: 133.3%;
+    }
+
 </style>
 

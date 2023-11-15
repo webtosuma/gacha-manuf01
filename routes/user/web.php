@@ -16,37 +16,14 @@ Route::get('/', function(){
 
 /*
 |--------------------------------------------------------------------------
-| ガチャ
-|--------------------------------------------------------------------------
-*/
-    # ガチャカのテゴリー選択
-    Route::get('/g/{category_code?}',
-    [App\Http\Controllers\GachaController::class, 'index'])
-    ->name('gacha_category');
-
-    # ガチャカの詳細表示
-    Route::get('/g/{category_code}/{gacha}/{key}',
-    [App\Http\Controllers\GachaController::class, 'show'])
-    ->name('gacha');
-
-    # ガチャカで遊ぶ
-    Route::post('/g/play/{category_code}/{gacha}/{key}',
-    [App\Http\Controllers\GachaPlayController::class, 'play'])
-    ->name('gacha.play');
-
-    # ガチャカの結果表示
-    Route::post('/g/result/{category_code}/{user_gacha_history}',
-    [App\Http\Controllers\GachaController::class, 'result'])
-    ->name('gacha.result');
-
-/*
-|--------------------------------------------------------------------------
 | 認証・登録・パスワード変更
+|  UserController
 |--------------------------------------------------------------------------
 */
     Auth::routes();
 
-    # ログインが必要ですページ(require_login)　※ログイン前にログインが必要なページにアクセスした際に表示されるページ
+    # ログインが必要ですページ(require_login)　
+    // ※ログイン前にログインが必要なページにアクセスした際に表示されるページ
     Route::get('/require_login', function () { return view('auth.require_login'); })
     ->name('require_login');
 
@@ -61,16 +38,49 @@ Route::get('/', function(){
     ->name('reset_pass_step02');
 
 
+/*
+|--------------------------------------------------------------------------
+| ガチャ
+|  GachaController
+|  GachaPlayController
+|--------------------------------------------------------------------------
+*/
+    # ガチャカのテゴリー選択
+    Route::get('/g/{category_code?}',
+    [App\Http\Controllers\GachaController::class, 'index'])
+    ->name('gacha_category');
+
+    # ガチャカの詳細表示
+    Route::get('/g/{category_code}/{gacha}/{key}',
+    [App\Http\Controllers\GachaController::class, 'show'])
+    ->name('gacha');
+
+    Route::middleware(['auth'])->group(function () {
+        # ガチャカで遊ぶ
+        Route::post('/g/play/{category_code}/{gacha}/{key}',
+        [App\Http\Controllers\GachaPlayController::class, 'play'])
+        ->name('gacha.play');
+
+        # ガチャカの結果表示
+        Route::post('/g/result/{category_code}/{user_gacha_history}',
+        [App\Http\Controllers\GachaController::class, 'result'])
+        ->name('gacha.result');
+    });
 
 
+/*
+|--------------------------------------------------------------------------
+| ポイント購入・履歴
+|  PointSailController
+|  PointHistoryController
+|--------------------------------------------------------------------------
+*/
+    Route::middleware(['auth'])->group(function () {
 
-
-Route::middleware(['auth'])->group(function () {
-
-    # ポイント購入　
-    Route::get('point_sail',
-    [Controllers\PointSailController::class, 'index'])
-    ->name('point_sail');
+        # ポイント購入　
+        Route::get('point_sail',
+        [Controllers\PointSailController::class, 'index'])
+        ->name('point_sail');
 
         Route::get('point_sail/payment/{point_sail}',
         [Controllers\PointSailController::class, 'payment'])
@@ -88,15 +98,66 @@ Route::middleware(['auth'])->group(function () {
         [Controllers\PointSailController::class, 'comp'])
         ->name('point_sail.comp');
 
-    # ポイント購入履歴
-    Route::get('point_history/{month?}',
-    [Controllers\PointHistoryController::class, 'index'])
-    ->name('point_history');
+        # ポイント購入履歴
+        Route::get('point_history/{month?}',
+        [Controllers\PointHistoryController::class, 'index'])
+        ->name('point_history');
 
-    //
+    });
+/*
+|--------------------------------------------------------------------------
+| 取得した景品
+|  UserPrizeController
+|--------------------------------------------------------------------------
+*/
+    Route::middleware(['auth'])->group(function () {
 
-});
+        # 景品一覧
+        Route::get('user_prize',
+        [Controllers\UserPrizeController::class, 'index'])
+        ->name('user_prize');
 
+        # 景品のポイント交換
+        Route::patch('user_prize/exchange_points',
+        [Controllers\UserPrizeController::class, 'exchange_points'])
+        ->name('user_prize.exchange_points');
+
+    });
+
+/*
+|--------------------------------------------------------------------------
+| 発送申請履歴
+|--------------------------------------------------------------------------
+*/
+    Route::middleware(['auth'])->group(function () {
+
+        Route::get('shipped', //発送申請履歴・発送中へリダイレクト
+        function () { return redirect()->route('shipped.current'); })
+        ->name('shipped');
+
+        # 発送申請入力
+        Route::get('shipped/appli', function () { return 'shipped_appli'; })
+        ->name('shipped.appli');
+        # 発送申請確認
+        # 発送申請完了
+
+
+        # 発送申請履歴・発送中
+        Route::get('shipped/current', function () { return 'shipped_current'; })
+        ->name('shipped.current');
+            # 発送申請履歴・発送中　詳細
+            Route::get('shipped/current/{user_shipped}', function () { return 'shipped_current'; })
+            ->name('shipped.current.show');
+
+
+        # 発送申請履歴・完了済　
+        Route::get('shipped/comp', function () { return 'shipped_comp'; })
+        ->name('shipped.comp');
+            # 発送申請履歴・完了済　詳細
+            Route::get('shipped/current/{user_shipped}', function () { return 'shipped_current'; })
+            ->name('shipped.current.show');
+
+    });
 
 
 /*
