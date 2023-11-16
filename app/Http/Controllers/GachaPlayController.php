@@ -29,6 +29,11 @@ class GachaPlayController extends Controller
             'XB' => 'site/movie/xb.mp4',
             'XC' => 'site/movie/xc.mp4',
             'XD' => 'site/movie/xd.mp4',
+
+            'MXA' => 'site/movie/mxd.mp4',
+            'MXB' => 'site/movie/mxd.mp4',
+            'MXC' => 'site/movie/mxd.mp4',
+            'MXD' => 'site/movie/mxd.mp4',
         ];
     }
 
@@ -91,7 +96,10 @@ class GachaPlayController extends Controller
 
             # 動画パスの取得
             $movies = self::Movies();
-            $movie_path = asset('storage/'. $movies[ $max_rank ] );
+            $movie_path = [
+                'pc'     => asset('storage/'.$movies[ $max_rank ] ),
+                'mobile' => asset('storage/'. $movies[ 'M'.$max_rank ] ),
+            ];
 
             DB::commit();
 
@@ -106,8 +114,10 @@ class GachaPlayController extends Controller
 
         }
 
+        // 二重送信防止
+        $request->session()->regenerateToken();
 
-        // dd( $movie_path );
+
         # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
         return view('gacha.play', compact('user_gacha_history', 'movie_path' ));
     }

@@ -1,7 +1,7 @@
 @extends('layouts.small')
 
 <!----- title ----->
-@section('title','ポイント購入|'.$point_sail->value.'ポイント')
+@section('title','ポイント購入確認|'.$point_sail->value.'ポイント')
 
 
 @section('style')
@@ -21,10 +21,9 @@
 
 
 @section('content')
+<h3 class="mt-3">ポイント購入前確認</h3>
+
 <ul class="list-group list-group-flush my-5">
-    <li class="list-group-item bg-white">
-        <h3>ポイント購入前確認画面</h3>
-    </li>
     <li class="list-group-item bg-white py-4">
         <h6 class="fw-bold text-center">ポイント数と金額をご確認ください。</h6>
         <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">

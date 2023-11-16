@@ -65,6 +65,11 @@ Route::get('/', function(){
         Route::post('/g/result/{category_code}/{user_gacha_history}',
         [App\Http\Controllers\GachaController::class, 'result'])
         ->name('gacha.result');
+
+        # 景品のポイント交換
+        Route::patch('/g/exchange_points/{category_code}/{user_gacha_history}',
+        [App\Http\Controllers\GachaController::class, 'exchange_points'])
+        ->name('gacha.exchange_points');
     });
 
 
@@ -126,7 +131,7 @@ Route::get('/', function(){
 
 /*
 |--------------------------------------------------------------------------
-| 発送申請履歴
+| 発送申請履歴 ShippedController
 |--------------------------------------------------------------------------
 */
     Route::middleware(['auth'])->group(function () {
@@ -136,25 +141,30 @@ Route::get('/', function(){
         ->name('shipped');
 
         # 発送申請入力
-        Route::get('shipped/appli', function () { return 'shipped_appli'; })
+        Route::post('shipped/appli',
+        [Controllers\ShippedController::class, 'appli'])
         ->name('shipped.appli');
-        # 発送申請確認
-        # 発送申請完了
 
 
         # 発送申請履歴・発送中
-        Route::get('shipped/current', function () { return 'shipped_current'; })
+        Route::get('shipped/current',
+        [Controllers\ShippedController::class, 'current'])
         ->name('shipped.current');
+
             # 発送申請履歴・発送中　詳細
-            Route::get('shipped/current/{user_shipped}', function () { return 'shipped_current'; })
+            Route::get('shipped/current/{user_shipped}',
+            [Controllers\ShippedController::class, 'current_show'])
             ->name('shipped.current.show');
 
 
         # 発送申請履歴・完了済　
-        Route::get('shipped/comp', function () { return 'shipped_comp'; })
+        Route::get('shipped/comp',
+        [Controllers\ShippedController::class, 'comp'])
         ->name('shipped.comp');
+
             # 発送申請履歴・完了済　詳細
-            Route::get('shipped/current/{user_shipped}', function () { return 'shipped_current'; })
+            Route::get('shipped/comp/{user_shipped}',
+            [Controllers\ShippedController::class, 'comp_show'])
             ->name('shipped.current.show');
 
     });

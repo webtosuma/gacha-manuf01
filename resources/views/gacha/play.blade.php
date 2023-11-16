@@ -6,38 +6,47 @@
 @section('script')
 <script>
     'use strict';
-    const video = document.querySelector('video');
+    const videos = document.querySelectorAll('video');
     const form  = document.querySelector('form');
 
-    // 動画が再生された後にフォーム送信
-    video.addEventListener('ended', function() {
-        form.submit();
+    videos.forEach(video => {
+        // 動画が再生された後にフォーム送信
+        video.addEventListener('ended', function() {
+            form.submit();
+        });
+        // メディアの再生を開始
+        video.play();
     });
-    // メディアの再生を開始
-    video.play();
 </script>
 @endsection
 
 
 @section('content')
-    {{-- <div class="bg-white p-3">{{ 'テスト中...'.$movie_path }}</div> --}}
+    {{-- <div class="bg-white p-3">{{ 'テスト中...'.$movie_path['mobie'] }}</div> --}}
 
-    <div class="mx-auto p-3" style="max-width:600px; height:100vh;">
+    <div class="mx-auto"style="height:100vh; min-width:100vw;">
         <div class="position-relative
         d-flex align-items-center align-items-center h-100 bg-">
 
 
-            <!-- 動画 -->
-            <div class="section_video">
-                <div class="video-area">
+            <div class="section_video w-100">
+                <!-- 動画mobile -->
+                <div class="video-area d-md-none">
                     <video class="bg_video"
                     playsinline
                     muted width="100%" height=""
-                    poster="{{asset('storage/site/image/video.png')}}"
-                    >
-                        <source src="{{ $movie_path }}"></source>
+                    poster=""
+                    ><source src="{{ $movie_path['mobile'] }}"></source>
                     </video>
-
+                </div>
+                <!-- 動画PC -->
+                <div class="video-area d-none d-md-block">
+                    <video class="bg_video"
+                    playsinline
+                    muted width="100%" height=""
+                    poster=""
+                    ><source src="{{ $movie_path['pc'] }}"></source>
+                    </video>
                 </div>
             </div>
 

@@ -33,7 +33,11 @@
                     <div class="col-6">
 
                         <!-- 選択した景品の発送申請 r_shipped_appli -->
-                        <form :action="r_shipped_appli">
+                        <form :action="r_shipped_appli" method="post">
+                            <input type="hidden" name="_token" :value="token">
+
+                            <input v-for="(id, key) in ids" :key="key"
+                            type="hidden" name="user_prize_ids[]" :value="id">
 
                             <button type="submit" :disabled="disabled"
                             class="btn btn-lg btn-light border rounded-pill w-100"
@@ -46,14 +50,16 @@
             </div>
         </div>
 
-
+        <div class="text-end">
+            取得景品数：<span class="fs-1 fw-bold">{{ userPrizes.length }}</span>
+        </div>
         <!--景品一覧-->
         <ul class="row px-3 bg-white rounded-3" style="list-style:none;">
 
             <li v-for="(userPrize, key) in userPrizes" :key="key"
             class="col-6 col-lg-4"><label class="d-block p-3" style="cursor:pointer;">
                 <div class="row">
-                    <div class="col-6 p-0 pe-2 position-relative">
+                    <div class="col-4 p-0 pe-2 position-relative">
                         <!--チェックボックス-->
                         <div class="position-absolute top-0 start-0" style="z-index:5">
 
@@ -70,12 +76,14 @@
                         :url=" userPrize.prize.image_path " />
 
                     </div>
-                    <div class="col-6 p-0">
+                    <div class="col-8 p-0">
+                        <div class="form-text">{{ formatDate(userPrize.created_at) }}</div>
                         <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
                         <div class="">{{ userPrize.prize.rank_id }}</div>
-                        <div class="form-text">{{ formatDate(userPrize.created_at) }}</div>
+                        <!-- <div class="form-text">{{ formatDate(userPrize.created_at) }}</div> -->
 
-                        <div class="mt-3 px-3 text-center border rounded-pill d-inline-block">{{ userPrize.prize.point+'pt' }}</div>
+                        <div class="mt- px-3 text-center border rounded-pill d-inline-block"
+                        >{{ userPrize.prize.point+'pt' }}</div>
 
                     </div>
                 </div>

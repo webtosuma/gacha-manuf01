@@ -40,6 +40,10 @@
     <div id="app">
         @include('includes.header')
 
+        @if ( isset( $message ) )
+            <section class="bg-dark text-warning text-center">{{$message}}</section>
+        @endif
+
         <main class="py-" style="min-height: 80vh">
             @yield('content')
         </main>

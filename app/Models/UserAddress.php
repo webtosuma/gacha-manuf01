@@ -16,11 +16,14 @@ class UserAddress extends Model
     use SoftDeletes; //論理削除の利用
 
     protected $fillable = [
+        'name',//宛名
+        'tell',//電話番号
+        'user_id',    //リレーションID
         'postal_code',//'郵便番号'
         'todohuken' , //'住所-都道府県'
         'shikuchoson',//'住所-市町村'
         'number',     //'住所-番地'
-        'user_id',         //リレーションID
+        'is_default',//デフォルトの送信先か否か
     ];
 
 

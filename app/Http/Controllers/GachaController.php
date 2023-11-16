@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
 use App\Models\UserGachaHistory;
+use App\Models\UserPrize;
 use App\Models\PointHistory;
 /*
 | =============================================
@@ -44,6 +45,7 @@ class GachaController extends Controller
 
         # viewの表示
         return view('gacha.index', compact( 'category_code', 'bg_image',  'categories', 'gachas' ) );
+
     }
 
 
@@ -105,24 +107,49 @@ class GachaController extends Controller
 
 
     /**
-     * PLAYガチャのガチャカの結果表示
-     * @param \Illuminate\Http\Request $request
+     * PLAYガチャの結果表示
      * @param String $category_code      //カテゴリーコード名
      * @param  \App\Models\UserGachaHistory $user_gacha_history
-     *
      * @return \Illuminate\Http\Response
      */
-    public function result(Request $request, $category_code, UserGachaHistory $user_gacha_history)
+    public function result($category_code, UserGachaHistory $user_gacha_history)
     {
         # ユーザの結果のみを表示
         $user = Auth::user();
         if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
 
-        # ユーザー取得景品
-        $user_prizes = $user_gacha_history->user_prizes;
 
         # ガチャ
         $gacha = $user_gacha_history->gacha;
-        return view('gacha.result',compact('gacha','user_prizes'));
+        return view('gacha.result',compact('gacha','user_gacha_history',));
+    }
+
+
+
+
+    /**
+     * 景品のポイント交換
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param String $category_code      //カテゴリーコード名
+     * @param  \App\Models\UserGachaHistory $user_gacha_history
+     * @return \Illuminate\Http\Response
+     */
+    public function exchange_points(
+        Request $request, $category_code,
+        UserGachaHistory $user_gacha_history
+    ){
+
+        # 景品のポイント交換
+        UserPrizeController::ExchangePoints($request);
+
+        # ガチャ
+        $gacha = $user_gacha_history->gacha;
+        # メッセージ
+        $message = '指定した景品をポイント交換しました。';
+
+        return view('gacha.result',compact('gacha','user_gacha_history','message') )
+        ->with('alert-warning',$message);
+
     }
 }
