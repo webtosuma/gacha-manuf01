@@ -40,10 +40,10 @@ style="max-width:90vw; min-width:30vw;">
             >お知らせ</a>
 
             {{-- <a href="" class="list-group-item list-group-item-action py-3"
-            >最近取得した景品</a> --}}
+            >最近取得した商品</a> --}}
 
             <a href="{{ route('user_prize') }}" class="list-group-item list-group-item-action py-3"
-            >取得した景品</a>
+            >取得した商品</a>
 
             <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3"
             >ポイント履歴</a>

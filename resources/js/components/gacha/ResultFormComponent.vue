@@ -70,10 +70,10 @@
             <div class="col-md-8 mx-auto">
                 <button type="submit"
                 class="btn btn-warning rounded-pill w-100" :disabled="disabled"
-                >選択した景品をポイント交換する</button>
+                >選択した商品をポイント交換する</button>
             </div>
             <p class="text-white form-text m-0 mt-3">
-                *選択されなかった商品は、「取得した景品一覧」に移動されます。
+                *選択されなかった商品は、「取得した商品一覧」に移動されます。
             </p>
         </div>
 
@@ -95,13 +95,13 @@
         data() { return {
 
 
-            userPrizes: [],/* ユーザー取得景品 */
+            userPrizes: [],/* ユーザー取得商品 */
 
             ids: [],/*チェックボックスのID*/
 
             allCheck: false,/*全てチェック*/
 
-            totalPoint: 0,/*チェック中のユーザー景品の合計ポイント*/
+            totalPoint: 0,/*チェック中のユーザー商品の合計ポイント*/
 
             disabled: true,
         } },

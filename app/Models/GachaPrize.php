@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャの景品　モデル
+|  ガチャの商品　モデル
 | =============================================
 */
 class GachaPrize extends Model
@@ -18,11 +18,11 @@ class GachaPrize extends Model
     public $timestamps = true;
     protected $fillable = [
         'gacha_id', //ガチャの種類リレーション
-        'prize_id', //景品リレーション
+        'prize_id', //商品リレーション
 
         'rank_id',        //ランクID
-        'max_count',      //景品総数
-        'remaining_count',//景品残数
+        'max_count',      //商品総数
+        'remaining_count',//商品残数
     ];
 
 

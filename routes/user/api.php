@@ -22,16 +22,23 @@ use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
-| 取得した景品
+| 取得した商品
 |--------------------------------------------------------------------------
 */
     Route::middleware(['auth'])->group(function () {
 
-        # ユーザーの取得積み景品
+        # ユーザーの取得積み商品
         //（ポイント交換・発送済みを除く）
         Route::post('user_prize/api',
         [Controllers\UserPrizeAPIController::class, 'index'])
         ->name('api_user_prize');
+
+        # IDを指定して、ユーザーの取得積み商品取得
+        //（ポイント交換・発送済みを除く）
+        Route::post('user_prize/find/api',
+        [Controllers\UserPrizeAPIController::class, 'find'])
+        ->name('api.user_prize.find');
+
     });
 
 
@@ -42,7 +49,7 @@ use App\Http\Controllers;
 */
 Route::middleware(['auth'])->group(function () {
 
-    # ユーザーのガチャ履歴に紐づいた、ユーザーの取得積み景品
+    # ユーザーのガチャ履歴に紐づいた、ユーザーの取得積み商品
     Route::post('use_gacha_history/{user_gacha_history}/api',
     [Controllers\UserGachaHistoryApiContloller::class, 'show'])
     ->name('use_gacha_history.show');
@@ -56,11 +63,23 @@ Route::middleware(['auth'])->group(function () {
 | ユーザーアドレス
 |--------------------------------------------------------------------------
 */
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
+
+    # ユーザーアドレスの取得
+    Route::post('use_address/api',
+    [Controllers\UserAddressApiController::class, 'index'])
+    ->name('api.use_address');
+
+    # ユーザーアドレスの保存
     Route::post('use_address/store/api',
     [Controllers\UserAddressApiController::class, 'store'])
     ->name('api.use_address.store');
 
-// });
+    # ユーザーアドレスの削除
+    Route::delete('use_address/destroy/api/{user_address?}',
+    [Controllers\UserAddressApiController::class, 'destroy'])
+    ->name('api.use_address.destroy');
+
+});
 

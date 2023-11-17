@@ -29,26 +29,21 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-user-prize-form',
     require('./components/user_prize/FormComponent.vue').default);
 
+    /* 発送申請入力フォーム */
+    Vue.component('u-shipped-form',
+    require('./components/shipped/Form.vue').default);
 
-    /* お届け先の新規登録 */
-    Vue.component('u-create-user-address-form',
-    require('./components/shipped/CreateUserAddressForm.vue').default);
+        /* お届け先一覧 */
+        Vue.component('u-addressーlist-form',
+        require('./components/shipped/AddressListForm.vue').default);
 
-    /* 発送申請フォーム親 */
-    Vue.component('u-shipped-parrent-form',
-    require('./components/shipped/ParentForm.vue').default);
+        /* お届け先の新規登録 */
+        Vue.component('u-create-user-address-form',
+        require('./components/shipped/CreateUserAddressForm.vue').default);
 
-    /* 発送申請フォーム子供01 */
-    Vue.component('u-shipped-children01form',
-    require('./components/shipped/children01Form.vue').default);
-
-    /* 発送申請フォーム子供02 */
-    Vue.component('u-shipped-children02form',
-    require('./components/shipped/children02Form.vue').default);
-
-    /* 発送申請フォーム子供03 */
-    Vue.component('u-shipped-children03form',
-    require('./components/shipped/children03Form.vue').default);
+        /* 発送景品リスト */
+        Vue.component('u-userprize-list',
+        require('./components/shipped/UserPrizes.vue').default);
 
 /*
 |=============================================
@@ -68,6 +63,10 @@ require('./components/ExampleComponent.vue').default);
     /* disabled ボタン */
     Vue.component('disabled-button-component',
     require('./components/Items/DisabledButtonComponent.vue').default);
+
+    /* disabled(ノーマルform用) ボタン */
+    Vue.component('disabled-button',
+    require('./components/Items/DisabledButton.vue').default);
 
     /* 画像表示 */
     Vue.component('ratio-image-component',

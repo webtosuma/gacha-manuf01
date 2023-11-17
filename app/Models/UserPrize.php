@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ユーザー取得景品　モデル
+|  ユーザー取得商品　モデル
 | =============================================
 */
 
@@ -19,7 +19,7 @@ class UserPrize extends Model
     public $timestamps = true;
     protected $fillable = [
         'user_id',    //ユーザー　リレーション
-        'prize_id',   //景品リレーション
+        'prize_id',   //商品リレーション
         'gacha_history_id',//主テーブルに関連する従テーブルのレコードを削除
         'point_history_id',//ポイント収支履歴リレーション（ポイント交換した時のみ）
         'shipped_id',//発送履歴（発送した時のみ）

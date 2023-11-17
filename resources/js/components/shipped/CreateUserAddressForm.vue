@@ -4,6 +4,7 @@
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary text-white"
         data-bs-toggle="modal" data-bs-target="#createAddressModal"
+        :disabled="comp"
         >お届け先の新規登録</button>
 
         <!-- Modal -->
@@ -12,7 +13,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createAddressModalLabel">お届け先の新規登録</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button v-if="!comp"
+                    type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
@@ -82,7 +84,9 @@
                         <div class="col-md-8 mx-auto my-5">
                             <disabled-button-component @btn-click="store()"
                             style_class="btn btn-lg btn-primary text-white w-100"
+                            type="button"
                             :disabled="loading" btn_text="お届け先の登録" />
+
 
                         </div>
 
@@ -92,7 +96,8 @@
                             お届け先情報を追加しました。
                         </div>
                         <div class="col-md-8 mx-auto my-5">
-                            <button data-bs-dismiss="modal"
+                            <button @click="close()"
+                            data-bs-dismiss="modal"
                             class="btn btn-lg border w-100">閉じる</button>
                         </div>
                     </div>
@@ -123,13 +128,7 @@
         data() { return {
 
             inputs: {
-                // name        :'',//宛名
-                // tell        :'',//電話番号
-                // postal_code :'',//郵便番号
-                // todohuken   :'',//住所-都道府県
-                // shikuchoson :'',//住所-市町村
-                // number      :'',//住所-番地
-                name        :'hogehoge',//宛名
+                name        :'えみっと',//宛名
                 tell        :'09011112222',//電話番号
                 postal_code :'1234567',//郵便番号
                 todohuken   :'北海道',//住所-都道府県
@@ -160,6 +159,9 @@
         } },
         mounted() {
 
+            /*データの初期化*/
+            this.inputs = this.default();
+
             /*tokenの保存*/
             this.inputs = {...this.inputs, _token: this.token }
 
@@ -175,28 +177,47 @@
                 axios.post( route, this.inputs )
                 .then(json => {
                     console.log( json.data );
-
                     this.comp = true;
+                    this.loading = false;// 通信中
+
+                    /** お届け先一覧の更新 */
+                    this.getList();
                 })
                 .catch(error => {
-                    // alert('データ送信エラーが発生しました。');
-                    // console.log( error.response.data );
-                    // return;
-
 
                     //バリデーション結果の受け取り
                     if( error.response.status == 422 ){
                         console.log( error.response.data.errors );
                         this.errors = error.response.data.errors;
                         this.loading = false;// 通信中終了
+
                     }
                     //その他のエラー
                     else{ alert('データ送信エラーが発生しました。'); }
-                    // console.log( error.response.data );
 
                 });
             },
 
+            /** モーダルを閉じる->初期化 */
+            close() {
+                this.comp = false;
+                this.inputs = this.default();
+            },
+
+
+            /** デフォルトデータ */
+            default() { return {
+                name        :'',//宛名
+                tell        :'',//電話番号
+                postal_code :'',//郵便番号
+                todohuken   :'',//住所-都道府県
+                shikuchoson :'',//住所-市町村
+                number      :'',//住所-番地
+            }; },
+
+
+            /** お届け先一覧の更新 */
+            getList(){ this.$emit('my-created'); },
 
         },
     }

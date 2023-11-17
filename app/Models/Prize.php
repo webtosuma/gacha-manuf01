@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
-|  景品　モデル
+|  商品　モデル
 | =============================================
 */
 class Prize extends Model
@@ -19,7 +19,7 @@ class Prize extends Model
     public $timestamps = true;
     protected $fillable = [
         'category_id',  //リレーション
-        'code',   //景品コード
+        'code',   //商品コード
         'name',   //名前
         'image',  //画像
         'rank_id',//ランクID

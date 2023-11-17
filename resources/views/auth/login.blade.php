@@ -4,7 +4,12 @@
 @section('title','ログイン')
 
 <!----- meta ----->
-@section('meta') @endsection
+@section('meta')
+@php
+$email    = config('app.debug') ? 'na@tosuma.ltd' : '';
+$password = config('app.debug') ? 'password' : '';
+@endphp
+@endsection
 
 <!----- style ----->
 @section('style') @endsection
@@ -17,7 +22,6 @@
 
 <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5"
 style="min-height: 80vh; max-width:600px;">
-
     <form method="POST" action="{{ route('login') }}" class="w-100 text-center">
         @csrf
         <h2 class="h3 mb-3 fw-bold">ログイン</h2>
@@ -29,13 +33,14 @@ style="min-height: 80vh; max-width:600px;">
         <div class="form-floating mb-3">
           <input type="email" class="form-control" id="floatingInput" autofocus
           name="email"
-          value="{{ session('email') ? session('email') : '' }}">
+          value="{{ session('email') ? session('email') : $email }}">
+
           <label for="floatingInput">メールアドレス</label>
         </div>
         <div class="form-floating mb-3">
           <input type="password" class="form-control" id="floatingPassword"
           name="password"
-          value="{{ session('password') ? session('password') : '' }}">
+          value="{{ session('password') ? session('password') : $password }}">
           <label for="floatingPassword">パスワード</label>
         </div>
 

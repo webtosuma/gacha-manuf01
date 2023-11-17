@@ -8,7 +8,7 @@ use App\Models\UserPrize;
 use App\Models\PointHistory;
 /*
 | =============================================
-|  取得した景品一覧 コントローラー
+|  取得した商品一覧 コントローラー
 | =============================================
 */
 class UserPrizeController extends Controller
@@ -25,18 +25,18 @@ class UserPrizeController extends Controller
 
 
     /**
-     * 景品のポイント交換
+     * 商品のポイント交換
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function exchange_points(Request $request)
     {
-        # 景品のポイント交換
+        # 商品のポイント交換
         self::ExchangePoints($request);
 
         # メッセージ
-        $message = '指定した景品をポイント交換しました。';
+        $message = '指定した商品をポイント交換しました。';
 
         return view('user_prize.index',compact('message'))
         ->with('alert-warning','ログインしました。');
@@ -45,7 +45,7 @@ class UserPrizeController extends Controller
 
 
     /**
-     * 景品のポイント交換
+     * 商品のポイント交換
      * @return Void
      */
     public static function ExchangePoints($request)
@@ -54,7 +54,7 @@ class UserPrizeController extends Controller
         $user =Auth::user();
         $id_array = $request->user_prize_ids;
 
-        # ポイント交換するユーザー景品を取得
+        # ポイント交換するユーザー商品を取得
         $user_prizes = UserPrize::where('user_id',$user->id)
         ->find( $id_array );
 
@@ -68,12 +68,12 @@ class UserPrizeController extends Controller
         $point_history = new PointHistory([
             'user_id'   => $user->id,    //ユーザー　リレーション
             'value'     => $total_point, //ポイント数
-            'reason_id' => 12 // '景品のポイント交換',
+            'reason_id' => 12 // '商品のポイント交換',
         ]);
         $point_history->save();
 
 
-        # ユーザー取得景品情報の更新
+        # ユーザー取得商品情報の更新
         foreach ($user_prizes as $user_prize) {
             $user_prize->point_history_id = $point_history->id;
             $user_prize->save();

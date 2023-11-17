@@ -6,7 +6,8 @@
             <!--- サイトロゴ -->
             <a class="navbar-brand  text-white" href="{{ url('admin.home') }}">
                 <h1 class="fs-6 m-0 text-center">
-                    <img src="" alt="{{ config('app.name', 'Laravel') }}"><br>
+                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">
+                    <br>
                     <span class="fw-bold" style="font-size:.8rem;">サイト管理者</span>
                 </h1>
             </a>

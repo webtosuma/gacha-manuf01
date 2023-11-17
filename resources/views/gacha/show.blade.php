@@ -138,13 +138,13 @@
                             @break
                     @endswitch
 
-                    <!-- 景品画像 -->
+                    <!-- 商品画像 -->
                     @if ( $discription->image_path )
                         <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                        src="{{$discription->image_path }}" alt="景品画像">
+                        src="{{$discription->image_path }}" alt="商品画像">
                     @endif
 
-                    <!-- 景品説明文 -->
+                    <!-- 商品説明文 -->
                     @if ( $discription->sorce )
                     <p class="p-3 mt-2 form-text text-secondary" style="border-radius:1rem; background:rgb(255, 255, 255, .9);"
                     ><replace-text-component text="{{$discription->sorce_text }}"></replace-text-component></p>
@@ -163,51 +163,10 @@
                     お買い求め前に必ずお読み下さい。
                 </h6>
 
-                <div class="p- py-3">
-                    <h6 class="text-secondary">商品について</h6>
-                    <ul class="form-text">
-                        <li>
-                            画像はイメージです。カードの状態を表すものではありません。
-                        </li>
-                        <li>
-                            カードには一部、傷ありが出ることがあります。
-                        </li>
-                        <li>
-                            お客様のご都合による、商品の交換・返金はできません。
-                        </li>
-                    </ul>
 
-                    <h6 class="text-secondary">発送について</h6>
-                    <ul class="form-text">
-                        <li>
-                            発送時期に関する個別のお問い合わせにはお答えできません。
-                        </li>
-                        <li>
-                            ご入力いただいた住所の変更はできません。お間違えの無い様にご入力ください。
-                        </li>
-                        <li>
-                            商品をお受け取りいただけなかった場合は、お客様ご自身で運送会社へお問い合わせください。
-                        </li>
-                        <li>
-                            再配送の際は、配送料をお客様にご負担いただきますのでご了承ください。
-                        </li>
-                    </ul>
+                <!--注意事項-->
+                @include('includes.notes')
 
-                    <h6 class="text-secondary">その他</h6>
-                    <ul class="form-text">
-                        <li>
-                            アクセスが集中した場合、一時的にアクセスを制限させていただく場合がございます。しばらくお時間をおいてからアクセスしてください。
-                        </li>
-                    </ul>
-
-                    <h6 class="text-secondary">お問い合わせについて</h6>
-                    <ul class="form-text">
-                        <li>
-                            お問い合わせは、こちら
-                        </li>
-                    </ul>
-                    <a href="{{ route('contact') }}">{{ route('contact') }}</a>
-                </div>
 
             </div>
         </div>

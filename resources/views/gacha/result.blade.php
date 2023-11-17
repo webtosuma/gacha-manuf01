@@ -60,7 +60,7 @@
                 <div class="col-md">
                     <a href="{{ route('user_prize') }}"
                         class="btn btn-light border-dark rounded-pill w-100"
-                        >{{ '取得した景品一覧を見る' }}</a>
+                        >{{ '取得した商品一覧を見る' }}</a>
                 </div>
             </div>
         </div>

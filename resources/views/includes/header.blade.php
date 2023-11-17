@@ -1,11 +1,11 @@
 <header>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-0">
         <div class="container">
-            <div class="d-flex align-items-center gap-3">
+            <h1 class="d-flex align-items-center gap-3 m-0">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <h1>{{ config('app.name', 'Laravel') }}</h1>
+                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">
                 </a>
-            </div>
+            </h1>
 
             <div class="d-flex align-items-center ">
                 @guest
@@ -45,8 +45,5 @@
 
 
     @include('includes.offcanvas_menu')
-
-    <!--[ mobile メニュー ]-->
-    @include('includes.mobile_menu')
 
 </header>

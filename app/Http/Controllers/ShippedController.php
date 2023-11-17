@@ -14,25 +14,6 @@ use App\Models\User;
 class ShippedController extends Controller
 {
     /**
-     * 発送申請入力
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function appli(Request $request)
-    {
-        $user = Auth::user();
-
-        # 発送するユーザー景品を取得
-        $id_array = $request->user_prize_ids;
-        $user_prizes = UserPrize::where('user_id',$user->id) //ユーザー以外のデータを除去
-        ->find($id_array);
-
-        return view('shipped.appli',compact('user_prizes'));
-    }
-
-
-
-    /**
      * 発送申請履歴・発送中
      *
      * @return \Illuminate\Http\Response
@@ -41,6 +22,9 @@ class ShippedController extends Controller
     {
         return view('shipped.current');
     }
+
+
+
     /**
      * 発送申請履歴・発送中　詳細 current.show
      *
@@ -51,6 +35,8 @@ class ShippedController extends Controller
         return view('shipped.current_show');
     }
 
+
+
     /**
      * 発送申請履歴・完了済　comp
      *
@@ -60,6 +46,7 @@ class ShippedController extends Controller
     {
         return view('shipped.comp');
     }
+
 
     /**
      * 発送申請履歴・完了済　詳細

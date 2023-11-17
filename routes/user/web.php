@@ -66,7 +66,7 @@ Route::get('/', function(){
         [App\Http\Controllers\GachaController::class, 'result'])
         ->name('gacha.result');
 
-        # 景品のポイント交換
+        # 商品のポイント交換
         Route::patch('/g/exchange_points/{category_code}/{user_gacha_history}',
         [App\Http\Controllers\GachaController::class, 'exchange_points'])
         ->name('gacha.exchange_points');
@@ -111,27 +111,59 @@ Route::get('/', function(){
     });
 /*
 |--------------------------------------------------------------------------
-| 取得した景品
+| 取得した商品
 |  UserPrizeController
 |--------------------------------------------------------------------------
 */
     Route::middleware(['auth'])->group(function () {
 
-        # 景品一覧
+        # 商品一覧
         Route::get('user_prize',
         [Controllers\UserPrizeController::class, 'index'])
         ->name('user_prize');
 
-        # 景品のポイント交換
+        # 商品のポイント交換
         Route::patch('user_prize/exchange_points',
         [Controllers\UserPrizeController::class, 'exchange_points'])
         ->name('user_prize.exchange_points');
 
     });
 
+
+
 /*
 |--------------------------------------------------------------------------
-| 発送申請履歴 ShippedController
+| 発送申請　ShippedAppliController
+|--------------------------------------------------------------------------
+*/
+    Route::middleware(['auth'])->group(function () {
+
+        # 発送申請入力
+        Route::post('shipped/appli',
+        [Controllers\ShippedAppliController::class, 'index'])
+        ->name('shipped.appli');
+
+        # 発送申請確認
+        Route::post('shipped/appli/confirm',
+        [Controllers\ShippedAppliController::class, 'confirm'])
+        ->name('shipped.appli.confirm');
+
+        # 発送申請完了
+        Route::post('shipped/appli/comp',
+        [Controllers\ShippedAppliController::class, 'comp'])
+        ->name('shipped.appli.comp');
+
+        # 発送申請完了
+        Route::get('shipped/appli/comp', function(){
+            return view('shipped.appli.comp');
+        })->name('shipped.appli.comp.get');
+
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| 発送申請履歴 ShippedController　ShippedAppliController
 |--------------------------------------------------------------------------
 */
     Route::middleware(['auth'])->group(function () {
@@ -139,12 +171,6 @@ Route::get('/', function(){
         Route::get('shipped', //発送申請履歴・発送中へリダイレクト
         function () { return redirect()->route('shipped.current'); })
         ->name('shipped');
-
-        # 発送申請入力
-        Route::post('shipped/appli',
-        [Controllers\ShippedController::class, 'appli'])
-        ->name('shipped.appli');
-
 
         # 発送申請履歴・発送中
         Route::get('shipped/current',
@@ -156,7 +182,6 @@ Route::get('/', function(){
             [Controllers\ShippedController::class, 'current_show'])
             ->name('shipped.current.show');
 
-
         # 発送申請履歴・完了済　
         Route::get('shipped/comp',
         [Controllers\ShippedController::class, 'comp'])
@@ -166,9 +191,8 @@ Route::get('/', function(){
             Route::get('shipped/comp/{user_shipped}',
             [Controllers\ShippedController::class, 'comp_show'])
             ->name('shipped.current.show');
-
+        //
     });
-
 
 /*
 |--------------------------------------------------------------------------

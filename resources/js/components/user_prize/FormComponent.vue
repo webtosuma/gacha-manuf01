@@ -23,7 +23,7 @@
                 <div class="row g-2">
                     <div class="col-6">
 
-                        <!--選択した景品をポイント交換 r_exchange_points -->
+                        <!--選択した商品をポイント交換 r_exchange_points -->
                         <button type="button" :disabled="disabled"
                         data-bs-toggle="modal" data-bs-target="#exchangeModal"
                         class="btn btn-lg btn-warning rounded-pill w-100"
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-6">
 
-                        <!-- 選択した景品の発送申請 r_shipped_appli -->
+                        <!-- 選択した商品の発送申請 r_shipped_appli -->
                         <form :action="r_shipped_appli" method="post">
                             <input type="hidden" name="_token" :value="token">
 
@@ -51,9 +51,9 @@
         </div>
 
         <div class="text-end">
-            取得景品数：<span class="fs-1 fw-bold">{{ userPrizes.length }}</span>
+            取得商品数：<span class="fs-1 fw-bold">{{ userPrizes.length }}</span>
         </div>
-        <!--景品一覧-->
+        <!--商品一覧-->
         <ul class="row px-3 bg-white rounded-3" style="list-style:none;">
 
             <li v-for="(userPrize, key) in userPrizes" :key="key"
@@ -90,7 +90,7 @@
             </label></li>
 
             <li v-if="userPrizes.length==0"
-            class="list-group-item bg-white py-5 fs-5 text-secondary">*取得した景品はありません。</li>
+            class="list-group-item bg-white py-5 fs-5 text-secondary">*取得した商品はありません。</li>
 
         </ul>
 
@@ -101,13 +101,13 @@
                 <div class="modal-content">
                     <div class="modal-body text-center">
                         <h5 class="modal-title" id="exchangeModalLabel"
-                        >選択した景品をポイントと交換します。<br />よろしいですか？</h5>
+                        >選択した商品をポイントと交換します。<br />よろしいですか？</h5>
                     </div>
                     <div class="modal-body">
                         <div class="row g-2">
                             <div class="col-6">
 
-                                <!--選択した景品をポイント交換 r_exchange_points -->
+                                <!--選択した商品をポイント交換 r_exchange_points -->
                                 <form :action="r_exchange_points" method="post">
                                     <input type="hidden" name="_token" :value="token">
                                     <input type="hidden" name="_method" value="patch">
@@ -149,13 +149,13 @@
         data() { return {
 
 
-            userPrizes: [],/* ユーザー取得景品 */
+            userPrizes: [],/* ユーザー取得商品 */
 
             ids: [],/*チェックボックスのID*/
 
             allCheck: false,/*全てチェック*/
 
-            totalPoint: 0,/*チェック中のユーザー景品の合計ポイント*/
+            totalPoint: 0,/*チェック中のユーザー商品の合計ポイント*/
 
             disabled: true,
         } },

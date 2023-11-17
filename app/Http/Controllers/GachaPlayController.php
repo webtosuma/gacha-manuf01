@@ -25,15 +25,17 @@ class GachaPlayController extends Controller
     public function Movies()
     {
         return [
-            'XA' => 'site/movie/xa.mp4',
-            'XB' => 'site/movie/xb.mp4',
-            'XC' => 'site/movie/xc.mp4',
-            'XD' => 'site/movie/xd.mp4',
 
-            'MXA' => 'site/movie/mxd.mp4',
-            'MXB' => 'site/movie/mxd.mp4',
-            'MXC' => 'site/movie/mxd.mp4',
-            'MXD' => 'site/movie/mxd.mp4',
+            'XA' => 'site/movie/pcwarp_rainbow.mp4',
+            'XB' => 'site/movie/pcwarp_gold.mp4',
+            'XC' => 'site/movie/pcwarp_red.mp4',
+            'XD' => 'site/movie/pcwarp_normal.mp4',
+
+            'MXA' => 'site/movie/warp_rainbow.mp4',
+            'MXB' => 'site/movie/warp_gold.mp4',
+            'MXC' => 'site/movie/warp_red.mp4',
+            'MXD' => 'site/movie/warp_normal.mp4',
+
         ];
     }
 
@@ -80,18 +82,18 @@ class GachaPlayController extends Controller
             $user_gacha_history = self::CreateGachaHistory( $gacha, $point_history ,$play_count );
 
 
-            # ガチャの残り景品ID配列
+            # ガチャの残り商品ID配列
             $reminingGPIdArray = self::ReminingGPIdArray( $gacha );
-            # ランダムで選出した、ガチャの景品ID配列
+            # ランダムで選出した、ガチャの商品ID配列
             $randReminingGPIdArray = self::RandReminingGPIdArray( $reminingGPIdArray, $play_count);
 
 
-            #ユーザー取得景品の登録・残り景品の減算
+            #ユーザー取得商品の登録・残り商品の減算
             foreach ($randReminingGPIdArray as $reminingGP_id) {
                 self::CreateUserPrize( $user_gacha_history, $reminingGP_id );
             }
 
-            # ランダムで選出した、ガチャ景品の最大ランク
+            # ランダムで選出した、ガチャ商品の最大ランク
             $max_rank = self::MaxRank($randReminingGPIdArray );
 
             # 動画パスの取得
@@ -148,9 +150,9 @@ class GachaPlayController extends Controller
         else if( $total_play_point > $user->point ){
             return 'ポイントが不足しています';
         }
-        # 景品数が、プレイ回数より少ないとき
+        # 商品数が、プレイ回数より少ないとき
         else if( $play_count > $remaining_count ){
-            return '残りの景品数が少ないため、複数回ガチャをすることができません';
+            return '残りの商品数が少ないため、複数回ガチャをすることができません';
         }
         # 売り切れ
         else if( $is_sold_out ){
@@ -205,20 +207,20 @@ class GachaPlayController extends Controller
 
 
     /**
-     * ガチャの残り景品ID配列
+     * ガチャの残り商品ID配列
      * @param  Gacha $gacha
      * @return　UserGachaHistory
     */
     public function ReminingGPIdArray( $gacha )
     {
-        # ガチャに登録された景品の種類情報
+        # ガチャに登録された商品の種類情報
         $gacha->g_prizes;
 
-        //景品の種類数、繰り返し
+        //商品の種類数、繰り返し
         $id_array = [];
         foreach ($gacha->g_prizes as $g_prize)
         {
-            //景品種類の残り数、繰り返し
+            //商品種類の残り数、繰り返し
             $count = $g_prize->remaining_count;
             for ($i=0; $i < $count; $i++) {
 
@@ -232,7 +234,7 @@ class GachaPlayController extends Controller
 
 
     /**
-     * ランダムで選出した、ガチャの景品ID配列
+     * ランダムで選出した、ガチャの商品ID配列
      * @param  Gacha $gacha
      * @return　UserGachaHistory
     */
@@ -268,26 +270,26 @@ class GachaPlayController extends Controller
 
 
     /**
-     * 一つのユーザー取得景品の登録・残り景品の減算
+     * 一つのユーザー取得商品の登録・残り商品の減算
      * @param  Gacha $gacha
-     * @param  Array $randReminingGPIdArray //ランダムで選出した、ガチャの景品ID配列
+     * @param  Array $randReminingGPIdArray //ランダムで選出した、ガチャの商品ID配列
      * @return　UserPrize
     */
     public function CreateUserPrize( $user_gacha_history, $reminingGP_id )
     {
         $user = Auth::user(); //ログインユーザー取得
-        $gacha_prize = GachaPrize::find($reminingGP_id); //ガチャの景品モデル
+        $gacha_prize = GachaPrize::find($reminingGP_id); //ガチャの商品モデル
 
-        # ガチャの景品：残数の更新
+        # ガチャの商品：残数の更新
         $gacha_prize->remaining_count --;
         $gacha_prize->save();
         // dd($gacha_prize);
 
 
-        # ユーザー取得景品の登録
+        # ユーザー取得商品の登録
         $user_prize = new UserPrize([
             'user_id'  => $user->id,  //ユーザー　リレーション
-            'prize_id' => $gacha_prize->prize_id,//景品リレーション
+            'prize_id' => $gacha_prize->prize_id,//商品リレーション
             'gacha_history_id'=> $user_gacha_history->id,//主テーブルに関連する従テーブルのレコードを削除
         ]);
         $user_prize->save();

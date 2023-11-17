@@ -6,7 +6,7 @@ $menu_array = [
         'route' => route('admin.prize'),
         'key'   => 'prize',
         'icon'  => 'bi-gift',
-        'label' => '景品管理',
+        'label' => '商品管理',
     ],
     [
         'route' => route('admin.gacha'),

@@ -84,12 +84,13 @@ class User extends Authenticatable
         */
         public function addresses()
         {
-            return $this->hasMany(UserAddress::class,'user_id');
+            return $this->hasMany(UserAddress::class,'user_id')
+            ->orderByDesc('id');
         }
 
 
         /**
-         * PointHistoryモデル リレーション ($user->address)
+         * PointHistoryモデル リレーション ($user->point_histories)
          * @return \App\Models\PointHistory
         */
         public function point_histories()

@@ -1,8 +1,15 @@
-
 @extends('layouts.small')
 
 <!----- title ----->
 @section('title','管理者ログイン')
+
+@section('meta')
+@php
+$email    = config('app.debug') ? 'na@tosuma.ltd' : '';
+$password = config('app.debug') ? 'password' : '';
+@endphp
+@endsection
+
 
 
 @section('content')
@@ -20,13 +27,13 @@
             <div class="form-floating mb-3">
             <input type="email" class="form-control" id="floatingInput" autofocus
             name="email"
-            value="{{ session('email') ? session('email') : '' }}">
+            value="{{ session('email') ? session('email') : $email }}">
             <label for="floatingInput">メールアドレス</label>
             </div>
             <div class="form-floating mb-3">
             <input type="password" class="form-control" id="floatingPassword"
             name="password"
-            value="{{ session('password') ? session('password') : '' }}">
+            value="{{ session('password') ? session('password') : $password }}">
             <label for="floatingPassword">パスワード</label>
             </div>
 

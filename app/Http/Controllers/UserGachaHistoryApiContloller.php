@@ -30,7 +30,7 @@ class UserGachaHistoryApiContloller extends Controller
         if( $user->id == $user_gacha_history->id ){ return response()->json( [], 401 ); }
 
 
-        # ユーザーの取得景品情報
+        # ユーザーの取得商品情報
         $query = UserPrize::query();
 
             # ログインユーザーのデータに絞る
@@ -46,13 +46,13 @@ class UserGachaHistoryApiContloller extends Controller
             # 取得が新しい順
             $query->orderByDesc('created_at');
 
-            # 景品テーブル(prize)とのリレーション
+            # 商品テーブル(prize)とのリレーション
             $query->with(['prize' => function ($query) {
                 // prizeテーブルのpointカラムを降順に並び替える
                 // $query->orderBy('point', 'desc');
             }]);
 
-            # 指定した『ガチャ履歴』に該当する景品のみ
+            # 指定した『ガチャ履歴』に該当する商品のみ
             $query->where('gacha_history_id', $user_gacha_history->id);
 
         $user_prizes = $query->get();

@@ -54,7 +54,6 @@ class AdminSeeder extends Seeder
 
 
 
-
     /**
      * サイト管理者情報
      *
@@ -65,9 +64,9 @@ class AdminSeeder extends Seeder
         return   [
             [
                 'user' => [
-                    'email' => 't.sakai@tosuma.ltd',
-                    'password' => Hash::make('Msb369_pl_sa555'),
-                    'name' => '酒井貴弘',
+                    'email' => 'na@tosuma.ltd',
+                    'password' => Hash::make('password'),
+                    'name' => 'TOSUMA(テスト作業)',
                 ],
                 'admin' => [
                     'master' => 1,
