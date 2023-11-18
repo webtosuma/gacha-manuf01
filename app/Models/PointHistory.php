@@ -74,4 +74,15 @@ class PointHistory extends Model
             return $this->belongsTo(User::class);
         }
 
+
+        /**
+         * UserGachaHistoryモデル リレーション
+         * @return \App\Models\UserGachaHistory
+        */
+        public function user_gacha_history()
+        {
+            return $this->hasOne(UserGachaHistory::class,'point_history_id');
+        }
+
+
 }

@@ -30,13 +30,13 @@ use App\Http\Controllers;
         # ユーザーの取得積み商品
         //（ポイント交換・発送済みを除く）
         Route::post('user_prize/api',
-        [Controllers\UserPrizeAPIController::class, 'index'])
+        [Controllers\UserPrizeApiController::class, 'index'])
         ->name('api_user_prize');
 
         # IDを指定して、ユーザーの取得積み商品取得
         //（ポイント交換・発送済みを除く）
         Route::post('user_prize/find/api',
-        [Controllers\UserPrizeAPIController::class, 'find'])
+        [Controllers\UserPrizeApiController::class, 'find'])
         ->name('api.user_prize.find');
 
     });

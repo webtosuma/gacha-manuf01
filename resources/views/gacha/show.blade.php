@@ -19,14 +19,18 @@
 @section('content')
 
     <!--ボトムメニュー-->
-    <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white" style="background:rgb(0, 0, 0, .7)">
+    <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white"
+    style="z-index:100; background:rgb(0, 0, 0, .7);">
         <div class="container">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center gap-2 fs-5">
                     @include('includes.point_icon')
 
                     <div class="">
-                        1回×<span class="fs-1">{{ $gacha->one_play_point }}</span>pt
+                        1回×
+                        <span class="fs-1">
+                            <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
+                        </span>pt
                     </div>
                 </div>
                 <div class="progress">
@@ -39,7 +43,10 @@
                     style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
                 </div>
                 <p class="fs-5 text-center m-0">
-                    {{ '残り'.$gacha->remaining_count.'/'.$gacha->max_count }}
+                    残り
+                    <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
+                    /
+                    <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
                 </p>
 
             </div>
@@ -93,8 +100,16 @@
         <div class="mx-auto overflow-auto px-0" style="max-width:1200px;">
 
 
-            <img class="d-block w-100 shadow" style="border-radius:1rem;"
-            src="{{$gacha->image_path}}" alt="トップ画像">
+            <div class="d-none d-md-block overflow-hidden" style="border-radius:1rem;">
+                <ratio-image-component
+                url="{{ $gacha->image_path }}" style_class="ratio ratio-16x9 w-100"
+                ></ratio-image-component>
+            </div>
+            <div class="d-md-none  overflow-hidden" style="border-radius:1rem;">
+                <ratio-image-component
+                url="{{ $gacha->image_path }}" style_class="ratio ratio-1x1 w-100"
+                ></ratio-image-component>
+            </div>
 
 
         </div>

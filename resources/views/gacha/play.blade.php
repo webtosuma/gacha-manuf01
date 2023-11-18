@@ -34,7 +34,7 @@
                 <div class="video-area d-md-none">
                     <video class="bg_video"
                     playsinline
-                    muted width="100%" height=""
+                    width="100%" height=""
                     poster=""
                     ><source src="{{ $movie_path['mobile'] }}"></source>
                     </video>
@@ -43,7 +43,7 @@
                 <div class="video-area d-none d-md-block">
                     <video class="bg_video"
                     playsinline
-                    muted width="100%" height=""
+                    width="100%" height=""
                     poster=""
                     ><source src="{{ $movie_path['pc'] }}"></source>
                     </video>

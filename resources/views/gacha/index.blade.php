@@ -198,14 +198,20 @@
                             <div class="card-body">
                                 <h6 class="d-flex justify-content-between align-items-end">
                                     <p class="card-text m-0">
-                                        {{ '残り'.$gacha->remaining_count.'/'.$gacha->max_count }}
+                                        残り
+                                        <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
+                                        /
+                                        <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
                                     </p>
 
                                     <div class="d-flex align-items-center gap-2">
                                         @include('includes.point_icon')
 
                                         <div class="">
-                                            1回×<span class="fs-1">{{ $gacha->one_play_point }}</span>pt
+                                            1回×
+                                            <span class="fs-1">
+                                                <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
+                                            </span>pt
                                         </div>
                                     </div>
                                 </h6>

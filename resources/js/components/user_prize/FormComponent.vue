@@ -15,7 +15,9 @@
                     </label>
 
                     <div class="form-check mb-3">
-                        <span class="fs-1 fw-bold">{{ totalPoint ? '+'+totalPoint : 0 }}</span>pt
+                        <span class="fs-1 fw-bold">
+                            <number-comma-component :number=" totalPoint ? '+'+totalPoint : 0 " />
+                        </span>pt
                     </div>
                 </div>
 
@@ -51,17 +53,30 @@
         </div>
 
         <div class="text-end">
-            取得商品数：<span class="fs-1 fw-bold">{{ userPrizes.length }}</span>
+            取得商品数：
+            <span class="fs-1 fw-bold">
+                <number-comma-component :number="userPrizes.length" />
+            </span>
         </div>
         <!--商品一覧-->
-        <ul class="row px-3 bg-white rounded-3" style="list-style:none;">
+        <ul class="row px-3 bg-white rounded-3 mx-2 gy-3 mt-0" style="list-style:none;">
+
+            <!--読み込み中-->
+            <li v-if="loading"
+            class="list-group-item bg-white py-5 fs-5 text-secondary">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </li>
 
             <li v-for="(userPrize, key) in userPrizes" :key="key"
-            class="col-6 col-lg-4"><label class="d-block p-3" style="cursor:pointer;">
+            class="col-12 col-sm-6 col-lg-4 "><label class="d-block " style="cursor:pointer;">
                 <div class="row">
-                    <div class="col-4 p-0 pe-2 position-relative">
+                    <div class="col-4 px-0 pe-3 position-relative">
                         <!--チェックボックス-->
-                        <div class="position-absolute top-0 start-0" style="z-index:5">
+                        <div class="position-absolute top-0 start-0 translate-middle" style="z-index:5">
 
                             <input @change="changeChildren()"
                             v-model="ids" :value="userPrize.id"
@@ -80,16 +95,16 @@
                         <div class="form-text">{{ formatDate(userPrize.created_at) }}</div>
                         <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
                         <div class="">{{ userPrize.prize.rank_id }}</div>
-                        <!-- <div class="form-text">{{ formatDate(userPrize.created_at) }}</div> -->
 
-                        <div class="mt- px-3 text-center border rounded-pill d-inline-block"
-                        >{{ userPrize.prize.point+'pt' }}</div>
+                        <div class="mt- px-3 text-center border rounded-pill d-inline-block">
+                            <number-comma-component :number=" userPrize.prize.point " />{{ 'pt' }}
+                        </div>
 
                     </div>
                 </div>
             </label></li>
 
-            <li v-if="userPrizes.length==0"
+            <li v-if="!loading && userPrizes.length==0"
             class="list-group-item bg-white py-5 fs-5 text-secondary">*取得した商品はありません。</li>
 
         </ul>
@@ -148,6 +163,7 @@
         },
         data() { return {
 
+            loading: true,
 
             userPrizes: [],/* ユーザー取得商品 */
 
@@ -170,16 +186,17 @@
             /* データ取得 */
             getData :function(){
 
-                const route = this.r_api_user_prize;
-                axios.post( route )
+                const route = this.r_api_user_prize;　
+                axios.post( route ,{ _token: this.token })
                 .then(json => {
-                    console.log(json.data);
+                    // console.log(json.data);
 
                     this.userPrizes = json.data;
+                    this.loading = false;//読み込み中
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')
-                    console.log( error.response.data );
+                    // console.log( error.response.data );
 
                 });
 

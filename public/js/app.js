@@ -5507,6 +5507,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/NumberCommaComponent.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/NumberCommaComponent.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    number: {
+      type: [String, Number],
+      "default": ''
+    }
+  },
+  methods: {
+    /** 数字文字列にカンマを追加 */addCommasToNumber: function addCommasToNumber(number) {
+      var string = String(number);
+      return string.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/RatioImageComponent.vue?vue&type=script&lang=js":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/RatioImageComponent.vue?vue&type=script&lang=js ***!
@@ -6006,6 +6034,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      loading: true,
       userPrizes: [],
       /* ユーザー取得商品 */
 
@@ -6031,8 +6060,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       var route = this.r_use_gacha_history_show;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route).then(function (json) {
-        console.log(json.data);
+        // console.log(json.data);
         _this.userPrizes = json.data;
+        _this.loading = false; //読み込み中
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
         console.log(error.response.data);
@@ -6498,6 +6528,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   }), _props),
   data: function data() {
     return {
+      loading: true,
       userPrizes: [],
       /* ユーザー取得商品 */
 
@@ -6522,14 +6553,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     getData: function getData() {
       var _this = this;
       var route = this.r_api_user_prize;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route).then(function (json) {
-        console.log(json.data);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
+        _token: this.token
+      }).then(function (json) {
+        // console.log(json.data);
+
         _this.userPrizes = json.data;
+        _this.loading = false; //読み込み中
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
-        console.log(error.response.data);
+        // console.log( error.response.data );
       });
     },
+
     /** 全て選択をクリック */
     changeAll: function changeAll() {
       var ids = this.userPrizes.map(function (value) {
@@ -7119,6 +7155,31 @@ var staticRenderFns = [function () {
     staticClass: "visually-hidden"
   }, [_vm._v("Loading...")])]);
 }];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/NumberCommaComponent.vue?vue&type=template&id=1ebc69ea":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/NumberCommaComponent.vue?vue&type=template&id=1ebc69ea ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "d-inline-block"
+  }, [_vm._v(_vm._s(_vm.addCommasToNumber(_vm.number)))]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -7971,22 +8032,14 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "container px-3 py-4",
-    staticStyle: {
-      "max-width": "500px"
-    }
-  }, [_c("h2", {
-    staticClass: "text-secondary fw-bold btn btn-lg w-100 mb-4",
-    staticStyle: {
-      background: "rgb(255, 255, 255, .7)"
-    }
-  }, [_vm._v("ガチャ結果")]), _vm._v(" "), _c("div", {
+  return _c("div", [_c("div", {
     staticClass: "row justify-content-center g-3 gy-4 mb-4",
     staticStyle: {
       "min-height": "50vh"
     }
-  }, _vm._l(_vm.userPrizes, function (userPrize, key) {
+  }, [_vm.loading ? _c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.userPrizes, function (userPrize, key) {
     return _c("div", {
       key: key,
       staticClass: "col-3 col-md-3"
@@ -7997,7 +8050,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "position-relative"
     }, [_c("div", {
-      staticClass: "position-absolute top-0 start-0",
+      staticClass: "position-absolute top-0 start-0 translate-middle",
       staticStyle: {
         "z-index": "100"
       }
@@ -8048,10 +8101,14 @@ var render = function render() {
       }
     })], 1), _vm._v(" "), _c("div", {
       staticClass: "bg-white text- fw-bold text-center mt-1 px-1 rounded"
-    }, [_vm._v("\n                        " + _vm._s(userPrize.prize.point + "pt") + "\n                    ")]), _vm._v(" "), _c("div", {
+    }, [_c("number-comma-component", {
+      attrs: {
+        number: userPrize.prize.point
+      }
+    }), _vm._v("pt\n\n                        ")], 1), _vm._v(" "), _c("div", {
       staticClass: "bg-dark text-primary fw-bold text-center mt-1 px-1 rounded"
     }, [_vm._v("\n                        " + _vm._s("ランク " + userPrize.prize.rank_id) + "\n                    ")])])])]);
-  }), 0), _vm._v(" "), _c("div", {
+  })], 2), _vm._v(" "), _c("div", {
     staticClass: "rounded-3 p-3",
     staticStyle: {
       background: "rgb(0, 0, 0, .7)"
@@ -8105,7 +8162,11 @@ var render = function render() {
     staticClass: "form-check mb-3"
   }, [_c("span", {
     staticClass: "fs-1 fw-bold"
-  }, [_vm._v(_vm._s(_vm.totalPoint))]), _vm._v("pt\n            ")])]), _vm._v(" "), _c("div", {
+  }, [_c("number-comma-component", {
+    attrs: {
+      number: _vm.totalPoint
+    }
+  })], 1), _vm._v("pt\n            ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 mx-auto"
   }, [_c("button", {
     staticClass: "btn btn-warning rounded-pill w-100",
@@ -8117,7 +8178,18 @@ var render = function render() {
     staticClass: "text-white form-text m-0 mt-3"
   }, [_vm._v("\n            *選択されなかった商品は、「取得した商品一覧」に移動されます。\n        ")])])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "spinner-border text-light",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])]);
+}];
 render._withStripped = true;
 
 
@@ -8602,11 +8674,11 @@ var staticRenderFns = [function () {
     staticClass: "d-flex justify-content-between"
   }, [_c("span", {
     staticClass: "form-text"
-  }, [_vm._v("配送料・手数料：")]), _vm._v(" "), _c("span", [_vm._v("¥0")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("配送料・手数料：")]), _vm._v(" "), _c("span", [_vm._v("0pt")])]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-between fs-5 fw-bold"
   }, [_c("span", {}, [_vm._v("合計利用ポイント：")]), _vm._v(" "), _c("span", {
     staticClass: "text-danger"
-  }, [_vm._v("¥0")])])])])]);
+  }, [_vm._v("0pt")])])])])]);
 }];
 render._withStripped = true;
 
@@ -8743,7 +8815,11 @@ var render = function render() {
     staticClass: "form-check mb-3"
   }, [_c("span", {
     staticClass: "fs-1 fw-bold"
-  }, [_vm._v(_vm._s(_vm.totalPoint ? "+" + _vm.totalPoint : 0))]), _vm._v("pt\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_c("number-comma-component", {
+    attrs: {
+      number: _vm.totalPoint ? "+" + _vm.totalPoint : 0
+    }
+  })], 1), _vm._v("pt\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "row g-2"
   }, [_c("div", {
     staticClass: "col-6"
@@ -8789,28 +8865,34 @@ var render = function render() {
     }
   }, [_vm._v("発送申請")])], 2)])])])]), _vm._v(" "), _c("div", {
     staticClass: "text-end"
-  }, [_vm._v("\n        取得商品数："), _c("span", {
+  }, [_vm._v("\n        取得商品数：\n        "), _c("span", {
     staticClass: "fs-1 fw-bold"
-  }, [_vm._v(_vm._s(_vm.userPrizes.length))])]), _vm._v(" "), _c("ul", {
-    staticClass: "row px-3 bg-white rounded-3",
+  }, [_c("number-comma-component", {
+    attrs: {
+      number: _vm.userPrizes.length
+    }
+  })], 1)]), _vm._v(" "), _c("ul", {
+    staticClass: "row px-3 bg-white rounded-3 mx-2 gy-3 mt-0",
     staticStyle: {
       "list-style": "none"
     }
-  }, [_vm._l(_vm.userPrizes, function (userPrize, key) {
+  }, [_vm.loading ? _c("li", {
+    staticClass: "list-group-item bg-white py-5 fs-5 text-secondary"
+  }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.userPrizes, function (userPrize, key) {
     return _c("li", {
       key: key,
-      staticClass: "col-6 col-lg-4"
+      staticClass: "col-12 col-sm-6 col-lg-4"
     }, [_c("label", {
-      staticClass: "d-block p-3",
+      staticClass: "d-block",
       staticStyle: {
         cursor: "pointer"
       }
     }, [_c("div", {
       staticClass: "row"
     }, [_c("div", {
-      staticClass: "col-4 p-0 pe-2 position-relative"
+      staticClass: "col-4 px-0 pe-3 position-relative"
     }, [_c("div", {
-      staticClass: "position-absolute top-0 start-0",
+      staticClass: "position-absolute top-0 start-0 translate-middle",
       staticStyle: {
         "z-index": "5"
       }
@@ -8869,8 +8951,12 @@ var render = function render() {
       }
     }, [_vm._v(_vm._s(userPrize.prize.name))]), _vm._v(" "), _c("div", {}, [_vm._v(_vm._s(userPrize.prize.rank_id))]), _vm._v(" "), _c("div", {
       staticClass: "mt- px-3 text-center border rounded-pill d-inline-block"
-    }, [_vm._v(_vm._s(userPrize.prize.point + "pt"))])])])])]);
-  }), _vm._v(" "), _vm.userPrizes.length == 0 ? _c("li", {
+    }, [_c("number-comma-component", {
+      attrs: {
+        number: userPrize.prize.point
+      }
+    }), _vm._v(_vm._s("pt") + "\n                    ")], 1)])])])]);
+  }), _vm._v(" "), !_vm.loading && _vm.userPrizes.length == 0 ? _c("li", {
     staticClass: "list-group-item bg-white py-5 fs-5 text-secondary"
   }, [_vm._v("*取得した商品はありません。")]) : _vm._e()], 2), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
@@ -8884,7 +8970,7 @@ var render = function render() {
     staticClass: "modal-dialog"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row g-2"
@@ -8925,9 +9011,22 @@ var render = function render() {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("ポイント交換")])], 2)]), _vm._v(" "), _vm._m(1)])])])])])]);
+  }, [_vm._v("ポイント交換")])], 2)]), _vm._v(" "), _vm._m(2)])])])])])]);
 };
 var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])])]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -9036,6 +9135,9 @@ Vue.component('alert-modal-comp-component', (__webpack_require__(/*! ./component
 
 /* 削除モーダル */
 Vue.component('delete-modal-component', (__webpack_require__(/*! ./components/Items/DeleteModalComponent.vue */ "./resources/js/components/Items/DeleteModalComponent.vue")["default"]));
+
+/* 数字にカンマを入れるコンポーネント */
+Vue.component('number-comma-component', (__webpack_require__(/*! ./components/Items/NumberCommaComponent.vue */ "./resources/js/components/Items/NumberCommaComponent.vue")["default"]));
 var app = new Vue({
   el: '#app'
 });
@@ -31989,6 +32091,45 @@ component.options.__file = "resources/js/components/Items/LoadingContainerCompon
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/NumberCommaComponent.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/Items/NumberCommaComponent.vue ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _NumberCommaComponent_vue_vue_type_template_id_1ebc69ea__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NumberCommaComponent.vue?vue&type=template&id=1ebc69ea */ "./resources/js/components/Items/NumberCommaComponent.vue?vue&type=template&id=1ebc69ea");
+/* harmony import */ var _NumberCommaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NumberCommaComponent.vue?vue&type=script&lang=js */ "./resources/js/components/Items/NumberCommaComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NumberCommaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NumberCommaComponent_vue_vue_type_template_id_1ebc69ea__WEBPACK_IMPORTED_MODULE_0__.render,
+  _NumberCommaComponent_vue_vue_type_template_id_1ebc69ea__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Items/NumberCommaComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/RatioImageComponent.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/Items/RatioImageComponent.vue ***!
@@ -32564,6 +32705,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/NumberCommaComponent.vue?vue&type=script&lang=js":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Items/NumberCommaComponent.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberCommaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NumberCommaComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/NumberCommaComponent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberCommaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/RatioImageComponent.vue?vue&type=script&lang=js":
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/Items/RatioImageComponent.vue?vue&type=script&lang=js ***!
@@ -32889,6 +33046,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LoadingContainerComponent_vue_vue_type_template_id_a6baafe4_scoped_true__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_LoadingContainerComponent_vue_vue_type_template_id_a6baafe4_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LoadingContainerComponent.vue?vue&type=template&id=a6baafe4&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/LoadingContainerComponent.vue?vue&type=template&id=a6baafe4&scoped=true");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Items/NumberCommaComponent.vue?vue&type=template&id=1ebc69ea":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Items/NumberCommaComponent.vue?vue&type=template&id=1ebc69ea ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberCommaComponent_vue_vue_type_template_id_1ebc69ea__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberCommaComponent_vue_vue_type_template_id_1ebc69ea__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberCommaComponent_vue_vue_type_template_id_1ebc69ea__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NumberCommaComponent.vue?vue&type=template&id=1ebc69ea */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/NumberCommaComponent.vue?vue&type=template&id=1ebc69ea");
 
 
 /***/ }),

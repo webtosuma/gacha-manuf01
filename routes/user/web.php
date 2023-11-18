@@ -193,29 +193,56 @@ Route::get('/', function(){
             ->name('shipped.current.show');
         //
     });
+/*
+|--------------------------------------------------------------------------
+| ユーザー設定
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('settings',
+    function () { return view('settings.index'); })
+    ->name('settings');
+
+});
 
 /*
 |--------------------------------------------------------------------------
 | 求職者(Worker) - フッターメニュー
 |--------------------------------------------------------------------------
 */
+    # ガイド(guide)
+    Route::get('guide',
+    function () { return view('footer_menu.guide.index'); })
+    ->name('guide');
+
     # 利用規約(trems)
     Route::get('/trems/{revision_date?}',
     function ($revision_date='2023-04-01')
-    { return view('trems.index', compact('revision_date') )
+    { return view('footer_menu.trems.index', compact('revision_date') )
     ->with('affiliate_key',session('affiliate_key') ?? '');} )
     ->name('trems');
 
     # プライバシーポリシー(privacy_policy)
     Route::get('/privacy_policy/{revision_date?}',
     function ($revision_date='2023-09-12') {
-    return view('privacy_policy.index', compact('revision_date') )
+    return view('footer_menu.privacy_policy.index', compact('revision_date') )
     ->with('affiliate_key',session('affiliate_key') ?? '');} )
     ->name('privacy_policy');
 
 
+    # 特定商取引法に基づく表記(tradelaw)
+    Route::get('tradelaw',
+    function () { return view('footer_menu.tradelaw.index'); })
+    ->name('tradelaw');
+
+    # お知らせ(news)
+    Route::get('news',
+    function () { return view('footer_menu.news.index'); })
+    ->name('news');
+
     # お問い合わせ(contact)
-    Route::get('/contact', function(){ return view('contact.index'); })
+    Route::get('/contact', function(){ return view('footer_menu.contact.index'); })
     ->name('contact');
 
         # お問い合わせコンポーネント用データAPI(component_data_api)
@@ -237,7 +264,7 @@ Route::get('/', function(){
 
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {
-        return redirect('https://tosuma.ltd/');
+        return redirect('https://fobees.jp/');
     })->name('operating_company');
 
 //

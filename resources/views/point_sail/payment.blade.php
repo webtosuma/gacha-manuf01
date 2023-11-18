@@ -28,7 +28,9 @@
         <h6 class="fw-bold text-center">ポイント数と金額をご確認ください。</h6>
         <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">
             <div class="col-6">ポイント数</div>
-            <div class="col-6 border-bottom fw-bold">{{ $point_sail->value.'ポイント' }}</div>
+            <div class="col-6 border-bottom fw-bold">
+                {{ $point_sail->value }}ポイント
+            </div>
             <div class="col-6">支払い方法</div>
             <div class="col-6 border-bottom fw-bold">クレジットカード</div>
             <div class="col-6">支払い金額</div>

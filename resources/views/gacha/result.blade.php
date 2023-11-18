@@ -13,28 +13,33 @@
 @endsection
 
 @section('content')
-    <section id="result">
+    <section id="result" style="min-height: 80vh;">
+
+        <div class="container px-3 py-4"  style="max-width:500px;">
 
 
-        <!--ポイント交換フォーム-->
-        @php $params = [
-            'category_code'=>$gacha->category->code_name,
-            'user_gacha_history'=>$user_gacha_history
-        ]; @endphp
-        <form action="{{ route( 'gacha.exchange_points', $params) }}" method="POST">
-            @csrf
-            @method('PATCH')
+            <h2 class="text-secondary fw-bold btn btn-lg w-100 mb-4"
+            style="background: rgb(255, 255, 255, .7);"
+            >ガチャ結果</h2>
 
+            <!--ポイント交換フォーム-->
+            @php $params = [
+                'category_code'=>$gacha->category->code_name,
+                'user_gacha_history'=>$user_gacha_history
+            ]; @endphp
+            <form action="{{ route( 'gacha.exchange_points', $params) }}" method="POST">
+                @csrf
+                @method('PATCH')
 
-            <!--カード一覧-->
-            <u-gacha-result-form
-            token="{{ csrf_token() }}"
-            r_use_gacha_history_show="{{ route('use_gacha_history.show',$user_gacha_history) }}"
-            ></u-gacha-result-form>
+                <!--カード一覧-->
+                <u-gacha-result-form
+                token="{{ csrf_token() }}"
+                r_use_gacha_history_show="{{ route('use_gacha_history.show',$user_gacha_history) }}"
+                ></u-gacha-result-form>
 
+            </form>
 
-
-        </form>
+        </div>
     </section>
     <section class="py-5 bg-dark border-bottom border-right">
         <div class="container">

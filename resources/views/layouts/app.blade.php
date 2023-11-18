@@ -26,6 +26,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
     <style>
+        a{ text-decoration: none; }
         /* サイトデフォルト背景 */
         body{
             background: no-repeat center center / cover fixed;

@@ -1,1 +1,1 @@
-comp show
+show

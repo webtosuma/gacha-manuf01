@@ -18,7 +18,12 @@ style="max-width:90vw; min-width:30vw;">
         </div>
     @else
         <div class="d-flex justify-content-between align-items-center p-3 bg-white">
-            <div class="">所持ポイント：<span class="fs-3 fw-bold">{{ Auth::user()->point.'pt' }}</span></div>
+            <div class="">所持ポイント：
+                <span class="fs-3 fw-bold">
+                    <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                </span>
+                <span>pt</span>
+            </div>
             <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
         </div>
     @endguest
@@ -26,17 +31,8 @@ style="max-width:90vw; min-width:30vw;">
 
     <div class="offcanvas-body px-0">
         <div class="list-group list-group-flush">
-            {{-- <a href="" class="bg-primary text-white list-group-item list-group-item-action py-3"
-            >お知らせ</a>
 
-            <a href="" class="bg-danger text-white list-group-item list-group-item-action py-3"
-            >最近ゲットしたカード</a>
-
-            <a href="" class="bg-warning text-white list-group-item list-group-item-action py-3"
-            >取得カード履歴</a> --}}
-
-
-            <a href="" class="list-group-item list-group-item-action py-3"
+            <a href="{{ route('news') }}" class="list-group-item list-group-item-action py-3"
             >お知らせ</a>
 
             {{-- <a href="" class="list-group-item list-group-item-action py-3"
@@ -51,10 +47,10 @@ style="max-width:90vw; min-width:30vw;">
             <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3"
             >発送申請履歴</a>
 
-            <a href="" class="list-group-item list-group-item-action py-3"
+            <a href="{{ route('settings') }}" class="list-group-item list-group-item-action py-3"
             >会員情報設定</a>
 
-            <a href="" class="list-group-item list-group-item-action py-3"
+            <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3"
             >利用ガイド</a>
 
             @if ( Auth::check() )

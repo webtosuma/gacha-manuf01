@@ -29,13 +29,14 @@
                 <div class="">
                     <div class="d-flex align-items-center gap-2">
                         @include('includes.point_icon')
-                        <h3 class="m-0 fw-bold">{{ $point_sail->value }}</h3>
-                        <span>ポイント</span>
+                        <h3 class="m-0 fw-bold">
+                            <number-comma-component number="{{ $point_sail->value }}"></number-comma-component>
+                        </h3>
+                        <span>pt</span>
                     </div>
 
                     @if( $point_sail->service )
                     <div class="badge bg-danger-subtle rounded-pill fw-bold px-3">
-                        {{-- <span class="text-dark fw-bold fs-5">{{ $point_sail->value - $point_sail->service }}</span> --}}
                         <span class="text-danger fw-bold fs-6">{{ '+'.$point_sail->service }}</span>
                         <span class="text-danger fw-bold">ポイントお得！</span>
                     </div>
@@ -47,7 +48,9 @@
                 class="btn btn-lg btn-warning text-white rounded-pill shadow py-1" style="width:8rem;">
                     <div class="d-flex align-items-center justify-content-between w-100">
                         <span>¥</span>
-                        <h5 class="m-0 fw-bold">{{ $point_sail->price }}</h5>
+                        <h5 class="m-0 fw-bold">
+                            <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
+                        </h5>
                     </div>
                 </a>
             </div></li>

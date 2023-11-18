@@ -1,14 +1,15 @@
 <template>
-    <div class="container px-3 py-4"  style="max-width:500px;">
-
-
-        <h2 class="text-secondary fw-bold btn btn-lg w-100 mb-4"
-        style="background: rgb(255, 255, 255, .7);"
-        >ガチャ結果</h2>
-
+    <div>
 
         <!--カード一覧-->
         <div class="row justify-content-center g-3 gy-4 mb-4" style="min-height: 50vh;" >
+
+            <div v-if="loading"
+            class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
 
             <div v-for="(userPrize, key) in userPrizes" :key="key"
             class="col-3 col-md-3">
@@ -19,7 +20,7 @@
 
                         <div class="position-relative">
                             <!--チェックボックス-->
-                            <div class="position-absolute top-0 start-0" style="z-index:100">
+                            <div class="position-absolute top-0 start-0 translate-middle" style="z-index:100">
                                 <input v-model="ids" @change="changeChildren()"
                                 class="form-check-input float-xl-none m-0 rounded-pill"
                                 style="width:2em; height:2em;"
@@ -35,7 +36,9 @@
 
                         <!--ポイント表示-->
                         <div class="bg-white text- fw-bold text-center mt-1 px-1 rounded">
-                            {{ userPrize.prize.point+'pt' }}
+                            <number-comma-component :number="userPrize.prize.point" />pt
+
+                            <!-- {{ userPrize.prize.point+'pt' }} -->
                         </div>
                         <div class="bg-dark text-primary fw-bold text-center mt-1 px-1 rounded">
                             {{ 'ランク '+ userPrize.prize.rank_id }}
@@ -52,7 +55,6 @@
         </div>
 
 
-
         <div class="rounded-3 p-3" style="background: rgb(0, 0, 0, .7);">
             <div class="d-flex justify-content-between align-items-start text-white">
                 <div class="form-check mb-3">
@@ -64,7 +66,9 @@
                 </div>
 
                 <div class="form-check mb-3">
-                    <span class="fs-1 fw-bold">{{ totalPoint }}</span>pt
+                    <span class="fs-1 fw-bold">
+                        <number-comma-component :number="totalPoint" />
+                    </span>pt
                 </div>
             </div>
             <div class="col-md-8 mx-auto">
@@ -76,10 +80,6 @@
                 *選択されなかった商品は、「取得した商品一覧」に移動されます。
             </p>
         </div>
-
-
-
-
 
 
     </div>
@@ -94,6 +94,7 @@
         },
         data() { return {
 
+            loading: true,
 
             userPrizes: [],/* ユーザー取得商品 */
 
@@ -119,8 +120,9 @@
                 const route = this.r_use_gacha_history_show;
                 axios.post( route )
                 .then(json => {
-                    console.log(json.data);
+                    // console.log(json.data);
                     this.userPrizes = json.data;
+                    this.loading = false;//読み込み中
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')

@@ -99,6 +99,9 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('delete-modal-component',
     require('./components/Items/DeleteModalComponent.vue').default);
 
+    /* 数字にカンマを入れるコンポーネント */
+    Vue.component('number-comma-component',
+    require('./components/Items/NumberCommaComponent.vue').default);
 
 
 

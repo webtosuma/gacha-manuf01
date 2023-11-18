@@ -28,7 +28,8 @@
                             <div class="rounded-pill bg- text- fw-bold border
                             d-flex align-items-center justify-content-end px-2
                             " style="width:6rem; height:1.6rem;">
-                                {{ Auth::user()->point }}pt
+                                <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                                <span>pt</span>
                             </div>
                         </div>
                     </a>

@@ -2,13 +2,13 @@
 
 
 <!----- title ----->
-@section('title','プライバシーポリシー')
+@section('title','利用規約')
 
 <!----- contents ----->
 @section('content')
 
     <div class="container my-5">
-        @include( 'privacy_policy.'.$revision_date )
+        @include( 'footer_menu.trems.'.$revision_date )
     </div>
 
 @endsection
