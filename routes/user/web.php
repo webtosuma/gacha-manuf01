@@ -218,14 +218,14 @@ Route::middleware(['auth'])->group(function () {
 
     # 利用規約(trems)
     Route::get('/trems/{revision_date?}',
-    function ($revision_date='2023-04-01')
+    function ($revision_date='2023-12-01')
     { return view('footer_menu.trems.index', compact('revision_date') )
     ->with('affiliate_key',session('affiliate_key') ?? '');} )
     ->name('trems');
 
     # プライバシーポリシー(privacy_policy)
     Route::get('/privacy_policy/{revision_date?}',
-    function ($revision_date='2023-09-12') {
+    function ($revision_date='2023-12-01') {
     return view('footer_menu.privacy_policy.index', compact('revision_date') )
     ->with('affiliate_key',session('affiliate_key') ?? '');} )
     ->name('privacy_policy');
@@ -256,10 +256,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('contact.completion_api');
 
 
-    // # よくある質問(faq)
-    // Route::get('/faq', function () { return view('worker.faq.list')
-    // ->with('affiliate_key',session('affiliate_key') ?? '');} )
-    // ->name('faq');
 
 
     # 運営会社(operating_company)

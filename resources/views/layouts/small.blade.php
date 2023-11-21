@@ -38,7 +38,7 @@
 
     </main>
     <footer cclass="bg-dark py-3">
-        <p class="m-0 text-secondary text-center">copy;& TOSUMA Co.,Ltd.</p>
+        <p class="m-0 text-secondary text-center">&copy;fobees</p>
     </footer>
 
     <!-- bootstrap JavaScript -->

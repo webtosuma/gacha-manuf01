@@ -26,5 +26,14 @@ $active_key = 'prize';
 
         <h2 class="my-5 py-3 border-bottom">商品管理</h2>
 
+        <a-plize-list
+        token="{{ csrf_token() }}"
+        r_api_prize   ="{{ route('admin.api.prize') }}"
+        r_api_destroy ="{{ route('admin.api.prize.destroy') }}"
+        r_api_category="{{ route('admin.api.gacha.category') }}"
+        r_create      ="{{ route('admin.prize.create') }}"
+        r_edit        ="{{ route('admin.prize.edit') }}"
+        ></a-plize-list>
+
     </div>
 @endsection

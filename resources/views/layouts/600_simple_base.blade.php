@@ -37,7 +37,7 @@
 
     </main>
     <footer cclass="mx-auto" style="max-width:600px;">
-        {{-- <p class="m-0 text-secondary">&copy; TOSUMA Co.,Ltd.</p> --}}
+        <p class="m-0 text-secondary text-center">&copy;fobees</p>
     </footer>
 
     <!-- bootstrap JavaScript -->

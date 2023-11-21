@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     # ユーザーのガチャ履歴に紐づいた、ユーザーの取得積み商品
     Route::post('use_gacha_history/{user_gacha_history}/api',
     [Controllers\UserGachaHistoryApiContloller::class, 'show'])
-    ->name('use_gacha_history.show');
+    ->name('api.use_gacha_history.show');
 
 });
 

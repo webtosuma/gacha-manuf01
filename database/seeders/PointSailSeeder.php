@@ -39,16 +39,6 @@ class PointSailSeeder extends Seeder
     {
         return   [
             [
-                'value'   => 100,  //実際付与されるポイント
-                'price'   => 110,  //管理者編集権限
-                'service' => 0,//サービス差異
-            ],
-            [
-                'value'   => 300,  //実際付与されるポイント
-                'price'   => 330,  //管理者編集権限
-                'service' => 0,//サービス差異
-            ],
-            [
                 'value'   => 1000,  //実際付与されるポイント
                 'price'   => 1100,  //管理者編集権限
                 'service' => 0,//サービス差異
@@ -68,6 +58,12 @@ class PointSailSeeder extends Seeder
                 'price'   => 11000,  //管理者編集権限
                 'service' => 500,//サービス差異
             ],
+            [
+                'value'   => 53000,  //実際付与されるポイント
+                'price'   => 55000,  //管理者編集権限
+                'service' => 3000,//サービス差異
+            ],
+
         ];
 
     }

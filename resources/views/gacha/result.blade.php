@@ -34,7 +34,7 @@
                 <!--カード一覧-->
                 <u-gacha-result-form
                 token="{{ csrf_token() }}"
-                r_use_gacha_history_show="{{ route('use_gacha_history.show',$user_gacha_history) }}"
+                r_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
                 ></u-gacha-result-form>
 
             </form>

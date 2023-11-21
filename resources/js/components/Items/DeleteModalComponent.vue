@@ -33,7 +33,7 @@
                             >OK</button>
                         </div>
                         <div class="col">
-                            <button type="button" class="btn btn-outline-secondary w-100"
+                            <button type="button" class="btn btn-light border w-100"
                             data-bs-dismiss="modal"
                             >閉じる</button>
                         </div>

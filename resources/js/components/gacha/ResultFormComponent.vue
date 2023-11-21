@@ -34,14 +34,14 @@
                             ></ratio-image-component>
                         </div>
 
+                        <!--商品ランク表示-->
+                        <div class="bg-dark text-primary fw-bold text-center mt-1 px-1 rounded">
+                            {{ userPrize.prize.rank.name }}
+                        </div>
                         <!--ポイント表示-->
                         <div class="bg-white text- fw-bold text-center mt-1 px-1 rounded">
                             <number-comma-component :number="userPrize.prize.point" />pt
 
-                            <!-- {{ userPrize.prize.point+'pt' }} -->
-                        </div>
-                        <div class="bg-dark text-primary fw-bold text-center mt-1 px-1 rounded">
-                            {{ 'ランク '+ userPrize.prize.rank_id }}
                         </div>
 
                     </label>
@@ -120,7 +120,7 @@
                 const route = this.r_use_gacha_history_show;
                 axios.post( route )
                 .then(json => {
-                    // console.log(json.data);
+                    console.log(json.data);
                     this.userPrizes = json.data;
                     this.loading = false;//読み込み中
                 })

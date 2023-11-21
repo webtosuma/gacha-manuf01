@@ -1,12 +1,12 @@
-<header class="shadow-sm bg-dark">
+<header class="shadow-sm bg-primary">
 
     <nav class="navbar navbar-expand-lg p-0">
         <div class="container-fluid">
 
             <!--- サイトロゴ -->
             <a class="navbar-brand  text-white" href="{{ url('admin.home') }}">
-                <h1 class="fs-6 m-0 text-center">
-                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">
+                <h1 class="fs-6 m-0 text-center d-flex align-items-center gap-2">
+                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:2rem;">
                     <br>
                     <span class="fw-bold" style="font-size:.8rem;">サイト管理者</span>
                 </h1>

@@ -36,9 +36,6 @@
 
 
     </main>
-    <footer class="container-900 text-secondary">
-        <p class="m-0 text-secondary">&copy; TOSUMA Co.,Ltd.</p>
-    </footer>
 
     <!-- bootstrap JavaScript -->
     <script src="{{ asset('js/app.js') }}" defer></script>

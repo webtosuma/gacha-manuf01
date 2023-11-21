@@ -47,7 +47,7 @@ class UserGachaHistoryApiContloller extends Controller
             $query->orderByDesc('created_at');
 
             # 商品テーブル(prize)とのリレーション
-            $query->with(['prize' => function ($query) {
+            $query->with(['prize.rank' => function ($query) {
                 // prizeテーブルのpointカラムを降順に並び替える
                 // $query->orderBy('point', 'desc');
             }]);

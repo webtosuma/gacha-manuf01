@@ -35,4 +35,23 @@ class GachaPrize extends Model
     {
         return \Database\Factories\GachaPrizeFactory::new();
     }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * Prizeモデル リレーション
+         * @return \App\Models\Prize
+        */
+        public function prize(){
+            return $this->belongsTo(Prize::class);
+        }
+
 }

@@ -6,7 +6,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:6rem;">
                 </a>
-                <small class="d-block mb-3 text-muteddd">© 2017–2023</small>
+                <small class="d-block mb-3 text-muteddd">&copy;fobees</small>
             </div>
             <div class="col-12 col-md">
                 <h3>{{ __('カテゴリー') }}</h3>

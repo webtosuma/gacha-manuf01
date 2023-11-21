@@ -26,5 +26,25 @@ $active_key = 'gacha';
 
         <h2 class="my-5 py-3 border-bottom">ガチャ管理</h2>
 
+
+
+        <section class="mb-3">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page"
+                  >すべて</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link"
+                  href="#">ワンピース</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link"
+                  href="#">ポケモン</a>
+                </li>
+              </ul>
+        </section>
+
+        <a href="{{ route('admin.gacha.create') }}" class="btn brn-primariy ">新規登録</a>
     </div>
 @endsection

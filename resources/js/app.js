@@ -50,6 +50,10 @@ require('./components/ExampleComponent.vue').default);
 | サイト管理者ページ　コンポーネント
 |=============================================
 */
+    /* 商品管理 */
+    Vue.component('a-plize-list',
+    require('./components/admin/prize/Index.vue').default);
+
 
 /*
 |=============================================

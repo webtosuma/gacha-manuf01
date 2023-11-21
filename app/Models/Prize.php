@@ -40,6 +40,21 @@ class Prize extends Model
     }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * PrizeRankモデル リレーション (lank)
+         * @return \App\Models\PrizeRank
+        */
+        public function rank()
+        {
+            return $this->belongsTo(PrizeRank::class,'rank_id');
+        }
 
 
     /*
@@ -50,7 +65,7 @@ class Prize extends Model
     |
     */
         /** 画像なしの時の画像 */
-        public static function noImage(){ return asset( 'storage/'.'site/image/bg04.jpg' );}
+        public static function noImage(){ return asset( 'storage/site/image/no_image.jpg' );}
 
         /**
          * 画像ファイルパス image_path
@@ -61,5 +76,6 @@ class Prize extends Model
             return $this->image && Storage::exists($this->image) ?
             asset( 'storage/'.$this->image ) :  self::noImage();
         }
+
 
 }

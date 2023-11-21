@@ -1,5 +1,5 @@
 @php
-$active_class = "text-primary fw-bold border-bottom border-start border-top border-primary border-2 bg-body active_menu disabled";
+$active_class = "text-primary fw-bold border-bottom border-start border-top border-primary border-2 bg-white active_menu disabled";
 
 $menu_array = [
     [
@@ -21,6 +21,12 @@ $menu_array = [
         'label' => 'ポイント管理',
     ],
     [
+        'route' => '#',
+        'key'   => 'earnings',
+        'icon'  => 'bi-graph-up',
+        'label' => 'ポイント売上',
+    ],
+    [
         'route' => route('admin.shipped'),
         'key'   => 'shipped',
         'icon'  => 'bi-cart4',
@@ -40,8 +46,8 @@ $menu_array = [
     ],
 ];
 @endphp
-<div class="d-flex flex-column justify-content-between">
-    <div class="border-bottom bg-white" id="sideMenuAccordion">
+<div class="d-flex flex-column justify-content-between py-3">
+    <div class="border-bottom bg-body" id="sideMenuAccordion">
         @foreach ($menu_array as $menu)
             @php
             $icon_class = $menu['icon']." text-primary bi fs-4 me-3";

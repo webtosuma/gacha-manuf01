@@ -94,7 +94,7 @@
                     <div class="col-8 p-0">
                         <div class="form-text">{{ formatDate(userPrize.created_at) }}</div>
                         <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
-                        <div class="">{{ userPrize.prize.rank_id }}</div>
+                        <div class="">{{ userPrize.prize.rank.name }}</div>
 
                         <div class="mt- px-3 text-center border rounded-pill d-inline-block">
                             <number-comma-component :number=" userPrize.prize.point " />{{ 'pt' }}

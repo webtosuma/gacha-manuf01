@@ -1,5 +1,5 @@
 <footer>
-    <div class="mail-container">
+    {{-- <div class="mail-container">
         <p class="bg-light-text">
             <small>
                 このメールは≪{{ env('APP_NAME') }}≫ご利用のお客様に自動送信しています。
@@ -23,5 +23,5 @@
             <a href="{{route('operating_company')}}">{{env('COMPANY_NAME')}}</a>
         </div>
         <div class="copy">&copy; TOSUMA Co.,Ltd.</div>
-    </div>
+    </div> --}}
 </footer>

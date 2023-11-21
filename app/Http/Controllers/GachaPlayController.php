@@ -11,6 +11,7 @@ use App\Models\GachaPrize;
 use App\Models\PointHistory;
 use App\Models\UserGachaHistory;
 use App\Models\UserPrize;
+use App\Models\Prize;
 
 /*
 | =============================================
@@ -26,15 +27,31 @@ class GachaPlayController extends Controller
     {
         return [
 
-            'XA' => 'site/movie/pcwarp_rainbow.mp4',
-            'XB' => 'site/movie/pcwarp_gold.mp4',
-            'XC' => 'site/movie/pcwarp_red.mp4',
-            'XD' => 'site/movie/pcwarp_normal.mp4',
+            'XA' => [
+                'site/movie/pcwarp_rainbow.mp4',
+            ],
+            'XB' => [
+                'site/movie/pcwarp_gold.mp4',
+            ],
+            'XC' => [
+                'site/movie/pcwarp_red.mp4',
+            ],
+            'XD' => [
+                'site/movie/pcwarp_normal.mp4',
+            ],
 
-            'MXA' => 'site/movie/warp_rainbow.mp4',
-            'MXB' => 'site/movie/warp_gold.mp4',
-            'MXC' => 'site/movie/warp_red.mp4',
-            'MXD' => 'site/movie/warp_normal.mp4',
+            'MXA' => [
+                'site/movie/warp_rainbow.mp4',
+            ],
+            'MXB' => [
+                'site/movie/warp_gold.mp4',
+            ],
+            'MXC' => [
+                'site/movie/warp_red.mp4',
+            ],
+            'MXD' => [
+                'site/movie/warp_normal.mp4',
+            ],
 
         ];
     }
@@ -50,6 +67,10 @@ class GachaPlayController extends Controller
      */
     public function play(Request $request, $category_code, Gacha $gacha, $key)
     {
+
+        // dd($gacha->g_prizes[0]->rank_id);
+
+
         # 変数
         $user = Auth::user(); //ログインユーザー取得
         $play_count = (int) $request->play_count;   //プレイ回数
@@ -97,11 +118,8 @@ class GachaPlayController extends Controller
             $max_rank = self::MaxRank($randReminingGPIdArray );
 
             # 動画パスの取得
-            $movies = self::Movies();
-            $movie_path = [
-                'pc'     => asset('storage/'.$movies[ $max_rank ] ),
-                'mobile' => asset('storage/'. $movies[ 'M'.$max_rank ] ),
-            ];
+            $movie_path = self::MoviePath($max_rank);
+
 
             DB::commit();
 
@@ -270,6 +288,28 @@ class GachaPlayController extends Controller
 
 
     /**
+     * 動画パスの取得
+     * @param  String $max _path
+     * @param  Array $randReminingGPIdArray //ランダムで選出した、ガチャの商品ID配列
+     * @return　Array
+    */
+    public function MoviePath( $max_rank )
+    {
+        $movies = self::Movies();
+
+        $pc_movies = $movies[ $max_rank ];
+        $m_movies  = $movies[ 'M'.$max_rank ];
+
+        return [
+            'pc'     => asset('storage/'.$pc_movies[ rand( 0, count($pc_movies)-1 ) ] ),
+            'mobile' => asset('storage/'.$m_movies[  rand( 0, count($m_movies)-1 ) ] ),
+        ];
+
+    }
+
+
+
+    /**
      * 一つのユーザー取得商品の登録・残り商品の減算
      * @param  Gacha $gacha
      * @param  Array $randReminingGPIdArray //ランダムで選出した、ガチャの商品ID配列
@@ -294,5 +334,6 @@ class GachaPlayController extends Controller
         ]);
         $user_prize->save();
     }
+
 
 }

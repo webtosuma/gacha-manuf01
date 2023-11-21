@@ -8,7 +8,7 @@ use App\Models\GachaPrize;
 use App\Models\Prize;
 /*
 | =============================================
-|  ガチャの景品　シーダー
+|  ガチャの商品　シーダー
 | =============================================
 */
 class GachaPrizeSeeder extends Seeder
@@ -37,9 +37,10 @@ class GachaPrizeSeeder extends Seeder
         # XAランク景品の登録
 
             $rank_id = 'XA';
+            $prize_lank_id = 1;
 
             $prizes = Prize::inRandomOrder()
-            ->where('rank_id',$rank_id)
+            ->where('rank_id', $prize_lank_id)
             ->limit(2)->get();
 
             foreach ($prizes as $prize) {
@@ -56,9 +57,10 @@ class GachaPrizeSeeder extends Seeder
         # XBランク景品の登録
 
             $rank_id = 'XB';
+            $prize_lank_id = 2;
 
             $prizes = Prize::inRandomOrder()
-            ->where('rank_id',$rank_id)
+            ->where('rank_id', $prize_lank_id)
             ->limit(3)->get();
 
             foreach ($prizes as $prize) {
@@ -75,9 +77,10 @@ class GachaPrizeSeeder extends Seeder
         # XCランク景品の登録
 
             $rank_id = 'XC';
+            $prize_lank_id = 3;
 
             $prizes = Prize::inRandomOrder()
-            ->where('rank_id',$rank_id)
+            ->where('rank_id', $prize_lank_id)
             ->limit(5)->get();
 
             foreach ($prizes as $prize) {
@@ -94,9 +97,10 @@ class GachaPrizeSeeder extends Seeder
         # XDランク景品の登録
 
             $rank_id = 'XD';
+            $prize_lank_id = 4;
 
             $prizes = Prize::inRandomOrder()
-            ->where('rank_id',$rank_id)
+            ->where('rank_id', $prize_lank_id)
             ->limit(5)->get();
 
             foreach ($prizes as $prize) {
@@ -113,4 +117,5 @@ class GachaPrizeSeeder extends Seeder
         //
 
     }
+
 }

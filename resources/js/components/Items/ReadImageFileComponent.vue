@@ -2,8 +2,10 @@
     <div class="">
 
         <!-- 画像 -->
-        <div class="ratio border mb-2" :class="ration_size">
-            <img :src="src" :alt="alt">
+        <div class="mb-2">
+            <ratio-image-component
+            :style_class="style_class"
+            :url="src" />
         </div>
 
         <!--ファイル　インプット-->
@@ -52,7 +54,7 @@
             noimg_path: { type: String, default: '', }, //画像無しのパス
             alt:        { type: String, default: 'サムネ画像', },
             name:       { type: String, default: 'image', }, //インプット要素のname名
-            ration_size:{ type: String, default: 'ratio-16x9', }, //インプット要素のname名
+            style_class:{ type: String, default: 'ratio ratio-3x4 rounded-3', },
 
         },
         mounted() {

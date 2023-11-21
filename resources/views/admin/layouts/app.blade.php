@@ -25,19 +25,22 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('style')
+    <style>
+        a{ text-decoration: none; }
+    </style>
 
 </head>
-<body style="">
+<body class="">
     <div id="app">
 
 
         @include('admin.includes.header')
 
-        <main class="row mx-0 bg-body g-0">
+        <main class="row mx-0 g-0">
 
 
             <!--flex-c1-->
-            <aside class="d-none d-lg-block col-auto pe-0 bg-white">
+            <aside class="d-none d-lg-block col-auto pe-0 bg-body">
                 <div class="position-sticky ps-2" style="top: 2rem; ">
 
 
@@ -46,7 +49,7 @@
                 </div>
             </aside>
             <!--flex-c2-->
-            <div class="col bg-body">
+            <div class="col bg-white">
 
                 <div style="min-height:90vh;">
                     @yield('content')

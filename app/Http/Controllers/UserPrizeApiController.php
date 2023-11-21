@@ -38,7 +38,7 @@ class UserPrizeApiController extends Controller
             $query->orderByDesc('created_at');
 
             # 商品テーブル(prize)とのリレーション
-            $query->with(['prize' => function ($query) {
+            $query->with(['prize.rank' => function ($query) {
 
                 // prizeテーブルのpointカラムを降順に並び替える
                 // $query->orderBy('point', 'desc');
@@ -65,14 +65,8 @@ class UserPrizeApiController extends Controller
      */
     public function find(Request $request)
     {
-        // return response()->json( $request->all() );
-
         $user = Auth::user();
         $id_array = $request->user_prize_ids;//発送するユーザー商品ID
-
-        // return response()->json( $id_array );
-
-
 
         $query = UserPrize::query();
 
@@ -89,7 +83,7 @@ class UserPrizeApiController extends Controller
             $query->orderByDesc('created_at');
 
             # 商品テーブル(prize)とのリレーション
-            $query->with('prize');
+            $query->with('prize.rank');
 
         $user_prizes = $query->find($id_array);
 
