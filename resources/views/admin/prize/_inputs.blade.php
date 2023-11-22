@@ -65,7 +65,7 @@
             <input value="{{old('name', $prize->name )}}"
             name="name"
             type="text" class="form-control" >
-            <div class="form-text">ユーザーには表示されない、管理用の名前です。</div>
+            {{-- <div class="form-text">ユーザーには表示されない、管理用の名前です。</div> --}}
             <!--error message-->
             @if ( $errors->has('name') )
                 <div class="text-danger"> {{$errors->first('name')}} </div>

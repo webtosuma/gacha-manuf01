@@ -17,7 +17,7 @@
 
 
 
-        <h2 class="my-5 py-3 border-bottom">Admin TOP</h2>
+        <h2 class="mb-5 py-3 border-bottom">Admin TOP</h2>
 
     </div>
 @endsection

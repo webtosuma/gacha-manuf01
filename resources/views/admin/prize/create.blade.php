@@ -33,7 +33,7 @@ $active_key = 'prize';
 
 
 
-        <h2 class="my-5 py-3 border-bottom">商品登録</h2>
+        <h2 class="mb-5 py-3 border-bottom">商品登録</h2>
 
 
         <section>

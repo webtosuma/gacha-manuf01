@@ -34,6 +34,7 @@ class AdminPrizeController extends Controller
         # 評価ランクデータ
         $ranks = PrizeRank::all();
 
+        # 新規作成モデル
         $prize = new Prize([
             'category_id'=>$category_id,
             'point'=>0,
@@ -104,7 +105,7 @@ class AdminPrizeController extends Controller
         # 入力データの加工
         $inputs = self::processingInputs( $request, $prize );
 
-        # DBデータの新規登録
+        # DBデータの更新
         $prize->update($inputs);
         $request->session()->regenerateToken();// 二重送信防止
 
@@ -120,7 +121,7 @@ class AdminPrizeController extends Controller
          * 入力データの加工 self::processingInputs( $request )
          *
          * @param \Illuminate\Http\Request $request
-         * @param \App\Models\Plize $prize //新規登録のとき===null
+         * @param \App\Models\Prize $prize //新規登録のとき===null
          * @return Array
          */
         public function processingInputs( $request, $prize=null )

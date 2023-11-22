@@ -88,7 +88,7 @@ class Gacha extends Model
     |
     */
         /** 画像なしの時の画像 */
-        public static function noImage(){ return asset( 'storage/'.'site/image/bg04.jpg' );}
+        public static function noImage(){ return asset( 'storage/site/image/no_image.jpg' );}
 
         /**
          * 画像ファイルパス image_path
@@ -103,7 +103,7 @@ class Gacha extends Model
 
 
         /**
-         * 景品・総数 max_count
+         * 商品・総数 max_count
          * @return String
         */
         public function getMaxCountAttribute()
@@ -113,7 +113,7 @@ class Gacha extends Model
 
 
         /**
-         * 景品・残り数 remaining_count
+         * 商品・残り数 remaining_count
          * @return String
         */
         public function getRemainingCountAttribute()
@@ -123,14 +123,14 @@ class Gacha extends Model
 
 
         /**
-         * 景品・残り割合 remaining_ratio
+         * 商品・残り割合 remaining_ratio
          * @return String
         */
         public function getRemainingRatioAttribute()
         {
             $max       = $this->max_count;
             $remaining = $this->remaining_count;
-            return ($remaining/$max) * 100;
+            return $max>0 ? ( ($remaining/$max) * 100 ) : 0 ;
         }
 
 }

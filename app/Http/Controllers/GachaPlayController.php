@@ -31,26 +31,32 @@ class GachaPlayController extends Controller
                 'site/movie/pcwarp_rainbow.mp4',
             ],
             'XB' => [
-                'site/movie/pcwarp_gold.mp4',
+                'site/movie/pcwarp_rainbow.mp4',
+                // 'site/movie/pcwarp_gold.mp4',
             ],
             'XC' => [
-                'site/movie/pcwarp_red.mp4',
+                'site/movie/pcwarp_rainbow.mp4',
+                // 'site/movie/pcwarp_red.mp4',
             ],
             'XD' => [
-                'site/movie/pcwarp_normal.mp4',
+                'site/movie/pcwarp_rainbow.mp4',
+                // 'site/movie/pcwarp_normal.mp4',
             ],
 
             'MXA' => [
                 'site/movie/warp_rainbow.mp4',
             ],
             'MXB' => [
-                'site/movie/warp_gold.mp4',
+                'site/movie/warp_rainbow.mp4',
+                // 'site/movie/warp_gold.mp4',
             ],
             'MXC' => [
-                'site/movie/warp_red.mp4',
+                'site/movie/warp_rainbow.mp4',
+                // 'site/movie/warp_red.mp4',
             ],
             'MXD' => [
-                'site/movie/warp_normal.mp4',
+                'site/movie/warp_rainbow.mp4',
+                // 'site/movie/warp_normal.mp4',
             ],
 
         ];
