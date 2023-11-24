@@ -24,7 +24,7 @@ class CreateGachaDiscriptionsTable extends Migration
 
             $table->string('image');//画像
             $table->string('sorce')->nullable()->default(NULL);//説明文
-            $table->string('rank_id');//ランクID
+            $table->string('gacha_rank_id');//ランクID
 
             $table->timestamps();
         });

@@ -59,24 +59,24 @@ class GachaDiscriptionSeeder extends Seeder
         return   [
             [
                 // 'gacha_id' => 1,
-                'image'    => 'sample/gachas/g01/01prize.png', //画像
-                'sorce'    => '1等賞の説明文　', //説明文
-                'rank_id'  => 'XA', //ランクID
+                'image'        => 'sample/gachas/g01/01prize.png', //画像
+                'sorce'        => '1等賞の説明文　', //説明文
+                'gacha_rank_id'=> '101', //ランクID
             ],
             [
-                'image'    => 'sample/gachas/g01/02prize.png', //画像
-                'sorce'    => "2等賞の説明文\n改行", //説明文
-                'rank_id'  => 'XB', //ランクID
+                'image'        => 'sample/gachas/g01/02prize.png', //画像
+                'sorce'        => "2等賞の説明文\n改行", //説明文
+                'gacha_rank_id'=> '102', //ランクID
             ],
             [
-                'image'    => 'sample/gachas/g01/03prize.png', //画像
-                'sorce'    => "3等賞の説明文\n改行", //説明文
-                'rank_id'  => 'XC', //ランクID
+                'image'        => 'sample/gachas/g01/03prize.png', //画像
+                'sorce'        => "3等賞の説明文\n改行", //説明文
+                'gacha_rank_id'=> '103', //ランクID
             ],
             [
-                'image'    => 'sample/gachas/g01/04prize.png', //画像
-                'sorce'    => '4等賞の説明文　https://www.google.co.jp/', //説明文
-                'rank_id'  => 'XD', //ランクID
+                'image'        => 'sample/gachas/g01/04prize.png', //画像
+                'sorce'        => '4等賞の説明文　https://www.google.co.jp/', //説明文
+                'gacha_rank_id'=> '104', //ランクID
             ],
 
         ];

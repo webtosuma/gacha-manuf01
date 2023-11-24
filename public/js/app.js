@@ -6177,6 +6177,78 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    movie_path_mobile: {
+      type: String,
+      "default": ''
+    },
+    movie_path_pc: {
+      type: String,
+      "default": ''
+    },
+    r_action: {
+      type: String,
+      "default": ''
+    }
+  },
+  data: function data() {
+    return {
+      videos: '',
+      form: '',
+      muted: true
+    };
+  },
+  mounted: function mounted() {
+    this.set();
+    console.log(this.videos);
+    this.autoPlay();
+  },
+  methods: {
+    set: function set() {
+      this.videos = document.querySelectorAll('video');
+      this.form = document.querySelector('form');
+    },
+    autoPlay: function autoPlay() {
+      var _this = this;
+      this.videos.forEach(function (video) {
+        // 動画が再生された後にフォーム送信
+        var form = _this.form;
+        video.addEventListener('ended', function () {
+          // フォーム送信
+          form.submit();
+        });
+
+        // メディアの再生を開始
+        video.play();
+
+        // 音声再生
+        _this.muted = false;
+      });
+    },
+    /** 音声切り替え */switchMuted: function switchMuted() {
+      this.muted = !this.muted;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/ResultFormComponent.vue?vue&type=script&lang=js":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/ResultFormComponent.vue?vue&type=script&lang=js ***!
@@ -8522,6 +8594,117 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "mx-auto",
+    staticStyle: {
+      height: "100vh",
+      "min-width": "100vw"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex align-items-center align-items-center h-100 w-100 bg-"
+  }, [_c("div", {
+    staticClass: "section_video w-100"
+  }, [_c("div", {
+    staticClass: "video-area d-md-none"
+  }, [_c("video", {
+    staticClass: "bg_video",
+    attrs: {
+      playsinline: "",
+      width: "100%",
+      height: "",
+      poster: ""
+    },
+    domProps: {
+      muted: _vm.muted
+    }
+  }, [_c("source", {
+    attrs: {
+      src: _vm.movie_path_mobile
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "video-area d-none d-md-block"
+  }, [_c("video", {
+    staticClass: "bg_video",
+    attrs: {
+      playsinline: "",
+      width: "100%",
+      height: "",
+      poster: ""
+    },
+    domProps: {
+      muted: _vm.muted
+    }
+  }, [_c("source", {
+    attrs: {
+      src: _vm.movie_path_pc
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "position-fixed top-0 start-0 p-3"
+  }, [_c("button", {
+    staticClass: "btn btn-light btn-sm float-right py-0 fs-3",
+    attrs: {
+      id: "muteButton"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.switchMuted();
+      }
+    }
+  }, [!_vm.muted ? _c("i", {
+    staticClass: "bi bi-volume-up-fill"
+  }) : _c("i", {
+    staticClass: "bi bi-volume-mute-fill"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "position-fixed bottom-0 end-0 p-3"
+  }, [_c("form", {
+    attrs: {
+      action: _vm.r_action,
+      method: "post"
+    }
+  }, [_c("input", {
+    attrs: {
+      type: "hidden",
+      name: "_token"
+    },
+    domProps: {
+      value: _vm.token
+    }
+  }), _vm._v(" "), _vm._m(0)])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn-light btn-sm flort-right py-0",
+    attrs: {
+      type: "submit"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("span", [_vm._v("演出をスキップ")]), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-skip-end-fill fs-3"
+  })])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/ResultFormComponent.vue?vue&type=template&id=a8f5afd8":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/ResultFormComponent.vue?vue&type=template&id=a8f5afd8 ***!
@@ -9580,6 +9763,9 @@ Vue.component('u-register-form', (__webpack_require__(/*! ./components/auth/Regi
 
 /* パスワード変更フォーム */
 Vue.component('u-reset-password-form', (__webpack_require__(/*! ./components/auth/ResetPasswordFormConpornent.vue */ "./resources/js/components/auth/ResetPasswordFormConpornent.vue")["default"]));
+
+/* 動画自動再生コンポーネント */
+Vue.component('u-movie-play', (__webpack_require__(/*! ./components/gacha/MoviePlayComponent.vue */ "./resources/js/components/gacha/MoviePlayComponent.vue")["default"]));
 
 /* ガチャ結果フォーム */
 Vue.component('u-gacha-result-form', (__webpack_require__(/*! ./components/gacha/ResultFormComponent.vue */ "./resources/js/components/gacha/ResultFormComponent.vue")["default"]));
@@ -32929,6 +33115,45 @@ component.options.__file = "resources/js/components/auth/ResetPasswordFormConpor
 
 /***/ }),
 
+/***/ "./resources/js/components/gacha/MoviePlayComponent.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/gacha/MoviePlayComponent.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MoviePlayComponent_vue_vue_type_template_id_96067e1e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MoviePlayComponent.vue?vue&type=template&id=96067e1e */ "./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e");
+/* harmony import */ var _MoviePlayComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MoviePlayComponent.vue?vue&type=script&lang=js */ "./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MoviePlayComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MoviePlayComponent_vue_vue_type_template_id_96067e1e__WEBPACK_IMPORTED_MODULE_0__.render,
+  _MoviePlayComponent_vue_vue_type_template_id_96067e1e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/gacha/MoviePlayComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/gacha/ResultFormComponent.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/gacha/ResultFormComponent.vue ***!
@@ -33419,6 +33644,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MoviePlayComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MoviePlayComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MoviePlayComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/gacha/ResultFormComponent.vue?vue&type=script&lang=js":
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/gacha/ResultFormComponent.vue?vue&type=script&lang=js ***!
@@ -33783,6 +34024,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MoviePlayComponent_vue_vue_type_template_id_96067e1e__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MoviePlayComponent_vue_vue_type_template_id_96067e1e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MoviePlayComponent_vue_vue_type_template_id_96067e1e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MoviePlayComponent.vue?vue&type=template&id=96067e1e */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e");
 
 
 /***/ }),

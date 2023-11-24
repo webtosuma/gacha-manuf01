@@ -21,6 +21,10 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-reset-password-form',
     require('./components/auth/ResetPasswordFormConpornent.vue').default);
 
+    /* 動画自動再生コンポーネント */
+    Vue.component('u-movie-play',
+    require('./components/gacha/MoviePlayComponent.vue').default);
+
     /* ガチャ結果フォーム */
     Vue.component('u-gacha-result-form',
     require('./components/gacha/ResultFormComponent.vue').default);

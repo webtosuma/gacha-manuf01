@@ -235,7 +235,7 @@
                                 <form action="{{ route('gacha.play', $params) }}" method="post">
                                     @csrf
 
-                                    @if ($gacha->remaining_count >=1) {{--  --}}
+                                    @if ($gacha->remaining_count >=1)
                                         <button type="submit" name="play_count" value="{{ 1 }}"
                                         class="btn btn-light bg-gradient fw-bold w-100
                                         rounded-pill border-secondary border-3"
@@ -255,7 +255,7 @@
                                 <form action="{{ route('gacha.play', $params) }}" method="post">
                                     @csrf
 
-                                    @if ($gacha->remaining_count >=10) {{--  --}}
+                                    @if ($gacha->remaining_count >=10)
                                         <button type="submit" name="play_count" value="{{ 10 }}"
                                         class="btn btn-dark bg-gradient text- fw-bold w-100
                                         rounded-pill border-secondary border-3"

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル
+|  ガチャ　モデル rank
 | =============================================
 */
 class Gacha extends Model
@@ -23,9 +23,9 @@ class Gacha extends Model
         'name',  //名前
         'image', //イメージ画像
         'one_play_point', //1回PLAYポイント数
-        'ten_play_point', //10回PLAYポイント数
         'published_at',//公開設定(利用しない->非公開*消さない)
         'key',   //認証キー
+        'is_day_once' //一日一回のガチャか
     ];
 
 
@@ -65,7 +65,7 @@ class Gacha extends Model
         public function discriptions()
         {
             return $this->hasMany(GachaDiscription::class,'gacha_id')
-            ->orderBy('rank_id','asc'); //ランク順
+            ->orderBy('gacha_rank_id','asc'); //ランク順
         }
 
 
@@ -76,7 +76,7 @@ class Gacha extends Model
         public function g_prizes()
         {
             return $this->hasMany(GachaPrize::class,'gacha_id')
-            ->orderBy('rank_id','asc'); //ランク順
+            ->orderBy('gacha_rank_id','asc'); //ランク順
         }
 
 
@@ -131,6 +131,55 @@ class Gacha extends Model
             $max       = $this->max_count;
             $remaining = $this->remaining_count;
             return $max>0 ? ( ($remaining/$max) * 100 ) : 0 ;
+        }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * RankA 景品
+         * @return String
+        */
+        public function getRankAPrizesAttribute()
+        {
+            return GachaPrize::where('gacha_id',$this->id)
+            ->where('gacha_rank_id',101)
+            ->get();
+        }
+        /**
+         * RankB 景品
+         * @return String
+        */
+        public function getRankBPrizesAttribute()
+        {
+            return GachaPrize::where('gacha_id',$this->id)
+            ->where('gacha_rank_id',102)
+            ->get();
+        }
+        /**
+         * RankC 景品
+         * @return String
+        */
+        public function getRankCPrizesAttribute()
+        {
+            return GachaPrize::where('gacha_id',$this->id)
+            ->where('gacha_rank_id',103)
+            ->get();
+        }
+        /**
+         * RankD 景品
+         * @return String
+        */
+        public function getRankDPrizesAttribute()
+        {
+            return GachaPrize::where('gacha_id',$this->id)
+            ->where('gacha_rank_id',104)
+            ->get();
         }
 
 }

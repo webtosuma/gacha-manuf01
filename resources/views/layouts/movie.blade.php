@@ -27,7 +27,6 @@
         </div>
     </main>
     <!-- bootstrap JavaScript -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     @yield('script')
     <script src="{{ asset('js/app.js') }}" defer></script>
 

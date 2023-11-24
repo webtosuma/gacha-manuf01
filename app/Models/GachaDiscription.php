@@ -19,7 +19,7 @@ class GachaDiscription extends Model
        'gacha_id', //ガチャリレーション
        'image',//画像
        'sorce',//説明文
-       'rank_id',//ランクID
+       'gacha_rank_id',//ランクID
     ];
 
 

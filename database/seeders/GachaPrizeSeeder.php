@@ -34,9 +34,9 @@ class GachaPrizeSeeder extends Seeder
      */
     public function create( $gacha )
     {
-        # XAランク景品の登録
+        # 101ランク景品の登録
 
-            $rank_id = 'XA';
+            $gacha_rank_id = '101';
             $prize_lank_id = 1;
 
             $prizes = Prize::inRandomOrder()
@@ -47,16 +47,16 @@ class GachaPrizeSeeder extends Seeder
                 $gacha_prize = new GachaPrize([
                     'gacha_id'        => $gacha->id, //ガチャの種類リレーション
                     'prize_id'        => 1, //景品リレーション
-                    'rank_id'         => $rank_id, //ランクID
+                    'gacha_rank_id'   => $gacha_rank_id, //ランクID
                     'max_count'       => 1, //景品総数
                     'remaining_count' => 1, //景品残数
                 ]);
                 $gacha_prize->save();
             }
 
-        # XBランク景品の登録
+        # 102ランク景品の登録
 
-            $rank_id = 'XB';
+            $gacha_rank_id = '102';
             $prize_lank_id = 2;
 
             $prizes = Prize::inRandomOrder()
@@ -67,16 +67,16 @@ class GachaPrizeSeeder extends Seeder
                 $gacha_prize = new GachaPrize([
                     'gacha_id'        => $gacha->id, //ガチャの種類リレーション
                     'prize_id'        => $prize->id, //景品リレーション
-                    'rank_id'         => $rank_id, //ランクID
+                    'gacha_rank_id'   => $gacha_rank_id, //ランクID
                     'max_count'       => 1, //景品総数
                     'remaining_count' => 1, //景品残数
                 ]);
                 $gacha_prize->save();
             }
 
-        # XCランク景品の登録
+        # 103ランク景品の登録
 
-            $rank_id = 'XC';
+            $gacha_rank_id = '103';
             $prize_lank_id = 3;
 
             $prizes = Prize::inRandomOrder()
@@ -87,16 +87,16 @@ class GachaPrizeSeeder extends Seeder
                 $gacha_prize = new GachaPrize([
                     'gacha_id'        => $gacha->id, //ガチャの種類リレーション
                     'prize_id'        => $prize->id, //景品リレーション
-                    'rank_id'         => $rank_id, //ランクID
+                    'gacha_rank_id'   => $gacha_rank_id, //ランクID
                     'max_count'       => 1, //景品総数
                     'remaining_count' => 1, //景品残数
                 ]);
                 $gacha_prize->save();
             }
 
-        # XDランク景品の登録
+        # 104ランク景品の登録
 
-            $rank_id = 'XD';
+            $gacha_rank_id = '104';
             $prize_lank_id = 4;
 
             $prizes = Prize::inRandomOrder()
@@ -107,7 +107,7 @@ class GachaPrizeSeeder extends Seeder
                 $gacha_prize = new GachaPrize([
                     'gacha_id'        => $gacha->id, //ガチャの種類リレーション
                     'prize_id'        => $prize->id, //景品リレーション
-                    'rank_id'         => $rank_id, //ランクID
+                    'gacha_rank_id'   => $gacha_rank_id, //ランクID
                     'max_count'       => 18, //景品総数
                     'remaining_count' => 18, //景品残数
                 ]);

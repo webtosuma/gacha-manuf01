@@ -29,7 +29,7 @@ class PrizeRankSeeder extends Seeder
 
 
 
-        /**
+    /**
      * サイト管理者情報
      *
      * @return Array
@@ -42,7 +42,7 @@ class PrizeRankSeeder extends Seeder
                 'order'  => 11,
             ],
             [
-                'name'   => 'RankSS',
+                'name'   => 'RankS',
                 'order'  => 12,
             ],
             [

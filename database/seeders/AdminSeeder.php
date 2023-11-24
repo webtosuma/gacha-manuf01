@@ -28,8 +28,6 @@ class AdminSeeder extends Seeder
             $user = new \App\Models\User($data['user']);
             $user->save();
 
-
-
             # adminデータの保存
             $admin_data = $data['admin'];
             $admin_data['user_id'] = $user->id;
@@ -48,7 +46,16 @@ class AdminSeeder extends Seeder
                 'is_default'  => 1,//デフォルトの送信先か否か
             ]);
             $user_address->save();
-            //
+
+            # ポイント付与
+            $point_history = new \App\Models\PointHistory([
+                'user_id'   => $user->id,          //ユーザー　リレーション
+                'value'     => 1000000, //ポイント数
+                'reason_id' => 13 //入出理由ID
+            ]);
+            $point_history->save();
+
+
         }
     }
 

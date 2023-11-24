@@ -100,6 +100,9 @@ class GachaController extends Controller
     {
         if( $gacha->key!=$key ){ return \App::abort(404); }
 
+
+
+        // dd($gacha->rank_ss_prizes);
         return view('gacha.show', compact( 'gacha' ));
     }
 

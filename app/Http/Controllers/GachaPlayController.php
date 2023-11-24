@@ -27,38 +27,63 @@ class GachaPlayController extends Controller
     {
         return [
 
-            'XA' => [
-                'site/movie/pcwarp_rainbow.mp4',
-            ],
-            'XB' => [
-                'site/movie/pcwarp_rainbow.mp4',
-                // 'site/movie/pcwarp_gold.mp4',
-            ],
-            'XC' => [
-                'site/movie/pcwarp_rainbow.mp4',
-                // 'site/movie/pcwarp_red.mp4',
-            ],
-            'XD' => [
-                'site/movie/pcwarp_rainbow.mp4',
-                // 'site/movie/pcwarp_normal.mp4',
-            ],
+            '101' => [
+                [
+                    'pc'     => 'site/movie/pc/101/01.mp4',
+                    'mobile' => 'site/movie/mobile/101/01.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/101/02.mp4',
+                    'mobile' => 'site/movie/mobile/101/02.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/101/03.mp4',
+                    'mobile' => 'site/movie/mobile/101/03.mp4',
+                ],
 
-            'MXA' => [
-                'site/movie/warp_rainbow.mp4',
             ],
-            'MXB' => [
-                'site/movie/warp_rainbow.mp4',
-                // 'site/movie/warp_gold.mp4',
+            '102' => [
+                [
+                    'pc'     => 'site/movie/pc/102/01.mp4',
+                    'mobile' => 'site/movie/mobile/102/01.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/102/01.mp4',
+                    'mobile' => 'site/movie/mobile/102/02.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/102/01.mp4',
+                    'mobile' => 'site/movie/mobile/102/03.mp4',
+                ],
             ],
-            'MXC' => [
-                'site/movie/warp_rainbow.mp4',
-                // 'site/movie/warp_red.mp4',
+            '103' => [
+                [
+                    'pc'     => 'site/movie/pc/103/01.mp4',
+                    'mobile' => 'site/movie/mobile/103/01.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/103/01.mp4',
+                    'mobile' => 'site/movie/mobile/103/02.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/103/01.mp4',
+                    'mobile' => 'site/movie/mobile/103/03.mp4',
+                ],
             ],
-            'MXD' => [
-                'site/movie/warp_rainbow.mp4',
-                // 'site/movie/warp_normal.mp4',
+            '104' => [
+                [
+                    'pc'     => 'site/movie/pc/104/01.mp4',
+                    'mobile' => 'site/movie/mobile/104/01.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/104/02.mp4',
+                    'mobile' => 'site/movie/mobile/104/02.mp4',
+                ],
+                [
+                    'pc'     => 'site/movie/pc/104/03.mp4',
+                    'mobile' => 'site/movie/mobile/104/03.mp4',
+                ],
             ],
-
         ];
     }
 
@@ -73,8 +98,9 @@ class GachaPlayController extends Controller
      */
     public function play(Request $request, $category_code, Gacha $gacha, $key)
     {
-
-        // dd($gacha->g_prizes[0]->rank_id);
+        // $user_gacha_history = UserGachaHIstory::first();
+        // $movie_path = self::MoviePath('XA');
+        // return view('gacha.play', compact('user_gacha_history', 'movie_path' ));
 
 
         # 変数
@@ -283,12 +309,12 @@ class GachaPlayController extends Controller
      * @param  Array $randReminingGPIdArray
      * @return String
     */
-    public function MaxRank( $randReminingGPIdArray ){
-
-        $gacha_prizes = GachaPrize::orderBy('rank_id','asc')//ランクが高い順
+    public function MaxRank( $randReminingGPIdArray )
+    {
+        $gacha_prizes = GachaPrize::orderBy('gacha_rank_id','asc')//ランクが高い順
         ->find($randReminingGPIdArray);
 
-        return $gacha_prizes[0]->rank_id;
+        return $gacha_prizes[0]->gacha_rank_id;
     }
 
 
@@ -301,14 +327,13 @@ class GachaPlayController extends Controller
     */
     public function MoviePath( $max_rank )
     {
-        $movies = self::Movies();
-
-        $pc_movies = $movies[ $max_rank ];
-        $m_movies  = $movies[ 'M'.$max_rank ];
+        $all_movies  = self::Movies();
+        $rank_movies = $all_movies[ $max_rank ]; //ランク別画像
+        $movies      = $rank_movies[ rand( 0, count($rank_movies)-1 ) ];
 
         return [
-            'pc'     => asset('storage/'.$pc_movies[ rand( 0, count($pc_movies)-1 ) ] ),
-            'mobile' => asset('storage/'.$m_movies[  rand( 0, count($m_movies)-1 ) ] ),
+            'pc'     => asset( 'storage/'.$movies['pc'] ),
+            'mobile' => asset( 'storage/'.$movies['mobile'] ),
         ];
 
     }
@@ -329,7 +354,6 @@ class GachaPlayController extends Controller
         # ガチャの商品：残数の更新
         $gacha_prize->remaining_count --;
         $gacha_prize->save();
-        // dd($gacha_prize);
 
 
         # ユーザー取得商品の登録

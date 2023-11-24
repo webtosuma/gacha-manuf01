@@ -28,7 +28,7 @@ class PrizeSeeder extends Seeder
                 'code'            => sprintf('xa-%02d',$i),//景品コード
                 'name'            => sprintf('xa-%02dカード名',$i),//名前
                 'image'           => sprintf($path.'%02d.png',$i),//画像
-                'rank_id'         => '1',//ランクID
+                'rank_id'         => 1,//ランクID
                 'point'           => 1000,//交換ポイント値
                 'point_updated_at'=> now(),//交換ポイント値更新日時
                 'published_at'    => now(),//公開日時
@@ -44,7 +44,7 @@ class PrizeSeeder extends Seeder
                 'code'            => sprintf('xb-%02d',$i),//景品コード
                 'name'            => sprintf('xb-%02dカード名',$i),//名前
                 'image'           => sprintf($path.'%02d.png',$i),//画像
-                'rank_id'         => '2',//ランクID
+                'rank_id'         => 2,//ランクID
                 'point'           => 500,//交換ポイント値
                 'point_updated_at'=> now(),//交換ポイント値更新日時
                 'published_at'    => now(),//公開日時
@@ -60,7 +60,7 @@ class PrizeSeeder extends Seeder
                 'code'            => sprintf('xc-%02d',$i),//景品コード
                 'name'            => sprintf('xc-%02dカード名',$i),//名前
                 'image'           => sprintf($path.'%02d.png',$i),//画像
-                'rank_id'         => '3',//ランクID
+                'rank_id'         => 3,//ランクID
                 'point'           => 100,//交換ポイント値
                 'point_updated_at'=> now(),//交換ポイント値更新日時
                 'published_at'    => now(),//公開日時
@@ -76,7 +76,7 @@ class PrizeSeeder extends Seeder
                 'code'            => sprintf('xd-%02d',$i),//景品コード
                 'name'            => sprintf('xd-%02dカード名',$i),//名前
                 'image'           => sprintf($path.'%02d.png',$i),//画像
-                'rank_id'         => '4',//ランクID
+                'rank_id'         => 4,//ランクID
                 'point'           => 50,//交換ポイント値
                 'point_updated_at'=> now(),//交換ポイント値更新日時
                 'published_at'    => now(),//公開日時
