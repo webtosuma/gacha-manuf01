@@ -174,6 +174,23 @@ use \App\Http\Controllers;
 
         });//end middleware
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | ポイント売上
+    | AdminPointHistoryController
+    |--------------------------------------------------------------------------
+    */
+        Route::middleware(['admin_auth'])->group(function () {
+
+            Route::get('/admin/point_history/{month_text?}',
+            [Controllers\AdminPointHistoryController ::class, 'index'])
+            ->where('month_text', '[0-9]{4}-[0-9]{2}-01')
+            ->name('admin.point_history');
+
+        });
+
+
     /*
     |--------------------------------------------------------------------------
     | 管理者ページ

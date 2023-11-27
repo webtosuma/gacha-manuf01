@@ -58,6 +58,13 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('a-plize-list',
     require('./components/admin/prize/Index.vue').default);
 
+    /* ポイント売上 */
+    // 年月選択
+    Vue.component('a-pointhistory-selectmonth',
+    require('./components/admin/point_history/SelectMonth.vue').default);
+    // グラフ
+    Vue.component('a-pointhistory-chart',
+    require('./components/admin/point_history/Chart.vue').default);
 
 /*
 |=============================================

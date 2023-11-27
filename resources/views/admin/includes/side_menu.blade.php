@@ -21,8 +21,8 @@ $menu_array = [
         'label' => 'ポイント管理',
     ],
     [
-        'route' => '#',
-        'key'   => 'earnings',
+        'route' => route('admin.point_history'),
+        'key'   => 'point_history',
         'icon'  => 'bi-graph-up',
         'label' => 'ポイント売上',
     ],

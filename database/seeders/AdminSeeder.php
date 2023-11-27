@@ -55,7 +55,21 @@ class AdminSeeder extends Seeder
             ]);
             $point_history->save();
 
+            $point_history = new \App\Models\PointHistory([
+                'user_id'   => $user->id,          //ユーザー　リレーション
+                'value'     => 10000, //ポイント数
+                'price'     => 10000,
+                'reason_id' => 11 //入出理由ID
+            ]);
+            $point_history->save();
 
+            $point_history = new \App\Models\PointHistory([
+                'user_id'   => $user->id,          //ユーザー　リレーション
+                'value'     => 50000, //ポイント数
+                'price'     => 50000,
+                'reason_id' => 11 //入出理由ID
+            ]);
+            $point_history->save();
         }
     }
 
