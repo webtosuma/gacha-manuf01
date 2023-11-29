@@ -12,6 +12,7 @@ use App\Models\UserPrize;
 use App\Models\UserAddress;
 use App\Models\PointHistory;
 use App\Models\UserShipped;
+use App\Models\Prize;
 /*
 | =============================================
 |  発送申請 コントローラー
@@ -66,7 +67,14 @@ class ShippedAppliController extends Controller
         if( !$user_prizes->count() ){ return \App::abort(404); }//データがないとき
 
 
-        return view('shipped.appli.confirm',compact('user_address','user_prizes'));
+        # 発送する商品:種類別($shipped_prizes)
+        $id_array = $user_prizes->pluck('prize_id')->toArray();
+        $shipped_prizes = Prize::find( $id_array );//カードの重複除去
+        foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
+            $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
+        }
+
+        return view('shipped.appli.confirm',compact('user_address','user_prizes', 'shipped_prizes' ) );
     }
 
 

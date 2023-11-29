@@ -1,5 +1,5 @@
 @php
-$active_class = "text-primary fw-bold border-bottom border-start border-top border-primary border-2 bg-white active_menu disabled";
+$active_class = "text-primary fw-bold border-end border-bottom border-start border-top border-primary border-2 bg-white active_menu disabled";
 
 $menu_array = [
     [
@@ -39,31 +39,55 @@ $menu_array = [
         'label' => '登録ユーザー',
     ],
     [
-        'route' => '',
-        'key'   => '',
+        'route' => route('admin.contact'),
+        'key'   => 'contact',
+        'icon'  => 'bi-telephone',
+        'label' => 'お問い合わせ',
+    ],
+    [
+        'route' => route('admin.register'),
+        'key'   => 'register',
         'icon'  => 'bi-person-circle',
         'label' => 'サイト管理者',
     ],
 ];
 @endphp
-<div class="d-flex flex-column justify-content-between py-3">
+<div class="d-flex flex-column justify-content-between py-3 px-2">
     <div class="border-bottom bg-body" id="sideMenuAccordion">
         @foreach ($menu_array as $menu)
             @php
-            $icon_class = $menu['icon']." text-primary bi fs-4 me-3";
-            $style_class = 'list-group-item border-0 p-2 ps-3 pe-5 w-100 '.( isset($active_key)&&$active_key==$menu['key'] ? $active_class :  '')
+            $icon_class = $menu['icon']." text-primary bi fs-4";
+            $style_class = 'list-group-item border-0 p-2 px-3 w-100 '.( isset($active_key)&&$active_key==$menu['key'] ? $active_class :  '')
             @endphp
 
             <a href="{{ $menu['route'] }}"
             class="{{$style_class}}"
-            style="border-radius: 2rem 0 0 2rem;"
-            ><i class="{{$icon_class}}"></i>{{ $menu['label'] }}</a>
+            style="border-radius: 2rem  2rem;">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="{{$icon_class}}"></i>
+                    <span>{{ $menu['label'] }}</span>
+
+                    @php $waiting_shippeds_count = Auth()->user()->admin->waiting_shippeds->count(); @endphp
+                    @if ( $menu['key']=='shipped' && $waiting_shippeds_count )
+                        <!--商品　未発送数-->
+                        <span class="badge rounded-pill bg-warning">{{$waiting_shippeds_count}}</span>
+                    @endif
+
+
+                    @php $unresponsed_contacts_count = Auth()->user()->admin->unresponsed_contacts->count(); @endphp
+                    @if ( $menu['key']=='contact' && $unresponsed_contacts_count )
+                        <!--お問い合わせ　未対応-->
+                        <span class="badge rounded-pill bg-warning">{{$unresponsed_contacts_count}}</span>
+                    @endif
+
+                </div>
+            </a>
         @endforeach
 
 
         <form action="{{ route('admin_auth.logout') }}" method="POST">
             @csrf
-            <button  class="list-group-item border-0 p-2 ps-3 pe-5 w-100 text-start" type="submit">
+            <button  class="list-group-item border-0 p-2 px-3 w-100 text-start" type="submit">
                 <i class="bi bi-box-arrow-right fs-4 me-3"></i>
                 {{ __('ログアウト') }}
             </button>

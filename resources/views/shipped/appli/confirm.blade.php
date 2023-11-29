@@ -9,9 +9,9 @@
     <div class="container mt-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('user_prize') }}">取得した商品</a></li>
-            <li class="breadcrumb-item active" aria-current="page">発送申請</li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('user_prize') }}">取得した商品</a></li>
+                <li class="breadcrumb-item active" aria-current="page">発送申請</li>
             </ol>
         </nav>
     </div>
@@ -24,61 +24,15 @@
             @csrf
             @method('POST')
 
-            <div class="mx-auto" style="max-width:900px;">
+            <div class="mx-auto mt-5" style="max-width:900px;">
+
+                <h5 class="text-primary text-center">
+                    *内容をご確認の上、発送申請を確定させてください。
+                </h5>
 
                 <!-- お届け先と利用ポイント -->
                 <section class="my-4">
-                    <ul class="list-group bg-white">
-                        <li class="list-group-item p-4 text-center">
-                            <span class="text-primary fs-5">*内容をご確認の上、発送申請を確定させてください。</span>
-                        </li>
-                        <li class="list-group-item p-3">
-                            <h5>お届け先住所</h5>
-                        <input type="hidden" name="user_address_id" value="{{ $user_address->id }}">
-                            <div class="fw-bold">
-                                {{ $user_address->name }} 様
-                            </div>
-                            <div class="fw-bold">
-                                <span>{{ '〒'.$user_address->postal_code }}</span>
-                                <span>{{ $user_address->todohuken }}</span>
-                                <span>{{ $user_address->shikuchoson }}</span>
-                                <span>{{ $user_address->number }}</span>
-                        </div>
-                        </li>
-                        <li class="list-group-item p-3">
-                            <h5>利用ポイント</h5>
-                            <div class="d-flex justify-content-between">
-                                <span class="form-text">配送料・手数料：</span>
-                                <span>0pt</span>
-                            </div>
-                            <div class="d-flex justify-content-between fs-5 fw-bold">
-                                <span class="">合計利用ポイント：</span>
-                                <span class="text-danger">0pt</span>
-                            </div>
-                        </li>
-                        <li class="list-group-item p-3">
-                            <h5>発送する商品</h5>
-
-                        <div class="row p-3">
-                            @foreach ($user_prizes as $user_prize)
-                                <input type="hidden" name="user_prize_ids[]" value="{{ $user_prize->id }}">
-
-                                <div class="col-3 col-md-2 p-0 pe-2">
-                                    <div class="">
-                                        <ratio-image-component
-                                        style_class="ratio ratio-3x4 rounded-3"
-                                        url="{{ $user_prize->prize->image_path }}" />
-                                    </div>
-                                    <h6 classs="form-text">{{ $user_prize->prize->name }}</h6>
-                                </div>
-                            @endforeach
-                        </div>
-                            <div class="text-end">
-                                <span class="me-3">合計</span>
-                                <span class="fs-3">{{ $user_prizes->count() }}</span>点
-                            </div>
-                        </li>
-                    </ul>
+                    @include('shipped.common.confirm_list')
                 </section>
 
 

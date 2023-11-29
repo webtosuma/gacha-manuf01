@@ -99,6 +99,14 @@ class User extends Authenticatable
         }
 
 
+        /**
+         * UserPrizeモデル リレーション ($user->u_prizes)
+         * @return \App\Models\UserPrize
+        */
+        public function u_prizes()
+        {
+            return $this->hasMany(UserPrize::class,'user_id');
+        }
 
     /*
     |--------------------------------------------------------------------------

@@ -164,34 +164,34 @@ Route::get('/', function(){
 
 /*
 |--------------------------------------------------------------------------
-| 発送申請履歴 ShippedController　ShippedAppliController
+| 発送申請履歴 ShippedWaitingController ShippedSentController
 |--------------------------------------------------------------------------
 */
     Route::middleware(['auth'])->group(function () {
 
-        Route::get('shipped', //発送申請履歴・発送中へリダイレクト
-        function () { return redirect()->route('shipped.current'); })
+        Route::get('shipped', //発送申請履歴・発送待ちへリダイレクト
+        function () { return redirect()->route('shipped.waiting'); })
         ->name('shipped');
 
-        # 発送申請履歴・発送中
-        Route::get('shipped/current',
-        [Controllers\ShippedController::class, 'current'])
-        ->name('shipped.current');
+        # 発送申請履歴・発送待ち
+        Route::get('shipped/waiting',
+        [Controllers\ShippedWaitingController::class, 'index'])
+        ->name('shipped.waiting');
 
-            # 発送申請履歴・発送中　詳細
-            Route::get('shipped/current/{user_shipped}',
-            [Controllers\ShippedController::class, 'current_show'])
-            ->name('shipped.current.show');
+            # 発送申請履歴・発送待ち　詳細
+            Route::get('shipped/waiting/{user_shipped}',
+            [Controllers\ShippedWaitingController::class, 'show'])
+            ->name('shipped.waiting.show');
 
-        # 発送申請履歴・完了済　
-        Route::get('shipped/comp',
-        [Controllers\ShippedController::class, 'comp'])
-        ->name('shipped.comp');
+        # 発送申請履歴・発送済み
+        Route::get('shipped/send',
+        [Controllers\ShippedSendController::class, 'index'])
+        ->name('shipped.send');
 
-            # 発送申請履歴・完了済　詳細
-            Route::get('shipped/comp/{user_shipped}',
-            [Controllers\ShippedController::class, 'comp_show'])
-            ->name('shipped.current.show');
+            # 発送申請履歴・発送済み　詳細
+            Route::get('shipped/send/{user_shipped}',
+            [Controllers\ShippedSendController::class, 'show'])
+            ->name('shipped.send.show');
         //
     });
 /*
@@ -246,15 +246,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/contact', function(){ return view('footer_menu.contact.index'); })
     ->name('contact');
 
-        # お問い合わせコンポーネント用データAPI(component_data_api)
-        Route::post('/contact/component_data_api',
-        [Controllers\ContactController::class, 'component_data_api'])
-        ->name('contact.component_data_api');
+        # お問い合わせ[バリデーション]API(component_data_api)
+        Route::post('/contact/api/validation',
+        [Controllers\ContactController::class, 'validation'])
+        ->name('api.contact.validation');
 
         # お問い合わせ[完了]API(completion_api)
-        Route::post('contact/completion_api',
-        [Controllers\ContactController::class, 'completion_api'])
-        ->name('contact.completion_api');
+        Route::post('contact/api/completion',
+        [Controllers\ContactController::class, 'completion'])
+        ->name('api.contact.completion');
 
 
 

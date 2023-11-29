@@ -27,6 +27,7 @@
     <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
     <style>
         a{ text-decoration: none; }
+        th,td{ background-color: #fff !important; }
         /* サイトデフォルト背景 */
         body{
             background: no-repeat center center / cover fixed;

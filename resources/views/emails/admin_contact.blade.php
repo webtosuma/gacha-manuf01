@@ -13,11 +13,7 @@
 
     <div>---------- お問い合わせ内容 ----------</div>
     <br>
-    <div>お問い合わせの種類：{{$type_text}}</div>
-    <br>
     <div>氏名：{{$name}}</div>
-    <br>
-    <div>会社名：{{ $company ? $company : '※未入力' }}</div>
     <br>
     <div>メールアドレス：{{$email}}</div>
     <br>

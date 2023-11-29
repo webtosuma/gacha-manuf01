@@ -100,4 +100,24 @@ class Admin extends Model
         {
             return \App\Models\User::find($this->user_id)->email;
         }
+
+
+        /**
+         * 発送待ち商品[サイドメニュー] $admin->waiting_shippeds
+         * @return String
+        */
+        public function  getWaitingShippedsAttribute()
+        {
+            $state_id = 11;
+            return UserShipped::where('state_id', $state_id)->get();
+        }
+
+        /**
+         * 未対応お問い合わせ[サイドメニュー] $admin->unresponsed_contacts
+         * @return String
+        */
+        public function  getUnresponsedContactsAttribute()
+        {
+            return Contact::where('responsed',0)->get();
+        }
 }

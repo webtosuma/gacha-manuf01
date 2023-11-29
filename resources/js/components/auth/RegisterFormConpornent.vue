@@ -163,7 +163,7 @@
                     }
                     //その他のエラー
                     else{ alert('データ送信エラーが発生しました。'); }
-                    console.log( error.response.data );
+                    // console.log( error.response.data );
 
                 });
 

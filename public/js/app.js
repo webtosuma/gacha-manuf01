@@ -5199,6 +5199,10 @@ __webpack_require__.r(__webpack_exports__);
     button_class: {
       type: String,
       "default": 'btn btn-primary'
+    },
+    func_btn_type: {
+      type: String,
+      "default": 'button'
     }
   },
   data: function data() {
@@ -5735,6 +5739,124 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/contact/ListComponent.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/contact/ListComponent.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    r_api_list: {
+      type: String,
+      "default": ''
+    },
+    //一覧表示
+    r_api_update: {
+      type: String,
+      "default": ''
+    },
+    r_api_destroy: {
+      type: String,
+      "default": ''
+    }
+  },
+  data: function data() {
+    return {
+      test: false,
+      loading: true,
+      /* データリスト */
+      contacts: [],
+      inputs: {}
+    };
+  },
+  mounted: function mounted() {
+    this.inputs._token = this.token; //token保存
+
+    /* お問い合わせデータの取得 */
+    this.getContactList();
+  },
+  methods: {
+    /** お問い合わせデータの取得route_list */
+    getContactList: function getContactList() {
+      var _this = this;
+      // [ 非同期通信 ]
+      var route = this.r_api_list;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
+        // console.log(json.data);
+
+        // データの保存
+        _this.contacts = json.data;
+
+        // 読み込み完了
+        _this.loading = false;
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        console.log(error.response.data);
+      });
+    },
+    /** 対応状況の変更 */
+    responsed: function responsed(id, _responsed) {
+      // [ 非同期通信 ]
+      var route = this.r_api_update + '/' + id;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().patch(route, _objectSpread({
+        responsed: _responsed ? 1 : 0
+      }, this.inputs)).then(function (json) {
+
+        // 保存状態の変更
+        // console.log( json );
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        // console.log( error.response.data );
+      });
+    },
+
+    /** お問い合わせの削除 */
+    destroy: function destroy(id) {
+      var _this2 = this;
+      // [ 非同期通信 ]
+      var route = this.r_api_destroy + '/' + id;
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](route, this.inputs).then(function (json) {
+        /* お問い合わせデータの取得 */
+        _this2.getContactList();
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        console.log(error.response.data);
+      });
+    },
+    /** 日時間データをテクスト変換  */formatAt: function formatAt(inputString) {
+      var date = new Date(inputString);
+      var year = date.getFullYear();
+      var month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
+      var day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
+      var hours = String(date.getHours()).padStart(2, '0'); // 時間も2桁にパディング
+      var minutes = String(date.getMinutes()).padStart(2, '0'); // 分も2桁にパディング
+
+      return "".concat(year, "/").concat(month, "/").concat(day, " ").concat(hours, ":").concat(minutes);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js ***!
@@ -6150,9 +6272,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         else {
           alert('データ送信エラーが発生しました。');
         }
-        console.log(error.response.data);
+        // console.log( error.response.data );
       });
     },
+
     /* 次へメソッド */
     addCardNum: function addCardNum() {
       this.card_num++;
@@ -6324,6 +6447,144 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     /* 離脱防止アラートの解除 */
     stopOnbeforeunload: function stopOnbeforeunload() {
       window.onbeforeunload = null;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    r_api_validation: {
+      type: String,
+      "default": ''
+    },
+    r_api_completion: {
+      type: String,
+      "default": ''
+    },
+    r_privacy_policy: {
+      type: String,
+      "default": ''
+    },
+    r_top: {
+      type: String,
+      "default": ''
+    }
+  },
+  data: function data() {
+    return {
+      loading: false,
+      /* 通信中 */
+
+      /* 表示中ステップ番号 */
+      step_num: 1,
+      /* 入力内容 */
+      inputs: {
+        _token: '',
+        name: '',
+        email: '',
+        tell: '',
+        body: '',
+        agree: false // プライバシーポリシー同意
+
+        // name : 'ホゲ', //氏名
+        // email: 't.sakai@tosuma.ltd', //メールアドレス(半角英数)
+        // tell : '09011112222', //電話番号(半角数字)
+        // body : 'hoge', //お問い合わせ内容
+        // agree: true, // プライバシーポリシー同意
+      },
+
+      /* エラー内容 length */
+      errors: {}
+    };
+  },
+  mounted: function mounted() {
+    //tokenのセット
+    this.inputs._token = this.token;
+  },
+  methods: {
+    /* ステップ01完了 */
+    step01: function step01() {
+      var _this = this;
+      this.loading = true; // 通信中
+
+      this.inputs.agree = this.inputs.agree ? 'on' : ''; //同意チェック
+
+      var route = this.r_api_validation;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
+        // console.log(json.data);
+
+        _this.loading = false; // 通信中
+        _this.addStepNum();
+      })["catch"](function (error) {
+        //バリデーション結果の受け取り
+        if (error.response.status == 422) {
+          // console.log( error.response.data.errors );
+          _this.errors = error.response.data.errors;
+          _this.loading = false; // 通信中
+        }
+        //その他のエラー
+        else {
+          alert('データ送信エラーが発生しました。');
+        }
+        // console.log( error.response.data );
+      });
+    },
+
+    /* ステップ02完了 */
+    step02: function step02() {
+      var _this2 = this;
+      this.loading = true; // 通信中
+
+      var route = this.r_api_completion;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
+        // console.log(json.data);
+
+        _this2.loading = false; // 通信中
+        _this2.addStepNum();
+      })["catch"](function (error) {
+        alert('データ送信エラーが発生しました。');
+        // console.log( error.response.data );
+      });
+    },
+
+    /* 次へメソッド */
+    addStepNum: function addStepNum() {
+      this.step_num++;
+      window.scroll({
+        top: 0,
+        behavior: 'smooth'
+      });
+    },
+    /* 前へメソッド */
+    subStepNum: function subStepNum() {
+      this.step_num--;
+      window.scroll({
+        top: 0,
+        behavior: 'smooth'
+      });
+    },
+    windowOpen: function windowOpen() {
+      window.open(this.privacy_policy);
     }
   }
 });
@@ -7242,7 +7503,7 @@ var render = function render() {
     staticClass: "btn text-white w-100",
     "class": "btn-" + _vm.color,
     attrs: {
-      type: "button",
+      type: _vm.func_btn_type,
       "data-bs-dismiss": "modal"
     },
     on: {
@@ -7717,6 +7978,232 @@ var render = function render() {
   });
 };
 var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/contact/ListComponent.vue?vue&type=template&id=4a5e3f16":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/contact/ListComponent.vue?vue&type=template&id=4a5e3f16 ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", [_vm.loading ? _c("div", {
+    staticClass: "card card-body py-5"
+  }, [_vm._m(0), _vm._v(" "), _c("h2", {
+    staticClass: "text-center"
+  }, [_vm._v("読み込み中")])]) : !_vm.contacts.length ? _c("div", {
+    staticClass: "card card-body py-5"
+  }, [_c("h5", {
+    staticClass: "text-center"
+  }, [_vm._v("お問い合わせ情報はありません")])]) : _c("div", {
+    staticClass: "list-group"
+  }, _vm._l(_vm.contacts, function (contact, dKey) {
+    return _c("div", {
+      key: dKey,
+      staticClass: "list-group-item list-group-item-action p-0 d-flex"
+    }, [_c("a", {
+      staticClass: "d-block p-3 py-2 col text-dark text-decoration-none",
+      attrs: {
+        href: "#",
+        "data-bs-toggle": "offcanvas",
+        "data-bs-target": "#contactListOffcanvas" + dKey,
+        "aria-controls": "contactListOffcanvas" + dKey
+      }
+    }, [_c("div", {
+      staticClass: "row"
+    }, [_c("div", {
+      staticClass: "col-auto"
+    }, [contact.responsed ? _c("span", {
+      staticClass: "badge text-secondary"
+    }, [_vm._v("対応済")]) : _c("span", {
+      staticClass: "badge bg-danger"
+    }, [_vm._v("未対応")])]), _vm._v(" "), _c("div", {
+      staticClass: "col-auto"
+    }, [_vm._v(_vm._s(_vm.formatAt(contact.created_at)))]), _vm._v(" "), _c("div", {
+      staticClass: "col d-none d-md-block overflow-hidden"
+    }, [_c("span", {
+      staticClass: "d-inline-block text-truncate",
+      staticStyle: {
+        width: "200px"
+      }
+    }, [_vm._v("\n                                " + _vm._s(contact.name) + "様\n                            ")])])])]), _vm._v(" "), _c("div", {
+      staticClass: "col-auto"
+    }, [_c("div", {
+      staticClass: "dropdown"
+    }, [_c("button", {
+      staticClass: "btn",
+      attrs: {
+        type: "button",
+        id: "contactDropdownMenuButton" + dKey,
+        "data-bs-toggle": "dropdown",
+        "aria-expanded": "false"
+      }
+    }, [_vm._m(1, true)]), _vm._v(" "), _c("ul", {
+      staticClass: "dropdown-menu",
+      attrs: {
+        "aria-labelledby": "contactDropdownMenuButton" + dKey
+      }
+    }, [_c("li", [_c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: "#"
+      },
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.destroy(contact.id);
+        }
+      }
+    }, [_vm._v("削除")])])])])]), _vm._v(" "), _c("div", {
+      staticClass: "offcanvas offcanvas-end",
+      staticStyle: {
+        width: "600px"
+      },
+      attrs: {
+        tabindex: "-1",
+        id: "contactListOffcanvas" + dKey,
+        "aria-labelledby": "contactListOffcanvasLabel" + dKey
+      }
+    }, [_c("div", {
+      staticClass: "offcanvas-header"
+    }, [_c("h5", {
+      attrs: {
+        id: "contactListOffcanvasLabel" + dKey
+      }
+    }, [_vm._v("お問い合わせ内容")]), _vm._v(" "), _c("button", {
+      staticClass: "btn-close text-reset",
+      attrs: {
+        type: "button",
+        "data-bs-dismiss": "offcanvas",
+        "aria-label": "Close"
+      }
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "offcanvas-body"
+    }, [_c("div", {
+      staticClass: "card card-body mb-3"
+    }, [_c("div", {
+      staticClass: "row"
+    }, [_c("div", {
+      staticClass: "col-12 col-md-4 fw-bold"
+    }, [_vm._v("対応状況")]), _vm._v(" "), _c("div", {
+      staticClass: "col-12 col-md-8 ps-3"
+    }, [_c("div", {
+      staticClass: "row align-items-center"
+    }, [_c("div", {
+      staticClass: "col"
+    }, [contact.responsed ? _c("span", {
+      staticClass: "text-success"
+    }, [_vm._v("対応済")]) : _c("span", {
+      staticClass: "text-danger"
+    }, [_vm._v("未対応")])]), _vm._v(" "), _c("div", {
+      staticClass: "col-auto"
+    }, [_c("div", {
+      staticClass: "form-check form-switch"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: contact.responsed,
+        expression: "contact.responsed"
+      }],
+      staticClass: "form-check-input",
+      attrs: {
+        type: "checkbox",
+        id: "flexSwitchResponsed" + dKey
+      },
+      domProps: {
+        checked: Array.isArray(contact.responsed) ? _vm._i(contact.responsed, null) > -1 : contact.responsed
+      },
+      on: {
+        change: [function ($event) {
+          var $$a = contact.responsed,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+          if (Array.isArray($$a)) {
+            var $$v = null,
+              $$i = _vm._i($$a, $$v);
+            if ($$el.checked) {
+              $$i < 0 && _vm.$set(contact, "responsed", $$a.concat([$$v]));
+            } else {
+              $$i > -1 && _vm.$set(contact, "responsed", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+            }
+          } else {
+            _vm.$set(contact, "responsed", $$c);
+          }
+        }, function ($event) {
+          return _vm.responsed(contact.id, contact.responsed);
+        }]
+      }
+    })])])])])]), _vm._v(" "), _c("div", {
+      staticClass: "row py-2 border-top"
+    }, [_c("div", {
+      staticClass: "col-12 col-md-4 fw-bold"
+    }, [_vm._v("日時")]), _vm._v(" "), _c("div", {
+      staticClass: "col-12 col-md-8 ps-3"
+    }, [_vm._v(_vm._s(_vm.formatAt(contact.created_at)))])]), _vm._v(" "), _c("div", {
+      staticClass: "row py-2 border-top"
+    }, [_c("div", {
+      staticClass: "col-12 col-md-4 fw-bold"
+    }, [_vm._v("氏名")]), _vm._v(" "), _c("div", {
+      staticClass: "col-12 col-md-8 ps-3"
+    }, [_vm._v(_vm._s(contact.name))])]), _vm._v(" "), _c("div", {
+      staticClass: "row py-2 border-top"
+    }, [_c("div", {
+      staticClass: "col-12 col-md-4 fw-bold"
+    }, [_vm._v("メール")]), _vm._v(" "), _c("div", {
+      staticClass: "col-12 col-md-8 ps-3"
+    }, [_vm._v(_vm._s(contact.email))])]), _vm._v(" "), _c("div", {
+      staticClass: "row py-2 border-top"
+    }, [_c("div", {
+      staticClass: "col-12 col-md-4 fw-bold"
+    }, [_vm._v("電話番号")]), _vm._v(" "), _c("div", {
+      staticClass: "col-12 col-md-8 ps-3"
+    }, [_vm._v(_vm._s(contact.tell))])]), _vm._v(" "), _c("div", {
+      staticClass: "row py-2 border-top"
+    }, [_c("div", {
+      staticClass: "col-12 col-md-4 fw-bold"
+    }, [_vm._v("お問い合わせ内容")]), _vm._v(" "), _c("div", {
+      staticClass: "col-12 col-md-8 ps-3"
+    }, [_c("div", {
+      domProps: {
+        innerHTML: _vm._s(contact.body_text.replace(/\r?\n/g, "<br>"))
+      }
+    })])])])])])]);
+  }), 0)])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "d-flex justify-content-center"
+  }, [_c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("span", {
+    staticClass: "fs-5"
+  }, [_c("i", {
+    staticClass: "bi bi-three-dots-vertical"
+  })]);
+}];
 render._withStripped = true;
 
 
@@ -8826,6 +9313,429 @@ var staticRenderFns = [function () {
   return _c("p", {
     staticClass: "bg-light p-3"
   }, [_vm._v("\n                        入力されたメールアドレス宛にメールをお送りしました。"), _c("br"), _vm._v("\n                        メールに記載された6ケタの認証番号を入力してください。\n                    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2 ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", {
+    staticClass: "card-body my-5"
+  }, [_c("div", {
+    staticClass: "form-steps-pill mx-auto",
+    staticStyle: {
+      "max-width": "600px"
+    }
+  }, [_c("div", {
+    staticClass: "step-box",
+    "class": {
+      "text-primary": true
+    }
+  }, [_c("div", {
+    staticClass: "step_num",
+    "class": {
+      "bg-primary": true
+    }
+  }, [_vm._v("1")]), _vm._v("入　力\n            ")]), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-dash mb-3",
+    "class": {
+      "text-primary": _vm.step_num > 1
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "step-box",
+    "class": {
+      "text-primary": _vm.step_num > 1
+    }
+  }, [_c("div", {
+    staticClass: "step_num",
+    "class": {
+      "bg-primary": _vm.step_num > 1
+    }
+  }, [_vm._v("2")]), _vm._v("確　認\n            ")]), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-dash mb-3",
+    "class": {
+      "text-primary": _vm.step_num > 2
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "step-box",
+    "class": {
+      "text-primary": _vm.step_num > 2
+    }
+  }, [_c("div", {
+    staticClass: "step_num",
+    "class": {
+      "bg-primary": _vm.step_num > 2
+    }
+  }, [_vm._v("3")]), _vm._v("完　了\n            ")])])]), _vm._v(" "), _c("section", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.step_num === 1,
+      expression: "step_num===1"
+    }],
+    staticClass: "fs-5"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label fw-bold",
+    attrs: {
+      "for": "input_name"
+    }
+  }, [_vm._v("\n            " + _vm._s("氏名") + "\n            ")]), _c("span", {
+    staticClass: "badge bg-danger ms-1"
+  }, [_vm._v("必須")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.name,
+      expression: "inputs.name"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "border-danger": _vm.errors.name
+    },
+    attrs: {
+      type: "text",
+      name: "name",
+      id: "input_name",
+      placeholder: "例) 山田　太郎"
+    },
+    domProps: {
+      value: _vm.inputs.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.name ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label fw-bold",
+    attrs: {
+      "for": "input_email"
+    }
+  }, [_vm._v("\n            " + _vm._s("メールアドレス(半角英数)") + "\n            ")]), _c("span", {
+    staticClass: "badge bg-danger ms-1"
+  }, [_vm._v("必須")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.email,
+      expression: "inputs.email"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "border-danger": _vm.errors.email
+    },
+    attrs: {
+      type: "email",
+      id: "input_email",
+      name: "email",
+      placeholder: "例) yamada@mail.co.jp"
+    },
+    domProps: {
+      value: _vm.inputs.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "email", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.email ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label fw-bold",
+    attrs: {
+      "for": "input_tell"
+    }
+  }, [_vm._v("\n            " + _vm._s("電話番号(半角数字)") + "\n            ")]), _c("span", {
+    staticClass: "badge bg-danger ms-1"
+  }, [_vm._v("必須")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.tell,
+      expression: "inputs.tell"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "border-danger": _vm.errors.tell
+    },
+    attrs: {
+      type: "tel",
+      id: "input_tell",
+      placeholder: "例) 09012345678",
+      pattern: "\\d{10,11}"
+    },
+    domProps: {
+      value: _vm.inputs.tell
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "tell", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.tell ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.tell[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label fw-bold",
+    attrs: {
+      "for": "input_body"
+    }
+  }, [_vm._v("\n            " + _vm._s("お問い合わせ内容") + "\n            ")]), _c("span", {
+    staticClass: "badge bg-danger ms-1"
+  }, [_vm._v("必須")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.body,
+      expression: "inputs.body"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "border-danger": _vm.errors.body
+    },
+    staticStyle: {
+      height: "10rem"
+    },
+    attrs: {
+      type: "text",
+      placeholder: "ご自由にご記入ください",
+      id: "input_body"
+    },
+    domProps: {
+      value: _vm.inputs.body
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "body", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.body ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.body[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "card border-light mt-5"
+  }, [_c("div", {
+    staticClass: "card-body text-md-center"
+  }, [_c("h5", {
+    staticClass: "card-title fw-bold text-center"
+  }, [_vm._v("個人情報の取り扱いについて")]), _vm._v(" "), _c("p", {
+    staticClass: "card-text"
+  }, [_c("a", {
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.windowOpen.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("プライバシーポリシー")]), _vm._v("をご確認ください。"), _c("br"), _vm._v("\n                    同意いただけた場合のみ「同意する」にチェックを入れ、確認画面へお進みください。\n                ")]), _vm._v(" "), _c("div", {
+    staticClass: "mt-3 form-check text-center"
+  }, [_c("div", {
+    staticClass: "d-inline-block"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.agree,
+      expression: "inputs.agree"
+    }],
+    staticClass: "form-check-input",
+    attrs: {
+      type: "checkbox",
+      id: "input_agree"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.inputs.agree) ? _vm._i(_vm.inputs.agree, null) > -1 : _vm.inputs.agree
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.inputs.agree,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.inputs, "agree", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.inputs, "agree", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.inputs, "agree", $$c);
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "form-check-label",
+    attrs: {
+      "for": "input_agree"
+    }
+  }, [_vm._v("同意する")]), _vm._v(" "), _c("span", {
+    staticClass: "badge bg-danger ms-1"
+  }, [_vm._v("必須")])])]), _vm._v(" "), _vm.errors.agree ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.agree[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form_group my-5"
+  }, [_c("div", {
+    staticClass: "col-sm-8 mb-3 mx-auto"
+  }, [_c("disabled-button-component", {
+    attrs: {
+      style_class: "btn btn-lg btn-primary text-white w-100",
+      disabled: _vm.loading,
+      btn_text: "入力内容の確認"
+    },
+    on: {
+      "btn-click": function btnClick($event) {
+        return _vm.step01();
+      }
+    }
+  })], 1)])]), _vm._v(" "), _c("section", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.step_num === 2,
+      expression: "step_num===2"
+    }],
+    staticClass: "fs-5"
+  }, [_c("h5", {
+    staticClass: "mb-3"
+  }, [_vm._v("ご入力内容の確認をお願いします。")]), _vm._v(" "), _c("div", {
+    staticClass: "card w-100 mb-5 bg-white"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row mb-3"
+  }, [_vm._m(1), _vm._v(" "), _c("p", {
+    staticClass: "col-sm-9"
+  }, [_vm._v(_vm._s(_vm.inputs["name"]))])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_vm._m(2), _vm._v(" "), _c("p", {
+    staticClass: "col-sm-9"
+  }, [_vm._v(_vm._s(_vm.inputs["email"]))])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_vm._m(3), _vm._v(" "), _c("p", {
+    staticClass: "col-sm-9"
+  }, [_vm._v(_vm._s(_vm.inputs["tell"]))])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_vm._m(4), _vm._v(" "), _c("p", {
+    staticClass: "col-sm-9",
+    domProps: {
+      innerHTML: _vm._s(_vm.inputs.body.replace(/\r?\n/g, "<br>"))
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "form_group mb-5"
+  }, [_c("div", {
+    staticClass: "col-sm-8 mb-3 mx-auto"
+  }, [_c("button", {
+    staticClass: "btn btn-primary btn-arrow btn-lg text-white fs-5 w-100",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.step02();
+      }
+    }
+  }, [_vm._v("確定")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-8 mb-3 mx-auto"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-secondary btn-arrow btn-lg fs-5 w-100",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.subStepNum();
+      }
+    }
+  }, [_vm._v("戻る")])])])]), _vm._v(" "), _c("section", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.step_num === 3,
+      expression: "step_num===3"
+    }]
+  }, [_c("h5", {
+    staticClass: "mb-3"
+  }, [_vm._v("お問い合わせ内容を送信しました。")]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c("div", {
+    staticClass: "form_group my-5"
+  }, [_c("div", {
+    staticClass: "col-sm-6 mb-3 mx-auto"
+  }, [_c("a", {
+    staticClass: "btn btn-light border w-100",
+    attrs: {
+      href: _vm.r_top,
+      onclick: "stopOnbeforeunload()"
+    }
+  }, [_vm._v(_vm._s("Topに戻る"))])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "text-secondary text-center mb-4"
+  }, [_vm._v("\n            ご不明な点は、下記フォームよりお問い合わせください。"), _c("br"), _vm._v("\n            お問合せ内容の確認後、担当者よりご連絡致します。\n        ")]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "col-sm-3"
+  }, [_c("strong", [_vm._v("氏名：")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "col-sm-3"
+  }, [_c("strong", [_vm._v("メールアドレス：")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "col-sm-3"
+  }, [_c("strong", [_vm._v("電話番号：")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "col-sm-3"
+  }, [_c("strong", [_vm._v("お問い合わせ内容：")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card w-100 mb-5"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_vm._v("お問い合わせ頂き、ありがとうございまいた。")])]);
 }];
 render._withStripped = true;
 
@@ -10023,6 +10933,8 @@ Vue.component('u-create-user-address-form', (__webpack_require__(/*! ./component
 /* 発送景品リスト */
 Vue.component('u-userprize-list', (__webpack_require__(/*! ./components/shipped/UserPrizes.vue */ "./resources/js/components/shipped/UserPrizes.vue")["default"]));
 
+/* お問い合わせフォーム */
+Vue.component('contact-form-component', (__webpack_require__(/*! ./components/contact/FormComponent.vue */ "./resources/js/components/contact/FormComponent.vue")["default"]));
 /*
 |=============================================
 | サイト管理者ページ　コンポーネント
@@ -10036,6 +10948,9 @@ Vue.component('a-plize-list', (__webpack_require__(/*! ./components/admin/prize/
 Vue.component('a-pointhistory-selectmonth', (__webpack_require__(/*! ./components/admin/point_history/SelectMonth.vue */ "./resources/js/components/admin/point_history/SelectMonth.vue")["default"]));
 // グラフ
 Vue.component('a-pointhistory-chart', (__webpack_require__(/*! ./components/admin/point_history/Chart.vue */ "./resources/js/components/admin/point_history/Chart.vue")["default"]));
+
+/* お問い合わせ一覧 */
+Vue.component('contact-list-component', (__webpack_require__(/*! ./components/admin/contact/ListComponent.vue */ "./resources/js/components/admin/contact/ListComponent.vue")["default"]));
 
 /*
 |=============================================
@@ -33240,6 +34155,45 @@ component.options.__file = "resources/js/components/Items/ReplaceTextComponent.v
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/contact/ListComponent.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/admin/contact/ListComponent.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListComponent.vue?vue&type=template&id=4a5e3f16 */ "./resources/js/components/admin/contact/ListComponent.vue?vue&type=template&id=4a5e3f16");
+/* harmony import */ var _ListComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListComponent.vue?vue&type=script&lang=js */ "./resources/js/components/admin/contact/ListComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__.render,
+  _ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/contact/ListComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/point_history/Chart.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/admin/point_history/Chart.vue ***!
@@ -33433,6 +34387,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/auth/ResetPasswordFormConpornent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/contact/FormComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/contact/FormComponent.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=template&id=beaa52e2 */ "./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2");
+/* harmony import */ var _FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=script&lang=js */ "./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__.render,
+  _FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/contact/FormComponent.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -33918,6 +34911,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/contact/ListComponent.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/admin/contact/ListComponent.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ListComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/contact/ListComponent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js":
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js ***!
@@ -33995,6 +35004,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ResetPasswordFormConpornent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=script&lang=js");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -34331,6 +35356,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/contact/ListComponent.vue?vue&type=template&id=4a5e3f16":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/admin/contact/ListComponent.vue?vue&type=template&id=4a5e3f16 ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ListComponent.vue?vue&type=template&id=4a5e3f16 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/contact/ListComponent.vue?vue&type=template&id=4a5e3f16");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/point_history/Chart.vue?vue&type=template&id=2e7c5599":
 /*!*********************************************************************************************!*\
   !*** ./resources/js/components/admin/point_history/Chart.vue?vue&type=template&id=2e7c5599 ***!
@@ -34412,6 +35454,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordFormConpornent_vue_vue_type_template_id_01b07020__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/ResetPasswordFormConpornent.vue?vue&type=template&id=01b07020");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2 ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormComponent.vue?vue&type=template&id=beaa52e2 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2");
 
 
 /***/ }),

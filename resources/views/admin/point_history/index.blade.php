@@ -9,13 +9,6 @@ $active_key = 'point_history';
 @endphp @endsection
 
 
-@section('style')
-<style>
-    th,td{ background-color: #fff !important; }
-</style>
-@endsection
-
-
 @section('content')
     <div class="container mb-4">
 

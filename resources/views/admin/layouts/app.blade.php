@@ -27,6 +27,7 @@
     @yield('style')
     <style>
         a{ text-decoration: none; }
+        th,td{ background-color: #fff !important; }
     </style>
 
 </head>

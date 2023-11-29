@@ -21,6 +21,14 @@ class UserShipped extends Model
         'user_address_id', //ユーザーアドレス
         'point_history_id',//ポイント収支履歴リレーション
         'state_id',        //発送状況
+        'shipment_at',     //発送日時
+        'arrival_at' ,     //到着日時
+    ];
+
+    /** Carbonオブジェクトとして利用 */
+    protected $dates = [
+        'shipment_at',     //発送日時
+        'arrival_at' ,     //到着日時
     ];
 
 
@@ -44,13 +52,13 @@ class UserShipped extends Model
     {
         return [
             //発送前
-            11 => '発送準備中',
+            11 => '発送待ち',
 
             //発送後
-            21 => '発送完了',
+            21 => '発送済み',
 
             //ユーザー
-            31 => '受取り済み',
+            31 => '受取済み',
         ];
     }
 
@@ -77,5 +85,22 @@ class UserShipped extends Model
         */
         public function point_history(){
             return $this->belongsTo(PointHistory::class);
+        }
+
+        /**
+         * PointHistoryモデル リレーション
+         * @return \App\Models\PointHistory
+        */
+        public function user_address(){
+            return $this->belongsTo(UserAddress::class);
+        }
+
+        /**
+         * UserPrizeモデル リレーション
+         * @return \App\Models\UserPrize
+        */
+        public function user_prizes()
+        {
+            return $this->hasMany(UserPrize::class,'shipped_id');
         }
 }

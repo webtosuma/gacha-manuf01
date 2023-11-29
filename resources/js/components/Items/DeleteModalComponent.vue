@@ -28,7 +28,7 @@
 
                         <div class="col">
                             <button @click="parentFunc"
-                            type="button" :class="'btn-'+ color" class="btn text-white w-100"
+                            :type="func_btn_type" :class="'btn-'+ color" class="btn text-white w-100"
                             data-bs-dismiss="modal"
                             >OK</button>
                         </div>
@@ -53,6 +53,7 @@
             color:       { type: String, default: 'danger',},
             button_text: { type: String, default: '',},
             button_class:{ type: String, default: 'btn btn-primary',},
+            func_btn_type:{ type: String, default: 'button',},
         },
         data(){ return {　} },
         mounted() { },

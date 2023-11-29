@@ -49,6 +49,8 @@ require('./components/ExampleComponent.vue').default);
         Vue.component('u-userprize-list',
         require('./components/shipped/UserPrizes.vue').default);
 
+    /* お問い合わせフォーム */
+    Vue.component('contact-form-component', require('./components/contact/FormComponent.vue').default);
 /*
 |=============================================
 | サイト管理者ページ　コンポーネント
@@ -65,6 +67,11 @@ require('./components/ExampleComponent.vue').default);
     // グラフ
     Vue.component('a-pointhistory-chart',
     require('./components/admin/point_history/Chart.vue').default);
+
+
+    /* お問い合わせ一覧 */
+    Vue.component('contact-list-component',
+    require('./components/admin/contact/ListComponent.vue').default);
 
 /*
 |=============================================

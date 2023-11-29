@@ -119,9 +119,11 @@
                         <td>{{ formatDate( prize.updated_at ) }}</td>
                         <td class="">
                             <div class="d-flex gap-2 justify-content-end h-100">
+                                <!--編集-->
                                 <a class="btn btn-sm btn-light border "
                                 :href="r_edit+'/'+prize.id"><i class="bi bi-pencil-fill"></i></a>
 
+                                <!--削除モーダル-->
                                 <delete-modal-component
                                 @parent-func="destory(prize.id)"
                                 :indexKey="'delete'+prize.id"
@@ -132,41 +134,9 @@
                                     <div class="form-text">商品名：{{ prize.name }}</div>
                                 </delete-modal-component>
 
-                                <!-- <button class="btn btn-sm btn-light border ">削除</button> -->
                             </div>
                         </td>
                     </tr>
-                    <!-- <tr>
-                        <td>
-                            <input class="form-check-input" type="checkbox" >
-                        </td>
-                        <th scope="row">
-                            <input class="form-control form-control-sm" id="formFileSm" type="file" style="font-size: 16px;">
-                        </th>
-                        <td>
-                            <input type="text" class="form-control form-control-sm">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control form-control-sm">
-                        </td>
-                        <td>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control form-control-sm" min="0">
-                        </td>
-                        <td></td>
-                        <td class="">
-                            <div class="d-flex gap-2 justify-content-end">
-                                <button class="btn btn-sm btn-light border ">更新</button>
-                            </div>
-                        </td>
-                    </tr> -->
 
                     <tr v-if="!loading && prizes.length==0">
                         <td colspan="8" class="text-center text-secondary border-0 py-5">
