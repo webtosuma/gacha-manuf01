@@ -33,10 +33,21 @@ Route::get('/', function(){
     ->name('reset_pass_step01');
 
     # パスワード変更API ステップ02(reset_pass_step02)
-    Route::post('user/reset_pass_step02',
+    Route::post('reset_pass_step02',
     [Controllers\UserController::class, 'reset_pass_step02'])
     ->name('reset_pass_step02');
 
+
+    # 退会処理(destroy)
+    Route::delete('auth/destroy',
+    [Controllers\UserController::class,'destroy'])
+    ->middleware(['auth'])
+    ->name('auth.destroy');
+
+    # 退会完了ページの表示(completed_destroy)
+    Route::get('auth/completed_destroy',
+    function () { return view('auth.completed_destroy'); })
+    ->name('auth.completed_destroy');        //
 
 /*
 |--------------------------------------------------------------------------
@@ -130,8 +141,6 @@ Route::get('/', function(){
 
     });
 
-
-
 /*
 |--------------------------------------------------------------------------
 | 発送申請　ShippedAppliController
@@ -199,13 +208,59 @@ Route::get('/', function(){
 | ユーザー設定
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
 
-    Route::get('settings',
-    function () { return view('settings.index'); })
-    ->name('settings');
+        Route::get('settings',
+        function () { return view('settings.index'); })
+        ->name('settings');
 
-});
+
+        /* フォームの表示 */
+
+            # アカウント設定(acount)
+            Route::get('/settings/acount',
+            function () { return  view('settings.acount'); })
+            ->name('settings.acount');
+
+            # メールアドレス変更(email)
+            Route::get('/settings/email',
+            function () { return  view('settings.email'); })
+            ->name('settings.email');
+
+            # クレジット情報設定(credit_card)
+            Route::get('/settings/credit_card',
+            function () { return  view('settings.credit_card'); })
+            ->name('settings.credit_card');
+
+            # 商品発送先の住所設定(shipped_address)
+            Route::get('/settings/shipped_address',
+            function () { return  view('settings.shipped_address'); })
+            ->name('settings.shipped_address');
+
+            # メール受信設定(email_reception)
+            Route::get('/settings/email_reception',
+            function () { return  view('settings.email_reception'); })
+            ->name('settings.email_reception');
+
+            # 退会の手続き(withdraw)
+            Route::get('/settings/withdraw',
+            function () { return  view('settings.withdraw'); })
+            ->name('settings.withdraw');
+
+
+        /* 更新処理 */
+
+            # アカウント情報変更(acount_info_update)
+            Route::patch('/settings/acount_info/update',
+            [Controllers\SettingsController::class, 'acount_info_update'])
+            ->name('settings.acount_info.update');
+
+            # メール受信設定(email_reception_update)
+            Route::patch('/settings/email_reception/update',
+            [Controllers\SettingsController::class, 'email_reception_update'])
+            ->name('settings.email_reception.update');
+
+    });
 
 /*
 |--------------------------------------------------------------------------
@@ -231,7 +286,6 @@ Route::middleware(['auth'])->group(function () {
     ->with('affiliate_key',session('affiliate_key') ?? '');} )
     ->name('privacy_policy');
 
-
     # 特定商取引法に基づく表記(tradelaw)
     Route::get('tradelaw',
     function () { return view('footer_menu.tradelaw.index'); })
@@ -245,19 +299,6 @@ Route::middleware(['auth'])->group(function () {
     # お問い合わせ(contact)
     Route::get('/contact', function(){ return view('footer_menu.contact.index'); })
     ->name('contact');
-
-        # お問い合わせ[バリデーション]API(component_data_api)
-        Route::post('/contact/api/validation',
-        [Controllers\ContactController::class, 'validation'])
-        ->name('api.contact.validation');
-
-        # お問い合わせ[完了]API(completion_api)
-        Route::post('contact/api/completion',
-        [Controllers\ContactController::class, 'completion'])
-        ->name('api.contact.completion');
-
-
-
 
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {

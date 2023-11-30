@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use \App\Models\Admin;
 /*
 |--------------------------------------------------------------------------
 | メール送信コントローラー　※コントローラー内で利用
@@ -38,7 +39,7 @@ class SendMailController extends Controller
             # サイト管理者へメール送信
 
                 // メール受取り設定の管理者ユーザーの取得
-                $admins = \App\Models\Admin::where('get_mail',1)->get();
+                $admins = Admin::where('get_mail',1)->get();
 
                 # メールの送信
                 foreach ($admins as $admin) {
@@ -77,7 +78,7 @@ class SendMailController extends Controller
             # サイト管理者へメール送信
 
                 // メール受取り設定の管理者ユーザーの取得
-                $admins = \App\Models\Admin::where('get_mail',1)->get();
+                $admins = Admin::where('get_mail',1)->get();
 
                 # メールの送信
                 foreach ($admins as $admin) {
@@ -165,6 +166,43 @@ class SendMailController extends Controller
 
 
 
+        /**
+         * ユーザー退会処理
+         *
+         * @param Array $inputs
+         * @return Void
+        */
+        public static function UserDestroy($inputs)
+        {
+
+            # お問い合わせ入力者へメール送信
+
+                Mail::to( $inputs['email'] ) //宛先
+                ->send(new \App\Mail\SendHtmlMailMailable([
+                    'inputs' => $inputs , //入力変数
+                    'view' => 'emails.user_destroy' , //テンプレート
+                    'subject' => '退会処理が完了しました。' , //件名
+                ]) );
+
+
+            # サイト管理者へメール送信
+
+                // メール受取り設定の管理者ユーザーの取得
+                $admins = Admin::where('get_mail',1)->get();
+
+                # メールの送信
+                foreach ($admins as $admin) {
+
+                    Mail::to( $admin->email ) //宛先
+                    ->send(new \App\Mail\SendHtmlMailMailable([
+                        'inputs' => $inputs , //入力変数
+                        'view'   => 'emails.admin_user_destroy' , //テンプレート
+                        'subject'=> '退会を受け付けました。' , //件名
+                    ]) );
+                }
+
+            //
+        }
 
     //
 }

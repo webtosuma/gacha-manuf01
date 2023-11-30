@@ -22,6 +22,23 @@ use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
+| お問い合わせ
+|--------------------------------------------------------------------------
+*/
+
+    # お問い合わせ[バリデーション]API(component_data_api)
+    Route::post('/contact/api/validation',
+    [Controllers\ContactController::class, 'validation'])
+    ->name('api.contact.validation');
+
+    # お問い合わせ[完了]API(completion_api)
+    Route::post('contact/api/completion',
+    [Controllers\ContactController::class, 'completion'])
+    ->name('api.contact.completion');
+
+
+/*
+|--------------------------------------------------------------------------
 | 取得した商品
 |--------------------------------------------------------------------------
 */
@@ -47,14 +64,14 @@ use App\Http\Controllers;
 | ガチャ履歴
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
 
-    # ユーザーのガチャ履歴に紐づいた、ユーザーの取得積み商品
-    Route::post('use_gacha_history/{user_gacha_history}/api',
-    [Controllers\UserGachaHistoryApiContloller::class, 'show'])
-    ->name('api.use_gacha_history.show');
+        # ユーザーのガチャ履歴に紐づいた、ユーザーの取得積み商品
+        Route::post('use_gacha_history/{user_gacha_history}/api',
+        [Controllers\UserGachaHistoryApiContloller::class, 'show'])
+        ->name('api.use_gacha_history.show');
 
-});
+    });
 
 
 
@@ -63,23 +80,23 @@ Route::middleware(['auth'])->group(function () {
 | ユーザーアドレス
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
 
 
-    # ユーザーアドレスの取得
-    Route::post('use_address/api',
-    [Controllers\UserAddressApiController::class, 'index'])
-    ->name('api.use_address');
+        # ユーザーアドレスの取得
+        Route::post('use_address/api',
+        [Controllers\UserAddressApiController::class, 'index'])
+        ->name('api.use_address');
 
-    # ユーザーアドレスの保存
-    Route::post('use_address/store/api',
-    [Controllers\UserAddressApiController::class, 'store'])
-    ->name('api.use_address.store');
+        # ユーザーアドレスの保存
+        Route::post('use_address/store/api',
+        [Controllers\UserAddressApiController::class, 'store'])
+        ->name('api.use_address.store');
 
-    # ユーザーアドレスの削除
-    Route::delete('use_address/destroy/api/{user_address?}',
-    [Controllers\UserAddressApiController::class, 'destroy'])
-    ->name('api.use_address.destroy');
+        # ユーザーアドレスの削除
+        Route::delete('use_address/destroy/api/{user_address?}',
+        [Controllers\UserAddressApiController::class, 'destroy'])
+        ->name('api.use_address.destroy');
 
-});
+    });
 

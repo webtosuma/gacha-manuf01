@@ -81,7 +81,6 @@ class AdminShippedWaitingController extends Controller
         $user_shipped->update([
             'state_id' => 21,//発送状況:'発送済み'
             'shipment_at'=>now(), //発送日時
-
         ]);
 
         return redirect()->route('admin.shipped.send.show',$user_shipped)

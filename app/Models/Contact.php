@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 /*
  | ===================================
  |  お問い合わせ　
@@ -43,16 +44,10 @@ class Contact extends Model
      */
     public function getStorageBodyAttribute()
     {
-        return $this->body;
-        // パスから改行を取り除く
-        $body = $this->body;
-        $path = str_replace(["\r\n", "\r", "\n"], '', $body);
+        $text = $this->body;
+        $path = str_replace(["\r\n", "\r", "\n"], '', $text);
 
-
-        return \Illuminate\Support\Facades\Storage::exists($path) ?
-        \Illuminate\Support\Facades\Storage::get($body) //ストレージ　
-        : $body; //DB
-
+        return Storage::exists($path) ? Storage::get($path) : $text;
     }
 
 

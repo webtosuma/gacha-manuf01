@@ -127,9 +127,9 @@
                                     <div class="col-12 col-md-4 fw-bold">電話番号</div>
                                     <div class="col-12 col-md-8 ps-3">{{contact.tell}}</div>
                                 </div>
-                                <div class="row py-2 border-top">
-                                    <div class="col-12 col-md-4 fw-bold">お問い合わせ内容</div>
-                                    <div class="col-12 col-md-8 ps-3">
+                                <div class="row py-2 gy-2 border-top">
+                                    <div class="col-12 col-md- fw-bold">お問い合わせ内容</div>
+                                    <div class="col-12 col-md- ps-3">
                                         <div v-html="contact.body_text.replace(/\r?\n/g, '<br>')"></div>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
                 const route = this.r_api_list;
                 axios.post( route , this.inputs )
                 .then(json => {
-                    // console.log(json.data);
+                    console.log(json.data);
 
                     // データの保存
                     this.contacts = json.data;

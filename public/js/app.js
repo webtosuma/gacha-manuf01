@@ -5801,7 +5801,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       // [ 非同期通信 ]
       var route = this.r_api_list;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
-        // console.log(json.data);
+        console.log(json.data);
 
         // データの保存
         _this.contacts = json.data;
@@ -8170,11 +8170,11 @@ var render = function render() {
     }, [_vm._v("電話番号")]), _vm._v(" "), _c("div", {
       staticClass: "col-12 col-md-8 ps-3"
     }, [_vm._v(_vm._s(contact.tell))])]), _vm._v(" "), _c("div", {
-      staticClass: "row py-2 border-top"
+      staticClass: "row py-2 gy-2 border-top"
     }, [_c("div", {
-      staticClass: "col-12 col-md-4 fw-bold"
+      staticClass: "col-12 col-md- fw-bold"
     }, [_vm._v("お問い合わせ内容")]), _vm._v(" "), _c("div", {
-      staticClass: "col-12 col-md-8 ps-3"
+      staticClass: "col-12 col-md- ps-3"
     }, [_c("div", {
       domProps: {
         innerHTML: _vm._s(contact.body_text.replace(/\r?\n/g, "<br>"))

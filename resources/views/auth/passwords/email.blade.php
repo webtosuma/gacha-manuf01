@@ -8,8 +8,7 @@
 @endsection
 
 @section('content')
-<div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5"
-style="min-height: 80vh; max-width:600px;">
+<div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5">
 
 
 

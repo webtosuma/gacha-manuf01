@@ -12,7 +12,6 @@ use App\Models\Contact;
  *  お問い合わせ　コントローラー
  * =========================================
 */
-
 class ContactController extends Controller
 {
     /**

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserDestroyRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Contact;
 /*
 | =============================================
 |  認証情報(User) コントローラー
@@ -96,4 +98,62 @@ class UserController extends Controller
             # バリデーション成功レスポンス
             return response()->json([ 'message' => 'reset_pass_step02 ok!', ]);
         }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 退会処理
+    |--------------------------------------------------------------------------
+    */
+        /**
+         * 退会処理(destroy)
+         *
+         * @param \App\Http\Requests\UserDestroyRequest $request
+         * @return \Illuminate\View\View
+        */
+        public function destroy( UserDestroyRequest $request)
+        {
+
+            # 削除対象情報
+            $user = Auth::user();
+
+            # 入力内容
+            $inputs = [
+                'name'      => '【退会】'.$user->name, //氏名
+                'email'     => $user->email, //メール
+                'tell'      => '*未入力', //電話番号
+                'body'      => "【退会アンケート】\n".$request->body, //本文
+            ];
+
+            # text入力値が150文字以上の時、ストレージへファイル保存する
+            $dir = 'upload/contact/';      //保存先ディレクトリ
+            $new_text = $inputs['body'];  //新しい入力テキスト
+            $inputs['body'] = Method::uploadStorageText($dir, $new_text);
+
+
+
+            # お問い合わせとしてDB保存
+            $contact = new Contact( $inputs );
+            $contact->save();
+
+
+            # 顧客へメールの自動送信
+            SendMailController::UserDestroy( $inputs );
+
+
+            # ログアウト
+            Auth::logout(); //ユーザーセッションの削除
+            $request->session()->invalidate(); //全セッションの削除
+
+
+            # アカウントの削除
+            $user->delete();
+            $request->session()->regenerateToken(); // 二重投稿防止
+
+
+            # ログアウト完了ページへリダイレクト
+            return redirect()->route('auth.completed_destroy');
+        }
+    //
 }
