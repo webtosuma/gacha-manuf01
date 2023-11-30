@@ -1,7 +1,7 @@
 <template>
     <div class="">
-        <h5>お届け先の選択</h5>
-        <label class="form-check">
+        <label v-if="show_check!='0'"
+        class="form-check">
             <input name="default_address" :value="true"
             class="form-check-input" type="checkbox" checked>
             <div class="form-check-label">
@@ -13,7 +13,7 @@
             class="list-group-item">
                 <label class="d-block">
                     <div class="row g-0 align-items-center">
-                        <div class="col-auto">
+                        <div v-if="show_check!='0'" class="col-auto">
                             <div class="form-check">
                                 <input v-model="selectedAddressId"
                                 @change="updateSelectedAddressId( selectedAddressId )"
@@ -63,6 +63,7 @@
             r_index:  { type: [String,Number], default: null },
             r_store:  { type: [String,Number], default: null },//＊新規作成コンポーネントで利用
             r_destroy:{ type: [String,Number], default: null },
+            show_check :{ type: [String,Number], defualt: '1' },//チェックボックスの表示
         },
         data() { return {
 

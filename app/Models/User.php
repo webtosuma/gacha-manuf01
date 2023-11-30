@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'payjp_customer_id',
         'image',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -115,6 +117,19 @@ class User extends Authenticatable
     |
     |
     */
+        /** 画像なしの時の画像 */
+        public static function noImage(){ return asset( 'storage/site/image/user_no_image.png' );}
+
+        /**
+         * 画像ファイルパス image_path
+         * @return String
+        */
+        public function getImagePathAttribute()
+        {
+            return $this->image && Storage::exists($this->image) ?
+            asset( 'storage/'.$this->image ) :  self::noImage();
+        }
+
         /**
          * ポイント残数 $user->point
          * @return String
@@ -122,6 +137,7 @@ class User extends Authenticatable
         public function getPointAttribute() {
             return $this->point_histories->sum('value');
         }
+
 
 
 }

@@ -3,7 +3,23 @@ style="max-width:90vw; min-width:30vw;">
     <div class="offcanvas-header align-items-center">
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         <h5 id="offcanvasHumbergeLabel">
-            @guest {{ __('ゲスト') }} @else {{ Auth::user()->name }} @endguest {{ __( 'さん') }}
+            <div class="row align-items-center g-2">
+
+
+                <div class="col-auto" style="width: 3rem;">
+                    <ratio-image-component
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="ユーザーメニュー"
+                    style_class="ratio ratio-1x1 rounded-pill border"
+                    url="{{ Auth::user()->image_path }}"
+                    ></ratio-image-component>
+                </div>
+
+                <div class="col">
+                    {{ Auth::user()->name }}
+                </div>
+
+
+            </div>
         </h5>
     </div>
 
@@ -18,13 +34,18 @@ style="max-width:90vw; min-width:30vw;">
         </div>
     @else
         <div class="d-flex justify-content-between align-items-center p-3 bg-white">
-            <div class="">所持ポイント：
-                <span class="fs-3 fw-bold">
-                    <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
-                </span>
-                <span>pt</span>
+            <div class="col">
+                <div class="">所持ポイント：</div>
+                <div class="">
+                    <span class="fs-3 fw-bold">
+                        <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                    </span>
+                    <span>pt</span>
+                </div>
             </div>
-            <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+            <div class="col-auto">
+                <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+            </div>
         </div>
     @endguest
 

@@ -2,7 +2,9 @@
 
     <div class="mx-auto" style="max-width:900px;">
         <!-- お届け先選択 -->
-        <section class="my-4">
+        <section class="my-5">
+            <h5>お届け先の選択</h5>
+
             <u-addressーlist-form
             :token="token" :r_index="r_index"
             :r_store="r_store" :r_destroy="r_destroy"
@@ -11,7 +13,7 @@
         </section>
 
         <!-- 利用ポイント -->
-        <section class="my-4">
+        <section class="my-5">
             <h5>利用ポイント</h5>
             <ul class="list-group bg-white">
                 <li class="list-group-item p-3">
@@ -28,7 +30,7 @@
         </section>
 
         <!-- 発送する商品 -->
-        <section class="my-4">
+        <section class="my-5">
             <u-userprize-list
             :token="token"
             :u_prize_ids="u_prize_ids"

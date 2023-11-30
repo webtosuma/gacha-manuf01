@@ -30,7 +30,7 @@ class PointSailController extends Controller
 
 
         /**
-         * ポイント購入　一覧
+         * ポイント　一覧
          * @return \Illuminate\View\View
         */
         public function index()
@@ -45,7 +45,7 @@ class PointSailController extends Controller
 
 
         /**
-         * ポイント購入　クレジットカード入力or選択
+         * 購入　手続き
          * @param \App\Models\PointSail $point_sail
          * @return \Illuminate\View\View
         */
@@ -53,6 +53,23 @@ class PointSailController extends Controller
         {
             $cardList = self::UserCardList();//ユーザーが登録したカード一覧の取得
             return view('point_sail.payment', compact('point_sail','cardList'));
+        }
+
+
+
+        /**
+         * 新規登録
+         * @param \Illuminate\Http\Request $request
+         * @param \App\Models\PointSail $point_sail
+         * @return \Illuminate\View\View
+        */
+        public function create( Request $request, PointSail $point_sail )
+        {
+            # 新規作成メソッド
+            self::MethodCreate( $request );
+
+            # 購入　手続きへリダイレクト
+            return redirect()->route('point_sail.payment',$point_sail);
         }
 
 
@@ -114,7 +131,7 @@ class PointSailController extends Controller
 
 
         /**
-         * ポイント購入　クレジットカード入力or選択
+         * ポイント購入　完了
          * @param \App\Models\PointHistory $point_history
          * @return \Illuminate\View\View
         */
@@ -213,5 +230,63 @@ class PointSailController extends Controller
         }
 
 
+        /**
+         * 新規登録メソッド
+         * @param \Illuminate\Http\Request $request
+         * @return Void
+        */
+        public static function MethodCreate( Request $request )
+        {
+            # ログインユーザー取得
+            $user = Auth::user();
+
+            # シークレットキーを設定
+            Payjp::setApiKey(config('payjp.secret_key'));
+
+            # 新規カード作成＆既にpayjpに登録済みの場合
+            if ( !empty( $user['payjp_customer_id'] )) {
+                // カード情報を追加
+                $customer = Customer::retrieve( $user['payjp_customer_id'] );
+                $card = $customer->cards->create([
+                    'card' => $request->get('payjp-token'),
+                ]);
+                // 使用するカードを設定
+                $customer->default_card = $card->id;
+                $customer->save();
+            }
+
+            # 新規カード作成＆payjp未登録の場合
+            else {
+                // payjpで顧客新規登録 & カード登録
+                $customer = Customer::create([
+                    'card' => $request->get('payjp-token'),
+                ]);
+                // DBにcustomer_idを登録
+                $user->payjp_customer_id = $customer->id;
+                $user->save();
+            }
+        }
+
+
+
+        /**
+         * 削除メソッド
+         * @param \Illuminate\Http\Request $request
+         * @return Void
+        */
+        public static function MethodDestory( $request )
+        {
+            # ログインユーザー取得
+            $user = Auth::user();
+
+            # シークレットキーを設定
+            Payjp::setApiKey(config('payjp.secret_key'));
+
+            $payjp_card_id = $request->get('payjp_card_id');
+
+            $customer = Customer::retrieve( $user['payjp_customer_id'] );
+            $card = $customer->cards->retrieve( $payjp_card_id );
+            $card->delete();
+        }
     //
 }

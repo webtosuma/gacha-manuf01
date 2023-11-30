@@ -3,7 +3,7 @@
         <div class="container">
             <h1 class="d-flex align-items-center gap-3 m-0">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">
+                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:2rem;">
                 </a>
             </h1>
 
@@ -37,8 +37,17 @@
                     <!-- ハンバーガーボタン -->
                     <button class="btn btn-  py-0 " type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasHumberge"
-                        aria-controls="offcanvasHumberge"
-                    ><i class="bi bi-list fs-3"></i></button>
+                    aria-controls="offcanvasHumberge"style="width:3.2rem;">
+                        <i class="bi bi-list fs-3"></i>
+
+                        {{-- <ratio-image-component
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="ユーザーメニュー"
+                        style_class="ratio ratio-1x1 rounded-pill border"
+                        url="{{ Auth::user()->image_path }}"
+                        ></ratio-image-component> --}}
+
+                    </button>
+
                 @endguest
             </div>
         </div>

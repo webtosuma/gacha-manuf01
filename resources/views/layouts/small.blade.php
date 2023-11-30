@@ -41,6 +41,9 @@
         <p class="m-0 text-secondary text-center">&copy;fobees</p>
     </footer>
 
+    <!-- フェードインアラート -->
+    @include('includes.fadein-alert')
+
     <!-- bootstrap JavaScript -->
     @yield('script')
 

@@ -22,6 +22,7 @@ class ShippedAppliController extends Controller
 {
     /**
      * 発送申請　入力
+     *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -34,18 +35,27 @@ class ShippedAppliController extends Controller
         $user_prizes = self::FindUserPrizes( $id_array );
         if( !$user_prizes->count() ){ return \App::abort(404); }//データがないとき
 
-        return view('shipped.appli.index',compact('id_array'));
+        # 発送する商品:種類別($shipped_prizes)
+        $sp_id_array = $user_prizes->pluck('prize_id')->toArray();
+        $shipped_prizes = Prize::find( $sp_id_array );//カードの重複除去
+        foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
+            $shipped_prize->count = array_count_values( $sp_id_array )[ $shipped_prize->id ] ?? 0;
+        }
+
+        return view('shipped.appli.index',compact('id_array','user_prizes','shipped_prizes'));
     }
 
 
 
     /**
      * 発送申請 確認
+     *
      * @param \App\Http\Requests\ShippedAppliRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function confirm(Request $request)
+    public function confirm(ShippedAppliRequest $request)
     {
+
         $user = Auth::user();
         $id_array = $request->user_prize_ids;//発送するユーザー商品ID
         $default_address_id = $request->user_address_id;//ユーザーアドレスID
@@ -82,7 +92,7 @@ class ShippedAppliController extends Controller
     # 発送申請完了comp
     /**
      * 発送申請 完了
-     * @param \App\Http\Requests\ShippedAppliRequest $request
+     * @param \App\Http\Requests\Request $request
      * @return \Illuminate\Http\Response
      */
     public function comp(Request $request)

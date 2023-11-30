@@ -50,11 +50,6 @@ class RegisterController extends Controller
         ]);
         $user->save();
 
-        # アフィリエイトによる登録記録を保存（アフィリエイトキーが存在するとき）
-        // if( $affiliate_key = $request->affiliate_key ){
-        //     AffiliateController::RegistRecordSave( $affiliate_key, $user );
-        // }
-
 
         # 求職者・管理者へメール送信
         // SendMailController::WorkerAuthRegister02( $worker );

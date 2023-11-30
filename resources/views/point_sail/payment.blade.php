@@ -25,7 +25,7 @@
 
 <ul class="list-group list-group-flush my-5">
     <li class="list-group-item bg-white py-4">
-        <h6 class="fw-bold text-center">ポイント数と金額をご確認ください。</h6>
+        <h5 class="fw-bold text-center">ポイント数と金額をご確認ください。</h5>
         <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">
             <div class="col-6">ポイント数</div>
             <div class="col-6 border-bottom fw-bold">
@@ -49,7 +49,8 @@
     </li>
     @if (!empty($cardList))
         <li class="list-group-item bg-white py-5">
-            <p>登録済みのクレジットカードで支払う</p>
+
+            <h3 class="text-center fw-bold mb-3">お支払いカード選択</h3>
             <form action="{{ route('point_sail.payment_post',$point_sail) }}" method="post">
                 @csrf
 
@@ -69,7 +70,7 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="col-md-8 mx-auto">
+                <div class="col-md-8 mx-auto mt-5">
                     <input type="submit" class="btn btn-primary text-white w-100"
                     value="選択したクレジットカードで購入する">
                 </div>
@@ -77,24 +78,24 @@
             </form>
         </li>
     @endif
-    <li class="list-group-item bg-white py-5">
-        <p>クレジットカード情報を登録して支払う</p>
 
-        <div class="col-md-8 mx-auto mb-3">
-            <form action="{{ route('point_sail.payment_post',$point_sail) }}" method="post">
+    <li class="list-group-item bg-white py-5">
+        <h3 class="text-center fw-bold mb-3">お支払いカード新規登録</h3>
+        <div class="col-md-8 mx-auto mb-3 mt-5">
+            <form action="{{ route('point_sail.create',$point_sail ) }}" method="post">
                 @csrf
                 <script
                 src="https://checkout.pay.jp/"
                 class="payjp-button"
                 data-key="{{ config('payjp.public_key') }}"
-                data-text="クレジットカード情報を入力して購入"
-                data-submit-text="購入する"
+                data-text="クレジットカード情報の新規登録"
+                data-submit-text="新規登録"
                 ></script>
             </form>
         </div>
     </li>
     <li class="list-group-item bg-white py-5">
-        <div class="col-md-8 mx-auto mb-3">
+        <div class="col-md-8 mx-auto mt-">
             <a href class="btn btn-light border w-100"
             >購入するポイント数の変更</a>
         </div>

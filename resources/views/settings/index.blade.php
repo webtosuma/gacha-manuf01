@@ -29,13 +29,6 @@
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('settings.email') }}"
-            class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
-            >{{ 'メールアドレス変更' }}
-                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
-                ><i class="bi bi-chevron-right"></i></div>
-            </a>
-
             <a href="{{ route('password.request') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >{{ 'パスワード変更' }}
@@ -57,19 +50,19 @@
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('settings.email_reception') }}"
+            {{-- <a href="{{ route('settings.email_reception') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >{{ 'メール受信設定' }}
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a>
+            </a> --}}
 
-            <a href="{{ route('settings.withdraw') }}"
+            {{-- <a href="{{ route('settings.withdraw') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >{{ '退会の手続き' }}
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a>
+            </a> --}}
 
         </div>
     </div>

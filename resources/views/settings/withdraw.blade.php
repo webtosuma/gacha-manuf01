@@ -81,8 +81,8 @@
                 class="btn btn-lg btn-light border rounded-pill w-100"
                 >会員情報設定に戻る</a>
             </div>
-
         </div>
+
     </form>
 </div>
 @endsection

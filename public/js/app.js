@@ -6792,7 +6792,11 @@ __webpack_require__.r(__webpack_exports__);
     r_destroy: {
       type: [String, Number],
       "default": null
-    }
+    },
+    show_check: {
+      type: [String, Number],
+      defualt: '1'
+    } //チェックボックスの表示
   },
   data: function data() {
     return {
@@ -10046,7 +10050,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {}, [_c("h5", [_vm._v("お届け先の選択")]), _vm._v(" "), _c("label", {
+  return _c("div", {}, [_vm.show_check != "0" ? _c("label", {
     staticClass: "form-check"
   }, [_c("input", {
     staticClass: "form-check-input",
@@ -10060,7 +10064,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "form-check-label"
-  }, [_vm._v("\n            毎回このお届け先を使う\n        ")])]), _vm._v(" "), _c("ul", {
+  }, [_vm._v("\n            毎回このお届け先を使う\n        ")])]) : _vm._e(), _vm._v(" "), _c("ul", {
     staticClass: "list-group bg-white"
   }, [_vm._l(_vm.addresses, function (address, key) {
     return _c("li", {
@@ -10070,7 +10074,7 @@ var render = function render() {
       staticClass: "d-block"
     }, [_c("div", {
       staticClass: "row g-0 align-items-center"
-    }, [_c("div", {
+    }, [_vm.show_check != "0" ? _c("div", {
       staticClass: "col-auto"
     }, [_c("div", {
       staticClass: "form-check"
@@ -10097,7 +10101,7 @@ var render = function render() {
           return _vm.updateSelectedAddressId(_vm.selectedAddressId);
         }]
       }
-    })])]), _vm._v(" "), _c("div", {
+    })])]) : _vm._e(), _vm._v(" "), _c("div", {
       staticClass: "col"
     }, [_c("div", {
       staticClass: "fw-bold"
@@ -10451,8 +10455,8 @@ var render = function render() {
       "max-width": "900px"
     }
   }, [_c("section", {
-    staticClass: "my-4"
-  }, [_c("u-addressーlist-form", {
+    staticClass: "my-5"
+  }, [_c("h5", [_vm._v("お届け先の選択")]), _vm._v(" "), _c("u-addressーlist-form", {
     attrs: {
       token: _vm.token,
       r_index: _vm.r_index,
@@ -10463,7 +10467,7 @@ var render = function render() {
       "update-address": _vm.updateSelectedAddressId
     }
   })], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("section", {
-    staticClass: "my-4"
+    staticClass: "my-5"
   }, [_c("u-userprize-list", {
     attrs: {
       token: _vm.token,
@@ -10501,7 +10505,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("section", {
-    staticClass: "my-4"
+    staticClass: "my-5"
   }, [_c("h5", [_vm._v("利用ポイント")]), _vm._v(" "), _c("ul", {
     staticClass: "list-group bg-white"
   }, [_c("li", {

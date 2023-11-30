@@ -93,15 +93,22 @@ Route::get('/', function(){
 */
     Route::middleware(['auth'])->group(function () {
 
-        # ポイント購入　
+        # ポイント一覧
         Route::get('point_sail',
         [Controllers\PointSailController::class, 'index'])
         ->name('point_sail');
 
+        # 購入手続き
         Route::get('point_sail/payment/{point_sail}',
         [Controllers\PointSailController::class, 'payment'])
         ->name('point_sail.payment');
 
+        # 新規登録
+        Route::post('point_sail/create/{point_sail}',
+        [Controllers\PointSailController::class, 'create'])
+        ->name('point_sail.create');
+
+        # 購入
         Route::post('point_sail/payment/{point_sail}',
         [Controllers\PointSailController::class, 'payment_post'])
         ->name('point_sail.payment_post');
@@ -118,6 +125,11 @@ Route::get('/', function(){
         Route::get('point_history/{month?}',
         [Controllers\PointHistoryController::class, 'index'])
         ->name('point_history');
+
+        # カード情報の削除
+        Route::delete('point_sail/destroy/{point_sail}',
+        [Controllers\PointSailController::class, 'destroy'])
+        ->name('point_sail.destroy');
 
     });
 
@@ -219,17 +231,12 @@ Route::get('/', function(){
 
             # アカウント設定(acount)
             Route::get('/settings/acount',
-            function () { return  view('settings.acount'); })
+            function () { return  view('settings.acount.index'); })
             ->name('settings.acount');
-
-            # メールアドレス変更(email)
-            Route::get('/settings/email',
-            function () { return  view('settings.email'); })
-            ->name('settings.email');
 
             # クレジット情報設定(credit_card)
             Route::get('/settings/credit_card',
-            function () { return  view('settings.credit_card'); })
+            [Controllers\SettingsController::class, 'credit_card'])
             ->name('settings.credit_card');
 
             # 商品発送先の住所設定(shipped_address)
@@ -237,7 +244,7 @@ Route::get('/', function(){
             function () { return  view('settings.shipped_address'); })
             ->name('settings.shipped_address');
 
-            # メール受信設定(email_reception)
+            # メール受信設定(email_reception) 未使用
             Route::get('/settings/email_reception',
             function () { return  view('settings.email_reception'); })
             ->name('settings.email_reception');
@@ -250,12 +257,24 @@ Route::get('/', function(){
 
         /* 更新処理 */
 
-            # アカウント情報変更(acount_info_update)
-            Route::patch('/settings/acount_info/update',
-            [Controllers\SettingsController::class, 'acount_info_update'])
-            ->name('settings.acount_info.update');
+            # アカウント情報変更(acount_update)
+            Route::patch('/settings/acount/update',
+            [Controllers\SettingsController::class, 'acount_update'])
+            ->name('settings.acount.update');
 
-            # メール受信設定(email_reception_update)
+
+            # クレジット情報・新規登録
+            Route::post('/settings/credit_card/create',
+            [Controllers\SettingsController::class, 'credit_card_create'])
+            ->name('settings.credit_card.create');
+
+            # クレジット情報・削除
+            Route::delete('/settings/credit_card/destroy',
+            [Controllers\SettingsController::class, 'credit_card_destroy'])
+            ->name('settings.credit_card.destroy');
+
+
+            # メール受信設定(email_reception_update) 未使用
             Route::patch('/settings/email_reception/update',
             [Controllers\SettingsController::class, 'email_reception_update'])
             ->name('settings.email_reception.update');

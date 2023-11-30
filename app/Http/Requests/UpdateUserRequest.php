@@ -6,10 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 /**
  * =========================================
- *  ユーザー登録　リクエスト
+ *  ユーザー情報更新　リクエスト
  * =========================================
 */
-class UserRegisterRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,8 +32,16 @@ class UserRegisterRequest extends FormRequest
         $rules = [
             'name'     => ['required', 'string', 'max:140'],
             'email'    => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'regex:/^[a-zA-Z0-9]{8,20}$/', 'confirmed'],
         ];
+
+
+        # 前回のメールアドレスの重複除去
+        $user = Auth::user();
+        $request = $this->all(); //フォームの入力値をすべて取得
+        if( isset($request['email']) && ($user->email === $request['email']) )
+        {
+            $rules['email'] = ['required', 'email'];
+        }
 
         return $rules;
     }

@@ -40,8 +40,43 @@
             </form>
 
         </div>
+
+        <div class="container py-5">
+            @php
+            $params = [
+                'category_code'=>$gacha->category->code_name,
+                'gacha'=>$gacha,
+                'key'=>$gacha->key
+            ];
+            @endphp
+
+            <div class="row g-3 justify-content-center">
+                <div class="col-md-4">
+                    <a href="{{ route('gacha', $params ) }}"
+                    class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
+                    >{{ 'もう一度ガチャる' }}
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-warning"><i class="bi bi-chevron-right"></i></div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{{ route('gacha_category', $gacha->category->code_name ) }}"
+                    class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
+                    >{{ '他のガチャを選ぶ' }}
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-warning"><i class="bi bi-chevron-right"></i></div>
+                    </a>
+                </div>
+                {{-- <div class="col-md-4">
+                    <a href="{{ route('user_prize') }}"
+                        class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
+                        >{{ '取得した商品一覧を見る' }}
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-warning"><i class="bi bi-chevron-right"></i></div>
+                    </a>
+                </div> --}}
+            </div>
+        </div>
+
     </section>
-    <section class="py-5 bg-dark border-bottom border-right">
+    {{-- <section class="py-5 bg-dark border-bottom border-right">
         <div class="container">
             @php
             $params = [
@@ -69,5 +104,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

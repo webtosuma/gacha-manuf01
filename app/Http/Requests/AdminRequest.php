@@ -24,7 +24,6 @@ class AdminRequest extends FormRequest
 
         # フォームの入力値をすべて取得
         $request = $this->all();
-        // dd($request);
 
         # 管理者修正、メールアドレスの重複登録不可を解除
         if( $this->_method=='PATCH' )
@@ -37,13 +36,13 @@ class AdminRequest extends FormRequest
             $admin = Admin::find($request['admin_id']);
             if( isset($request['email']) && ($admin->email === $request['email']) )
             {
-                $rules['email'] = 'email';
+                $rules['email'] = ['email'];
             }
 
-            if( !isset($request['email']) )
-            {
-                $rules['email'] = '';
-            }
+            // if( !isset($request['email']) )
+            // {
+            //     $rules['email'] = '';
+            // }
         }
 
 
