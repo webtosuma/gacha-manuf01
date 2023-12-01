@@ -143,8 +143,8 @@
     </section> --}}
     <!--カテゴリー-->
     <section class="p-3 bg-dark">
-        <div class="container overflow-auto">
-            <nav class="nav gap-3 flex-nowrap" style="min-width:900px;">
+        <div class="containerrr overflow-auto">
+            <nav class="nav gap-3 flex-nowrap" style="min-width:500px;">
                 @php
                 $sc = "col-md fs-5 fw-bold btn btn-light rounded-pill border-dark border-2";
                 $style_class = $category_code=='all' ? $sc.' disabled' : $sc;

@@ -27,10 +27,9 @@
                 <!-- 賞ラベル -->
                 @switch( $discription->gacha_rank_id )
                     @case('101')
-                        <div class="col-8 mx-auto mb-3">
-                            <div class="fw-bold text-center" style="font-size:3rem;">Rank A</div>
-                            {{-- <img class="d-block w-100"
-                            src="{{asset('storage/site/image/gacha/01prize.png')}}" alt="1等賞"> --}}
+                        <div class="col-12">
+                            <img class="d-block w-100"
+                            src="{{asset('storage/site/image/rank/ss01.png')}}" alt="1等賞">
                         </div>
 
                         <!--カード画像-->
@@ -49,10 +48,9 @@
                         </div>
                         @break
                     @case('102')
-                        <div class="col-8 mx-auto mb-3">
-                            <div class="fw-bold text-center" style="font-size:3rem;">Rank B</div>
-                            {{-- <img class="d-block w-100"
-                            src="{{asset('storage/site/image/gacha/02prize.png')}}" alt="2等賞"> --}}
+                        <div class="col-12">
+                            <img class="d-block w-100"
+                            src="{{asset('storage/site/image/rank/s01.png')}}" alt="1等賞">
                         </div>
 
                         <!--カード画像-->
@@ -71,10 +69,9 @@
                         </div>
                         @break
                     @case('103')
-                        <div class="col-8 mx-auto mb-3">
-                            <div class="fw-bold text-center" style="font-size:3rem;">Rank C</div>
-                            {{-- <img class="d-block w-100"
-                            src="{{asset('storage/site/image/gacha/03prize.png')}}" alt="3等賞"> --}}
+                        <div class="col-12">
+                            <img class="d-block w-100"
+                            src="{{asset('storage/site/image/rank/a01.png')}}" alt="1等賞">
                         </div>
 
                         <!--カード画像-->
@@ -93,10 +90,9 @@
                         </div>
                         @break
                     @case('104')
-                        <div class="col-8 mx-auto mb-3">
-                            <div class="fw-bold text-center" style="font-size:3rem;">Rank D</div>
-                            {{-- <img class="d-block w-100"
-                            src="{{asset('storage/site/image/gacha/04prize.png')}}" alt="4等賞"> --}}
+                        <div class="col-12">
+                            <img class="d-block w-100"
+                            src="{{asset('storage/site/image/rank/b01.png')}}" alt="1等賞">
                         </div>
 
                         <!--カード画像-->

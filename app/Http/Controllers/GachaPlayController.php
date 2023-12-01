@@ -98,10 +98,6 @@ class GachaPlayController extends Controller
      */
     public function play(Request $request, $category_code, Gacha $gacha, $key)
     {
-        // $user_gacha_history = UserGachaHIstory::first();
-        // $movie_path = self::MoviePath('XA');
-        // return view('gacha.play', compact('user_gacha_history', 'movie_path' ));
-
 
         # 変数
         $user = Auth::user(); //ログインユーザー取得

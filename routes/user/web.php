@@ -3,6 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 
+# 動画テスト
+Route::get('/test/movie', function(){
+
+    $user_gacha_history = \App\Models\UserGachaHistory::find(1);
+    $movies = [
+        'pc'     => 'site/movie/pc/101/01.mp4',
+        'mobile' => 'site/movie/mobile/101/01.mp4',
+    ];
+    $movie_path = [
+        'pc'     => asset( 'storage/'.$movies['pc'] ),
+        'mobile' => asset( 'storage/'.$movies['mobile'] ),
+    ];
+    return view('gacha.play', compact('user_gacha_history', 'movie_path' ));
+} );
+
+
 /*
 ==========================================================================
  ユーザールーティング　web

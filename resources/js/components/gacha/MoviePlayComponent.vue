@@ -7,7 +7,7 @@
                 <div class="video-area d-md-none">
                     <video class="bg_video"
                     playsinline :muted="muted"
-                    width="100%" height=""
+                    width="100%"
                     poster=""
                     ><source :src="movie_path_mobile" />
                     </video>
@@ -16,7 +16,7 @@
                 <div class="video-area d-none d-md-block">
                     <video class="bg_video"
                     playsinline :muted="muted"
-                    width="100%" height=""
+                    width="100%"
                     poster=""
                     ><source :src="movie_path_pc" />
                     </video>
@@ -71,7 +71,7 @@
         mounted() {
 
             this.set();
-            console.log( this.videos );
+            // console.log( this.videos );
             this.autoPlay();
 
         },

@@ -6,6 +6,7 @@ style="max-width:90vw; min-width:30vw;">
             <div class="row align-items-center g-2">
 
 
+
                 <div class="col-auto" style="width: 3rem;">
                     <ratio-image-component
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="ユーザーメニュー"

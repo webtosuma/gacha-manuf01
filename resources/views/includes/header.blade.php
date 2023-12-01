@@ -27,7 +27,7 @@
 
                             <div class="rounded-pill bg- text- fw-bold border
                             d-flex align-items-center justify-content-end px-2
-                            " style="width:6rem; height:1.6rem;">
+                            " style="width:7rem; height:1.6rem;">
                                 <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
                                 <span>pt</span>
                             </div>
@@ -54,6 +54,8 @@
     </nav>
 
 
-    @include('includes.offcanvas_menu')
+    @if(Auth::check())
+        @include('includes.offcanvas_menu')
+    @endif
 
 </header>

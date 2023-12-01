@@ -22,7 +22,7 @@ class CreatePrizesTable extends Migration
             $table->foreignId('category_id')->constrained('gacha_categories')
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
 
-            $table->foreignId('rank_id')->constrained('gacha_categories');
+            $table->integer('rank_id');
 
             $table->string('code'  )->nullable()->default(NULL);//景品コード
             $table->string('name' );//名

@@ -58,25 +58,44 @@ class GachaDiscriptionSeeder extends Seeder
 
         return   [
             [
-                // 'gacha_id' => 1,
-                'image'        => 'sample/gachas/g01/01prize.png', //画像
-                'sorce'        => '1等賞の説明文　', //説明文
+                'image'        => '', //画像
+                'sorce'        => 'RankSSの説明文　', //説明文
                 'gacha_rank_id'=> '101', //ランクID
             ],
             [
-                'image'        => 'sample/gachas/g01/02prize.png', //画像
-                'sorce'        => "2等賞の説明文\n改行", //説明文
+                'image'        => '', //画像
+                'sorce'        => 'RankSの説明文　', //説明文
                 'gacha_rank_id'=> '102', //ランクID
             ],
             [
+                'image'        => '', //画像
+                'sorce'        => 'RankAの説明文　', //説明文
+                'gacha_rank_id'=> '111', //ランクID
+            ],
+            [
+                'image'        => 'sample/gachas/g01/02prize.png', //画像
+                'sorce'        => "RankBの説明文\n改行", //説明文
+                'gacha_rank_id'=> '112', //ランクID
+            ],
+            [
                 'image'        => 'sample/gachas/g01/03prize.png', //画像
-                'sorce'        => "3等賞の説明文\n改行", //説明文
-                'gacha_rank_id'=> '103', //ランクID
+                'sorce'        => "RankCの説明文\n改行", //説明文
+                'gacha_rank_id'=> '113', //ランクID
             ],
             [
                 'image'        => 'sample/gachas/g01/04prize.png', //画像
-                'sorce'        => '4等賞の説明文　https://www.google.co.jp/', //説明文
-                'gacha_rank_id'=> '104', //ランクID
+                'sorce'        => 'RankDの説明文　https://www.google.co.jp/', //説明文
+                'gacha_rank_id'=> '114', //ランクID
+            ],
+            [
+                'image'        => '', //画像
+                'sorce'        => 'ゾロ目の説明文', //説明文
+                'gacha_rank_id'=> '21', //ランクID
+            ],
+            [
+                'image'        => '', //画像
+                'sorce'        => 'ラストワンの説明文', //説明文
+                'gacha_rank_id'=> '11', //ランクID
             ],
 
         ];

@@ -48,17 +48,17 @@ class GachaCategorySeeder extends Seeder
                 'code_name'    => 'pokemon',//'コードネーム（ルーティング用）'
                 'bg_image'     => 'site/image/bg01.jpg',//'背景画像'
             ],
-            [
-                'name'         => '遊戯王',//名前
-                'code_name'    => 'yugio',//'コードネーム（ルーティング用）'
-                'bg_image'     => 'site/image/bg04.jpg',//'背景画像'
-                'is_published' => 0,//公開日時
-            ],
-            [
-                'name'         => 'ドラゴンボール',//名前
-                'code_name'    => 'dragonball',//'コードネーム（ルーティング用）'
-                'bg_image'     => 'site/image/bg02.jpg',//'背景画像'
-            ],
+            // [
+            //     'name'         => '遊戯王',//名前
+            //     'code_name'    => 'yugio',//'コードネーム（ルーティング用）'
+            //     'bg_image'     => 'site/image/bg04.jpg',//'背景画像'
+            //     'is_published' => 0,//公開日時
+            // ],
+            // [
+            //     'name'         => 'ドラゴンボール',//名前
+            //     'code_name'    => 'dragonball',//'コードネーム（ルーティング用）'
+            //     'bg_image'     => 'site/image/bg02.jpg',//'背景画像'
+            // ],
         ];
 
     }

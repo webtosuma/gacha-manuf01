@@ -6630,7 +6630,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.set();
-    console.log(this.videos);
+    // console.log( this.videos );
     this.autoPlay();
   },
   methods: {
@@ -9778,7 +9778,6 @@ var render = function render() {
     attrs: {
       playsinline: "",
       width: "100%",
-      height: "",
       poster: ""
     },
     domProps: {
@@ -9795,7 +9794,6 @@ var render = function render() {
     attrs: {
       playsinline: "",
       width: "100%",
-      height: "",
       poster: ""
     },
     domProps: {

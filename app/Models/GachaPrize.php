@@ -39,6 +39,27 @@ class GachaPrize extends Model
     }
 
 
+    /**
+     * ガチャランク　一覧
+     *
+     * @return Array　
+     */
+    public static function gacha_ranks()
+    {
+        return [
+            11 => 'ラストワン',
+            21 => 'ゾロ目',
+
+            101 => 'RankSS',
+            102 => 'RankS',
+
+            111 => 'RankA',
+            112 => 'RankB',
+            113 => 'RankC',
+            114 => 'RankD',
+
+        ];
+    }
 
     /*
     |--------------------------------------------------------------------------

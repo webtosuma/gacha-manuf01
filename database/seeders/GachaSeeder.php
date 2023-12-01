@@ -36,19 +36,8 @@ class GachaSeeder extends Seeder
                 $gacha = new Gacha($data);
                 $gacha->save();
 
-
-
-                // # ガチャの詳細説明登録
-                // self::CreateDiscriptions( $gacha );
             }
         }
-
-        // # ガチャの詳細説明登録
-        // $gachas = Gacha::all();
-        // foreach ($gachas as $gacha) {
-        //     self::CreateDiscriptions( $gacha );
-        // }
-
     }
 
 

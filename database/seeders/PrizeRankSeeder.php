@@ -39,12 +39,13 @@ class PrizeRankSeeder extends Seeder
         return   [
             [
                 'name'   => 'RankSS',
-                'order'  => 11,
+                'order'  => 101,
             ],
             [
                 'name'   => 'RankS',
-                'order'  => 12,
+                'order'  => 102,
             ],
+
             [
                 'name'   => 'RankA',
                 'order'  => 111,
@@ -62,8 +63,6 @@ class PrizeRankSeeder extends Seeder
                 'name'   => 'RankD',
                 'order'  => 114,
             ],
-
-
         ];
 
     }

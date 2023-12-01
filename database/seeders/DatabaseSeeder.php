@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         /* 本番利用 */
         $this->call(PointSailSeeder::class);//販売用ポイント
         $this->call(GachaCategorySeeder::class);//ガチャのカテゴリーグループ
-        $this->call(PrizeRankSeeder::class);//商品のランク
+        // $this->call(PrizeRankSeeder::class);//商品のランク
 
 
         /* テスト用 */
