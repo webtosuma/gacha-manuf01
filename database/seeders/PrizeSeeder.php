@@ -22,12 +22,12 @@ class PrizeSeeder extends Seeder
     public function run()
     {
         $data_array = [
-            ['rank'=>'ss', 'count'=>1, 'rank_id'=>101, 'point'=>10000 ,],
-            ['rank'=>'s',  'count'=>2, 'rank_id'=>102,  'point'=>5000 ,],
-            ['rank'=>'a',  'count'=>4, 'rank_id'=>111,  'point'=>1000 ,],
-            ['rank'=>'b',  'count'=>5, 'rank_id'=>112,  'point'=>500 ,],
-            ['rank'=>'c',  'count'=>6, 'rank_id'=>113,  'point'=>100,],
-            ['rank'=>'d',  'count'=>8, 'rank_id'=>114,  'point'=>50,],
+            ['rank'=>'ss', 'count'=>1, 'rank_id'=>1, 'point'=>10000 ,],
+            ['rank'=>'s',  'count'=>2, 'rank_id'=>2,  'point'=>5000 ,],
+            ['rank'=>'a',  'count'=>4, 'rank_id'=>3,  'point'=>1000 ,],
+            ['rank'=>'b',  'count'=>5, 'rank_id'=>4,  'point'=>500 ,],
+            ['rank'=>'c',  'count'=>7, 'rank_id'=>5,  'point'=>100,],
+            ['rank'=>'d',  'count'=>8, 'rank_id'=>6,  'point'=>50,],
 
         ];
         foreach ($data_array as $data) {

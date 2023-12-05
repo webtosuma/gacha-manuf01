@@ -34,6 +34,107 @@ class GachaDiscription extends Model
     }
 
 
+    /**
+     * ガチャランク　一覧
+     *
+     * @return Array　
+     */
+    public static function gacha_ranks()
+    {
+        return [
+
+            100 => 'RankSS',
+            200 => 'RankS',
+            300 => 'RankA',
+
+            400 => 'RankB',
+            500 => 'RankC',
+            600 => 'RankD',
+
+            10 => 'ラストワン',
+            310 => 'キリ番',
+            320 => 'ゾロ目',
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * Gachaモデル リレーション
+         * @return \App\Models\Gacha
+        */
+        public function gacha(){
+            return $this->belongsTo(Gacha::class, 'gacha_id');
+        }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー 詳細表示
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * GachaPrizeモデル リレーション (g_prizes)
+         * @return \App\Models\GachaPrize
+        */
+        public function getGPrizesAttribute()
+        {
+            return GachaPrize::where('gacha_id',$this->gacha->id)
+            ->where('gacha_rank_id', $this->gacha_rank_id)
+            ->get();
+        }
+
+
+        /**
+         * ランクのラベルテキスト rank_label
+         * @return String
+        */
+        public function getRankLabelAttribute()
+        {
+            $gacha_ranks = $this->gacha_ranks();
+            return $gacha_ranks[ $this->gacha_rank_id ];
+        }
+
+
+        /**
+         * ランクのラベル画像ファイルパス rank_label_image
+         * @return String
+        */
+        public function getRankLabelImageAttribute()
+        {
+            $dir = 'site/image/rank/';
+            $path = $dir.$this->gacha_rank_id.'.png';
+
+            return Storage::exists($path) ?
+            asset( 'storage/'.$path ) :  null;
+        }
+
+
+
+        /**
+         * ガチャランクごとの演出動画一覧 (movies)
+         * @return \App\Models\GachaPrize
+        */
+        public function getMoviesAttribute()
+        {
+            # ガチャランクごとの演出動画ID
+            $id_array = GachaRankMovie::where('gacha_id',$this->gacha->id)
+            ->where('gacha_rank_id', $this->gacha_rank_id)
+            ->get()->pluck('movie_id')->toArray();
+
+            # ガチャランクに紐づく動画
+            return Movie::find( $id_array );
+        }
+
+
+
 
 
     /*

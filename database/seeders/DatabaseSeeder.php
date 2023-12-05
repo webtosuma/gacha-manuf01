@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         /* 本番利用 */
         $this->call(PointSailSeeder::class);//販売用ポイント
         $this->call(GachaCategorySeeder::class);//ガチャのカテゴリーグループ
-        // $this->call(PrizeRankSeeder::class);//商品のランク
+        $this->call(MovieSeeder::class);//演出動画
+        $this->call(PrizeRankSeeder::class);//商品のランク
 
 
         /* テスト用 */
@@ -28,8 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GachaDiscriptionSeeder::class);//ガチャ詳細情報
         $this->call(PrizeSeeder::class);//景品
         $this->call(GachaPrizeSeeder::class);//各ガチャの景品
-
-
+        $this->call(GachaRankMovieSeeder::class);//各ガチャの演出動画設定
 
     }
 }

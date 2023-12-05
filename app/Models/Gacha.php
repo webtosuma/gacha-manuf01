@@ -64,8 +64,7 @@ class Gacha extends Model
         */
         public function discriptions()
         {
-            return $this->hasMany(GachaDiscription::class,'gacha_id')
-            ->orderBy('gacha_rank_id','asc'); //ランク順
+            return $this->hasMany(GachaDiscription::class,'gacha_id');
         }
 
 

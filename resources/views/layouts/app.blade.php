@@ -37,6 +37,9 @@
 
     @yield('style')
 
+    @include('includes.google_tag')
+
+
 </head>
 <body class="">
     <div id="app">

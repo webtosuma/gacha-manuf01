@@ -19,8 +19,16 @@
 </section>
 <!--各賞-->
 <div class="row justify-content-center mx-auto" style="max-width:1200px;">
+
     @foreach ($gacha->discriptions as $discription)
-        <section class="py-5 col-12">
+
+
+
+        @include('gacha.show.section')
+
+
+
+        {{-- <section class="py-5 col-12">
 
             <div class="container overflow-auto" style="max-width:600px;">
 
@@ -96,10 +104,6 @@
                         </div>
 
                         <!--カード画像-->
-                        {{-- @if ( $discription->image_path )
-                            <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                            src="{{$discription->image_path }}" alt="商品画像">
-                        @else --}}
                             <div class="row gy-3 mb-3 justify-content-center">
                                 @foreach ($gacha->rank_d_prizes as $gacha_prize)
                                     <div class="col-4 position-relative">
@@ -113,30 +117,19 @@
                                     </div>
                                 @endforeach
                             </div>
-                        {{-- @endif --}}
                         @break
                     @case('105')
                         <div class="col-8 mx-auto mb-3">
                             <div class="fw-bold text-center" style="font-size:3rem;">Rank C</div>
-                            {{-- <img class="d-block w-100"
-                            src="{{asset('storage/site/image/gacha/04prize.png')}}" alt="4等賞"> --}}
                         </div>
                         @break
                     @case('106')
                         <div class="col-8 mx-auto mb-3">
                             <div class="fw-bold text-center" style="font-size:3rem;">Rank D</div>
-                            {{-- <img class="d-block w-100"
-                            src="{{asset('storage/site/image/gacha/04prize.png')}}" alt="4等賞"> --}}
                         </div>
                         @break
 
                 @endswitch
-
-                <!-- 商品画像 -->
-                {{-- @if ( $discription->image_path )
-                    <img class="d-block w-100 shadow" style="border-radius:1rem;"
-                    src="{{$discription->image_path }}" alt="商品画像">
-                @endif --}}
 
                 <!-- 商品説明文 -->
                 @if ( $discription->sorce )
@@ -145,6 +138,6 @@
                 @endif
 
             </div>
-        </section>
+        </section> --}}
     @endforeach
 </div>

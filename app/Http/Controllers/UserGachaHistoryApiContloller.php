@@ -43,8 +43,6 @@ class UserGachaHistoryApiContloller extends Controller
             # 発送済みデータを除く
             $query->where('shipped_id',Null);
 
-            # 取得が新しい順
-            $query->orderByDesc('created_at');
 
             # 商品テーブル(prize)とのリレーション
             $query->with(['prize.rank' => function ($query) {

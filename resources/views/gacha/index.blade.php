@@ -195,26 +195,17 @@
                             </div>
 
                             <!--metter-->
-                            <div class="card-body">
-                                <h6 class="d-flex justify-content-between align-items-end">
-                                    <p class="card-text m-0">
-                                        残り
-                                        <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
-                                        /
-                                        <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
-                                    </p>
+                            <div class="card-body py-0">
+                                <div class="d-flex align-items-center justify-content-center gap-2 fs-5">
+                                    @include('includes.point_icon')
 
-                                    <div class="d-flex align-items-center gap-2">
-                                        @include('includes.point_icon')
-
-                                        <div class="">
-                                            1回×
-                                            <span class="fs-1">
-                                                <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
-                                            </span>pt
-                                        </div>
+                                    <div class="">
+                                        1回×
+                                        <span class="fs-3">
+                                            <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
+                                        </span>pt
                                     </div>
-                                </h6>
+                                </div>
                                 <div class="progress">
                                     @php
                                     $ratio = $gacha->remaining_ratio;
@@ -224,6 +215,12 @@
                                     <div class="{{ $style_class }}" role="progressbar"
                                     style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
                                 </div>
+                                <p class="form-text text-center m-0">
+                                    残り
+                                    <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
+                                    /
+                                    <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
+                                </p>
                             </div>
                         </a>
 

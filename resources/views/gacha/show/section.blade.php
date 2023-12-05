@@ -1,0 +1,59 @@
+{{-- 表示：登録カード数が0いじょうのとき --}}
+@if ( $discription->g_prizes->count() )
+    <section class="py-5 col-12">
+        <div class="container overflow-auto" style="max-width:600px;">
+
+
+            <!-- Rankラベル -->
+            {{-- @if ( $discription->rank_label_image )
+                <div class="">
+                    <img class="d-block w-100"
+                    src="{{ $discription->rank_label_image }}"
+                    alt="{{ $discription->rank_label }}">
+                </div>
+            @else
+                <div class="text-center" style="font-size:4rem;">{{ $discription->rank_label }}</div>
+            @endif --}}
+            <div class="text-center" style="font-size:4rem;">{{ $discription->rank_label }}</div>
+
+
+
+            <!--商品画像-->
+            @if ( $discription->image_path )
+                <img class="d-block w-100"
+                src="{{ $discription->image_path }}"
+                alt="{{ $discription->rank_label.'商品画像' }}">
+            @else
+
+                @php $col = $discription->gacha_rank_id < 400 ? 'col-6' : 'col-3' ; @endphp
+                <div class="row gy-3 mb-3 justify-content-center">
+                    @foreach ($discription->g_prizes as $gacha_prize)
+
+
+                        <div class="{{ $col }} position-relative">
+                            <ratio-image-component
+                            style_class="ratio ratio-3x4 rounded-3"
+                            url="{{$gacha_prize->prize->image_path}}"
+                            ></ratio-image-component>
+
+                            <div class="position-absolute bottom-0 end-0 translate-middle
+                            bg-dark text-white px-2 rounded fs-3">{{'×'.$gacha_prize->max_count}}</div>
+                        </div>
+
+
+                    @endforeach
+                </div>
+
+            @endif
+
+
+            <!-- 商品説明文 -->
+            @if ( $discription->sorce )
+                <p class="p-3 mt-2 form-text text-secondary" style="border-radius:1rem; background:rgb(255, 255, 255, .9);"
+                ><replace-text-component text="{{$discription->sorce_text }}"></replace-text-component></p>
+            @endif
+
+
+        </div>
+    </section>
+@endif

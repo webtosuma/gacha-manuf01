@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <!-- ファビコン画像の読み込み -->
-    <link rel="shortcut icon" href="image/favicon.png">
-
     <title>
     cardFesta（カードフェスタ）|オンラインオリパ・ネットオリパを24時間365日楽しめる！国内送料は無料！
     </title>
@@ -30,7 +27,18 @@
     <meta property="og:locale"      content="ja_JP"  />
     <meta property="og:type"        content="website">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <!-- ファビコン画像の読み込み -->
+    <link rel="shortcut icon" href="{{asset('storage/site/image/favicon.png')}}">
+    <!-- bootstrap アイコン の読み込み-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    @include('includes.google_tag')
 
 
 </head>
@@ -43,20 +51,26 @@
         playsinline
         muted
         width="100%"
-        poster=""
-        ><source src="{{ $movie_path['pc'] }}"></source></video>
+        poster="{{asset('storage/site/image/yokoku.png')}}"
+        >
+            {{-- <source src="site/movie/yokoku_2.mp4"></source> --}}
+            <source src="{{ asset('storage/site/movie/yokoku_2.mp4') }}"></source>
+        </video>
 
 
     </div>
-    <div class="d-flex d-md-none align-items-center justify-content-center w-100 bg-dark">
+    <div class="d-flex d-md-none align-items-center justify-content-center w-100 h-100 bg-dark">
 
         <video class="bg_video h-100"
         loop
         playsinline
         muted
         width="100%"
-        poster=""
-        ><source src="{{ $movie_path['mobile'] }}"></source></video>
+        poster="{{asset('storage/site/image/yokoku.png')}}"
+        >
+            {{-- <source src="site/movie/yokoku_2_mobile.mp4"></source> --}}
+            <source src="{{ asset('storage/site/movie/yokoku_2_mobile.mp4') }}"></source>
+        </video>
 
 
     </div>
@@ -64,7 +78,10 @@
 
 
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script>
+
         'use strict';
 
         // すべてのvideoタグを取得

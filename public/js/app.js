@@ -6625,13 +6625,22 @@ __webpack_require__.r(__webpack_exports__);
     return {
       videos: '',
       form: '',
-      muted: true
+      muted: true,
+      moviePlaying: true //動画再生中
     };
   },
   mounted: function mounted() {
     this.set();
-    // console.log( this.videos );
+
+    // 今フォームの表示
+    var userAnswer = window.confirm("音声が出ます。よろしいですか？");
+    if (userAnswer) {
+      this.muted = false;
+    }
     this.autoPlay();
+
+    // 再生チェック(再生ボタンの表示有無)
+    this.playCheck();
   },
   methods: {
     set: function set() {
@@ -6652,8 +6661,30 @@ __webpack_require__.r(__webpack_exports__);
         video.play();
 
         // 音声再生
-        _this.muted = false;
+        // this.muted = false;
       });
+    },
+    // 再生
+    play: function play() {
+      this.videos.forEach(function (video) {
+        // メディアの再生を開始
+        video.play();
+      });
+
+      // 再生チェック
+      this.playCheck();
+    },
+    // 再生チェック
+    playCheck: function playCheck() {
+      this.moviePlaying = true;
+
+      // this.videos.forEach(video => {
+
+      //     if (video.paused) {
+      //         console.log("ビデオは再生中です。");
+      //         this.moviePlaying = false;
+      //     }
+      // });
     },
     /** 音声切り替え */switchMuted: function switchMuted() {
       this.muted = !this.muted;
@@ -9803,10 +9834,18 @@ var render = function render() {
     attrs: {
       src: _vm.movie_path_pc
     }
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "position-fixed top-0 start-0 p-3"
+  })])])]), _vm._v(" "), !_vm.moviePlaying ? _c("div", {
+    staticClass: "position-absolute top-50 start-50 translate-middle"
   }, [_c("button", {
     staticClass: "btn btn-light btn-sm float-right py-0 fs-3",
+    on: {
+      click: function click($event) {
+        return _vm.play();
+      }
+    }
+  }, [_vm._v("play")])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "position-fixed top-0 start-0 p-3"
+  }, [_c("button", {
     attrs: {
       id: "muteButton"
     },

@@ -12,6 +12,8 @@ use App\Models\PointHistory;
 use App\Models\UserGachaHistory;
 use App\Models\UserPrize;
 use App\Models\Prize;
+use App\Models\GachaRankMovie;
+use App\Models\Movie;
 
 /*
 | =============================================
@@ -20,73 +22,6 @@ use App\Models\Prize;
 */
 class GachaPlayController extends Controller
 {
-    /**
-     * 動画ファイルパス
-     */
-    public function Movies()
-    {
-        return [
-
-            '101' => [
-                [
-                    'pc'     => 'site/movie/pc/101/01.mp4',
-                    'mobile' => 'site/movie/mobile/101/01.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/101/02.mp4',
-                    'mobile' => 'site/movie/mobile/101/02.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/101/03.mp4',
-                    'mobile' => 'site/movie/mobile/101/03.mp4',
-                ],
-
-            ],
-            '102' => [
-                [
-                    'pc'     => 'site/movie/pc/102/01.mp4',
-                    'mobile' => 'site/movie/mobile/102/01.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/102/01.mp4',
-                    'mobile' => 'site/movie/mobile/102/02.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/102/01.mp4',
-                    'mobile' => 'site/movie/mobile/102/03.mp4',
-                ],
-            ],
-            '103' => [
-                [
-                    'pc'     => 'site/movie/pc/103/01.mp4',
-                    'mobile' => 'site/movie/mobile/103/01.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/103/01.mp4',
-                    'mobile' => 'site/movie/mobile/103/02.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/103/01.mp4',
-                    'mobile' => 'site/movie/mobile/103/03.mp4',
-                ],
-            ],
-            '104' => [
-                [
-                    'pc'     => 'site/movie/pc/104/01.mp4',
-                    'mobile' => 'site/movie/mobile/104/01.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/104/02.mp4',
-                    'mobile' => 'site/movie/mobile/104/02.mp4',
-                ],
-                [
-                    'pc'     => 'site/movie/pc/104/03.mp4',
-                    'mobile' => 'site/movie/mobile/104/03.mp4',
-                ],
-            ],
-        ];
-    }
-
 
     /**
      * PLAYガチャで遊ぶ
@@ -130,9 +65,9 @@ class GachaPlayController extends Controller
             # ガチャ履歴の登録
             $user_gacha_history = self::CreateGachaHistory( $gacha, $point_history ,$play_count );
 
-
             # ガチャの残り商品ID配列
             $reminingGPIdArray = self::ReminingGPIdArray( $gacha );
+
             # ランダムで選出した、ガチャの商品ID配列
             $randReminingGPIdArray = self::RandReminingGPIdArray( $reminingGPIdArray, $play_count);
 
@@ -146,7 +81,7 @@ class GachaPlayController extends Controller
             $max_rank = self::MaxRank($randReminingGPIdArray );
 
             # 動画パスの取得
-            $movie_path = self::MoviePath($max_rank);
+            $movie_path = self::MoviePath($gacha, $max_rank);
 
 
             DB::commit();
@@ -317,21 +252,30 @@ class GachaPlayController extends Controller
 
     /**
      * 動画パスの取得
+     * @param  \App\Models\Gacha  $gacha //ガチャモデル
      * @param  String $max _path
      * @param  Array $randReminingGPIdArray //ランダムで選出した、ガチャの商品ID配列
      * @return　Array
     */
-    public function MoviePath( $max_rank )
+    public function MoviePath( $gacha, $max_rank )
     {
-        $all_movies  = self::Movies();
-        $rank_movies = $all_movies[ $max_rank ]; //ランク別画像
-        $movies      = $rank_movies[ rand( 0, count($rank_movies)-1 ) ];
 
-        return [
-            'pc'     => asset( 'storage/'.$movies['pc'] ),
-            'mobile' => asset( 'storage/'.$movies['mobile'] ),
+
+        # ガチャランクごとの演出動画ID
+        $id_array = GachaRankMovie::where('gacha_id',$gacha->id)
+        ->where('gacha_rank_id', $max_rank)
+        ->get()->pluck('movie_id')->toArray();
+
+        # ガチャランクに紐づく動画
+        $movies = Movie::find( $id_array );
+
+
+        # 紐づく動画からランダムで選出
+        $movie = $movies[ rand(0, $movies->count()-1 ) ];
+        return  [
+            'pc'     => $movie->pc,
+            'mobile' => $movie->mobile,
         ];
-
     }
 
 

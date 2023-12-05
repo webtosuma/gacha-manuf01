@@ -39,29 +39,29 @@ class PrizeRankSeeder extends Seeder
         return   [
             [
                 'name'   => 'RankSS',
-                'order'  => 101,
+                'order'  => 100,
             ],
             [
                 'name'   => 'RankS',
-                'order'  => 102,
+                'order'  => 200,
             ],
 
             [
                 'name'   => 'RankA',
-                'order'  => 111,
+                'order'  => 300,
             ],
             [
                 'name'   => 'RankB',
-                'order'  => 112,
+                'order'  => 400,
             ],
 
             [
                 'name'   => 'RankC',
-                'order'  => 113,
+                'order'  => 500,
             ],
             [
                 'name'   => 'RankD',
-                'order'  => 114,
+                'order'  => 600,
             ],
         ];
 

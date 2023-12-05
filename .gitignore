@@ -5,6 +5,7 @@
 /vendor
 .env
 .env_heteml
+.env_heteml_test
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml

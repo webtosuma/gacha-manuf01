@@ -35,15 +35,17 @@ class GachaPrizeSeeder extends Seeder
     public function create( $gacha )
     {
         $data_array = [
-            ['rank'=>'ラストワン', 'count'=>1, 'rank_id'=>'111', 'gacha_rank_id'=>'11', 'max_count'=>1,],
-            ['rank'=>'ゾロ目',    'count'=>1, 'rank_id'=>'112', 'gacha_rank_id'=>'21', 'max_count'=>1,],
-            ['rank'=>'ss', 'count'=>1, 'rank_id'=>'101', 'gacha_rank_id'=>'101', 'max_count'=>1,],
-            ['rank'=>'s',  'count'=>2, 'rank_id'=>'102', 'gacha_rank_id'=>'102', 'max_count'=>1,],
-            ['rank'=>'a',  'count'=>4, 'rank_id'=>'111', 'gacha_rank_id'=>'111', 'max_count'=>1,],
-            ['rank'=>'b',  'count'=>5, 'rank_id'=>'112', 'gacha_rank_id'=>'112', 'max_count'=>1,],
-            ['rank'=>'c',  'count'=>6, 'rank_id'=>'113', 'gacha_rank_id'=>'113', 'max_count'=>1,],
-            ['rank'=>'d',  'count'=>8, 'rank_id'=>'114', 'gacha_rank_id'=>'114', 'max_count'=>10,],
+            ['rank'=>'ss', 'count'=>1, 'rank_id'=>'1', 'gacha_rank_id'=>'100', 'max_count'=>1,],
+            ['rank'=>'s',  'count'=>2, 'rank_id'=>'2', 'gacha_rank_id'=>'200', 'max_count'=>2,],
+            ['rank'=>'a',  'count'=>4, 'rank_id'=>'3', 'gacha_rank_id'=>'300', 'max_count'=>50,],
 
+            ['rank'=>'b',  'count'=>5, 'rank_id'=>'4', 'gacha_rank_id'=>'400', 'max_count'=>50,],
+            ['rank'=>'c',  'count'=>7, 'rank_id'=>'5', 'gacha_rank_id'=>'500', 'max_count'=>50,],
+            ['rank'=>'d',  'count'=>8, 'rank_id'=>'6', 'gacha_rank_id'=>'600', 'max_count'=>149,],
+
+            ['rank'=>'キリ番',    'count'=>1, 'rank_id'=>'2', 'gacha_rank_id'=>'310', 'max_count'=>1,],
+            ['rank'=>'ゾロ目',    'count'=>1, 'rank_id'=>'2', 'gacha_rank_id'=>'320', 'max_count'=>1,],
+            ['rank'=>'ラストワン', 'count'=>1, 'rank_id'=>'1', 'gacha_rank_id'=>'10', 'max_count'=>1,],
         ];
         foreach ($data_array as $data) {
 
@@ -69,88 +71,6 @@ class GachaPrizeSeeder extends Seeder
         }
 
 
-
-        // # 101ランク景品の登録
-
-        //     $gacha_rank_id = '101';
-        //     $prize_lank_id = 1;
-
-        //     $prizes = Prize::inRandomOrder()
-        //     ->where('rank_id', $prize_lank_id)
-        //     ->limit(2)->get();
-
-        //     foreach ($prizes as $prize) {
-        //         $gacha_prize = new GachaPrize([
-        //             'gacha_id'        => $gacha->id, //ガチャの種類リレーション
-        //             'prize_id'        => 1, //景品リレーション
-        //             'gacha_rank_id'   => $gacha_rank_id, //ランクID
-        //             'max_count'       => 1, //景品総数
-        //             'remaining_count' => 1, //景品残数
-        //         ]);
-        //         $gacha_prize->save();
-        //     }
-
-        // # 102ランク景品の登録
-
-        //     $gacha_rank_id = '102';
-        //     $prize_lank_id = 2;
-
-        //     $prizes = Prize::inRandomOrder()
-        //     ->where('rank_id', $prize_lank_id)
-        //     ->limit(3)->get();
-
-        //     foreach ($prizes as $prize) {
-        //         $gacha_prize = new GachaPrize([
-        //             'gacha_id'        => $gacha->id, //ガチャの種類リレーション
-        //             'prize_id'        => $prize->id, //景品リレーション
-        //             'gacha_rank_id'   => $gacha_rank_id, //ランクID
-        //             'max_count'       => 1, //景品総数
-        //             'remaining_count' => 1, //景品残数
-        //         ]);
-        //         $gacha_prize->save();
-        //     }
-
-        // # 103ランク景品の登録
-
-        //     $gacha_rank_id = '103';
-        //     $prize_lank_id = 3;
-
-        //     $prizes = Prize::inRandomOrder()
-        //     ->where('rank_id', $prize_lank_id)
-        //     ->limit(5)->get();
-
-        //     foreach ($prizes as $prize) {
-        //         $gacha_prize = new GachaPrize([
-        //             'gacha_id'        => $gacha->id, //ガチャの種類リレーション
-        //             'prize_id'        => $prize->id, //景品リレーション
-        //             'gacha_rank_id'   => $gacha_rank_id, //ランクID
-        //             'max_count'       => 1, //景品総数
-        //             'remaining_count' => 1, //景品残数
-        //         ]);
-        //         $gacha_prize->save();
-        //     }
-
-        // # 104ランク景品の登録
-
-        //     $gacha_rank_id = '104';
-        //     $prize_lank_id = 4;
-
-        //     $prizes = Prize::inRandomOrder()
-        //     ->where('rank_id', $prize_lank_id)
-        //     ->limit(5)->get();
-
-        //     foreach ($prizes as $prize) {
-        //         $gacha_prize = new GachaPrize([
-        //             'gacha_id'        => $gacha->id, //ガチャの種類リレーション
-        //             'prize_id'        => $prize->id, //景品リレーション
-        //             'gacha_rank_id'   => $gacha_rank_id, //ランクID
-        //             'max_count'       => 18, //景品総数
-        //             'remaining_count' => 18, //景品残数
-        //         ]);
-        //         $gacha_prize->save();
-        //     }
-
-        //
 
     }
 

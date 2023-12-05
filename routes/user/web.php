@@ -3,20 +3,20 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 
-# 動画テスト
-Route::get('/test/movie', function(){
+// # 動画テスト
+// Route::get('/test/movie', function(){
 
-    $user_gacha_history = \App\Models\UserGachaHistory::find(1);
-    $movies = [
-        'pc'     => 'site/movie/pc/101/01.mp4',
-        'mobile' => 'site/movie/mobile/101/01.mp4',
-    ];
-    $movie_path = [
-        'pc'     => asset( 'storage/'.$movies['pc'] ),
-        'mobile' => asset( 'storage/'.$movies['mobile'] ),
-    ];
-    return view('gacha.play', compact('user_gacha_history', 'movie_path' ));
-} );
+//     $user_gacha_history = \App\Models\UserGachaHistory::find(1);
+//     $movies = [
+//         'pc'     => 'site/movie/pc/101/01.mp4',
+//         'mobile' => 'site/movie/mobile/101/01.mp4',
+//     ];
+//     $movie_path = [
+//         'pc'     => asset( 'storage/'.$movies['pc'] ),
+//         'mobile' => asset( 'storage/'.$movies['mobile'] ),
+//     ];
+//     return view('gacha.play', compact('user_gacha_history', 'movie_path' ));
+// } );
 
 
 /*
@@ -25,10 +25,16 @@ Route::get('/test/movie', function(){
 ==========================================================================
 */
 
-// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', function(){
-    return redirect()->route('gacha_category','onepiece');
-} )->name('home');
+    // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/', function(){
+        return redirect()->route('gacha_category','onepiece');
+    } )->name('home');
+
+    # 予告
+    // Route::get('/', function(){
+    //     return view('lp');
+    // } )->name('home');
 
 /*
 |--------------------------------------------------------------------------

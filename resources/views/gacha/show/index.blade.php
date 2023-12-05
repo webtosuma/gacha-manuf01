@@ -91,7 +91,8 @@
     </div>
 
 
-    @include('gacha.show_body')
+    @include('gacha.show.main')
+
 
     <!--注意事項ー-->
     <section class="py-5">
