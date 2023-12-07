@@ -47,7 +47,7 @@ $active_key = 'gacha';
 
                 <!--プレビュー-->
                 <div class="col-10 mx-auto">
-                    @include('gacha.show_body')
+                    @include('gacha.show.main')
                 </div>
 
             </div>

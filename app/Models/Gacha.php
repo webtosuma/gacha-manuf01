@@ -133,52 +133,62 @@ class Gacha extends Model
         }
 
 
+        /**
+         * ガチャ　プレイ数 played_count
+         * @return String
+        */
+        public function getPlayedCountAttribute()
+        {
+            $max       = $this->max_count;
+            $remaining = $this->remaining_count;
+            return $max - $remaining;
+        }
     /*
     |--------------------------------------------------------------------------
     | アクセサー
     |--------------------------------------------------------------------------
     |
     |
-    */
-        /**
-         * RankA 景品
-         * @return String
-        */
-        public function getRankAPrizesAttribute()
-        {
-            return GachaPrize::where('gacha_id',$this->id)
-            ->where('gacha_rank_id',101)
-            ->get();
-        }
-        /**
-         * RankB 景品
-         * @return String
-        */
-        public function getRankBPrizesAttribute()
-        {
-            return GachaPrize::where('gacha_id',$this->id)
-            ->where('gacha_rank_id',102)
-            ->get();
-        }
-        /**
-         * RankC 景品
-         * @return String
-        */
-        public function getRankCPrizesAttribute()
-        {
-            return GachaPrize::where('gacha_id',$this->id)
-            ->where('gacha_rank_id',103)
-            ->get();
-        }
-        /**
-         * RankD 景品
-         * @return String
-        */
-        public function getRankDPrizesAttribute()
-        {
-            return GachaPrize::where('gacha_id',$this->id)
-            ->where('gacha_rank_id',104)
-            ->get();
-        }
+    // */
+    //     /**
+    //      * RankA 景品
+    //      * @return String
+    //     */
+    //     public function getRankAPrizesAttribute()
+    //     {
+    //         return GachaPrize::where('gacha_id',$this->id)
+    //         ->where('gacha_rank_id',101)
+    //         ->get();
+    //     }
+    //     /**
+    //      * RankB 景品
+    //      * @return String
+    //     */
+    //     public function getRankBPrizesAttribute()
+    //     {
+    //         return GachaPrize::where('gacha_id',$this->id)
+    //         ->where('gacha_rank_id',102)
+    //         ->get();
+    //     }
+    //     /**
+    //      * RankC 景品
+    //      * @return String
+    //     */
+    //     public function getRankCPrizesAttribute()
+    //     {
+    //         return GachaPrize::where('gacha_id',$this->id)
+    //         ->where('gacha_rank_id',103)
+    //         ->get();
+    //     }
+    //     /**
+    //      * RankD 景品
+    //      * @return String
+    //     */
+    //     public function getRankDPrizesAttribute()
+    //     {
+    //         return GachaPrize::where('gacha_id',$this->id)
+    //         ->where('gacha_rank_id',104)
+    //         ->get();
+    //     }
 
 }

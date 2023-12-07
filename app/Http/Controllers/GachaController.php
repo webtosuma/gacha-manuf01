@@ -101,15 +101,7 @@ class GachaController extends Controller
         if( $gacha->key!=$key ){ return \App::abort(404); }
 
 
-        // $array = [];
-        // foreach ($gacha->discriptions as $discription) {
-        //     foreach ( $discription->movies as $movie) {
-
-        //         $array[] = $movie->pc;
-        //         $array[] = $movie->mobile;
-        //     }
-        // }
-        // dd( $array);
+        // dd( $gacha->play_count);
 
 
         return view('gacha.show.index', compact( 'gacha' ));

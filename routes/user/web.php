@@ -32,8 +32,7 @@ use App\Http\Controllers;
     } )->name('home');
 
     # 予告
-    // Route::get('/', function(){
-    //     return view('lp');
+    // Route::get('/', function(){ return view('lp');
     // } )->name('home');
 
 /*

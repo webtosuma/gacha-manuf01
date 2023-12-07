@@ -41,7 +41,7 @@
 
         </div>
 
-        <div class="container py-5">
+        {{-- <div class="container py-5">
             @php
             $params = [
                 'category_code'=>$gacha->category->code_name,
@@ -65,19 +65,17 @@
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-warning"><i class="bi bi-chevron-right"></i></div>
                     </a>
                 </div>
-                {{-- <div class="col-md-4">
-                    <a href="{{ route('user_prize') }}"
-                        class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
-                        >{{ '取得した商品一覧を見る' }}
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-warning"><i class="bi bi-chevron-right"></i></div>
-                    </a>
-                </div> --}}
             </div>
-        </div>
+        </div> --}}
 
     </section>
-    {{-- <section class="py-5 bg-dark border-bottom border-right">
+
+
+    <!--ボトムメニュー-->
+    <section class="position-fixed bottom-0 end-0 w-100 py-3 text-white"
+    style="z-index:100; background:rgb(0, 0, 0, .7);">
         <div class="container">
+
             @php
             $params = [
                 'category_code'=>$gacha->category->code_name,
@@ -86,23 +84,25 @@
             ];
             @endphp
 
-            <div class="row g-3">
-                <div class="col-md">
+            <div class="row g-3 justify-content-center">
+                <div class="col-md-4">
                     <a href="{{ route('gacha', $params ) }}"
-                    class="btn btn-light border-dark rounded-pill w-100"
-                    >{{ 'もう一度ガチャる' }}</a>
+                    class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
+                    >{{ 'もう一度ガチャる' }}
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-warning"><i class="bi bi-chevron-right"></i></div>
+                    </a>
                 </div>
-                <div class="col-md">
+                <div class="col-md-4">
                     <a href="{{ route('gacha_category', $gacha->category->code_name ) }}"
-                    class="btn btn-light border-dark rounded-pill w-100"
-                    >{{ '他のガチャを選ぶ' }}</a>
-                </div>
-                <div class="col-md">
-                    <a href="{{ route('user_prize') }}"
-                        class="btn btn-light border-dark rounded-pill w-100"
-                        >{{ '取得した商品一覧を見る' }}</a>
+                    class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
+                    >{{ '他のガチャを選ぶ' }}
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-warning"><i class="bi bi-chevron-right"></i></div>
+                    </a>
                 </div>
             </div>
+
+
         </div>
-    </section> --}}
+    </section>
+
 @endsection

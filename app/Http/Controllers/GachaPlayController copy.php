@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\GachaPlayCreateUserPrizeMethod
-as CreateUserPrize;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,6 +14,7 @@ use App\Models\UserPrize;
 use App\Models\Prize;
 use App\Models\GachaRankMovie;
 use App\Models\Movie;
+
 /*
 | =============================================
 |  ガチャ PLAY コントローラー
@@ -67,10 +65,17 @@ class GachaPlayController extends Controller
             # ガチャ履歴の登録
             $user_gacha_history = self::CreateGachaHistory( $gacha, $point_history ,$play_count );
 
+            # ガチャの残り商品ID配列
+            $reminingGPIdArray = self::ReminingGPIdArray( $gacha );
 
-            # 当たりの選出・ユーザー取得商品の登録・残り商品の減算
-            $randReminingGPIdArray = CreateUserPrize::index( $user_gacha_history, $play_count );
+            # ランダムで選出した、ガチャの商品ID配列
+            $randReminingGPIdArray = self::RandReminingGPIdArray( $reminingGPIdArray, $play_count);
 
+
+            #ユーザー取得商品の登録・残り商品の減算
+            foreach ($randReminingGPIdArray as $reminingGP_id) {
+                self::CreateUserPrize( $user_gacha_history, $reminingGP_id );
+            }
 
             # ランダムで選出した、ガチャ商品の最大ランク
             $max_rank = self::MaxRank($randReminingGPIdArray );
@@ -183,6 +188,54 @@ class GachaPlayController extends Controller
 
 
     /**
+     * ガチャの残り商品ID配列
+     * @param  Gacha $gacha
+     * @return　UserGachaHistory
+    */
+    public function ReminingGPIdArray( $gacha )
+    {
+        # ガチャに登録された商品の種類情報
+        $gacha->g_prizes;
+
+        //商品の種類数、繰り返し
+        $id_array = [];
+        foreach ($gacha->g_prizes as $g_prize)
+        {
+            //商品種類の残り数、繰り返し
+            $count = $g_prize->remaining_count;
+            for ($i=0; $i < $count; $i++) {
+
+                $id_array[] = $g_prize->id;
+
+            }
+
+        }
+        return $id_array;
+    }
+
+
+    /**
+     * ランダムで選出した、ガチャの商品ID配列
+     * @param  Gacha $gacha
+     * @return　UserGachaHistory
+    */
+    public function RandReminingGPIdArray( $reminingGPIdArray, $play_count)
+    {
+        // 配列からランダムなキーを選択
+        $rand_keys = array_rand( $reminingGPIdArray, $play_count);
+        if( is_int($rand_keys) ){ $rand_keys = [$rand_keys ]; }//$play_count==1のとき、返り値を配列にする
+
+        // 抽出されたデータを格納する配列
+        $randIdArray = [];
+        foreach ($rand_keys as $key) {
+
+            $randIdArray[] = $reminingGPIdArray[$key];
+        }
+        return $randIdArray;
+    }
+
+
+    /**
      * 最大ランク
      * @param  Array $randReminingGPIdArray
      * @return String
@@ -223,6 +276,33 @@ class GachaPlayController extends Controller
             'pc'     => $movie->pc,
             'mobile' => $movie->mobile,
         ];
+    }
+
+
+
+    /**
+     * 一つのユーザー取得商品の登録・残り商品の減算
+     * @param  Gacha $gacha
+     * @param  Array $randReminingGPIdArray //ランダムで選出した、ガチャの商品ID配列
+     * @return　UserPrize
+    */
+    public function CreateUserPrize( $user_gacha_history, $reminingGP_id )
+    {
+        $user = Auth::user(); //ログインユーザー取得
+        $gacha_prize = GachaPrize::find($reminingGP_id); //ガチャの商品モデル
+
+        # ガチャの商品：残数の更新
+        $gacha_prize->remaining_count --;
+        $gacha_prize->save();
+
+
+        # ユーザー取得商品の登録
+        $user_prize = new UserPrize([
+            'user_id'  => $user->id,  //ユーザー　リレーション
+            'prize_id' => $gacha_prize->prize_id,//商品リレーション
+            'gacha_history_id'=> $user_gacha_history->id,//主テーブルに関連する従テーブルのレコードを削除
+        ]);
+        $user_prize->save();
     }
 
 

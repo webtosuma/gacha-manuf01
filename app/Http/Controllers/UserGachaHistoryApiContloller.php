@@ -43,11 +43,9 @@ class UserGachaHistoryApiContloller extends Controller
             # 発送済みデータを除く
             $query->where('shipped_id',Null);
 
-
             # 商品テーブル(prize)とのリレーション
             $query->with(['prize.rank' => function ($query) {
-                // prizeテーブルのpointカラムを降順に並び替える
-                // $query->orderBy('point', 'desc');
+                $query->orderBy('order', 'desc');
             }]);
 
             # 指定した『ガチャ履歴』に該当する商品のみ

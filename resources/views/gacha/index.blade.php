@@ -144,9 +144,9 @@
     <!--カテゴリー-->
     <section class="p-3 bg-dark">
         <div class="containerrr overflow-auto">
-            <nav class="nav gap-3 flex-nowrap" style="min-width:500px;">
+            <nav class="nav gap-3 flex-nowrap" style="min-width:600px;">
                 @php
-                $sc = "col-md fs-5 fw-bold btn btn-light rounded-pill border-dark border-2";
+                $sc = "col fs-5 py-3 fw-bold btn btn-light rounded-pill border-dark border-2";
                 $style_class = $category_code=='all' ? $sc.' disabled' : $sc;
                 @endphp
                 <a  href="{{ route('gacha_category','all') }}"

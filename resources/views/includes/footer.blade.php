@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white p-3 py-5">
+<footer class="bg-light text- p-3 py-5">
     <div class="container">
 
         <div class="row mx-0">
