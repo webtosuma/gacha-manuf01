@@ -158,7 +158,7 @@ class AdminGachaController extends Controller
      */
     public function published(Gacha $gacha)
     {
-        return view('admin.gacha.published', compact('gacha'));
+        return view('admin.gacha.published.edit', compact('gacha'));
     }
 
 

@@ -12,18 +12,25 @@
         </li>
         <li class="nav-item">
             @php
+            $active = isset($tab) &&$tab=='admin.gacha.prize'? $active_class : '';
+            @endphp
+            <a class="nav-link text-warning {{$active}}"
+            href="{{ route('admin.gacha.prize.edit',$gacha) }}">商品</a>
+        </li>
+        <li class="nav-item">
+            @php
+            $active = isset($tab) &&$tab=='admin.gacha.movie.edit'? $active_class : '';
+            @endphp
+            <a class="nav-link text-warning {{$active}}"
+            href="{{ route('admin.gacha.movie.edit',$gacha) }}">演出動画</a>
+        </li>
+        <li class="nav-item">
+            @php
             $active = isset($tab) &&$tab=='admin.gacha.discription.edit'? $active_class : '';
             @endphp
             <a class="nav-link text-warning {{$active}}"
             href="{{ route('admin.gacha.discription.edit',$gacha) }}">詳細説明</a>
         </li>
-        <li class="nav-item">
-            @php
-            $active = isset($tab) &&$tab=='admin.gacha.prize'? $active_class : '';
-            @endphp
-            <a class="nav-link text-warning {{$active}}"
-            href="{{ route('admin.gacha.prize',$gacha) }}">登録商品</a>
-          </li>
         <li class="nav-item">
             @php
             $active = isset($tab) &&$tab=='admin.gacha.published'? $active_class : '';

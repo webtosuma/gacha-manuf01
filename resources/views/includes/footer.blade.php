@@ -1,8 +1,8 @@
 <footer class="bg-light text- p-3 py-5">
     <div class="container">
 
-        <div class="row mx-0">
-            <div class="col-12 col-md">
+        <div class="row mx-0 gy-3">
+            <div class="col-12 col-lg-3">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:6rem;">
                 </a>
@@ -13,6 +13,8 @@
                 <ul class="list-unstyled fs-4">
                     <li><a class="link-secondary text-decoration-none"
                     href="{{ route('gacha_category','onepiece') }}">ワンピース</a></li>
+                    <li><a class="link-secondary text-decoration-none"
+                    href="{{ route('gacha_category','pokemon') }}">ポケモン</a></li>
                 </ul>
             </div>
             <div class="col-12 col-md-6">
@@ -41,21 +43,14 @@
                         </ul>
                     </div>
                 </div>
-                {{-- <ul class="list-unstyled text-smallll">
-                    <li><a class="link-secondary text-decoration-none"
-                    href="#">利用ガイド</a></li>
-                    <li><a class="link-secondary text-decoration-none"
-                    href="#">利用規約</a></li>
-                    <li><a class="link-secondary text-decoration-none"
-                    href="#">プライバシーポリシー</a></li>
-                    <li><a class="link-secondary text-decoration-none"
-                    href="#">特定商取引法に基づく表記</a></li>
-                    <li><a class="link-secondary text-decoration-none"
-                    href="#">お問い合わせ</a></li>
-                    <li><a class="link-secondary text-decoration-none"
-                    href="#">運営会社</a></li>
-                </ul> --}}
             </div>
+            {{-- <div class="col-12 ">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:6rem;">
+                </a>
+                <small class="d-block mb-3 text-muteddd">&copy;fobees</small>
+            </div>
+ --}}
         </div>
     </div>
 </footer>

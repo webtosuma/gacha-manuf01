@@ -4,13 +4,19 @@
 @section('title','ガチャ登録商品編集')
 
 
+@section('script')
+ <!-- フォームのページ離脱防止アラート -->
+ <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
+@endsection
+
+
 @section('meta') @php
 $active_key = 'gacha';
 @endphp @endsection
 
 
 @section('content')
-    <div class="container mb-4">
+    <div class="container mb-5">
 
 
         {{-- パンくずリスト --}}
@@ -37,8 +43,14 @@ $active_key = 'gacha';
         @include('admin.gacha.common.tab')
 
 
-        <section>
-        </section>
+        <a-gachaprize-edit
+        token="{{ csrf_token() }}"
+        category_id   ="{{ $gacha->category->id }}"
+        r_api_prize   ="{{ route('admin.api.prize') }}"
+        r_api_gacha_ranks ="{{ route('admin.api.gacha.ranks',$gacha) }}"
+        r_api_ranks_gacha_prizes ="{{ route('admin.api.gacha.ranks_gacha_prizes') }}"
+        ></a-gachaprize-edit>
+
 
     </div>
 @endsection

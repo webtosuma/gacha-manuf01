@@ -9,6 +9,12 @@ $active_key = 'gacha';
 @endphp @endsection
 
 
+@section('script')
+ <!-- フォームのページ離脱防止アラート -->
+ <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
+@endsection
+
+
 @section('style')
 <style>
     /* ガチャの背景画像 */

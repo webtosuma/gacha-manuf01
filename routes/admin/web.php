@@ -141,36 +141,39 @@ use \App\Http\Controllers;
     */
         Route::middleware(['admin_auth'])->group(function () {
 
-            # 詳細情報の一覧
-            Route::get('/admin/gacha/discription/{gacha}',
-            [Controllers\AdminGachaDisriptionController ::class, 'index'])
-            ->name('admin.gacha.discription');
+            // # 商品の一覧
+            // Route::get('/admin/gacha/prize/{gacha}',
+            // [Controllers\AdminGachaPrizeController ::class, 'index'])
+            // ->name('admin.gacha.prize');
+
+            # 商品の編集
+            Route::get('/admin/gacha/prize/edit/{gacha}',
+            [Controllers\AdminGachaPrizeController ::class, 'edit'])
+            ->name('admin.gacha.prize.edit');
+
+                # 商品の更新
+                Route::patch('/admin/gacha/prize/update/{rank}',
+                [Controllers\AdminGachaPrizeController ::class, 'update'])
+                ->name('admin.gacha.prize.update');
+
+
+            # 演出動画情報の編集
+            Route::get('/admin/gacha/movie/edit/{gacha}',
+            [Controllers\AdminGachaMovieController ::class, 'edit'])
+            ->name('admin.gacha.movie.edit');
+
 
             # 詳細情報の編集
             Route::get('/admin/gacha/discription/edit/{gacha}',
             [Controllers\AdminGachaDisriptionController ::class, 'edit'])
             ->name('admin.gacha.discription.edit');
 
-            # 詳細情報の更新
-            Route::patch('/admin/gacha/discription/update/{discription}',
-            [Controllers\AdminGachaDisriptionController ::class, 'update'])
-            ->name('admin.gacha.discription.update');
+                # 詳細情報の更新
+                Route::patch('/admin/gacha/discription/update/{discription}',
+                [Controllers\AdminGachaDisriptionController ::class, 'update'])
+                ->name('admin.gacha.discription.update');
 
 
-            # 商品の一覧
-            Route::get('/admin/gacha/prize/{gacha}',
-            [Controllers\AdminGachaPrizeController ::class, 'index'])
-            ->name('admin.gacha.prize');
-
-            # 商品の編集
-            Route::get('/admin/gacha/prize/edit/{rank}',
-            [Controllers\AdminGachaPrizeController ::class, 'edit'])
-            ->name('admin.gacha.prize.edit');
-
-            # 商品の更新
-            Route::patch('/admin/gacha/prize/update/{rank}',
-            [Controllers\AdminGachaPrizeController ::class, 'update'])
-            ->name('admin.gacha.prize.update');
 
         });//end middleware
 

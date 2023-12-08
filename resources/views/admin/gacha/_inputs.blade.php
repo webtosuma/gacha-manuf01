@@ -64,9 +64,12 @@
             <div class="form-label">1回のガチャに必要なポイント</div>
 
             <div class=" col-4">
-                <input value="{{old('one_play_point', $gacha->one_play_point )}}"
-                name="one_play_point"
-                type="number" class="form-control" min="0">
+                <div class="d-flex align-items-center gap-2">
+                    <input value="{{old('one_play_point', $gacha->one_play_point ?? 0 )}}"
+                    name="one_play_point"
+                    type="number" class="form-control" min="0">
+                    <span>pt</span>
+                </div>
             </div>
 
             <!--error message-->
@@ -74,6 +77,37 @@
                 <div class="text-danger"> {{$errors->first('one_play_point')}} </div>
             @endif
         </label>
+
+
+        <!--その他設定(type)-->
+        <div class="d-block mb-4">
+            <div class="form-label">その他設定</div>
+
+
+            <div class="d-flex flex-column gap-3 ps-3">
+                <label class="form-check">
+                    <input name="type" checked
+                    class="form-check-input" type="radio">
+                    <div class="form-check-div">通常限定ガチャ</div>
+                </label>
+                <label class="form-check">
+                    <input name="type"
+                    class="form-check-input" type="radio">
+                    <div class="form-check-div">一回限定ガチャ</div>
+                </label>
+                <label class="form-check">
+                    <input name="type"
+                    class="form-check-input" type="radio">
+                    <div class="form-check-div">一日限定ガチャ</div>
+                </label>
+            </div>
+
+            <!--error message-->
+            @if ( $errors->has('type') )
+                <div class="text-danger"> {{$errors->first('type')}} </div>
+            @endif
+        </div>
+
 
 
         <div class="col-md-6 my-5">

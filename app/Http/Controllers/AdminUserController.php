@@ -18,7 +18,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::orderByDesc('created_at')->get();
+        $users = User::doesntHave('admin')//adminユーザーは非表示
+        ->orderByDesc('created_at')->get();
 
         return view('admin.user.index', compact('users') );
     }

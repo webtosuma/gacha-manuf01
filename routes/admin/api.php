@@ -12,6 +12,18 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminApiGatyaController::class, 'category'])
     ->name('admin.api.gacha.category');
 
+    # ガチャのランク情報の取得
+    Route::post('admin/api/gacha/ranks/{gacha}',
+    [Controllers\AdminApiGatyaController::class, 'ranks'])
+    ->name('admin.api.gacha.ranks');
+
+    # ガチャランク別、ガチャ商品情報の取得
+    Route::post('admin/api/gacha/ranks/gacha_prizes/{discription?}',
+    [Controllers\AdminApiGatyaController::class, 'ranks_gacha_prizes'])
+    ->name('admin.api.gacha.ranks_gacha_prizes');
+
+
+
     # 商品一覧情報の取得
     Route::post('admin/api/prize',
     [Controllers\AdminApiPrizeController::class, 'index'])

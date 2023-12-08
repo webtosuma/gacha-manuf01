@@ -54,6 +54,15 @@ class AdminApiPrizeController extends Controller
                 $query->orderBy('point', $request->updated_at);
             }
 
+            # 指定したIDを含む
+            if( $request->ids ){
+                $query->whereIn('id', $request->ids);
+            }
+            # 指定したIDを除く
+            if( $request->not_ids ){
+                $query->whereNotIn('id', $request->not_ids);
+            }
+
         $prizes = $query->with('rank')->get();
 
         # 画像パスの登録

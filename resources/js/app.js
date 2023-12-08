@@ -57,10 +57,27 @@ require('./components/ExampleComponent.vue').default);
 |=============================================
 */
     /* 商品管理 */
-    Vue.component('a-plize-list',
+    Vue.component('a-prize-list',
     require('./components/admin/prize/Index.vue').default);
 
+    /* ガチャ管理 */
+
+    // 商品登録
+    Vue.component('a-gachaprize-edit',
+    require('./components/admin/gacha/prize/edit/Index.vue').default);
+
+        // ランク
+        Vue.component('a-gachaprize-gacharank-container',
+        require('./components/admin/gacha/prize/edit/GachaRankContainer.vue').default);
+
+
+        // 商品リスト
+        Vue.component('a-gachaprize-prize-list',
+        require('./components/admin/gacha/prize/edit/PrizeList.vue').default);
+
+
     /* ポイント売上 */
+
     // 年月選択
     Vue.component('a-pointhistory-selectmonth',
     require('./components/admin/point_history/SelectMonth.vue').default);

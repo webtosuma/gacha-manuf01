@@ -21,8 +21,8 @@ class AdminGachaPrizeController extends Controller
      * @param  \App\Models\Gacha  $gacha
      * @return \Illuminate\Http\Response
      */
-    public function index(Gacha $gacha)
+    public function edit(Gacha $gacha)
     {
-        return view('admin.gacha.prize.index', compact('gacha'));
+        return view('admin.gacha.prize.edit', compact('gacha'));
     }
 }

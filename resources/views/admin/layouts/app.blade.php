@@ -28,6 +28,9 @@
     <style>
         a{ text-decoration: none; }
         th,td{ background-color: #fff !important; }
+        .nav-tabs .nav-link.active{
+            background-color: #fff;
+        }
     </style>
 
 </head>

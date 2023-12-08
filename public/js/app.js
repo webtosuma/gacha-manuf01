@@ -5857,6 +5857,369 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    category_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    r_api_prize: {
+      type: String,
+      "default": ''
+    },
+    //商品
+
+    rank_label: {
+      type: String,
+      "default": ''
+    },
+    r_api_ranks_gacha_prizes: {
+      type: String,
+      "default": ''
+    } //ガチャ商品
+  },
+  data: function data() {
+    return {
+      g_prizes: [],
+      /* 登録ずみガチャ商品 */
+
+      prize_ids: [],
+      //右を非表示にするID
+      prizes: [],
+      /* 新規登録　商品 */
+
+      loading: false
+    };
+  },
+  mounted: function mounted() {
+    this.getData();
+  },
+  methods: {
+    /** ガチャ商品 */getData: function getData() {
+      var _this = this;
+      this.loading = true; //読み込み中
+
+      // パラメーター
+      var route = this.r_api_ranks_gacha_prizes;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
+        _token: this.token
+      }).then(function (json) {
+        // console.log(json.data);
+
+        _this.g_prizes = json.data;
+        _this.g_prizes.forEach(function (g_prize) {
+          _this.prize_ids.push(g_prize.prize.id);
+        });
+        _this.loading = false; //読み込み中
+      })["catch"](function (error) {
+        // alert('通信エラーが発生しました。')
+        // console.log( error.response.data );
+      });
+    },
+    /** 新しいガチャ商品の種類を追加 */addGachaPrize: function addGachaPrize(prize_ids) {
+      this.prize_ids = [].concat(_toConsumableArray(this.prize_ids), _toConsumableArray(prize_ids));
+      this.getPrizeData(); /* 新規商品データ取得 */
+    },
+    /** 新しいガチャ商品の種類を削除 */removeGachaPrize: function removeGachaPrize(id) {
+      // prize_ids配列から該当IDを削除
+      var array = this.prize_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+      this.prize_ids = array;
+
+      /* 新規商品データ取得 */
+      var filtterArray = this.filterPrizeIds();
+      if (filtterArray.length > 0) {
+        this.getPrizeData();
+      } else {
+        this.prizes = [];
+      }
+    },
+    /** 既に登録ずみの商品IDを除去 */filterPrizeIds: function filterPrizeIds() {
+      // 既に登録ずみのID配列
+      var created_prize_ids = this.g_prizes.map(function (g_prize) {
+        return g_prize.prize.id;
+      });
+      return this.prize_ids.filter(function (id) {
+        return !created_prize_ids.includes(id);
+      });
+    },
+    /** 新規商品データ取得 */getPrizeData: function getPrizeData() {
+      var _this2 = this;
+      this.loading = true; //読み込み中
+
+      // パラメーター
+      var inputs = {
+        _token: this.token,
+        ids: this.filterPrizeIds()
+      };
+      var route = this.r_api_prize;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs).then(function (json) {
+        console.log(json.data);
+        _this2.prizes = json.data;
+        _this2.loading = false; //読み込み中
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        // console.log( error.response.data );
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    category_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    r_api_prize: {
+      type: String,
+      "default": ''
+    },
+    //商品
+
+    r_api_gacha_ranks: {
+      type: String,
+      "default": ''
+    },
+    //ガチャランク
+    r_api_ranks_gacha_prizes: {
+      type: String,
+      "default": ''
+    } //ガチャ商品
+  },
+  data: function data() {
+    return {
+      active_gr_id: '',
+      discriptions: [],
+      /* ガチャランク */
+
+      loading: false
+    };
+  },
+  mounted: function mounted() {
+    this.getGachaRanks(); // 新規ガチャランクデータ取得
+  },
+
+  methods: {
+    /** 新規ガチャランクデータ取得 */getGachaRanks: function getGachaRanks() {
+      var _this = this;
+      this.loading = true; //読み込み中
+
+      // パラメーター
+      var route = this.r_api_gacha_ranks;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
+        _token: this.token
+      }).then(function (json) {
+        // console.log(json.data);
+
+        _this.discriptions = json.data;
+        _this.active_gr_id = json.data[0].gacha_rank_id;
+        _this.loading = false; //読み込み中
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        // console.log( error.response.data );
+      });
+    },
+    /** アクティブなランクの変更 */changeActive: function changeActive(active_gr_id) {
+      this.active_gr_id = active_gr_id;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    category_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    r_api_prize: {
+      type: String,
+      "default": ''
+    },
+    //商品
+
+    parent_prize_ids: {
+      type: Array,
+      "default": []
+    } //親が持つ商品ID
+  },
+  data: function data() {
+    return {
+      prizes: [],
+      /* 商品 */
+      inputs: {
+        key_words: '',
+        category_id: 1,
+        order_code: '',
+        order_name: '',
+        order_rank_id: '',
+        order_point: '',
+        order_updated_at: '',
+        not_ids: []
+      },
+      keyWords: '',
+      ids: [],
+      /*チェックボックスのID*/
+      loading: true,
+      allCheck: false,
+      /*全てチェック*/
+      disabled: true
+    };
+  },
+  watch: {
+    parent_prize_ids: {
+      handler: function handler() {
+        this.getData(); /* データ取得 */
+      },
+      deep: true
+    }
+  },
+  mounted: function mounted() {
+    this.inputs._token = this.token; //token保存
+    this.inputs.category_id = this.category_id; //カテゴリーID
+
+    this.getData(); /* データ取得 */
+  },
+
+  methods: {
+    /* 商品データ取得 */getData: function getData() {
+      var _this = this;
+      this.loading = true; //読み込み中
+
+      this.inputs.not_ids = [].concat(_toConsumableArray(this.parent_prize_ids), _toConsumableArray(this.ids)); //親が持つデータは除く
+
+      var route = this.r_api_prize;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
+        // console.log(json.data);
+
+        _this.prizes = json.data;
+        _this.loading = false; //読み込み中
+      })["catch"](function (error) {
+        // alert('通信エラーが発生しました。')
+        // console.log( error.response.data );
+      });
+    },
+    /** キーワード検索 */changeKeyWord: function changeKeyWord() {
+      this.inputs.key_words = this.keyWords;
+      this.getData(); /* データ取得 */
+    },
+    /** 並び替え */changeOrder: function changeOrder(key) {
+      var order = this.inputs[key];
+      switch (order) {
+        case '':
+          this.inputs[key] = 'asc';
+          break;
+        case 'asc':
+          this.inputs[key] = 'desc';
+          break;
+        default:
+          this.inputs[key] = '';
+          break;
+      }
+      this.getData(); /* データ取得 */
+    },
+    /** 全て選択をクリック */changeAll: function changeAll() {
+      var ids = this.prizes.map(function (value) {
+        return value.id;
+      });
+      this.ids = this.allCheck ? ids : [];
+    },
+    /** 子チェックをクリック */changeChildren: function changeChildren() {
+      var ids = this.prizes.map(function (value) {
+        return value.id;
+      });
+      this.allCheck = this.ids.length == ids.length;
+    },
+    /** 日付データをテクスト変換  */formatDate: function formatDate(inputString) {
+      var date = new Date(inputString);
+      var year = date.getFullYear();
+      var month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
+      var day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
+
+      return "".concat(year, "/").concat(month, "/").concat(day);
+    },
+    /** 選択した商品IDを送信 */sendPrizeId: function sendPrizeId() {
+      this.$emit('send-prize-id', this.ids); //選択した商品IDを送信
+
+      this.getData(); /* データ取得 */
+      this.ids = []; //チェックボックスのリセット
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js ***!
@@ -8238,6 +8601,519 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "bi bi-three-dots-vertical"
   })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=template&id=82333d5a":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=template&id=82333d5a ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row g-1"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "card overflow-auto",
+    staticStyle: {
+      height: "60vh"
+    }
+  }, [_c("div", {
+    staticClass: "p-2"
+  }, [_vm._v("prize ids:" + _vm._s(_vm.prize_ids))]), _vm._v(" "), _c("table", {
+    staticClass: "table"
+  }, [_c("thead", [_c("tr", [_c("th", {
+    attrs: {
+      colspan: "5"
+    }
+  }, [_vm._v(_vm._s(_vm.rank_label))]), _vm._v(" "), _c("td", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "6rem"
+    }
+  }, [_vm._v("口数")])])]), _vm._v(" "), _c("tbody", [_vm.loading ? _c("tr", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.g_prizes, function (g_prize, key) {
+    return _c("tr", {
+      key: key
+    }, [_c("td", {
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: g_prize.prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td", [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: g_prize.max_count,
+        expression: "g_prize.max_count"
+      }],
+      staticClass: "form-control form-control-sm text-end",
+      attrs: {
+        type: "number",
+        min: "0"
+      },
+      domProps: {
+        value: g_prize.max_count
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(g_prize, "max_count", $event.target.value);
+        }
+      }
+    })])]);
+  }), _vm._v(" "), !_vm.loading && _vm.g_prizes.length == 0 ? _c("tr", [_c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]) : _vm._e()], 2)]), _vm._v(" "), _c("table", {
+    staticClass: "table"
+  }, [_c("tbody", _vm._l(_vm.prizes, function (prize, p_key) {
+    return _c("tr", {
+      key: p_key
+    }, [_c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "2rem"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-sm border text-danger",
+      on: {
+        click: function click($event) {
+          return _vm.removeGachaPrize(prize.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-trash3"
+    })])]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _vm._m(1, true)]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "col"
+  }, [_c("a-gachaprize-prize-list", {
+    attrs: {
+      parent_prize_ids: _vm.prize_ids,
+      token: _vm.token,
+      category_id: _vm.category_id,
+      r_api_prize: _vm.r_api_prize
+    },
+    on: {
+      "send-prize-id": _vm.addGachaPrize
+    }
+  })], 1)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "bg-success-subtle",
+    staticStyle: {
+      width: "6rem"
+    }
+  }, [_c("input", {
+    staticClass: "form-control form-control-sm text-end",
+    attrs: {
+      type: "number",
+      value: "0",
+      min: "0"
+    }
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {}, [_c("section", [_c("div", {
+    staticClass: "row g-1"
+  }, [_c("div", {
+    staticClass: "col-auto"
+  }, [_c("div", {
+    staticClass: "d-flex flex-column py-3"
+  }, _vm._l(_vm.discriptions, function (discription, key) {
+    return _c("button", {
+      key: key,
+      staticClass: "btn btn-link text-decoration-none position-relative border-bottom",
+      on: {
+        click: function click($event) {
+          return _vm.changeActive(discription.gacha_rank_id);
+        }
+      }
+    }, [_c("div", {
+      staticClass: "d-flex flex-column justify-content-between gap-0"
+    }, [_c("span", {
+      staticClass: "fw-bold"
+    }, [_vm._v(_vm._s(discription.rank_label))]), _vm._v(" "), _c("span", {
+      staticClass: "text-secondary"
+    }, [_vm._v("100(10%)")])]), _vm._v(" "), _c("div", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: _vm.active_gr_id == discription.gacha_rank_id,
+        expression: " active_gr_id == discription.gacha_rank_id "
+      }],
+      staticClass: "position-absolute top-50 start-100 translate-middle",
+      staticStyle: {
+        "z-index": "10"
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-caret-right-fill text-primary fs-1"
+    })])]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "col"
+  }, _vm._l(_vm.discriptions, function (discription, key) {
+    return _c("div", {
+      key: key
+    }, [_c("div", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: _vm.active_gr_id == discription.gacha_rank_id,
+        expression: "active_gr_id == discription.gacha_rank_id"
+      }],
+      staticClass: "mb-3"
+    }, [_c("a-gachaprize-gacharank-container", {
+      attrs: {
+        token: _vm.token,
+        category_id: _vm.category_id,
+        r_api_prize: _vm.r_api_prize,
+        rank_label: discription.rank_label,
+        r_api_ranks_gacha_prizes: _vm.r_api_ranks_gacha_prizes + "/" + discription.id
+      }
+    })], 1)]);
+  }), 0)])]), _vm._v(" "), _vm._m(0)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("section", {
+    staticClass: "mt-3"
+  }, [_c("div", {
+    staticClass: "card card-body bg-light"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-between align-items-center"
+  }, [_c("div", {
+    staticClass: "d-flex gap-3"
+  }, [_c("div", {}, [_vm._v("合計口数：100")]), _vm._v(" "), _c("div", {}, [_vm._v("合計ポイント：100pt")])]), _vm._v(" "), _c("div", {}, [_c("button", {
+    staticClass: "btn btn-warning text-white"
+  }, [_vm._v("この内容で更新する")])])])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=template&id=fcb86700":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=template&id=fcb86700 ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row g-1"
+  }, [_c("div", {
+    staticClass: "col-auto",
+    staticStyle: {
+      height: "60vh"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex align-items-center h-100"
+  }, [_c("button", {
+    staticClass: "btn btn-light border p-0 fs-3",
+    attrs: {
+      disabled: !_vm.ids.length
+    },
+    on: {
+      click: _vm.sendPrizeId
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-caret-left"
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "card overflow-auto",
+    staticStyle: {
+      height: "60vh"
+    }
+  }, [_c("div", {
+    staticClass: "p-2"
+  }, [_vm._v("parent ids:" + _vm._s(_vm.parent_prize_ids))]), _vm._v(" "), _c("div", {
+    staticClass: "p-2"
+  }, [_vm._v("inputs:" + _vm._s(_vm.ids))]), _vm._v(" "), _c("div", {
+    staticClass: "p-2"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.keyWords,
+      expression: "keyWords"
+    }],
+    staticClass: "form-control form-control-sm",
+    attrs: {
+      type: "text",
+      placeholder: "検索：商品名・商品コード名",
+      "aria-label": "Username",
+      "aria-describedby": "basic-addon1"
+    },
+    domProps: {
+      value: _vm.keyWords
+    },
+    on: {
+      change: function change($event) {
+        return _vm.changeKeyWord();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.keyWords = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("table", {
+    staticClass: "table"
+  }, [_c("thead", [_c("tr", {}, [_c("th", {
+    staticStyle: {
+      width: "1rem"
+    }
+  }), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_c("a", {
+    staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.changeOrder("order_code");
+      }
+    }
+  }, [_vm.inputs["order_code"] != "desc" ? _c("i", {
+    staticClass: "bi bi-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), _vm.inputs["order_code"] != "asc" ? _c("i", {
+    staticClass: "bi bi-caret-down-fill"
+  }) : _vm._e()])]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_c("a", {
+    staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.changeOrder("order_name");
+      }
+    }
+  }, [_vm.inputs["order_name"] != "desc" ? _c("i", {
+    staticClass: "bi bi-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), _vm.inputs["order_name"] != "asc" ? _c("i", {
+    staticClass: "bi bi-caret-down-fill"
+  }) : _vm._e()])]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_c("a", {
+    staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.changeOrder("order_rank_id");
+      }
+    }
+  }, [_vm.inputs["order_rank_id"] != "desc" ? _c("i", {
+    staticClass: "bi bi-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), _vm.inputs["order_rank_id"] != "asc" ? _c("i", {
+    staticClass: "bi bi-caret-down-fill"
+  }) : _vm._e()])]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_c("a", {
+    staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.changeOrder("order_point");
+      }
+    }
+  }, [_vm.inputs["order_point"] != "desc" ? _c("i", {
+    staticClass: "bi bi-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), _vm.inputs["order_point"] != "asc" ? _c("i", {
+    staticClass: "bi bi-caret-down-fill"
+  }) : _vm._e()])])])]), _vm._v(" "), _c("tbody", [_vm.loading ? _c("tr", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.prizes, function (prize, key) {
+    return _c("tr", {
+      key: key
+    }, [_c("td", [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.ids,
+        expression: "ids"
+      }],
+      staticClass: "form-check-input",
+      "class": {
+        "bg-secondary": _vm.parent_prize_ids.includes(prize.id)
+      },
+      attrs: {
+        disabled: _vm.parent_prize_ids.includes(prize.id),
+        type: "checkbox"
+      },
+      domProps: {
+        value: prize.id,
+        checked: Array.isArray(_vm.ids) ? _vm._i(_vm.ids, prize.id) > -1 : _vm.ids
+      },
+      on: {
+        change: [function ($event) {
+          var $$a = _vm.ids,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+          if (Array.isArray($$a)) {
+            var $$v = prize.id,
+              $$i = _vm._i($$a, $$v);
+            if ($$el.checked) {
+              $$i < 0 && (_vm.ids = $$a.concat([$$v]));
+            } else {
+              $$i > -1 && (_vm.ids = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+            }
+          } else {
+            _vm.ids = $$c;
+          }
+        }, function ($event) {
+          return _vm.changeChildren();
+        }]
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point) + " pt")])]);
+  }), _vm._v(" "), !_vm.loading && _vm.prizes.length == 0 ? _c("tr", [_c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]) : _vm._e()], 2)])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])])])]);
 }];
 render._withStripped = true;
 
@@ -10982,9 +11858,21 @@ Vue.component('contact-form-component', (__webpack_require__(/*! ./components/co
 |=============================================
 */
 /* 商品管理 */
-Vue.component('a-plize-list', (__webpack_require__(/*! ./components/admin/prize/Index.vue */ "./resources/js/components/admin/prize/Index.vue")["default"]));
+Vue.component('a-prize-list', (__webpack_require__(/*! ./components/admin/prize/Index.vue */ "./resources/js/components/admin/prize/Index.vue")["default"]));
+
+/* ガチャ管理 */
+
+// 商品登録
+Vue.component('a-gachaprize-edit', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/Index.vue */ "./resources/js/components/admin/gacha/prize/edit/Index.vue")["default"]));
+
+// ランク
+Vue.component('a-gachaprize-gacharank-container', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/GachaRankContainer.vue */ "./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue")["default"]));
+
+// 商品リスト
+Vue.component('a-gachaprize-prize-list', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/PrizeList.vue */ "./resources/js/components/admin/gacha/prize/edit/PrizeList.vue")["default"]));
 
 /* ポイント売上 */
+
 // 年月選択
 Vue.component('a-pointhistory-selectmonth', (__webpack_require__(/*! ./components/admin/point_history/SelectMonth.vue */ "./resources/js/components/admin/point_history/SelectMonth.vue")["default"]));
 // グラフ
@@ -34235,6 +35123,123 @@ component.options.__file = "resources/js/components/admin/contact/ListComponent.
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GachaRankContainer.vue?vue&type=template&id=82333d5a */ "./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=template&id=82333d5a");
+/* harmony import */ var _GachaRankContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GachaRankContainer.vue?vue&type=script&lang=js */ "./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GachaRankContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__.render,
+  _GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/Index.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/Index.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Index_vue_vue_type_template_id_ac081efc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Index.vue?vue&type=template&id=ac081efc */ "./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc");
+/* harmony import */ var _Index_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Index.vue?vue&type=script&lang=js */ "./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Index_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Index_vue_vue_type_template_id_ac081efc__WEBPACK_IMPORTED_MODULE_0__.render,
+  _Index_vue_vue_type_template_id_ac081efc__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/gacha/prize/edit/Index.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/PrizeList.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/PrizeList.vue ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PrizeList_vue_vue_type_template_id_fcb86700__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrizeList.vue?vue&type=template&id=fcb86700 */ "./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=template&id=fcb86700");
+/* harmony import */ var _PrizeList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrizeList.vue?vue&type=script&lang=js */ "./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PrizeList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PrizeList_vue_vue_type_template_id_fcb86700__WEBPACK_IMPORTED_MODULE_0__.render,
+  _PrizeList_vue_vue_type_template_id_fcb86700__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/gacha/prize/edit/PrizeList.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/point_history/Chart.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/admin/point_history/Chart.vue ***!
@@ -34968,6 +35973,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankContainer.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrizeList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PrizeList.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrizeList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js":
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/admin/point_history/Chart.vue?vue&type=script&lang=js ***!
@@ -35410,6 +36463,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_4a5e3f16__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ListComponent.vue?vue&type=template&id=4a5e3f16 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/contact/ListComponent.vue?vue&type=template&id=4a5e3f16");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=template&id=82333d5a":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=template&id=82333d5a ***!
+  \*************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankContainer.vue?vue&type=template&id=82333d5a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=template&id=82333d5a");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_ac081efc__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_ac081efc__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_ac081efc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=template&id=ac081efc */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=template&id=fcb86700":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=template&id=fcb86700 ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrizeList_vue_vue_type_template_id_fcb86700__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrizeList_vue_vue_type_template_id_fcb86700__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrizeList_vue_vue_type_template_id_fcb86700__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PrizeList.vue?vue&type=template&id=fcb86700 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/PrizeList.vue?vue&type=template&id=fcb86700");
 
 
 /***/ }),

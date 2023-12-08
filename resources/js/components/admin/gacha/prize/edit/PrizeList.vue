@@ -1,0 +1,250 @@
+<template>
+    <div class="row g-1">
+        <!--追加ボタン-->
+        <div class="col-auto" style="height: 60vh">
+            <div class="d-flex align-items-center h-100">
+                <button @click="sendPrizeId"
+                :disabled="!ids.length"
+                class="btn btn-light border p-0 fs-3"
+                ><i class="bi bi-caret-left"></i></button>
+            </div>
+        </div>
+        <!--商品リスト-->
+        <div class="col">
+            <div class="card overflow-auto"  style="height: 60vh">
+
+
+                <div class="p-2">parent ids:{{ parent_prize_ids }}</div>
+                <div class="p-2">inputs:{{ ids }}</div>
+
+
+                <div class="p-2">
+                    <input @change="changeKeyWord()" v-model="keyWords"
+                    type="text" class="form-control form-control-sm" placeholder="検索：商品名・商品コード名"
+                    aria-label="Username" aria-describedby="basic-addon1" />
+                </div>
+
+                <table class="table">
+                    <!--ヘッド（並べ替えボタン）-->
+                    <thead>
+                        <tr class="">
+                            <th style="width:1rem;"><!--チェックボックス-->
+                                <!-- <input v-model="allCheck" @change="changeAll()"
+                                class="form-check-input" type="checkbox"> -->
+                            </th>
+
+                            <th scope="col"></th>
+
+                            <th scope="col"><a
+                            @click.prevent="changeOrder( 'order_code' )"
+                            href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                                <!-- <span>商品コード</span> -->
+                                <i v-if="inputs['order_code']!='desc'" class="bi bi-caret-up-fill"></i>
+                                <i v-if="inputs['order_code']!='asc'"  class="bi bi-caret-down-fill"></i>
+                            </a></th>
+
+                            <th scope="col"><a
+                            @click.prevent="changeOrder( 'order_name' )"
+                            href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                                <!-- <span>商品名</span> -->
+                                <i v-if="inputs['order_name']!='desc'" class="bi bi-caret-up-fill"></i>
+                                <i v-if="inputs['order_name']!='asc'"  class="bi bi-caret-down-fill"></i>
+                            </a></th>
+
+                            <th scope="col"><a
+                            @click.prevent="changeOrder( 'order_rank_id' )"
+                            href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                                <!-- <span>評価ランク</span> -->
+                                <i v-if="inputs['order_rank_id']!='desc'" class="bi bi-caret-up-fill"></i>
+                                <i v-if="inputs['order_rank_id']!='asc'"  class="bi bi-caret-down-fill"></i>
+                            </a></th>
+
+                            <th scope="col"><a
+                            @click.prevent="changeOrder( 'order_point' )"
+                            href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                                <!-- <span>交換ポイント</span> -->
+                                <i v-if="inputs['order_point']!='desc'" class="bi bi-caret-up-fill"></i>
+                                <i v-if="inputs['order_point']!='asc'"  class="bi bi-caret-down-fill"></i>
+                            </a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--読み込み中-->
+                        <tr v-if="loading">
+                            <td colspan="8" class="text-center text-secondary border-0 py-5">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr v-for="(prize, key) in prizes" :key="key">
+                            <td>
+                                <input v-model="ids"
+                                @change="changeChildren()"
+                               :disabled="parent_prize_ids.includes( prize.id )"
+                               :class="{'bg-secondary': parent_prize_ids.includes( prize.id ) }"
+                                class="form-check-input" type="checkbox" :value=" prize.id ">
+                            </td>
+                            <td scope="row" style="width:3rem;">
+                                <!--画像-->
+                                <ratio-image-component
+                                style_class="ratio ratio-3x4 rounded-3"
+                                :url=" prize.image_path " />
+                            </td>
+                            <td>{{ prize.code }}</td>
+                            <td>{{ prize.name }}</td>
+                            <td>{{ prize.rank.name }}</td>
+                            <td>{{ prize.point }} pt</td>
+                        </tr>
+
+                        <tr v-if="!loading && prizes.length==0">
+                            <td colspan="8" class="text-center text-secondary border-0 py-5">
+                                *商品の登録情報はありません。
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</template>
+<script>
+    import axios from 'axios'
+
+    export default {
+        props: {
+            token:{ type: String,  default: '', },
+            category_id:   { type: [String,Number],  default: '', },
+            r_api_prize:   { type: String,  default: '', },   //商品
+
+            parent_prize_ids:{ type: Array,  default: [], },   //親が持つ商品ID
+        },
+        data() { return {
+
+
+            prizes:  [],/* 商品 */
+            inputs: {
+                key_words: '',
+                category_id: 1,
+                order_code: '',
+                order_name: '',
+                order_rank_id: '',
+                order_point: '',
+                order_updated_at: '',
+                not_ids: [],
+            },
+
+            keyWords: '',
+            ids: [],/*チェックボックスのID*/
+            loading:  true,
+            allCheck: false,/*全てチェック*/
+            disabled: true,
+
+
+        } },
+        watch: {
+            parent_prize_ids:{
+                handler(){
+                    this.getData();/* データ取得 */
+                }, deep: true
+            }
+        },
+        mounted() {
+
+            this.inputs._token = this.token; //token保存
+            this.inputs.category_id = this.category_id; //カテゴリーID
+
+            this.getData();/* データ取得 */
+
+        },
+        methods: {
+
+            /* 商品データ取得 */
+            getData() {
+
+                this.loading = true;//読み込み中
+
+                this.inputs.not_ids = [ ...this.parent_prize_ids, ...this.ids ];//親が持つデータは除く
+
+                const route = this.r_api_prize;
+                axios.post( route , this.inputs )
+                .then(json => {
+                    // console.log(json.data);
+
+                    this.prizes = json.data;
+                    this.loading = false;//読み込み中
+                })
+                .catch(error => {
+                    // alert('通信エラーが発生しました。')
+                    // console.log( error.response.data );
+
+                });
+
+            },
+
+            /** キーワード検索 */
+            changeKeyWord() {
+                this.inputs.key_words = this.keyWords;
+                this.getData(); /* データ取得 */
+            },
+
+
+            /** 並び替え */
+            changeOrder(key) {
+                const order = this.inputs[key];
+
+                switch (order) {
+                    case '':    this.inputs[key]='asc';  break;
+                    case 'asc': this.inputs[key]='desc';  break;
+                    default:    this.inputs[key]='';  break;
+                }
+
+                this.getData(); /* データ取得 */
+            },
+
+
+            /** 全て選択をクリック */
+            changeAll(){
+                const ids = this.prizes.map( value => { return value.id; } );
+                this.ids  = this.allCheck ? ids : [];
+            },
+
+            /** 子チェックをクリック */
+            changeChildren(){
+                const ids = this.prizes.map( value => { return value.id; } );
+                this.allCheck = this.ids.length == ids.length;
+            },
+
+
+            /** 日付データをテクスト変換  */
+            formatDate(inputString) {
+                const date = new Date(inputString);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
+                const day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
+
+                return `${year}/${month}/${day}`;
+            },
+
+
+
+            /** 選択した商品IDを送信 */
+            sendPrizeId() {
+                this.$emit('send-prize-id',this.ids);//選択した商品IDを送信
+
+                this.getData();/* データ取得 */
+                this.ids = [];//チェックボックスのリセット
+            },
+
+        },
+
+    };
+</script>

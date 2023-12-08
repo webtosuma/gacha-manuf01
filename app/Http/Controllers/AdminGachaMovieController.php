@@ -10,10 +10,10 @@ use App\Models\GachaPrize;
 use App\Models\Prize;
 /*
 | =============================================
-|  サイト管理者 ガチャの詳細説明 コントローラー
+|  サイト管理者 ガチャの演出動画　コントローラー
 | =============================================
 */
-class AdminGachaDisriptionController extends Controller
+class AdminGachaMovieController extends Controller
 {
     /**
      * 編集
@@ -23,8 +23,6 @@ class AdminGachaDisriptionController extends Controller
      */
     public function edit(Gacha $gacha)
     {
-        return view('admin.gacha.discription.edit', compact('gacha'));
+        return view('admin.gacha.movie.edit', compact('gacha'));
     }
-
-
 }
