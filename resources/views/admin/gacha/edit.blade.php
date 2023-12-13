@@ -35,7 +35,7 @@ $active_key = 'gacha';
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">ガチャ編集</h2>
+        <h2 class="mb-5 py-3 border-bottom">『{{ $gacha->name }}』編集</h2>
 
 
         <!--タブメニュ-->

@@ -33,6 +33,10 @@
             background: no-repeat center center / cover fixed;
             background-image: url({{asset('storage/site/image/bg01.jpg')}});
         }
+        main{
+            padding-top: 2.6rem;
+            min-height: 80vh;
+        }
     </style>
 
     @yield('style')
@@ -49,7 +53,7 @@
             <section class="bg-dark text-warning text-center">{{$message}}</section>
         @endif
 
-        <main class="py-" style="min-height: 80vh">
+        <main>
             @yield('content')
         </main>
 

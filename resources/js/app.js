@@ -62,18 +62,17 @@ require('./components/ExampleComponent.vue').default);
 
     /* ガチャ管理 */
 
-    // 商品登録
-    Vue.component('a-gachaprize-edit',
-    require('./components/admin/gacha/prize/edit/Index.vue').default);
+        // 商品登録
+        Vue.component('a-gachaprize-edit',
+        require('./components/admin/gacha/prize/edit/Index.vue').default);
 
-        // ランク
-        Vue.component('a-gachaprize-gacharank-container',
-        require('./components/admin/gacha/prize/edit/GachaRankContainer.vue').default);
+            // ランク
+            Vue.component('a-gachaprize-gacharank-container',
+            require('./components/admin/gacha/prize/edit/GachaRankContainer.vue').default);
 
-
-        // 商品リスト
-        Vue.component('a-gachaprize-prize-list',
-        require('./components/admin/gacha/prize/edit/PrizeList.vue').default);
+            // 商品リスト
+            Vue.component('a-gachaprize-prize-list',
+            require('./components/admin/gacha/prize/edit/PrizeList.vue').default);
 
 
     /* ポイント売上 */

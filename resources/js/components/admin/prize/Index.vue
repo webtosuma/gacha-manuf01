@@ -21,7 +21,7 @@
             <div class="row g-3 ">
                 <div class="col-auto">
                     <a :href="r_create+'?gacha_category_id='+inputs.category_id"
-                    class="btn btn-lg btn-primary text-white px-4"
+                    class="btn btn-lg btn-primary text-white px-4 shadow"
                     >+ 商品の新規登録</a>
                 </div>
                 <div class="col-4">

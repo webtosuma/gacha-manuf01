@@ -53,7 +53,8 @@ class GachaCategory extends Model
         */
         public function gachas()
         {
-            return $this->hasMany(Gacha::class,'category_id');
+            return $this->hasMany(Gacha::class,'category_id')
+            ->orderByDesc('created_at');
         }
 
 

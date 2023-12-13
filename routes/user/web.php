@@ -28,7 +28,7 @@ use App\Http\Controllers;
     // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/', function(){
-        return redirect()->route('gacha_category','onepiece');
+        return redirect()->route('gacha_category');
     } )->name('home');
 
     # 予告

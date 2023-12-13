@@ -26,10 +26,9 @@ class CreateGachasTable extends Migration
             $table->string('image');//画像
             $table->integer('one_play_point')->default(0);//1回PLAYポイント数
             $table->integer('ten_play_point')->default(0);//10回PLAYポイント数
-            $table->dateTime('published_at' )->nullable()->default(NULL);//公開日時
+            $table->timestamp('published_at' )->nullable()->default(NULL);//公開日時
             $table->string('key'  );//'認証キー'
             $table->boolean('is_day_once' )->default(0);//一日一回のガチャか
-
 
             $table->softDeletes();//論理削除
             $table->timestamps();

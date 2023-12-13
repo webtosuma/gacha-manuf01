@@ -40,6 +40,10 @@ class Gacha extends Model
     }
 
 
+    /** Carbonオブジェクトとして利用 */
+    protected $dates = [
+        'published_at',//公開設定(利用しない->非公開*消さない)
+    ];
 
 
     /*
@@ -86,6 +90,19 @@ class Gacha extends Model
     |
     |
     */
+        /**
+         * 公開中かどうか is_published
+         * @return String
+        */
+        public function getIsPublishedAttribute()
+        {
+            return $this->published_at && $this->published_at < now()->format('Y-m-d H:i:s') ;
+        }
+
+
+
+
+
         /** 画像なしの時の画像 */
         public static function noImage(){ return asset( 'storage/site/image/no_image.jpg' );}
 

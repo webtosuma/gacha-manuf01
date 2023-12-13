@@ -41,6 +41,13 @@ $active_key = 'gacha';
         {{-- <h2 class="my-5 py-3 border-bottom">{{ $gacha->name }}</h2> --}}
 
 
+
+        <!--タブメニュ-->
+        @php $tab='admin.gacha.show'; @endphp
+        @include('admin.gacha.common.tab')
+
+
+
         <div class="row mx-0 g-3">
             <!--flex-c2-->
             <div class="col bg-white bg_gacha rounded-3">
@@ -89,26 +96,23 @@ $active_key = 'gacha';
                             </div>
 
                             <a href="{{ route('admin.gacha.edit', $gacha) }}" class="btn btn-warning text-white shadow"
-                            >基本情報の編集</a>
-                        </div>
-                    </div>
-
-                    <div class="p-3 bg-light rounded-3 mb-3">
-                        <div class="mb-">
-                            <a href="{{ route('admin.gacha.discription.edit',$gacha) }}"
-                            class="btn btn-warning text-white shadow">詳細説明の編集</a>
+                            >編集する</a>
                         </div>
                     </div>
                     <div class="p-3 bg-light rounded-3 mb-3">
-                        <div class="mb-">
-                            <a href="{{ route('admin.gacha.prize', $gacha) }}"
-                            class="btn btn-warning text-white shadow">登録商品の編集</a>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-light rounded-3 mb-3">
-                        <div class="mb-">
+                        @if ( $gacha->is_published )
+                            <div class="text-success border-bottom">公開中</div>
+                        @else
+                            <div class="text-danger border-bottom">非公開</div>
+                            <div class="">{{
+                            $gacha->published_at ?
+                            '公開予定日：'.\Carbon\Carbon::parse($gacha->published_at)->format('Y年m月d日')
+                            : ''
+                            }}</div>
+                        @endif
+                        <div class="mt-3">
                             <a href="{{ route('admin.gacha.published', $gacha) }}"
-                            class="btn btn-warning text-white shadow">公開設定</a>
+                            class="btn btn-sm btn-light border">公開設定</a>
                         </div>
                     </div>
 

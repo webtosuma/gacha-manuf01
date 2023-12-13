@@ -18,7 +18,7 @@
     <!--ボトムメニュー-->
     <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white"
     style="z-index:100; background:rgb(0, 0, 0, .7);">
-        <div class="container">
+        <div class="container mx-auto" style="max-width:600px;">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center gap-2 fs-5">
                     @include('includes.point_icon')
@@ -96,7 +96,7 @@
 
     <!--注意事項ー-->
     <section class="py-5">
-        <div class="container px-0 overflow-auto">
+        <div class="container px-0 overflow-auto mx-auto" style="max-width:600px;">
             <div class="p-3" style="border-radius:1rem; background:rgb(255, 255, 255, .9);">
 
                 <h6 class="border border-danger border-2 p-2 text-danger text-center">

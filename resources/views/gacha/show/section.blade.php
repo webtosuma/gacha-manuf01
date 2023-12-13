@@ -19,25 +19,32 @@
 
 
             <!--商品画像-->
-            @if ( $discription->image_path )
+            @if ( $discription->image )
                 <img class="d-block w-100"
                 src="{{ $discription->image_path }}"
                 alt="{{ $discription->rank_label.'商品画像' }}">
             @else
 
-                @php $col = $discription->gacha_rank_id < 400 ? 'col-6' : 'col-3' ; @endphp
+                @php
+                $col = $discription->gacha_rank_id < 400 ? 'col-6' : 'col-3' ;
+                $fs = $discription->gacha_rank_id < 400 ? 'fs-1' : '' ;
+                @endphp
                 <div class="row gy-3 mb-3 justify-content-center">
                     @foreach ($discription->g_prizes as $gacha_prize)
 
 
-                        <div class="{{ $col }} position-relative">
-                            <ratio-image-component
-                            style_class="ratio ratio-3x4 rounded-3"
-                            url="{{$gacha_prize->prize->image_path}}"
-                            ></ratio-image-component>
+                        <div class="{{ $col }}">
+                            <div class="position-relative">
+                                <ratio-image-component
+                                style_class="ratio ratio-3x4 rounded-3"
+                                url="{{$gacha_prize->prize->image_path}}"
+                                ></ratio-image-component>
 
-                            <div class="position-absolute bottom-0 end-0 translate-middle
-                            bg-dark text-white px-2 rounded fs-3">{{'×'.$gacha_prize->max_count}}</div>
+                                <div class="position-absolute bottom-0 end-0 p-1">
+                                    <div class="bg-dark text-white px-2 rounded {{$fs}}"
+                                    >{{'×'.$gacha_prize->max_count}}</div>
+                                </div>
+                            </div>
                         </div>
 
 

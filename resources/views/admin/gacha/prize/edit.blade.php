@@ -35,7 +35,7 @@ $active_key = 'gacha';
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">ガチャ編集</h2>
+        <h2 class="mb-5 py-3 border-bottom">『{{ $gacha->name }}』編集</h2>
 
 
         <!--タブメニュ-->
@@ -43,13 +43,21 @@ $active_key = 'gacha';
         @include('admin.gacha.common.tab')
 
 
-        <a-gachaprize-edit
-        token="{{ csrf_token() }}"
-        category_id   ="{{ $gacha->category->id }}"
-        r_api_prize   ="{{ route('admin.api.prize') }}"
-        r_api_gacha_ranks ="{{ route('admin.api.gacha.ranks',$gacha) }}"
-        r_api_ranks_gacha_prizes ="{{ route('admin.api.gacha.ranks_gacha_prizes') }}"
-        ></a-gachaprize-edit>
+        {{ $gacha->max_count }}
+        <form action="{{ route('admin.gacha.prize.update', $gacha) }}" method="POST"
+        enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+            @csrf
+            @method('PATCH')
+
+            <a-gachaprize-edit
+            token="{{ csrf_token() }}"
+            category_id   ="{{ $gacha->category->id }}"
+            r_api_prize   ="{{ route('admin.api.prize') }}"
+            r_api_gacha_ranks ="{{ route('admin.api.gacha.ranks',$gacha) }}"
+            r_api_ranks_gacha_prizes ="{{ route('admin.api.gacha.ranks_gacha_prizes') }}"
+            ></a-gachaprize-edit>
+
+        </form>
 
 
     </div>

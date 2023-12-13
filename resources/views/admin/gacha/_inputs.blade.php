@@ -6,14 +6,14 @@
              <!--トップ画像(image)-->
             <label class="d-block mb-4">
                 <div class="form-label">トップ画像</div>
+                <div class="form-text">*この登録画像は、ガチャのメイン画像として使用されます。</div>
 
                 <read-image-file-component
                 img_path="{{ $gacha->image_path }}"
                 noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
-                style_class="ratio ratio-16x9 rounded-3"
+                style_class="ratio ratio-4x3 rounded-3"
                 name="image"
                 ></read-image-file-component>
-                <div class="form-text">*この登録画像は、ガチャのメイン画像として使用されます。</div>
 
                 <!--error message-->
                 @if ( $errors->has('image') )
@@ -112,9 +112,9 @@
 
         <div class="col-md-6 my-5">
             @if (!$gacha->id)
-            <disabled-button style_class="btn btn-primary text-white w-100" btn_text="登録する"></button>
+            <disabled-button style_class="btn btn-primary text-white w-100 shadow" btn_text="登録する"></bdisabled-button>
             @else
-            <disabled-button style_class="btn btn-warning text-white w-100" btn_text="更新する"></button>
+            <disabled-button style_class="btn btn-warning text-white w-100 shadow" btn_text="更新する"></bdisabled-button>
             @endif
         </div>
 

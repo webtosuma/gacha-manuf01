@@ -1,5 +1,19 @@
 <template>
     <div class="">
+        <section class="p-3">
+            <div class="cardd card-body bg-lightt">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3">
+                        <div class="">合計口数：100</div>
+                        <div class="">合計ポイント：100pt</div>
+                    </div>
+                    <div class="">
+                        <disabled-button style_class="btn btn-warning text-white w-100 shadow"
+                        btn_text="更新する" />
+                    </div>
+                </div>
+            </div>
+        </section>
         <section>
             <div class="row g-1">
 
@@ -8,6 +22,7 @@
 
                         <button v-for="( discription, key ) in discriptions" :key="key"
                         @click="changeActive( discription.gacha_rank_id )"
+                        type="button"
                         class="btn btn-link text-decoration-none position-relative border-bottom">
                             <div class="d-flex flex-column justify-content-between gap-0">
                                 <span class="fw-bold">{{ discription.rank_label }}</span>
@@ -36,6 +51,8 @@
 
                             :rank_label="discription.rank_label"
                             :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
+
+                            :gacha_rank_id="discription.gacha_rank_id"
                             />
 
                         </div>
@@ -43,19 +60,6 @@
 
                 </div>
 
-            </div>
-        </section>
-        <section class="mt-3">
-            <div class="card card-body bg-light">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3">
-                        <div class="">合計口数：100</div>
-                        <div class="">合計ポイント：100pt</div>
-                    </div>
-                    <div class="">
-                        <button class="btn btn-warning text-white">この内容で更新する</button>
-                    </div>
-                </div>
             </div>
         </section>
     </div>

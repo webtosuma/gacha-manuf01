@@ -47,65 +47,38 @@ $active_key = 'gacha';
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">ガチャ編集</h2>
+        <h2 class="mb-5 py-3 border-bottom">『{{ $gacha->name }}』編集</h2>
+
 
         <!--タブメニュ-->
         @php $tab='admin.gacha.discription.edit'; @endphp
         @include('admin.gacha.common.tab')
 
 
-        <div class="row mx-0 g-3">
-            <!--flex-c2-->
-            <div class="d-none d-lg-block col-8 bg-white bg_gacha rounded-3">
+        <form action="{{ route('admin.gacha.discription.update', $gacha) }}" method="POST"
+        enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+            @csrf
+            @method('PATCH')
 
-                <!--プレビュー-->
-                <div class="col-10 mx-auto">
-                    @include('gacha.show.main')
+
+            <div class="row g-0">
+                <!--flex-c2-->
+                <div class="col mb-5">
+
+                    @include('admin.gacha.discription._inputs')
+
                 </div>
-
-            </div>
-            <!--flex-c1-->
-            <aside class="col ">
-                <div class="position-sticky" style="top: 2rem; ">
-
-                    <div class="p-3 bg-light rounded-3 mb-3 overflow-auto" style="max-height:90vh;">
-
-                        <div class="mb-3">
-                            <label class="form-label fs-6">1等賞</label>
-                            <input class="form-control bg-white mb-2" type="file" id="formFileMultiple" multiple>
-                            <textarea class="form-control bg-white"rows="3" placeholder="＊商品の補足説明などがあれば、入力してください。"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fs-6">2等賞</label>
-                            <input class="form-control bg-white mb-2" type="file" id="formFileMultiple" multiple>
-                            <textarea class="form-control bg-white"rows="3" placeholder="＊商品の補足説明などがあれば、入力してください。"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fs-6">3等賞</label>
-                            <input class="form-control bg-white mb-2" type="file" id="formFileMultiple" multiple>
-                            <textarea class="form-control bg-white"rows="3" placeholder="＊商品の補足説明などがあれば、入力してください。"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fs-6">4等賞</label>
-                            <input class="form-control bg-white mb-2" type="file" id="formFileMultiple" multiple>
-                            <textarea class="form-control bg-white"rows="3" placeholder="＊商品の補足説明などがあれば、入力してください。"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fs-6">ラストワン賞</label>
-                            <input class="form-control bg-white mb-2" type="file" id="formFileMultiple" multiple>
-                            <textarea class="form-control bg-white"rows="3" placeholder="＊商品の補足説明などがあれば、入力してください。"></textarea>
-                        </div>
-
-                        <div class="mt-4">
-                            <a href="{{ route('admin.gacha.discription.edit',$gacha) }}"
-                            class="btn btn-warning text-white shadow w-100">更新する</a>
-                        </div>
+                <aside class="col-12 col-md-3 ">
+                    <div class="position-sticky p-3" style="top: 2rem; ">
+                        <disabled-button style_class="btn btn-warning text-white w-100 shadow"
+                        btn_text="更新する"></bdisabled-button>
                     </div>
+                </aside>
+            </div>
 
 
+        </form>
 
-                </div>
-            </aside>
-        </div>
+
     </div>
 @endsection

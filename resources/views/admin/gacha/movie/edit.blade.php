@@ -47,12 +47,37 @@ $active_key = 'gacha';
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">ガチャ編集</h2>
+        <h2 class="mb-5 py-3 border-bottom">『{{ $gacha->name }}』編集</h2>
+
 
         <!--タブメニュ-->
         @php $tab='admin.gacha.movie.edit'; @endphp
         @include('admin.gacha.common.tab')
 
+
+        <form action="{{ route('admin.gacha.movie.update',$gacha) }}" method="POST"
+        enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+            @csrf
+            @method('PATCH')
+
+
+            <div class="row g-0">
+                <!--flex-c2-->
+                <div class="col mb-5">
+
+                    @include('admin.gacha.movie._inputs')
+
+                </div>
+                <aside class="d-none d-lg-block col-3 ">
+                    <div class="position-sticky p-3" style="top: 2rem; ">
+                        <disabled-button style_class="btn btn-warning text-white w-100 shadow"
+                        btn_text="更新する"></bdisabled-button>
+                    </div>
+                </aside>
+            </div>
+
+
+        </form>
 
     </div>
 @endsection

@@ -110,12 +110,11 @@
 
         <div class="col-md-6 my-5">
             @if (!$prize->id)
-            <disabled-button style_class="btn btn-primary text-white w-100" btn_text="登録する"></button>
+            <disabled-button style_class="btn btn-primary text-white w-100 shadow" btn_text="登録する"></bdisabled-button>
             @else
-            <disabled-button style_class="btn btn-warning text-white w-100" btn_text="更新する"></button>
+            <disabled-button style_class="btn btn-warning text-white w-100 shadow" btn_text="更新する"></bdisabled-button>
             @endif
         </div>
-
 
     </div>
 </div>

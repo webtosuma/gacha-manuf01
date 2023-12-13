@@ -33,12 +33,38 @@ $active_key = 'gacha';
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">ガチャ編集</h2>
+        <h2 class="mb-5 py-3 border-bottom">『{{ $gacha->name }}』編集</h2>
+
 
 
         <!--タブメニュ-->
         @php $tab='admin.gacha.published'; @endphp
         @include('admin.gacha.common.tab')
+
+
+        <form action="{{ route('admin.gacha.published.update', $gacha) }}"
+        method="POST" onsubmit="stopOnbeforeunload()">
+            @csrf
+            @method('PATCH')
+
+
+            <div class="row g-0">
+                <!--flex-c2-->
+                <div class="col">
+
+                    @include('admin.gacha.published._inputs')
+
+                </div>
+                <aside class="col-12 col-md-3 ">
+                    <div class="position-sticky p-3" style="top: 2rem; ">
+                        <disabled-button style_class="btn btn-warning text-white w-100 shadow"
+                        btn_text="更新する"></bdisabled-button>
+                    </div>
+                </aside>
+            </div>
+
+
+        </form>
 
 
     </div>

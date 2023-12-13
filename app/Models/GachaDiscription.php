@@ -34,11 +34,7 @@ class GachaDiscription extends Model
     }
 
 
-    /**
-     * ガチャランク　一覧
-     *
-     * @return Array　
-     */
+    /** ガチャランク　一覧 */
     public static function gacha_ranks()
     {
         return [
@@ -57,6 +53,12 @@ class GachaDiscription extends Model
         ];
     }
 
+    // /** 特別なガチャランク */
+    // public static function special_gacha_rank_ids()
+    // {
+    //     return [ 10,310,320, ];
+    // }
+
     /*
     |--------------------------------------------------------------------------
     | リレーション
@@ -71,6 +73,7 @@ class GachaDiscription extends Model
         public function gacha(){
             return $this->belongsTo(Gacha::class, 'gacha_id');
         }
+
 
 
     /*
@@ -117,6 +120,16 @@ class GachaDiscription extends Model
         }
 
 
+        /**
+         * GachaRankMovieモデル リレーション
+         * @return \App\Models\GachaRankMovie
+        */
+        public function getGachaRankMoviesAttribute(){
+            return GachaRankMovie::where('gacha_id',$this->gacha->id)
+            ->where('gacha_rank_id', $this->gacha_rank_id)
+            ->get();
+        }
+
 
         /**
          * ガチャランクごとの演出動画一覧 (movies)
@@ -145,7 +158,7 @@ class GachaDiscription extends Model
     |
     */
         // /** 画像なしの時の画像 */
-        // public static function noImage(){ return asset( 'storage/'.'site/image/bg04.jpg' );}
+        public static function noImage(){ return asset( 'storage/site/image/no_image.jpg' );}
 
         /**
          * 画像ファイルパス image_path
@@ -154,7 +167,7 @@ class GachaDiscription extends Model
         public function getImagePathAttribute()
         {
             return $this->image && Storage::exists($this->image) ?
-            asset( 'storage/'.$this->image ) :  null;
+            asset( 'storage/'.$this->image ) :  self::noImage();
         }
 
 

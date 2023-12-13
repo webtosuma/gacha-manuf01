@@ -2,10 +2,15 @@
     <div class="row g-1">
         <div class="col">
 
+            <div class="card overflow-auto" style="height: 90vh">
 
-            <div class="card overflow-auto" style="height: 60vh">
+                <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
+                    *特殊な商品の数量は、更新時に自動算出されます。<br>
+                    *商品登録を削除する場合は、数量を0にし、更新を行なってください。
+                </div>
 
-                <div class="p-2">prize ids:{{ prize_ids }}</div>
+                <div v-if="test"
+                class="p-2">prize ids:{{ prize_ids }}</div>
 
 
                 <table class="table">
@@ -40,11 +45,13 @@
                             <td>{{ g_prize.prize.rank.name }}</td>
                             <td>{{ g_prize.prize.point }} pt</td>
                             <td>
-                                <input v-model="g_prize.max_count" type="number"
+                                <input v-model="g_prize.max_count"
+                                :name="'gri'+gacha_rank_id+'-gacha_prize_counts[]'"
+                                type="number"
                                 class="form-control form-control-sm text-end" min="0">
                             </td>
                         </tr>
-                        <tr v-if="!loading && g_prizes.length==0">
+                        <tr v-if="!loading && g_prizes.length==0 && prizes.length==0">
                             <td colspan="8" class="text-center text-secondary border-0 py-5">
                                 *商品の登録情報はありません。
                             </td>
@@ -59,7 +66,8 @@
                         <td class="bg-success-subtle"  style="width:2rem;">
                             <!-- 削除 -->
                             <button @click="removeGachaPrize(prize.id)"
-                             class="btn btn-sm border text-danger"><i class="bi bi-trash3"></i></button>
+                             class="btn btn-sm border text-danger" type="button"
+                            ><i class="bi bi-trash3"></i></button>
                         </td>
 
                         <td class="bg-success-subtle" scope="row" style="width:3rem;">
@@ -75,8 +83,13 @@
                         <td class="bg-success-subtle">{{ prize.point }} pt</td>
 
                         <td class="bg-success-subtle"  style="width:6rem;">
-                            <input type="number" value="0"
+                            <input type="number" value="1"
+                            :name="'gri'+gacha_rank_id+'-new_prize_counts[]'"
                             class="form-control form-control-sm text-end" min="0">
+
+                            <input type="hidden" :value="prize.id"
+                            :name="'gri'+gacha_rank_id+'-new_prize_ids[]'"
+                            >
                         </td>
                     </tr>
 
@@ -95,6 +108,8 @@
             :token="token"
             :category_id="category_id"
             :r_api_prize="r_api_prize"
+
+            :is_special_rank="is_special_rank"
             />
 
         </div>
@@ -113,6 +128,8 @@
 
             rank_label:{ type: String,  default: '', },
             r_api_ranks_gacha_prizes:{ type: String,  default: '', },//ガチャ商品
+
+            gacha_rank_id:{ type: [String,Number],  default: '', },
         },
         data() { return {
 
@@ -122,7 +139,9 @@
             prizes:  [],  /* 新規登録　商品 */
 
 
+            is_special_rank: false,
             loading: false,
+            test: false,
 
         } },
         mounted() {
@@ -141,14 +160,14 @@
                 const route = this.r_api_ranks_gacha_prizes;
                 axios.post( route , { _token : this.token, } )
                 .then(json => {
-                    // console.log(json.data);
+                    console.log(json.data);
 
                     this.g_prizes = json.data;
                     this.g_prizes.forEach( g_prize => {
-
                         this.prize_ids.push(g_prize.prize.id);
                     });
 
+                    this.isSpecialGachaRank(); // 特殊商品が否か
 
 
                     this.loading = false;//読み込み中
@@ -227,6 +246,12 @@
 
             },
 
+            /** 特殊商品が否か */
+            isSpecialGachaRank() {
+
+                const array = ['10','310','320'];
+                this.is_special_rank = array.includes(this.gacha_rank_id);
+            },
         }
     }
 </script>

@@ -76,7 +76,7 @@ class GachaSeeder extends Seeder
                 'image' => 'sample/gachas/g01/top.png',//イメージ画像
                 'one_play_point' => 100,//1回PLAYポイント数
                 'ten_play_point' => 1000,//10回PLAYポイント数
-                'published_at'   => '2050-01-01 00:00:00',//公開設定(利用しない->非公開*消さない)
+                'published_at'   => '2025-01-01 00:00:00',//公開設定(利用しない->非公開*消さない)
             ],
 
         ];

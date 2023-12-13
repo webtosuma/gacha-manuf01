@@ -1,7 +1,7 @@
 <template>
     <div class="row g-1">
         <!--追加ボタン-->
-        <div class="col-auto" style="height: 60vh">
+        <div class="col-auto" style="height: 90vh">
             <div class="d-flex align-items-center h-100">
                 <button @click="sendPrizeId"
                 :disabled="!ids.length"
@@ -11,11 +11,17 @@
         </div>
         <!--商品リスト-->
         <div class="col">
-            <div class="card overflow-auto"  style="height: 60vh">
+            <div class="card overflow-auto"  style="height: 90vh">
 
+                <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
+                    *特殊な商品の登録は1種類までです。
+                </div>
 
-                <div class="p-2">parent ids:{{ parent_prize_ids }}</div>
-                <div class="p-2">inputs:{{ ids }}</div>
+                <div v-if="test">
+                    <div class="p-2">parent ids:{{ parent_prize_ids }}</div>
+                    <div class="p-2">ids:{{ ids }}</div>
+                    <div class="p-2">is_special_rank:{{ specialDisabled(0) }}</div>
+                </div>
 
 
                 <div class="p-2">
@@ -84,7 +90,7 @@
                             <td>
                                 <input v-model="ids"
                                 @change="changeChildren()"
-                               :disabled="parent_prize_ids.includes( prize.id )"
+                               :disabled="parent_prize_ids.includes( prize.id ) || specialDisabled(prize.id)"
                                :class="{'bg-secondary': parent_prize_ids.includes( prize.id ) }"
                                 class="form-check-input" type="checkbox" :value=" prize.id ">
                             </td>
@@ -126,6 +132,8 @@
             r_api_prize:   { type: String,  default: '', },   //商品
 
             parent_prize_ids:{ type: Array,  default: [], },   //親が持つ商品ID
+
+            is_special_rank:{ type: Boolean,  default: '', },//特殊商品が否か
         },
         data() { return {
 
@@ -144,10 +152,13 @@
 
             keyWords: '',
             ids: [],/*チェックボックスのID*/
+
+
             loading:  true,
             allCheck: false,/*全てチェック*/
             disabled: true,
 
+            test: true,
 
         } },
         watch: {
@@ -244,6 +255,19 @@
                 this.ids = [];//チェックボックスのリセット
             },
 
+
+            /** 特殊な商品のdisabled */
+            specialDisabled(id=1) {
+                return (
+                    this.is_special_rank
+                    && this.ids.length>0
+                    && !this.ids.includes(id)
+                ) || (
+                    this.is_special_rank
+                    && this.parent_prize_ids.length>0
+                )
+                ;
+            },
         },
 
     };

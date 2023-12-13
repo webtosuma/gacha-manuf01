@@ -91,9 +91,24 @@ class AdminGachaController extends Controller
         # 入力データの加工
         $inputs = self::processingInputs( $request );
 
+
         # DBデータの新規登録
         $gacha = new \App\Models\Gacha( $inputs, $gacha=null );
         $gacha->save();
+
+
+        # 詳細情報(discriptions)の登録
+        $gacha_ranks = GachaDiscription::gacha_ranks();//ランク情報
+        foreach ($gacha_ranks as $gacha_rank_id => $label)
+        {
+            $gacha_discription = new GachaDiscription([
+                'gacha_id'      => $gacha->id, //ガチャリレーション
+                'gacha_rank_id' => $gacha_rank_id,//ランクID
+            ]);
+            $gacha_discription->save();
+        }
+
+
         $request->session()->regenerateToken();// 二重送信防止
 
 
@@ -101,11 +116,12 @@ class AdminGachaController extends Controller
         $message = <<<__
         ガチャの基本情報を登録しました
         続けて、次の編集作業を行なってください。
-        「詳細説明の編集」
         「登録商品の編集」
+        「演出動画の編集」
+        「詳細説明の編集」
         「公開設定」
         __;
-        return redirect()->route('admin.gacha.show',$gacha)
+        return redirect()->route('admin.gacha.prize.edit',$gacha)
         ->with(['alert-primary'=>$message]);
     }
 
@@ -144,7 +160,8 @@ class AdminGachaController extends Controller
         $request->session()->regenerateToken();// 二重送信防止
 
 
-        return redirect()->route('admin.gacha.show',$gacha)
+        // return redirect()->route('admin.gacha.show',$gacha)
+        return redirect()->route('admin.gacha.edit',$gacha)
         ->with(['alert-warning'=>'ガチャの基本情報を更新しました']);
     }
 
@@ -159,6 +176,44 @@ class AdminGachaController extends Controller
     public function published(Gacha $gacha)
     {
         return view('admin.gacha.published.edit', compact('gacha'));
+    }
+
+
+    /**
+     * 公開設定の更新
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Gacha  $gacha
+     * @return \Illuminate\Http\Response
+     */
+    public function published_update(Request $request, Gacha $gacha)
+    {
+        // dd( $request->all() );
+        # 公開日変数
+
+            $published_at = $gacha->published_at;
+
+            // 公開[1](前回が「公開」でないとき)
+            if( $request->is_published==1 && !$gacha->is_published ){
+                $published_at = now()->format('Y-m-d H:i:00');
+            }
+            // 公開予約[2]
+            else if( $request->is_published==2 ){
+                $published_at = str_replace('T',' ', $request->published_at );
+            }
+            // 非公開[0]
+            else if( $request->is_published==0 ){
+                $published_at = NULL;
+            }
+
+
+        # 更新情報の保存
+        $gacha->update( compact('published_at') );
+
+
+        # リダイレクト
+        return redirect()->route('admin.gacha.published',$gacha)
+        ->with(['alert-warning'=>'ガチャの公開設定を更新しました']);
     }
 
 

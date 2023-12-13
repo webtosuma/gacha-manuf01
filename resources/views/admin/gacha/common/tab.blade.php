@@ -3,6 +3,7 @@
     $active_class = ' active disabled text-dark';
     @endphp
     <ul class="nav nav-tabs">
+
         <li class="nav-item">
             @php
             $active = isset($tab) &&$tab=='admin.gacha.edit'? $active_class : '';
@@ -29,7 +30,7 @@
             $active = isset($tab) &&$tab=='admin.gacha.discription.edit'? $active_class : '';
             @endphp
             <a class="nav-link text-warning {{$active}}"
-            href="{{ route('admin.gacha.discription.edit',$gacha) }}">詳細説明</a>
+            href="{{ route('admin.gacha.discription.edit',$gacha) }}">商品説明</a>
         </li>
         <li class="nav-item">
             @php
@@ -39,8 +40,13 @@
             href="{{ route('admin.gacha.published',$gacha) }}">公開設定</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"
-            href="{{ route('admin.gacha.show',$gacha) }}">詳細ページに戻る</a>
-          </li>
-      </ul>
+            @php
+            $active = isset($tab) &&$tab=='admin.gacha.show'? $active_class : '';
+            @endphp
+            <a class="nav-link {{$active}}"
+            href="{{ route('admin.gacha.show',$gacha) }}"
+            >{{  $active ? '詳細情報' : '詳細情報へ戻る' }}</a>
+        </li>
+
+    </ul>
 </section>

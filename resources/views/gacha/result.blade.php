@@ -18,9 +18,9 @@
         <div class="container px-3 py-4"  style="max-width:500px;">
 
 
-            <h2 class="text-secondary fw-bold btn btn-lg w-100 mb-4"
+            <h3 class="text-secondary fw-bold rounded-3 p-2 text-center w-100 mb-4"
             style="background: rgb(255, 255, 255, .7);"
-            >ガチャ結果</h2>
+            >ガチャ結果</h3>
 
             <!--ポイント交換フォーム-->
             @php $params = [

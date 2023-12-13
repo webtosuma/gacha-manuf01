@@ -59,65 +59,74 @@
 
 
 @section('content')
-    <!--カルーセル-->
-    <section class="bg-dark overflow-hidden" style="
-    background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
-    ">
-        <div class="container px-0" style="">
-            <div class="col-md-12 mx-auto">
-                <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
-                    <!--image-->
-                    <div class="carousel-inner anm_opasity_e01" style="max-height:90vh;">
-                        @foreach ($gachas as $gi => $gacha)
+    @if( $category_code=='all' )
+        <!--カルーセル-->
+        <section class="bg-dark overflow-hidden" style="
+        background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
+        ">
+            <div class="container px-0 mx-auto" style="max-width:900px;">
+                <div class="col-md-12 mx-auto">
+                    <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
-                            @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
-                            <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
-                            {{ $gi==0 ? 'active' : ''}}">
+                        <!--image-->
+                        <div class="carousel-inner anm_opasity_e01" style="max-height:90vh;">
+                            @foreach ($gachas as $gi => $gacha)
 
-                                <div class="d-none d-md-block">
-                                    <!--pc-->
-                                    <ratio-image-component
-                                    style_class="ratio ratio-16x9"
-                                    url="{{ $gacha->image_path }}"
-                                    ></ratio-image-component>
-                                </div>
-                                <div class="d-md-none">
-                                    <!--mobile-->
-                                    <ratio-image-component
-                                    style_class="ratio ratio-4x3"
-                                    url="{{ $gacha->image_path }}"
-                                    ></ratio-image-component>
-                                </div>
+                                @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+                                <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
+                                {{ $gi==0 ? 'active' : ''}}">
 
-                            </a>
-                        @endforeach
-                    </div>
+                                    {{-- <div class="d-none d-md-block">
+                                        <!--pc-->
+                                        <ratio-image-component
+                                        style_class="ratio ratio-16x9"
+                                        url="{{ $gacha->image_path }}"
+                                        ></ratio-image-component>
+                                    </div>
+                                    <div class="d-md-none">
+                                        <!--mobile-->
+                                        <ratio-image-component
+                                        style_class="ratio ratio-4x3"
+                                        url="{{ $gacha->image_path }}"
+                                        ></ratio-image-component>
+                                    </div> --}}
+                                    <div class="">
+                                        <ratio-image-component
+                                        style_class="ratio ratio-4x3"
+                                        url="{{ $gacha->image_path }}"
+                                        ></ratio-image-component>
+                                    </div>
 
-
-                    <!--side menu-->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                    </button>
+                                </a>
+                            @endforeach
+                        </div>
 
 
-                    <!--bottom menu-->
-                    <div class="carousel-indicators mb-0">
-                        @foreach ($gachas as $gi => $gacha)
-                            <button type="button" data-bs-target="#carouselIndicators"
-                            class="{{ $gi==0 ? 'active' : ''}}"
-                            data-bs-slide-to="{{$gi}}" aria-current="true" aria-label="{{'Slide '.($gi+1)}}x"></button>
-                        @endforeach
+                        <!--side menu-->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                        </button>
+
+
+                        <!--bottom menu-->
+                        <div class="carousel-indicators mb-0">
+                            @foreach ($gachas as $gi => $gacha)
+                                <button type="button" data-bs-target="#carouselIndicators"
+                                class="{{ $gi==0 ? 'active' : ''}}"
+                                data-bs-slide-to="{{$gi}}" aria-current="true" aria-label="{{'Slide '.($gi+1)}}x"></button>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
     <!--お知らせ-->
     {{-- <section class="bg-dark">
         <div class="container py-4">
@@ -142,11 +151,14 @@
         </div>
     </section> --}}
     <!--カテゴリー-->
-    <section class="p-3 bg-dark">
-        <div class="containerrr overflow-auto">
+    @php
+    $bg = $category_code=='all' ? 'bg-dark' : '';
+    @endphp
+    <section class="py-3 {{$bg}}">
+        <div class="container overflow-auto">
             <nav class="nav gap-3 flex-nowrap" style="min-width:600px;">
                 @php
-                $sc = "col fs-5 py-3 fw-bold btn btn-light rounded-pill border-dark border-2";
+                $sc = "col fs-5 py-2 fw-bold btn btn-light rounded-pill border-dark border-2";
                 $style_class = $category_code=='all' ? $sc.' disabled' : $sc;
                 @endphp
                 <a  href="{{ route('gacha_category','all') }}"

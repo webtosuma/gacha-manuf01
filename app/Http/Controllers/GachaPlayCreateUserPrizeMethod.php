@@ -248,7 +248,7 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
 
             # 当たり目を返す(該当ガチャ商品があるときのみ)
-            return $gacha_prize->count() ? self::KiriHitsCalc( $gacha->max_count ) : [] ;
+            return $gacha_prize->count() ? self::KiriHitsCalc( $gacha ) : [] ;
 
         }
 
@@ -259,16 +259,25 @@ class GachaPlayCreateUserPrizeMethod extends Controller
              * @param  Integer $max_count //合計口数
              * @return Array 当たり目配列
             */
-            public static function KiriHitsCalc( $max_count )
+            public static function KiriHitsCalc( $gacha )
             {
+                $max_count = $gacha->max_count;
                 $n = floor( log10($max_count) );      //合計口数ー下の桁数
                 $a = ceil( $max_count / pow(10,$n) ); //合計口数ー上の位の値（繰り上げ
+
+                # ラストワンが存在するか
+                $lastone_gacha_prize = GachaPrize::where('gacha_id',$gacha->id)
+                ->where('gacha_rank_id', self::GachaRankIdLastone() )
+                ->first();
+
+                # 最大値(ラストワンが存在する場合は、最後の値を含まない)
+                $max = $lastone_gacha_prize ? $max_count-1 : $max_count;
 
                 $nums = [];
                 for ($i=1; $i <= $a; $i++)
                 {
                     $num = $i * pow(10,$n);
-                    if( $num <= $max_count ){ $nums[] = $num;}
+                    if( $num <= $max ){ $nums[] = $num;}
                 }
 
                 return $nums;
@@ -295,7 +304,7 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
 
             # 当たり目を返す(該当ガチャ商品があるときのみ)
-            return $gacha_prize->count() ? self::ZoroHitsCalc( $gacha->max_count ) : [] ;
+            return $gacha_prize->count() ? self::ZoroHitsCalc( $gacha ) : [] ;
 
         }
 
@@ -306,16 +315,25 @@ class GachaPlayCreateUserPrizeMethod extends Controller
              * @param  Integer $max_count //合計口数
              * @return Array 当たり目配列
             */
-            public static function ZoroHitsCalc( $max_count )
+            public static function ZoroHitsCalc( $gacha )
             {
+                $max_count = $gacha->max_count;
                 $n = floor( log10($max_count) );      //合計口数ー下の桁数
                 $a = ceil( $max_count / pow(10,$n) ); //合計口数ー上の位の値（繰り上げ
+
+                # ラストワンが存在するか
+                $lastone_gacha_prize = GachaPrize::where('gacha_id',$gacha->id)
+                ->where('gacha_rank_id', self::GachaRankIdLastone() )
+                ->first();
+
+                # 最大値(ラストワンが存在する場合は、最後の値を含まない)
+                $max = $lastone_gacha_prize ? $max_count-1 : $max_count;
 
                 $nums = [];
                 for ($i=1; $i <= $a; $i++)
                 {
                     $num = str_repeat( $i, $n+1 );
-                    if( $num <= $max_count ){ $nums[] = $num;}
+                    if( $num <= $max ){ $nums[] = $num;}
 
                 }
 

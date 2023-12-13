@@ -18,6 +18,12 @@
 
                     <label class="w-100">
 
+                        <!--商品ランク表示-->
+                        <div class="text-center">
+                            <span class="fw-bold fs-5"
+                            >{{ userPrize.prize.rank.name }}</span>
+                        </div>
+
                         <div class="position-relative">
                             <!--チェックボックス-->
                             <div class="position-absolute top-0 start-0 translate-middle" style="z-index:100">
@@ -35,11 +41,11 @@
                         </div>
 
                         <!--商品ランク表示-->
-                        <div class="bg-dark text-primary fw-bold text-center mt-1 px-1 rounded">
+                        <!-- <div class="bg-dark text-primary fw-bold text-center mt-1 px-1 rounded">
                             {{ userPrize.prize.rank.name }}
-                        </div>
+                        </div> -->
                         <!--ポイント表示-->
-                        <div class="bg-white text- fw-bold text-center mt-1 px-1 rounded">
+                        <div class="bg-white text-center mt-1 px-1 rounded-pill">
                             <number-comma-component :number="userPrize.prize.point" />pt
 
                         </div>

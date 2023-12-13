@@ -28,7 +28,6 @@ class CreateGachaPrizesTable extends Migration
             $table->string('gacha_rank_id');//ランクID
             $table->integer('max_count')->default(0);       //景品総数
             $table->integer('remaining_count')->default(0); //景品残数
-            $table->integer('win_order')->nullable()->default(NULL); //指定して当選する順番
 
             $table->softDeletes();//論理削除
             $table->timestamps();

@@ -67,12 +67,14 @@ $active_key = 'gacha';
 
             </div>
             @foreach ($gachas as $gacha)
-                <div class="col-12 col-md-4 col-lg-3 ">
+                <div class="col-12 col-md-4 col-lg-3 position-relative">
+
+
+
                     <a href="{{route('admin.gacha.show',$gacha)}}"
-                    class="card border-secondary border-3 shadow bg-white
+                    class="card border-secondary border-3 shadow bg-white h-100
                     text-dark text-center overflow-hidden text-decoration-none
                     hover_anime" style="border-radius:1rem;">
-
 
                         <!--image-->
                         <div class="position-relative">
@@ -89,15 +91,17 @@ $active_key = 'gacha';
                         </div>
 
                         <!--metter-->
-                        <div class="card-body">
-                            <h6 class="d-flexxx justify-content-between align-items-end">
-                                <div class="d-flex align-items-center gap-2">
-                                    @include('includes.point_icon')
-                                    <div class="">
-                                        1回×
-                                        <span class="fs-3">
-                                            <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
-                                        </span>pt
+                        @if ( $gacha->is_published )
+                            <div class="card-body py-1">
+                                <div class="d-flex justify-content-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                        @include('includes.point_icon')
+                                        <div class="">
+                                            1回×
+                                            <span class="fs-3">
+                                                <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
+                                            </span>pt
+                                        </div>
                                     </div>
                                 </div>
                                 <p class="card-text m-0">
@@ -106,22 +110,47 @@ $active_key = 'gacha';
                                     /
                                     <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
                                 </p>
-                            </h6>
-                            <div class="progress">
-                                @php
-                                $ratio = $gacha->remaining_ratio;
-                                $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
-                                $style_class = 'progress-bar progress-bar-striped '.$bg_color
-                                @endphp
-                                <div class="{{ $style_class }}" role="progressbar"
-                                style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
                             </div>
-                        </div>
+                        @elseif( $gacha->published_at )
+                            <div class="card-body bg-success text-center text-white">
+                                <h3>公開予約中</h3>
+                                <div >{{
+                                    \Carbon\Carbon::parse($gacha->published_at)->format('Y/m/d').'公開予定'
+                                }}</div>
+                            </div>
+                        @else
+                            <div class="card-body bg-secondary text-center text-white">
+                                <h3>非公開</h3>
+                            </div>
+                        @endif
+
                     </a>
+
+
+                    <div class="dropdown position-absolute top-0 end-0" style="z-index:100;">
+                        <button class="btn border bg-white rounded-circle" type="button"
+                        id="dropdownMenuButton{{ $gacha->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $gacha->id }}"  style="z-index:100;">
+                            <li><a class="dropdown-item"
+                            href="{{ route('admin.gacha.show',$gacha) }}"
+                            >詳細情報を見る</a></li>
+                            <li><a class="dropdown-item"
+                            href="{{ route('admin.gacha.edit',$gacha) }}"
+                            >編集する</a></li>
+                            <li><a class="dropdown-item"
+                            href="#"
+                            >コピーする</a></li>
+                            <li><a class="dropdown-item"
+                            href="#"
+                            >削除する</a></li>
+                        </ul>
+                    </div>
+
                 </div>
             @endforeach
         </section>
 
-        <a href="{{ route('admin.gacha.create') }}" class="btn brn-primariy ">新規登録</a>
     </div>
 @endsection

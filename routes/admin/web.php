@@ -141,7 +141,7 @@ use \App\Http\Controllers;
     */
         Route::middleware(['admin_auth'])->group(function () {
 
-            // # 商品の一覧
+            # ガチャの詳細情報
             // Route::get('/admin/gacha/prize/{gacha}',
             // [Controllers\AdminGachaPrizeController ::class, 'index'])
             // ->name('admin.gacha.prize');
@@ -152,7 +152,7 @@ use \App\Http\Controllers;
             ->name('admin.gacha.prize.edit');
 
                 # 商品の更新
-                Route::patch('/admin/gacha/prize/update/{rank}',
+                Route::patch('/admin/gacha/prize/update/{gacha}',
                 [Controllers\AdminGachaPrizeController ::class, 'update'])
                 ->name('admin.gacha.prize.update');
 
@@ -162,6 +162,10 @@ use \App\Http\Controllers;
             [Controllers\AdminGachaMovieController ::class, 'edit'])
             ->name('admin.gacha.movie.edit');
 
+                # 演出動画情報の更新
+                Route::patch('/admin/gacha/movie/update/{gacha}',
+                [Controllers\AdminGachaMovieController ::class, 'update'])
+                ->name('admin.gacha.movie.update');
 
             # 詳細情報の編集
             Route::get('/admin/gacha/discription/edit/{gacha}',
@@ -169,7 +173,7 @@ use \App\Http\Controllers;
             ->name('admin.gacha.discription.edit');
 
                 # 詳細情報の更新
-                Route::patch('/admin/gacha/discription/update/{discription}',
+                Route::patch('/admin/gacha/discription/update/{gacha}',
                 [Controllers\AdminGachaDisriptionController ::class, 'update'])
                 ->name('admin.gacha.discription.update');
 
