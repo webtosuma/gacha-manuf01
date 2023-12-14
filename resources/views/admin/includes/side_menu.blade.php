@@ -3,22 +3,10 @@ $active_class = "text-primary fw-bold border-end border-bottom border-start bord
 
 $menu_array = [
     [
-        'route' => route('admin.prize'),
-        'key'   => 'prize',
-        'icon'  => 'bi-gift',
-        'label' => '商品管理',
-    ],
-    [
         'route' => route('admin.gacha'),
         'key'   => 'gacha',
-        'icon'  => 'bi-globe',
+        'icon'  => 'bi-gift',
         'label' => 'ガチャ管理',
-    ],
-    [
-        'route' => route('admin.point'),
-        'key'   => 'point',
-        'icon'  => 'bi-coin',
-        'label' => 'ポイント管理',
     ],
     [
         'route' => route('admin.point_history'),
@@ -51,9 +39,56 @@ $menu_array = [
         'label' => 'サイト管理者',
     ],
 ];
+$submenu_array = [
+    [
+        'route' => route('admin.prize'),
+        'key'   => 'prize',
+        'label' => '商品',
+    ],
+    [
+        'route' => '',
+        'key'   => 'movie',
+        'label' => '演出動画(準備中)',
+    ],
+    [
+        'route' => '',
+        'key'   => 'category',
+        'label' => 'カテゴリー(準備中)',
+    ],
+    [
+        'route' => route('admin.point'),
+        'key'   => 'point',
+        'label' => '販売ポイント(準備中)',
+    ],
+    [
+        'route' => '',
+        'key'   => 'slider',
+        'label' => 'スライダー(準備中)',
+    ],
+];
 @endphp
 <div class="d-flex flex-column justify-content-between py-3 px-2">
     <div class="border-bottom bg-body" id="sideMenuAccordion">
+
+        <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle"
+        data-bs-toggle="collapse" href="#collapseAdminSideMenu" role="button" aria-expanded="false" aria-controls="collapseAdminSideMenu"
+        type="button" >
+            <i class="bi bi-globe text-primary fs-4 me-3"></i>
+            {{ __('登録管理') }}
+        </button>
+        <div class="collapse ps-3 {{ isset($active_submenu)&&$active_submenu==true ? 'show' :  ''}}"
+        id="collapseAdminSideMenu">
+
+            @foreach ($submenu_array as $menu)
+            <a href="{{ $menu['route'] }}"
+            class="list-group-item border-0 p-2 px-3 w-100 text-start
+            {{ isset($active_key)&&$active_key==$menu['key'] ? $active_class :  ''}}"
+            style="border-radius: 2rem  2rem;"
+            >{{ $menu['label'] }}</a>
+            @endforeach
+
+        </div>
+
         @foreach ($menu_array as $menu)
             @php
             $icon_class = $menu['icon']." text-primary bi fs-4";

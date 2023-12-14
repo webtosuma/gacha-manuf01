@@ -43,7 +43,7 @@ $active_key = 'gacha';
         @include('admin.gacha.common.tab')
 
 
-        {{ $gacha->max_count }}
+        {{-- {{ $gacha->max_count }} --}}
         <form action="{{ route('admin.gacha.prize.update', $gacha) }}" method="POST"
         enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
             @csrf

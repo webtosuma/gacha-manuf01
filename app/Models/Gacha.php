@@ -160,52 +160,19 @@ class Gacha extends Model
             $remaining = $this->remaining_count;
             return $max - $remaining;
         }
-    /*
-    |--------------------------------------------------------------------------
-    | アクセサー
-    |--------------------------------------------------------------------------
-    |
-    |
-    // */
-    //     /**
-    //      * RankA 景品
-    //      * @return String
-    //     */
-    //     public function getRankAPrizesAttribute()
-    //     {
-    //         return GachaPrize::where('gacha_id',$this->id)
-    //         ->where('gacha_rank_id',101)
-    //         ->get();
-    //     }
-    //     /**
-    //      * RankB 景品
-    //      * @return String
-    //     */
-    //     public function getRankBPrizesAttribute()
-    //     {
-    //         return GachaPrize::where('gacha_id',$this->id)
-    //         ->where('gacha_rank_id',102)
-    //         ->get();
-    //     }
-    //     /**
-    //      * RankC 景品
-    //      * @return String
-    //     */
-    //     public function getRankCPrizesAttribute()
-    //     {
-    //         return GachaPrize::where('gacha_id',$this->id)
-    //         ->where('gacha_rank_id',103)
-    //         ->get();
-    //     }
-    //     /**
-    //      * RankD 景品
-    //      * @return String
-    //     */
-    //     public function getRankDPrizesAttribute()
-    //     {
-    //         return GachaPrize::where('gacha_id',$this->id)
-    //         ->where('gacha_rank_id',104)
-    //         ->get();
-    //     }
 
+
+        /**
+         * ランクの商品ポイント合計 total_point
+         * @return String
+        */
+        public function getTotalPointAttribute()
+        {
+            $g_prizes = $this->g_prizes;
+            $point = 0;
+            foreach ($g_prizes as $g_prize) {
+                $point +=  $g_prize->prize->point/*ポイント数*/ * $g_prize->max_count/*登録数*/;
+            }
+            return $point;
+        }
 }

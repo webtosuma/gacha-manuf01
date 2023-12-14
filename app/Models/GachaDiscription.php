@@ -148,6 +148,19 @@ class GachaDiscription extends Model
 
 
 
+        /**
+         * ランクの商品ポイント合計 total_point
+         * @return String
+        */
+        public function getTotalPointAttribute()
+        {
+            $g_prizes = $this->g_prizes;
+            $point = 0;
+            foreach ($g_prizes as $g_prize) {
+                $point +=  $g_prize->prize->point/*ポイント数*/ * $g_prize->max_count/*登録数*/;
+            }
+            return $point;
+        }
 
 
     /*

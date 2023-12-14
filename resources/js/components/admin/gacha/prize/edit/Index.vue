@@ -1,67 +1,99 @@
 <template>
     <div class="">
-        <section class="p-3">
-            <div class="cardd card-body bg-lightt">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3">
-                        <div class="">合計口数：100</div>
-                        <div class="">合計ポイント：100pt</div>
+
+        <div class="row g-0">
+            <!--flex-c2-->
+            <div class="col mb-5">
+                <section class="mb-5">
+                    <!--head-->
+                    <div class="mx-3 py-2 border-bottom row text-end">
+                        <div class="col-3"></div>
+                        <div class="col">口数</div>
+                        <div class="col">当選率</div>
+                        <div class="col">平均PT</div>
+                    </div>
+
+
+                    <!--body-->
+                    <div v-for="( discription, key ) in discriptions" :key="key"
+                    class="mx-3 py-2 border-bottom mb-3">
+
+                        <button class="btn w-100 text-start" type="button"
+                        data-bs-toggle="collapse" :data-bs-target="'#collapse'+discription.id"
+                        aria-expanded="false" :aria-controls="'collapse'+discription.id">
+                            <div class="row align-items-center text-end">
+
+
+                                <div class="col-3 dropdown-toggle text-start">
+                                    <span class="fs-5">{{ discription.rank_label }}</span>
+                                </div>
+
+                                <div class="col">
+                                    <number-comma-component :number="discription.g_prizes_max_count" />
+                                </div>
+                                <div class="col">
+                                    <number-comma-component :number="discription.g_prizes_ratio" />
+                                    <span>%</span>
+                                </div>
+                                <div class="col">
+                                    <number-comma-component :number="discription.total_point" />
+                                    <span>pt</span>
+                                </div>
+
+                            </div>
+                        </button>
+
+                        <!-- collapse -->
+                        <div class="collapse my-3 showww" :id="'collapse'+discription.id">
+                            <div class="px-3">
+
+                                <a-gachaprize-gacharank-container
+                                :token="token"
+                                :category_id="category_id"
+                                :r_api_prize="r_api_prize"
+
+                                :rank_label="discription.rank_label"
+                                :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
+
+                                :gacha_rank_id="discription.gacha_rank_id"
+                                />
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!--flex-c1-->
+            <aside class="col-auto ">
+                <div class="position-sticky p-3" style="top: 2rem; ">
+                    <div class="">
+                        <span>合計口数：</span><br>
+                        <span class="fs-3">
+                            <number-comma-component :number="gacha.max_count" />
+                        </span>
                     </div>
                     <div class="">
-                        <disabled-button style_class="btn btn-warning text-white w-100 shadow"
+                        <span>交換予定ポイント：</span><br>
+                        <span class="fs-3">
+                            <number-comma-component :number="gacha.total_point" />
+                        </span>
+                        <span>pt</span>
+                    </div>
+                    <div class="">
+                        <span>予定売上：</span><br>
+                        <span class="fs-3">
+                            <number-comma-component :number="gacha.total_play_point" />
+                        </span>
+                        <span>pt</span>
+                    </div>
+
+                    <div class="my-3">
+                        <disabled-button style_class="btn btn-warning px-5 text-white w-100 shadow"
                         btn_text="更新する" />
                     </div>
                 </div>
-            </div>
-        </section>
-        <section>
-            <div class="row g-1">
-
-                <div class="col-auto">
-                    <div class="d-flex flex-column py-3">
-
-                        <button v-for="( discription, key ) in discriptions" :key="key"
-                        @click="changeActive( discription.gacha_rank_id )"
-                        type="button"
-                        class="btn btn-link text-decoration-none position-relative border-bottom">
-                            <div class="d-flex flex-column justify-content-between gap-0">
-                                <span class="fw-bold">{{ discription.rank_label }}</span>
-
-                                <span class="text-secondary">100(10%)</span>
-                            </div>
-
-                            <div v-show=" active_gr_id == discription.gacha_rank_id "
-                            class="position-absolute top-50 start-100 translate-middle"
-                            style="z-index: 10;"
-                            ><i class="bi bi-caret-right-fill text-primary fs-1"></i></div>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <!--ランク別登録商品-->
-                    <div v-for="( discription, key ) in discriptions" :key="key">
-                        <div v-show="active_gr_id == discription.gacha_rank_id"
-                        class="mb-3">
-
-                            <a-gachaprize-gacharank-container
-                            :token="token"
-                            :category_id="category_id"
-                            :r_api_prize="r_api_prize"
-
-                            :rank_label="discription.rank_label"
-                            :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
-
-                            :gacha_rank_id="discription.gacha_rank_id"
-                            />
-
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
+            </aside>
+        </div>
     </div>
 </template>
 <script>
@@ -79,7 +111,9 @@
         data() { return {
 
             active_gr_id: '',
-            discriptions:  [],/* ガチャランク */
+
+            gacha: {},   // ガチャ情報
+            discriptions: [],/* ガチャランク */
 
             loading:  false,
 
@@ -100,9 +134,10 @@
                 axios.post( route , { _token : this.token, } )
                 .then(json => {
                     // console.log(json.data);
+                    this.gacha = json.data.gacha;
 
-                    this.discriptions = json.data;
-                    this.active_gr_id = json.data[0].gacha_rank_id;
+                    this.discriptions = json.data.discriptions;
+                    this.active_gr_id = json.data.discriptions[0].gacha_rank_id;
                     this.loading = false;//読み込み中
                 })
                 .catch(error => {

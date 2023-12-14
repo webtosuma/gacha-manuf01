@@ -1,7 +1,7 @@
 <template>
     <div class="row g-1">
         <!--追加ボタン-->
-        <div class="col-auto" style="height: 90vh">
+        <div class="col-auto" style="height: 50vh">
             <div class="d-flex align-items-center h-100">
                 <button @click="sendPrizeId"
                 :disabled="!ids.length"
@@ -11,11 +11,11 @@
         </div>
         <!--商品リスト-->
         <div class="col">
-            <div class="card overflow-auto"  style="height: 90vh">
+            <div class="card overflow-auto"  style="height: 50vh">
 
-                <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
+                <!-- <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
                     *特殊な商品の登録は1種類までです。
-                </div>
+                </div> -->
 
                 <div v-if="test">
                     <div class="p-2">parent ids:{{ parent_prize_ids }}</div>
@@ -133,7 +133,8 @@
 
             parent_prize_ids:{ type: Array,  default: [], },   //親が持つ商品ID
 
-            is_special_rank:{ type: Boolean,  default: '', },//特殊商品が否か
+            is_special_rank:{ type: Boolean,  default: false, },//特殊商品が否か
+            test:           { type: Boolean,  default: false, },//特殊商品が否か
         },
         data() { return {
 
@@ -157,8 +158,6 @@
             loading:  true,
             allCheck: false,/*全てチェック*/
             disabled: true,
-
-            test: true,
 
         } },
         watch: {

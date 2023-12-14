@@ -142,9 +142,9 @@ use \App\Http\Controllers;
         Route::middleware(['admin_auth'])->group(function () {
 
             # ガチャの詳細情報
-            // Route::get('/admin/gacha/prize/{gacha}',
-            // [Controllers\AdminGachaPrizeController ::class, 'index'])
-            // ->name('admin.gacha.prize');
+            Route::get('/admin/gacha/prize/{gacha}',function(\App\Models\Gacha $gacha) {
+                return view('admin.gacha.prize.show', compact('gacha'));
+            })->name('admin.gacha.prize.show');
 
             # 商品の編集
             Route::get('/admin/gacha/prize/edit/{gacha}',

@@ -6,6 +6,7 @@
 
 @section('meta') @php
 $active_key = 'prize';
+$active_submenu = true;
 @endphp @endsection
 
 

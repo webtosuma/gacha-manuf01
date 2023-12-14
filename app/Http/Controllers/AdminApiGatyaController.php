@@ -39,15 +39,28 @@ class AdminApiGatyaController extends Controller
      */
     public function ranks(Request $request, Gacha $gacha)
     {
+        # ガチャ情報
         $gacha = Gacha::find($gacha->id);
-        $discriptions = $gacha->discriptions;
+        $gacha->max_count = $gacha->max_count;
+        $gacha->total_play_point = $gacha->one_play_point * $gacha->max_count;//合計ポイント
+        $gacha->total_point = $gacha->total_point;
 
+        # ランク情報
+        $discriptions = $gacha->discriptions;
         foreach ($discriptions as $discription) {
             $discription->rank_label = $discription->rank_label; //ランクラベル
-            $g_prizes   = $discription->g_prizes;   //ガチャ商品
+            // $g_prizes   = $discription->g_prizes;   //ガチャ商品
+            $discription->g_prizes_max_count = $discription->g_prizes->sum('max_count');     //口数(g_prizes_max_count)
+            $discription->total_point        = $discription->total_point;                    //合計ポイント(total_point)
+            $discription->remaining_count    = $discription->g_prizes->sum('remaining_count');//残数 (remaining_count)
+
+            $ratio = $gacha->max_count
+            ? $discription->g_prizes->sum('max_count')/$gacha->max_count*100 :0;
+            $discription->g_prizes_ratio = round( $ratio, 1);//当選率(g_prizes_ratio)
+
         }
 
-        return response()->json( $discriptions );
+        return response()->json(compact('gacha','discriptions'));
     }
 
 

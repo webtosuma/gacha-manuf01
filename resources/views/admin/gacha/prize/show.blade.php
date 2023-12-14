@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title',$gacha->name)
+@section('title','ガチャ登録商品編集')
 
 
 @section('meta') @php
@@ -9,20 +9,8 @@ $active_key = 'gacha';
 @endphp @endsection
 
 
-@section('style')
-<style>
-    /* ガチャの背景画像 */
-    .bg_gacha{
-        background: no-repeat center center / cover fixed;
-        background-image: url({{ $gacha->category->bg_image_path }});
-    }
-</style>
-@endsection
-
-
-
 @section('content')
-    <div class="container mb-4">
+    <div class="container mb-5">
 
 
         {{-- パンくずリスト --}}
@@ -32,20 +20,21 @@ $active_key = 'gacha';
                 >{{ 'Top' }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.gacha') }}"
                 >{{ 'ガチャ管理' }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $gacha->name }}</li>
-            </ol>
+                <li class="breadcrumb-item"><a href="{{ route('admin.gacha.show',$gacha) }}"
+                >{{ $gacha->name }}</a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">登録商品一覧</li>
+                </ol>
         </nav>
 
 
 
-        {{-- <h2 class="my-5 py-3 border-bottom">{{ $gacha->name }}</h2> --}}
-
+        <h2 class="mb-5 py-3 border-bottom">『{{ $gacha->name }}』登録商品一覧</h2>
 
 
         <!--タブメニュ-->
-        @php $tab='admin.gacha.show'; @endphp
+        @php $tab='admin.gacha.prize.show'; @endphp
         @include('admin.gacha.common.tab')
-
 
 
         <div class="row mx-0 g-3">
@@ -53,9 +42,7 @@ $active_key = 'gacha';
             <div class="col bg-white bg_gacha rounded-3">
 
                 <!--プレビュー-->
-                <div class="col-10 mx-auto">
-                    @include('gacha.show.main')
-                </div>
+                @include('admin.gacha.prize.show_list')
 
             </div>
             <!--flex-c1-->
@@ -95,8 +82,8 @@ $active_key = 'gacha';
                                 </div>
                             </div>
 
-                            <a href="{{ route('admin.gacha.edit', $gacha) }}" class="btn btn-warning text-white shadow"
-                            >編集する</a>
+                            {{-- <a href="{{ route('admin.gacha.edit', $gacha) }}" class="btn btn-warning text-white shadow"
+                            >編集する</a> --}}
                         </div>
                     </div>
 
@@ -162,9 +149,10 @@ $active_key = 'gacha';
                         </div>
                     </div>
 
-
                 </div>
             </aside>
         </div>
+
+
     </div>
 @endsection

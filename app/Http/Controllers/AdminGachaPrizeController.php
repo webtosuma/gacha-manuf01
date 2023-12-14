@@ -38,7 +38,7 @@ class AdminGachaPrizeController extends Controller
      */
     public function update(Request $request, Gacha $gacha)
     {
-        dd( $request->all() );
+        // dd( $request->all() );
 
         // DB::beginTransaction();
         // try {
@@ -82,11 +82,11 @@ class AdminGachaPrizeController extends Controller
             $key = 'gri'.$gacha_rank_id; //識別キー gri100
             // dd($key);
 
-            $new_prize_ids    = $request[$key.'-new_prize_ids'];      //新規商品：商品ID
-            $new_prize_counts = $request[$key.'-new_prize_counts'];   //新規商品：商品数
-            $gacha_prizes     = $discription->g_prizes; //登録ずみ商品
-            $gacha_prize_counts = $request[$key.'-gacha_prize_counts']; //登録ずみ商品：商品数
-
+            $new_prize_ids          = $request[$key.'-new_prize_ids'];          //新規商品：商品ID
+            $new_prize_counts       = $request[$key.'-new_prize_counts'];       //新規商品：商品数
+            $gacha_prizes           = $discription->g_prizes;                   //登録ずみガチャ商品
+            $gacha_prize_counts     = $request[$key.'-gacha_prize_counts'];     //登録ずみガチャ商品：商品数
+            $delete_gacha_prize_ids = $request[$key.'-delete_gacha_prize_ids']; //削除ガチャ商品ID
 
             ## 新規商品の登録
             if ($new_prize_ids)
@@ -94,6 +94,7 @@ class AdminGachaPrizeController extends Controller
                 foreach ($new_prize_ids as $num => $prize_id)
                 {
                     $count = $new_prize_counts[$num];//商品数
+                    $count = self::SpecialRankCount( $count,$gacha_rank_id, $gacha );//特殊なカウントの自動計算
 
                     if( $count==0 ){ continue; }//処理スキップ
 
@@ -127,9 +128,17 @@ class AdminGachaPrizeController extends Controller
                         ]);
                     }
                     /* 削除 */
-                    else{
-                        $gacha_prize->delete();
-                    }
+                    else{ $gacha_prize->delete(); }
+                }
+            }
+
+
+            ## 登録ずみ商品の削除
+            if ($delete_gacha_prize_ids)
+            {
+                foreach ($delete_gacha_prize_ids as $id) {
+                    $gacha_prize = GachaPrize::find($id);
+                    $gacha_prize->delete();
                 }
             }
         }

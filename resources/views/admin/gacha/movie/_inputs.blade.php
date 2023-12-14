@@ -18,7 +18,6 @@
                 </div>
             </div>
         </button>
-
         <div class="collapse mb-3  @if(!$num) showww @endif" id="collapse{{$discription->id}}">
             <div class="card card-body overflow-auto bg-body" style="">
                 <div class="form-text">動画選択</div>
