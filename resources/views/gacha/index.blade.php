@@ -60,12 +60,14 @@
 
 @section('content')
 
-    @if( $category_code=='all' )
+    @if( $category_code=='all' || true )
         <!--カルーセル-->
-        <section class="bg-dark overflow-hidden" style="
+        {{-- <section class="bg-dark overflow-hidden" style="
         background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
-        ">
-            <div class="container px-0 mx-auto" style="max-width:900px;">
+        "> --}}
+        <section class="bg-whiteee overflow-hidden">
+
+            <div class="container px-0 col-md-8 mx-auto">
                 <div class="col-md-12 mx-auto">
                     <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
@@ -77,20 +79,6 @@
                                 <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
                                 {{ $gi==0 ? 'active' : ''}}">
 
-                                    {{-- <div class="d-none d-md-block">
-                                        <!--pc-->
-                                        <ratio-image-component
-                                        style_class="ratio ratio-16x9"
-                                        url="{{ $gacha->image_path }}"
-                                        ></ratio-image-component>
-                                    </div>
-                                    <div class="d-md-none">
-                                        <!--mobile-->
-                                        <ratio-image-component
-                                        style_class="ratio ratio-4x3"
-                                        url="{{ $gacha->image_path }}"
-                                        ></ratio-image-component>
-                                    </div> --}}
                                     <div class="">
                                         <ratio-image-component
                                         style_class="ratio ratio-4x3"
@@ -127,38 +115,15 @@
             </div>
         </section>
     @endif
-    <!--お知らせ-->
-    {{-- <section class="bg-dark">
-        <div class="container py-4">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">{{ __('お知らせ') }}</div>
-
-                        <div class="card-body">
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-
-                            <a href="{{route('payment')}}">{{ __('ポイント購入') }}</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
     <!--カテゴリー-->
     @php
-    $bg = $category_code=='all' ? 'bg-dark' : '';
+    $bg = $category_code=='all' ? 'bg-whiteee' : '';
     @endphp
     <section class="py-3 {{$bg}}">
-        <div class="container overflow-auto">
+        <div class="col-md-8 mx-auto overflow-auto">
             <nav class="nav gap-3 flex-nowrap" style="min-width:600px;">
                 @php
-                $sc = "col fs-5 py-2 fw-bold btn btn-light rounded-pill border-dark border-2";
+                $sc = "col fs- py-2 fw-bold btn btn-dark";
                 $style_class = $category_code=='all' ? $sc.' disabled' : $sc;
                 @endphp
                 <a  href="{{ route('gacha_category','all') }}"
@@ -284,6 +249,45 @@
             </div>
 
 
+        </div>
+    </section>
+    <!--お知らせ-->
+    <section class="bg-dark">
+        <div class="container py-4">
+            <div class="col-md-8 mx-auto">
+
+                <h3 class="text-center text-white fw-bold">お知らせ</h3>
+
+                <div class="list-group list-group-flush shadow-sm rounded-4"
+                style="background:rgb(255, 255, 255, .7);">
+                    @foreach ($infomations as $infomation)
+                        <div class="list-group-item list-group-item-action border-0 pozition-relative">
+                            <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
+                                <div class="row py-2 mx-3 my-2">
+                                    <div class="col-auto">
+                                        {{ $infomation->created_at->format('Y.m.d') }}
+                                    </div>
+                                    <div class="col-auto" style="width:3rem;">
+                                        @if( !$infomation->is_read )
+                                            <span class="badge bg-danger">未読</span>
+                                        @endif
+                                    </div>
+                                    <div class="col">
+                                        {{ $infomation->title }}
+                                    </div>
+                                    <div class="col-auto text-primary">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-end mt-2">
+                    <a href="{{route('infomation')}}" class="btn text-white ">もっと見る ></a>
+                </div>
+            </div>
         </div>
     </section>
 

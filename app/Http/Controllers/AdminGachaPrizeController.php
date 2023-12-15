@@ -10,7 +10,7 @@ use App\Models\GachaPrize;
 use App\Models\Prize;
 /*
 | =============================================
-|  ガチャの商品 サイト管理者 コントローラー
+|  サイト管理者　ガチャの商品 コントローラー
 | =============================================
 */
 class AdminGachaPrizeController extends Controller

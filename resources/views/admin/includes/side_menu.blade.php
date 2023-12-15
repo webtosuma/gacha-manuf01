@@ -61,9 +61,9 @@ $submenu_array = [
         'label' => '販売ポイント(準備中)',
     ],
     [
-        'route' => '',
-        'key'   => 'slider',
-        'label' => 'スライダー(準備中)',
+        'route' => route('admin.infomation'),
+        'key'   => 'infomation',
+        'label' => 'お知らせ',
     ],
 ];
 @endphp

@@ -22,10 +22,11 @@ class Gacha extends Model
 
         'name',  //名前
         'image', //イメージ画像
-        'one_play_point', //1回PLAYポイント数
-        'published_at',//公開設定(利用しない->非公開*消さない)
         'key',   //認証キー
-        'is_day_once' //一日一回のガチャか
+        'type',  //ガチャの種類
+        'meta_discription', //メタタグ用の説明文
+        'one_play_point',   //1回PLAYポイント数
+        'published_at',     //公開設定(利用しない->非公開*消さない)
     ];
 
 
@@ -45,6 +46,16 @@ class Gacha extends Model
         'published_at',//公開設定(利用しない->非公開*消さない)
     ];
 
+
+    /** ガチャランク　一覧 */
+    public static function types()
+    {
+        return [
+            'nomal'       => '通常',
+            'one_time'    => '一回限定',
+            'only_oneday' => '一日限定',
+        ];
+    }
 
     /*
     |--------------------------------------------------------------------------

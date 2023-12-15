@@ -14,23 +14,7 @@
 
     <title>{{ $title }}</title>
 
-    <meta  name="description" content="{{ $description }}">
-    <meta  name="keywords" content="オンラインオリパ,ネットオリパ,オリパ,ポケカ,ワンピース,カード,ガチャ,トレカ, ">
-
-
-    <meta property="og:title" content="{{ $title }}" />
-    <meta property="og:description" content="{{ $description }}" />
-    <meta property="og:url"         content="https://cardfesta.jp/" />
-    <meta property="og:site_name"   content="cardFesta" />
-    <meta property="og:image"       content="{{ $image }}" />
-    <meta property="og:locale"      content="ja_JP"  />
-    <meta property="og:type"        content="website">
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@CardFesta7627" />
-    <meta name="twitter:title" content="{{ $title }}" />
-    <meta name="twitter:description" content="{{ $description }}" />
-    <meta name="twitter:image" content="{{ $image }}" />
+    @include('includes.meta')
 
     <!-- ファビコン画像の読み込み -->
     <link rel="shortcut icon" href="{{asset('storage/site/image/favicon.png')}}">

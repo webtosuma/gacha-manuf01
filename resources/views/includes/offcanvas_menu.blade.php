@@ -54,9 +54,6 @@ style="max-width:90vw; min-width:30vw;">
     <div class="offcanvas-body px-0">
         <div class="list-group list-group-flush">
 
-            <a href="{{ route('news') }}" class="list-group-item list-group-item-action py-3"
-            >お知らせ</a>
-
             {{-- <a href="" class="list-group-item list-group-item-action py-3"
             >最近取得した商品</a> --}}
 
@@ -74,6 +71,15 @@ style="max-width:90vw; min-width:30vw;">
 
             <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3"
             >利用ガイド</a>
+
+            <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3">
+                <span>お知らせ</span>
+                @php $unread_count = Auth()->user()->unread_infomation_count; @endphp
+                @if ( $unread_count )
+                    <!--お問い合わせ　未対応-->
+                    <span class="badge rounded-pill bg-danger">{{$unread_count}}</span>
+                @endif
+            </a>
 
             @if ( Auth::check() )
                 <form action="{{ route('logout') }}" method="POST">

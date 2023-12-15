@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use App\Models\GachaCategory;
 use App\Models\Gacha;
 use App\Models\UserGachaHistory;
 use App\Models\UserPrize;
 use App\Models\PointHistory;
+use App\Models\Infomation;
+
 /*
 | =============================================
 |  ガチャ コントローラー
@@ -41,10 +42,18 @@ class GachaController extends Controller
             ## 表示できるガチャ一覧
             $gachas = self::getPublishedGachas( $category_code );
             // dd($gachas[0]->image_path);
+
+            ## お知らせ
+            $infomations =
+            InfomationController::GetInfomationsQuery()
+            ->limit(4)->get();;
+
         //
 
         # viewの表示
-        return view('gacha.index', compact( 'category_code', 'bg_image',  'categories', 'gachas' ) );
+        return view('gacha.index', compact(
+            'category_code', 'bg_image',  'categories', 'gachas', 'infomations',
+         ) );
 
     }
 

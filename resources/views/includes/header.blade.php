@@ -1,5 +1,5 @@
 <header class="position-fixed w-100" style="z-index:100;">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-0">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-smmm p-0">
         <div class="container">
             <h1 class="d-flex align-items-center gap-3 m-0">
                 <a class="navbar-brand" href="{{ url('/') }}">

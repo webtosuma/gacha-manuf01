@@ -25,7 +25,6 @@ use App\Http\Controllers;
 ==========================================================================
 */
 
-    // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/', function(){
         return redirect()->route('gacha_category');
@@ -332,9 +331,13 @@ use App\Http\Controllers;
     ->name('tradelaw');
 
     # お知らせ(news)
-    Route::get('news',
-    function () { return view('footer_menu.news.index'); })
-    ->name('news');
+    Route::get('infomation',
+    [App\Http\Controllers\InfomationController::class,'index'])
+    ->name('infomation');
+
+        Route::get('infomation/{infomation}',
+        [App\Http\Controllers\InfomationController::class,'show'])
+        ->name('infomation.show');
 
     # お問い合わせ(contact)
     Route::get('/contact', function(){ return view('footer_menu.contact.index'); })

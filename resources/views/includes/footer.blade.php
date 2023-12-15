@@ -35,7 +35,7 @@
                     <div class="col-12 col-md">
                         <ul class="list-unstyled m-0">
                             <li><a class="link-secondary text-decoration-none"
-                            href="{{ route('news') }}">お知らせ</a></li>
+                            href="{{ route('infomation') }}">お知らせ</a></li>
                             <li><a class="link-secondary text-decoration-none"
                             href="{{ route('contact') }}">お問い合わせ</a></li>
                             <li><a class="link-secondary text-decoration-none"

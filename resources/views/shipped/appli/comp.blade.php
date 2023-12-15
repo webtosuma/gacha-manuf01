@@ -39,12 +39,12 @@
                                 >取得した商品一覧に戻る</a>
                             </div>
                         </li>
-                        <li class="list-group-item">
+                        {{-- <li class="list-group-item">
 
                             <!--注意事項-->
                             @include('includes.notes')
 
-                        </li>
+                        </li> --}}
                     </ul>
 
                 </section>
