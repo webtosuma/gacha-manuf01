@@ -27,8 +27,6 @@
                 <div class="col-4">
                     <label class="d-block">
                         <div class="form-text">商品画像</div>
-                        {{-- <input name="{{'gri'.$discription->gacha_rank_id}}-image"
-                        class="form-control" type="file" > --}}
 
                         <read-image-file-component
                         img_path="{{ $discription->image_path }}"
@@ -41,6 +39,7 @@
                 <div class="col">
                     <label class="d-block h-100">
                         <div class="form-text">商品説明</div>
+
                         <textarea name="sorces[]"
                         class="form-control bg-white h-75"
                         placeholder="＊商品の補足説明などがあれば、入力してください。"

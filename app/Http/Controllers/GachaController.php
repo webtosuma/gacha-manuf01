@@ -48,11 +48,16 @@ class GachaController extends Controller
             InfomationController::GetInfomationsQuery()
             ->limit(4)->get();;
 
+            ## スライドお知らせ
+            $slide_infos = Infomation::where('published_at','<=', now()) //非公開を除く
+            ->where('is_slide',1)
+            ->get();
+
         //
 
         # viewの表示
         return view('gacha.index', compact(
-            'category_code', 'bg_image',  'categories', 'gachas', 'infomations',
+            'category_code', 'bg_image',  'categories', 'gachas', 'infomations', 'slide_infos',
          ) );
 
     }

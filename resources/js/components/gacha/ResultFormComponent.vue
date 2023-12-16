@@ -26,7 +26,7 @@
 
                         <div class="position-relative">
                             <!--チェックボックス-->
-                            <div class="position-absolute top-0 start-0 translate-middle" style="z-index:100">
+                            <div class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
                                 <input v-model="ids" @change="changeChildren()"
                                 class="form-check-input float-xl-none m-0 rounded-pill"
                                 style="width:2em; height:2em;"

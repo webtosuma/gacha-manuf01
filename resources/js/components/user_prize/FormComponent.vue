@@ -2,7 +2,8 @@
     <div class="">
 
         <!--ボトムメニュー-->
-        <div class="position-fixed bottom-0 end-0 w-100 pb-3 bg-white border" style="border-radius: 1rem 1rem 0 0; z-index:1000;">
+        <div class="position-fixed bottom-0 end-0 w-100 pb-3 bg-white border"
+        style="border-radius: 1rem 1rem 0 0; z-index:50;">
             <div class="container py-3" style="max-width:900px;">
 
                 <div class="d-flex justify-content-between align-items-center">

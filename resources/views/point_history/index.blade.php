@@ -25,8 +25,9 @@
             <div class="">所持ポイント：<span class="fs-3 fw-bold">
                 <number-comma-component number="{{ Auth::user()->point.'pt' }}"></number-comma-component>
             </span></div>
-            <a href="{{ route('point_sail') }}" class="btn btn-warning rounded-pill shadow">ポイント購入</a>
-
+            <div class="col-auto">
+                <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+            </div>
         </div></li>
 
 

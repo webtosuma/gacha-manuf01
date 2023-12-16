@@ -17,15 +17,15 @@
 
     <!--ボトムメニュー-->
     <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white"
-    style="z-index:100; background:rgb(0, 0, 0, .7);">
+    style="z-index:50; background:rgb(0, 0, 0, .7);">
         <div class="container mx-auto" style="max-width:600px;">
             <div class="card-body">
-                <div class="d-flex align-items-center justify-content-center gap-2 fs-5">
+                <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
                     @include('includes.point_icon')
 
                     <div class="">
                         1回×
-                        <span class="fs-1">
+                        <span class="fs-4">
                             <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
                         </span>pt
                     </div>
@@ -39,7 +39,7 @@
                     <div class="{{ $style_class }}" role="progressbar"
                     style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
                 </div>
-                <p class="fs-5 text-center m-0">
+                <p class="form-text text-white text-center m-0">
                     残り
                     <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
                     /
@@ -56,12 +56,12 @@
 
                         @if ($gacha->remaining_count >=1) {{--  --}}
                             <button type="submit" name="play_count" value="{{ 1 }}"
-                            class="btn btn-lg py-3 btn-light bg-gradient fw-bold w-100
+                            class="btn py-md-3 btn-light bg-gradient fw-bold w-100
                             rounded-pill border-secondary border-3"
                             >1回ガチャる</button>
                         @else
                             <button type="submit" name="play_count" disabled
-                            class="btn btn-lg py-3 btn-light bg-gradient fw-bold w-100 text-danger
+                            class="btn py-md-3 btn-light bg-gradient fw-bold w-100 text-danger
                             rounded-pill border-secondary border-3"
                             >売り切れ</button>
                         @endif
@@ -75,12 +75,12 @@
                         @csrf
                         @if ($gacha->remaining_count >=10) {{--  --}}
                             <button type="submit" name="play_count" value="{{ 10 }}"
-                            class="btn btn-lg py-3 btn-dark bg-gradient text- fw-bold w-100
+                            class="btn py-md-3 btn-dark bg-gradient text- fw-bold w-100
                             rounded-pill border-secondary border-3"
                             >10連ガチャる</button>
                         @else
                             <button type="submit" name="play_count" disabled
-                            class="btn btn-lg py-3 btn-dark bg-gradient text- fw-bold w-100 text-danger
+                            class="btn py-md-3 btn-dark bg-gradient text- fw-bold w-100 text-danger
                             rounded-pill border-secondary border-3"
                             >売り切れ</button>
                         @endif

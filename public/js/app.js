@@ -10973,7 +10973,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "position-absolute top-0 start-0 translate-middle",
       staticStyle: {
-        "z-index": "100"
+        "z-index": "3"
       }
     }, [_c("input", {
       directives: [{
@@ -11680,7 +11680,7 @@ var render = function render() {
     staticClass: "position-fixed bottom-0 end-0 w-100 pb-3 bg-white border",
     staticStyle: {
       "border-radius": "1rem 1rem 0 0",
-      "z-index": "1000"
+      "z-index": "50"
     }
   }, [_c("div", {
     staticClass: "container py-3",

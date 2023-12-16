@@ -3,7 +3,8 @@
         <div class="container">
             <h1 class="d-flex align-items-center gap-3 m-0">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:2rem;">
+                    <img src="{{asset('storage/site/image/logo.png')}}"
+                    alt="{{ config('app.name') }}" class="d-brock" style="height:2.4rem;">
                 </a>
             </h1>
 

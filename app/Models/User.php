@@ -148,10 +148,13 @@ class User extends Authenticatable
 
             $query = \App\Models\Infomation::query();
 
+                $query->doesntHave('is_reads');
+
                 $query->where('published_at','<=', now()); //非公開を除く
 
                 //他のユーザーのお知らせを除く
                 $query->where('user_id',null)->orWhere('user_id',$this->id);
+
 
             $infomations = $query->get();
 

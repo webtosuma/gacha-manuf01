@@ -71,13 +71,29 @@
                 <div class="col-md-12 mx-auto">
                     <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
-                        <!--image-->
-                        <div class="carousel-inner anm_opasity_e01" style="max-height:90vh;">
+                        <!--image  お知らせスライド -->
+                        <div class="carousel-inner" style="max-height:90vh;">
+                            @foreach ($slide_infos as $si => $slide_info)
+
+                                <a href="{{ route('infomation.show',$slide_info) }}" class="carousel-item pb- bg-dark
+                                {{ $si==0 ? 'active' : ''}}">
+
+                                    <div class="">
+                                        <ratio-image-component
+                                        style_class="ratio ratio-4x3"
+                                        url="{{ $slide_info->image_path }}"
+                                        ></ratio-image-component>
+                                    </div>
+
+                                </a>
+                            @endforeach
+
+                            <!--image ガチャスライド -->
                             @foreach ($gachas as $gi => $gacha)
 
                                 @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
                                 <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
-                                {{ $gi==0 ? 'active' : ''}}">
+                                {{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}">
 
                                     <div class="">
                                         <ratio-image-component
@@ -104,12 +120,21 @@
 
                         <!--bottom menu-->
                         <div class="carousel-indicators mb-0">
+                            <!--お知らせスライド -->
+                            @foreach ($slide_infos as $si => $slide_info)
+                                <button type="button" data-bs-target="#carouselIndicators"
+                                class="{{ $si==0 ? 'active' : ''}}"
+                                data-bs-slide-to="{{$si}}" aria-current="true" aria-label="{{'Slide '.($si+1)}}x"></button>
+                            @endforeach
+                            <!--ガチャスライド -->
                             @foreach ($gachas as $gi => $gacha)
                                 <button type="button" data-bs-target="#carouselIndicators"
-                                class="{{ $gi==0 ? 'active' : ''}}"
-                                data-bs-slide-to="{{$gi}}" aria-current="true" aria-label="{{'Slide '.($gi+1)}}x"></button>
+                                class="{{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}"
+                                data-bs-slide-to="{{$gi+$slide_infos->count()}}" aria-current="true" aria-label="{{'Slide '.($gi+$slide_infos->count()+1)}}x"></button>
                             @endforeach
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -263,19 +288,25 @@
                     @foreach ($infomations as $infomation)
                         <div class="list-group-item list-group-item-action border-0 pozition-relative">
                             <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
-                                <div class="row py-2 mx-3 my-2">
-                                    <div class="col-auto">
-                                        {{ $infomation->created_at->format('Y.m.d') }}
-                                    </div>
-                                    <div class="col-auto" style="width:3rem;">
-                                        @if( !$infomation->is_read )
-                                            <span class="badge bg-danger">未読</span>
-                                        @endif
-                                    </div>
+                                <div class="d-flex align-items-center px-3">
                                     <div class="col">
-                                        {{ $infomation->title }}
+                                        <div class="row py-2">
+
+                                            <div class="col-auto">
+                                                {{ $infomation->created_at->format('Y.m.d') }}
+                                            </div>
+                                            <div class="col-auto" style="width:3rem;">
+                                                @if( !$infomation->is_read )
+                                                    <span class="badge bg-danger">未読</span>
+                                                @endif
+                                            </div>
+                                            <div class="col-12 col-md">
+                                                {{ $infomation->title }}
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <div class="col-auto text-primary">
+                                    <div class="col-auto text-dark">
                                         <i class="bi bi-chevron-right"></i>
                                     </div>
                                 </div>

@@ -44,7 +44,9 @@ class AdminInfomationController extends Controller
      */
     public function create()
     {
-        $infomation = new Infomation();
+        $infomation = new Infomation([
+            'is_slide' => 0,
+        ]);
 
         return view('admin.infomation.create', compact('infomation'));
     }
