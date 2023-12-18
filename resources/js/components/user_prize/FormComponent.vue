@@ -4,18 +4,17 @@
         <!--ボトムメニュー-->
         <div class="position-fixed bottom-0 end-0 w-100 pb-3 bg-white border"
         style="border-radius: 1rem 1rem 0 0; z-index:50;">
-            <div class="container py-3" style="max-width:900px;">
+            <div class="container" style="max-width:900px;">
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <label class="form-check mb-3" style="cursor:pointer;">
+                <div class="d-flex justify-content-between align-items-center px-3">
+                    <label class="form-check" style="cursor:pointer;">
                         <input v-model="allCheck" @change="changeAll()"
                         class="form-check-input" type="checkbox">
                         <span class="form-check-label fs-5">
                             全て選択
                         </span>
                     </label>
-
-                    <div class="form-check mb-3">
+                    <div class="form-check mb-">
                         <span class="fs-1 fw-bold">
                             <number-comma-component :number=" totalPoint ? '+'+totalPoint : 0 " />
                         </span>pt
@@ -29,7 +28,7 @@
                         <!--選択した商品をポイント交換 r_exchange_points -->
                         <button type="button" :disabled="disabled"
                         data-bs-toggle="modal" data-bs-target="#exchangeModal"
-                        class="btn btn-lg btn-warning rounded-pill w-100"
+                        class="btn py-md-3 btn-warning rounded-pill w-100"
                         >ポイント交換</button>
 
                     </div>
@@ -43,7 +42,7 @@
                             type="hidden" name="user_prize_ids[]" :value="id">
 
                             <button type="submit" :disabled="disabled"
-                            class="btn btn-lg btn-light border rounded-pill w-100"
+                            class="btn py-md-3 btn-light border rounded-pill w-100"
                             >発送申請</button>
                         </form>
 
@@ -117,7 +116,7 @@
                 <div class="modal-content">
                     <div class="modal-body text-center">
                         <h5 class="modal-title" id="exchangeModalLabel"
-                        >選択した商品をポイントと交換します。<br />よろしいですか？</h5>
+                        >選択商品をポイントと交換します。<br />よろしいですか？</h5>
                     </div>
                     <div class="modal-body">
                         <div class="row g-2">
@@ -132,14 +131,14 @@
                                     type="hidden" name="user_prize_ids[]" :value="id">
 
                                     <button type="submit"
-                                    class="btn btn-lg btn-warning rounded-pill w-100"
+                                    class="btn p-md-3 btn-warning rounded-pill w-100"
                                     >ポイント交換</button>
                                 </form>
 
                             </div>
                             <div class="col-6">
                                 <button type="button"
-                                class="btn btn-lg btn-light border rounded-pill w-100"
+                                class="btn p-md-3 btn-light border rounded-pill w-100"
                                 data-bs-dismiss="modal"
                                 >やめる</button>
                             </div>

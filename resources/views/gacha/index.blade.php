@@ -16,6 +16,8 @@
     }
 </style>
 <style>
+    main{ padding-top: 0rem; }
+
     /* カルーセル */
     .carousel-indicators [data-bs-target] {
         border-radius: 100%;
@@ -67,7 +69,7 @@
         "> --}}
         <section class="bg-whiteee overflow-hidden">
 
-            <div class="container px-0 col-md-8 mx-auto">
+            <div class="container px-0 col-md- mx-auto">
                 <div class="col-md-12 mx-auto">
                     <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
@@ -145,8 +147,8 @@
     $bg = $category_code=='all' ? 'bg-whiteee' : '';
     @endphp
     <section class="py-3 {{$bg}}">
-        <div class="col-md-8 mx-auto overflow-auto">
-            <nav class="nav gap-3 flex-nowrap" style="min-width:600px;">
+        <div class="container px-0 col-md-12 mx-auto overflow-auto">
+            <nav class="nav gap-3 flex-nowrap" style="min-width:300px;">
                 @php
                 $sc = "col fs- py-2 fw-bold btn btn-dark";
                 $style_class = $category_code=='all' ? $sc.' disabled' : $sc;
@@ -171,7 +173,7 @@
         <div class="container">
 
             <!--card-->
-            <div class="row gy-5 my-3 overflow-hidden">
+            <div class="row gy-5 overflow-hidden">
                 @foreach ($gachas as $gacha)
                     <div class="col-12 col-md-6 col-lg-4 ">
 
@@ -257,7 +259,7 @@
                                     @if ($gacha->remaining_count >=10)
                                         <button type="submit" name="play_count" value="{{ 10 }}"
                                         class="btn btn-dark bg-gradient text- fw-bold w-100
-                                        rounded-pill border-secondary border-3"
+                                        rounded-pill border-danger border-3"
                                         >10連ガチャる</button>
                                     @else
                                         <button type="submit" name="play_count" disabled

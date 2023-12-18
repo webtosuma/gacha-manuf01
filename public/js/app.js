@@ -11339,10 +11339,10 @@ var render = function render() {
   }, [_vm._v("※" + _vm._s(_vm.errors.tell[0]))]) : _vm._e()]), _vm._v(" "), _c("label", {
     staticClass: "mb-3 d-block"
   }, [_c("div", {
-    staticClass: "col-4"
-  }, [_c("div", {
     staticClass: "form-label"
-  }, [_vm._v("郵便番号（7桁の半角数字のみ）")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("郵便番号（7桁の半角数字のみ）")]), _vm._v(" "), _c("div", {
+    staticClass: "col-6"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -11478,7 +11478,7 @@ var render = function render() {
       role: "alert"
     }
   }, [_vm._v("※" + _vm._s(_vm.errors.number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-8 mx-auto my-5"
+    staticClass: "col-md-8 mx-auto mt-5"
   }, [_c("disabled-button-component", {
     attrs: {
       style_class: "btn btn-lg btn-primary text-white w-100",
@@ -11683,14 +11683,14 @@ var render = function render() {
       "z-index": "50"
     }
   }, [_c("div", {
-    staticClass: "container py-3",
+    staticClass: "container",
     staticStyle: {
       "max-width": "900px"
     }
   }, [_c("div", {
-    staticClass: "d-flex justify-content-between align-items-center"
+    staticClass: "d-flex justify-content-between align-items-center px-3"
   }, [_c("label", {
-    staticClass: "form-check mb-3",
+    staticClass: "form-check",
     staticStyle: {
       cursor: "pointer"
     }
@@ -11731,7 +11731,7 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "form-check-label fs-5"
   }, [_vm._v("\n                        全て選択\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "form-check mb-3"
+    staticClass: "form-check mb-"
   }, [_c("span", {
     staticClass: "fs-1 fw-bold"
   }, [_c("number-comma-component", {
@@ -11743,7 +11743,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-6"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-warning rounded-pill w-100",
+    staticClass: "btn py-md-3 btn-warning rounded-pill w-100",
     attrs: {
       type: "button",
       disabled: _vm.disabled,
@@ -11777,7 +11777,7 @@ var render = function render() {
       }
     });
   }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-lg btn-light border rounded-pill w-100",
+    staticClass: "btn py-md-3 btn-light border rounded-pill w-100",
     attrs: {
       type: "submit",
       disabled: _vm.disabled
@@ -11926,7 +11926,7 @@ var render = function render() {
       }
     });
   }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-lg btn-warning rounded-pill w-100",
+    staticClass: "btn p-md-3 btn-warning rounded-pill w-100",
     attrs: {
       type: "submit"
     }
@@ -11955,14 +11955,14 @@ var staticRenderFns = [function () {
     attrs: {
       id: "exchangeModalLabel"
     }
-  }, [_vm._v("選択した商品をポイントと交換します。"), _c("br"), _vm._v("よろしいですか？")])]);
+  }, [_vm._v("選択商品をポイントと交換します。"), _c("br"), _vm._v("よろしいですか？")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "col-6"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-light border rounded-pill w-100",
+    staticClass: "btn p-md-3 btn-light border rounded-pill w-100",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal"

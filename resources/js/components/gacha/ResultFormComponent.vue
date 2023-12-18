@@ -2,7 +2,8 @@
     <div>
 
         <!--カード一覧-->
-        <div class="row justify-content-center g-3 gy-4 mb-4" style="min-height: 50vh;" >
+        <div class="row justify-content-center g-3 gy-4 mb-4"
+        style="min-height: 50vh;" >
 
             <div v-if="loading"
             class="d-flex justify-content-center align-items-center">

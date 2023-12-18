@@ -1,6 +1,9 @@
 <header class="position-fixed w-100" style="z-index:100;">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-smmm p-0">
-        <div class="container">
+    <div class="container py-2">
+
+        <nav class="d-flex justify-content-between p-1
+        rounded-pill ps-4 shadow" style="background:rgb(255, 255, 255, .9);">
+
             <h1 class="d-flex align-items-center gap-3 m-0">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{asset('storage/site/image/logo.png')}}"
@@ -26,7 +29,7 @@
 
                             @include('includes.point_icon')
 
-                            <div class="rounded-pill bg- text- fw-bold border
+                            <div class="rounded-pill bg-white text- fw-bold border
                             d-flex align-items-center justify-content-end px-2
                             " style="width:7rem; height:1.6rem;">
                                 <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
@@ -51,8 +54,9 @@
 
                 @endguest
             </div>
-        </div>
-    </nav>
+
+        </nav>
+    </div>
 
 
     @if(Auth::check())

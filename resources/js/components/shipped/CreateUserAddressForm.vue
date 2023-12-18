@@ -39,8 +39,8 @@
                         </label>
 
                         <label class="mb-3 d-block">
-                            <div class="col-4">
-                                <div class="form-label">郵便番号（7桁の半角数字のみ）</div>
+                            <div class="form-label">郵便番号（7桁の半角数字のみ）</div>
+                            <div class="col-6">
                                 <input v-model="inputs.postal_code" name="postal_code"
                                 :disabled="loading"
                                 type="text" class="form-control"  placeholder="例：0001234">
@@ -81,13 +81,11 @@
                             <div v-if="errors.number" class="text-danger" role="alert">※{{ errors.number[0] }}</div>
                         </label>
 
-                        <div class="col-md-8 mx-auto my-5">
+                        <div class="col-md-8 mx-auto mt-5">
                             <disabled-button-component @btn-click="store()"
                             style_class="btn btn-lg btn-primary text-white w-100"
                             type="button"
                             :disabled="loading" btn_text="お届け先の登録" />
-
-
                         </div>
 
                     </div>

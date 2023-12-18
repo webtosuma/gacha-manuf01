@@ -48,7 +48,7 @@
                             <tr>
                                 <td class="py-3">
                                 <a href="{{ route('shipped.waiting.show',$shipped) }}"
-                                >{{ $shipped->user_address->name }}</a></td>
+                                >{{ $shipped->user_address->name }}様</a></td>
 
                                 <td class="d-none d-md-table-cell my-3">{{ $shipped->user_address->todohuken }}</td>
                                 <td class="d-none d-md-table-cell my-3">{{ $shipped->user_prizes->count() }}</td>

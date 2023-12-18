@@ -76,7 +76,7 @@
                         @if ($gacha->remaining_count >=10) {{--  --}}
                             <button type="submit" name="play_count" value="{{ 10 }}"
                             class="btn py-md-3 btn-dark bg-gradient text- fw-bold w-100
-                            rounded-pill border-secondary border-3"
+                            rounded-pill border-danger border-3"
                             >10連ガチャる</button>
                         @else
                             <button type="submit" name="play_count" disabled

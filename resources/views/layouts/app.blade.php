@@ -34,7 +34,7 @@
             background-image: url({{asset('storage/site/image/bg01.jpg')}});
         }
         main{
-            padding-top: 2.6rem;
+            padding-top: 4rem;
             min-height: 80vh;
         }
     </style>

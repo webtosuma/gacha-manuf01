@@ -69,7 +69,8 @@ $active_key = 'shipped';
                     @forelse ($shippeds as $shipped)
                         <tr>
                             <td class="py-3">
-                                <a href="{{ route('admin.shipped.send.show', $shipped) }}">{{ $shipped->user_address->name }}</a>
+                                <a href="{{ route('admin.shipped.send.show', $shipped) }}"
+                                >{{ $shipped->user_address->name }}様</a>
                             </td>
                             <td class="py-3">{{ $shipped->user_address->todohuken }}</td>
                             <td class="py-3">{{ $shipped->user_prizes->count() }}</td>

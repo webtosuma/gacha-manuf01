@@ -5,6 +5,7 @@
 
 @section('style')
 <style>
+    main{ padding-top: 0rem; }
     #result {
         background: no-repeat center center / cover;
         background-image: url({{asset('storage/site/image/gacha/bg_result.jpg')}});
@@ -13,13 +14,13 @@
 @endsection
 
 @section('content')
-    <section id="result" style="min-height: 80vh;">
+    <section id="result" style="padding-top:3rem; min-height: 80vh;">
 
         <div class="container px-3 py-4"  style="max-width:500px;">
 
 
-            <h3 class="text-secondary fw-bold rounded-3 p-2 text-center w-100 mb-4"
-            style="background: rgb(255, 255, 255, .7);"
+            <h3 class="text-secondaryy fw-bold rounded-3 p-2 text-center w-100 mb-4"
+            style="background: rgb(255, 255, 255, .0);"
             >ガチャ結果</h3>
 
             <!--ポイント交換フォーム-->

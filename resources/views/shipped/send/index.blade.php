@@ -48,7 +48,7 @@
                         @forelse ($shippeds as $shipped)
                             <tr>
                                 <td class="py-3">
-                                    <a href="{{ route('shipped.send.show', $shipped) }}">{{ $shipped->user_address->name }}</a>
+                                    <a href="{{ route('shipped.send.show', $shipped) }}">{{ $shipped->user_address->name }}様</a>
                                 </td>
                                 <td class="d-none d-md-table-cell py-3">{{ $shipped->user_address->todohuken }}</td>
                                 <td class="d-none d-md-table-cell py-3">{{ $shipped->user_prizes->count() }}</td>
