@@ -57,6 +57,25 @@ class Prize extends Model
         }
 
 
+        /**
+         * GachaPrizeモデル リレーション
+         * @return \App\Models\GachaPrize
+        */
+        public function g_prizes()
+        {
+            return $this->hasMany(GachaPrize::class,'prize_id'); //ランク順
+        }
+
+
+
+        /**
+         * UserPrizeモデル リレーション
+         * @return \App\Models\UserPrize
+        */
+        public function u_prizes()
+        {
+            return $this->hasMany(UserPrize::class,'prize_id');
+        }
     /*
     |--------------------------------------------------------------------------
     | アクセサー
@@ -77,5 +96,17 @@ class Prize extends Model
             asset( 'storage/'.$this->image ) :  self::noImage();
         }
 
+
+        /**
+         * 利用中か否か image_path
+         * @return String
+        */
+        public function getIsUsedAttribute()
+        {
+            $user_prizes_count  = $this->u_prizes->count();
+            $gacha_prizes_count = $this->g_prizes->count();
+
+            return $user_prizes_count + $gacha_prizes_count > 0 ;
+        }
 
 }

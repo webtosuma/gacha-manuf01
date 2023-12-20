@@ -59,13 +59,14 @@
 
             <!-- お届け先と利用ポイント -->
             <section class="my-4">
+                <div class="mb-2">発送コード：{{ $user_shipped->code}} </div>
                 @include('shipped.common.confirm_list')
             </section>
 
             <section class="my-5">
                 <div class="col-md-8 mx-auto my-3">
                     <a href="{{route('shipped.send')}}"
-                    class="btn btn-lg btn-light border w-100"
+                    class="btn btn-lg btn-light border rounded-pill w-100"
                     >発送済み一覧に戻る</a>
                 </div>
             </section>

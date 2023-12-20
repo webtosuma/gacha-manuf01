@@ -10,7 +10,7 @@
             <span>{{ $user_address->todohuken }}</span>
             <span>{{ $user_address->shikuchoson }}</span>
             <span>{{ $user_address->number }}</span>
-    </div>
+        </div>
     </li>
     <li class="list-group-item p-3">
         <h5>利用ポイント</h5>

@@ -71,7 +71,7 @@ $active_key = 'register';
                                         @method('DELETE')
 
                                         <delete-modal-component
-                                        indexKey="{{'delete'.$admin->id}}"
+                                        index_key="{{'delete'.$admin->id}}"
                                         icon="bi-trash"
                                         func_btn_type="submit"
                                         button_class="btn btn-sm btn-light border ">

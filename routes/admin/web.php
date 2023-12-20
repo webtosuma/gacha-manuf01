@@ -126,9 +126,9 @@ use \App\Http\Controllers;
                 ->name('admin.gacha.published.update');
 
             # 削除
-            Route::delete('/admin/gacha/destory/{gacha}',
-            [Controllers\AdminGachaController ::class, 'destory'])
-            ->name('admin.gacha.destory');
+            Route::delete('/admin/gacha/destroy/{gacha}',
+            [Controllers\AdminGachaController ::class, 'destroy'])
+            ->name('admin.gacha.destroy');
 
         });//end middleware
 
@@ -304,9 +304,9 @@ use \App\Http\Controllers;
                 ->name('admin.infomation.update');
 
             # 削除
-            Route::delete('/admin/infomation/destory/{infomation}',
-            [Controllers\AdminInfomationController ::class, 'destory'])
-            ->name('admin.infomation.destory');
+            Route::delete('/admin/infomation/destroy/{infomation}',
+            [Controllers\AdminInfomationController ::class, 'destroy'])
+            ->name('admin.infomation.destroy');
 
         });//end middleware
 

@@ -226,7 +226,9 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
 
             # 当たり目を返す(該当ガチャ商品があるときのみ)
-            return $gacha_prize ? $gacha->max_count : null;
+            return $gacha_prize ? 1 : null;
+            // return $gacha_prize ? $gacha->max_count : null;
+
         }
 
 

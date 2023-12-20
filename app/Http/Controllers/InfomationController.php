@@ -19,15 +19,8 @@ class InfomationController extends Controller
 
         $query = Infomation::query();
 
-            $query->where('published_at','<=', now()); //非公開を除く
+        $query->where('published_at','<=', now()); //非公開を除く
 
-            if( Auth::check() ) {
-                //他のユーザーのお知らせを除く
-                $query->where('user_id',null)->orWhere('user_id',Auth::user()->id);
-            }
-            else{
-                $query->where('user_id',null);
-            }
 
         return $query;
     }
@@ -60,24 +53,6 @@ class InfomationController extends Controller
      */
     public function show( Infomation $infomation )
     {
-        $user = Auth::user();
-
-        # ログインユーザー以外のユーザーのお知らせを表示不可
-        if(
-            $infomation->user_id  &&  $infomation->user_id != $user->id
-        ){ return \App::abort(404); }
-
-
-        #　既読処理
-        if( Auth::check() && !$infomation->is_read ){
-            $is_read = new InfomationIsRead([
-                'user_id'       => $user->id,
-                'infomation_id' => $infomation->id,
-            ]);
-            $is_read->save();
-        }
-
-
         return view('footer_menu.infomation.show', compact('infomation'));
     }
 }

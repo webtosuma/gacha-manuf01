@@ -297,11 +297,6 @@
                                             <div class="col-auto">
                                                 {{ $infomation->created_at->format('Y.m.d') }}
                                             </div>
-                                            <div class="col-auto" style="width:3rem;">
-                                                @if( !$infomation->is_read )
-                                                    <span class="badge bg-danger">未読</span>
-                                                @endif
-                                            </div>
                                             <div class="col-12 col-md">
                                                 {{ $infomation->title }}
                                             </div>

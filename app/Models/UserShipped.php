@@ -22,6 +22,7 @@ class UserShipped extends Model
         'point_history_id',//ポイント収支履歴リレーション
         'state_id',        //発送状況
         'shipment_at',     //発送日時
+        'shipment_read',   //ユーザーの発送確認
         'arrival_at' ,     //到着日時
     ];
 
@@ -102,5 +103,23 @@ class UserShipped extends Model
         public function user_prizes()
         {
             return $this->hasMany(UserPrize::class,'shipped_id');
+        }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 発送コード code 0000-0000
+         * @return String
+        */
+        public function getCodeAttribute()
+        {
+            return sprintf('s%04d-%04d',$this->user_id,$this->id);
         }
 }

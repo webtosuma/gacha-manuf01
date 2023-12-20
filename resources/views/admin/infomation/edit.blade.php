@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','お知らせ　新規登録')
+@section('title',$infomation->title.'編集')
 
 
 @section('meta') @php
@@ -27,20 +27,23 @@ $active_submenu = true;
                 >{{ 'Top' }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.infomation') }}"
                 >{{ 'お知らせ' }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.infomation.show',$infomation) }}"
+                >{{ $infomation->title }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"
-                >{{ 'お知らせ　新規登録' }}</li>
+                >{{ '編集' }}</li>
             </ol>
         </nav>
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">{{ 'お知らせ　新規登録' }}</h2>
+        <h2 class="mb-5 py-3 border-bottom">{{ '『'.$infomation->title.'』編集' }}</h2>
 
 
         <section>
-            <form action="{{ route('admin.infomation.store',) }}" method="POST"
+            <form action="{{ route('admin.infomation.update',$infomation) }}" method="POST"
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
+                @method('PATCH')
 
                 @include('admin.infomation._inputs')
 

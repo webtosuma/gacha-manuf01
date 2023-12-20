@@ -57,17 +57,21 @@ $active_key = 'shipped';
 
             <table class="table bg-white my-3">
                 <!--ヘッド（並べ替えボタン）-->
+                @if ($shippeds->count())
                 <thead>
                     <tr class="bg-white">
+                        <th scope="col">商品コード</th>
                         <th scope="col">宛名</th>
                         <th scope="col">都道府県</th>
                         <th scope="col">商品数</th>
                         <th scope="col">発送日時</th>
                     </tr>
                 </thead>
+                @endif
                 <tbody>
                     @forelse ($shippeds as $shipped)
                         <tr>
+                            <td class="py-3">{{ $shipped->code}}</td>
                             <td class="py-3">
                                 <a href="{{ route('admin.shipped.send.show', $shipped) }}"
                                 >{{ $shipped->user_address->name }}様</a>

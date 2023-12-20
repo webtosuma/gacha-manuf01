@@ -25,6 +25,9 @@ class UserPrizeApiController extends Controller
         # ユーザーの取得商品情報
         $query = UserPrize::query();
 
+            # 商品情報とのリレーションがあること
+            $query->has('prize');
+
             # ログインユーザーのデータに絞る
             $query->where('user_id',$user->id);
 
@@ -49,7 +52,9 @@ class UserPrizeApiController extends Controller
 
         # 画像パスの登録
         foreach ($user_prizes as $user_prize) {
-            $user_prize->prize->image_path = $user_prize->prize->image_path;
+
+            $user_prize->prize->image_path =  $user_prize->prize->image_path;
+
         }
 
         return response()->json( $user_prizes );

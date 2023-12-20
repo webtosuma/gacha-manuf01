@@ -22,7 +22,6 @@ class Infomation extends Model
         'image',       //画像
         'is_slide',    //スライドの表示有無
         'published_at',//公開日時
-        'user_id',//特定のユーザーに送信か、否か
     ];
 
     /** Carbonオブジェクトとして利用 */
@@ -35,30 +34,12 @@ class Infomation extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | リレーション
-    |--------------------------------------------------------------------------
-    |
-    |
-    */
-        /**
-         * InfomationIsReadモデル リレーション
-         * @return \App\Models\InfomationIsRead
-        */
-        public function is_reads()
-        {
-            return $this->hasMany(InfomationIsRead::class,'infomation_id')
-            ->orderByDesc('id');
-        }
-
-
-
-    /*
-    |--------------------------------------------------------------------------
     | アクセサー
     |--------------------------------------------------------------------------
     |
     |
     */
+
         /**
          * 画像ファイルパス image_path
          * @return String
@@ -84,18 +65,12 @@ class Infomation extends Model
 
 
         /**
-         *  ログインユーザーがお知らせを未読か否か　$infomation->is_read
-         *  * ログアウト中は全て既読
-         *
-         * @return Bool
+         * 公開中かどうか is_published
+         * @return String
         */
-        public function getIsReadAttribute(){
-
-            $is_read = ! Auth::check() ? null :
-            InfomationIsRead::where('user_id', Auth::user()->id)
-            ->where('infomation_id', $this->id)->first();
-
-            return Auth::check() ? isset( $is_read  ) : true;
+        public function getIsPublishedAttribute()
+        {
+            return $this->published_at && $this->published_at < now()->format('Y-m-d H:i:s') ;
         }
 
 

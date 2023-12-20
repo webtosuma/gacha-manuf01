@@ -52,6 +52,15 @@ class ShippedSendController extends Controller
         # stateが異なれば、非表示
         $state_id = self::StateId();
         if( $user_shipped->state_id != $state_id ){ return \App::abort(404); }
+        $user = Auth::user();
+        if( $user_shipped->user_id != $user->id ){ return \App::abort(404); }
+
+
+        # 既読更新
+        if( !$user_shipped->shipment_read ){
+            $user_shipped->update(['shipment_read'=>1]);
+        }
+
 
         # お届け先アドレス
         $user_address = $user_shipped->user_address;
@@ -66,6 +75,8 @@ class ShippedSendController extends Controller
             $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
         }
 
-        return view('shipped.send.show', compact('user_address','user_prizes','shipped_prizes') );
+        return view('shipped.send.show', compact(
+            'user_shipped','user_address','user_prizes','shipped_prizes'
+        ) );
     }
 }

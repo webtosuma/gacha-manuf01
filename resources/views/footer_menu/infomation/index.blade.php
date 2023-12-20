@@ -23,11 +23,11 @@
 
         <div class="mx-auto my-5" style="max-width:900px;">
 
-            <div class="list-group list-group-flush shadow-sm rounded-4"
+            <div class="list-group rounded-4"
             style="background:rgb(255, 255, 255, .7);">
                 @foreach ($infomations as $infomation)
 
-                    <div class="list-group-item list-group-item-action border-0 pozition-relative">
+                    <div class="list-group-item list-group-item-action pozition-relative">
                         <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
                             <div class="d-flex align-items-center px-3">
                                 <div class="col">
@@ -35,11 +35,6 @@
 
                                         <div class="col-auto">
                                             {{ $infomation->created_at->format('Y.m.d') }}
-                                        </div>
-                                        <div class="col-auto" style="width:3rem;">
-                                            @if( !$infomation->is_read )
-                                                <span class="badge bg-danger">未読</span>
-                                            @endif
                                         </div>
                                         <div class="col-12 col-md">
                                             {{ $infomation->title }}

@@ -22,7 +22,7 @@
     <div class="container py-4 mb-5">
         <h3 class="mb-">お問い合わせ</h3>
 
-        <section class="mb-5">
+        <section class="mb-5 col-md-8 mx-auto">
 
             <contact-form-component
             token="{{csrf_token()}}"

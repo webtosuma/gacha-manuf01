@@ -30,12 +30,20 @@
                         >発送待ち</a>
                     </li>
                     <li class="nav-item col">
-                        <div class="nav-link active bg-white" aria-current="page">発送済み</div>
+                        <div class="nav-link active bg-white" aria-current="page">
+                            発送済み
+                            @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
+                            @if ( $unread_count )
+                                <!--未読-->
+                                <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
+                            @endif
+                        </div>
                     </li>
                 </ul>
 
                 <table class="table bg-white my-3">
                     <!--ヘッド（並べ替えボタン）-->
+                    @if ($shippeds->count())
                     <thead>
                         <tr class="bg-white">
                             <th scope="col" >宛名</th>
@@ -44,11 +52,20 @@
                             <th scope="col" class="">発送日</th>
                         </tr>
                     </thead>
+                    @endif
                     <tbody>
                         @forelse ($shippeds as $shipped)
                             <tr>
                                 <td class="py-3">
-                                    <a href="{{ route('shipped.send.show', $shipped) }}">{{ $shipped->user_address->name }}様</a>
+                                    <a href="{{ route('shipped.send.show', $shipped) }}">
+                                        {{ $shipped->user_address->name }}様
+
+                                        @if ( !$shipped->shipment_read )
+                                            <!--未読-->
+                                            <span class="badge rounded-pill bg-warning">{{'未読'}}</span>
+                                        @endif
+
+                                    </a>
                                 </td>
                                 <td class="d-none d-md-table-cell py-3">{{ $shipped->user_address->todohuken }}</td>
                                 <td class="d-none d-md-table-cell py-3">{{ $shipped->user_prizes->count() }}</td>

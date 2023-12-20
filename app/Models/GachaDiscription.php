@@ -89,7 +89,8 @@ class GachaDiscription extends Model
         */
         public function getGPrizesAttribute()
         {
-            return GachaPrize::where('gacha_id',$this->gacha->id)
+            return GachaPrize::has('prize')//リレーションがあるもののみ
+            ->where('gacha_id',$this->gacha->id)
             ->where('gacha_rank_id', $this->gacha_rank_id)
             ->get();
         }

@@ -142,15 +142,66 @@ $active_key = 'gacha';
                             <li><a class="dropdown-item"
                             href="#"
                             >コピーする</a></li>
-                            <li><a class="dropdown-item"
+                            {{-- <li><a class="dropdown-item"
                             href="#"
-                            >削除する</a></li>
+                            >削除する</a></li> --}}
+
+                            <li><button type="button" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal{{'delete'.$gacha->id}}"
+                            class="dropdown-item"
+                            >削除する</button><li>
+
+                                <!-- Button trigger modal -->
+                                {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{'delete'.$gacha->id}}">
+                                    Launch demo modal
+                                </button> --}}
+
+                                <!--削除モーダル-->
+                                {{-- <form action="{{ route('admin.gacha.destroy', $gacha) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <delete-modal-component
+                                    indexKey="{{'delete'.$gacha->id}}"
+                                    icon="bi-trash"
+                                    func_btn_type="submit"
+                                    button_class="btn btn-sm btn-light border ">
+                                        <div>
+                                            <span class="fw-bold">『{{$gacha->title}}』</span>を削除します。
+                                            <br />よろしいですか？
+                                        </div>
+                                    </delete-modal-component>
+                                </form> --}}
+                            </li>
                         </ul>
                     </div>
-
                 </div>
             @endforeach
         </section>
 
     </div>
+
+
+    <!--削除モーダル-->
+    <div class="" style="height: 0;">
+        @foreach ($gachas as $gacha)
+            <!-- Modal -->
+            <form action="{{ route('admin.gacha.destroy', $gacha) }}" method="post">
+                @csrf
+                @method('DELETE')
+
+                <delete-modal-component
+                index_key="{{'delete'.$gacha->id}}"
+                icon="bi-trash"
+                func_btn_type="submit"
+                button_class="invisible">
+                    <div>
+                        <span class="fw-bold">『{{$gacha->name}}』</span>を削除します。
+                        <br />よろしいですか？
+                    </div>
+                </delete-modal-component>
+            </form>
+        @endforeach
+    </div>
+
 @endsection

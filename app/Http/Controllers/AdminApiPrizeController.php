@@ -68,6 +68,7 @@ class AdminApiPrizeController extends Controller
         # 画像パスの登録
         foreach ($prizes as $prize) {
             $prize->image_path = $prize->image_path;
+            $prize->is_used = $prize->is_used;
         }
 
 

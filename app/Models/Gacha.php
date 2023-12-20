@@ -90,6 +90,7 @@ class Gacha extends Model
         public function g_prizes()
         {
             return $this->hasMany(GachaPrize::class,'gacha_id')
+            ->has('prize')
             ->orderBy('gacha_rank_id','asc'); //ランク順
         }
 

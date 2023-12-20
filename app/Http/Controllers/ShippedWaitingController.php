@@ -52,6 +52,9 @@ class ShippedWaitingController extends Controller
         if( $user_shipped->state_id != $state_id ){
             return redirect()->route('shipped.send.show',$user_shipped);
         }
+        $user = Auth::user();
+        if( $user_shipped->user_id != $user->id ){ return \App::abort(404); }
+
 
         # お届け先アドレス
         $user_address = $user_shipped->user_address;
@@ -66,6 +69,8 @@ class ShippedWaitingController extends Controller
             $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
         }
 
-        return view('shipped.waiting.show', compact('user_address','user_prizes','shipped_prizes') );
+        return view('shipped.waiting.show', compact(
+            'user_shipped','user_address','user_prizes','shipped_prizes'
+        ) );
     }
 }

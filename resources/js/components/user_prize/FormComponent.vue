@@ -72,8 +72,8 @@
             </li>
 
             <li v-for="(userPrize, key) in userPrizes" :key="key"
-            class="col-12 col-sm-6 col-lg-4 "><label class="d-block " style="cursor:pointer;">
-                <div class="row">
+            class="col-12 col-sm-6 col-lg-4"><label class="d-block " style="cursor:pointer;">
+                <div class="row" v-if="userPrize.prize">
                     <div class="col-4 px-0 pe-3 position-relative">
                         <!--チェックボックス-->
                         <div class="position-absolute top-0 start-0 translate-middle" style="z-index:5">
@@ -102,10 +102,14 @@
 
                     </div>
                 </div>
+                <div v-else class="py-5">
+                    <!--商品情報が削除されたとき-->
+                    *商品情報が削除されました
+                </div>
             </label></li>
 
             <li v-if="!loading && userPrizes.length==0"
-            class="list-group-item bg-white py-5 fs-5 text-secondary">*取得した商品はありません。</li>
+            class="py-3">*取得した商品はありません。</li>
 
         </ul>
 
@@ -225,7 +229,7 @@
                 this.totalPoint = 0;
 
                 this.userPrizes.forEach( userPrize => {
-                    if( this.ids.some( id => id === userPrize.id) ){
+                    if( this.ids.some( id => id === userPrize.id) && userPrize.prize ){
                         this.totalPoint += userPrize.prize.point;
                     }
                 } );

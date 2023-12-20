@@ -36,36 +36,107 @@ $active_submenu = true;
             {{'新規登録'}}
             </a>
 
-            <div class="list-group list-group-flush border rounded-4 shadowww"
+            <div class="list-group "
             style="background:rgb(255, 255, 255, .7);">
                 @foreach ($infomations as $infomation)
-                    <div class="list-group-item list-group-item-action border-0 pozition-relative">
-                        <a href="{{ route('admin.infomation.show',$infomation) }}">
-                            <div class="row mx-3 my-2">
-                                <div class="col-auto">
+                    <div class="list-group-item border- pozition-relative">
+                        <div class="row mx-3 align-items-center py-2 g-2">
+                            <div class="col-auto">
+                                @if( $infomation->is_published )
+                                    <!--公開-->
+                                    <span class="badge rounded-pill bg-primary">{{ '公開中' }}</span>
+                                @elseif( $infomation->published_at > now() )
+                                    <!--公開予約-->
+                                    <span class="badge rounded-pill bg-warning">{{ '予約中' }}</span>
+                                @else
+                                    <!--非公開-->
+                                    <span class="badge rounded-pill bg-danger">{{ '非公開' }}</span>
+                                @endif
+                            </div>
+                            <div class="col-auto" style="width: 5rem;">
+                                @if( $infomation->is_slide )
+                                    <div class="d-inline-block px-2 py-1 bg-light form-text">スライド</div>
+                                @endif
+                            </div>
+                            <div class="col">
+                                <a href="{{ route('admin.infomation.show',$infomation) }}" class="border-bottom border-primary">
+
+                                    {{ $infomation->title }}
+
+                                </a>
+                            </div>
+                            <div class="col-auto text-secondary">
+                                <div class="">
+                                    <!--登録日-->
+                                    <i class="bi bi-pencil-fill"></i>
                                     {{ $infomation->created_at->format('Y.m.d') }}
                                 </div>
-                                <div class="col">
-                                    {{ $infomation->title }}
-                                </div>
-                                <div class="col-auto text-primary">
-                                    <i class="bi bi-chevron-right"></i>
+                                <div class="">
+                                    <!--公開日-->
+                                    <i class="bi bi-eye"></i>
+                                    {{ $infomation->published_at? $infomation->published_at->format('Y.m.d') : '----.--.--' }}
                                 </div>
                             </div>
-                        </a>
-                        <div class="position-absolute top-50 start-100 translate-middle">
-                            <button class="btn border bg-white rounded-circle" type="button" style="z-index:10;"
-                            id="dropdownMenuButton{{ $infomation->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $infomation->id }}"  style="z-index:100;">
-                                <li><a class="dropdown-item"
-                                href=""
-                                >編集する</a></li>
-                                <li><a class="dropdown-item"
-                                href="#"
-                                >削除する</a></li>
-                            </ul>
+                            <div class="col-auto">
+                                <!--編集ボタン-->
+                                <a href="{{ route('admin.infomation.edit',$infomation) }}"
+                                class="btn btn-sm btn-light border "
+                                ><i class="bi bi-pencil-fill"></i></a>
+
+                            </div>
+                            <div class="col-auto">
+
+                                <!--削除モーダル-->
+                                <form action="{{ route('admin.infomation.destroy', $infomation) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <delete-modal-component
+                                    index_key="{{'delete'.$infomation->id}}"
+                                    icon="bi-trash"
+                                    func_btn_type="submit"
+                                    button_class="btn btn-sm btn-light border ">
+                                        <div>
+                                            <span class="fw-bold">『{{$infomation->title}}』</span>を削除します。
+                                            <br />よろしいですか？
+                                        </div>
+                                    </delete-modal-component>
+                                </form>
+                            </div>
+                            {{-- <div class="col-auto text-primary">
+                                <div class="">
+                                    <button class="btn bg-white rounded-circle" type="button" style="z-index:10;"
+                                    id="dropdownMenuButton{{ $infomation->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $infomation->id }}"  style="z-index:100;">
+                                        <!--編集-->
+                                        <li><a class="dropdown-item"
+                                        href="{{ route('admin.infomation.edit',$infomation) }}"
+                                        >編集する</a></li>
+                                        <!--削除モーダル-->
+                                        <li>
+                                            <form action="{{ route('admin.infomation.destory', $infomation) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <delete-modal-component
+                                                indexKey="{{'delete'.$infomation->id}}"
+                                                icon="bi-trash"
+                                                func_btn_type="submit"
+                                                button_text="削除する"
+                                                button_class="dropdown-item ">
+                                                    <div>
+                                                        <span class="fw-bold">『{{$infomation->title}}』</span>を削除します。
+                                                        <br />よろしいですか？
+                                                    </div>
+                                                </delete-modal-component>
+
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> --}}
                         </div>
                     </div>
                 @endforeach

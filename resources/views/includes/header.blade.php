@@ -1,7 +1,7 @@
 <header class="position-fixed w-100" style="z-index:100;">
     <div class="container py-2">
 
-        <nav class="d-flex justify-content-between p-1
+        <nav class="d-flex justify-content-between p-1 border border-primary border-3
         rounded-pill ps-4 shadow" style="background:rgb(255, 255, 255, .9);">
 
             <h1 class="d-flex align-items-center gap-3 m-0">

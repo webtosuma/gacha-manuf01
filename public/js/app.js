@@ -5180,7 +5180,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    indexKey: {
+    index_key: {
       type: [String, Number],
       "default": '1'
     },
@@ -7695,7 +7695,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.userPrizes.forEach(function (userPrize) {
         if (_this2.ids.some(function (id) {
           return id === userPrize.id;
-        })) {
+        }) && userPrize.prize) {
           _this2.totalPoint += userPrize.prize.point;
         }
       });
@@ -7911,7 +7911,7 @@ var render = function render() {
     attrs: {
       type: "button",
       "data-bs-toggle": "modal",
-      "data-bs-target": "#deleteModal" + _vm.indexKey
+      "data-bs-target": "#deleteModal" + _vm.index_key
     }
   }, [_vm._v(_vm._s(_vm.button_text)), _vm.button_text == "" ? _c("i", {
     staticClass: "bi",
@@ -7919,8 +7919,8 @@ var render = function render() {
   }) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
-      id: "deleteModal" + _vm.indexKey,
-      "aria-labelledby": "deleteModalLabel" + _vm.indexKey,
+      id: "deleteModal" + _vm.index_key,
+      "aria-labelledby": "deleteModalLabel" + _vm.index_key,
       tabindex: "-1",
       "aria-hidden": "true"
     }
@@ -9651,7 +9651,13 @@ var render = function render() {
       }
     })], 1)]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(prize.updated_at)))]), _vm._v(" "), _c("td", {}, [_c("div", {
       staticClass: "d-flex gap-2 justify-content-end h-100"
-    }, [_c("a", {
+    }, [_c("div", {
+      staticStyle: {
+        width: "4rem"
+      }
+    }, [prize.is_used ? _c("span", {
+      staticClass: "badge rounded-pill bg-success"
+    }, [_vm._v(_vm._s("利用中"))]) : _vm._e()]), _vm._v(" "), _c("a", {
       staticClass: "btn btn-sm btn-light border",
       attrs: {
         href: _vm.r_edit + "/" + prize.id
@@ -9662,7 +9668,7 @@ var render = function render() {
       attrs: {
         indexKey: "delete" + prize.id,
         icon: "bi-trash",
-        button_class: "btn btn-sm btn-light border "
+        button_class: prize.is_used ? "disabled btn btn-sm btn-secondary border" : "btn btn-sm btn-light border"
       },
       on: {
         "parent-func": function parentFunc($event) {
@@ -11806,7 +11812,7 @@ var render = function render() {
       staticStyle: {
         cursor: "pointer"
       }
-    }, [_c("div", {
+    }, [userPrize.prize ? _c("div", {
       staticClass: "row"
     }, [_c("div", {
       staticClass: "col-4 px-0 pe-3 position-relative"
@@ -11874,9 +11880,11 @@ var render = function render() {
       attrs: {
         number: userPrize.prize.point
       }
-    }), _vm._v(_vm._s("pt") + "\n                    ")], 1)])])])]);
+    }), _vm._v(_vm._s("pt") + "\n                    ")], 1)])]) : _c("div", {
+      staticClass: "py-5"
+    }, [_vm._v("\n                *商品情報が削除されました\n            ")])])]);
   }), _vm._v(" "), !_vm.loading && _vm.userPrizes.length == 0 ? _c("li", {
-    staticClass: "list-group-item bg-white py-5 fs-5 text-secondary"
+    staticClass: "py-3"
   }, [_vm._v("*取得した商品はありません。")]) : _vm._e()], 2), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {

@@ -2,12 +2,12 @@
     <div class="d-inline-block">
         <!-- Button trigger modal -->
         <button type="button" :class="button_class"
-        data-bs-toggle="modal" :data-bs-target="'#deleteModal'+ indexKey "
+        data-bs-toggle="modal" :data-bs-target="'#deleteModal'+ index_key "
         >{{ button_text }}<i v-if="button_text=='' " class="bi" :class="icon" ></i></button>
 
         <!-- Modal -->
         <div class="modal fade"
-        :id="'deleteModal'+ indexKey " :aria-labelledby="'deleteModalLabel'+ indexKey " tabindex="-1" aria-hidden="true">
+        :id="'deleteModal'+ index_key " :aria-labelledby="'deleteModalLabel'+ index_key " tabindex="-1" aria-hidden="true">
             <div class="modal-dialog  modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center border-0 pb-0">
@@ -48,7 +48,7 @@
 <script>
     export default{
         props: {
-            indexKey:    { type: [String,Number], default: '1',},
+            index_key:    { type: [String,Number], default: '1',},
             icon:        { type: String, default: 'bi-exclamation-triangle',},
             color:       { type: String, default: 'danger',},
             button_text: { type: String, default: '',},

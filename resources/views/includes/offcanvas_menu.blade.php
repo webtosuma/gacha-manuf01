@@ -63,8 +63,14 @@ style="max-width:90vw; min-width:30vw;">
             <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3"
             >ポイント履歴</a>
 
-            <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3"
-            >発送申請履歴</a>
+            <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3">
+                発送申請履歴
+                @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
+                @if ( $unread_count )
+                    <!--お問い合わせ　未対応-->
+                    <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
+                @endif
+            </a>
 
             <a href="{{ route('settings') }}" class="list-group-item list-group-item-action py-3"
             >会員情報設定</a>
@@ -72,14 +78,8 @@ style="max-width:90vw; min-width:30vw;">
             <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3"
             >利用ガイド</a>
 
-            <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3">
-                <span>お知らせ</span>
-                @php $unread_count = Auth()->user()->unread_infomation_count; @endphp
-                @if ( $unread_count )
-                    <!--お問い合わせ　未対応-->
-                    <span class="badge rounded-pill bg-danger">{{$unread_count}}</span>
-                @endif
-            </a>
+            <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3"
+            >お知らせ</a>
 
             @if ( Auth::check() )
                 <form action="{{ route('logout') }}" method="POST">

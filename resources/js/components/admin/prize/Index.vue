@@ -119,6 +119,10 @@
                         <td>{{ formatDate( prize.updated_at ) }}</td>
                         <td class="">
                             <div class="d-flex gap-2 justify-content-end h-100">
+                                <div class="" style="width:4rem;">
+                                    <span v-if="prize.is_used"
+                                    class="badge rounded-pill bg-success">{{ '利用中' }}</span>
+                                </div>
                                 <!--編集-->
                                 <a class="btn btn-sm btn-light border "
                                 :href="r_edit+'/'+prize.id"><i class="bi bi-pencil-fill"></i></a>
@@ -128,7 +132,7 @@
                                 @parent-func="destory(prize.id)"
                                 :indexKey="'delete'+prize.id"
                                 icon="bi-trash"
-                                button_class="btn btn-sm btn-light border ">
+                                :button_class=" prize.is_used ? 'disabled btn btn-sm btn-secondary border' :'btn btn-sm btn-light border' ">
                                     <div>この商品を削除します。<br />よろしいですか？</div>
                                     <div class="form-text">商品コード：{{ prize.code }}</div>
                                     <div class="form-text">商品名：{{ prize.name }}</div>

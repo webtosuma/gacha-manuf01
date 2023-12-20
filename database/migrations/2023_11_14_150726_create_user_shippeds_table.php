@@ -30,6 +30,7 @@ class CreateUserShippedsTable extends Migration
 
             $table->integer('state_id');//発送状況
             $table->timestamp('shipment_at')->nullable()->default(NULL);//発送日時
+            $table->boolean('shipment_read')->default(0);//ユーザーの発送確認
             $table->timestamp('arrival_at' )->nullable()->default(NULL);//到着日時
 
             $table->softDeletes();//論理削除

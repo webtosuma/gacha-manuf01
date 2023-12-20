@@ -17,17 +17,17 @@ class CreateInfomationIsReadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('infomation_is_reads', function (Blueprint $table) {
-            $table->id();
+        // Schema::create('infomation_is_reads', function (Blueprint $table) {
+        //     $table->id();
 
-            $table->foreignId('user_id')->constrained('users')
-            ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+        //     $table->foreignId('user_id')->constrained('users')
+        //     ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
 
-            $table->foreignId('infomation_id')->constrained('infomations')
-            ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+        //     $table->foreignId('infomation_id')->constrained('infomations')
+        //     ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
 
-            $table->timestamps();
-        });
+        //     $table->timestamps();
+        // });
     }
 
     /**

@@ -62,6 +62,7 @@ $active_key = 'shipped';
 
             <!-- お届け先と利用ポイント -->
             <section class="my-4">
+                <div class="mb-2">発送コード：{{ $user_shipped->code}} </div>
                 @include('shipped.common.confirm_list')
             </section>
 

@@ -139,29 +139,17 @@ class User extends Authenticatable
         }
 
 
+
         /**
-         * 未読お知らせ数 $user->unread_infomation_count
+         * 未読の発送ずみ数 $user->unread_send_shippeds_count
          * @return String
         */
-        public function getUnreadInfomationCountAttribute(){
-
-
-            $query = \App\Models\Infomation::query();
-
-                $query->doesntHave('is_reads');
-
-                $query->where('published_at','<=', now()); //非公開を除く
-
-                //他のユーザーのお知らせを除く
-                $query->where('user_id',null)->orWhere('user_id',$this->id);
-
-
-            $infomations = $query->get();
-
-            $count = $infomations->count();
-
-            //100以上の時は、「+99」と表示
-            return $count>99 ? '+99' : $count;
+        public function getUnreadSendShippedsCountAttribute()
+        {
+            return \App\Models\UserShipped::where('user_id',$this->id)
+            ->where('shipment_at','<>',NULL)
+            ->where('shipment_read',0)
+            ->get()->count();
         }
 
 }

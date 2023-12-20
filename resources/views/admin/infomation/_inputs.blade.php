@@ -1,8 +1,8 @@
-<div class="form-text mb-3">
-    <span class="text-danger">＊</span>入力必須
-</div>
-<div class="row px-3 g-5">
-    <div class="col-md">
+<div class="row justify-content-center px-3 g-5">
+    <div class="form-text mb-3">
+        <span class="text-danger">＊</span>入力必須
+    </div>
+    <div class="col-lg-6">
 
         <!--タイトル(title)-->
         <label class="d-block mb-4">
@@ -32,12 +32,17 @@
             class="form-control" style="height:10rem;"
             placeholder="お知らせ本文を入力してください。"
             >{{ $infomation->body }}</textarea>
+
+            <!--error message-->
+            @if ( $errors->has('body') )
+                <div class="text-danger"> {{$errors->first('body')}} </div>
+            @endif
         </label>
 
 
 
         <!--トップ画像(image)-->
-        <label class="d-block mb-4">
+        <label class="d-block col-md-12 mx-auto mb-4">
             <div class="form-label">トップ画像</div>
 
             <div class="px-3">
@@ -57,37 +62,7 @@
 
 
     </div>
-    <div class="col-md-6">
-
-
-        <!--スライド設定(is_slide-->
-        <div class="d-block mb-5">
-            <div class="form-label">
-                スライド設定
-                <span class="text-danger">＊</span>
-            </div>
-
-            <div class="d-flex flex-column gap-3 ps-4">
-                <div class="form-text">トップページのスライドに表示させますか？</div>
-                <label class="form-check">
-                    <input name="is_slide"
-                    {{ $infomation->is_slide==true ? 'checked' : '' }}
-                    class="form-check-input" type="radio">
-                    <div class="form-check-div">表示させる</div>
-                </label>
-                <label class="form-check">
-                    <input name="is_slide"
-                    {{ $infomation->is_slide==false ? 'checked' : '' }}
-                    class="form-check-input" type="radio">
-                    <div class="form-check-div">表示させない</div>
-                </label>
-            </div>
-
-            <!--error message-->
-            @if ( $errors->has('type') )
-                <div class="text-danger"> {{$errors->first('type')}} </div>
-            @endif
-        </div>
+    <div class="col-lg-4">
 
 
         <!--公開設定(is_published)-->
@@ -157,14 +132,50 @@
         </div>
 
 
-        <div class="col-md-8 mx-auto my-5">
+        <!--スライド設定(is_slide-->
+        <div class="d-block mb-5">
+            <div class="form-label">
+                スライド設定
+                <span class="text-danger">＊</span>
+            </div>
+
+            <div class="card p-2 mx-4">
+
+                <div class="d-flex flex-column gap-3 ps-4">
+                    <div class="form-text">トップページのスライドに表示させますか？</div>
+                    <label class="form-check">
+                        <input name="is_slide" value="1"
+                        {{ $infomation->is_slide==true ? 'checked' : '' }}
+                        class="form-check-input" type="radio">
+                        <div class="form-check-div">表示させる</div>
+                    </label>
+                    <label class="form-check">
+                        <input name="is_slide" value="0"
+                        {{ $infomation->is_slide==false ? 'checked' : '' }}
+                        class="form-check-input" type="radio">
+                        <div class="form-check-div">表示させない</div>
+                    </label>
+                </div>
+
+                <!--error message-->
+                @if ( $errors->has('type') )
+                    <div class="text-danger"> {{$errors->first('type')}} </div>
+                @endif
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <div class="col-12">
+        <div class="col-md-6 mx-auto my-5">
             @if (!$infomation->id)
             <disabled-button style_class="btn btn-lg btn-primary text-white w-100 shadow" btn_text="登録する"></bdisabled-button>
             @else
             <disabled-button style_class="btn btn-lg btn-warning text-white w-100 shadow" btn_text="更新する"></bdisabled-button>
             @endif
         </div>
-
-
     </div>
 </div>

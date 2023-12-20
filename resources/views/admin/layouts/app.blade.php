@@ -61,8 +61,8 @@
 
 
                 <!-- Footer -->
-                <footer class="p-3 bg-dark text-center">
-                    footer
+                <footer class="p-3 bg-white text-center">
+                    <small class="d-block mb-3 text-muteddd">&copy;fobees</small>
                 </footer>
                 {{-- @include('includes.footer') --}}
             </div>
