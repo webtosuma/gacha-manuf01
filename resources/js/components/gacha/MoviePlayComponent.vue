@@ -23,17 +23,11 @@
                 </div>
             </div>
 
-            <!-- 再生ボタン -->
-            <div v-if="!moviePlaying"
-             class="position-absolute top-50 start-50 translate-middle">
-                <button @click="play()"
-                class="btn btn-light btn-sm float-right py-0 fs-3"
-                >play</button>
-            </div>
 
             <!-- 音声切り替えボタン -->
             <div class="position-fixed top-0 start-0 p-3">
                 <button @click="switchMuted()"
+                class="btn btn-light btn-sm py-0 fs-3"
                 id="muteButton" >
 
                     <i v-if="!muted" class="bi bi-volume-up-fill"></i>
@@ -56,6 +50,11 @@
                 </form>
             </div>
 
+            <!--音声コンフォーム-->
+            <confirm-modal-component
+            @click-ok="autoPlay(false)"
+            @click-no="autoPlay(true)"
+            body="音声が出ます。よろしいですか？" icon="" />
 
         </div>
     </div>
@@ -74,22 +73,11 @@
             form   : '',
 
             muted: true,
-            moviePlaying: true,//動画再生中
+            moviePlaying: false,//動画再生中
         } },
         mounted() {
 
             this.set();
-
-            // 今フォームの表示
-            var userAnswer = window.confirm("音声が出ます。よろしいですか？");
-            if (userAnswer) {
-                this.muted = false;
-            }
-
-            this.autoPlay();
-
-            // 再生チェック(再生ボタンの表示有無)
-            this.playCheck()
 
         },
         methods: {
@@ -99,7 +87,11 @@
                 this.form   = document.querySelector('form');
             },
 
-            autoPlay() {
+            /** 自動再生 */
+            autoPlay(muted=false) {
+
+                this.muted = muted;
+
                 this.videos.forEach(video => {
 
                     // 動画が再生された後にフォーム送信
@@ -114,34 +106,8 @@
                     // メディアの再生を開始
                     video.play();
 
-                    // 音声再生
-                    // this.muted = false;
+                    this.moviePlaying = true;
                 });
-            },
-
-            // 再生
-            play(){
-                this.videos.forEach(video => {
-                    // メディアの再生を開始
-                    video.play();
-                });
-
-                // 再生チェック
-                this.playCheck()
-            },
-
-
-            // 再生チェック
-            playCheck(){
-                this.moviePlaying = true;
-
-                // this.videos.forEach(video => {
-
-                //     if (video.paused) {
-                //         console.log("ビデオは再生中です。");
-                //         this.moviePlaying = false;
-                //     }
-                // });
             },
 
 

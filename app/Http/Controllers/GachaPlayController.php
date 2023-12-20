@@ -67,7 +67,6 @@ class GachaPlayController extends Controller
             # ガチャ履歴の登録
             $user_gacha_history = self::CreateGachaHistory( $gacha, $point_history ,$play_count );
 
-
             # 当たりの選出・ユーザー取得商品の登録・残り商品の減算
             $randReminingGPIdArray = CreateUserPrize::index( $user_gacha_history, $play_count );
 

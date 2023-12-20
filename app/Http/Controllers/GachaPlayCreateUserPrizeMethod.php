@@ -28,7 +28,6 @@ class GachaPlayCreateUserPrizeMethod extends Controller
     */
     public static function index($user_gacha_history, $play_count)
     {
-
         # 変数定義
 
             $gacha = $user_gacha_history->gacha; //ガチャ情報
@@ -47,30 +46,40 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
             // dd($zoro_hits_array);
 
+
         # 当たりの種類による分岐
         for ($i=0; $i < $count; $i++)
         {
             $gacha_prize_id = null;
 
+            // dd($remaining_count);
+            // $remaining_count = 222;
+            // dd( in_array( $remaining_count, $zoro_hits_array ) );
+
+
+
             ## ラストワンの当選
-            if( $played_count+1 == $lastone_hit ){
-                // dd('ラストワン:'.$played_count+1);
+            if( $remaining_count == $lastone_hit ){
+                // dd('ラストワン:'.$remaining_count);
+
                 $gacha_rank_id  = self::GachaRankIdLastone();
                 $gacha_prize_id =
                 self::WinnerSpecial( $user_gacha_history, $gacha_rank_id );
             }
 
             ## キリ番の当選
-            else if( in_array( $played_count+1, $kiri_hits_array ) ){
-                // dd('キリ番:'.$played_count+1);
+            else if( in_array( $remaining_count, $kiri_hits_array ) ){
+                // dd('キリ番:'.$remaining_count);
+
                 $gacha_rank_id  = self::GachaRankIdKiri();
                 $gacha_prize_id =
                 self::WinnerSpecial( $user_gacha_history, $gacha_rank_id );
             }
 
             ## ゾロ目の当選
-            else if( in_array( $played_count+1, $zoro_hits_array ) ){
-                dd('ゾロ目:'.$played_count+1);
+            else if( in_array( $remaining_count, $zoro_hits_array ) ){
+                // dd('ゾロ目:'.$remaining_count);
+
                 $gacha_rank_id  = self::GachaRankIdZoro();
                 $gacha_prize_id =
                 self::WinnerSpecial( $user_gacha_history, $gacha_rank_id );            }
@@ -83,6 +92,7 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
             $randReminingGPIdArray[] = $gacha_prize_id;
             $played_count ++;//済み口数の加算
+            $remaining_count --;//残り数の減産
         }
 
         return $randReminingGPIdArray;
