@@ -62,86 +62,86 @@
 
 @section('content')
 
-    @if( $category_code=='all' || true )
-        <!--カルーセル-->
-        {{-- <section class="bg-dark overflow-hidden" style="
-        background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
-        "> --}}
-        <section class="bg-whiteee overflow-hidden">
+    <!--カルーセル-->
+    {{-- <section class="bg-dark overflow-hidden" style="
+    background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
+    "> --}}
+    <section class="bg-whiteee overflow-hidden"  style="min-height:50vh;">
 
-            <div class="container px-0 col-md- mx-auto">
-                <div class="col-md-12 mx-auto">
-                    <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="container px-0 col-md- mx-auto">
+            <div class="col-md-12 mx-auto">
+                <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
-                        <!--image  お知らせスライド -->
-                        <div class="carousel-inner" style="max-height:90vh;">
-                            @foreach ($slide_infos as $si => $slide_info)
+                    <!--image  お知らせスライド -->
+                    <div class="carousel-inner" style="max-height:90vh;">
+                        @foreach ($slide_infos as $si => $slide_info)
 
-                                <a href="{{ route('infomation.show',$slide_info) }}" class="carousel-item pb- bg-dark
-                                {{ $si==0 ? 'active' : ''}}">
+                            <a href="{{ route('infomation.show',$slide_info) }}" class="carousel-item pb- bg-dark
+                            {{ $si==0 ? 'active' : ''}}">
 
-                                    <div class="">
-                                        <ratio-image-component
-                                        style_class="ratio ratio-4x3"
-                                        url="{{ $slide_info->image_path }}"
-                                        ></ratio-image-component>
-                                    </div>
+                                <div class="">
+                                    <ratio-image-component
+                                    style_class="ratio ratio-4x3"
+                                    url="{{ $slide_info->image_path }}"
+                                    ></ratio-image-component>
+                                </div>
 
-                                </a>
-                            @endforeach
+                            </a>
+                        @endforeach
 
-                            <!--image ガチャスライド -->
-                            @foreach ($gachas as $gi => $gacha)
+                        <!--image ガチャスライド -->
+                        @foreach ($gachas as $gi => $gacha)
 
-                                @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
-                                <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
-                                {{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}">
+                            @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+                            <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
+                            {{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}">
 
-                                    <div class="">
-                                        <ratio-image-component
-                                        style_class="ratio ratio-4x3"
-                                        url="{{ $gacha->image_path }}"
-                                        ></ratio-image-component>
-                                    </div>
+                                <div class="">
+                                    <ratio-image-component
+                                    style_class="ratio ratio-4x3"
+                                    url="{{ $gacha->image_path }}"
+                                    ></ratio-image-component>
+                                </div>
 
-                                </a>
-                            @endforeach
-                        </div>
-
-
-                        <!--side menu-->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                        </button>
-
-
-                        <!--bottom menu-->
-                        <div class="carousel-indicators mb-0">
-                            <!--お知らせスライド -->
-                            @foreach ($slide_infos as $si => $slide_info)
-                                <button type="button" data-bs-target="#carouselIndicators"
-                                class="{{ $si==0 ? 'active' : ''}}"
-                                data-bs-slide-to="{{$si}}" aria-current="true" aria-label="{{'Slide '.($si+1)}}x"></button>
-                            @endforeach
-                            <!--ガチャスライド -->
-                            @foreach ($gachas as $gi => $gacha)
-                                <button type="button" data-bs-target="#carouselIndicators"
-                                class="{{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}"
-                                data-bs-slide-to="{{$gi+$slide_infos->count()}}" aria-current="true" aria-label="{{'Slide '.($gi+$slide_infos->count()+1)}}x"></button>
-                            @endforeach
-                        </div>
-
-
+                            </a>
+                        @endforeach
                     </div>
+
+
+                    <!--side menu-->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                    </button>
+
+
+                    <!--bottom menu-->
+                    <div class="carousel-indicators mb-0">
+                        <!--お知らせスライド -->
+                        @foreach ($slide_infos as $si => $slide_info)
+                            <button type="button" data-bs-target="#carouselIndicators"
+                            class="{{ $si==0 ? 'active' : ''}}"
+                            data-bs-slide-to="{{$si}}" aria-current="true" aria-label="{{'Slide '.($si+1)}}x"></button>
+                        @endforeach
+                        <!--ガチャスライド -->
+                        @foreach ($gachas as $gi => $gacha)
+                            <button type="button" data-bs-target="#carouselIndicators"
+                            class="{{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}"
+                            data-bs-slide-to="{{$gi+$slide_infos->count()}}" aria-current="true" aria-label="{{'Slide '.($gi+$slide_infos->count()+1)}}x"></button>
+                        @endforeach
+                    </div>
+
+
                 </div>
             </div>
-        </section>
-    @endif
+        </div>
+    </section>
+
+
     <!--カテゴリー-->
     @php
     $bg = $category_code=='all' ? 'bg-whiteee' : '';
@@ -168,9 +168,11 @@
             </nav>
         </div>
     </section>
+
+
     <!--ガチャ-->
     <section class="p-3 pb-5">
-        <div class="container">
+        <div class="container" style="min-height:50vh;">
 
             <!--card-->
             <div class="row gy-5 overflow-hidden">
@@ -278,6 +280,20 @@
 
         </div>
     </section>
+
+    <!--twitterタイムライン-->
+    <section class="bg-dark">
+        <div class="container py-5">
+
+            <h3 class="text-center text-white fw-bold">お知らせ</h3>
+
+            <div class="col-md-8 mx-auto rounded-4 overflow-auto" style="max-height:90vh;">
+                <a class="twitter-timeline" href="https://twitter.com/CardFesta7627?ref_src=twsrc%5Etfw">Tweets by CardFesta7627</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </section>
+
+
     <!--お知らせ-->
     <section class="bg-dark">
         <div class="container py-4">
@@ -287,7 +303,7 @@
 
                 <div class="list-group list-group-flush shadow-sm rounded-4"
                 style="background:rgb(255, 255, 255, .7);">
-                    @foreach ($infomations as $infomation)
+                    @forelse ($infomations as $infomation)
                         <div class="list-group-item list-group-item-action border-0 pozition-relative">
                             <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
                                 <div class="d-flex align-items-center px-3">
@@ -309,8 +325,14 @@
                                 </div>
                             </a>
                         </div>
-                    @endforeach
-                </div>
+                        @empty
+                            <div class="list-group-item border-0 pozition-relative">
+                                <div class="">
+                                    * お知らせはありません
+                                </div>
+                            </div>
+                        @endforelse
+                    </div>
 
                 <div class="text-end mt-2">
                     <a href="{{route('infomation')}}" class="btn text-white ">もっと見る ></a>
@@ -318,5 +340,6 @@
             </div>
         </div>
     </section>
+
 
 @endsection

@@ -25,7 +25,7 @@
 
             <div class="list-group rounded-4"
             style="background:rgb(255, 255, 255, .7);">
-                @foreach ($infomations as $infomation)
+                @forelse ($infomations as $infomation)
 
                     <div class="list-group-item list-group-item-action pozition-relative">
                         <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
@@ -49,7 +49,13 @@
                         </a>
                     </div>
 
-                @endforeach
+                @empty
+                    <div class="list-group-item border-0 pozition-relative">
+                        <div class="">
+                            * お知らせはありません
+                        </div>
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>

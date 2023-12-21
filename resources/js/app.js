@@ -141,11 +141,14 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('confirm-modal-component',
     require('./components/Items/ConfirmeModalComponent.vue').default);
 
-
     /* 数字にカンマを入れるコンポーネント */
     Vue.component('number-comma-component',
     require('./components/Items/NumberCommaComponent.vue').default);
 
+    /* エスケープテキストエリア*/
+    Vue.component('encodedーtextarea-component',  require('./components/Items/EncodedTextareaComponent.vue').default);
+    /* エスケープインプットテキスト*/
+    Vue.component('encodedーinputtext-component',  require('./components/Items/EncodedInputtextComponent.vue').default);
 
 
 

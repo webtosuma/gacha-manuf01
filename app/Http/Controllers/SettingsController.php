@@ -30,6 +30,7 @@ class SettingsController extends Controller
             'name',  //名前
             'email', //メールアドレス
             'image', //イメージ画像
+            'twitter_id',//X(旧twitter)ID
         );
 
         # ストレージ画像ファイルの更新（イメージ画像）

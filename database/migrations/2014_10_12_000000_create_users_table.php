@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('payjp_customer_id')->nullable()->default(NULL)->comment('payjp ID');
             $table->string('image')->nullable()->default(NULL);
+            $table->string('twitter_id')->nullable()->default(NULL);
 
             $table->rememberToken();
             $table->timestamps();

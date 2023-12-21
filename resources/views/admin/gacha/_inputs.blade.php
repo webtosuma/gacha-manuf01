@@ -80,7 +80,7 @@
 
 
         <!--その他設定(type)-->
-        <div class="d-block mb-4">
+        {{-- <div class="d-block mb-4">
             <div class="form-label">その他設定</div>
 
 
@@ -106,7 +106,7 @@
             @if ( $errors->has('type') )
                 <div class="text-danger"> {{$errors->first('type')}} </div>
             @endif
-        </div>
+        </div> --}}
 
 
 

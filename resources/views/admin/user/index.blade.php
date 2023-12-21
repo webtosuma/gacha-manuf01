@@ -35,6 +35,7 @@ $active_key = 'user';
                         <tr class="bg-white">
                             <th scope="col">アカウント名</th>
                             <th scope="col">メールアドレス</th>
+                            <th scope="col">X(旧twitter)ID</th>
 
                             <th class="text-center" scope="col"
                             >保有商品数</th>
@@ -52,6 +53,7 @@ $active_key = 'user';
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->twitter_id ? $user->twitter_id : '---' }}</td>
 
                                 <td class="text-center"><a href="" class="btn btn-link">
                                     <number-comma-component number="{{ $user->u_prizes->count() }}"></number-comma-component>

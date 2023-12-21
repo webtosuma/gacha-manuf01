@@ -57,7 +57,10 @@ class AdminGachaMovieController extends Controller
             $discription->movies->pluck('id')->toArray();//更新前、動画ID
             $new_id_array = $request[$key];              //更新後、動画ID
 
-            // dd($discription->gacha_rank_movies->toArray());
+
+            # 値がなければスキップ
+            if( !$new_id_array ){ continue; }
+
 
             ## ランク動画->新規登録
             foreach ($new_id_array as $id)

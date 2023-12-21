@@ -24,10 +24,16 @@
 
     </div>
     <div class="col-md-8">
+        <div class="form-text mb-3">
+            <span class="text-danger">＊</span>入力必須
+        </div>
 
         <!--アカウント名(name)-->
         <label class="d-block mb-4">
-            <div class="form-label">アカウント名</div>
+            <div class="form-label">
+                アカウント名
+                <span class="text-danger">＊</span>
+            </div>
 
             <input value="{{old('name', Auth::user()->name )}}"
             name="name"
@@ -40,7 +46,10 @@
 
         <!--メールアドレス(email)-->
         <label class="d-block mb-4">
-            <div class="form-label">メールアドレス</div>
+            <div class="form-label">
+                メールアドレス
+                <span class="text-danger">＊</span>
+            </div>
 
             <input value="{{old('email', Auth::user()->email )}}"
             name="email"
@@ -48,6 +57,21 @@
             <!--error message-->
             @if ( $errors->has('email') )
                 <div class="text-danger"> {{$errors->first('email')}} </div>
+            @endif
+        </label>
+
+
+        <!--X(旧twitter)ID(twitter_id)-->
+        <label class="d-block mb-4">
+            <div class="form-label">X(旧twitter)ID</div>
+
+            <input value="{{old('twitter_id', Auth::user()->twitter_id )}}"
+            name="twitter_id"
+            placeholder="@○○○○○"
+            type="text" class="form-control">
+            <!--error message-->
+            @if ( $errors->has('twitter_id') )
+                <div class="text-danger"> {{$errors->first('twitter_id')}} </div>
             @endif
         </label>
 

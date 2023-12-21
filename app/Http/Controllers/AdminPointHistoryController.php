@@ -78,8 +78,9 @@ class AdminPointHistoryController extends Controller
     public function AllMonths()
     {
         # 最も古い月(＊ポイント購入のみ)
-        $old_month = PointHistory::where('reason_id',11)->first()->created_at;
         $month = Carbon::parse( now()->format('Y-m-01') );
+        $first_point_history =  PointHistory::where('reason_id',11)->first();
+        $old_month = $first_point_history ? $first_point_history->created_at : $month->copy();
 
         $array = [];
         while ($month->format('Y-m') >= $old_month->format('Y-m')) {

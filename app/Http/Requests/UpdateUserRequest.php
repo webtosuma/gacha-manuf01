@@ -30,8 +30,9 @@ class UpdateUserRequest extends FormRequest
     {
 
         $rules = [
-            'name'     => ['required', 'string', 'max:140'],
-            'email'    => ['required', 'email', 'unique:users'],
+            'name'      => ['required', 'string', 'max:140'],
+            'email'     => ['required', 'email', 'unique:users'],
+            'twitter_id'=> ['regex:/^@.+/', 'string', 'max:140','nullable'],
         ];
 
 
@@ -55,9 +56,10 @@ class UpdateUserRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'     => 'アカウント名',
-            'email'    => 'メールアドレス',
-            'password' => 'パスワード',
+            'name'      => 'アカウント名',
+            'email'     => 'メールアドレス',
+            'twitter_id'=> 'X(旧twitter)ID',
+            'password'  => 'パスワード',
         ];
     }
 

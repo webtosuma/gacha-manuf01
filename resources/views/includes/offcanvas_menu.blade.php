@@ -1,26 +1,34 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasHumberge" aria-labelledby="offcanvasHumbergeLabel"
 style="max-width:90vw; min-width:30vw;">
+
     <div class="offcanvas-header align-items-center">
+        <!--閉じる-->
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-header align-items-center">
         <h5 id="offcanvasHumbergeLabel">
-            <div class="row align-items-center g-2">
+            <a href="{{ route('settings.acount') }}" class="d-block text-dark">
+                <div class="row align-items-center g-2">
 
 
+                    <div class="col-auto" style="width: 3rem;">
+                        <ratio-image-component
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="ユーザーメニュー"
+                        style_class="ratio ratio-1x1 rounded-pill border"
+                        url="{{ Auth::user()->image_path }}"
+                        ></ratio-image-component>
+                    </div>
 
-                <div class="col-auto" style="width: 3rem;">
-                    <ratio-image-component
-                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="ユーザーメニュー"
-                    style_class="ratio ratio-1x1 rounded-pill border"
-                    url="{{ Auth::user()->image_path }}"
-                    ></ratio-image-component>
+                    <div class="col">
+                        <div class="">{{ Auth::user()->name }}さん</div>
+                        @if( Auth::user()->twitter_id )
+                            <div class="form-text">X(旧twitter)ID：{{ Auth::user()->twitter_id }}</div>
+                        @endif
+                    </div>
+
+
                 </div>
-
-                <div class="col">
-                    {{ Auth::user()->name }}
-                </div>
-
-
-            </div>
+            </a>
         </h5>
     </div>
 

@@ -155,6 +155,12 @@ class AdminInfomationController extends Controller
         # スライドの表示有無
             $inputs['is_slide'] = $request->is_slide==true ;
 
+
+        # エンコードコンポーネント入力情報のデコード処理（絵文字対策）
+            $inputs['title'] = urldecode($inputs['title']);
+            $inputs['body']  = urldecode($inputs['body']) ;
+
+
         # ストレージ更新の処理（商品説明）body
             $old_text = $infomation? $infomation->body: null;  //更新前のファイルパステキスト
             $new_text = $request->body;             //新しい入力テキスト

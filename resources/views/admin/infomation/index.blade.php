@@ -38,7 +38,7 @@ $active_submenu = true;
 
             <div class="list-group "
             style="background:rgb(255, 255, 255, .7);">
-                @foreach ($infomations as $infomation)
+                @forelse ($infomations as $infomation)
                     <div class="list-group-item border- pozition-relative">
                         <div class="row mx-3 align-items-center py-2 g-2">
                             <div class="col-auto">
@@ -105,7 +105,13 @@ $active_submenu = true;
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="list-group-item border-0 pozition-relative">
+                        <div class="">
+                            * お知らせはありません
+                        </div>
+                    </div>
+                @endforelse
             </div>
 
 

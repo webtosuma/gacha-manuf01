@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         /* アカウント */
-        $this->call(UserSeeder::class);//テスト用
+        // $this->call(UserSeeder::class);//テスト用
         $this->call(AdminSeeder::class);
 
         /* 本番利用 */
@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
 
 
         /* テスト用 */
-        $this->call(GachaSeeder::class);//ガチャ
-        $this->call(GachaDiscriptionSeeder::class);//ガチャ詳細情報
-        $this->call(PrizeSeeder::class);//景品
-        $this->call(GachaPrizeSeeder::class);//各ガチャの景品
-        $this->call(GachaRankMovieSeeder::class);//各ガチャの演出動画設定
-        $this->call(InfomationSeeder::class);//お知らせ
+        // $this->call(GachaSeeder::class);//ガチャ
+        // $this->call(GachaDiscriptionSeeder::class);//ガチャ詳細情報
+        // $this->call(PrizeSeeder::class);//景品
+        // $this->call(GachaPrizeSeeder::class);//各ガチャの景品
+        // $this->call(GachaRankMovieSeeder::class);//各ガチャの演出動画設定
+        // $this->call(InfomationSeeder::class);//お知らせ
 
     }
 }

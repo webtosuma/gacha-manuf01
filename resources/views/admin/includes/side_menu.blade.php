@@ -41,9 +41,10 @@ $menu_array = [
 ];
 $submenu_array = [
     [
-        'route' => route('admin.category'),
+        // 'route' => route('admin.category'),
+        'route' => '',
         'key'   => 'category',
-        'label' => 'カテゴリー',
+        'label' => 'カテゴリー(準備中)',
     ],
     [
         'route' => route('admin.prize'),

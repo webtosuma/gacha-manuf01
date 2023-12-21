@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password',
         'payjp_customer_id',
         'image',
+        'twitter_id',//X(旧twitter)ID
     ];
 
 
