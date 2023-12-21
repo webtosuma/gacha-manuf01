@@ -33,14 +33,55 @@ use \App\Http\Controllers;
         [Controllers\AdminAuthController ::class, 'logout'])
         ->name('admin_auth.logout');
 
-        // # 管理者登録画面の表示(admin_auth.register_form)
-        // Route::get('/admin_auth/register_form',
-        // [Controllers\AdminAuthController ::class, 'register_form'])
-        // ->name('admin_auth.register_form');
 
     /*
     |--------------------------------------------------------------------------
-    | 景品管理
+    | カテゴリー GachaCategory
+    |--------------------------------------------------------------------------
+    */
+        Route::middleware(['admin_auth'])->group(function () {
+
+            # 一覧
+            Route::get('/admin/category',
+            [Controllers\AdminGachaCategoryController ::class, 'index'])
+            ->name('admin.category');
+
+            # 表示
+            Route::get('/admin/category/show/{category}',
+            [Controllers\AdminGachaCategoryController::class,'show'])
+            ->name('admin.category.show');
+
+            # 新規登録
+            Route::get('/admin/category/create',
+            [Controllers\AdminGachaCategoryController::class, 'create'])
+            ->name('admin.category.create');
+
+                # 登録
+                Route::post('/admin/category/store',
+                [Controllers\AdminGachaCategoryController::class, 'store'])
+                ->name('admin.category.store');
+
+            # 基本情報の編集
+            Route::get('/admin/category/edit/{category}',
+            [Controllers\AdminGachaCategoryController::class, 'edit'])
+            ->name('admin.category.edit');
+
+                # 基本情報の更新
+                Route::patch('/admin/category/update/{category}',
+                [Controllers\AdminGachaCategoryController::class, 'update'])
+                ->name('admin.category.update');
+
+            # 削除
+            Route::delete('/admin/category/destroy/{category}',
+            [Controllers\AdminGachaCategoryController::class, 'destroy'])
+            ->name('admin.category.destroy');
+
+
+        });//end middleware
+
+    /*
+    |--------------------------------------------------------------------------
+    | 商品管理
     |--------------------------------------------------------------------------
     */
         Route::middleware(['admin_auth'])->group(function () {
@@ -249,6 +290,12 @@ use \App\Http\Controllers;
             Route::get('/admin/user',
             [Controllers\AdminUserController ::class, 'index'])
             ->name('admin.user');
+
+
+            # ポイント付与
+            Route::patch('/admin/user/add_point/{user}',
+            [Controllers\AdminUserController ::class, 'add_point'])
+            ->name('admin.user.add_point');
 
         });//end middleware
     /*

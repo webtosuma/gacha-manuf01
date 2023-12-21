@@ -35,10 +35,15 @@ $active_key = 'user';
                         <tr class="bg-white">
                             <th scope="col">アカウント名</th>
                             <th scope="col">メールアドレス</th>
-                            <th class="text-center" scope="col"
-                            >保有ポイント</th>
+
                             <th class="text-center" scope="col"
                             >保有商品数</th>
+                            <th class="text-center" scope="col"
+                            >ガチャPLAY数</th>
+                            <th class="text-center" scope="col"
+                            >保有ポイント</th>
+                            <th></th>
+
                             <th scope="col">会員登録日</th>
                         </tr>
                     </thead>
@@ -47,11 +52,44 @@ $active_key = 'user';
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td class="text-center">
-                                    <number-comma-component number="{{ $user->point }}"></number-comma-component>
-                                </td>
-                                <td class="text-center">
+
+                                <td class="text-center"><a href="" class="btn btn-link">
                                     <number-comma-component number="{{ $user->u_prizes->count() }}"></number-comma-component>
+                                </a></td>
+                                <td class="text-center"><a href="" class="btn btn-link">
+                                    <number-comma-component number="{{ $user->gacha_histories->count() }}"></number-comma-component>
+                                </a></td>
+                                <td class="text-center"><a href="" class="btn btn-link">
+                                    <number-comma-component number="{{ $user->point }}"></number-comma-component>
+                                </a></td>
+                                <td>
+                                    {{-- <a href="" class="btn btn-warning btn-sm rounded-pill form-text">+PT付与</a> --}}
+                                    <!--ポイント付与モーダル-->
+                                    <form action="{{ route('admin.user.add_point', $user) }}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <delete-modal-component
+                                        index_key="{{'delete'.$user->id}}"
+                                        icon="bi-coin" color="warning"
+                                        func_btn_type="submit"
+                                        button_text="+PT付与"
+                                        button_class="btn btn-warning btn-sm text-white rounded-pill form-text">
+                                            <div>
+                                                <span class="fw-bold">『{{$user->name}}』さんに</span>ポイントを付与します。
+                                                <div class="col-8 mx-auto">
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon3">付与ポイント</span>
+                                                        <input class="form-control text-end"  type="number" name="value" value="1000" min="100">
+                                                        <span class="input-group-text" id="basic-addon3">pt</span>
+                                                    </div>
+                                                </div>
+                                                よろしいですか？
+                                            </div>
+                                        </delete-modal-component>
+                                    </form>
+
+
                                 </td>
                                 <td>{{ $user->created_at->format('Y年m月d日') }}</td>
                             </tr>

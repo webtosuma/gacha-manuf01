@@ -103,40 +103,6 @@ $active_submenu = true;
                                     </delete-modal-component>
                                 </form>
                             </div>
-                            {{-- <div class="col-auto text-primary">
-                                <div class="">
-                                    <button class="btn bg-white rounded-circle" type="button" style="z-index:10;"
-                                    id="dropdownMenuButton{{ $infomation->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $infomation->id }}"  style="z-index:100;">
-                                        <!--編集-->
-                                        <li><a class="dropdown-item"
-                                        href="{{ route('admin.infomation.edit',$infomation) }}"
-                                        >編集する</a></li>
-                                        <!--削除モーダル-->
-                                        <li>
-                                            <form action="{{ route('admin.infomation.destory', $infomation) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <delete-modal-component
-                                                indexKey="{{'delete'.$infomation->id}}"
-                                                icon="bi-trash"
-                                                func_btn_type="submit"
-                                                button_text="削除する"
-                                                button_class="dropdown-item ">
-                                                    <div>
-                                                        <span class="fw-bold">『{{$infomation->title}}』</span>を削除します。
-                                                        <br />よろしいですか？
-                                                    </div>
-                                                </delete-modal-component>
-
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 @endforeach

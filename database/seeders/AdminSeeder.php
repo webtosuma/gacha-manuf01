@@ -85,14 +85,48 @@ class AdminSeeder extends Seeder
         return   [
             [
                 'user' => [
-                    'email' => 'na@tosuma.ltd',
+                    'email' => 't.sakai@tosuma.ltd',
                     'password' => Hash::make('password'),
-                    'name' => 'TOSUMA(テスト作業)',
+                    'name' => '酒井　貴弘',
                 ],
                 'admin' => [
                     'master' => 1,
                 ],
             ],
+            [
+                'user' => [
+                    'email' => 'n.akutagawa@tosuma.ltd',
+                    'password' => Hash::make('password'),
+                    'name' => '芥川　伸雄',
+                ],
+                'admin' => [
+                    'master' => 0,
+                    'get_mail'=>0,
+                ],
+            ],
+            [
+                'user' => [
+                    'email' => 'na@tosuma.ltd',
+                    'password' => Hash::make('password'),
+                    'name' => 'TOSUMA',
+                ],
+                'admin' => [
+                    'master' => 1,
+                    'get_mail'=>0,
+                ],
+            ],
+            [
+                'user' => [
+                    'email' => 'na@fobees.ltd',
+                    'password' => Hash::make('password'),
+                    'name' => 'Fobees',
+                ],
+                'admin' => [
+                    'master' => 0,
+                    'get_mail'=>0,
+                ],
+            ],
+
         ];
 
     }

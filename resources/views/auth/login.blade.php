@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.small')
 
 <!----- title ----->
 @section('title','ログイン')

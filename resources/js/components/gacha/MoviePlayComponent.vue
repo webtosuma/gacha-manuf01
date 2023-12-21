@@ -6,7 +6,8 @@
                 <!-- 動画mobile -->
                 <div class="video-area d-md-none">
                     <video class="bg_video"
-                    playsinline :muted="muted"
+                    playsinline
+                    :muted="muted"
                     width="100%"
                     poster=""
                     ><source :src="movie_path_mobile" />
@@ -15,7 +16,8 @@
                 <!-- 動画PC -->
                 <div class="video-area d-none d-md-block">
                     <video class="bg_video"
-                    playsinline :muted="muted"
+                    playsinline
+                    :muted="muted"
                     width="100%"
                     poster=""
                     ><source :src="movie_path_pc" />

@@ -110,6 +110,16 @@ class User extends Authenticatable
             return $this->hasMany(UserPrize::class,'user_id');
         }
 
+
+        /**
+         * UserGachaHistoryモデル リレーション ($user->u_prizes)
+         * @return \App\Models\UserGachaHistory
+        */
+        public function gacha_histories()
+        {
+            return $this->hasMany(UserGachaHistory::class,'user_id');
+        }
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

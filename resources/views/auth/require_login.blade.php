@@ -1,5 +1,5 @@
-{{-- @extends('layouts.600_simple_base') --}}
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.small')
 
 
 <!----- title ----->

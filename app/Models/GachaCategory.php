@@ -59,6 +59,16 @@ class GachaCategory extends Model
 
 
 
+        /**
+         * 公開中ガチャ published_gachas
+         * @return String
+        */
+        public function getPublishedGachasAttribute()
+        {
+            return Gacha::where('category_id',$this->id)
+            ->where('published_at', '<' ,now() )
+            ->get();
+        }
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +78,7 @@ class GachaCategory extends Model
     |
     */
         /** 画像なしの時の画像 */
-        public static function noImage(){ return asset( 'storage/'.'site/image/bg02.jpg' );}
+        public static function noImage(){ return asset( 'storage/'.'site/image/bg01.jpg' );}
 
         /**
          * 画像ファイルパス bg_image_path
@@ -79,4 +89,5 @@ class GachaCategory extends Model
             return $this->bg_image && Storage::exists($this->bg_image) ?
             asset( 'storage/'.$this->bg_image ) : self::noImage();
         }
+
 }
