@@ -41,10 +41,9 @@ $menu_array = [
 ];
 $submenu_array = [
     [
-        // 'route' => route('admin.category'),
-        'route' => '',
+        'route' => route('admin.category'),
         'key'   => 'category',
-        'label' => 'カテゴリー(準備中)',
+        'label' => 'カテゴリー',
     ],
     [
         'route' => route('admin.prize'),
@@ -57,9 +56,9 @@ $submenu_array = [
         'label' => '演出動画(準備中)',
     ],
     [
-        'route' => route('admin.point'),
+        'route' => route('admin.point_sail'),
         'key'   => 'point',
-        'label' => '販売ポイント(準備中)',
+        'label' => '販売ポイント',
     ],
     [
         'route' => route('admin.infomation'),

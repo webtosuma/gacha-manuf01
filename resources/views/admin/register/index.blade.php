@@ -40,7 +40,7 @@ $active_key = 'register';
             @endif
 
             <div class="card w-100 border-bottom-0 overflow-auto">
-                <table class="table mb-0"  style="min-width: 900px">
+                <table class="table mb-0">
                     <tbody>
                         <tr class="bg-light">
                             <th scope="col">名前</th>

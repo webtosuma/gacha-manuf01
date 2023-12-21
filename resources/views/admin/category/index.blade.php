@@ -34,7 +34,7 @@ $active_submenu = true;
         </a>
 
         <section class="card card-body bg-white my-3 overflow-auto">
-            <table class="table mb-0"  style="min-width: 900px">
+            <table class="table mb-0">
                 <tbody>
                     <tr class="bg-light">
                         <th scope="col">公開</th>
@@ -57,8 +57,9 @@ $active_submenu = true;
                         </th>
 
                         <!-- カテゴリー名 -->
-                        <td><a href=""
-                        >{{ $gacha_category->name }}</a></td>
+                        {{-- <td><a href=""
+                        >{{ $gacha_category->name }}</a></td> --}}
+                        <td>{{ $gacha_category->name }}</td>
 
                         <!-- コード -->
                         <td>{{ $gacha_category->code_name }}</td>
@@ -69,13 +70,13 @@ $active_submenu = true;
                         <td style="width:8rem;"><div class="row justify-content-end g-2">
                             <div class="col-auto">
                                 <!--編集ボタン-->
-                                <a href="{{ route('admin.infomation.edit',$gacha_category) }}"
+                                <a href="{{ route('admin.category.edit',$gacha_category) }}"
                                 class="btn btn-sm btn-light border "
                                 ><i class="bi bi-pencil-fill"></i></a>
                             </div>
                             <div class="col-auto">
                                 <!--削除モーダル-->
-                                <form action="{{ route('admin.infomation.destroy', $gacha_category) }}" method="post">
+                                <form action="{{ route('admin.category.destroy', $gacha_category) }}" method="post">
                                     @csrf
                                     @method('DELETE')
 

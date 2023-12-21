@@ -41,9 +41,13 @@ class AdminGachaDisriptionController extends Controller
         $discriptions = $gacha->discriptions;
         foreach ($discriptions as $num => $discription) {
 
+            # エンコードコンポーネント入力情報のデコード処理（絵文字対策）
+            $sorce = urldecode( $request->sorces[$num] );
+
             # ストレージ更新の処理（商品説明）sorce
             $old_text = $discription->sorce;  //更新前のファイルパステキスト
-            $new_text = $request->sorces[$num];             //新しい入力テキスト
+            // $new_text = $request->sorces[$num];             //新しい入力テキスト
+            $new_text = $sorce;             //新しい入力テキスト
             $dir = 'upload/discription/sorce/';      //保存先ディレクトリ
             $sorce = Method::uploadStorageText($dir, $new_text, $old_text);
 

@@ -148,7 +148,7 @@
     @endphp
     <section class="py-3 {{$bg}}">
         <div class="container px-0 col-md-12 mx-auto overflow-auto">
-            <nav class="nav gap-3 flex-nowrap" style="min-width:300px;">
+            <nav class="nav gap-3 flex-nowrap" style="min-width:{{$categories->count()*10 + 10}}rem;">
                 @php
                 $sc = "col fs- py-2 fw-bold btn btn-dark";
                 $style_class = $category_code=='all' ? $sc.' disabled' : $sc;

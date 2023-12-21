@@ -40,10 +40,18 @@
                     <label class="d-block h-100">
                         <div class="form-text">商品説明</div>
 
-                        <textarea name="sorces[]"
+                        {{-- <textarea name="sorces[]"
                         class="form-control bg-white h-75"
                         placeholder="＊商品の補足説明などがあれば、入力してください。"
-                        >{{ $discription->sorce_text }}</textarea>
+                        >{{ $discription->sorce_text }}</textarea> --}}
+
+                        <encodedーtextarea-component
+                        name="sorces[]" id="sorces"
+                        style_class="form-control" rows="10"
+                        placeholder="＊商品の補足説明などがあれば、入力してください。"
+                        default_body="{{ $discription->sorce_text }}"
+                        ></encodedーtextarea-component>
+
                     </label>
                 </div>
 

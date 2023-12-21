@@ -52,7 +52,6 @@ class GachaController extends Controller
             $slide_infos = Infomation::where('published_at','<=', now()) //非公開を除く
             ->where('is_slide',1)
             ->get();
-
         //
 
         # viewの表示

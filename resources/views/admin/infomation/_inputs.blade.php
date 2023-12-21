@@ -1,7 +1,7 @@
+<div class="form-text mb-3">
+    <span class="text-danger">＊</span>入力必須
+</div>
 <div class="row justify-content-center px-3 g-5">
-    <div class="form-text mb-3">
-        <span class="text-danger">＊</span>入力必須
-    </div>
     <div class="col-lg-6">
 
         <!--タイトル(title)-->
@@ -31,7 +31,7 @@
         <!--本文(body)-->
         <label class="d-block mb-4">
             <div class="form-label">
-                商品説明
+                本文
                 <span class="text-danger">＊</span>
             </div>
 
@@ -44,7 +44,7 @@
             name="body" id="body"
             style_class="form-control" rows="6"
             placeholder="お知らせ本文を入力してください。"
-            default_body="{{ $infomation->body }}"
+            default_body="{{ $infomation->body_text }}"
             ></encodedーtextarea-component>
 
 
@@ -56,9 +56,9 @@
 
 
 
-        <!--トップ画像(image)-->
+        <!--イメージ画像(image)-->
         <label class="d-block col-md-12 mx-auto mb-4">
-            <div class="form-label">トップ画像</div>
+            <div class="form-label">イメージ画像</div>
 
             <div class="px-3">
                 <read-image-file-component

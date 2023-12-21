@@ -106,6 +106,7 @@ class AdminInfomationController extends Controller
         # 入力データの加工
         $inputs = self::processingInputs( $request, $infomation );
 
+        // dd($inputs);
         # DBデータの更新
         $infomation->update( $inputs );
 
@@ -160,12 +161,11 @@ class AdminInfomationController extends Controller
             $inputs['title'] = urldecode($inputs['title']);
             $inputs['body']  = urldecode($inputs['body']) ;
 
-
-        # ストレージ更新の処理（商品説明）body
+            # ストレージ更新の処理（商品説明）body
             $old_text = $infomation? $infomation->body: null;  //更新前のファイルパステキスト
-            $new_text = $request->body;             //新しい入力テキスト
+            $new_text = $inputs['body'];             //新しい入力テキスト
             $dir = 'upload/infomation/body/';      //保存先ディレクトリ
-            $inputs['bosy'] = Method::uploadStorageText($dir, $new_text, $old_text);
+            $inputs['body'] = Method::uploadStorageText($dir, $new_text, $old_text);
 
 
         # ストレージ画像ファイルの更新（イメージ画像）

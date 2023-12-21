@@ -29,8 +29,11 @@ $active_key = 'gacha';
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">『{{ $gacha->name }}』登録商品一覧</h2>
+        <h2 class="mb- py-3 border-bottom">『{{ $gacha->name }}』登録商品一覧</h2>
 
+        <a href="{{route('admin.gacha')}}"
+        class="btn my-3 border rounded-pill"
+        ><i class="bi bi-arrow-left-short"></i>一覧に戻る</a>
 
         <!--タブメニュ-->
         @php $tab='admin.gacha.prize.show'; @endphp

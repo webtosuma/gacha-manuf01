@@ -6,20 +6,20 @@
 
 
         <div class="col-8 mx-auto">
-            <!--背景画像(image)-->
+            <!--背景画像(bg_image)-->
             <label class="d-block mb-4">
                 <div class="form-label">背景画像</div>
 
                 <read-image-file-component
-                img_path="{{ $gacha_category->image_path }}"
+                img_path="{{ $gacha_category->bg_image_path }}"
                 noimg_path="{{$gacha_category->noImage()}}"
                 style_class="ratio ratio-3x4 rounded-3 border"
-                name="image"
+                name="bg_image"
                 ></read-image-file-component>
 
                 <!--error message-->
-                @if ( $errors->has('image') )
-                    <div class="text-danger"> {{$errors->first('image')}} </div>
+                @if ( $errors->has('bg_image') )
+                    <div class="text-danger"> {{$errors->first('bg_image')}} </div>
                 @endif
             </label>
         </div>
@@ -91,7 +91,7 @@
                     <div class="form-check">
                         <input name="is_published" value="0"
                         type="radio" id="publishedType3" class="form-check-input"
-                        {{ !$gacha_category->published_at ? 'checked' : ''}}
+                        {{ !$gacha_category->is_published ? 'checked' : ''}}
                         >
                         <h6 class="mb-0 mt-1">非公開</h6>
                     </div>

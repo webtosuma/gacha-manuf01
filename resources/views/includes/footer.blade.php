@@ -11,11 +11,15 @@
             </div>
             <div class="col-12 col-md">
                 <h3>{{ __('カテゴリー') }}</h3>
+                @php
+                $gacha_categories = \App\Models\GachaCategory::where('is_published',1)->get();
+                @endphp
                 <ul class="list-unstyled fs-5">
-                    <li><a class="link-secondary text-decoration-none"
-                    href="{{ route('gacha_category','onepiece') }}">ワンピース</a></li>
-                    <li><a class="link-secondary text-decoration-none"
-                    href="{{ route('gacha_category','pokemon') }}">ポケモン</a></li>
+                    @foreach ($gacha_categories as $gacha_category)
+                        <li><a class="link-secondary text-decoration-none"
+                        href="{{ route('gacha_category',$gacha_category->code_name) }}"
+                        >{{ $gacha_category->name }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-12 col-md-6">

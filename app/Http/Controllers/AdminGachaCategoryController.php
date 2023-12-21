@@ -74,8 +74,8 @@ class AdminGachaCategoryController extends Controller
 
 
         # 返信メッセージ
-        return redirect()->route('admin.gacha_category')
-        ->with(['alert-primary'=>'お知らせ情報を新規登録しました。']);
+        return redirect()->route('admin.category')
+        ->with(['alert-primary'=>'ガチャのカテゴリーを新規登録しました。']);
     }
 
 
@@ -102,7 +102,6 @@ class AdminGachaCategoryController extends Controller
      */
     public function update(AdminGachaCategoryRequest $request, GachaCategory $gacha_category)
     {
-        // dd($request->all());
         # 入力データの加工
         $inputs = self::processingInputs( $request, $gacha_category );
 
@@ -111,8 +110,8 @@ class AdminGachaCategoryController extends Controller
 
 
         # リダイレクト
-        return redirect()->route('admin.gacha_category')
-        ->with(['alert-warning'=>'お知らせ情報を更新しました。']);
+        return redirect()->route('admin.category')
+        ->with(['alert-warning'=>'ガチャのカテゴリーを更新しました。']);
     }
 
 
@@ -129,8 +128,8 @@ class AdminGachaCategoryController extends Controller
 
 
         # リダイレクト
-        return redirect()->route('admin.gacha_category')
-        ->with(['alert-danger'=>'お知らせ情報を削除しました。']);
+        return redirect()->route('admin.category')
+        ->with(['alert-danger'=>'ガチャのカテゴリーを削除しました。']);
     }
 
 
@@ -145,52 +144,21 @@ class AdminGachaCategoryController extends Controller
     public function processingInputs( $request, $gacha_category=null )
     {
         $inputs = $request->only(
-            'title',       //題名
-            'body' ,       //本文
-            'image',       //画像
-            'is_slide',    //スライドの表示有無
-            'published_at',//公開日時
+            'name',        //名前
+            'code_name',   //'コードネーム（ルーティング用）'
+            'bg_image' ,   //'背景画像'
+            'is_published',//公開(bool)
         );
-
-        # スライドの表示有無
-            $inputs['is_slide'] = $request->is_slide==true ;
-
-        # ストレージ更新の処理（商品説明）body
-            $old_text = $gacha_category? $gacha_category->body: null;  //更新前のファイルパステキスト
-            $new_text = $request->body;             //新しい入力テキスト
-            $dir = 'upload/gacha_category/body/';      //保存先ディレクトリ
-            $inputs['bosy'] = Method::uploadStorageText($dir, $new_text, $old_text);
 
 
         # ストレージ画像ファイルの更新（イメージ画像）
-            $dir = 'upload/gacha_category/image/';             //保存先ディレクトリ
-            $request_file    = $request->file('image');     //画像のリクエスト
-            $old_image_path  = $gacha_category? $gacha_category->image: null; //更新前の画像パス
+            $dir = 'upload/gacha_category/bg_image/';             //保存先ディレクトリ
+            $request_file    = $request->file('bg_image');     //画像のリクエスト
+            $old_image_path  = $gacha_category? $gacha_category->bg_image: null; //更新前の画像パス
             $image_dalete    = $request->image_dalete;      //画像を削除するか否か
             $copy_image_puth = $request->copy_image_puth;       //コピー用画像パス
 
-            $inputs['image'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
-
-
-        # 公開設定
-            $published_at = $gacha_category? $gacha_category->published_at :NULL;
-            $is_published = $gacha_category? $gacha_category->is_published :NULL;//公開中か否か
-
-            // 公開[1](前回が「公開」でないとき)
-            if( $request->is_published==1 && !$is_published ){
-                $published_at = now()->format('Y-m-d H:i:00');
-            }
-            // 公開予約[2]
-            else if( $request->is_published==2 ){
-                $published_at = str_replace('T',' ', $request->published_at );
-            }
-            // 非公開[0]
-            else if( $request->is_published==0 ){
-                $published_at = NULL;
-            }
-
-            $inputs['published_at'] = $published_at;
-        //
+            $inputs['bg_image'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
 
 
         return $inputs;

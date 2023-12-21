@@ -1,5 +1,5 @@
 <article class="container my-5">
-    <div class="mx-auto" style="max-width:900px;">
+    <div class="mx-auto" style="max-width:600px;">
 
         <!--タイトル-->
         <h2 class="fs-1 fw-bold">{{ $infomation->title }}</h2>

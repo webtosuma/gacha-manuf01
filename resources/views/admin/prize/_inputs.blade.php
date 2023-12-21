@@ -1,3 +1,6 @@
+<div class="form-text mb-3">
+    <span class="text-danger">＊</span>入力必須
+</div>
 <div class="row">
     <div class="col-md">
 
@@ -5,7 +8,9 @@
         <div class="col-6 mx-auto">
             <!--商品画像(image)-->
             <label class="d-block mb-4">
-                <div class="form-label">商品画像</div>
+                <div class="form-label">
+                    商品画像<span class="text-danger">＊</span>
+                </div>
 
                 <read-image-file-component
                 img_path="{{ $prize->image_path }}"
@@ -26,7 +31,9 @@
     <div class="col-md-6">
         <!--カテゴリー(category_id)-->
         <label class="d-block mb-4">
-            <div class="form-label">カテゴリー</div>
+            <div class="form-label">
+                カテゴリー<span class="text-danger">＊</span>
+            </div>
             <select class="form-select" name="category_id">
                 <option value="">選択してください</option>
 
@@ -47,7 +54,9 @@
 
         <!--商品コード(code)-->
         <label class="d-block mb-4">
-            <div class="form-label">商品コード</div>
+            <div class="form-label">
+                商品コード<span class="text-danger">＊</span>
+            </div>
 
             <input value="{{old('code', $prize->code )}}"
             name="code"
@@ -60,7 +69,9 @@
 
         <!--商品名(name)-->
         <label class="d-block mb-4">
-            <div class="form-label">商品名</div>
+            <div class="form-label">
+                商品名<span class="text-danger">＊</span>
+            </div>
 
             <input value="{{old('name', $prize->name )}}"
             name="name"
@@ -75,7 +86,10 @@
 
         <!--ランク(rank_id)-->
         <label class="d-block mb-4">
-            <div class="form-label">評価ランク</div>
+            <div class="form-label">
+                評価ランク<span class="text-danger">＊</span>
+            </div>
+
             <select class="form-select" name="rank_id">
                 <option value="">選択してください</option>
 
@@ -96,7 +110,9 @@
 
         <!--交換ポイント(point)-->
         <label class="d-block mb-4 col-4">
-            <div class="form-label">交換ポイント</div>
+            <div class="form-label">
+                交換ポイント<span class="text-danger">＊</span>
+            </div>
 
             <input value="{{old('point', $prize->point )}}"
             name="point"

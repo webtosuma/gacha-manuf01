@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','カテゴリー　新規登録')
+@section('name',$gacha_category->name.'編集')
 
 
 @section('meta') @php
@@ -27,30 +27,33 @@ $active_submenu = true;
                 >{{ 'Top' }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.category') }}"
                 >{{ 'カテゴリー' }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.category.show',$gacha_category) }}"
+                >{{ $gacha_category->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"
-                >{{ 'カテゴリー　新規登録' }}</li>
+                >{{ '編集' }}</li>
             </ol>
         </nav>
 
 
 
-        <h2 class="mb- py-3 border-bottom">{{ 'カテゴリー　新規登録' }}</h2>
+        <h2 class="mb- py-3 border-bottom">{{ '『'.$gacha_category->name.'』編集' }}</h2>
 
         <a href="#" onClick="history.back(); return false;"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
+
         <section>
-            <form action="{{ route('admin.category.store',) }}" method="POST"
+            <form action="{{ route('admin.category.update',$gacha_category) }}" method="POST"
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
+                @method('PATCH')
 
                 @include('admin.category._inputs')
 
 
             </form>
         </section>
-
 
     </div>
 @endsection

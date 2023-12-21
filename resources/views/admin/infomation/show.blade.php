@@ -26,6 +26,9 @@ $active_submenu = true;
             </ol>
         </nav>
 
+        <a href="{{route('admin.infomation.edit',$infomation)}}"
+        class="btn btn-warning text-white my-3"
+        >編集する</a>
 
         @include('footer_menu.infomation.article')
 

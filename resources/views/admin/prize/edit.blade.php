@@ -34,7 +34,11 @@ $active_submenu = true;
 
 
 
-        <h2 class="mb-5 py-3 border-bottom">編集</h2>
+        <h2 class="mb- py-3 border-bottom">編集</h2>
+
+        <a href="#" onClick="history.back(); return false;"
+        class="btn my-3 border rounded-pill"
+        ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
 
         <section>
