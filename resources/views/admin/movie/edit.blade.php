@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title',$movie->value.'pt編集')
+@section('title',$movie->name.'編集')
 
 
 @section('meta') @php
@@ -34,22 +34,121 @@ $active_submenu = true;
 
 
 
-        <h2 class="mb- py-3 border-bottom">{{ '『'.$movie->value.'pt』編集' }}</h2>
+        <h2 class="mb- py-3 border-bottom">{{ '『'.$movie->name.'』編集' }}</h2>
 
-        <a href="#" onClick="history.back(); return false;"
+        <a href="{{route('admin.movie')}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
 
-        <section>
+        <!--演出動画名(name)-->
+        <section class="py-5 border-bottom">
             <form action="{{ route('admin.movie.update',$movie) }}" method="POST"
             novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
                 @method('PATCH')
 
-                @include('admin.movie._inputs')
+                <div class="row align-items-end">
+                    <div class="col-6">
+                        <label class="d-block">
+                            <div class="form-label">
+                                演出動画名
+                                <span class="text-danger">＊</span>
+                            </div>
 
+                            <input value="{{old('name', $movie->name )}}"
+                            name="name"
+                            type="text" class="form-control">
+
+                            <!--error message-->
+                            @if ( $errors->has('name') )
+                                <div class="text-danger"> {{$errors->first('name')}} </div>
+                            @endif
+                        </label>
+                    </div>
+                    <div class="col">
+                        <disabled-button style_class="btn btn-warning text-white shadow" btn_text="更新する"></bdisabled-button>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+
+
+
+        <!--PC用動画(pc_storage)-->
+        <section class="py-5 border-bottom">
+            <form action="{{ route('admin.movie.update',$movie) }}" method="POST"
+            novalidate
+            enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" name="name" value="{{$movie->name}}">
+                <input type="hidden" name="pc" value="1">
+
+
+                <div class="row align-items-end">
+                    <div class="col-6">
+                        <label class="d-block mb-4">
+                            <div class="form-label">
+                                PC用動画
+                                <span class="text-danger">＊</span>
+                            </div>
+
+                            <read-movie-file-component
+                            name="pc_storage"
+                            video_path="{{ $movie->pc }}"
+                            ></read-movie-file-component>
+
+                            <!--error message-->
+                            @if ( $errors->has('pc_storage') )
+                                <div class="text-danger"> {{$errors->first('pc_storage')}} </div>
+                            @endif
+                        </label>
+                    </div>
+                    <div class="col">
+                        <disabled-button style_class="btn btn-warning text-white shadow" btn_text="更新する"></bdisabled-button>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+
+
+        <!--モバイル用動画(mobile_storage)-->
+        <section class="py-5 border-bottom">
+            <form action="{{ route('admin.movie.update',$movie) }}" method="POST"
+            novalidate
+            enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" name="name" value="{{$movie->name}}">
+                <input type="hidden" name="mobile" value="1">
+
+                <div class="row align-items-end">
+                    <div class="col-6">
+                        <label class="d-block col-6 mx-auto">
+                            <div class="form-label">
+                                モバイル用動画
+                                <span class="text-danger">＊</span>
+                            </div>
+
+                            <read-movie-file-component
+                            name="mobile_storage"
+                            video_path="{{ $movie->mobile }}"
+                            ></read-movie-file-component>
+
+                            <!--error message-->
+                            @if ( $errors->has('mobile_storage') )
+                                <div class="text-danger"> {{$errors->first('mobile_storage')}} </div>
+                            @endif
+                        </label>
+                    </div>
+                    <div class="col">
+                        <disabled-button style_class="btn btn-warning text-white shadow" btn_text="更新する"></bdisabled-button>
+                    </div>
+                </div>
 
             </form>
         </section>

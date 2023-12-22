@@ -24,7 +24,7 @@
             :for="name+'_dalete'"><i class="bi bi-x-lg"></i></label>
         </div>
 
-        <div class="form-text">※ファイルは1000Mバイト以内で、mp4・movのいずれかの形式を選択してください。</div>
+        <div class="form-text">※ファイルは8Mバイト以内で、mp4・movのいずれかの形式を選択してください。</div>
 
         <!-- delete(hidden) -->
         <div class="form-check d-none">
@@ -78,7 +78,7 @@
                     ( file.type === 'video/mp4' || file.type === 'video/mov' ) &&
                     // file.type === 'video/mp4'
                     //ファイルサイズ
-                    file.size < 1000*1000*1000
+                    file.size < 8*1000*1000
 
                 ){
                     this.src = URL.createObjectURL(file); //表示画像の変更

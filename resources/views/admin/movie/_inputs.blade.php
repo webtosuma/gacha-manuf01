@@ -2,6 +2,7 @@
     <span class="text-danger">＊</span>入力必須
 </div>
 
+
 <div class="col-6">
     <!--演出動画名(name)-->
     <label class="d-block mb-4">
@@ -33,6 +34,7 @@
 
             <read-movie-file-component
             name="pc_storage"
+            video_path="{{ $movie->pc }}"
             ></read-movie-file-component>
 
             <!--error message-->
@@ -51,6 +53,7 @@
 
             <read-movie-file-component
             name="mobile_storage"
+            video_path="{{ $movie->mobile }}"
             ></read-movie-file-component>
 
             <!--error message-->

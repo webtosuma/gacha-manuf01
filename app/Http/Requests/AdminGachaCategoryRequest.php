@@ -30,7 +30,8 @@ class AdminGachaCategoryRequest extends FormRequest
         $rules = [
             'name'     => ['required','max:140',],
             'code_name'=> ['required','max:140',],
-            'image'    => ['file','max:10000','mimes:jpeg,png,jpg'], //イメージ画像
+            // 'image'    => ['file','max:10000','mimes:jpeg,png,jpg'], //イメージ画像
+            'image'        => ['required','file',], //イメージ画像
             'is_published' => ['required','in:0,1'],
         ];
 

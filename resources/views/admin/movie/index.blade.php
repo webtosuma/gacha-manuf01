@@ -58,7 +58,8 @@ $active_submenu = true;
                 <tbody>
                     <tr class="bg-light">
                         <th scope="col">演出動画名</th>
-                        <th scope="col">動画再生</th>
+                        <th scope="col">PC用動画再生</th>
+                        <th scope="col">モバイル用動画再生</th>
                         <th scope="col"></th>
                     </tr>
 
@@ -70,10 +71,19 @@ $active_submenu = true;
 
                         <td>
                             <!-- PC用 -->
-                            @include('admin.movie.pc_movie_modal')
-
+                            @if ($movie->pc)
+                                @include('admin.movie.pc_movie_modal')
+                            @else
+                                <span>未登録</span>
+                            @endif
+                        </td>
+                        <td>
                             <!-- モバイル用 -->
-                            @include('admin.movie.mobile_movie_modal')
+                            @if ($movie->mobile)
+                                @include('admin.movie.mobile_movie_modal')
+                            @else
+                                <span>未登録</span>
+                            @endif
                         </td>
 
                         <td style="width:8rem;"><div class="row justify-content-end g-2">

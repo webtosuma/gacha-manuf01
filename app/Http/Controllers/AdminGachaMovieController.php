@@ -26,7 +26,8 @@ class AdminGachaMovieController extends Controller
      */
     public function edit(Gacha $gacha)
     {
-        $movies = Movie::all();
+        $movies = Movie::where('pc_storage','<>','') //PC・mobile共に保存ずみのみ
+        ->where('mobile_storage','<>','')->get();
 
         return view('admin.gacha.movie.edit', compact('gacha','movies'));
     }

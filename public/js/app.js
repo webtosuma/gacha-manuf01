@@ -5897,7 +5897,7 @@ __webpack_require__.r(__webpack_exports__);
       (file.type === 'video/mp4' || file.type === 'video/mov') &&
       // file.type === 'video/mp4'
       //ファイルサイズ
-      file.size < 1000 * 1000 * 1000) {
+      file.size < 8 * 1000 * 1000) {
         this.src = URL.createObjectURL(file); //表示画像の変更
         this.err_message = '';
 
@@ -8900,7 +8900,7 @@ var render = function render() {
     staticClass: "bi bi-x-lg"
   })])]), _vm._v(" "), _c("div", {
     staticClass: "form-text"
-  }, [_vm._v("※ファイルは1000Mバイト以内で、mp4・movのいずれかの形式を選択してください。")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("※ファイルは8Mバイト以内で、mp4・movのいずれかの形式を選択してください。")]), _vm._v(" "), _c("div", {
     staticClass: "form-check d-none"
   }, [_c("input", {
     directives: [{

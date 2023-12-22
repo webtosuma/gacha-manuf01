@@ -29,7 +29,8 @@ class AdminPrizeRequest extends FormRequest
     {
         $rules = [
             'category_id'  => ['required','max:140',],
-            'image'        => ['required','file','max:10000','mimes:jpeg,png,jpg'], //イメージ画像
+            // 'image'        => ['required','file','max:10000','mimes:jpeg,png,jpg'], //イメージ画像
+            'image'        => ['required','file',], //イメージ画像
             'code'         => ['required'],
             'name'         => ['required','max:140',],
             'rank_id'      => ['required','max:140',],

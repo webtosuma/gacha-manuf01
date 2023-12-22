@@ -35,11 +35,7 @@ class AdminMovieController extends Controller
      */
     public function create()
     {
-        $movie = new Movie([
-            'price' => 0,
-            'value' => 0,
-            'is_published' => 0,
-        ]);
+        $movie = new Movie();
 
         return view('admin.movie.create', compact('movie'));
     }
@@ -54,10 +50,14 @@ class AdminMovieController extends Controller
      */
     public function store(AdminMovieRequest $request)
     {
-        dd( $request->all() );
+        // dd( $request->all() );
 
         # 入力データの加工
-        $inputs = self::processingInputs( $request );
+        $inputs = [
+            'name'=> $request->name,
+            'pc_storage'    => '',
+            'mobile_storage'=> '',
+        ];
 
         # DBデータの新規登録
         $movie = new Movie( $inputs );
@@ -65,8 +65,8 @@ class AdminMovieController extends Controller
 
 
         # 返信メッセージ
-        return redirect()->route('admin.movie')
-        ->with(['alert-primary'=>'演出動画を新規登録しました。']);
+        return redirect()->route('admin.movie.edit',$movie)
+        ->with(['alert-primary'=>'新規登録する演出動画名を登録しました。']);
     }
 
 
@@ -77,7 +77,7 @@ class AdminMovieController extends Controller
      * @param  \App\Models\Movie $movie
      * @return \Illuminate\Http\Response
      */
-    public function edit(PointSail $movie)
+    public function edit(Movie $movie)
     {
         return view('admin.movie.edit', compact('movie'));
     }
@@ -93,8 +93,44 @@ class AdminMovieController extends Controller
      */
     public function update(AdminMovieRequest $request, Movie $movie)
     {
-        # 入力データの加工
-        $inputs = self::processingInputs( $request, $movie );
+        // dd($request->all());
+
+        $inputs = [];
+
+        # PC用動画の更新
+        if( $request->pc ){
+
+            # ストレージ画像ファイルの更新（イメージ画像）
+            $dir = 'upload/movie/pc_storage/';             //保存先ディレクトリ
+            $request_file    = $request->file('pc_storage');     //画像のリクエスト
+            $old_image_path  = $movie->pc_storage; //更新前の画像パス
+            $image_dalete    = $request->pc_storage_dalete;      //画像を削除するか否か
+
+            $inputs['pc_storage'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete) ?? '';
+
+            $message = 'PC用動画を更新しました。';
+        }
+
+        # PCモバイル動画の更新
+        elseif( $request->mobile ){
+
+            # ストレージ画像ファイルの更新（イメージ画像）
+            $dir = 'upload/movie/mobile_storage/';             //保存先ディレクトリ
+            $request_file    = $request->file('mobile_storage');     //画像のリクエスト
+            $old_image_path  = $movie->mobile_storage; //更新前の画像パス
+            $image_dalete    = $request->mobile_storage_dalete;      //画像を削除するか否か
+
+            $inputs['mobile_storage'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete) ?? '';
+
+            $message = 'モバイル用動画を更新しました。';
+        }
+
+        # 演出動画名の更新
+        elseif( $request->name ){
+            $inputs['name'] = $request->name;
+            $message = '演出動画名を更新しました。';
+        }
+
 
 
         # DBデータの更新
@@ -102,8 +138,8 @@ class AdminMovieController extends Controller
 
 
         # リダイレクト
-        return redirect()->route('admin.movie')
-        ->with(['alert-warning'=>'演出動画情報を更新しました。']);
+        return redirect()->route('admin.movie.edit', $movie)
+        ->with(['alert-warning'=>$message]);
     }
 
 
@@ -124,26 +160,4 @@ class AdminMovieController extends Controller
     }
 
 
-
-    /**
-     * 入力データの加工 self::processingInputs( $request )
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Movie $pointSail //新規登録のとき===null
-     * @return Array
-     */
-    public function processingInputs( $request, $pointSail=null )
-    {
-        $inputs = $request->only(
-            'value'       ,// '付与ポイント数',
-            'price'       ,// 'ポイント販売価格',
-            'is_published',// '公開設定',
-        );
-
-        # お得分の計算
-        $service = $request->value - $request->price;
-        $inputs['service'] = $service > 0? $service : 0 ;
-
-        return $inputs;
-    }
 }

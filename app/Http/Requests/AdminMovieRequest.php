@@ -24,10 +24,9 @@ class AdminMovieRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'value'  => ['required','integer','min:0',],
-            // 'price'  => ['required','integer','min:0'],
-            // 'service'=> ['integer','min:0'],
-            // 'is_published' => ['required','in:0,1'],
+            'name'          => ['required','max:140',],
+            'pc_storage'    => ['file',],
+            'mobile_storage'=> ['file',],
         ];
     }
 
@@ -40,7 +39,7 @@ class AdminMovieRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'          => '動画名',
+            'name'          => '演出動画名',
             'pc_storage'    => 'PC用動画・保存先',
             'mobile_storage'=> 'mobile用動画・保存先',
         ];
