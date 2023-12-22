@@ -12,82 +12,138 @@ use App\Models\PointSail;
 */
 class AdminPointSailController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * 一覧
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         # 販売用ポイント情報取得
-        $point_sails = PointSail::orderBy('value','asc')->get();//ポイントが低い順
+        $point_sails = PointSail::orderByDesc('is_published')//公開中のみ上
+        ->orderBy('value','asc')//ポイントが低い順
+        ->get();
 
         return view('admin.point_sail.index',compact('point_sails'));
     }
 
+
+
     /**
-     * Show the form for creating a new resource.
+     * 新規作成
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $point_sail = new PointSail([
+            'price' => 0,
+            'value' => 0,
+            'is_published' => 0,
+        ]);
+
+        return view('admin.point_sail.create', compact('point_sail'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+
 
     /**
-     * Display the specified resource.
+     * 登録
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\AdminPointSailRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function store(AdminPointSailRequest $request)
     {
-        //
+        # 入力データの加工
+        $inputs = self::processingInputs( $request );
+
+        # DBデータの新規登録
+        $point_sail = new PointSail( $inputs );
+        $point_sail->save();
+
+
+        # 返信メッセージ
+        return redirect()->route('admin.point_sail')
+        ->with(['alert-primary'=>'販売ポイントを新規登録しました。']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+
 
     /**
-     * Update the specified resource in storage.
+     * 編集
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\PointSail $point_sail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function edit(PointSail $point_sail)
     {
-        //
+        return view('admin.point_sail.edit', compact('point_sail'));
     }
 
+
+
     /**
-     * Remove the specified resource from storage.
+     * 更新
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\AdminPointSailRequest  $request
+     * @param  \App\Models\PointSail $point_sail
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function update(AdminPointSailRequest $request, PointSail $point_sail)
     {
-        //
+        # 入力データの加工
+        $inputs = self::processingInputs( $request, $point_sail );
+
+
+        # DBデータの更新
+        $point_sail->update( $inputs );
+
+
+        # リダイレクト
+        return redirect()->route('admin.point_sail')
+        ->with(['alert-warning'=>'販売ポイント情報を更新しました。']);
+    }
+
+
+
+    /**
+     * 削除
+     *
+     * @param  \App\Models\PointSail $point_sail
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy( PointSail $point_sail )
+    {
+        $point_sail->delete();
+
+        # リダイレクト
+        return redirect()->route('admin.point_sail')
+        ->with(['alert-danger'=>'販売ポイント情報を削除しました。']);
+    }
+
+
+
+    /**
+     * 入力データの加工 self::processingInputs( $request )
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\PointSail $pointSail //新規登録のとき===null
+     * @return Array
+     */
+    public function processingInputs( $request, $pointSail=null )
+    {
+        $inputs = $request->only(
+            'value'       ,// '付与ポイント数',
+            'price'       ,// 'ポイント販売価格',
+            'is_published',// '公開設定',
+        );
+
+        # お得分の計算
+        $service = $request->value - $request->price;
+        $inputs['service'] = $service > 0? $service : 0 ;
+
+        return $inputs;
     }
 }

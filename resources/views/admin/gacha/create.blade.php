@@ -40,6 +40,7 @@ $active_key = 'gacha';
 
         <section>
             <form action="{{ route('admin.gacha.store',) }}" method="POST"
+            novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
 

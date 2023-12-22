@@ -29,7 +29,7 @@ $active_submenu = true;
                 <li class="breadcrumb-item"><a href="{{ route('admin.prize') }}"
                     >{{ '商品管理' }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">編集</li>
-                </ol>
+            </ol>
         </nav>
 
 
@@ -43,6 +43,7 @@ $active_submenu = true;
 
         <section>
             <form action="{{ route('admin.prize.update', $prize) }}" method="POST"
+            novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
                 @method('PATCH')

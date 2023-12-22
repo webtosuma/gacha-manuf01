@@ -33,7 +33,7 @@ class AdminPrizeRequest extends FormRequest
             'code'         => ['required'],
             'name'         => ['required','max:140',],
             'rank_id'      => ['required','max:140',],
-            'point'        => ['required','max:140',],
+            'point'        => ['required','integer','min:0'],
         ];
 
         // 更新時のルール

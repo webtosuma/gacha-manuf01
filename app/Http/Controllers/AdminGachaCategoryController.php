@@ -27,16 +27,16 @@ class AdminGachaCategoryController extends Controller
     }
 
 
-    /**
-     * 表示
-     *
-     * @param  \App\Models\GachaCategory $gacha_category
-     * @return \Illuminate\Http\Response
-     */
-    public function show( GachaCategory $gacha_category )
-    {
-        return view('admin.category.show', compact('gacha_category'));
-    }
+    // /**
+    //  * 表示
+    //  *
+    //  * @param  \App\Models\GachaCategory $gacha_category
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function show( GachaCategory $gacha_category )
+    // {
+    //     return view('admin.category.show', compact('gacha_category'));
+    // }
 
 
 

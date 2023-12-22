@@ -49,6 +49,7 @@ $active_key = 'gacha';
 
         <section>
             <form action="{{ route('admin.gacha.update', $gacha) }}" method="POST"
+            novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
                 @method('PATCH')

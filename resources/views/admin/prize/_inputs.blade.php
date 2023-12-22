@@ -109,14 +109,17 @@
 
 
         <!--交換ポイント(point)-->
-        <label class="d-block mb-4 col-4">
+        <label class="d-block mb-4">
             <div class="form-label">
                 交換ポイント<span class="text-danger">＊</span>
             </div>
 
-            <input value="{{old('point', $prize->point )}}"
-            name="point"
-            type="number" class="form-control" min="0">
+            <div class="col-4">
+                <input value="{{old('point', $prize->point )}}"
+                name="point"
+                type="number" class="form-control" min="0">
+            </div>
+
             <!--error message-->
             @if ( $errors->has('point') )
                 <div class="text-danger"> {{$errors->first('point')}} </div>

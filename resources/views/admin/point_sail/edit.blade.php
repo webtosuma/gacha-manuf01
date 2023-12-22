@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
 
 
-@section('title',$gacha_category->name.'編集')
+@section('title',$point_sail->value.'pt編集')
 
 
 @section('meta') @php
-$active_key = 'category';
+$active_key = 'point_sail';
 $active_submenu = true;
 @endphp @endsection
 
@@ -25,10 +25,8 @@ $active_submenu = true;
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"
                 >{{ 'Top' }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category') }}"
-                >{{ 'カテゴリー' }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category.show',$gacha_category) }}"
-                >{{ $gacha_category->name }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.point_sail') }}"
+                >{{ '販売ポイント' }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"
                 >{{ '編集' }}</li>
             </ol>
@@ -36,7 +34,7 @@ $active_submenu = true;
 
 
 
-        <h2 class="mb- py-3 border-bottom">{{ '『'.$gacha_category->name.'』編集' }}</h2>
+        <h2 class="mb- py-3 border-bottom">{{ '『'.$point_sail->value.'pt』編集' }}</h2>
 
         <a href="#" onClick="history.back(); return false;"
         class="btn my-3 border rounded-pill"
@@ -44,12 +42,13 @@ $active_submenu = true;
 
 
         <section>
-            <form action="{{ route('admin.category.update',$gacha_category) }}" method="POST"
+            <form action="{{ route('admin.point_sail.update',$point_sail) }}" method="POST"
+            novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
                 @method('PATCH')
 
-                @include('admin.category._inputs')
+                @include('admin.point_sail._inputs')
 
 
             </form>

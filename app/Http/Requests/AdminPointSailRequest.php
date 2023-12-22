@@ -3,7 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+/*
+| =============================================
+|  サイト管理者　販売ポイント　リクエスト
+| =============================================
+*/
 class AdminPointSailRequest extends FormRequest
 {
     /**
@@ -13,7 +17,7 @@ class AdminPointSailRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +28,27 @@ class AdminPointSailRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'value'  => ['required','integer','min:0',],
+            'price'  => ['required','integer','min:0'],
+            'service'=> ['integer','min:0'],
+            'is_published' => ['required','in:0,1'],
+        ];
+    }
+
+
+    /**
+     * パラメーターの日本語表記
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'value'  => '付与ポイント数',
+            'price'  => 'ポイント販売価格',
+            'service'=> 'お得分',
+            //'is_subscription' => 'サブスクリプションか否か',
+            'is_published'    => '公開設定',
         ];
     }
 }
