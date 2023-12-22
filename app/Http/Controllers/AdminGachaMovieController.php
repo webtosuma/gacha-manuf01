@@ -28,8 +28,6 @@ class AdminGachaMovieController extends Controller
     {
         $movies = Movie::all();
 
-        // dd($gacha->discriptions[0]->movies->pluck('id')->toArray());
-
         return view('admin.gacha.movie.edit', compact('gacha','movies'));
     }
 

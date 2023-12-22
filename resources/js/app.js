@@ -114,6 +114,10 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('read-image-file-component',
     require('./components/Items/ReadImageFileComponent.vue').default);
 
+    /* 動画ファイル読み込み　Input */
+    Vue.component('read-movie-file-component',
+    require('./components/Items/ReadMovieFileComponent.vue').default);
+
     /* 文章置換え（改行・リンクタグ対応） */
     Vue.component('replace-text-component',
     require('./components/Items/ReplaceTextComponent.vue').default);

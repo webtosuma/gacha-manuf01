@@ -2,10 +2,15 @@
     <div class="">
 
         <!-- 画像 -->
-        <div class="mb-2">
-            <ratio-image-component
-            :style_class="style_class"
-            :url="src" />
+        <div v-if="src" class="mb-2">
+            <video class="bg_video"
+            playsinline
+            controls
+            width="100%"
+            poster="">
+                <source :src="src" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
         </div>
 
         <!--ファイル　インプット-->
@@ -19,7 +24,7 @@
             :for="name+'_dalete'"><i class="bi bi-x-lg"></i></label>
         </div>
 
-        <div class="form-text">※ファイルは8Mバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。</div>
+        <div class="form-text">※ファイルは1000Mバイト以内で、mp4・movのいずれかの形式を選択してください。</div>
 
         <!-- delete(hidden) -->
         <div class="form-check d-none">
@@ -36,31 +41,29 @@
 
 <script>
     export default {
-        data : function() {
-            return{
-                /* 表示画像のソース */
-                src: null,
-
-                /* エラーメッセージ */
-                err_message: '',
-
-                /* 削除 */
-                delete_radio: null,
-            }
-        },
         props: {
 
-            img_path:   { type: String, default: '', }, //表示画像のパス
-            noimg_path: { type: String, default: '', }, //画像無しのパス
-            alt:        { type: String, default: 'サムネ画像', },
+            video_path:   { type: String, default: '', }, //表示動画のパス
+            novideo_path: { type: String, default: '', }, //動画無しのパス
             name:       { type: String, default: 'image', }, //インプット要素のname名
-            style_class:{ type: String, default: 'ratio ratio-3x4 rounded-3', },
 
         },
+        data() { return{
+
+            /* 表示画像のソース */
+            src: null,
+
+            /* エラーメッセージ */
+            err_message: '',
+
+            /* 削除 */
+            delete_radio: null,
+
+        } },
         mounted() {
-            //プロップの値をデータに保存 ※プロップの値は直接変更できないので、データに保存
-            this.src = this.img_path!=='' ? this.img_path : this.noimg_path;
-            this.delete_radio = this.img_path == this.noimg_path ? 'delete' : null;
+
+            this.src = this.video_path !== '' ? this.video_path : this.no_video_path;
+            this.delete_radio = this.video_path == this.no_video_path ? 'delete' : null;
 
         },
         methods:{
@@ -72,9 +75,11 @@
 
                 if(
                     //ファイル形式
-                    ( file.type==='image/jpeg' || file.type==='image/png' ) &&
+                    ( file.type === 'video/mp4' || file.type === 'video/mov' ) &&
+                    // file.type === 'video/mp4'
                     //ファイルサイズ
-                    file.size < 8*1000*1000
+                    file.size < 1000*1000*1000
+
                 ){
                     this.src = URL.createObjectURL(file); //表示画像の変更
                     this.err_message = ''

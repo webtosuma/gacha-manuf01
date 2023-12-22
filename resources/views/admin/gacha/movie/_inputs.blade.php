@@ -33,14 +33,14 @@
                                 <div>{{ $movie->name }}</div>
                             </label>
                         </div>
-                        {{-- <div class="col-auto">
-                            <button class="btn btn-sm btn-light border" type="button"
-                            ><i class="bi bi-play-fill"></i>PC用動画</button>
+                        <div class="col-auto">
+                            <!-- PC用 -->
+                            @include('admin.movie.pc_movie_modal')
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-sm btn-light border" type="button"
-                            ><i class="bi bi-play-fill"></i>モバイル用動画</button>
-                        </div> --}}
+                            <!-- モバイル用 -->
+                            @include('admin.movie.mobile_movie_modal')
+                        </div>
                     </div>
 
                 @endforeach

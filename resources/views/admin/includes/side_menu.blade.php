@@ -51,9 +51,9 @@ $submenu_array = [
         'label' => '商品',
     ],
     [
-        'route' => '',
+        'route' => route('admin.movie'),
         'key'   => 'movie',
-        'label' => '演出動画(準備中)',
+        'label' => '演出動画',
     ],
     [
         'route' => route('admin.point_sail'),

@@ -5823,7 +5823,81 @@ __webpack_require__.r(__webpack_exports__);
       //ファイル形式
       (file.type === 'image/jpeg' || file.type === 'image/png') &&
       //ファイルサイズ
-      file.size < 10 * 1000 * 1000) {
+      file.size < 8 * 1000 * 1000) {
+        this.src = URL.createObjectURL(file); //表示画像の変更
+        this.err_message = '';
+
+        // 削除チェックを外す
+        this.delete_radio = null;
+      } else {
+        this.src = this.img_path;
+        this.err_message = '※エラー：ファイルサイズか形式が異なります。';
+        input_file.value = ''; //インプット要素内を空にする。
+      }
+    },
+
+    delete_image: function delete_image() {
+      this.src = this.noimg_path;
+      var input_file = document.getElementById('file_input' + this.name);
+      input_file.value = ''; //インプット要素内を空にする。
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    video_path: {
+      type: String,
+      "default": ''
+    },
+    //表示動画のパス
+    novideo_path: {
+      type: String,
+      "default": ''
+    },
+    //動画無しのパス
+    name: {
+      type: String,
+      "default": 'image'
+    } //インプット要素のname名
+  },
+  data: function data() {
+    return {
+      /* 表示画像のソース */
+      src: null,
+      /* エラーメッセージ */
+      err_message: '',
+      /* 削除 */
+      delete_radio: null
+    };
+  },
+  mounted: function mounted() {
+    this.src = this.video_path !== '' ? this.video_path : this.no_video_path;
+    this.delete_radio = this.video_path == this.no_video_path ? 'delete' : null;
+  },
+  methods: {
+    onChange: function onChange(event) {
+      var file = event.target.files[0];
+      var input_file = document.getElementById('file_input' + this.name);
+      if (
+      //ファイル形式
+      (file.type === 'video/mp4' || file.type === 'video/mov') &&
+      // file.type === 'video/mp4'
+      //ファイルサイズ
+      file.size < 1000 * 1000 * 1000) {
         this.src = URL.createObjectURL(file); //表示画像の変更
         this.err_message = '';
 
@@ -8732,7 +8806,101 @@ var render = function render() {
     staticClass: "bi bi-x-lg"
   })])]), _vm._v(" "), _c("div", {
     staticClass: "form-text"
-  }, [_vm._v("※ファイルは10Mバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("※ファイルは8Mバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。")]), _vm._v(" "), _c("div", {
+    staticClass: "form-check d-none"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.delete_radio,
+      expression: "delete_radio"
+    }],
+    staticClass: "form-check-input",
+    attrs: {
+      type: "radio",
+      name: _vm.name + "_dalete",
+      id: _vm.name + "_dalete",
+      value: "delete"
+    },
+    domProps: {
+      checked: _vm._q(_vm.delete_radio, "delete")
+    },
+    on: {
+      change: [function ($event) {
+        _vm.delete_radio = "delete";
+      }, _vm.delete_image]
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "form-text text-danger"
+  }, [_vm._v(_vm._s(_vm.err_message))])]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=template&id=4c521001":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=template&id=4c521001 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {}, [_vm.src ? _c("div", {
+    staticClass: "mb-2"
+  }, [_c("video", {
+    staticClass: "bg_video",
+    attrs: {
+      playsinline: "",
+      controls: "",
+      width: "100%",
+      poster: ""
+    }
+  }, [_c("source", {
+    attrs: {
+      src: _vm.src,
+      type: "video/mp4"
+    }
+  }), _vm._v("\n            Your browser does not support the video tag.\n        ")])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "input-group mb-3"
+  }, [_c("input", {
+    staticClass: "form-control",
+    staticStyle: {
+      padding: ".4rem"
+    },
+    attrs: {
+      type: "file",
+      name: _vm.name,
+      id: "file_input" + _vm.name
+    },
+    on: {
+      change: _vm.onChange
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "input-group-text text-white",
+    "class": {
+      "bg-danger": _vm.delete_radio == null
+    },
+    attrs: {
+      "data-bs-toggle": "tooltip",
+      "data-bs-placement": "bottom",
+      title: "画像の削除",
+      "for": _vm.name + "_dalete"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-x-lg"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-text"
+  }, [_vm._v("※ファイルは1000Mバイト以内で、mp4・movのいずれかの形式を選択してください。")]), _vm._v(" "), _c("div", {
     staticClass: "form-check d-none"
   }, [_c("input", {
     directives: [{
@@ -12441,6 +12609,9 @@ Vue.component('ratio-image-component', (__webpack_require__(/*! ./components/Ite
 
 /* 画像ファイル読み込み　Input */
 Vue.component('read-image-file-component', (__webpack_require__(/*! ./components/Items/ReadImageFileComponent.vue */ "./resources/js/components/Items/ReadImageFileComponent.vue")["default"]));
+
+/* 動画ファイル読み込み　Input */
+Vue.component('read-movie-file-component', (__webpack_require__(/*! ./components/Items/ReadMovieFileComponent.vue */ "./resources/js/components/Items/ReadMovieFileComponent.vue")["default"]));
 
 /* 文章置換え（改行・リンクタグ対応） */
 Vue.component('replace-text-component', (__webpack_require__(/*! ./components/Items/ReplaceTextComponent.vue */ "./resources/js/components/Items/ReplaceTextComponent.vue")["default"]));
@@ -35767,6 +35938,45 @@ component.options.__file = "resources/js/components/Items/ReadImageFileComponent
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/ReadMovieFileComponent.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/Items/ReadMovieFileComponent.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ReadMovieFileComponent_vue_vue_type_template_id_4c521001__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReadMovieFileComponent.vue?vue&type=template&id=4c521001 */ "./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=template&id=4c521001");
+/* harmony import */ var _ReadMovieFileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReadMovieFileComponent.vue?vue&type=script&lang=js */ "./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReadMovieFileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReadMovieFileComponent_vue_vue_type_template_id_4c521001__WEBPACK_IMPORTED_MODULE_0__.render,
+  _ReadMovieFileComponent_vue_vue_type_template_id_4c521001__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Items/ReadMovieFileComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/ReplaceTextComponent.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/Items/ReplaceTextComponent.vue ***!
@@ -36711,6 +36921,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=script&lang=js":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadMovieFileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReadMovieFileComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadMovieFileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/ReplaceTextComponent.vue?vue&type=script&lang=js":
 /*!****************************************************************************************!*\
   !*** ./resources/js/components/Items/ReplaceTextComponent.vue?vue&type=script&lang=js ***!
@@ -37250,6 +37476,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadImageFileComponent_vue_vue_type_template_id_7d6de136__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadImageFileComponent_vue_vue_type_template_id_7d6de136__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReadImageFileComponent.vue?vue&type=template&id=7d6de136 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFileComponent.vue?vue&type=template&id=7d6de136");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=template&id=4c521001":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=template&id=4c521001 ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadMovieFileComponent_vue_vue_type_template_id_4c521001__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadMovieFileComponent_vue_vue_type_template_id_4c521001__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadMovieFileComponent_vue_vue_type_template_id_4c521001__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReadMovieFileComponent.vue?vue&type=template&id=4c521001 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadMovieFileComponent.vue?vue&type=template&id=4c521001");
 
 
 /***/ }),
