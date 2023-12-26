@@ -233,6 +233,16 @@ use App\Http\Controllers;
 
         /* フォームの表示 */
 
+            # お友達紹介キャンペーンURL(canpaing_introductory)
+            Route::get('/settings/canpaing_introductory', function () {
+
+                $key = Auth::user()->id.'-'.Auth::user()->created_at->format('ymdHis');
+                $url = route('home');
+
+
+                return  view('settings.canpaing_introductory', compact('url'));
+            })->name('settings.canpaing_introductory');
+
             # アカウント設定(acount)
             Route::get('/settings/acount',
             function () { return  view('settings.acount.index'); })

@@ -46,7 +46,7 @@ class GachaController extends Controller
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
-            ->limit(4)->get();;
+            ->limit(3)->get();;
 
             ## スライドお知らせ
             $slide_infos = Infomation::where('published_at','<=', now()) //非公開を除く

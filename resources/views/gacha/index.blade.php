@@ -1,3 +1,5 @@
+
+
 @extends('layouts.app')
 
 <!--title-->
@@ -61,6 +63,33 @@
 
 
 @section('content')
+
+    <!-- 紹介キャンペーン　トースト -->
+    {{-- @if( $category_code=='all' )
+    <div class="toast-container position-fixed bottom-0 end-0 p-3 d-flex justify-content-end" style="z-index:99;">
+        <div class="col-8 col-md-12">
+            <div class="toast fade show border-0 rounded-3 overflow-hidden shadow" role="alert" aria-live="assertive" aria-atomic="true">
+
+                <div class="toast-header justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body p-0">
+
+                    <a href="{{route('settings.canpaing_introductory')}}" class="d-block">
+                        <ratio-image-component
+                        style_class="ratio ratio-4x3"
+                        url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.jpg' ) }}"
+                        ></ratio-image-component>
+                    </a>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif --}}
+
+
 
     <!--カルーセル-->
     {{-- <section class="bg-dark overflow-hidden" style="
@@ -281,28 +310,22 @@
         </div>
     </section>
 
-    <!--twitterタイムライン-->
-    <section class="bg-dark">
-        <div class="container py-5">
-
-            <h3 class="text-center text-white fw-bold">お知らせ</h3>
-
-            <div class="col-md-8 mx-auto rounded-4 overflow-auto" style="max-height:90vh;">
-                <a class="twitter-timeline" href="https://twitter.com/CardFesta7627?ref_src=twsrc%5Etfw">Tweets by CardFesta7627</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
-        </div>
-    </section>
 
 
     <!--お知らせ-->
-    <section class="bg-dark">
-        <div class="container py-4">
+    <section class="bg- mb-5">
+        <div class="container py-5">
             <div class="col-md-8 mx-auto">
 
-                <h3 class="text-center text-white fw-bold">お知らせ</h3>
+                {{-- <h3 class="text-center text-white fw-bold mb-4 fs-1">お知らせ</h3> --}}
 
                 <div class="list-group list-group-flush shadow-sm rounded-4"
-                style="background:rgb(255, 255, 255, .7);">
+                style="background:rgb(0, 0, 0, .8;">
+                    <div class="list-group-item border-0">
+                        <h3 class="text-center text-white my-3 fw-bold mb-4 fs-2 border-bottom border-primary border-2 pb-3"
+                        >お知らせ</h3>
+                    </div>
+
                     @forelse ($infomations as $infomation)
                         <div class="list-group-item list-group-item-action border-0 pozition-relative">
                             <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
@@ -310,36 +333,56 @@
                                     <div class="col">
                                         <div class="row py-2">
 
-                                            <div class="col-auto">
+                                            <div class="col-auto text-primary">
                                                 {{ $infomation->created_at->format('Y.m.d') }}
                                             </div>
-                                            <div class="col-12 col-md">
+                                            <div class="col-12 col-md text-white">
                                                 {{ $infomation->title }}
                                             </div>
 
                                         </div>
                                     </div>
-                                    <div class="col-auto text-dark">
+                                    <div class="col-auto text-primary">
                                         <i class="bi bi-chevron-right"></i>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                        @empty
-                            <div class="list-group-item border-0 pozition-relative">
-                                <div class="">
-                                    * お知らせはありません
-                                </div>
+                    @empty
+                        <div class="list-group-item border-0 pozition-relative">
+                            <div class="">
+                                * お知らせはありません
                             </div>
-                        @endforelse
-                    </div>
+                        </div>
+                    @endforelse
 
-                <div class="text-end mt-2">
-                    <a href="{{route('infomation')}}" class="btn text-white ">もっと見る ></a>
+                    <div class="list-group-item border-0 text-end">
+                        <a href="{{route('infomation')}}" class="btn btn- text-white ">もっと見る ></a>
+                    </div>
                 </div>
+
+                {{-- <div class="text-end mt-3">
+                    <a href="{{route('infomation')}}" class="btn btn- text-white ">もっと見る ></a>
+                </div> --}}
             </div>
         </div>
     </section>
+
+
+    <!--twitterタイムライン-->
+    <section class="bg-" style="background:rgb(0, 0, 0, 1);">
+        <div class="container py-5">
+
+            <h3 class="text-center text-white fs-3 fw-bold mb-4 py-3">X（旧twitter）公式タイムライン</h3>
+
+
+            <div class="col-md-8 mx-auto bg-white rounded-4 overflow-auto" style="max-height:90vh;">
+                <a class="twitter-timeline" href="https://twitter.com/CardFesta7627?ref_src=twsrc%5Etfw">Tweets by CardFesta7627</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </section>
+
+
 
 
 @endsection

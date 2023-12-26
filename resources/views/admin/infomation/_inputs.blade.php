@@ -11,15 +11,15 @@
                 <span class="text-danger">＊</span>
             </div>
 
-            {{-- <input value="{{old('title', $infomation->title )}}"
+            <input value="{{old('title', $infomation->title )}}"
             name="title"
-            type="text" class="form-control"> --}}
+            type="text" class="form-control">
 
-            <encodedーinputtext-component
+            {{-- <encodedーinputtext-component
             id="title" name="title"
             style_class="form-control"
             default_body="{{old('title', $infomation->title )}}"
-            ></encodedーinputtext-component>
+            ></encodedーinputtext-component> --}}
 
 
             <!--error message-->

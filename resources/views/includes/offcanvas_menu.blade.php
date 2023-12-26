@@ -65,6 +65,23 @@ style="max-width:90vw; min-width:30vw;">
             {{-- <a href="" class="list-group-item list-group-item-action py-3"
             >最近取得した商品</a> --}}
 
+
+            <!--お友達紹介キャンペーン-->
+            {{-- <div class="list-group-item p-3 px-2">
+                <div class="row g-2">
+                    <div class="col-4">
+                        <a href="{{route('settings.canpaing_introductory')}}" class="d-block rounded-4 overflow-hidden">
+                            <ratio-image-component
+                            style_class="ratio ratio-4x3"
+                            url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.jpg' ) }}"
+                            ></ratio-image-component>
+                        </a>
+                    </div>
+                </div>
+            </div> --}}
+
+
+
             <a href="{{ route('user_prize') }}" class="list-group-item list-group-item-action py-3"
             >取得した商品</a>
 
@@ -96,6 +113,14 @@ style="max-width:90vw; min-width:30vw;">
                     type="submit">{{ __('ログアウト') }}</button>
                 </form>
             @endif
+
+
+            {{-- <a href="{{route('settings.canpaing_introductory')}}" class="d-block rounded-4 overflow-hidden">
+                <ratio-image-component
+                style_class="ratio ratio-4x3"
+                url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.jpg' ) }}"
+                ></ratio-image-component>
+            </a> --}}
         </div>
     </div>
 </div>
