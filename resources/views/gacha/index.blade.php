@@ -179,8 +179,8 @@
         <div class="container px-0 col-md-12 mx-auto overflow-auto">
             <nav class="nav gap-3 flex-nowrap" style="min-width:{{$categories->count()*10 + 10}}rem;">
                 @php
-                $sc = "col fs- py-2 fw-bold btn btn-dark";
-                $style_class = $category_code=='all' ? $sc.' disabled' : $sc;
+                $sc = "col fs- py-2 fw-bold btn btn-dark border-0";
+                $style_class = $category_code=='all' ? $sc.' disabled bg-primary' : $sc;
                 @endphp
                 <a  href="{{ route('gacha_category','all') }}"
                 class="{{ $style_class }}">{{ 'すべて' }}</a>
@@ -188,7 +188,7 @@
 
                 @foreach ($categories as $category)
                     @php
-                    $style_class = $category_code == $category->code_name ? $sc.' disabled' : $sc;
+                    $style_class = $category_code == $category->code_name ? $sc.' disabled bg-primary' : $sc;
                     @endphp
 
                     <a  href="{{ route('gacha_category', $category->code_name ) }}"
@@ -373,7 +373,7 @@
     <section class="bg-" style="background:rgb(0, 0, 0, 1);">
         <div class="container py-5">
 
-            <h3 class="text-center text-white fs-3 fw-bold mb-4 py-3">X（旧twitter）公式タイムライン</h3>
+            <h3 class="text-center text-white fs-3 fw-bold mb-4 py-3">公式 X（旧twitter）</h3>
 
 
             <div class="col-md-8 mx-auto bg-white rounded-4 overflow-auto" style="max-height:90vh;">

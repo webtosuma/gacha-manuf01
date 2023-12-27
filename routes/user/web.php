@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 /*
 ==========================================================================
  ユーザールーティング　web
@@ -10,13 +10,17 @@ use App\Http\Controllers;
 */
 
 
-    // Route::get('/', function(){
-    //     return redirect()->route('gacha_category');
-    // } )->name('home');
+    Route::get('/', function(){
+        return Auth::check()
+        ? redirect()->route('gacha_category')
+        : view('lp');
+
+        // return redirect()->route('gacha_category');
+    } )->name('home');
 
     # 予告
-    Route::get('/', function(){ return view('lp');
-    } )->name('home');
+    // Route::get('/', function(){ return view('lp');
+    // } )->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +29,12 @@ use App\Http\Controllers;
 |--------------------------------------------------------------------------
 */
     Auth::routes();
+
+    # 会員登録処理
+    Route::post('register/post', //canpaing_introductory_key:紹介キャンペーン キー
+    [Controllers\Auth\RegisterController::class, 'register_post'])
+    ->name('register.post');
+
 
     # ログインが必要ですページ(require_login)　
     // ※ログイン前にログインが必要なページにアクセスした際に表示されるページ
@@ -233,16 +243,6 @@ use App\Http\Controllers;
 
         /* フォームの表示 */
 
-            # お友達紹介キャンペーンURL(canpaing_introductory)
-            Route::get('/settings/canpaing_introductory', function () {
-
-                $key = Auth::user()->id.'-'.Auth::user()->created_at->format('ymdHis');
-                $url = route('home');
-
-
-                return  view('settings.canpaing_introductory', compact('url'));
-            })->name('settings.canpaing_introductory');
-
             # アカウント設定(acount)
             Route::get('/settings/acount',
             function () { return  view('settings.acount.index'); })
@@ -295,9 +295,32 @@ use App\Http\Controllers;
 
     });
 
+
 /*
 |--------------------------------------------------------------------------
-| 求職者(Worker) - フッターメニュー
+| キャンペーン
+|--------------------------------------------------------------------------
+*/
+    # 会員登録:紹介キャンペーン
+    Route::get('register/ci/{key}', //key:紹介キャンペーン キー
+    [Controllers\CanpaingIntroductoryController::class, 'register'])
+    ->name('canpaing.introductory.register');
+
+
+
+    Route::middleware(['auth'])->group(function () {
+
+        # お友達紹介キャンペーンURL(canpaing_introductory)
+        Route::get('/canpaing/introductory',
+        [Controllers\CanpaingIntroductoryController::class, 'index'])
+        ->name('canpaing.introductory');
+
+
+    });
+
+/*
+|--------------------------------------------------------------------------
+| フッターメニュー
 |--------------------------------------------------------------------------
 */
     # ガイド(guide)

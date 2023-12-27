@@ -82,45 +82,68 @@ style="max-width:90vw; min-width:30vw;">
 
 
 
-            <a href="{{ route('user_prize') }}" class="list-group-item list-group-item-action py-3"
-            >取得した商品</a>
+            <a href="{{ route('user_prize') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            >取得した商品
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
 
-            <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3"
-            >ポイント履歴</a>
+            <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            >ポイント履歴
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
 
-            <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3">
+            <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3 position-relative">
                 発送申請履歴
                 @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
                 @if ( $unread_count )
                     <!--お問い合わせ　未対応-->
                     <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
                 @endif
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('settings') }}" class="list-group-item list-group-item-action py-3"
-            >会員情報設定</a>
+            <a href="{{ route('settings') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            >会員情報設定
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
 
-            <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3"
-            >利用ガイド</a>
+            <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            >利用ガイド
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
 
-            <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3"
-            >お知らせ</a>
+            <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            >お知らせ
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
+
+            @php
+            $canpaing_introductory_active = \App\Http\Controllers\CanpaingIntroductoryController::active();
+            @endphp
+            @if( $canpaing_introductory_active )
+            <a href="{{ route('canpaing.introductory') }}" class="list-group-item list-group-item-action py-3 position-relative
+            text-warning">お友達紹介キャンペーン
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
+            @endif
 
             @if ( Auth::check() )
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button class="list-group-item list-group-item-action py-3"
-                    type="submit">{{ __('ログアウト') }}</button>
+                    <button class="list-group-item list-group-item-action py-3 position-relative"
+                    type="submit">{{ __('ログアウト') }}
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                        ><i class="bi bi-chevron-right"></i></div>
+                    </button>
                 </form>
             @endif
-
-
-            {{-- <a href="{{route('settings.canpaing_introductory')}}" class="d-block rounded-4 overflow-hidden">
-                <ratio-image-component
-                style_class="ratio ratio-4x3"
-                url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.jpg' ) }}"
-                ></ratio-image-component>
-            </a> --}}
         </div>
     </div>
 </div>

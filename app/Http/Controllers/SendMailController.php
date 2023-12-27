@@ -13,6 +13,7 @@ use \App\Models\Admin;
 */
 class SendMailController extends Controller
 {
+
     /*
     |--------------------------------------------------------------------------
     | お問い合わせ
@@ -98,6 +99,53 @@ class SendMailController extends Controller
     | 認証・変更
     |--------------------------------------------------------------------------
     */
+
+        /**
+         * 求職者ユーザー登録02[登録完了]
+         *
+         * @param \App\Models\User $user
+         * @return Void
+        */
+        public static function UserAuthRegiste( $user )
+        {
+
+            # 求職者へメール送信
+
+                Mail::to( $user->email ) //宛先
+                ->send(new \App\Mail\SendHtmlMailMailable([
+                    'inputs' => null , //入力変数
+                    'view' => 'emails.worker_register02_completion' , //テンプレート
+                    'subject' => '会員登録が完了いたしました。' , //件名
+                ]) );
+
+
+            # サイト管理者へメール送信
+
+                // メール受取り設定の管理者ユーザーの取得
+                $admins = \App\Models\Admin::where('get_mail',1)->get();
+
+                // 入力パラメーター
+                $inputs = ['user'=>$user];
+
+                # メールの送信
+                foreach ($admins as $admin) {
+
+                    Mail::to( $admin->email ) //宛先
+                    ->send(new \App\Mail\SendHtmlMailMailable([
+                        'inputs' => $inputs , //入力変数
+                        'view'   => 'emails.admin_user_auth_register' , //テンプレート
+                        'subject'=> '会員登録を受け付けました。' , //件名
+                    ]) );
+                }
+
+            //
+            # テンプレートの表示
+            // return view('emails.admin_worker_auth_register', $inputs );
+        }
+
+
+
+
         /**
          * メール認証
          *

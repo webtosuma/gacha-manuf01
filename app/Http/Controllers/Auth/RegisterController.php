@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\SendMailController;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -26,21 +27,19 @@ class RegisterController extends Controller
      * Where to redirect users after registration.
      *
      * @var string
-     */
+    */
     protected $redirectTo = RouteServiceProvider::HOME;
 
 
-
     /**
-     * ユーザー登録 API
+     * ユーザー登録
      *
      * @param \Illuminate\Http\UserRegisterRequest $request
      * @return JSON
     */
-    public function register(UserRegisterRequest $request)
+    public function register_post(UserRegisterRequest $request)
     {
-        // return response()->json([ 'message' => 'register ok!', ]);
-
+        dd($request->session()->get('recruiter_id'));
 
         # 求職者情報の保存
         $user = new \App\Models\User([
@@ -52,7 +51,7 @@ class RegisterController extends Controller
 
 
         # 求職者・管理者へメール送信
-        // SendMailController::WorkerAuthRegister02( $worker );
+        SendMailController::UserAuthRegiste( $user );
 
 
         # ログイン
@@ -60,13 +59,50 @@ class RegisterController extends Controller
         $request->session()->regenerate();
 
 
-        # 成功レスポンス
-        return response()->json([
-            'message' => 'register ok!',
-            'user'    => $user,
-            'Auth check'=> Auth::check()
-        ]);
+        # リダイレクト
+        return redirect()->route('gacha_category')
+        ->with(['alert-success'=>'会員登録が完了しました。']);
     }
+
+
+
+
+    // /**
+    //  * ユーザー登録 API
+    //  *
+    //  * @param \Illuminate\Http\UserRegisterRequest $request
+    //  * @return JSON
+    // */
+    // public function register(UserRegisterRequest $request)
+    // {
+    //     // return response()->json([ 'message' => 'register ok!', ]);
+
+
+    //     # 求職者情報の保存
+    //     $user = new \App\Models\User([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make( $request->password ),
+    //     ]);
+    //     $user->save();
+
+
+    //     # 求職者・管理者へメール送信
+    //     // SendMailController::WorkerAuthRegister02( $worker );
+
+
+    //     # ログイン
+    //     Auth::attempt( $request->only('email','password'), true );
+    //     $request->session()->regenerate();
+
+
+    //     # 成功レスポンス
+    //     return response()->json([
+    //         'message' => 'register ok!',
+    //         'user'    => $user,
+    //         'Auth check'=> Auth::check()
+    //     ]);
+    // }
 
 
 

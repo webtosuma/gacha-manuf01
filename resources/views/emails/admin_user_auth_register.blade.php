@@ -13,19 +13,13 @@
 
     <div>---------- 登録情報 ----------</div>
     <div>
-        [氏　名]　{{ $worker->name.'('.$worker->kana_name.')' }}
+        [氏　名]　{{ $user->name }}
     </div>
     <div>
-        [性　別]　{{ $worker->gender }}
+        [メールアドレス]　{{ $user->email }}
     </div>
     <div>
-        [年　齢]　{{ $worker->age.'歳' }}
-    </div>
-    <div>
-        [メールアドレス]　{{ $worker->email }}
-    </div>
-    <div>
-        [電話番号]　{{ $worker->tell }}
+        [電話番号]　{{ $user->tell }}
     </div>
     <div>---------------------------------------</div>
 

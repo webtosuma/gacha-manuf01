@@ -11,7 +11,6 @@ use App\Models\UserGachaHistory;
 use App\Models\UserPrize;
 use App\Models\PointHistory;
 use App\Models\Infomation;
-
 /*
 | =============================================
 |  ガチャ コントローラー

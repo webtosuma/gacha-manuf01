@@ -18,6 +18,13 @@
     <!-- bootstrap CSS の読み込み-->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
+    <style>
+        /* サイトデフォルト背景 */
+        body{
+            background: no-repeat center center / cover fixed;
+            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+        }
+    </style>
 
     @yield('style')
 
@@ -26,10 +33,10 @@
 
 </head>
 <body class="bg-">
-    <header class="mx-auto" style="max-width:600px;">
+    <header class="mx-auto p-2" style="max-width:600px;">
         <h1 class="m-0 fs-6">
             <a href="{{route('home')}}" class="navbar-brand  fs-2 fw-bold">
-                <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">
+                <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:2.4rem;">
             </a>
         </h1>
     </header>

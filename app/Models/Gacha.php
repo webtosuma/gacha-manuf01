@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル rank
+|  ガチャ　モデル
 | =============================================
 */
 class Gacha extends Model
