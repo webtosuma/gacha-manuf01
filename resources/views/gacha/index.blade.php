@@ -97,12 +97,12 @@
     "> --}}
     <section class="bg-whiteee overflow-hidden"  style="min-height:50vh;">
 
-        <div class="container px-0 col-md- mx-auto">
-            <div class="col-md-12 mx-auto">
+        <div class="container px-0 bg-darkk">
+            <div class="mx-auto"  style="max-width: 900px;">
                 <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
                     <!--image  お知らせスライド -->
-                    <div class="carousel-inner" style="max-height:90vh;">
+                    <div class="carousel-inner">
                         @foreach ($slide_infos as $si => $slide_info)
 
                             <a href="{{ route('infomation.show',$slide_info) }}" class="carousel-item pb- bg-dark

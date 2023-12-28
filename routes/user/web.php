@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Auth;
     } )->name('home');
 
     # 予告
-    // Route::get('/', function(){ return view('lp');
-    // } )->name('home');
+    Route::get('/', function(){ return view('lp');
+    } )->name('home');
 
 /*
 |--------------------------------------------------------------------------

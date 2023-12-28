@@ -87,8 +87,12 @@ use \App\Http\Controllers;
 */
     Route::middleware(['admin_auth'])->group(function () {
 
+        // # 一覧
+        // Route::get('/admin/prize/{category_id?}', function () { return view('admin.prize.index'); })
+        // ->name('admin.prize');
         # 一覧
-        Route::get('/admin/prize', function () { return view('admin.prize.index'); })
+        Route::get('/admin/prize/list/{category_id?}',
+        [Controllers\AdminPrizeController ::class, 'index'])
         ->name('admin.prize');
 
         # 新規作成

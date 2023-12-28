@@ -19,6 +19,19 @@ class AdminApiPrizeController extends Controller
      */
     public function index(Request $request)
     {
+        // category_id: 1,
+        // key_words: '',
+        // order_code: '',
+        // order_name: '',
+        // order_rank_id: '',
+        // order_point: '',
+        // order_updated_at: '',
+
+        # カテゴリーの選択
+        // $category_id = $request->category_id;
+        // $category_id = $category_id ?? 1;
+
+
         $query = Prize::query();
 
             # キーワード(key_words)から検索(企業名など)
@@ -51,7 +64,9 @@ class AdminApiPrizeController extends Controller
 
             # 並び替え：更新日
             if( $request->updated_at ){
-                $query->orderBy('point', $request->updated_at);
+                $query->orderBy('updated_at', $request->updated_at);
+            }else{
+                $query->orderByDesc('updated_at');
             }
 
             # 指定したIDを含む

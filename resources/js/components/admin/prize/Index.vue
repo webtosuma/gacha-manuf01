@@ -1,13 +1,20 @@
 <template>
     <div class="">
 
+        <!-- {{ inputs.category_id }} -->
 
         <!--カテゴリー-->
         <section class="mb-3">
             <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a @click="setActiveCategory( '' )"
+                    :class="{'active disabled': inputs.category_id == ''}" class="nav-link" href="#"
+                    >{{ 'すべて' }}</a>
+
+                </li>
                 <li v-for="(category, key) in categories" :key="key"
                 class="nav-item">
-                    <a @click="setActiveCategory( category )"
+                    <a @click="setActiveCategory( category.id )"
                     :class="{'active disabled': inputs.category_id == category.id}" class="nav-link" href="#"
                     >{{ category.name }}</a>
 
@@ -166,6 +173,7 @@
             r_api_destroy: { type: String,  default: '', },//削除
             r_create:{ type: String,  default: '', },
             r_edit:{ type: String,  default: '', },
+            category_id:{ type: String,  default: '', },
         },
         data() { return {
 
@@ -176,12 +184,12 @@
 
             inputs: {
                 key_words: '',
-                category_id: 1,
+                category_id: '',
                 order_code: '',
                 order_name: '',
                 order_rank_id: '',
                 order_point: '',
-                order_updated_at: '',
+                updated_at: '',
             },
 
             keyWords: '',
@@ -195,7 +203,7 @@
         mounted() {
 
             this.inputs._token = this.token; //token保存
-
+            this.inputs.category_id = this.category_id ;
             this.getCategoryData();/* データ取得 */
 
         },
@@ -210,7 +218,9 @@
                     this.categories = json.data;
 
                     /** アクティブなカテゴリーのセット *//* 商品データ取得 */
-                    this.setActiveCategory( this.categories[0] );
+                    // this.setActiveCategory( this.categories[0] );
+                    this.setActiveCategory( this.category_id );
+
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')
@@ -269,12 +279,12 @@
 
 
             /** アクティブなカテゴリーのセット */
-            setActiveCategory( category ) {
+            setActiveCategory( category_id ) {
 
                 this.inputs.key_words=''; //キーワードのリセット
                 this.keyWords='',
 
-                this.inputs.category_id = category.id;//アクティブなカテゴリーIDのセット
+                this.inputs.category_id = category_id;//アクティブなカテゴリーIDのセット
                 this.getData(); /* データ取得 */
             },
 

@@ -16,6 +16,19 @@ use App\Models\PrizeRank;
 */
 class AdminPrizeController extends Controller
 {
+    /**
+     * 一覧
+     *
+     * @param Integer $category_id
+     * @return \Illuminate\Http\Response
+     */
+    public function index($category_id='')
+    {
+        return view('admin.prize.index', compact('category_id'));
+    }
+
+
+
 
     /**
      * 新規作成
@@ -63,7 +76,8 @@ class AdminPrizeController extends Controller
         $request->session()->regenerateToken();// 二重送信防止
 
 
-        return redirect()->route('admin.prize')
+        $category_id = $request->category_id;
+        return redirect()->route('admin.prize', $category_id)
         ->with(['alert-primary'=>'商品情報を更新しました']);
     }
 
@@ -110,7 +124,9 @@ class AdminPrizeController extends Controller
         $request->session()->regenerateToken();// 二重送信防止
 
 
-        return redirect()->route('admin.prize')
+
+        $category_id = $request->category_id;
+        return redirect()->route('admin.prize', $category_id)
         ->with(['alert-warning'=>'商品情報を更新しました']);
 
     }

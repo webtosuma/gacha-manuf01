@@ -1,20 +1,20 @@
 {{-- 表示：登録カード数が0いじょうのとき --}}
-@if ( $discription->g_prizes->count() )
+@if ( $discription->g_prizes->count() || $discription->image )
     <section class="py-5 col-12">
         <div class="container overflow-auto" style="max-width:600px;">
 
 
             <!-- Rankラベル -->
-            {{-- @if ( $discription->rank_label_image )
-                <div class="">
+            @if ( $discription->rank_label_image )
+                <div class="col-12 mx-auto p-3">
                     <img class="d-block w-100"
                     src="{{ $discription->rank_label_image }}"
                     alt="{{ $discription->rank_label }}">
                 </div>
             @else
-                <div class="text-center" style="font-size:4rem;">{{ $discription->rank_label }}</div>
-            @endif --}}
-            <div class="text-center" style="font-size:4rem;">{{ $discription->rank_label }}</div>
+                <div class="text-center" style="font-size:2rem;">{{ $discription->rank_label }}</div>
+            @endif
+            {{-- <div class="text-center" style="font-size:2rem;">{{ $discription->rank_label }}</div> --}}
 
 
 
@@ -40,10 +40,13 @@
                                 url="{{$gacha_prize->prize->image_path}}"
                                 ></ratio-image-component>
 
-                                <div class="position-absolute bottom-0 end-0 p-1">
-                                    <div class="bg-dark text-white px-2 rounded {{$fs}}"
-                                    >{{'×'.$gacha_prize->max_count}}</div>
-                                </div>
+                                @if( $discription->gacha_rank_id < 400 )
+                                    <!--登録枚数-->
+                                    <div class="position-absolute bottom-0 end-0 p-1">
+                                        <div class="bg-dark text-white px-2 rounded {{$fs}}"
+                                        >{{'×'.$gacha_prize->max_count}}</div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 

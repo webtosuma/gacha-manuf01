@@ -73,7 +73,7 @@ class GachaDiscriptionSeeder extends Seeder
                 'gacha_rank_id'=> '300', //ランクID
             ],
             [
-                'image'        => 'sample/gachas/g01/02prize.png', //画像
+                // 'image'        => 'sample/gachas/g01/02prize.png', //画像
                 'sorce'        => "RankBの説明文\n改行", //説明文
                 'gacha_rank_id'=> '400', //ランクID
             ],

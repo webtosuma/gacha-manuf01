@@ -6730,6 +6730,10 @@ __webpack_require__.r(__webpack_exports__);
     r_edit: {
       type: String,
       "default": ''
+    },
+    category_id: {
+      type: String,
+      "default": ''
     }
   },
   data: function data() {
@@ -6742,12 +6746,12 @@ __webpack_require__.r(__webpack_exports__);
 
       inputs: {
         key_words: '',
-        category_id: 1,
+        category_id: '',
         order_code: '',
         order_name: '',
         order_rank_id: '',
         order_point: '',
-        order_updated_at: ''
+        updated_at: ''
       },
       keyWords: '',
       ids: [],
@@ -6761,7 +6765,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.inputs._token = this.token; //token保存
-
+    this.inputs.category_id = this.category_id;
     this.getCategoryData(); /* データ取得 */
   },
 
@@ -6774,7 +6778,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.categories = json.data;
 
         /** アクティブなカテゴリーのセット */ /* 商品データ取得 */
-        _this.setActiveCategory(_this.categories[0]);
+        // this.setActiveCategory( this.categories[0] );
+        _this.setActiveCategory(_this.category_id);
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
         console.log(error.response.data);
@@ -6813,9 +6818,9 @@ __webpack_require__.r(__webpack_exports__);
       this.inputs.key_words = this.keyWords;
       this.getData(); /* データ取得 */
     },
-    /** アクティブなカテゴリーのセット */setActiveCategory: function setActiveCategory(category) {
+    /** アクティブなカテゴリーのセット */setActiveCategory: function setActiveCategory(category_id) {
       this.inputs.key_words = ''; //キーワードのリセット
-      this.keyWords = '', this.inputs.category_id = category.id; //アクティブなカテゴリーIDのセット
+      this.keyWords = '', this.inputs.category_id = category_id; //アクティブなカテゴリーIDのセット
       this.getData(); /* データ取得 */
     },
     /** 並び替え */changeOrder: function changeOrder(key) {
@@ -9918,7 +9923,22 @@ var render = function render() {
     staticClass: "mb-3"
   }, [_c("ul", {
     staticClass: "nav nav-tabs"
-  }, _vm._l(_vm.categories, function (category, key) {
+  }, [_c("li", {
+    staticClass: "nav-item"
+  }, [_c("a", {
+    staticClass: "nav-link",
+    "class": {
+      "active disabled": _vm.inputs.category_id == ""
+    },
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.setActiveCategory("");
+      }
+    }
+  }, [_vm._v(_vm._s("すべて"))])]), _vm._v(" "), _vm._l(_vm.categories, function (category, key) {
     return _c("li", {
       key: key,
       staticClass: "nav-item"
@@ -9932,11 +9952,11 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.setActiveCategory(category);
+          return _vm.setActiveCategory(category.id);
         }
       }
     }, [_vm._v(_vm._s(category.name))])]);
-  }), 0)]), _vm._v(" "), _c("section", {
+  })], 2)]), _vm._v(" "), _c("section", {
     staticClass: "mb-2"
   }, [_c("div", {
     staticClass: "row g-3"
