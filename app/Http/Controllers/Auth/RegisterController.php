@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\CanpaingIntroductoryController;//お友達紹介キャンペーン
 /*
 |--------------------------------------------------------------------------
 | 会員登録 Controller
@@ -39,8 +41,6 @@ class RegisterController extends Controller
     */
     public function register_post(UserRegisterRequest $request)
     {
-        dd($request->session()->get('recruiter_id'));
-
         # 求職者情報の保存
         $user = new \App\Models\User([
             'name' => $request->name,
@@ -48,6 +48,10 @@ class RegisterController extends Controller
             'password' => Hash::make( $request->password ),
         ]);
         $user->save();
+
+
+        # [紹介キャンペーン]ユーザー紹介履歴の登録
+        CanpaingIntroductoryController::createRecord( $request, $user );
 
 
         # 求職者・管理者へメール送信

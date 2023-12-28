@@ -63,7 +63,9 @@ class LoginController extends Controller
 
 
             // マイページTOPへリダイレクト
-            return redirect()->route('home')
+            return
+            // redirect()->route('home')
+            redirect()->route('gacha_category')
             ->with('alert-primary','ログインしました。');
 
         }

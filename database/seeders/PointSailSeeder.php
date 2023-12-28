@@ -44,8 +44,8 @@ class PointSailSeeder extends Seeder
                 'service' => 0,//サービス差異
             ],
             [
-                'value'   => 3000,  //実際付与されるポイント
-                'price'   => 3100,  //支払い金額
+                'value'   => 3100,  //実際付与されるポイント
+                'price'   => 3000,  //支払い金額
                 'service' => 100,//サービス差異
             ],
             [

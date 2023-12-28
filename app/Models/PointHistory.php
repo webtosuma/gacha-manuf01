@@ -40,7 +40,7 @@ class PointHistory extends Model
      *
      * @return Array　
      */
-    public static function resons()
+    public static function reasons()
     {
         return [
             //ポイント加算
@@ -52,6 +52,13 @@ class PointHistory extends Model
             //ポイント減算
             21 => 'ガチャる',
             22 => '商品発送',
+
+            //キャンペーン
+            31 => '紹介キャンペーン：紹介ユーザー',
+            32 => '紹介キャンペーン：新規登録ユーザー',
+
+            33 => '初回ポイント購入キャンペーン',
+
         ];
     }
 
@@ -86,4 +93,27 @@ class PointHistory extends Model
         }
 
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * ポイント入出理由 reason
+         * @return String
+        */
+        public function getreasonAttribute()
+        {
+            $reasons = $this->reasons();
+
+            return isset( $reasons[ $this->reason_id ] )
+            ? $reasons[ $this->reason_id ]
+            : 'その他' ;
+        }
+
+
+    //
 }

@@ -45,7 +45,7 @@
                             </div>
                         </div>
 
-                        <div class="">
+                        <div class="col-auto">
                             {{'+'}}
                             <number-comma-component number="{{ $point_history->value }}"></number-comma-component>
                             {{'pt'}}
@@ -61,30 +61,15 @@
                             <div class="fw-bold"><span class="text-primary">●</span>商品のポイント交換</div>
                         </div>
 
-                        <div class="">
+                        <div class="col-auto">
                             {{'+'}}
                             <number-comma-component number="{{ $point_history->value }}"></number-comma-component>
                             {{'pt'}}
                         </div>
                     </div></li>
                     @break
-                @case(13)
-                    {{-- キャンペーン付与 --}}
-                    <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">
-                        <div class="">
-                            <div class="form-text">{{ $point_history->created_at->format('Y/m/d H:i') }}</div>
-                            <div class="fw-bold"><span class="text-warning">●</span>キャンペーン付与</div>
-                        </div>
-
-                        <div class="">
-                            {{'+'}}
-                            <number-comma-component number="{{ $point_history->value }}"></number-comma-component>
-                            {{'pt'}}
-                        </div>
-                    </div></li>
-                    @break
-                @case(14)
-                    {{-- 特別付与 --}}
+                {{-- @case(14)
+                    <!--特別付与-->
                     <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">
                         <div class="">
                             <div class="form-text">{{ $point_history->created_at->format('Y/m/d H:i') }}</div>
@@ -97,7 +82,7 @@
                             {{'pt'}}
                         </div>
                     </div></li>
-                    @break
+                    @break --}}
 
 
                 @case(21)
@@ -114,7 +99,7 @@
                             </div>
                         </div>
 
-                        <div class="text-danger">
+                        <div class="col-auto text-danger">
                             <number-comma-component number="{{ $point_history->value }}"></number-comma-component>
                             {{'pt'}}
                         </div>
@@ -134,7 +119,7 @@
                             <div class="">配送料・手数料</div>
                         </div>
 
-                        <div class="{{$text_color}}">
+                        <div class="col-auto {{$text_color}}">
                             <number-comma-component number="{{ $point_history->value }}"></number-comma-component>
                             {{'pt'}}
                         </div>
@@ -146,15 +131,16 @@
                     {{-- その他 --}}
                     <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">
                         @php
-                        $text_color = $point_history->value >= 0 ? 'text-secondary' : 'text-danger';
+                        $text_color = $point_history->value >= 0 ? 'text-warning' : 'text-danger';
                         $sine = $point_history->value > 0 ? '+' : ( $point_history->value < 0 ? '-' : '' );
                         @endphp
                         <div class="">
                             <div class="form-text">{{$point_history->created_at->format('Y/m/d H:i')}}</div>
-                            <div class="fw-bold"><span class="{{$text_color}}">●</span>その他</div>
+                            <div class="fw-bold"><span class="{{$text_color}}">●</span>{{ $point_history->reason }}</div>
                         </div>
 
-                        <div class="{{$text_color}}">
+                        <div class="col-auto {{$point_history->value >= 0 ?'':'text-danger'}}">
+                            {{$point_history->value >= 0 ?'+':''}}
                             <number-comma-component number="{{ $point_history->value }}"></number-comma-component>
                             {{'pt'}}
                         </div>

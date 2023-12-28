@@ -51,7 +51,7 @@ class AdminSeeder extends Seeder
             $point_history = new \App\Models\PointHistory([
                 'user_id'   => $user->id,          //ユーザー　リレーション
                 'value'     => 1000000, //ポイント数
-                'reason_id' => 13 //入出理由ID
+                'reason_id' => 14 //入出理由ID
             ]);
             $point_history->save();
 

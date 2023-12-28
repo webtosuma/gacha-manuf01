@@ -11,16 +11,15 @@
                 <span class="text-danger">＊</span>
             </div>
 
-            <input value="{{old('title', $infomation->title )}}"
+            {{-- <input value="{{old('title', $infomation->title )}}"
             name="title"
-            type="text" class="form-control">
+            type="text" class="form-control"> --}}
 
-            {{-- <encodedーinputtext-component
+            <encodedーinputtext-component
             id="title" name="title"
             style_class="form-control"
-            default_body="{{old('title', $infomation->title )}}"
-            ></encodedーinputtext-component> --}}
-
+            default_body="{{ $errors->all() ? urldecode( old('title') ) : $infomation->title }}"
+            ></encodedーinputtext-component>
 
             <!--error message-->
             @if ( $errors->has('title') )
@@ -44,7 +43,7 @@
             name="body" id="body"
             style_class="form-control" rows="6"
             placeholder="お知らせ本文を入力してください。"
-            default_body="{{ $infomation->body_text }}"
+            default_body="{{ $errors->all() ? urldecode( old('body') ) : $infomation->body_text }}"
             ></encodedーtextarea-component>
 
 

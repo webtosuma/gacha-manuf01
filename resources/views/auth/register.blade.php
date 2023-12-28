@@ -31,7 +31,5 @@
         ></u-register-form > --}}
 
 
-
-
     </div>
 @endsection

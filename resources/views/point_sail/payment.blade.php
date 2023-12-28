@@ -1,7 +1,7 @@
 @extends('layouts.small')
 
 <!----- title ----->
-@section('title','ポイント購入確認|'.$point_sail->value.'ポイント')
+@section('title','ポイント購入確認|'.number_format($point_sail->value).'ポイント')
 
 
 @section('style')
@@ -29,12 +29,12 @@
         <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">
             <div class="col-6">ポイント数</div>
             <div class="col-6 border-bottom fw-bold">
-                {{ $point_sail->value }}ポイント
+                {{ number_format($point_sail->value) }}ポイント
             </div>
             <div class="col-6">支払い方法</div>
             <div class="col-6 border-bottom fw-bold">クレジットカード</div>
             <div class="col-6">支払い金額</div>
-            <div class="col-6 border-bottom fw-bold">{{ $point_sail->price.'円（税込）' }}</div>
+            <div class="col-6 border-bottom fw-bold">{{ number_format($point_sail->price).'円（税込）' }}</div>
         </div>
         <div class="">
 
@@ -96,7 +96,7 @@
     </li>
     <li class="list-group-item bg-white py-5">
         <div class="col-md-8 mx-auto mt-">
-            <a href class="btn btn-light border w-100"
+            <a href="{{route('point_sail')}}" class="btn btn-light border w-100"
             >購入するポイント数の変更</a>
         </div>
     </li>

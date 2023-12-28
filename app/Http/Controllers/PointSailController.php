@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\PointSail;
 use App\Models\PointHistory;
+use App\Http\Controllers\CanpaingIntroductoryController;//お友達紹介キャンペーン
+use App\Http\Controllers\CanpaingFirstPointSailController;//初回ポイント購入キャンペーン
+
 /*
 | =============================================
 |  ポイント購入 コントローラー
@@ -108,6 +111,15 @@ class PointSailController extends Controller
 
                 # カード情報の取得と支払い処理
                 self::PayjpCharge( $request, $amount=$point_sail->price );
+
+
+                # [紹介キャンペーン]ポイント付与
+                CanpaingIntroductoryController::grant();
+
+                # [紹介キャンペーン]初回ポイント購入
+                CanpaingFirstPointSailController::grant();
+
+
 
                 DB::commit();
                 return redirect(route('point_sail.comp',$point_history));
