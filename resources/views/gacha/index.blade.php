@@ -1,5 +1,3 @@
-
-
 @extends('layouts.app')
 
 <!--title-->
@@ -11,54 +9,54 @@
 
 <!--style-->
 @section('style')
-<style>
-    /* サイトデフォルト背景 */
-    body{
-        background-image: url({{ $bg_image }});
-    }
-</style>
-<style>
-    main{ padding-top: 0rem; }
+    <style>
+        /* サイトデフォルト背景 */
+        body{
+            background-image: url({{ $bg_image }});
+        }
+    </style>
+    <style>
+        main{ padding-top: 0rem; }
 
-    /* カルーセル */
-    .carousel-indicators [data-bs-target] {
-        border-radius: 100%;
-        widows: 30px; height: 30px;
-        margin-bottom:0;
-    }
-    .carousel-control-prev-icon, .carousel-control-next-icon {
-        display: inline-block;
-        width:  4rem;
-        height: 4rem;
-        background-repeat: no-repeat;
-        background-position: 50%;
-        background-size: 100% 100%;
-    }
+        /* カルーセル */
+        .carousel-indicators [data-bs-target] {
+            border-radius: 100%;
+            widows: 30px; height: 30px;
+            margin-bottom:0;
+        }
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            display: inline-block;
+            width:  4rem;
+            height: 4rem;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            background-size: 100% 100%;
+        }
 
-    .carousel-control-prev, .carousel-control-next {
-        width: 3rem;
-        opacity: .8;
-    }
+        .carousel-control-prev, .carousel-control-next {
+            width: 3rem;
+            opacity: .8;
+        }
 
-    /* タブメニュー */
-    .nav-link{
-        color: rgb(33,37,41);
-        font-size: 1.25rem
-    }
-    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-        color: #fff;
-        background-color:rgb(33,37,41) !important;
-    }
+        /* タブメニュー */
+        .nav-link{
+            color: rgb(33,37,41);
+            font-size: 1.25rem
+        }
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+            color: #fff;
+            background-color:rgb(33,37,41) !important;
+        }
 
-    /* ガチャのホバーアニメーション */
-    .hover_anime:hover{
-        position: relative;
-        transform: scale(1.05) translateY(-1rem);
+        /* ガチャのホバーアニメーション */
+        .hover_anime:hover{
+            position: relative;
+            transform: scale(1.05) translateY(-1rem);
 
-        transition: all .2s;
-    }
+            transition: all .2s;
+        }
 
-</style>
+    </style>
 @endsection
 
 

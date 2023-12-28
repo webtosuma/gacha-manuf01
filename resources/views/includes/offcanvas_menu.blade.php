@@ -66,21 +66,6 @@ style="max-width:90vw; min-width:30vw;">
             >最近取得した商品</a> --}}
 
 
-            <!--お友達紹介キャンペーン-->
-            {{-- <div class="list-group-item p-3 px-2">
-                <div class="row g-2">
-                    <div class="col-4">
-                        <a href="{{route('settings.canpaing_introductory')}}" class="d-block rounded-4 overflow-hidden">
-                            <ratio-image-component
-                            style_class="ratio ratio-4x3"
-                            url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.jpg' ) }}"
-                            ></ratio-image-component>
-                        </a>
-                    </div>
-                </div>
-            </div> --}}
-
-
 
             <a href="{{ route('user_prize') }}" class="list-group-item list-group-item-action py-3 position-relative"
             >取得した商品
@@ -123,16 +108,6 @@ style="max-width:90vw; min-width:30vw;">
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            @php
-            $canpaing_introductory_active = \App\Http\Controllers\CanpaingIntroductoryController::active();
-            @endphp
-            @if( $canpaing_introductory_active )
-            <a href="{{ route('canpaing.introductory') }}" class="list-group-item list-group-item-action py-3 position-relative
-            text-warning">お友達紹介キャンペーン
-                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
-                ><i class="bi bi-chevron-right"></i></div>
-            </a>
-            @endif
 
             @if ( Auth::check() )
                 <form action="{{ route('logout') }}" method="POST">
@@ -144,6 +119,29 @@ style="max-width:90vw; min-width:30vw;">
                     </button>
                 </form>
             @endif
+
+
+
+            <!--お友達紹介キャンペーン-->
+            @php
+            $canpaing_introductory_active = \App\Http\Controllers\CanpaingIntroductoryController::active();
+            @endphp
+            @if( $canpaing_introductory_active )
+                <div class="list-group-item p-3 p-2">
+                    <div class="row g-2">
+                        <div class="col">
+                            <a href="{{route('canpaing.introductory')}}" class="d-block rounded-4 overflow-hidden">
+                                <ratio-image-component
+                                style_class="ratio ratio-4x3"
+                                url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.png' ) }}"
+                                ></ratio-image-component>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+
         </div>
     </div>
 </div>

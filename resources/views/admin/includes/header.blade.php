@@ -1,10 +1,10 @@
-<header class="shadow-sm bg-primary">
+<header class="bg-white border-bottom border-primary border-3">
 
     <nav class="navbar navbar-expand-lg p-0">
         <div class="container-fluid">
 
             <!--- サイトロゴ -->
-            <a class="navbar-brand  text-white" href="{{ url('admin.home') }}">
+            <a class="navbar-brand  text-primary" href="{{ route('admin.home') }}">
                 <h1 class="fs-6 m-0 text-center d-flex align-items-center gap-2">
                     <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:2rem;">
                     <br>
@@ -16,12 +16,12 @@
 
             <div class="" id="navbarNav">
                 <ul class="d-flex align-items-center ms-auto p-2 m-0" style="list-style:none;">
-                    <li class="nav-item me-3 nav-link text-white  d-none d-lg-block">
+                    <li class="nav-item me-3 nav-link text-primary  d-none d-lg-block">
                         <span>{{ Auth::user()->name }}さん</span>
                     </li>
                     <li class="nav-item nav-link d-lg-none  p-0">
                         <!-- ハンバーガーボタン -->
-                        <div class="btn text-white py-0" data-bs-toggle="offcanvas" data-bs-target="#offcanvasHumberger" aria-controls="offcanvasHumberger">
+                        <div class="btn text-primary py-0" data-bs-toggle="offcanvas" data-bs-target="#offcanvasHumberger" aria-controls="offcanvasHumberger">
                             <i class="bi bi-list fs-1"></i>
                         </div>
                     </li>

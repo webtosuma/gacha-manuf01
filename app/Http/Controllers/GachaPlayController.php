@@ -212,12 +212,17 @@ class GachaPlayController extends Controller
         ->where('gacha_rank_id', $max_rank)
         ->get()->pluck('movie_id')->toArray();
 
+
         # ガチャランクに紐づく動画
         $movies = Movie::find( $id_array );
 
 
         # 紐づく動画からランダムで選出
-        $movie = $movies[ rand(0, $movies->count()-1 ) ];
+        $movie = $movies->count()>0
+            ? $movies[ rand(0, $movies->count()-1 ) ]
+            : Movie::inRandomOrder()->first() //指定の動画が無いとき、ランダムな動画を再生
+        ;
+
         return  [
             'pc'     => $movie->pc,
             'mobile' => $movie->mobile,
