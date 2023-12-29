@@ -208,7 +208,7 @@
             loading: false,/* 通信中 */
 
             /* 表示中ステップ番号 */
-            step_num : 1,
+            step_num : 3,
 
             /* 入力内容 */
             inputs: {

@@ -6,15 +6,13 @@
 
 
     @php
-    $title = "cardFesta（カードフェスタ）|オンラインオリパ・ネットオリパを24時間365日楽しめる！国内送料は無料！ ";
-    $description = "オンラインオリパ引くならcardFesta（カードフェスタ）! 高確率、爆アドガチャを多数ご用意しています。ポケカ・ワンピースなど人気オリパを24時間365日楽しめます。国内送料無料で、低コストガチャからハイリスクハイリターンなガチャなど楽しみ方は自由自在！ ";
-    $image = asset('storage/site/image/logo00.png');
+    $meta_title = "cardFesta（カードフェスタ）|オンラインオリパ・ネットオリパを24時間365日楽しめる！国内送料は無料！ ";
     @endphp
 
-
-    <title>{{ $title }}</title>
-
     @include('includes.meta')
+
+    <title>{{ $meta_title }}</title>
+
 
     <!-- ファビコン画像の読み込み -->
     <link rel="shortcut icon" href="{{asset('storage/site/image/favicon.png')}}">
@@ -32,6 +30,7 @@
 </head>
 <body style="height:100vh;">
 
+    <h1 class="d-none">{{ config('app.name') }}</h1>
     <div class="d-none d-md-flex align-items-center justify-content-center h-100 bg-dark">
 
         <video class="bg_video"

@@ -36,7 +36,7 @@ $active_submenu = true;
 
         <h2 class="mb- py-3 border-bottom">{{ '『'.$point_sail->value.'pt』編集' }}</h2>
 
-        <a href="#" onClick="history.back(); return false;"
+        <a href="{{route('admin.point_sail')}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 

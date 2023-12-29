@@ -42,9 +42,18 @@ $active_key = 'gacha';
 
         <section class="mb-3">
             <ul class="nav nav-tabs">
+                @php
+                $active = !$category_code ? 'active' : '';
+                @endphp
+                <li class="nav-item">
+                    <a  href="{{ route('admin.gacha') }}"
+                    class="nav-link {{ $active }}"
+                    >{{ 'すべて' }}</a>
+                </li>
+
                 @foreach ($categories as $category)
                     @php
-                    $active = $category->code_name == $gacha_category->code_name ? 'active' : '';
+                    $active = $category_code == $category->code_name ? 'active' : '';
                     @endphp
                     <li class="nav-item">
                         <a  href="{{ route('admin.gacha',$category->code_name) }}"
@@ -58,7 +67,7 @@ $active_key = 'gacha';
         <!--card-->
         <section class="row gy-5 my-3 overflow-hidden">
             <div class="col-12 col-md-4 col-lg-3 ">
-                <a href="{{ route('admin.gacha.create',$gacha_category->code_name) }}"
+                <a href="{{ route('admin.gacha.create',$category_code) }}"
                 class="btn btn-primary shadow text-white
                 hover_anime w-100 h-100" style="border-radius:1rem;"
                 ><div class="d-flex align-items-center justify-content-center h-100 fs-3"

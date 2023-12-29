@@ -1,17 +1,28 @@
 @extends('layouts.app')
 
 <!--title-->
-@section('title','ガチャ結果')
+@section('title','「'.$gacha->name.'」の結果')
+
+
+@section('meta')
+    @php
+        $meta_title = '「'.$gacha->name.'」の結果';
+        $meta_image = asset('storage/site/image/gacha/bg_result.jpg');
+    @endphp
+@endsection
+
 
 @section('style')
-<style>
-    main{ padding-top: 0rem; }
-    #result {
-        background: no-repeat center center / cover;
-        background-image: url({{asset('storage/site/image/gacha/bg_result.jpg')}});
-    }
-</style>
+    <style>
+        main{ padding-top: 0rem; }
+        #result {
+            background: no-repeat center center / cover;
+            background-image: url({{asset('storage/site/image/gacha/bg_result.jpg')}});
+        }
+    </style>
 @endsection
+
+
 
 @section('content')
     <section id="result" style="padding-top:3rem; min-height: 80vh;">

@@ -6,7 +6,11 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- meta -->
     @yield('meta')
+    @include('includes.meta')
+
 
 
     <title>@yield('title') - {{ config('app.name') }}</title>
@@ -34,7 +38,7 @@
             background-image: url({{asset('storage/site/image/bg01.jpg')}});
         }
         main{
-            padding-top: 4rem;
+            padding-top: 4.2rem;
             min-height: 80vh;
         }
     </style>

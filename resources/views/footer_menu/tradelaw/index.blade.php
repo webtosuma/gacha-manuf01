@@ -3,6 +3,13 @@
 
 <!----- title ----->
 @section('title','特定商取引法に基づく表記')
+@section('meta')
+    @php
+        $meta_title = '特定商取引法に基づく表記';
+    @endphp
+@endsection
+
+
 
 @section('content')
 
@@ -14,7 +21,7 @@
         </h2>
 
         <!-- [ 本文 ] -->
-        <section class="my-5 mx-auto" style="max-width:600px;">
+        <section class="my-5 mx-auto" style="max-width:900px;">
             @include('footer_menu.tradelaw.'.'body')
         </section>
 

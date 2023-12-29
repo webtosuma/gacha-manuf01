@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
 <!--title-->
-@section('title','ガチャ詳細')
+@section('title',$gacha->name.'-'.$gacha->category->name.'のガチャ')
+
+
+<!--meta-->
+@section('meta')
+    @php
+    $meta_title = $gacha->name.'-'.$gacha->category->name.'のガチャ';
+    // $meta_description = "オンラインオリパ引くならcardFesta（カードフェスタ）! 高確率、爆アドガチャを多数ご用意しています。ポケカ・ワンピースなど人気オリパを24時間365日楽しめます。国内送料無料で、低コストガチャからハイリスクハイリターンなガチャなど楽しみ方は自由自在！ ";
+    $meta_image = $gacha->image_path;
+    @endphp
+@endsection
+
 
 @section('style')
 <style>

@@ -20,6 +20,8 @@ $active_key = 'gacha';
                 >{{ 'Top' }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.gacha') }}"
                 >{{ 'ガチャ管理' }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.gacha',$gacha->category->code_name) }}"
+                >{{ $gacha->category->name }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.gacha.show',$gacha) }}"
                 >{{ $gacha->name }}</a></li>
 
@@ -31,7 +33,7 @@ $active_key = 'gacha';
 
         <h2 class="mb- py-3 border-bottom">『{{ $gacha->name }}』登録商品一覧</h2>
 
-        <a href="{{route('admin.gacha')}}"
+        <a href="{{route('admin.gacha',$gacha->category->code_name)}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>一覧に戻る</a>
 

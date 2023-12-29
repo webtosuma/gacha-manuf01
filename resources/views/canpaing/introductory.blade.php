@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
 <!----- title ----->
-@section('title','ご友人紹介キャンペーン')
+@section('title','ご友人紹介キャンペーン・ご紹介用URL')
+
+
+@section('meta')
+    @php
+        $meta_title = 'ご友人紹介キャンペーン・ご紹介用URL';
+        $meta_image = asset( 'storage/'.'site/image/campaign_introductory/index.png' );
+    @endphp
+@endsection
 
 @section('style')
     <style>
@@ -28,17 +36,6 @@
 <div class="container py-4 mb-5">
     {{-- <h3>ご友人紹介キャンペーン</h3> --}}
     <div class="mx-auto" style="max-width:900px;">
-        {{-- <section class="rounded-4 overflow-hidden my-5">
-
-
-            <ratio-image-component
-            style_class="ratio ratio-4x3"
-            url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.jpg' ) }}"
-            ></ratio-image-component>
-
-
-
-        </section> --}}
 
         <div class="card border-0 rounded-4  bg-white overflow-hidden">
 

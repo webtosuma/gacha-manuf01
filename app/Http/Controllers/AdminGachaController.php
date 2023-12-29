@@ -24,19 +24,18 @@ class AdminGachaController extends Controller
      */
     public function index($category_code=null)
     {
-        # 表示カテゴリー
-        $gacha_category = $category_code
-        ? GachaCategory::where('code_name',$category_code)->first()//カテゴリーの指定あり
-        : GachaCategory::first();//カテゴリーの指定なし
-        if(!$gacha_category){ return \App::abort(404); }//該当なし
+        # カテゴリーコードの認証
+        $gacha_category = GachaCategory::where('code_name',$category_code)->first();
+        if(!$gacha_category&&$category_code){ return \App::abort(404); }//該当なし
 
         # 表示できるガチャ一覧
-        $gachas = $gacha_category->gachas;
+        $gachas = $gacha_category ? $gacha_category->gachas
+        : Gacha::orderByDesc('created_at')->get();
 
         # カテゴリーデータ(select要素用)
         $categories = GachaCategory::all();
 
-        return view('admin.gacha.index', compact('gachas','gacha_category','categories'));
+        return view('admin.gacha.index', compact('gachas','gacha_category','categories','category_code'));
     }
 
 
@@ -60,15 +59,16 @@ class AdminGachaController extends Controller
      * @param String $category_code
      * @return \Illuminate\Http\Response
      */
-    public function create($category_code)
+    public function create($category_code=null)
     {
-        # 表示カテゴリー
+        # カテゴリーコードの認証
         $gacha_category = GachaCategory::where('code_name',$category_code)->first();
-        if(!$gacha_category){ return \App::abort(404); }//該当なし
+        if(!$gacha_category&&$category_code){ return \App::abort(404); }//該当なし
+
 
         # 新規作成モデル
         $gacha = new Gacha([
-            'category_id'=>$gacha_category->id,
+            'category_id' => $gacha_category ? $gacha_category->id : null,
             'point'=>0,
         ]);
 

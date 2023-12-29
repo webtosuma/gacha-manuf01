@@ -36,7 +36,7 @@ $active_submenu = true;
 
         <h2 class="mb- py-3 border-bottom">{{ '販売ポイント　新規登録' }}</h2>
 
-        <a href="#" onClick="history.back(); return false;"
+        <a href="{{route('admin.point_sail')}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 

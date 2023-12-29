@@ -3,6 +3,12 @@
 
 <!----- title ----->
 @section('title','利用ガイド')
+@section('meta')
+    @php
+        $meta_title = '利用ガイド';
+    @endphp
+@endsection
+
 
 @section('content')
 

@@ -3,6 +3,13 @@
 
 <!----- title ----->
 @section('title','利用規約')
+@section('meta')
+    @php
+        $meta_title = '利用規約';
+    @endphp
+@endsection
+
+
 
 <!----- contents ----->
 @section('content')

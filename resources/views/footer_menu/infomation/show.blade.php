@@ -1,7 +1,17 @@
 @extends('layouts.app')
 
 <!----- title ----->
-@section('title',$infomation->title )
+@section('title',$infomation->title.'-お知らせ' )
+
+@section('meta')
+    @php
+        $meta_title = $infomation->title.'-お知らせ';
+        $meta_description = str_replace(["\r\n", "\r", "\n"],  '', $infomation->body_text);
+        $meta_description =mb_substr($meta_description, 0, 130).'...';
+        $meta_image = $infomation->image_path;
+    @endphp
+@endsection
+
 
 
 @section('content')

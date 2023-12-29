@@ -1,10 +1,15 @@
 @extends('layouts.app')
 
 <!--title-->
-@section('title','タイトル')
+@section('title',$category_name.'のガチャ一覧')
 
 <!--meta-->
 @section('meta')
+    @php
+    $meta_title = $category_name.'のガチャ一覧';
+    // $meta_description = "オンラインオリパ引くならcardFesta（カードフェスタ）! 高確率、爆アドガチャを多数ご用意しています。ポケカ・ワンピースなど人気オリパを24時間365日楽しめます。国内送料無料で、低コストガチャからハイリスクハイリターンなガチャなど楽しみ方は自由自在！ ";
+    // $meta_image = asset('storage/site/image/logo00.png');
+    @endphp
 @endsection
 
 <!--style-->
@@ -16,7 +21,7 @@
         }
     </style>
     <style>
-        main{ padding-top: 0rem; }
+        /* main{ padding-top: 0rem; } */
 
         /* カルーセル */
         .carousel-indicators [data-bs-target] {
@@ -36,6 +41,15 @@
         .carousel-control-prev, .carousel-control-next {
             width: 3rem;
             opacity: .8;
+        }
+        .carousel-control-prev-icon {
+            background-image:url({{asset('storage/site/image/carousel/prev.png')}});
+        }
+        .carousel-control-next-icon {
+            background-image:url({{asset('storage/site/image/carousel/next.png')}});
+        }
+        .carousel-control-prev, .carousel-control-next{
+            opacity: 1;
         }
 
         /* タブメニュー */
@@ -61,6 +75,9 @@
 
 
 @section('content')
+
+    {{-- <section class="bg-dark" style="height:4.2rem;"></section> --}}
+
 
     <!-- 紹介キャンペーン　トースト -->
     {{-- @if( $category_code=='all' )
@@ -90,12 +107,9 @@
 
 
     <!--カルーセル-->
-    {{-- <section class="bg-dark overflow-hidden" style="
-    background: url({{asset('storage/site/image/bg02.jpg')}}) no-repeat center center/cover;
-    "> --}}
-    <section class="bg-whiteee overflow-hidden"  style="min-height:50vh;">
+    <section class="overflow-hidden">
 
-        <div class="container px-0 bg-darkk">
+        <div class="container px-0 bg-dar">
             <div class="mx-auto"  style="max-width: 900px;">
                 <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 

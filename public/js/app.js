@@ -6787,6 +6787,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     /* 商品データ取得 */getData: function getData() {
       var _this2 = this;
+      // this.prizes  = [];
       this.loading = true; //読み込み中
 
       var route = this.r_api_prize;
@@ -6856,7 +6857,10 @@ __webpack_require__.r(__webpack_exports__);
       var month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
       var day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
 
-      return "".concat(year, "/").concat(month, "/").concat(day);
+      var hours = String(date.getHours()).padStart(2, '0');
+      var minutes = String(date.getMinutes()).padStart(2, '0');
+      var seconds = String(date.getSeconds()).padStart(2, '0');
+      return "".concat(year, "/").concat(month, "/").concat(day, " ").concat(hours, ":").concat(minutes, ":").concat(seconds);
     }
   }
 });
@@ -7179,7 +7183,7 @@ __webpack_require__.r(__webpack_exports__);
       /* 通信中 */
 
       /* 表示中ステップ番号 */
-      step_num: 1,
+      step_num: 3,
       /* 入力内容 */
       inputs: {
         _token: '',
@@ -10199,7 +10203,9 @@ var render = function render() {
         style_class: "ratio ratio-3x4 rounded-3",
         url: prize.image_path
       }
-    })], 1)]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(prize.updated_at)))]), _vm._v(" "), _c("td", {}, [_c("div", {
+    })], 1)]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", {
+      staticClass: "form-text"
+    }, [_vm._v(_vm._s(_vm.formatDate(prize.updated_at)))]), _vm._v(" "), _c("td", {}, [_c("div", {
       staticClass: "d-flex gap-2 justify-content-end h-100"
     }, [_c("div", {
       staticStyle: {
@@ -10921,14 +10927,16 @@ var render = function render() {
   }, [_c("a", {
     staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-primary rounded-pill shadow",
     attrs: {
-      href: _vm.login_route
+      href: _vm.login_route,
+      onclick: "stopOnbeforeunload()"
     }
   }, [_vm._v("ログインする")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 offset-md-2"
   }, [_c("a", {
     staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-warning rounded-pill shadow",
     attrs: {
-      href: "#"
+      href: "#",
+      onclick: "stopOnbeforeunload()"
     },
     on: {
       click: function click($event) {

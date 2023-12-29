@@ -38,7 +38,7 @@ $active_submenu = true;
 
         <h2 class="mb- py-3 border-bottom">{{ '『'.$gacha_category->name.'』編集' }}</h2>
 
-        <a href="#" onClick="history.back(); return false;"
+        <a href="{{route('admin.category')}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 

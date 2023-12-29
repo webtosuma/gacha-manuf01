@@ -123,7 +123,7 @@
                         <td>{{ prize.name }}</td>
                         <td>{{ prize.rank.name }}</td>
                         <td>{{ prize.point }} pt</td>
-                        <td>{{ formatDate( prize.updated_at ) }}</td>
+                        <td class="form-text">{{ formatDate( prize.updated_at ) }}</td>
                         <td class="">
                             <div class="d-flex gap-2 justify-content-end h-100">
                                 <div class="" style="width:4rem;">
@@ -233,6 +233,7 @@
             /* 商品データ取得 */
             getData() {
 
+                // this.prizes  = [];
                 this.loading = true;//読み込み中
 
                 const route = this.r_api_prize;
@@ -323,7 +324,12 @@
                 const month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
                 const day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
 
-                return `${year}/${month}/${day}`;
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                const seconds = String(date.getSeconds()).padStart(2, '0');
+
+                return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+
             },
 
 

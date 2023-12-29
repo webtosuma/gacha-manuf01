@@ -3,6 +3,11 @@
 
 <!----- title ----->
 @section('title','お問い合わせ')
+@section('meta')
+    @php
+        $meta_title = 'お問い合わせ';
+    @endphp
+@endsection
 
 <!----- style ----->
 @section('style')

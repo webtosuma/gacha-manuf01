@@ -129,12 +129,12 @@
 
                     <div class="row g-3 mt-5 mb-3">
                         <div class="col-md-8 offset-md-2">
-                            <a :href="login_route"
+                            <a :href="login_route" onclick="stopOnbeforeunload()"
                             class="w-100 py-2 mb-2 btn btn-lg text-white btn-primary rounded-pill shadow"
                             >ログインする</a>
                         </div>
                         <div class="col-md-8 offset-md-2">
-                            <a href="#" @click.prevent="historyBack()"
+                            <a href="#" @click.prevent="historyBack()" onclick="stopOnbeforeunload()"
                             class="w-100 py-2 mb-2 btn btn-lg text-white btn-warning rounded-pill shadow"
                             >前のページに戻る</a>
                         </div>

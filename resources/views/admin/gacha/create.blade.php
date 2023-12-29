@@ -33,7 +33,7 @@ $active_key = 'gacha';
 
         <h2 class="mb- py-3 border-bottom">ガチャ新規登録</h2>
 
-        <a href="#" onClick="history.back(); return false;"
+        <a href="{{ route('admin.gacha',isset($gacha->category->code_name) ? $gacha->category->code_name : '') }}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 

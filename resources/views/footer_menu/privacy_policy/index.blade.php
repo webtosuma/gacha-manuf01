@@ -3,6 +3,11 @@
 
 <!----- title ----->
 @section('title','プライバシーポリシー')
+@section('meta')
+    @php
+        $meta_title = 'プライバシーポリシー';
+    @endphp
+@endsection
 
 
 <!----- contents ----->

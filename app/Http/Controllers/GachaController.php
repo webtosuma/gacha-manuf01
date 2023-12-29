@@ -31,6 +31,9 @@ class GachaController extends Controller
 
         # 変数
 
+            ## カテゴリー名（ページタイトル）
+            $category_name = $category ? $category->name : 'すべて';
+
             ## 背景画像
             $bg_image = $category ? $category->bg_image_path : GachaCategory::noImage();
 
@@ -55,7 +58,7 @@ class GachaController extends Controller
 
         # viewの表示
         return view('gacha.index', compact(
-            'category_code', 'bg_image',  'categories', 'gachas', 'infomations', 'slide_infos',
+            'category_code', 'category_name', 'bg_image',  'categories', 'gachas', 'infomations', 'slide_infos',
          ) );
 
     }
