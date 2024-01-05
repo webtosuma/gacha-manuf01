@@ -87,17 +87,9 @@ use Illuminate\Support\Facades\Auth;
         ->name('gacha.play');
 
         # ガチャカの結果表示
-        // Route::post('/g/result/{category_code}/{user_gacha_history}',
-        // [App\Http\Controllers\GachaController::class, 'result'])
-        // ->name('gacha.result');
         Route::get('/result/{category_code}/{user_gacha_history}',
         [App\Http\Controllers\GachaController::class, 'result'])
         ->name('gacha.result');
-
-        // Route::get('/result/{category_code}/{user_gacha_history}',
-        // function(){ return 'hoge'; } )
-        // ->name('gacha.result');
-
 
 
         # 商品のポイント交換

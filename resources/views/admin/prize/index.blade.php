@@ -30,6 +30,7 @@ $active_submenu = true;
         <a-prize-list
         token="{{ csrf_token() }}"
         r_api_prize   ="{{ route('admin.api.prize') }}"
+        r_api_update  ="{{ route('admin.api.prize.update') }}"
         r_api_destroy ="{{ route('admin.api.prize.destroy') }}"
         r_api_category="{{ route('admin.api.gacha.category') }}"
         r_create      ="{{ route('admin.prize.create') }}"

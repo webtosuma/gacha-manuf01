@@ -29,6 +29,11 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminApiPrizeController::class, 'index'])
     ->name('admin.api.prize');
 
+    # 商品一覧情報の更新
+    Route::patch('admin/api/prize/update/{prize?}',
+    [Controllers\AdminApiPrizeController::class, 'update'])
+    ->name('admin.api.prize.update');
+
     # 商品情報の削除
     Route::delete('admin/api/prize/{prize?}',
     [Controllers\AdminApiPrizeController::class, 'destroy'])

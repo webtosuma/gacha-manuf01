@@ -155,24 +155,19 @@ class GachaController extends Controller
         Request $request, $category_code,
         UserGachaHistory $user_gacha_history
     ){
-
-
-
         # 景品のポイント交換
-        $point_history = UserPrizeController::ExchangePoints($request);
+        $data = UserPrizeController::ExchangePoints($request);
+        $point_history = $data['point_history'];
+        $user_prizes   = $data['user_prizes'];
+
 
         # ガチャ
         $gacha = $user_gacha_history->gacha;
+
         # メッセージ
-        $message = $point_history->value.'ptとポイント交換しました。';
+        $message = '合計'.$user_prizes->count()."点の商品を\n".$point_history->value."ptに交換しました。\n選択されなかった商品は、\n「取得した商品一覧」に移動します。";
 
         return redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
-        ->with('alert-success',$message);
-
-
-
-        return view('gacha.result',compact('gacha','user_gacha_history','message') )
         ->with('alert-warning',$message);
-
     }
 }

@@ -2,7 +2,7 @@
     <div>
 
         <!--カード一覧-->
-        <div class="row justify-content-center g-3 gy-4 mb-4"
+        <div class="row justify-content-center align-items-center g-3 gy-4 mb-4"
         style="min-height: 50vh;" >
 
             <div v-if="loading"
@@ -12,6 +12,8 @@
                 </div>
             </div>
 
+            <div v-if="userPrizes.length==0"
+            class="text-center fs-5">*表示できる商品はありません</div>
             <div v-for="(userPrize, key) in userPrizes" :key="key"
             class="col-3 col-md-3">
                 <div class="d-flex align-items-center justify-content-center h-100">
@@ -41,14 +43,9 @@
                             ></ratio-image-component>
                         </div>
 
-                        <!--商品ランク表示-->
-                        <!-- <div class="bg-dark text-primary fw-bold text-center mt-1 px-1 rounded">
-                            {{ userPrize.prize.rank.name }}
-                        </div> -->
                         <!--ポイント表示-->
                         <div class="bg-white text-center mt-1 px-1 rounded-pill">
                             <number-comma-component :number="userPrize.prize.point" />pt
-
                         </div>
 
                     </label>
@@ -64,7 +61,7 @@
 
         <div class="rounded-3 p-3" style="background: rgb(0, 0, 0, .7);">
             <div class="d-flex justify-content-between align-items-start text-white">
-                <div class="form-check mb-3">
+                <div class="form-check mb-">
                     <input v-model="allCheck" @change="changeAll()"
                     class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
@@ -72,21 +69,60 @@
                     </label>
                 </div>
 
-                <div class="form-check mb-3">
+                <div class="form-check mb-">
                     <span class="fs-1 fw-bold">
                         <number-comma-component :number="totalPoint" />
                     </span>pt
                 </div>
             </div>
+            <p class="text-white form-text m-0 mb-3">
+                *選択されなかった商品は、「取得した商品一覧」に移動します。
+            </p>
             <div class="col-md-8 mx-auto">
-                <button type="submit"
+                <button type="button"
+                data-bs-toggle="modal" data-bs-target="#exchangeModal"
                 class="btn btn-warning rounded-pill w-100" :disabled="disabled"
                 >選択した商品をポイント交換する</button>
             </div>
-            <p class="text-white form-text m-0 mt-3">
-                *選択されなかった商品は、「取得した商品一覧」に移動されます。
-            </p>
+            <div class="col-md-8 mx-auto mt-2">
+                <a :href="r_gacha_category"
+                class="btn text-danger rounded-pill w-100" :disabled="disabled"
+                >SKIP</a>
+            </div>
         </div>
+
+
+
+
+        <!-- ポイント交換Modal -->
+        <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="exchangeModalLabel">
+                            <p>ポイント交換しますか？</p>
+                            <p>商品を<strong class="fs-3">{{ totalPoint }}pt</strong>と交換する</p>
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button type="button"
+                                class="btn p-md-33 btn-light border rounded-pill w-100"
+                                data-bs-dismiss="modal"
+                                >キャンセル</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                class="btn p-md-33 btn-warning text-white rounded-pill w-100"
+                                >交換する</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
     </div>
@@ -97,7 +133,8 @@
     export default {
         props: {
             token:{ type: String,  default: '', },
-            r_use_gacha_history_show:{ type: String,  default: '', },
+            r_api_use_gacha_history_show:{ type: String,  default: '', },
+            r_gacha_category:{ type: String,  default: '', },
         },
         data() { return {
 
@@ -124,7 +161,7 @@
             /* データ取得 */
             getData :function(){
 
-                const route = this.r_use_gacha_history_show;
+                const route = this.r_api_use_gacha_history_show;
                 axios.post( route )
                 .then(json => {
                     console.log(json.data);

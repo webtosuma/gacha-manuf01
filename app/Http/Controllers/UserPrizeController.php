@@ -33,13 +33,16 @@ class UserPrizeController extends Controller
     public function exchange_points(Request $request)
     {
         # 商品のポイント交換
-        $point_history = self::ExchangePoints($request);
+        $data = self::ExchangePoints($request);
+        $point_history = $data['point_history'];
+        $user_prizes   = $data['user_prizes'];
 
         # メッセージ
         $message = $point_history->value.'ptとポイント交換しました。';
+        $message = '合計'.$user_prizes->count()."点の商品を\n".$point_history->value."ptに交換しました。";
 
         return redirect('user_prize')
-        ->with('alert-success',$message);
+        ->with('alert-warning',$message);
     }
 
 
@@ -83,7 +86,7 @@ class UserPrizeController extends Controller
         // $request->session()->regenerateToken();
 
 
-        return $point_history;
+        return compact('user_prizes','point_history');
     }
 
 }

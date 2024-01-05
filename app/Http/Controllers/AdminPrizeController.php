@@ -140,7 +140,7 @@ class AdminPrizeController extends Controller
          * @param \App\Models\Prize $prize //新規登録のとき===null
          * @return Array
          */
-        public function processingInputs( $request, $prize=null )
+        public static function processingInputs( $request, $prize=null )
         {
             $inputs = $request->only(
                 'category_id',  //リレーション

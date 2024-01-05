@@ -120,7 +120,7 @@
                 <div class="modal-content">
                     <div class="modal-body text-center">
                         <h5 class="modal-title" id="exchangeModalLabel">
-                            <p>選択商品をポイントと交換しますか？</p>
+                            <p>ポイント交換しますか？</p>
                             <p>商品を<strong class="fs-3">{{ totalPoint }}pt</strong>と交換する</p>
                         </h5>
                     </div>
@@ -134,7 +134,6 @@
                             </div>
                             <div class="col-6">
 
-                                <!--選択した商品をポイント交換 r_exchange_points -->
                                 <form :action="r_exchange_points" method="post">
                                     <input type="hidden" name="_token" :value="token">
                                     <input type="hidden" name="_method" value="patch">

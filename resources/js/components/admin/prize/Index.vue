@@ -8,10 +8,13 @@
             <!--一括編集モード-->
             <edit-component
             @toggle-edit="toggleEdit"
+            @edit-update="update"
+
             :token="token"
             :inputs="inputs"
             :categories="categories"
-            :prizes="prizes"
+            :prop_prizes="prizes"
+            :selects="selects"
             ></edit-component>
 
 
@@ -55,13 +58,13 @@
                     <div class="col-auto">
                         <button @click="toggleEdit()"
                         class="btn btn-lg btn-light border" type="button"
-                        ><i class="bi bi-pencil-fill me-2"></i>一括編集する</button>
+                        ><i class="bi bi-pencil-fill me-2"></i>一括編集</button>
                     </div>
                 </div>
             </section>
 
             <!--テーブル-->
-            <section class="card card-body bg-white my-3 overflow-auto" style="height: 60vh;">
+            <section class="card card-body bg-white my-3 overflow-auto" style="height: 90vh;">
                 <table class="table bg-white " style="min-width: 600px; font-size: 16px;">
                     <!--ヘッド（並べ替えボタン）-->
                     <thead>
@@ -89,13 +92,27 @@
                                 <i v-if="inputs['order_name']!='asc'"  class="bi bi-caret-down-fill"></i>
                             </a></th>
 
-                            <th scope="col"><a
-                            @click.prevent="changeOrder( 'order_rank_id' )"
-                            href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
-                                <span>評価ランク</span>
-                                <i v-if="inputs['order_rank_id']!='desc'" class="bi bi-caret-up-fill"></i>
-                                <i v-if="inputs['order_rank_id']!='asc'"  class="bi bi-caret-down-fill"></i>
-                            </a></th>
+                            <th scope="col"><div class="row align-items-end g-0">
+                                <div class="col-auto">
+
+                                    <select @change="getData()"
+                                    v-model="inputs.where_rank_id"
+                                    class="form-select form-select-sm fw-bold" aria-label="Default select example">
+                                        <option value="">評価ランク</option>
+                                        <option v-for="(prize_rank, key) in selects.prize_ranks" :key="key"
+                                        :value="prize_rank.id">{{ prize_rank.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <a @click.prevent="changeOrder( 'order_rank_id' )"
+                                    href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                                        <!-- <span>評価ランク</span> -->
+                                        <i v-if="inputs['order_rank_id']!='desc'" class="bi bi-caret-up-fill"></i>
+                                        <i v-if="inputs['order_rank_id']!='asc'"  class="bi bi-caret-down-fill"></i>
+                                    </a>
+
+                                </div>
+                            </div></th>
 
                             <th scope="col"><a
                             @click.prevent="changeOrder( 'order_point' )"
@@ -197,6 +214,7 @@
             token:{ type: String,  default: '', },
             r_api_prize:{ type: String,  default: '', },   //商品
             r_api_category:{ type: String,  default: '', },//ガチャ カテゴリー
+            r_api_update: { type: String,  default: '', },//更新
             r_api_destroy: { type: String,  default: '', },//削除
             r_create:{ type: String,  default: '', },
             r_edit:{ type: String,  default: '', },
@@ -217,6 +235,11 @@
                 order_rank_id: '',
                 order_point: '',
                 updated_at: '',
+                where_rank_id: ''
+            },
+
+            selects: {
+                prize_ranks: {},
             },
 
             keyWords: '',
@@ -227,7 +250,7 @@
 
             disabled: true,
 
-            edit: true,/* 一括編集モード */
+            edit: false,/* 一括編集モード */
         } },
         mounted() {
 
@@ -247,7 +270,6 @@
                     this.categories = json.data;
 
                     /** アクティブなカテゴリーのセット *//* 商品データ取得 */
-                    // this.setActiveCategory( this.categories[0] );
                     this.setActiveCategory( this.category_id );
 
                 })
@@ -266,18 +288,41 @@
                 this.loading = true;//読み込み中
 
                 const route = this.r_api_prize;
-                axios.post( route , this.inputs )
+                axios.post( route , {_token: this.token, ...this.inputs} )
                 .then(json => {
                     // console.log(json.data);
 
-                    this.prizes = json.data;
+                    this.prizes = json.data.prizes;
+                    this.selects.prize_ranks = json.data.prize_ranks;
+
                     this.loading = false;//読み込み中
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')
-                    // console.log( error.response.data );
+                    console.log( error.response.data );
 
                 });
+            },
+
+
+            /** 更新 */
+            update( prize ) {
+
+                // console.log(prize)
+                const route = this.r_api_update+'/'+prize.id;
+                axios.patch( route , {_token: this.token, ...prize} )
+                .then(json => {
+
+                    // console.log(json.data);
+
+                    // this.getData(); /* データ取得 */
+                })
+                .catch(error => {
+                    alert('通信エラーが発生しました。')
+                    console.log( error.response.data );
+
+                });
+
             },
 
 
@@ -347,7 +392,10 @@
 
 
             /** 編集モード切り替え */
-            toggleEdit(){ this.edit = !this.edit; },
+            toggleEdit(){
+                this.getData();
+                this.edit = !this.edit;
+            },
 
 
 

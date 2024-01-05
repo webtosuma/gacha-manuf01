@@ -46,20 +46,81 @@
                 <!--カード一覧-->
                 <u-gacha-result-form
                 token="{{ csrf_token() }}"
-                r_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
+                r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
+                r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
+
                 ></u-gacha-result-form>
 
             </form>
-
         </div>
 
     </section>
 
 
+
     <!--ボトムメニュー-->
-    <section class="position-fixed bottom-0 end-0 w-100 py-2 text-white"
+    <div class="position-fixed bottom-0 end-0 w-100 py-3 text-white"
+    style="z-index:50; background:rgb(0, 0, 0, .7);">
+        <div class="container mx-auto" style="max-width:600px;">
+            <div class="card-body">
+
+
+                <h5 class="text-center text-white m-0">もう一度ガチャる？</h5>
+
+
+            </div>
+            <div class="row g-2 mt-1">
+                @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+
+                <div class="col-6">
+                    <form action="{{ route('gacha.play', $params) }}" method="post">
+                        @csrf
+
+                        @if ($gacha->remaining_count >=1) {{--  --}}
+                            <button type="submit" name="play_count" value="{{ 1 }}"
+                            class="btn py-md-3 btn-light bg-gradient fw-bold w-100
+                            rounded-pill border-secondary border-3"
+                            >1回ガチャる</button>
+                        @else
+                            <button type="submit" name="play_count" disabled
+                            class="btn py-md-3 btn-light bg-gradient fw-bold w-100 text-danger
+                            rounded-pill border-secondary border-3"
+                            >売り切れ</button>
+                        @endif
+
+                    </form>
+                </div>
+
+
+                <div class="col-6">
+                    <form action="{{ route('gacha.play', $params) }}" method="post">
+                        @csrf
+                        @if ($gacha->remaining_count >=10) {{--  --}}
+                            <button type="submit" name="play_count" value="{{ 10 }}"
+                            class="btn py-md-3 btn-dark bg-gradient text- fw-bold w-100
+                            rounded-pill border-danger border-3"
+                            >10連ガチャる</button>
+                        @else
+                            <button type="submit" name="play_count" disabled
+                            class="btn py-md-3 btn-dark bg-gradient text- fw-bold w-100 text-danger
+                            rounded-pill border-secondary border-3"
+                            >売り切れ</button>
+                        @endif
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!--ボトムメニュー-->
+    {{-- <section class="position-fixed bottom-0 end-0 w-100 py-2 text-white"
     style="z-index:50; background:rgb(0, 0, 0, .7);">
         <div class="container">
+
 
             @php
             $params = [
@@ -88,6 +149,6 @@
 
 
         </div>
-    </section>
+    </section> --}}
 
 @endsection

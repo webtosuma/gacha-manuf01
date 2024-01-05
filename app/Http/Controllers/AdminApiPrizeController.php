@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Prize;
+use App\Models\GachaCategory;
+use App\Models\PrizeRank;
 /*
 | =============================================
 |  商品情報 サイト管理者API コントローラー
@@ -19,22 +21,10 @@ class AdminApiPrizeController extends Controller
      */
     public function index(Request $request)
     {
-        // category_id: 1,
-        // key_words: '',
-        // order_code: '',
-        // order_name: '',
-        // order_rank_id: '',
-        // order_point: '',
-        // order_updated_at: '',
-
-        # カテゴリーの選択
-        // $category_id = $request->category_id;
-        // $category_id = $category_id ?? 1;
-
 
         $query = Prize::query();
 
-            # キーワード(key_words)から検索(企業名など)
+            # キーワード(key_words)から検索
             self::KeyWordSearch($request, $query);
 
             # カテゴリーの選択
@@ -57,6 +47,11 @@ class AdminApiPrizeController extends Controller
                 $query->orderBy('rank_id', $request->order_rank_id);
             }
 
+            # 絞り込み：ランク
+            if( $request->where_rank_id ){
+                $query->where('rank_id', $request->where_rank_id);
+            }
+
             # 並び替え：ポイント
             if( $request->order_point ){
                 $query->orderBy('point', $request->order_point);
@@ -66,7 +61,7 @@ class AdminApiPrizeController extends Controller
             if( $request->updated_at ){
                 $query->orderBy('updated_at', $request->updated_at);
             }else{
-                $query->orderByDesc('updated_at');
+                $query->orderByDesc('created_at');
             }
 
             # 指定したIDを含む
@@ -87,8 +82,36 @@ class AdminApiPrizeController extends Controller
         }
 
 
-        return response()->json( $prizes );
+
+
+
+        # その他のデータ
+        $prize_ranks = PrizeRank::all();//評価ランクデータ
+
+        return response()->json( compact('prizes' ,'prize_ranks') );
     }
+
+
+
+    /**
+     * 更新
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Prize;
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Prize $prize)
+    {
+        # 入力データの加工
+        $inputs = AdminPrizeController::processingInputs( $request, $prize );
+
+        # DBデータの更新
+        $prize->update($inputs);
+
+        return response()->json(['prize'=>$prize,'requests'=>$inputs]);
+    }
+
+
 
 
     /**
@@ -128,8 +151,8 @@ class AdminApiPrizeController extends Controller
 
             $query->where(function($q) use ($key_word) {
 
-                $q->where('code'                , 'like', '%' . $key_word . '%') //タイトル
-                ->orWhere('name'          , 'like', '%' . $key_word . '%') //業種
+                $q->where('code', 'like', '%' . $key_word . '%')
+                ->orWhere('name', 'like', '%' . $key_word . '%')
                 // ->orWhere('point'        , 'like', '%' . $key_word . '%') //職種
                 ;
 
