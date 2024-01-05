@@ -7,8 +7,6 @@
 @section('meta')
     @php
     $meta_title = $category_name.'のガチャ一覧';
-    // $meta_description = "オンラインオリパ引くならcardFesta（カードフェスタ）! 高確率、爆アドガチャを多数ご用意しています。ポケカ・ワンピースなど人気オリパを24時間365日楽しめます。国内送料無料で、低コストガチャからハイリスクハイリターンなガチャなど楽しみ方は自由自在！ ";
-    // $meta_image = asset('storage/site/image/logo00.png');
     @endphp
 @endsection
 
@@ -21,7 +19,7 @@
         }
     </style>
     <style>
-        /* main{ padding-top: 0rem; } */
+        main{ padding-top: 0rem; }
 
         /* カルーセル */
         .carousel-indicators [data-bs-target] {
@@ -74,9 +72,16 @@
 @endsection
 
 
+@section('script')
+    <!--X timeline-->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+@endsection
+
+
+
 @section('content')
 
-    {{-- <section class="bg-dark" style="height:4.2rem;"></section> --}}
+    <section class="bg-dark" style="height:4.2rem;"></section>
 
 
     <!-- 紹介キャンペーン　トースト -->
@@ -107,9 +112,9 @@
 
 
     <!--カルーセル-->
-    <section class="overflow-hidden">
+    <section class="overflow-hidden" style="background:rgb(0, 0, 0,.8);">
 
-        <div class="container px-0 bg-dar">
+        <div class="container p-3 bg-dar">
             <div class="mx-auto"  style="max-width: 900px;">
                 <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
@@ -189,7 +194,7 @@
     @endphp
     <section class="py-3 {{$bg}}">
         <div class="container px-0 col-md-12 mx-auto overflow-auto">
-            <nav class="nav gap-3 flex-nowrap" style="min-width:{{$categories->count()*10 + 10}}rem;">
+            <nav class="nav gap-1 flex-nowrap" style="min-width:{{$categories->count()*6 + 10}}rem;">
                 @php
                 $sc = "col fs- py-2 fw-bold btn btn-dark border-0";
                 $style_class = $category_code=='all' ? $sc.' disabled bg-primary' : $sc;
@@ -212,7 +217,7 @@
 
 
     <!--ガチャ-->
-    <section class="p-3 pb-5">
+    <section class="py-3 pb-5">
         <div class="container" style="min-height:50vh;">
 
             <!--card-->
@@ -385,11 +390,11 @@
     <section class="bg-" style="background:rgb(0, 0, 0, 1);">
         <div class="container py-5">
 
-            <h3 class="text-center text-white fs-3 fw-bold mb-4 py-3">公式 X（旧twitter）</h3>
+            <h3 class="text-center text-white fs-3 fw-bold mb-4 py-3">公式 X（旧Twitter）</h3>
 
 
-            <div class="col-md-8 mx-auto bg-white rounded-4 overflow-auto" style="max-height:90vh;">
-                <a class="twitter-timeline" href="https://twitter.com/CardFesta7627?ref_src=twsrc%5Etfw">Tweets by CardFesta7627</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <div class="col-md-8 mx-auto bg-dark rounded-4 overflow-auto" style="max-height:90vh;">
+                <a class="twitter-timeline" href="https://twitter.com/CardFesta7627?ref_src=twsrc%5Etfw">Tweets by CardFesta7627</a>
             </div>
         </div>
     </section>

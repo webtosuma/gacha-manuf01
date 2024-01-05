@@ -119,15 +119,27 @@ $submenu_array = [
             </a>
         @endforeach
 
-
-        <form action="{{ route('admin_auth.logout') }}" method="POST">
-            @csrf
-            <button  class="list-group-item border-0 p-2 px-3 w-100 text-start" type="submit">
-                <i class="bi bi-box-arrow-right fs-4 me-3"></i>
-                {{ __('ログアウト') }}
-            </button>
-        </form>
     </div>
+
+
+    <a href="{{ route('gacha_category') }}"
+    class="{{$style_class}}" style="border-radius: 2rem  2rem;">
+        <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-house fs-4"></i>
+            <span>{{ 'ユーザーサイト' }}</span>
+        </div>
+    </a>
+
+
+    <form action="{{ route('admin_auth.logout') }}" method="POST">
+        @csrf
+        <button  class="list-group-item border-0 p-2 px-3 w-100 text-start" type="submit">
+            <i class="bi bi-box-arrow-right fs-4 me-3"></i>
+            {{ __('ログアウト') }}
+        </button>
+    </form>
+
+
 </div>
 
 

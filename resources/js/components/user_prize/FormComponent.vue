@@ -25,15 +25,6 @@
                 <div class="row g-2">
                     <div class="col-6">
 
-                        <!--選択した商品をポイント交換 r_exchange_points -->
-                        <button type="button" :disabled="disabled"
-                        data-bs-toggle="modal" data-bs-target="#exchangeModal"
-                        class="btn py-md-3 btn-warning rounded-pill w-100"
-                        >ポイント交換</button>
-
-                    </div>
-                    <div class="col-6">
-
                         <!-- 選択した商品の発送申請 r_shipped_appli -->
                         <form :action="r_shipped_appli" method="post">
                             <input type="hidden" name="_token" :value="token">
@@ -45,6 +36,15 @@
                             class="btn py-md-3 btn-light border rounded-pill w-100"
                             >発送申請</button>
                         </form>
+
+                    </div>
+                    <div class="col-6">
+
+                        <!--選択した商品をポイント交換 r_exchange_points -->
+                        <button type="button" :disabled="disabled"
+                        data-bs-toggle="modal" data-bs-target="#exchangeModal"
+                        class="btn py-md-3 btn-warning text-white rounded-pill w-100"
+                        >ポイント交換</button>
 
                     </div>
                 </div>
@@ -119,11 +119,19 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body text-center">
-                        <h5 class="modal-title" id="exchangeModalLabel"
-                        >選択商品をポイントと交換します。<br />よろしいですか？</h5>
+                        <h5 class="modal-title" id="exchangeModalLabel">
+                            <p>選択商品をポイントと交換しますか？</p>
+                            <p>商品を<strong class="fs-3">{{ totalPoint }}pt</strong>と交換する</p>
+                        </h5>
                     </div>
                     <div class="modal-body">
                         <div class="row g-2">
+                            <div class="col-6">
+                                <button type="button"
+                                class="btn p-md-33 btn-light border rounded-pill w-100"
+                                data-bs-dismiss="modal"
+                                >キャンセル</button>
+                            </div>
                             <div class="col-6">
 
                                 <!--選択した商品をポイント交換 r_exchange_points -->
@@ -135,16 +143,10 @@
                                     type="hidden" name="user_prize_ids[]" :value="id">
 
                                     <button type="submit"
-                                    class="btn p-md-3 btn-warning rounded-pill w-100"
-                                    >ポイント交換</button>
+                                    class="btn p-md-33 btn-warning text-white rounded-pill w-100"
+                                    >交換する</button>
                                 </form>
 
-                            </div>
-                            <div class="col-6">
-                                <button type="button"
-                                class="btn p-md-3 btn-light border rounded-pill w-100"
-                                data-bs-dismiss="modal"
-                                >やめる</button>
                             </div>
                         </div>
                     </div>

@@ -15,7 +15,7 @@
     <style>
         /* カスタム背景 */
         body{
-            background-image: url({{ asset( 'storage/'.'site/image/campaign_introductory/bg.jpg' ) }});
+            background-image: url({{ asset( 'storage/'.'site/image/campaign_introductory/bg04.jpg' ) }});
         }
     </style>
 @endsection

@@ -5,8 +5,6 @@
 @section('meta')
     @php
         $meta_title = 'お知らせ';
-        $meta_description = str_replace(["\r\n", "\r", "\n"],  '', mb_substr($meta_description, 0, 130).'...' );
-        $meta_image = $infomation->image_path;
     @endphp
 @endsection
 

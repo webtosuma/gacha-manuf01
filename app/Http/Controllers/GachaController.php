@@ -115,10 +115,6 @@ class GachaController extends Controller
     {
         if( $gacha->key!=$key ){ return \App::abort(404); }
 
-
-        // dd( $gacha->play_count);
-
-
         return view('gacha.show.index', compact( 'gacha' ));
     }
 
@@ -160,13 +156,20 @@ class GachaController extends Controller
         UserGachaHistory $user_gacha_history
     ){
 
+
+
         # 景品のポイント交換
-        UserPrizeController::ExchangePoints($request);
+        $point_history = UserPrizeController::ExchangePoints($request);
 
         # ガチャ
         $gacha = $user_gacha_history->gacha;
         # メッセージ
-        $message = '指定した景品をポイント交換しました。';
+        $message = $point_history->value.'ptとポイント交換しました。';
+
+        return redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
+        ->with('alert-success',$message);
+
+
 
         return view('gacha.result',compact('gacha','user_gacha_history','message') )
         ->with('alert-warning',$message);

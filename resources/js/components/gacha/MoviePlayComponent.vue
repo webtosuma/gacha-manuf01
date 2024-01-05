@@ -40,8 +40,8 @@
 
             <!--スキップボタン-->
             <div class="position-fixed bottom-0 end-0 p-3">
-                <form :action="r_action" method="post">
-                    <input type="hidden" name="_token" :value="token">
+                <form :action="r_action" method="get">
+                    <!-- <input type="hidden" name="_token" :value="token"> -->
                     <button type="submit"
                     class="btn btn-light btn-sm flort-right py-0">
                         <div class="d-flex justify-content-center align-items-center">
