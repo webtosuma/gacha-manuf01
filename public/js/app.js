@@ -12264,7 +12264,11 @@ var render = function render() {
     }
   }, [_c("p", [_vm._v("ポイント交換しますか？")]), _vm._v(" "), _c("p", [_vm._v("商品を"), _c("strong", {
     staticClass: "fs-3"
-  }, [_vm._v(_vm._s(_vm.totalPoint) + "pt")]), _vm._v("と交換する")])])]), _vm._v(" "), _vm._m(1)])])])]);
+  }, [_c("number-comma-component", {
+    attrs: {
+      number: _vm.totalPoint
+    }
+  }), _vm._v("pt")], 1), _vm._v("と交換する")])])]), _vm._v(" "), _vm._m(1)])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -13092,7 +13096,11 @@ var render = function render() {
     }
   }, [_c("p", [_vm._v("ポイント交換しますか？")]), _vm._v(" "), _c("p", [_vm._v("商品を"), _c("strong", {
     staticClass: "fs-3"
-  }, [_vm._v(_vm._s(_vm.totalPoint) + "pt")]), _vm._v("と交換する")])])]), _vm._v(" "), _c("div", {
+  }, [_c("number-comma-component", {
+    attrs: {
+      number: _vm.totalPoint
+    }
+  }), _vm._v("pt")], 1), _vm._v("と交換する")])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row g-2"

@@ -121,7 +121,7 @@
                     <div class="modal-body text-center">
                         <h5 class="modal-title" id="exchangeModalLabel">
                             <p>ポイント交換しますか？</p>
-                            <p>商品を<strong class="fs-3">{{ totalPoint }}pt</strong>と交換する</p>
+                            <p>商品を<strong class="fs-3"><number-comma-component :number="totalPoint" />pt</strong>と交換する</p>
                         </h5>
                     </div>
                     <div class="modal-body">

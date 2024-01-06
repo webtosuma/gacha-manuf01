@@ -38,8 +38,8 @@ class UserPrizeController extends Controller
         $user_prizes   = $data['user_prizes'];
 
         # メッセージ
-        $message = $point_history->value.'ptとポイント交換しました。';
-        $message = '合計'.$user_prizes->count()."点の商品を\n".$point_history->value."ptに交換しました。";
+        $point = number_format( $point_history->value );
+        $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。";
 
         return redirect('user_prize')
         ->with('alert-warning',$message);

@@ -164,8 +164,10 @@ class GachaController extends Controller
         # ガチャ
         $gacha = $user_gacha_history->gacha;
 
+
         # メッセージ
-        $message = '合計'.$user_prizes->count()."点の商品を\n".$point_history->value."ptに交換しました。\n選択されなかった商品は、\n「取得した商品一覧」に移動します。";
+        $point = number_format( $point_history->value );
+        $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。\n選択されなかった商品は、\n「取得した商品一覧」に移動します。";
 
         return redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
         ->with('alert-warning',$message);
