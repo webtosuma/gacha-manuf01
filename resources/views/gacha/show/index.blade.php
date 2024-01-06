@@ -16,6 +16,8 @@
 
 @section('style')
 <style>
+    /* main{ padding-top: 0rem; } */
+
     /* サイトデフォルト背景 */
     body{
         background-image: url({{ $gacha->category->bg_image_path }});
@@ -25,6 +27,8 @@
 
 
 @section('content')
+
+    {{-- <section class="bg-dark" style="height:4.2rem;"></section> --}}
 
     <!--ボトムメニュー-->
     <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white"

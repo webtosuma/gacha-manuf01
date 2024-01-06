@@ -72,7 +72,13 @@ $active_submenu = true;
                         <td>
                             <!-- PC用 -->
                             @if ($movie->pc)
-                                @include('admin.movie.pc_movie_modal')
+                                <movie-modal-component
+                                id   ="{{$movie->id.'-pc'}}"
+                                title="{{ $movie->name.'（PC）' }}"
+                                src  ="{{ $movie->pc }}"
+                                btn_label="PC用動画再生"
+                                max_width="800px"
+                                ></movie-modal-component>
                             @else
                                 <span>未登録</span>
                             @endif
@@ -80,7 +86,13 @@ $active_submenu = true;
                         <td>
                             <!-- モバイル用 -->
                             @if ($movie->mobile)
-                                @include('admin.movie.mobile_movie_modal')
+                                <movie-modal-component
+                                id   ="{{$movie->id.'-mobile'}}"
+                                title="{{ $movie->name.'（モバイル）' }}"
+                                src  ="{{ $movie->mobile }}"
+                                btn_label="モバイル用動画再生"
+                                max_width="400px"
+                                ></movie-modal-component>
                             @else
                                 <span>未登録</span>
                             @endif

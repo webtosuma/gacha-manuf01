@@ -35,11 +35,23 @@
                         </div>
                         <div class="col-auto">
                             <!-- PC用 -->
-                            @include('admin.movie.pc_movie_modal')
+                            <movie-modal-component
+                            id   ="{{$movie->id.'-pc'}}"
+                            title="{{ $movie->name.'（PC）' }}"
+                            src  ="{{ $movie->pc }}"
+                            btn_label="PC用動画再生"
+                            max_width="800px"
+                            ></movie-modal-component>
                         </div>
                         <div class="col-auto">
                             <!-- モバイル用 -->
-                            @include('admin.movie.mobile_movie_modal')
+                            <movie-modal-component
+                            id   ="{{$movie->id.'-mobile'}}"
+                            title="{{ $movie->name.'（モバイル）' }}"
+                            src  ="{{ $movie->mobile }}"
+                            btn_label="モバイル用動画再生"
+                            max_width="400px"
+                            ></movie-modal-component>
                         </div>
                     </div>
 

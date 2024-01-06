@@ -1,6 +1,6 @@
 <!--トップー-->
 <section class="p- pb-md-5">
-    <div class="mx-auto overflow-auto px-0" style="max-width:600px;">
+    <div class="mx-auto overflow-auto px-3" style="max-width:600px;">
 
         <div class="overflow-hidden" style="border-radius:1rem;">
             <ratio-image-component

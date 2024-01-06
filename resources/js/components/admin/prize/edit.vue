@@ -30,13 +30,13 @@
                     class="btn btn-lg btn-warning text-white" type="button"
                     ><i class="bi bi-pencil-fill me-2"></i>一括編集を終了する</button>
                 </div>
-                <div class="col fs-1 text-danger">未完成　テスト段階　使用不可！！</div>
+                <!-- <div class="col fs-1 text-danger">未完成　テスト段階　使用不可！！</div> -->
             </div>
         </section>
 
 
         <!--テーブル-->
-        <section class="card card-body bg-white my-3 overflow-auto border-warning border-3" style="height: 60vh;">
+        <section class="card card-body bg-white my-3 overflow-auto border-warning border-3" style="height: 90vh;">
             <table class="table" style="min-width: 600px; font-size: 16px;">
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>

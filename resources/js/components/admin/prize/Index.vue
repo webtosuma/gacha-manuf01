@@ -146,8 +146,9 @@
 
                         <tr v-for="(prize, key) in prizes" :key="key">
                             <td>
-                                <input v-model="ids" @change="changeChildren()"
-                                class="form-check-input" type="checkbox" :value=" prize.id ">
+                                <input v-model="ids" :value="prize.id"
+                                @change="changeChildren()"
+                                class="form-check-input" type="checkbox" >
                             </td>
                             <td scope="row">
                                 <!--画像-->

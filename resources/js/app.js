@@ -155,8 +155,8 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('encodedーinputtext-component',  require('./components/Items/EncodedInputtextComponent.vue').default);
 
 
-
-
+    /* 動画モーダルコンポーネント */
+    Vue.component('movie-modal-component',  require('./components/Items/MovieModalComponent.vue').default);
 
 
 const app = new Vue({ el: '#app', });

@@ -12,7 +12,7 @@
                     alt="{{ $discription->rank_label }}">
                 </div>
             @else
-                <div class="text-center" style="font-size:5rem;">{{ $discription->rank_label }}</div>
+                <div class="text-center" style="font-size:3rem;">{{ $discription->rank_label }}</div>
             @endif
             {{-- <div class="text-center" style="font-size:2rem;">{{ $discription->rank_label }}</div> --}}
 
