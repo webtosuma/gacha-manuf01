@@ -6335,8 +6335,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       };
       var route = this.r_api_prize;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs).then(function (json) {
-        console.log(json.data);
-        _this2.prizes = json.data;
+        // console.log(json.data);
+
+        // this.prizes = json.data;
+        _this2.prizes = json.data.prizes;
         _this2.loading = false; //読み込み中
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
@@ -6499,7 +6501,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         order_rank_id: '',
         order_point: '',
         order_updated_at: '',
-        not_ids: []
+        not_ids: [],
+        where_rank_id: ''
+      },
+      selects: {
+        prize_ranks: {}
       },
       keyWords: '',
       ids: [],
@@ -6529,15 +6535,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   methods: {
     /* 商品データ取得 */getData: function getData() {
       var _this = this;
+      var inputs_not = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       this.loading = true; //読み込み中
 
-      this.inputs.not_ids = [].concat(_toConsumableArray(this.parent_prize_ids), _toConsumableArray(this.ids)); //親が持つデータは除く
-
+      if (inputs_not) {
+        this.inputs.not_ids = [].concat(_toConsumableArray(this.parent_prize_ids), _toConsumableArray(this.ids)); //親が持つデータは除く
+      } else {
+        //rank絞り込みの処理
+        this.ids = [];
+      }
       var route = this.r_api_prize;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
         // console.log(json.data);
-
-        _this.prizes = json.data;
+        _this.prizes = json.data.prizes;
+        _this.selects.prize_ranks = json.data.prize_ranks;
         _this.loading = false; //読み込み中
       })["catch"](function (error) {
         // alert('通信エラーが発生しました。')
@@ -9487,7 +9498,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card bg-white overflow-auto",
     staticStyle: {
-      height: "50vh"
+      height: "90vh"
     }
   }, [_vm.is_special_rank ? _c("div", {
     staticClass: "bg-danger-subtle p-2 form-text m-0"
@@ -9865,7 +9876,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-auto",
     staticStyle: {
-      height: "50vh"
+      height: "90vh"
     }
   }, [_c("div", {
     staticClass: "d-flex align-items-center h-100"
@@ -9884,7 +9895,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card overflow-auto",
     staticStyle: {
-      height: "50vh"
+      height: "90vh"
     }
   }, [_vm.test ? _c("div", [_c("div", {
     staticClass: "p-2"
@@ -9972,6 +9983,47 @@ var render = function render() {
     attrs: {
       scope: "col"
     }
+  }, [_c("div", {
+    staticClass: "row align-items-end g-0"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.where_rank_id,
+      expression: "inputs.where_rank_id"
+    }],
+    staticClass: "form-select form-select-sm fw-bold",
+    attrs: {
+      "aria-label": "Default select example"
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.inputs, "where_rank_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, function ($event) {
+        return _vm.getData(false);
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("評価ランク")]), _vm._v(" "), _vm._l(_vm.selects.prize_ranks, function (prize_rank, key) {
+    return _c("option", {
+      key: key,
+      domProps: {
+        value: prize_rank.id
+      }
+    }, [_vm._v(_vm._s(prize_rank.name))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
   }, [_c("a", {
     staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
     attrs: {
@@ -9987,7 +10039,7 @@ var render = function render() {
     staticClass: "bi bi-caret-up-fill"
   }) : _vm._e(), _vm._v(" "), _vm.inputs["order_rank_id"] != "asc" ? _c("i", {
     staticClass: "bi bi-caret-down-fill"
-  }) : _vm._e()])]), _vm._v(" "), _c("th", {
+  }) : _vm._e()])])])]), _vm._v(" "), _c("th", {
     attrs: {
       scope: "col"
     }

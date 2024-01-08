@@ -94,7 +94,6 @@
 
                             <th scope="col"><div class="row align-items-end g-0">
                                 <div class="col-auto">
-
                                     <select @change="getData()"
                                     v-model="inputs.where_rank_id"
                                     class="form-select form-select-sm fw-bold" aria-label="Default select example">

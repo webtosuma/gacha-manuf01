@@ -1,7 +1,7 @@
 <template>
     <div class="row g-1">
         <!--追加ボタン-->
-        <div class="col-auto" style="height: 50vh">
+        <div class="col-auto" style="height: 90vh">
             <div class="d-flex align-items-center h-100">
                 <button @click="sendPrizeId"
                 :disabled="!ids.length"
@@ -11,7 +11,7 @@
         </div>
         <!--商品リスト-->
         <div class="col">
-            <div class="card overflow-auto"  style="height: 50vh">
+            <div class="card overflow-auto"  style="height: 90vh">
 
                 <!-- <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
                     *特殊な商品の登録は1種類までです。
@@ -57,13 +57,25 @@
                                 <i v-if="inputs['order_name']!='asc'"  class="bi bi-caret-down-fill"></i>
                             </a></th>
 
-                            <th scope="col"><a
-                            @click.prevent="changeOrder( 'order_rank_id' )"
-                            href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                            <th scope="col"><div class="row align-items-end g-0">
                                 <!-- <span>評価ランク</span> -->
-                                <i v-if="inputs['order_rank_id']!='desc'" class="bi bi-caret-up-fill"></i>
-                                <i v-if="inputs['order_rank_id']!='asc'"  class="bi bi-caret-down-fill"></i>
-                            </a></th>
+                                <div class="col">
+                                    <select @change="getData(false)"
+                                    v-model="inputs.where_rank_id"
+                                    class="form-select form-select-sm fw-bold" aria-label="Default select example">
+                                        <option value="">評価ランク</option>
+                                        <option v-for="(prize_rank, key) in selects.prize_ranks" :key="key"
+                                        :value="prize_rank.id">{{ prize_rank.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <a @click.prevent="changeOrder( 'order_rank_id' )"
+                                    href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                                        <i v-if="inputs['order_rank_id']!='desc'" class="bi bi-caret-up-fill"></i>
+                                        <i v-if="inputs['order_rank_id']!='asc'"  class="bi bi-caret-down-fill"></i>
+                                    </a>
+                                </div>
+                            </div></th>
 
                             <th scope="col"><a
                             @click.prevent="changeOrder( 'order_point' )"
@@ -149,6 +161,11 @@
                 order_point: '',
                 order_updated_at: '',
                 not_ids: [],
+                where_rank_id: ''
+            },
+
+            selects: {
+                prize_ranks: {},
             },
 
             keyWords: '',
@@ -178,18 +195,24 @@
         methods: {
 
             /* 商品データ取得 */
-            getData() {
+            getData(inputs_not=true) {
 
                 this.loading = true;//読み込み中
 
-                this.inputs.not_ids = [ ...this.parent_prize_ids, ...this.ids ];//親が持つデータは除く
+                if(inputs_not){
+                    this.inputs.not_ids = [ ...this.parent_prize_ids, ...this.ids ];//親が持つデータは除く
+                }else{
+                    //rank絞り込みの処理
+                    this.ids=[];
+                }
 
                 const route = this.r_api_prize;
                 axios.post( route , this.inputs )
                 .then(json => {
                     // console.log(json.data);
+                    this.prizes = json.data.prizes;
+                    this.selects.prize_ranks = json.data.prize_ranks;
 
-                    this.prizes = json.data;
                     this.loading = false;//読み込み中
                 })
                 .catch(error => {

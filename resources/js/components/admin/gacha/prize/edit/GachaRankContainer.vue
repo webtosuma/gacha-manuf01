@@ -2,7 +2,7 @@
     <div class="row g-1">
         <div class="col">
 
-            <div class="card bg-white overflow-auto" style="height: 50vh">
+            <div class="card bg-white overflow-auto" style="height: 90vh">
 
                 <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
                     *特殊な商品の数量は、更新時に自動算出されます。<br>
@@ -284,9 +284,10 @@
                 const route = this.r_api_prize;
                 axios.post( route , inputs )
                 .then(json => {
-                    console.log(json.data);
+                    // console.log(json.data);
 
-                    this.prizes = json.data;
+                    // this.prizes = json.data;
+                    this.prizes = json.data.prizes;
                     this.loading = false;//読み込み中
                 })
                 .catch(error => {
