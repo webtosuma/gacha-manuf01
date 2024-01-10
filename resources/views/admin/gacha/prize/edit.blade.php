@@ -16,7 +16,7 @@ $active_key = 'gacha';
 
 
 @section('content')
-    <div class="container mb-5">
+    <div class="containerr mx-3 mb-5">
 
 
         {{-- パンくずリスト --}}

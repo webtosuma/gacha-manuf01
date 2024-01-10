@@ -132,6 +132,7 @@ class AdminPrizeController extends Controller
     }
 
 
+        /** 削除 => AdminApiPrizeController　 */
 
         /**
          * 入力データの加工 self::processingInputs( $request )

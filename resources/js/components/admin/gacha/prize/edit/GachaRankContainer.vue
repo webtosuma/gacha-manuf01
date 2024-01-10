@@ -2,6 +2,7 @@
     <div class="row g-1">
         <div class="col">
 
+            <!-- {{ prize_ids }} -->
             <div class="card bg-white overflow-auto" style="height: 90vh">
 
                 <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
@@ -136,6 +137,7 @@
             <a-gachaprize-prize-list
             @send-prize-id="addGachaPrize"
             :parent_prize_ids="prize_ids"
+            :gacha_rank_id="gacha_rank_id"
 
             :token="token"
             :category_id="category_id"
@@ -218,11 +220,12 @@
             addGachaPrize(prize_ids) {
                 this.prize_ids = [...this.prize_ids, ...prize_ids];
 
-                // console.log(this.prize_ids);
-                // return;
+                // 既に登録ずみの商品IDを除去
+                this.prize_ids = this.filterPrizeIds();
 
                 this.getPrizeData();/* 新規商品データ取得 */
             },
+
 
             /** 新しいガチャ商品の種類を削除 */
             removeGachaPrize(id) {
@@ -243,6 +246,7 @@
                 }
             },
 
+
             /** 登録ずみ商品を削除 */
             removePrizeIds( g_prize ){
 
@@ -256,6 +260,7 @@
                 g_prize.show = false;
                 console.log( this.g_prizes );
             },
+
 
             /** 既に登録ずみの商品IDを除去 */
             filterPrizeIds(){

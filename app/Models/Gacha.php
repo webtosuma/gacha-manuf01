@@ -19,12 +19,10 @@ class Gacha extends Model
     public $timestamps = true;
     protected $fillable = [
         'category_id',  //リレーション
-
         'name',  //名前
         'image', //イメージ画像
         'key',   //認証キー
         'type',  //ガチャの種類
-        'meta_discription', //メタタグ用の説明文
         'one_play_point',   //1回PLAYポイント数
         'published_at',     //公開設定(利用しない->非公開*消さない)
     ];
@@ -94,6 +92,15 @@ class Gacha extends Model
             ->orderBy('gacha_rank_id','asc'); //ランク順
         }
 
+
+        /**
+         * GachaRankMovieモデル リレーション
+         * @return \App\Models\GachaRankMovie
+        */
+        public function g_rank_movies()
+        {
+            return $this->hasMany(GachaRankMovie::class,'gacha_id');
+        }
 
     /*
     |--------------------------------------------------------------------------

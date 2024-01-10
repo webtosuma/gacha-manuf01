@@ -86,6 +86,19 @@ class Method
         if( Storage::exists( $file_path ) ){ storage::delete( $file_path ); }
     }
 
+    /**
+     * ストレージファイルの削除(名前違い)
+     *
+     * @param String $path    //ファイルパステキスト
+     */
+    public static function deleteStorageFile($path)
+    {
+
+        $file_path = str_replace(["\r\n", "\r", "\n", "\t","\v"], '', $path);
+
+        if( Storage::exists( $file_path ) ){ storage::delete( $file_path ); }
+    }
+
 
 
 
@@ -139,6 +152,8 @@ class Method
     public static function copyStorageFile( $dir, $path )
     {
         $old_path = str_replace(["\r\n", "\r", "\n", "\t","\v"], '',$path);
+
+        $new_path = '';
         if( Storage::exists( $old_path ) ){
 
             // 採番の取得($num)
@@ -155,11 +170,10 @@ class Method
 
             // ストレージファイルのコピー・DBにパスの値を渡す
             storage::copy( $old_path, $new_path );
-
-
-            return $new_path;
         }
 
+
+        return $new_path;
     }
 
 }

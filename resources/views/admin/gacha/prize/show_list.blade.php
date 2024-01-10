@@ -28,7 +28,7 @@
                         $ratio = $gacha->max_count
                         ? $discription->g_prizes->sum('max_count')/$gacha->max_count*100 :0;
                         @endphp
-                        <span>{{ round( $ratio, 1) .'%' }}</span>
+                        <span>{{ round( $ratio, 2) .'%' }}</span>
                     </div>
                     <div class="col">
                         @php
@@ -76,7 +76,7 @@
                                 $ratio = $gacha->max_count
                                 ? $g_prize->max_count/$gacha->max_count*100 :0;
                                 @endphp
-                                <span>{{ round( $ratio, 1) .'%' }}</span>
+                                <span>{{ round( $ratio, 2) .'%' }}</span>
                             </div>
                             <div class="col">
                                 <number-comma-component

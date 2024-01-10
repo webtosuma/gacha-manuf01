@@ -56,7 +56,7 @@ class AdminApiGatyaController extends Controller
 
             $ratio = $gacha->max_count
             ? $discription->g_prizes->sum('max_count')/$gacha->max_count*100 :0;
-            $discription->g_prizes_ratio = round( $ratio, 1);//当選率(g_prizes_ratio)
+            $discription->g_prizes_ratio = round( $ratio, 2);//当選率(g_prizes_ratio)
 
         }
 

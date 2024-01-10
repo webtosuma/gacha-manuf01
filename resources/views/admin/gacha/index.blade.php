@@ -148,40 +148,16 @@ $active_key = 'gacha';
                             <li><a class="dropdown-item"
                             href="{{ route('admin.gacha.edit',$gacha) }}"
                             >編集する</a></li>
-                            <li><a class="dropdown-item"
-                            href="#"
-                            >コピーする</a></li>
-                            {{-- <li><a class="dropdown-item"
-                            href="#"
-                            >削除する</a></li> --}}
+                            <li><form action="{{route('admin.gacha.copy', $gacha)}}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item"
+                                >コピーする</button>
+                            </form></li>
 
                             <li><button type="button" data-bs-toggle="modal"
                             data-bs-target="#deleteModal{{'delete'.$gacha->id}}"
                             class="dropdown-item"
-                            >削除する</button><li>
-
-                                <!-- Button trigger modal -->
-                                {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{'delete'.$gacha->id}}">
-                                    Launch demo modal
-                                </button> --}}
-
-                                <!--削除モーダル-->
-                                {{-- <form action="{{ route('admin.gacha.destroy', $gacha) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <delete-modal-component
-                                    indexKey="{{'delete'.$gacha->id}}"
-                                    icon="bi-trash"
-                                    func_btn_type="submit"
-                                    button_class="btn btn-sm btn-light border ">
-                                        <div>
-                                            <span class="fw-bold">『{{$gacha->title}}』</span>を削除します。
-                                            <br />よろしいですか？
-                                        </div>
-                                    </delete-modal-component>
-                                </form> --}}
-                            </li>
+                            >削除する</button></li>
                         </ul>
                     </div>
                 </div>

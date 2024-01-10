@@ -51,7 +51,12 @@ $active_key = 'user';
                     <tbody>
                         @forelse ($users as $user)
                             <tr>
-                                <td>{{ $user->name }}</td>
+                                <td>
+                                    @if ($user->admin)
+                                        <span class="text-primary">●</span>
+                                    @endif
+                                    {{ $user->name }}
+                                </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->twitter_id ? $user->twitter_id : '---' }}</td>
 

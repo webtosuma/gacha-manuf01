@@ -23,7 +23,7 @@ class PointSailController extends Controller
 {
 
     /** ログイン中のみ処理可能 @return void */
-    public function __construct(){ $this->middleware('auth');}
+    // public function __construct(){ $this->middleware('auth');}
 
     /*
     |--------------------------------------------------------------------------

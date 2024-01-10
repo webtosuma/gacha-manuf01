@@ -218,6 +218,31 @@ class AdminGachaController extends Controller
 
 
 
+    /**
+     * 削除
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Gacha  $gacha
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, Gacha $gacha)
+    {
+        # ストレージファイルの削除
+        Method::deleteStorageFile($gacha->image);
+
+        $discriptions  = $gacha->discriptions; //ガチャ詳細
+        foreach ($discriptions as $discription) {
+            Method::deleteStorageFile($discription->image);
+            Method::deleteStorageFile($discription->sorce);
+        }
+
+        # DBデータの削除
+        $gacha->delete();
+
+        return redirect()->route('admin.gacha',$gacha->category->code_name)
+        ->with(['alert-success'=>'ガチャを1件削除しました']);
+    }
+
 
     /**
      * 入力データの加工 self::processingInputs( $request )
@@ -241,7 +266,7 @@ class AdminGachaController extends Controller
 
 
         # ストレージ画像ファイルの更新（イメージ画像）
-            $dir = 'upload/prize/image/';             //保存先ディレクトリ
+            $dir = 'upload/gacha/image/';             //保存先ディレクトリ
             $request_file    = $request->file('image');     //画像のリクエスト
             $old_image_path  = $gacha? $gacha->image: null; //更新前の画像パス
             $image_dalete    = $request->image_dalete;      //画像を削除するか否か

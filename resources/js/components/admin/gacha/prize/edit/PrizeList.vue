@@ -11,6 +11,11 @@
         </div>
         <!--商品リスト-->
         <div class="col">
+
+            <!-- {{ parent_prize_ids }}
+            {{ ids }} -->
+
+
             <div class="card overflow-auto"  style="height: 90vh">
 
                 <!-- <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
@@ -63,18 +68,18 @@
                                     <select @change="getData(false)"
                                     v-model="inputs.where_rank_id"
                                     class="form-select form-select-sm fw-bold" aria-label="Default select example">
-                                        <option value="">評価ランク</option>
+                                        <!-- <option value="">評価ランク</option> -->
                                         <option v-for="(prize_rank, key) in selects.prize_ranks" :key="key"
                                         :value="prize_rank.id">{{ prize_rank.name }}</option>
                                     </select>
                                 </div>
-                                <div class="col-auto">
+                                <!-- <div class="col-auto">
                                     <a @click.prevent="changeOrder( 'order_rank_id' )"
                                     href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
                                         <i v-if="inputs['order_rank_id']!='desc'" class="bi bi-caret-up-fill"></i>
                                         <i v-if="inputs['order_rank_id']!='asc'"  class="bi bi-caret-down-fill"></i>
                                     </a>
-                                </div>
+                                </div> -->
                             </div></th>
 
                             <th scope="col"><a
@@ -141,6 +146,8 @@
         props: {
             token:{ type: String,  default: '', },
             category_id:   { type: [String,Number],  default: '', },
+            gacha_rank_id: { type: [String,Number],  default: '', },
+
             r_api_prize:   { type: String,  default: '', },   //商品
 
             parent_prize_ids:{ type: Array,  default: [], },   //親が持つ商品ID
@@ -188,11 +195,30 @@
 
             this.inputs._token = this.token; //token保存
             this.inputs.category_id = this.category_id; //カテゴリーID
+            this.inputs.where_rank_id = this.setWhereRankId();//選択中の商品ランク
 
             this.getData();/* データ取得 */
 
         },
         methods: {
+
+            /* ガチャランクに応じた商品ランクIDを返す */
+            setWhereRankId() {
+                let id = null;
+                switch (this.gacha_rank_id) {
+                    case '100': id = 1; break;
+                    case '200': id = 2; break;
+                    case '300': id = 3; break;
+                    case '400': id = 4; break;
+                    case '500': id = 5; break;
+                    case '600': id = 6; break;
+
+                    default:  id = 1; break;
+                }
+                return id;
+            },
+
+
 
             /* 商品データ取得 */
             getData(inputs_not=true) {

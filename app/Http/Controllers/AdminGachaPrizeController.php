@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
 use App\Models\GachaDiscription;
@@ -40,24 +41,24 @@ class AdminGachaPrizeController extends Controller
     {
         // dd( $request->all() );
 
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
 
             # ランク別詳細情報
             self::updateFunc( $request, $gacha);
 
-        //     DB::commit();
-        // } catch (\Exception $e) {
+            DB::commit();
+        } catch (\Exception $e) {
 
-        //     Log::error($e);
-        //     DB::rollback();
-        //     $message = 'エラーが発生しました。';
-        //     return redirect()->back()
-        //     ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+            Log::error($e);
+            DB::rollback();
+            $message = 'エラーが発生しました。';
+            return redirect()->back()
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
 
-        // }
-        // // 二重送信防止
-        // $request->session()->regenerateToken();
+        }
+        // 二重送信防止
+        $request->session()->regenerateToken();
 
 
         # リダイレクト

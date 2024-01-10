@@ -152,6 +152,10 @@ class AdminMovieController extends Controller
      */
     public function destroy( Movie $movie )
     {
+        # ストレージファイルの削除
+        Method::deleteStorageFile($movie->pc_storage);
+        Method::deleteStorageFile($movie->mobile_storage);
+
         $movie->delete();
 
         # リダイレクト

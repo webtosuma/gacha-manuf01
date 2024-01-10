@@ -6284,9 +6284,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     /** 新しいガチャ商品の種類を追加 */addGachaPrize: function addGachaPrize(prize_ids) {
       this.prize_ids = [].concat(_toConsumableArray(this.prize_ids), _toConsumableArray(prize_ids));
 
-      // console.log(this.prize_ids);
-      // return;
-
+      // 既に登録ずみの商品IDを除去
+      this.prize_ids = this.filterPrizeIds();
       this.getPrizeData(); /* 新規商品データ取得 */
     },
     /** 新しいガチャ商品の種類を削除 */removeGachaPrize: function removeGachaPrize(id) {
@@ -6467,6 +6466,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       type: [String, Number],
       "default": ''
     },
+    gacha_rank_id: {
+      type: [String, Number],
+      "default": ''
+    },
     r_api_prize: {
       type: String,
       "default": ''
@@ -6528,11 +6531,39 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   mounted: function mounted() {
     this.inputs._token = this.token; //token保存
     this.inputs.category_id = this.category_id; //カテゴリーID
+    this.inputs.where_rank_id = this.setWhereRankId(); //選択中の商品ランク
 
     this.getData(); /* データ取得 */
   },
 
   methods: {
+    /* ガチャランクに応じた商品ランクIDを返す */setWhereRankId: function setWhereRankId() {
+      var id = null;
+      switch (this.gacha_rank_id) {
+        case '100':
+          id = 1;
+          break;
+        case '200':
+          id = 2;
+          break;
+        case '300':
+          id = 3;
+          break;
+        case '400':
+          id = 4;
+          break;
+        case '500':
+          id = 5;
+          break;
+        case '600':
+          id = 6;
+          break;
+        default:
+          id = 1;
+          break;
+      }
+      return id;
+    },
     /* 商品データ取得 */getData: function getData() {
       var _this = this;
       var inputs_not = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
@@ -7372,7 +7403,7 @@ __webpack_require__.r(__webpack_exports__);
       /* 通信中 */
 
       /* 表示中ステップ番号 */
-      step_num: 3,
+      step_num: 1,
       /* 入力内容 */
       inputs: {
         _token: '',
@@ -9683,6 +9714,7 @@ var render = function render() {
   }, [_c("a-gachaprize-prize-list", {
     attrs: {
       parent_prize_ids: _vm.prize_ids,
+      gacha_rank_id: _vm.gacha_rank_id,
       token: _vm.token,
       category_id: _vm.category_id,
       r_api_prize: _vm.r_api_prize,
@@ -10011,35 +10043,14 @@ var render = function render() {
         return _vm.getData(false);
       }]
     }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("評価ランク")]), _vm._v(" "), _vm._l(_vm.selects.prize_ranks, function (prize_rank, key) {
+  }, _vm._l(_vm.selects.prize_ranks, function (prize_rank, key) {
     return _c("option", {
       key: key,
       domProps: {
         value: prize_rank.id
       }
     }, [_vm._v(_vm._s(prize_rank.name))]);
-  })], 2)]), _vm._v(" "), _c("div", {
-    staticClass: "col-auto"
-  }, [_c("a", {
-    staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
-    attrs: {
-      href: "#"
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.changeOrder("order_rank_id");
-      }
-    }
-  }, [_vm.inputs["order_rank_id"] != "desc" ? _c("i", {
-    staticClass: "bi bi-caret-up-fill"
-  }) : _vm._e(), _vm._v(" "), _vm.inputs["order_rank_id"] != "asc" ? _c("i", {
-    staticClass: "bi bi-caret-down-fill"
-  }) : _vm._e()])])])]), _vm._v(" "), _c("th", {
+  }), 0)])])]), _vm._v(" "), _c("th", {
     attrs: {
       scope: "col"
     }

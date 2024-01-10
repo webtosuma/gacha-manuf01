@@ -214,7 +214,7 @@ use \App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
-| ガチャ(基本情報) AdminGachaController
+| ガチャ(基本情報) AdminGachaController AdminGachaCopyController
 |--------------------------------------------------------------------------
 */
     Route::middleware(['admin_auth'])->group(function () {
@@ -250,11 +250,6 @@ use \App\Http\Controllers;
             [Controllers\AdminGachaController ::class, 'update'])
             ->name('admin.gacha.update');
 
-            # コピー作成
-            Route::post('/admin/gacha/copy/{gacha}',
-            [Controllers\AdminGachaController ::class, 'copy'])
-            ->name('admin.gacha.copy');
-
         # 公開設定
         Route::get('/admin/gacha/published/{gacha}',
         [Controllers\AdminGachaController ::class, 'published'])
@@ -269,6 +264,12 @@ use \App\Http\Controllers;
         Route::delete('/admin/gacha/destroy/{gacha}',
         [Controllers\AdminGachaController ::class, 'destroy'])
         ->name('admin.gacha.destroy');
+
+        # コピー作成
+        Route::post('/admin/gacha/copy/{gacha}',
+        [Controllers\AdminGachaCopyController ::class, 'index'])
+        ->name('admin.gacha.copy');
+
 
     });//end middleware
 

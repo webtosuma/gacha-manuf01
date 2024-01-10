@@ -105,12 +105,13 @@ use Illuminate\Support\Facades\Auth;
 |  PointHistoryController
 |--------------------------------------------------------------------------
 */
-    Route::middleware(['auth'])->group(function () {
+    # ポイント一覧
+    Route::get('point_sail',
+    [Controllers\PointSailController::class, 'index'])
+    ->name('point_sail');
 
-        # ポイント一覧
-        Route::get('point_sail',
-        [Controllers\PointSailController::class, 'index'])
-        ->name('point_sail');
+
+    Route::middleware(['auth'])->group(function () {
 
         # 購入手続き
         Route::get('point_sail/payment/{point_sail}',
