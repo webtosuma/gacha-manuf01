@@ -32,6 +32,7 @@ class AdminPointSailRequest extends FormRequest
             'price'  => ['required','integer','min:0'],
             'service'=> ['integer','min:0'],
             'is_published' => ['required','in:0,1'],
+            'stripe_id' => ['required','max:140',],
         ];
     }
 
@@ -49,6 +50,7 @@ class AdminPointSailRequest extends FormRequest
             'service'=> 'お得分',
             //'is_subscription' => 'サブスクリプションか否か',
             'is_published'    => '公開設定',
+            'stripe_id' => 'Stipeの商品ID',//
         ];
     }
 }

@@ -19,6 +19,7 @@ class PointSail extends Model
         'service',//サービス差異
         'is_subscription', //サブスクリプションか否か
         'is_published',    //公開設定(利用しない->非公開*消さない)
+        'stripe_id',//Stipeの商品ID
     ];
 
 

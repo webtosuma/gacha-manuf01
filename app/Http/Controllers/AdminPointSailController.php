@@ -138,6 +138,7 @@ class AdminPointSailController extends Controller
             'value'       ,// '付与ポイント数',
             'price'       ,// 'ポイント販売価格',
             'is_published',// '公開設定',
+            'stripe_id',   //Stipeの商品ID
         );
 
         # お得分の計算

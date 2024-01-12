@@ -45,6 +45,27 @@
             @endif
         </label>
 
+
+        <!--Stripeの商品ID(stripe_id)-->
+        <label class="d-block mb-4">
+            <div class="form-label">
+                Stripeの商品ID
+                <span class="text-danger">＊</span>
+            </div>
+
+            <div class="input-group mb-3">
+                <input  value="{{old('stripe_id', $point_sail->stripe_id  )}}"
+                name="stripe_id"
+                type="text" class="form-control">
+            </div>
+
+            <!--error message-->
+            @if ( $errors->has('stripe_id') )
+                <div class="text-danger"> {{$errors->first('stripe_id')}} </div>
+            @endif
+        </label>
+
+
     </div>
     <div class="col-md-6">
 
