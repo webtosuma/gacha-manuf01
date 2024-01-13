@@ -128,9 +128,9 @@ class CanpaingIntroductoryController extends Controller
 
 
     ## ポイント付与
-    public static function grant()
+    public static function grant($user)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         $point = self::grantPoint();//付与ポイント
 
         # ユーザー紹介履歴(お友達側)の取得

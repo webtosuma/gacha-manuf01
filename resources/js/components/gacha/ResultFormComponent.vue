@@ -22,10 +22,10 @@
                     <label class="w-100">
 
                         <!--商品ランク表示-->
-                        <div class="text-center">
+                        <!-- <div class="text-center">
                             <span class="fw-bold fs-5"
                             >{{ userPrize.prize.rank.name }}</span>
-                        </div>
+                        </div> -->
 
                         <div class="position-relative">
                             <!--チェックボックス-->

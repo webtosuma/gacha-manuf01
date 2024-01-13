@@ -26,17 +26,17 @@
         <li class="list-group-item bg-white py-4">
             <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">
                 <div class="col-6">ポイント数</div>
-                <div class="col-6 border-bottom fw-bold">{{ number_format($point_history->value).'ポイント' }}</div>
+                <div class="col-6 border-bottom fw-bold">{{ number_format($point_sail->value).'ポイント' }}</div>
                 <div class="col-6">支払い方法</div>
                 <div class="col-6 border-bottom fw-bold">クレジットカード</div>
                 <div class="col-6">支払い金額</div>
-                <div class="col-6 border-bottom fw-bold">{{ number_format($point_history->price).'円（税込）' }}</div>
+                <div class="col-6 border-bottom fw-bold">{{ number_format($point_sail->price).'円（税込）' }}</div>
             </div>
         </li>
     </ul>
 
     <div class="mx-auto" style="max-width:600px;">
-        <a href="{{ route('gacha_category') }}" class="btn btn-light border w-100"
+        <a href="{{ route('gacha_category') }}" class="btn btn-lg btn-primary text-white rounded-pill shadow w-100"
         >ガチャを続ける</a>
     </div>
 </div>

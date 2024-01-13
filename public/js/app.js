@@ -12166,10 +12166,6 @@ var render = function render() {
     }, [_c("label", {
       staticClass: "w-100"
     }, [_c("div", {
-      staticClass: "text-center"
-    }, [_c("span", {
-      staticClass: "fw-bold fs-5"
-    }, [_vm._v(_vm._s(userPrize.prize.rank.name))])]), _vm._v(" "), _c("div", {
       staticClass: "position-relative"
     }, [_c("div", {
       staticClass: "position-absolute top-0 start-0 translate-middle",
@@ -13127,7 +13123,7 @@ var render = function render() {
       attrs: {
         classs: "fw-bold"
       }
-    }, [_vm._v(_vm._s(userPrize.prize.name))]), _vm._v(" "), _c("div", {}, [_vm._v(_vm._s(userPrize.prize.rank.name))]), _vm._v(" "), _c("div", {
+    }, [_vm._v(_vm._s(userPrize.prize.name))]), _vm._v(" "), _c("div", {
       staticClass: "mt- px-3 text-center border rounded-pill d-inline-block"
     }, [_c("number-comma-component", {
       attrs: {

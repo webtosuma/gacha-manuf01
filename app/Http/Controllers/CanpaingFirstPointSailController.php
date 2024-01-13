@@ -29,9 +29,9 @@ class CanpaingFirstPointSailController extends Controller
 
 
     ## ポイント付与
-    public static function grant()
+    public static function grant($user)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         $point = self::grantPoint();//付与ポイント
 
         $point_sail_histories = PointHistory::where('user_id',$user->id)

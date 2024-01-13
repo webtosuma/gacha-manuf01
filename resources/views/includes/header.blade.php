@@ -11,7 +11,14 @@
                 </a>
             </h1>
 
+
+            @if ( config('app.debug') )
+                <h3 class="text-danger m-0 mt-2">TEST MODE</h3>
+            @endif
+
+
             <div class="d-flex align-items-center ">
+
                 @guest
                     <!-- ログイン前 -->
                     <a class="btn btn-sm btn-dark text-white rounded-pill shadow-sm fw-bold border-warning border-3 me-2"

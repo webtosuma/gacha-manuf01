@@ -12,6 +12,9 @@
                 </h1>
             </a>
 
+            @if ( config('app.debug') )
+                <h3 class="text-danger m-0 mt-2">TEST MODE</h3>
+            @endif
 
 
             <div class="" id="navbarNav">

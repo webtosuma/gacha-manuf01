@@ -1,4 +1,4 @@
-{{-- @if ( !config('app.debug') ) --}}
+@if ( !config('app.debug') )
 
 
     @php
@@ -33,4 +33,4 @@
 
 
 
-{{-- @endif --}}
+@endif

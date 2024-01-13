@@ -56,7 +56,7 @@ class AdminGachaDisriptionController extends Controller
             # ストレージ画像ファイルの更新（イメージ画像）image
             $key = 'gri'.$discription->gacha_rank_id; //識別キー gri100
 
-            $dir = 'upload/discription/image/';                  //保存先ディレクトリ
+            $dir = 'upload/discription/image';                  //保存先ディレクトリ
             $request_file    = $request->file( $key.'-image' );  //画像のリクエスト
             $old_image_path  = $discription->image;              //更新前の画像パス
             $image_dalete    = $request[$key.'-image_dalete'];   //画像を削除するか否か

@@ -107,7 +107,8 @@ use Illuminate\Support\Facades\Auth;
 */
     # ポイント一覧
     Route::get('point_sail',
-    [Controllers\PointSailController::class, 'index'])
+    // [Controllers\PointSailController::class, 'index'])
+    [Controllers\StripeController::class, 'index'])
     ->name('point_sail');
 
 
@@ -115,36 +116,23 @@ use Illuminate\Support\Facades\Auth;
 
         # 購入手続き
         Route::get('point_sail/payment/{point_sail}',
-        [Controllers\PointSailController::class, 'payment'])
+        [Controllers\StripeController::class, 'payment'])
         ->name('point_sail.payment');
 
-        # 新規登録
-        Route::post('point_sail/create/{point_sail}',
-        [Controllers\PointSailController::class, 'create'])
-        ->name('point_sail.create');
-
-        # 購入
-        Route::post('point_sail/payment/{point_sail}',
-        [Controllers\PointSailController::class, 'payment_post'])
+        # 購入処理
+        Route::get('point_sail/payment_post/{stripe_id}',
+        [Controllers\StripeController::class, 'payment_post'])
         ->name('point_sail.payment_post');
 
-        Route::get( 'payment', [Controllers\PaymentController::class, 'index'])->name('payment');
-        Route::post('payment', [Controllers\PaymentController::class, 'payment']);
-
-        // ポイント購入完了
-        Route::get('point_sail/comp/{point_history}',
-        [Controllers\PointSailController::class, 'comp'])
+        # ポイント購入完了
+        Route::get('point_sail/comp/{stripe_id}',
+        [Controllers\StripeController::class, 'comp'])
         ->name('point_sail.comp');
 
         # ポイント購入履歴
         Route::get('point_history/{month?}',
         [Controllers\PointHistoryController::class, 'index'])
         ->name('point_history');
-
-        # カード情報の削除
-        Route::delete('point_sail/destroy/{point_sail}',
-        [Controllers\PointSailController::class, 'destroy'])
-        ->name('point_sail.destroy');
 
     });
 

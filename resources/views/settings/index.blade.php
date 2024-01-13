@@ -50,7 +50,7 @@
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('settings.credit_card') }}"
+            {{-- <a href="{{ route('settings.credit_card') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >
                 <div class="row align-items-center">
@@ -62,7 +62,7 @@
 
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a>
+            </a> --}}
 
             <a href="{{ route('settings.shipped_address') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
