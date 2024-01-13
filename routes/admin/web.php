@@ -9,7 +9,9 @@ use \App\Http\Controllers;
  */
 
     # ホーム(home)
-    Route::get('/admin', function () { return view('admin.home'); })
+    Route::get('/admin',
+    // function () {  })
+    [Controllers\AdminHomeController::class,'index'])
     ->middleware('admin_auth')
     ->name('admin.home');
 
@@ -71,6 +73,16 @@ use \App\Http\Controllers;
             Route::patch('/admin/category/update/{gacha_category}',
             [Controllers\AdminGachaCategoryController::class, 'update'])
             ->name('admin.category.update');
+
+        # 基本情報の編集(すべて)
+        Route::get('/admin/category/all/edit',
+        [Controllers\AdminGachaCategoryController::class, 'all_edit'])
+        ->name('admin.category.all_edit');
+
+            # 基本情報の更新(すべて)
+            Route::patch('/admin/category/all/update',
+            [Controllers\AdminGachaCategoryController::class, 'all_update'])
+            ->name('admin.category.all_update');
 
         # 削除
         Route::delete('/admin/category/destroy/{gacha_category}',

@@ -6950,7 +6950,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](route, {
         _token: this.token
       }).then(function (json) {
-        console.log(json.data);
         _this3.getData(); /* データ取得 */
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
@@ -7660,7 +7659,7 @@ __webpack_require__.r(__webpack_exports__);
         if (_this2.ids.some(function (id) {
           return id === userPrize.id;
         })) {
-          _this2.totalPoint += userPrize.prize.point;
+          _this2.totalPoint += userPrize.point;
         }
       });
       this.disabled = this.totalPoint == 0;
@@ -8162,7 +8161,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         if (_this2.ids.some(function (id) {
           return id === userPrize.id;
         }) && userPrize.prize) {
-          _this2.totalPoint += userPrize.prize.point;
+          _this2.totalPoint += userPrize.point;
         }
       });
       this.disabled = this.totalPoint == 0;
@@ -10621,7 +10620,7 @@ var render = function render() {
       staticClass: "bi bi-pencil-fill"
     })]), _vm._v(" "), _c("delete-modal-component", {
       attrs: {
-        indexKey: "delete" + prize.id,
+        index_key: "delete" + prize.id,
         icon: "bi-trash",
         button_class: prize.is_used ? "disabled btn btn-sm btn-secondary border" : "btn btn-sm btn-light border"
       },
@@ -12221,7 +12220,7 @@ var render = function render() {
       staticClass: "bg-white text-center mt-1 px-1 rounded-pill"
     }, [_c("number-comma-component", {
       attrs: {
-        number: userPrize.prize.point
+        number: userPrize.point
       }
     }), _vm._v("pt\n                    ")], 1)])])]);
   })], 2), _vm._v(" "), _c("div", {
@@ -13127,7 +13126,7 @@ var render = function render() {
       staticClass: "mt- px-3 text-center border rounded-pill d-inline-block"
     }, [_c("number-comma-component", {
       attrs: {
-        number: userPrize.prize.point
+        number: userPrize.point
       }
     }), _vm._v(_vm._s("pt") + "\n                    ")], 1)])]) : _c("div", {
       staticClass: "py-5"

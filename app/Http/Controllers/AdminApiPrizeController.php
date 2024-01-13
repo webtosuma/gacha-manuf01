@@ -122,10 +122,7 @@ class AdminApiPrizeController extends Controller
      */
     public function destroy(Prize $prize)
     {
-        # ストレージファイルの削除
-        Method::deleteStorageFile($prize->image);
-
-        # DBデータの削除
+        # DBデータの理論削除
         $prize->delete();
         return response()->json(['message'=>'delete OK!']);
     }

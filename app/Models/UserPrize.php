@@ -23,6 +23,7 @@ class UserPrize extends Model
         'gacha_history_id',//主テーブルに関連する従テーブルのレコードを削除
         'point_history_id',//ポイント収支履歴リレーション（ポイント交換した時のみ）
         'shipped_id',//発送履歴（発送した時のみ）
+        'point',  //(商品取得時の)交換ポイント値
     ];
 
 

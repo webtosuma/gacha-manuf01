@@ -33,7 +33,7 @@ class AdminGachaController extends Controller
         : Gacha::orderByDesc('created_at')->get();
 
         # カテゴリーデータ(select要素用)
-        $categories = GachaCategory::all();
+        $categories = GachaCategory::orderBy('created_at')->get();
 
         return view('admin.gacha.index', compact('gachas','gacha_category','categories','category_code'));
     }
@@ -228,15 +228,15 @@ class AdminGachaController extends Controller
     public function destroy(Request $request, Gacha $gacha)
     {
         # ストレージファイルの削除
-        Method::deleteStorageFile($gacha->image);
+        // Method::deleteStorageFile($gacha->image);
 
-        $discriptions  = $gacha->discriptions; //ガチャ詳細
-        foreach ($discriptions as $discription) {
-            Method::deleteStorageFile($discription->image);
-            Method::deleteStorageFile($discription->sorce);
-        }
+        // $discriptions  = $gacha->discriptions; //ガチャ詳細
+        // foreach ($discriptions as $discription) {
+        //     Method::deleteStorageFile($discription->image);
+        //     Method::deleteStorageFile($discription->sorce);
+        // }
 
-        # DBデータの削除
+        # DBデータの論理削除
         $gacha->delete();
 
         return redirect()->route('admin.gacha',$gacha->category->code_name)

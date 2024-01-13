@@ -23,7 +23,7 @@ class AdminApiGatyaController extends Controller
      */
     public function category(Request $request)
     {
-        $category = GachaCategory::all();
+        $category = GachaCategory::orderBy('created_at')->get();
 
         return response()->json( $category );
     }

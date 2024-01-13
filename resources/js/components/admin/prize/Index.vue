@@ -175,7 +175,7 @@
                                     <!--削除モーダル-->
                                     <delete-modal-component
                                     @parent-func="destory(prize.id)"
-                                    :indexKey="'delete'+prize.id"
+                                    :index_key="'delete'+prize.id"
                                     icon="bi-trash"
                                     :button_class=" prize.is_used ? 'disabled btn btn-sm btn-secondary border' :'btn btn-sm btn-light border' ">
                                         <div>この商品を削除します。<br />よろしいですか？</div>
@@ -332,9 +332,6 @@
                 const route = this.r_api_destroy+'/'+id;
                 axios.delete( route , {_token: this.token} )
                 .then(json => {
-
-                    console.log(json.data);
-
                     this.getData(); /* データ取得 */
                 })
                 .catch(error => {

@@ -12,7 +12,8 @@
             <div class="col-12 col-md">
                 <h3>{{ __('カテゴリー') }}</h3>
                 @php
-                $gacha_categories = \App\Models\GachaCategory::where('is_published',1)->get();
+                $gacha_categories = \App\Models\GachaCategory::where('is_published',1)
+                ->orderBy('created_at')->get();
                 @endphp
                 <ul class="list-unstyled fs-5">
                     @foreach ($gacha_categories as $gacha_category)

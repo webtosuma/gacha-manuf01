@@ -64,7 +64,7 @@ class UserPrizeController extends Controller
         # 交換ポイントの合計($total_point)
         $total_point = 0;
         foreach ($user_prizes as $user_prize) {
-            $total_point += $user_prize->prize->point;
+            $total_point += $user_prize->point;
         }
 
         # ポイント履歴の登録

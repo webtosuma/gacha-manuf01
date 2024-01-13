@@ -48,7 +48,7 @@
 <script>
     export default{
         props: {
-            index_key:    { type: [String,Number], default: '1',},
+            index_key:   { type: [String,Number], default: '1',},
             icon:        { type: String, default: 'bi-exclamation-triangle',},
             color:       { type: String, default: 'danger',},
             button_text: { type: String, default: '',},

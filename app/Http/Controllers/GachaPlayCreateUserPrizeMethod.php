@@ -131,6 +131,7 @@ class GachaPlayCreateUserPrizeMethod extends Controller
             'user_id'  => $user->id,  //ユーザー　リレーション
             'prize_id' => $gacha_prize->prize_id,//商品リレーション
             'gacha_history_id'=> $user_gacha_history->id,//主テーブルに関連する従テーブルのレコードを削除
+            'point'    => $gacha_prize->prize->point,  //(商品取得時の)交換ポイント値
         ]);
         $user_prize->save();
     }

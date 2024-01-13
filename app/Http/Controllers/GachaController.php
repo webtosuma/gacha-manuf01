@@ -39,6 +39,7 @@ class GachaController extends Controller
 
             ## ガチャのカテゴリーグループ一覧
             $categories = GachaCategory::where('is_published',1) //公開中
+            ->orderBy('created_at')
             ->get();
 
             ## 表示できるガチャ一覧

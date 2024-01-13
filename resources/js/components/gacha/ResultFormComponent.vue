@@ -45,7 +45,7 @@
 
                         <!--ポイント表示-->
                         <div class="bg-white text-center mt-1 px-1 rounded-pill">
-                            <number-comma-component :number="userPrize.prize.point" />pt
+                            <number-comma-component :number="userPrize.point" />pt
                         </div>
 
                     </label>
@@ -199,7 +199,7 @@
 
                 this.userPrizes.forEach( userPrize => {
                     if( this.ids.some( id => id === userPrize.id) ){
-                        this.totalPoint += userPrize.prize.point;
+                        this.totalPoint += userPrize.point;
                     }
                 } );
 

@@ -27,10 +27,8 @@ $active_submenu = true;
                 >{{ 'Top' }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.category') }}"
                 >{{ 'カテゴリー' }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category.show',$gacha_category) }}"
-                >{{ $gacha_category->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"
-                >{{ '編集' }}</li>
+                >{{ $gacha_category->name }}</li>
             </ol>
         </nav>
 

@@ -19,24 +19,13 @@ class AdminGachaCategoryController extends Controller
      */
     public function index()
     {
-        $gacha_categories = GachaCategory::all();
+        $gacha_categories = GachaCategory::orderBy('created_at')
+        ->get();
 
         // dd($gacha_categories);
 
         return view('admin.category.index', compact('gacha_categories') );
     }
-
-
-    // /**
-    //  * 表示
-    //  *
-    //  * @param  \App\Models\GachaCategory $gacha_category
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show( GachaCategory $gacha_category )
-    // {
-    //     return view('admin.category.show', compact('gacha_category'));
-    // }
 
 
 
@@ -135,6 +124,49 @@ class AdminGachaCategoryController extends Controller
 
 
     /**
+     * 編集(すべて)
+     * @return \Illuminate\Http\Response
+     */
+    public function all_edit()
+    {
+        $gacha_category = new GachaCategory();
+
+        return view('admin.category.all_edit',compact('gacha_category'));
+    }
+
+
+
+
+    /**
+     * 更新(すべて)
+     *
+     * @param  Request $request
+     * @param  \App\Models\GachaCategory $gacha_category
+     * @return \Illuminate\Http\Response
+     */
+    public function all_update(Request $request)
+    {
+
+        if( $request_file = $request->file('bg_image') )
+        {
+            $dir = 'upload/gacha_category/bg_image';
+            $file_name = 'all.jpg';
+
+            // 画像のアップロード
+            $image_path =  $request_file->storeAs($dir,$file_name );
+        }
+
+
+        # リダイレクト
+        return redirect()->route('admin.category')
+        ->with(['alert-warning'=>'ガチャのカテゴリーを更新しました。']);
+    }
+
+
+
+
+
+    /**
      * 入力データの加工 self::processingInputs( $request )
      *
      * @param \Illuminate\Http\Request $request
@@ -152,7 +184,7 @@ class AdminGachaCategoryController extends Controller
 
 
         # ストレージ画像ファイルの更新（イメージ画像）
-            $dir = 'upload/gacha_category/bg_image/';             //保存先ディレクトリ
+            $dir = 'upload/gacha_category/bg_image';             //保存先ディレクトリ
             $request_file    = $request->file('bg_image');     //画像のリクエスト
             $old_image_path  = $gacha_category? $gacha_category->bg_image: null; //更新前の画像パス
             $image_dalete    = $request->image_dalete;      //画像を削除するか否か

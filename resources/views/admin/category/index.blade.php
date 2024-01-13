@@ -44,6 +44,31 @@ $active_submenu = true;
                         <th scope="col"></th>
                     </tr>
 
+                    <!--すべて-->
+                    <tr>
+                        <th scope="row"> </th>
+
+                        <!-- カテゴリー名 -->
+                        <td>{{ 'すべて' }}</td>
+
+                        <!-- コード -->
+                        <td>{{ 'all' }}</td>
+
+                        <!-- 公開中ガチャ -->
+                        <td></td>
+
+                        <td style="width:8rem;"><div class="row justify-content-start g-2">
+                            <div class="col-auto">
+                                <!--編集ボタン-->
+                                <a href="{{ route('admin.category.all_edit') }}"
+                                class="btn btn-sm btn-light border "
+                                ><i class="bi bi-pencil-fill"></i></a>
+                            </div>
+                        </div></td>
+
+                    </tr>
+
+                    <!--カスタマイズ-->
                     @foreach ($gacha_categories as $gacha_category)
                     <tr>
                         <th scope="row">
@@ -67,7 +92,7 @@ $active_submenu = true;
                         <!-- 公開中ガチャ -->
                         <td>{{ $gacha_category->published_gachas->count() }}</td>
 
-                        <td style="width:8rem;"><div class="row justify-content-end g-2">
+                        <td style="width:8rem;"><div class="row justify-content-start g-2">
                             <div class="col-auto">
                                 <!--編集ボタン-->
                                 <a href="{{ route('admin.category.edit',$gacha_category) }}"

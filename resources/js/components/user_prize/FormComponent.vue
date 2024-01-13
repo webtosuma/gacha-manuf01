@@ -97,7 +97,7 @@
                         <!-- <div class="">{{ userPrize.prize.rank.name }}</div> -->
 
                         <div class="mt- px-3 text-center border rounded-pill d-inline-block">
-                            <number-comma-component :number=" userPrize.prize.point " />{{ 'pt' }}
+                            <number-comma-component :number=" userPrize.point " />{{ 'pt' }}
                         </div>
 
                     </div>
@@ -156,7 +156,7 @@
     </div>
 </template>
 <script>
-    import axios from 'axios'
+    import axios from 'axios';
 
     export default {
         props: {
@@ -231,7 +231,7 @@
 
                 this.userPrizes.forEach( userPrize => {
                     if( this.ids.some( id => id === userPrize.id) && userPrize.prize ){
-                        this.totalPoint += userPrize.prize.point;
+                        this.totalPoint += userPrize.point;
                     }
                 } );
 
