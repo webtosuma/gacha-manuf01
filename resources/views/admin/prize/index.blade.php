@@ -35,6 +35,7 @@ $active_submenu = true;
         r_api_category="{{ route('admin.api.gacha.category') }}"
         r_create      ="{{ route('admin.prize.create') }}"
         r_edit        ="{{ route('admin.prize.edit') }}"
+        r_download_csv="{{ route('admin.prize.download_csv') }}"
         category_id   ="{{$category_id}}"
         ></a-prize-list>
 

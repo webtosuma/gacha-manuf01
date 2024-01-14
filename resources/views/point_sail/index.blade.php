@@ -19,8 +19,12 @@
     <div class="container py-4 mb-5">
         <h3>ポイント購入</h3>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item bg-white py-4 fs-"
-            >購入するポイントを選択してください</li>
+            <li class="list-group-item bg-white py-4 fs-">
+                購入するポイントを選択してください
+                <div class="mt-2" >
+                    ご利用可能な決済方法 <img src="{{asset('storage/site/image/stripe_card.png')}}" alt="ご利用可能な決済方法" style="height:3rem;">
+                </div>
+            </li>
 
 
             @foreach ($point_sails as $point_sail)

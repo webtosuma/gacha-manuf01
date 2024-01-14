@@ -47,18 +47,28 @@
                 <div class="row g-3 ">
                     <div class="col-auto">
                         <a :href="r_create+'?gacha_category_id='+inputs.category_id"
-                        class="btn btn-lg btn-primary text-white px-4 shadow"
+                        class="btn btn- btn-primary text-white px-4 shadow"
                         >+ 商品の新規登録</a>
                     </div>
                     <div class="col-4">
                         <input @change="changeKeyWord()" v-model="keyWords"
-                        type="text" class="form-control form-control-lg" placeholder="検索：商品名・商品コード名"
+                        type="text" class="form-control form-control-lgg" placeholder="検索：商品名・商品コード名"
                         aria-label="Username" aria-describedby="basic-addon1" />
                     </div>
                     <div class="col-auto">
                         <button @click="toggleEdit()"
-                        class="btn btn-lg btn-light border" type="button"
+                        class="btn btn- btn-light border" type="button"
                         ><i class="bi bi-pencil-fill me-2"></i>一括編集</button>
+                    </div>
+                    <div class="col-auto">
+                        <form :action="r_download_csv" method="post">
+                            <input type="hidden" name="_token" :value="token">
+                            <input v-for="(value, name) in inputs" :key="name"
+                            type="hidden" :name="name" :value="value">
+
+                            <button class="btn btn- btn-light border" type="submit"
+                            ><i class="bi bi-download me-2"></i>CSVダウンロード</button>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -218,6 +228,7 @@
             r_api_destroy: { type: String,  default: '', },//削除
             r_create:{ type: String,  default: '', },
             r_edit:{ type: String,  default: '', },
+            r_download_csv:{ type: String,  default: '', },//csvファイルダウンロードパス
             category_id:{ type: String,  default: '', },
         },
         data() { return {

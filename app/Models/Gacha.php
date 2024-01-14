@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
@@ -45,12 +46,12 @@ class Gacha extends Model
     ];
 
 
-    /** ガチャランク　一覧 */
+    /** ガチャの種類　一覧 */
     public static function types()
     {
         return [
             'nomal'       => '通常',
-            'one_time'    => '一回限定',
+            'one_time'    => '１回限定',
             'only_oneday' => '一日限定',
         ];
     }
@@ -193,5 +194,43 @@ class Gacha extends Model
                 $point +=  $g_prize->prize->point/*ポイント数*/ * $g_prize->max_count/*登録数*/;
             }
             return $point;
+        }
+
+
+
+        /**
+         * 一回プレイしたか？ played_one_time　
+         * @return String
+        */
+        public function getPlayedOneTimeAttribute()
+        {
+            $user_id = Auth::check() ? Auth::user()->id : 0;
+
+            $bool = UserGachaHistory::where('user_id',$user_id)
+            ->where('gacha_id',$this->id)
+            ->first();
+
+            return $bool ? true : false ;
+        }
+
+
+
+        /**
+         * 1日1回をプレイしたか？ played_only_oneday
+         * @return String
+        */
+        public function getPlayedOnlyOnedayAttribute()
+        {
+            $user_id = Auth::check() ? Auth::user()->id : 0;
+
+            // 今日の日付を取得
+            $today = \Carbon\Carbon::today();
+
+            $bool = UserGachaHistory::where('user_id',$user_id)
+            ->where('gacha_id',$this->id)
+            ->whereDate('created_at', $today)
+            ->first();
+
+            return $bool ? true : false ;
         }
 }

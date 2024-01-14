@@ -114,6 +114,10 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
+        dd(
+            $gacha->played_only_oneday
+        );
+
         if( $gacha->key!=$key ){ return \App::abort(404); }
 
         return view('gacha.show.index', compact( 'gacha' ));

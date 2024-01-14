@@ -69,46 +69,11 @@
 
 
             </div>
-            <div class="row g-2 mt-1">
-                @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
 
-                <div class="col-6">
-                    <form action="{{ route('gacha.play', $params) }}" method="post">
-                        @csrf
-
-                        @if ($gacha->remaining_count >=1) {{--  --}}
-                            <button type="submit" name="play_count" value="{{ 1 }}"
-                            class="btn py-md-3 btn-light bg-gradient fw-bold w-100
-                            rounded-pill border-secondary border-3"
-                            >1回ガチャる</button>
-                        @else
-                            <button type="submit" name="play_count" disabled
-                            class="btn py-md-3 btn-light bg-gradient fw-bold w-100 text-danger
-                            rounded-pill border-secondary border-3"
-                            >売り切れ</button>
-                        @endif
-
-                    </form>
-                </div>
+            <!--play_buttons-->
+            @include('gacha.common.play_buttons')
 
 
-                <div class="col-6">
-                    <form action="{{ route('gacha.play', $params) }}" method="post">
-                        @csrf
-                        @if ($gacha->remaining_count >=10) {{--  --}}
-                            <button type="submit" name="play_count" value="{{ 10 }}"
-                            class="btn py-md-3 btn-dark bg-gradient text- fw-bold w-100
-                            rounded-pill border-danger border-3"
-                            >10連ガチャる</button>
-                        @else
-                            <button type="submit" name="play_count" disabled
-                            class="btn py-md-3 btn-dark bg-gradient text- fw-bold w-100 text-danger
-                            rounded-pill border-secondary border-3"
-                            >売り切れ</button>
-                        @endif
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 

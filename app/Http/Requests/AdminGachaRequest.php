@@ -33,7 +33,7 @@ class AdminGachaRequest extends FormRequest
             'image'        => ['required','file',], //イメージ画像
             'name'          => ['required','max:140',],
             'one_play_point'=> ['required','integer','min:0'],
-
+            'type' => ['required',],  //ガチャの種類
         ];
 
         // 更新時のルール
@@ -58,6 +58,7 @@ class AdminGachaRequest extends FormRequest
             'name'           => 'ガチャ名',
             'image'          => 'トップ画像',
             'one_play_point' => '1回のガチャに必要なポイント',
+            'type'           => 'ガチャの種類'
         ];
     }
 }

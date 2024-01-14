@@ -70,6 +70,7 @@ class AdminGachaController extends Controller
         $gacha = new Gacha([
             'category_id' => $gacha_category ? $gacha_category->id : null,
             'point'=>0,
+            'type' => 'nomal',  //ガチャの種類
         ]);
 
         # カテゴリーデータ(select要素用)
@@ -258,6 +259,7 @@ class AdminGachaController extends Controller
             'name',  //名前
             'image', //イメージ画像
             'one_play_point', //1回PLAYポイント数
+            'type',  //ガチャの種類
         );
 
 

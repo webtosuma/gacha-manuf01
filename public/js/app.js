@@ -6866,6 +6866,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       type: String,
       "default": ''
     },
+    r_download_csv: {
+      type: String,
+      "default": ''
+    },
+    //csvファイルダウンロードパス
     category_id: {
       type: String,
       "default": ''
@@ -10329,7 +10334,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-auto"
   }, [_c("a", {
-    staticClass: "btn btn-lg btn-primary text-white px-4 shadow",
+    staticClass: "btn btn- btn-primary text-white px-4 shadow",
     attrs: {
       href: _vm.r_create + "?gacha_category_id=" + _vm.inputs.category_id
     }
@@ -10342,7 +10347,7 @@ var render = function render() {
       value: _vm.keyWords,
       expression: "keyWords"
     }],
-    staticClass: "form-control form-control-lg",
+    staticClass: "form-control form-control-lgg",
     attrs: {
       type: "text",
       placeholder: "検索：商品名・商品コード名",
@@ -10364,7 +10369,7 @@ var render = function render() {
   })]), _vm._v(" "), _c("div", {
     staticClass: "col-auto"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-light border",
+    staticClass: "btn btn- btn-light border",
     attrs: {
       type: "button"
     },
@@ -10375,7 +10380,33 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "bi bi-pencil-fill me-2"
-  }), _vm._v("一括編集")])])])]), _vm._v(" "), _c("section", {
+  }), _vm._v("一括編集")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_c("form", {
+    attrs: {
+      action: _vm.r_download_csv,
+      method: "post"
+    }
+  }, [_c("input", {
+    attrs: {
+      type: "hidden",
+      name: "_token"
+    },
+    domProps: {
+      value: _vm.token
+    }
+  }), _vm._v(" "), _vm._l(_vm.inputs, function (value, name) {
+    return _c("input", {
+      key: name,
+      attrs: {
+        type: "hidden",
+        name: name
+      },
+      domProps: {
+        value: value
+      }
+    });
+  }), _vm._v(" "), _vm._m(0)], 2)])])]), _vm._v(" "), _c("section", {
     staticClass: "card card-body bg-white my-3 overflow-auto",
     staticStyle: {
       height: "90vh"
@@ -10569,7 +10600,7 @@ var render = function render() {
     staticClass: "bi bi-caret-up-fill"
   }) : _vm._e(), _vm._v(" "), _vm.inputs["updated_at"] != "asc" ? _c("i", {
     staticClass: "bi bi-caret-down-fill"
-  }) : _vm._e()])]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.loading ? _c("tr", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.prizes, function (prize, key) {
+  }) : _vm._e()])]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.loading ? _c("tr", [_vm._m(1)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.prizes, function (prize, key) {
     return _c("tr", {
       key: key
     }, [_c("td", [_c("input", {
@@ -10661,6 +10692,17 @@ var render = function render() {
   }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]) : _vm._e()], 2)])])])]);
 };
 var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn- btn-light border",
+    attrs: {
+      type: "submit"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-download me-2"
+  }), _vm._v("CSVダウンロード")]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("td", {

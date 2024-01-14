@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 use App\Http\Requests\AdminPrizeRequest;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
@@ -132,7 +135,67 @@ class AdminPrizeController extends Controller
     }
 
 
-        /** 削除 => AdminApiPrizeController　 */
+    /** 削除 => AdminApiPrizeController　 */
+
+
+
+    /**
+     * CSVファイルのダウンロード
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function download_csv(Request $request)
+    {
+        # 商品情報の取得 (AdminApiPrizeControllerメソッド)
+        $prizes = AdminApiPrizeController::getPrizes($request);
+
+        $data_array = [];
+        $header = ['カテゴリー名','商品コード','商品名','ランク','交換ポイント','更新日時'];
+        $header = self::convertArrayToSJIS($header);
+        $data_array[] = implode(',',$header);
+
+        foreach ($prizes as $prize) {
+            $data = [
+                $prize->category->name, //カテゴリー名
+                $prize->code,       //商品コード
+                $prize->name,       //商品名
+                $prize->rank->name, //ランク
+                $prize->point,      //交換ポイント
+                $prize->updated_at->format('Y-m-d H:i:s'), //更新日時
+            ];
+
+            #UTF-8にエンコード
+            $data = self::convertArrayToSJIS($data);
+
+            # カンマに変換
+            $data_array[] = implode(',',$data);
+        }
+        // dd($data_array);
+
+
+        # パスワード一覧テキストの保存
+        $contents = implode("\n",$data_array);     //改行文章に変換し、変数に保存
+        $path = 'upload/prize/csv/data.csv';//ファイルパス
+        Storage::put($path,$contents);
+
+        # パスワード一覧テキストのダウンロード
+        return Storage::download($path,'cardFesta登録商品一覧.csv');
+    }
+
+
+        /** UTF-8からSJISにフォーマット */
+        public static function convertArrayToSJIS($data)
+        {
+            array_walk_recursive($data, function (&$value) {
+                // $value = mb_convert_encoding($value, 'UTF-8', 'auto');
+                $value = mb_convert_encoding($value, 'SJIS', 'UTF-8');
+            });
+
+            return $data;
+        }
+
+
 
         /**
          * 入力データの加工 self::processingInputs( $request )

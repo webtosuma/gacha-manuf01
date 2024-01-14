@@ -3,9 +3,9 @@
     <div class="container mx-auto overflow-auto px-3" style="max-widthh:1200px;">
 
         <div class="overflow-hidden" style="border-radius:1rem;">
-            <ratio-image-component
-            url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3 w-100"
-            ></ratio-image-component>
+
+            @include('gacha.common.top_image')
+
         </div>
 
     </div>

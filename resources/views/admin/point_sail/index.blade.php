@@ -35,8 +35,9 @@ $active_submenu = true;
 
         <section class="card card-body bg-white my-3 overflow-auto">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-white py-4 fs-"
-                >編集するポイントを選択してください</li>
+                <li class="list-group-item bg-white py-4 fs-">
+                    編集するポイントを選択してください
+                </li>
 
 
                 @foreach ($point_sails as $point_sail)

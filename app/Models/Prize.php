@@ -48,7 +48,15 @@ class Prize extends Model
     |
     */
         /**
-         * PrizeRankモデル リレーション (lank)
+         * GachaCategoryモデル リレーション
+         * @return \App\Models\GachaCategory
+        */
+        public function category(){
+            return $this->belongsTo(GachaCategory::class, 'category_id');
+        }
+
+        /**
+         * PrizeRankモデル リレーション (rank)
          * @return \App\Models\PrizeRank
         */
         public function rank()

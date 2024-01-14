@@ -79,34 +79,26 @@
         </label>
 
 
-        <!--その他設定(type)-->
-        {{-- <div class="d-block mb-4">
-            <div class="form-label">その他設定</div>
-
+        <!--ガチャの種類(type)-->
+        <div class="d-block mb-4">
+            <div class="form-label">ガチャの種類</div>
 
             <div class="d-flex flex-column gap-3 ps-3">
-                <label class="form-check">
-                    <input name="type" checked
-                    class="form-check-input" type="radio">
-                    <div class="form-check-div">通常限定ガチャ</div>
-                </label>
-                <label class="form-check">
-                    <input name="type"
-                    class="form-check-input" type="radio">
-                    <div class="form-check-div">一回限定ガチャ</div>
-                </label>
-                <label class="form-check">
-                    <input name="type"
-                    class="form-check-input" type="radio">
-                    <div class="form-check-div">一日限定ガチャ</div>
-                </label>
+                @foreach ($gacha->types() as $value => $lable)
+                    <label class="form-check">
+                        <input name="type" value="{{$value}}"
+                        @if( $value == $gacha->type ) checked @endif
+                        class="form-check-input" type="radio">
+                        <div class="form-check-div">{{ $lable }}</div>
+                    </label>
+                @endforeach
             </div>
 
             <!--error message-->
             @if ( $errors->has('type') )
                 <div class="text-danger"> {{$errors->first('type')}} </div>
             @endif
-        </div> --}}
+        </div>
 
 
 
