@@ -15,7 +15,7 @@
     <h6 class="text-secondary">発送について</h6>
     <ul class="form-text mb-3">
         <li>
-            商品の発送までには、<span class="text-danger">10〜15日ほど</span>かかります。
+            商品の発送までには、<span class="text-danger">3〜12日ほど</span>かかります。
         </li>
         <li>
             発送時期に関する個別のお問い合わせにはお答えできません。

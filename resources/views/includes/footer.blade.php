@@ -1,4 +1,4 @@
-<footer class="bg-light text- p-3 py-5">
+<footer class="bg-light text- px-3 pt-5" style="padding-bottom:10rem;">
     <div class="container">
 
         <div class="row mx-0 gy-3">

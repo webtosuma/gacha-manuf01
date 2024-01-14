@@ -128,6 +128,15 @@ use \App\Http\Controllers;
         ->name('admin.prize.update');
 
 
+        # CSVファイルのダウンロード
+        Route::post('/admin/prize/download/csv',
+        [Controllers\AdminPrizeController ::class, 'download_csv'])
+        ->name('admin.prize.download_csv');
+
+
+
+
+
     });//end middleware
 
 

@@ -1,5 +1,11 @@
 <template>
     <div class="">
+        {{ delete_gacha_prize_ids }}
+
+        <input v-for="(delete_gacha_prize_id, key) in delete_gacha_prize_ids" :key="key"
+        :value="delete_gacha_prize_id"
+        name="delete_gacha_prize_ids[]"
+        type="text" >
 
         <div class="row g-0">
             <!--flex-c2-->
@@ -48,6 +54,7 @@
                             <div class="px-3">
 
                                 <a-gachaprize-gacharank-container
+                                @send-delete-gp-id="addDeleteGachaPrizeId"
                                 :token="token"
                                 :category_id="category_id"
                                 :r_api_prize="r_api_prize"
@@ -56,6 +63,7 @@
                                 :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
 
                                 :gacha_rank_id="discription.gacha_rank_id"
+                                :delete_gacha_prize_ids="delete_gacha_prize_ids"
                                 />
 
                             </div>
@@ -115,6 +123,8 @@
             gacha: {},   // ガチャ情報
             discriptions: [],/* ガチャランク */
 
+            delete_gacha_prize_ids:[],// 削除対象のガチャ商品ID
+
             loading:  false,
 
         } },
@@ -146,6 +156,12 @@
 
                 });
 
+            },
+
+            /** 削除対象のガチャ商品ID　追加 */
+            addDeleteGachaPrizeId(id)
+            {
+                this.delete_gacha_prize_ids = [ ...this.delete_gacha_prize_ids, id ];
             },
 
 

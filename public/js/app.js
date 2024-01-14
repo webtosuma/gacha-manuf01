@@ -6234,6 +6234,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     gacha_rank_id: {
       type: [String, Number],
       "default": ''
+    },
+    delete_gacha_prize_ids: {
+      type: [Array, Object],
+      "default": []
     }
   },
   data: function data() {
@@ -6243,8 +6247,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       prize_ids: [],
       //右を非表示にするID
-      prizes: [],
+
+      new_prizes: [],
       /* 新規登録　商品 */
+      new_prizes_ids: [],
+      /* 新規登録　商品ID */
 
       is_special_rank: false,
       loading: false,
@@ -6282,28 +6289,33 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
     },
     /** 新しいガチャ商品の種類を追加 */addGachaPrize: function addGachaPrize(prize_ids) {
+      // 右を非表示にするID
       this.prize_ids = [].concat(_toConsumableArray(this.prize_ids), _toConsumableArray(prize_ids));
 
-      // 既に登録ずみの商品IDを除去
-      this.prize_ids = this.filterPrizeIds();
+      //  新規登録　商品ID
+      this.new_prizes_ids = [].concat(_toConsumableArray(this.new_prizes_ids), _toConsumableArray(prize_ids));
       this.getPrizeData(); /* 新規商品データ取得 */
     },
     /** 新しいガチャ商品の種類を削除 */removeGachaPrize: function removeGachaPrize(id) {
-      // prize_ids配列から該当IDを削除
-      var array = this.prize_ids.filter(function (p_id) {
+      // 右を非表示にするIDから該当IDを削除
+      this.prize_ids = this.prize_ids.filter(function (p_id) {
         return id != p_id;
       });
-      this.prize_ids = array;
 
-      /* 新規商品データ取得 */
-      var filtterArray = this.filterPrizeIds();
-      if (filtterArray.length > 0) {
+      //  新規登録-商品IDから該当IDを削除
+      this.new_prizes_ids = this.new_prizes_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+      if (this.new_prizes_ids.length > 0) {
         this.getPrizeData();
       } else {
-        this.prizes = [];
+        this.new_prizes = [];
       }
     },
     /** 登録ずみ商品を削除 */removePrizeIds: function removePrizeIds(g_prize) {
+      this.$emit('send-delete-gp-id', g_prize.id); //削除対象のガチャ商品IDを送信
+      return;
+
       // 商品ID配列の更新
       var new_prize_ids = this.prize_ids.filter(function (prize_id) {
         return prize_id != g_prize.prize.id;
@@ -6314,15 +6326,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       g_prize.show = false;
       console.log(this.g_prizes);
     },
-    /** 既に登録ずみの商品IDを除去 */filterPrizeIds: function filterPrizeIds() {
-      // 既に登録ずみのID配列
-      var created_prize_ids = this.g_prizes.map(function (g_prize) {
-        return g_prize.prize.id;
-      });
-      return this.prize_ids.filter(function (id) {
-        return !created_prize_ids.includes(id);
-      });
-    },
     /** 新規商品データ取得 */getPrizeData: function getPrizeData() {
       var _this2 = this;
       this.loading = true; //読み込み中
@@ -6330,14 +6333,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       // パラメーター
       var inputs = {
         _token: this.token,
-        ids: this.prize_ids
+        // ids: this.prize_ids,
+        ids: this.new_prizes_ids
       };
       var route = this.r_api_prize;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs).then(function (json) {
         // console.log(json.data);
 
-        // this.prizes = json.data;
-        _this2.prizes = json.data.prizes;
+        _this2.new_prizes = json.data.prizes;
         _this2.loading = false; //読み込み中
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
@@ -6366,6 +6369,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -6401,6 +6410,9 @@ __webpack_require__.r(__webpack_exports__);
       discriptions: [],
       /* ガチャランク */
 
+      delete_gacha_prize_ids: [],
+      // 削除対象のガチャ商品ID
+
       loading: false
     };
   },
@@ -6427,6 +6439,9 @@ __webpack_require__.r(__webpack_exports__);
         alert('通信エラーが発生しました。');
         // console.log( error.response.data );
       });
+    },
+    /** 削除対象のガチャ商品ID　追加 */addDeleteGachaPrizeId: function addDeleteGachaPrizeId(id) {
+      this.delete_gacha_prize_ids = [].concat(_toConsumableArray(this.delete_gacha_prize_ids), [id]);
     },
     /** アクティブなランクの変更 */changeActive: function changeActive(active_gr_id) {
       this.active_gr_id = active_gr_id;
@@ -9525,7 +9540,7 @@ var render = function render() {
     staticClass: "row g-1"
   }, [_c("div", {
     staticClass: "col"
-  }, [_c("div", {
+  }, [_vm._v("\n\n        " + _vm._s(_vm.prize_ids) + _vm._s(_vm.new_prizes_ids) + "\n        "), _c("div", {
     staticClass: "card bg-white overflow-auto",
     staticStyle: {
       height: "90vh"
@@ -9567,7 +9582,7 @@ var render = function render() {
         style_class: "ratio ratio-3x4 rounded-3",
         url: g_prize.prize.image_path
       }
-    })], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td", [_c("input", {
+    }), _vm._v("\n\n                            " + _vm._s(g_prize.id) + "\n                        ")], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td", [_c("input", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -9614,18 +9629,7 @@ var render = function render() {
       staticStyle: {
         width: "2rem"
       }
-    }, [_c("input", {
-      staticClass: "btn-check",
-      attrs: {
-        name: "gri" + _vm.gacha_rank_id + "-delete_gacha_prize_ids[]",
-        type: "checkbox",
-        id: "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id,
-        autocomplete: "off"
-      },
-      domProps: {
-        value: g_prize.id
-      }
-    }), _vm._v(" "), _c("label", {
+    }, [ true ? _c("label", {
       staticClass: "btn btn-sm border text-danger",
       attrs: {
         "for": "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id
@@ -9637,8 +9641,8 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "bi bi-trash3"
-    })])])])]);
-  }), _vm._v(" "), !_vm.loading && _vm.prize_ids.length == 0 && _vm.prizes.length == 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(), _vm._v(" "), _c("tbody", _vm._l(_vm.prizes, function (prize, p_key) {
+    })]) : 0])])]);
+  }), _vm._v(" "), !_vm.loading && _vm.prize_ids.length == 0 && _vm.new_prizes.length == 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(), _vm._v(" "), _c("tbody", _vm._l(_vm.new_prizes, function (prize, p_key) {
     return _c("tr", {
       key: p_key
     }, [_c("td", {
@@ -9773,7 +9777,18 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {}, [_c("div", {
+  return _c("div", {}, [_vm._v("\n    " + _vm._s(_vm.delete_gacha_prize_ids) + "\n\n    "), _vm._l(_vm.delete_gacha_prize_ids, function (delete_gacha_prize_id, key) {
+    return _c("input", {
+      key: key,
+      attrs: {
+        name: "delete_gacha_prize_ids[]",
+        type: "text"
+      },
+      domProps: {
+        value: delete_gacha_prize_id
+      }
+    });
+  }), _vm._v(" "), _c("div", {
     staticClass: "row g-0"
   }, [_c("div", {
     staticClass: "col mb-5"
@@ -9830,7 +9845,11 @@ var render = function render() {
         r_api_prize: _vm.r_api_prize,
         rank_label: discription.rank_label,
         r_api_ranks_gacha_prizes: _vm.r_api_ranks_gacha_prizes + "/" + discription.id,
-        gacha_rank_id: discription.gacha_rank_id
+        gacha_rank_id: discription.gacha_rank_id,
+        delete_gacha_prize_ids: _vm.delete_gacha_prize_ids
+      },
+      on: {
+        "send-delete-gp-id": _vm.addDeleteGachaPrizeId
       }
     })], 1)])]);
   })], 2)]), _vm._v(" "), _c("aside", {
@@ -9865,7 +9884,7 @@ var render = function render() {
       style_class: "btn btn-warning px-5 text-white w-100 shadow",
       btn_text: "更新する"
     }
-  })], 1)])])])]);
+  })], 1)])])])], 2);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -9923,7 +9942,7 @@ var render = function render() {
     staticClass: "bi bi-caret-left"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "col"
-  }, [_c("div", {
+  }, [_vm._v("\n\n        " + _vm._s(_vm.parent_prize_ids) + "\n        " + _vm._s(_vm.ids) + "\n\n\n        "), _c("div", {
     staticClass: "card overflow-auto",
     staticStyle: {
       height: "90vh"
