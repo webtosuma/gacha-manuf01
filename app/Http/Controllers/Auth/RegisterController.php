@@ -41,6 +41,7 @@ class RegisterController extends Controller
     */
     public function register_post(UserRegisterRequest $request)
     {
+
         # 求職者情報の保存
         $user = new \App\Models\User([
             'name' => $request->name,
@@ -71,42 +72,20 @@ class RegisterController extends Controller
 
 
 
-    // /**
-    //  * ユーザー登録 API
-    //  *
-    //  * @param \Illuminate\Http\UserRegisterRequest $request
-    //  * @return JSON
-    // */
-    // public function register(UserRegisterRequest $request)
-    // {
-    //     // return response()->json([ 'message' => 'register ok!', ]);
+    /**
+     * ユーザー登録(step01) API
+     *
+     * @param \Illuminate\Http\UserRegisterRequest $request
+     * @return JSON
+    */
+    public function step01(UserRegisterRequest $request)
+    {
+        # 認証番号メールの送信(メール送信は1回のみ)
+        $verification_code = SendMailController::UserAuthRegister01( $request );
+        // $verification_code ="123456";
 
-
-    //     # 求職者情報の保存
-    //     $user = new \App\Models\User([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => Hash::make( $request->password ),
-    //     ]);
-    //     $user->save();
-
-
-    //     # 求職者・管理者へメール送信
-    //     // SendMailController::WorkerAuthRegister02( $worker );
-
-
-    //     # ログイン
-    //     Auth::attempt( $request->only('email','password'), true );
-    //     $request->session()->regenerate();
-
-
-    //     # 成功レスポンス
-    //     return response()->json([
-    //         'message' => 'register ok!',
-    //         'user'    => $user,
-    //         'Auth check'=> Auth::check()
-    //     ]);
-    // }
+        return response()->json([ 'verification_code'=>$verification_code, ]);
+    }
 
 
 

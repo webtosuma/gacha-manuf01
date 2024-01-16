@@ -3,6 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 
+/*
+|--------------------------------------------------------------------------
+| ユーザー登録
+|--------------------------------------------------------------------------
+*/
+
+    # ユーザー登録(step01) API
+    Route::post('/register/api/step01',
+    [Controllers\Auth\RegisterController::class, 'step01'])
+    ->name('api.register.step01');
 
 /*
 |--------------------------------------------------------------------------

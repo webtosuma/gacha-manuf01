@@ -18,7 +18,7 @@ class UpdateAddStripeIdToPointSailsTable extends Migration
     public function up()
     {
         Schema::table('point_sails', function (Blueprint $table) {
-            $table->string('stripe_id');//Stipeの商品ID
+            $table->string('stripe_id')->nullable()->default(NULL);//Stipeの商品ID
         });
     }
 
@@ -30,7 +30,7 @@ class UpdateAddStripeIdToPointSailsTable extends Migration
     public function down()
     {
         Schema::table('point_sails', function (Blueprint $table) {
-            $table->doropColumn(('stripe_id'));
+            $table->dropColumn('stripe_id');
         });
     }
 }

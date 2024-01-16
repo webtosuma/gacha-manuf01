@@ -1,12 +1,12 @@
 <section>
 
 
-    <div>人材の会員登録を受付けました。</div>
+    <div>ユーザーの会員登録を受付けました。</div>
     <div>
         詳細については、管理者ページよりご確認ください。
     </div>
     <div>
-        <a href="{{ route('admin'); }}">{{ route('admin' ); }}</a>
+        <a href="{{ route('admin.home'); }}">{{ route('admin.home' ); }}</a>
     </div>
 
     <br><br>

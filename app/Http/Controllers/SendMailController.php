@@ -99,9 +99,42 @@ class SendMailController extends Controller
     | 認証・変更
     |--------------------------------------------------------------------------
     */
+        /**
+         * ユーザー登録01[メール認証]
+         *
+         * @param \Illuminate\Http\Request $request
+         * @return String $verification_code
+        */
+        public static function UserAuthRegister01( $request )
+        {
+            // 認証番号が生成済みであれば、処理を終了
+            if( $request->created_verification_code ){ return $request->created_verification_code; }
+
+            // 認証番号の生成
+            $verification_code = '';
+            for ($i=0; $i < 6; $i++) {
+                $rand = mt_rand(1,9);
+                $verification_code = $verification_code.$rand;
+            }
+
+
+            // 認証番号メールの送信
+            Mail::to( $request->email ) //宛先
+            ->send(new \App\Mail\SendHtmlMailMailable([
+                'inputs' => compact('verification_code') , //入力変数
+                'view' => 'emails.user_register01_verification' , //テンプレート
+                'subject' => '会員登録認証コード'.$verification_code , //件名
+            ]) );
+
+
+            # 認証コードを返す
+            return $verification_code;
+        }
+
+
 
         /**
-         * 求職者ユーザー登録02[登録完了]
+         * ユーザー登録02[登録完了]
          *
          * @param \App\Models\User $user
          * @return Void
@@ -128,15 +161,15 @@ class SendMailController extends Controller
                 $inputs = ['user'=>$user];
 
                 # メールの送信
-                foreach ($admins as $admin) {
+                // foreach ($admins as $admin) {
 
-                    Mail::to( $admin->email ) //宛先
-                    ->send(new \App\Mail\SendHtmlMailMailable([
-                        'inputs' => $inputs , //入力変数
-                        'view'   => 'emails.admin_user_auth_register' , //テンプレート
-                        'subject'=> '会員登録を受け付けました。' , //件名
-                    ]) );
-                }
+                //     Mail::to( $admin->email ) //宛先
+                //     ->send(new \App\Mail\SendHtmlMailMailable([
+                //         'inputs' => $inputs , //入力変数
+                //         'view'   => 'emails.admin_user_auth_register' , //テンプレート
+                //         'subject'=> '会員登録を受け付けました。' , //件名
+                //     ]) );
+                // }
 
             //
             # テンプレートの表示

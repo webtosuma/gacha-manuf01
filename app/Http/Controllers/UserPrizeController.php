@@ -83,7 +83,7 @@ class UserPrizeController extends Controller
         }
 
         // 二重送信防止
-        // $request->session()->regenerateToken();
+        $request->session()->regenerateToken();
 
 
         return compact('user_prizes','point_history');

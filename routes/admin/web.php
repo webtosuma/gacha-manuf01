@@ -357,6 +357,10 @@ use \App\Http\Controllers;
         ->where('month_text', '[0-9]{4}-[0-9]{2}-01')
         ->name('admin.point_history');
 
+        Route::get('/admin/point_history/l/datetime',
+        [Controllers\AdminPointHistoryController ::class, 'datetime'])
+        ->name('admin.point_history.datetime');
+
     });
 
 /*
@@ -417,6 +421,44 @@ use \App\Http\Controllers;
         Route::patch('/admin/user/add_point/{user}',
         [Controllers\AdminUserController ::class, 'add_point'])
         ->name('admin.user.add_point');
+
+        # ポイント履歴(個人・全体)
+        Route::get('/admin/user/point_history/{user_id}',
+        [Controllers\AdminUserController ::class, 'point_history'])
+        ->name('admin.user.point_history');
+
+            # 削除確認
+            Route::post('/admin/user/point_history/destroy_confirm/{user}',
+            [Controllers\AdminUserController ::class, 'point_history_destroy_confirm'])
+            ->name('admin.user.point_history.destroy_confirm');
+
+            # 削除確認
+            Route::delete('/admin/user/point_history/destroy/{user}',
+            [Controllers\AdminUserController ::class, 'point_history_destroy'])
+            ->name('admin.user.point_history.destroy');
+
+
+        # ユーザー商品履歴(個人・全体)
+        Route::get('/admin/user/user_prize/{user_id}',
+        [Controllers\AdminUserController ::class, 'user_prize'])
+        ->name('admin.user.user_prize');
+
+            # 削除確認
+            Route::post('/admin/user/user_prize/destroy_confirm/{user}',
+            [Controllers\AdminUserController ::class, 'user_prize_destroy_confirm'])
+            ->name('admin.user.user_prize.destroy_confirm');
+
+            # 削除確認
+            Route::delete('/admin/user/user_prize/destroy/{user}',
+            [Controllers\AdminUserController ::class, 'user_prize_destroy'])
+            ->name('admin.user.user_prize.destroy');
+
+
+        # 紹介キャンペーン一覧
+        Route::get('/admin/user/canpaing_introductory/',
+        [Controllers\AdminUserController ::class, 'canpaing_introductory'])
+        ->name('admin.user.canpaing_introductory');
+
 
     });//end middleware
 /*

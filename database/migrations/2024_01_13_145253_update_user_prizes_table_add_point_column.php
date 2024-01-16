@@ -30,7 +30,7 @@ class UpdateUserPrizesTableAddPointColumn extends Migration
     public function down()
     {
         Schema::table('user_prizes', function (Blueprint $table) {
-            $table->doropColumn(('point'));
+            $table->dropColumn('point');
         });
     }
 }

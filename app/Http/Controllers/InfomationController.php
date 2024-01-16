@@ -21,6 +21,7 @@ class InfomationController extends Controller
 
         $query->where('published_at','<=', now()); //非公開を除く
 
+        $query->orderByDesc('created_at');
 
         return $query;
     }

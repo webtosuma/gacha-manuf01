@@ -60,6 +60,7 @@ class CanpaingIntroductoryController extends Controller
     */
     public function index()
     {
+
         # キャンペーンが実施されてるかチェック
         if( !$this->active() ){ return \App::abort(404); }
 
@@ -82,6 +83,7 @@ class CanpaingIntroductoryController extends Controller
     */
     public function register(Request $request, $key=null )
     {
+
         # 紹介キャンペーン キーの認証
         $user = $this->usrKeyCheck($key);
 
@@ -127,24 +129,31 @@ class CanpaingIntroductoryController extends Controller
 
 
 
-    ## ポイント付与
+    ## [お友達紹介]ポイント付与
     public static function grant($user)
     {
-        // $user = Auth::user();
         $point = self::grantPoint();//付与ポイント
 
         # ユーザー紹介履歴(お友達側)の取得
         $canpaing_introductory = CanpaingIntroductory::where('friend_id',$user->id)->first();
+        // dd($canpaing_introductory);
+
+        # POINT履歴：紹介キャンペーン：新規登録ユーザー(32)
+        $reason_id = 32;
+        $canpaing_friend_count = PointHistory::where('user_id',$user->id)
+        ->where('reason_id',$reason_id)->get()->count();
+
 
 
         # 紹介ユーザーとお友達ユーザーへポイント付与
         if(
-            $canpaing_introductory &&        // ユーザー紹介履歴(お友達側)があるか
-            !$canpaing_introductory->done_at // ポイント付与日が未登録であるか
+            $canpaing_introductory &&    // ユーザー紹介履歴(お友達側)があるか
+            $canpaing_friend_count ==0   // キャンペーン付与（お友達側)履歴なし
         ){
             // ユーザー紹介履歴の更新
             $now = now();
             $canpaing_introductory->update(['done_at'=>$now]);
+
 
 
             // 紹介者ポイント付与

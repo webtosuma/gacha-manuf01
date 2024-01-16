@@ -176,6 +176,7 @@ class AdminGachaController extends Controller
      */
     public function published(Gacha $gacha)
     {
+        // dd($gacha->published_at->format('Ymd H:i:s'));
         return view('admin.gacha.published.edit', compact('gacha'));
     }
 

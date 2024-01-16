@@ -21,7 +21,10 @@
 
     <ul class="list-group list-group-flush my-5 mx-auto" style="max-width:600px;">
         <li class="list-group-item bg-white py-4">
-            <h3 class="text-center m-0">ポイント購入が完了しました</h3>
+            <h3 class="text-center">ポイント購入が完了しました</h3>
+            <div class="border border-danger p-3">
+                通信が混み合っている場合、決済サービスとの通信が遅れる場合があり、ポイントの反映が<strong>1分程</strong>、遅れる場合があります。
+            </div>
         </li>
         <li class="list-group-item bg-white py-4">
             <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">

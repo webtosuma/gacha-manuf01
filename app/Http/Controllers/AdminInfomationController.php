@@ -23,6 +23,7 @@ class AdminInfomationController extends Controller
         $infomations = Infomation::orderByDesc('created_at')
         ->get();
 
+
         return view('admin.infomation.index', compact('infomations'));
     }
 

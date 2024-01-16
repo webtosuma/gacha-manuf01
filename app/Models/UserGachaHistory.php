@@ -58,7 +58,7 @@ class UserGachaHistory extends Model
          * @return \App\Models\Gacha
         */
         public function gacha(){
-            return $this->belongsTo(Gacha::class);
+            return $this->belongsTo(Gacha::class)->withTrashed();
         }
 
 

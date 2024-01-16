@@ -3,11 +3,38 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 
-    include('user/api.php');
+    // Route::get('/', function(){
+    //     return redirect('https://cardfesta.jp');
+    // } )->name('home');
 
-    include('user/web.php');
+    // Route::get('/g/{any?}',function(){
+
+    //     return redirect('https://cardfesta.jp');
+
+    // })->where('any', '.*')
+    // ->name('gacha_category');
+
+
+
 
     include('admin/api.php');
 
     include('admin/web.php');
+
+    include('user/api.php');
+
+    include('user/web.php');//
+
+
+
+    // Auth::routes();
+
+    // # ONLINE
+    // Route::get('/{any?}', function()  {
+
+    //     return redirect('https://cardfesta.jp/');
+
+
+
+    // })->where('any', '.*');
 

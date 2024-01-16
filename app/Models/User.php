@@ -166,4 +166,41 @@ class User extends Authenticatable
             ->get()->count();
         }
 
+
+
+
+        /**
+         * ユーザー保有商品数(Admin) $user->u_prizes_count
+         * @return String
+        */
+        public function getUPrizesCountAttribute()
+        {
+            $query = UserPrize::query();
+
+                # ログインユーザーのデータに絞る
+                $query->where('user_id',$this->id);
+
+                # 商品情報とのリレーションがあること
+                $query->has('prize');
+
+                # ポイント交換ずみのデータを除く
+                $query->where('point_history_id',NULL);
+
+                # 発送済みデータを除く
+                $query->where('shipped_id',Null);
+
+                # 取得が新しい順
+                $query->orderByDesc('created_at');
+
+                # 商品テーブル(prize)とのリレーション
+                $query->with(['prize.rank' => function ($query) { }]);
+
+            $user_prizes = $query->get();
+
+            return $user_prizes->count();
+        }
+
+
+
+
 }

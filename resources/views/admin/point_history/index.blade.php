@@ -89,8 +89,13 @@ $active_key = 'point_history';
 
         </section>
 
+
+        <div class="mb-3">
+            <a href="{{route('admin.point_history.datetime')}}" class="btn border">ポイント購入履歴</a>
+        </div>
+
         <!--テーブル-->
-        <section class="card card-body bg-white my-5 overflow-auto">
+        <section class="card card-body bg-white mb-5 overflow-auto">
             <div class="mb-3">ポイント購入顧客情報</div>
             <table class="table bg-white ">
                 <!--ヘッド（並べ替えボタン）-->

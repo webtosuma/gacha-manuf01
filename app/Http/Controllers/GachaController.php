@@ -49,12 +49,18 @@ class GachaController extends Controller
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
-            ->limit(3)->get();;
+            ->limit(3)->get();
 
             ## スライドお知らせ
-            $slide_infos = Infomation::where('published_at','<=', now()) //非公開を除く
+            // $slide_infos = Infomation::where('published_at','<=', now()) //非公開を除く
+            // ->where('is_slide',1)
+            // ->get();
+
+            $slide_infos = InfomationController::GetInfomationsQuery()
             ->where('is_slide',1)
-            ->get();
+            ->limit(3)->get();;
+
+
         //
 
         # viewの表示
@@ -114,10 +120,6 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
-        dd(
-            $gacha->played_only_oneday
-        );
-
         if( $gacha->key!=$key ){ return \App::abort(404); }
 
         return view('gacha.show.index', compact( 'gacha' ));

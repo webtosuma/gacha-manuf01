@@ -12,15 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 
     Route::get('/', function(){
-        return Auth::check()
-        ? redirect()->route('gacha_category')
-        : view('lp');
 
-        // return redirect()->route('gacha_category');
-    } )->name('home');
+        return redirect()->route('gacha_category');
 
-    # 予告
-    Route::get('/', function(){ return view('lp');
     } )->name('home');
 
 /*
@@ -71,6 +65,7 @@ use Illuminate\Support\Facades\Auth;
 |  GachaPlayController
 |--------------------------------------------------------------------------
 */
+
     # ガチャカのテゴリー選択
     Route::get('/g/{category_code?}',
     [App\Http\Controllers\GachaController::class, 'index'])
@@ -121,9 +116,9 @@ use Illuminate\Support\Facades\Auth;
         ->name('point_sail.payment');
 
         # 購入処理
-        Route::get('point_sail/payment_post/{stripe_id}',
-        [Controllers\StripeController::class, 'payment_post'])
-        ->name('point_sail.payment_post');
+        // Route::get('point_sail/payment_post/{stripe_id}',
+        // [Controllers\StripeController::class, 'payment_post'])
+        // ->name('point_sail.payment_post');
 
         # ポイント購入完了
         Route::get('point_sail/comp/{stripe_id}',

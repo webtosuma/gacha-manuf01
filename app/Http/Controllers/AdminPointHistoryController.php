@@ -94,4 +94,24 @@ class AdminPointHistoryController extends Controller
     }
 
 
+
+
+
+
+    /**
+     * 時系列一覧
+     *
+     * @param String $month_text
+     * @return \Illuminate\Http\Response
+     */
+    public function datetime()
+    {
+        $point_histories =  PointHistory::where('reason_id',11)//購入履歴
+        ->orderByDesc('created_at')
+        ->get();
+
+
+        return view('admin.point_history.datetime', compact('point_histories') );
+    }
+
 }

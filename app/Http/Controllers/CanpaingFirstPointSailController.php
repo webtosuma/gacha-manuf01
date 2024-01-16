@@ -28,25 +28,31 @@ class CanpaingFirstPointSailController extends Controller
 
 
 
-    ## ポイント付与
+    ## [初回ポイント購入]ポイント付与
     public static function grant($user)
     {
-        // $user = Auth::user();
         $point = self::grantPoint();//付与ポイント
 
-        $point_sail_histories = PointHistory::where('user_id',$user->id)
-        ->where('reason_id','11')->get();
+        # ポイント購入数(11)
+        $purchases_count = PointHistory::where('user_id',$user->id)
+        ->where('reason_id','11')->get()->count();
+
+        # 初回ポイント購入キャンペーン(33)
+        $canpaing_reason_id = 33;
+        $canpaing_count = PointHistory::where('user_id',$user->id)
+        ->where('reason_id',$canpaing_reason_id)->get()->count();
+
 
         if(
-            self::active() && // キャンペーンが実施されているか
-            $point_sail_histories->count() == 1 // 初回ポイント購入
+            self::active()        && // キャンペーンが実施されているか
+            // $purchases_count >=1  && // ポイント購入回数が１以上
+            $canpaing_count  ==0     // キャンペーン付与履歴なし
         ){
             // 紹介者ポイント付与
-            $reason_id = 33;//'初回ポイント購入キャンペーン'
             $point_history = new PointHistory([
                 'user_id'   => $user->id,          //ユーザー　リレーション
                 'value'     => $point, //ポイント数
-                'reason_id' => $reason_id, //'お友達紹介キャンペーン'
+                'reason_id' => $canpaing_reason_id, //'お友達紹介キャンペーン'
             ]);
             $point_history->save();
         }

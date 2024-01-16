@@ -90,32 +90,34 @@ class StripeController extends Controller
     */
     public function payment_post(Request $request, $stripe_id)
     {
-        $point_sail = PointSail::where('stripe_id',$stripe_id)->first();
+        return ;
 
-        # ログインユーザー取得
-        $user = Auth::user();
+        // $point_sail = PointSail::where('stripe_id',$stripe_id)->first();
 
-        # ポイント履歴の登録
-        $point_history = new PointHistory([
-            'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => $point_sail->value, //ポイント数
-            'price'     => $point_sail->price, //販売価格(税込み)
-            'reason_id' => 11 //入出理由ID
-        ]);
-        $point_history->save();
+        // # ログインユーザー取得
+        // $user = Auth::user();
 
-        # [紹介キャンペーン]ポイント付与
-        CanpaingIntroductoryController::grant($user);
+        // # ポイント履歴の登録
+        // $point_history = new PointHistory([
+        //     'user_id'   => $user->id,          //ユーザー　リレーション
+        //     'value'     => $point_sail->value, //ポイント数
+        //     'price'     => $point_sail->price, //販売価格(税込み)
+        //     'reason_id' => 11 //入出理由ID
+        // ]);
+        // $point_history->save();
 
-        # [紹介キャンペーン]初回ポイント購入
-        CanpaingFirstPointSailController::grant($user);
+        // # [紹介キャンペーン]ポイント付与
+        // CanpaingIntroductoryController::grant($user);
 
-
-        // 二重送信防止
-        $request->session()->regenerateToken();
+        // # [紹介キャンペーン]初回ポイント購入
+        // CanpaingFirstPointSailController::grant($user);
 
 
-        return redirect(route('point_sail.comp',$point_sail->stripe_id));
+        // // 二重送信防止
+        // $request->session()->regenerateToken();
+
+
+        // return redirect(route('point_sail.comp',$point_sail->stripe_id));
     }
 
 
@@ -127,6 +129,15 @@ class StripeController extends Controller
     */
     public function comp($stripe_id)
     {
+        $user = Auth::user();
+
+        # [キャンペーン]初回ポイント購入
+        CanpaingFirstPointSailController::grant($user);
+
+        # [紹介キャンペーン]ポイント付与
+        CanpaingIntroductoryController::grant($user);
+
+
         $point_sail = PointSail::where('stripe_id',$stripe_id)->first();
 
         return $point_sail
@@ -151,10 +162,14 @@ class StripeController extends Controller
         $event = null;
 
         try {
+
             $event = Event::constructFrom($payload, $sigHeader, $endpointSecret);
+
         } catch (\UnexpectedValueException $e) {
             // 署名が無効な場合、またはその他のエラーが発生した場合の処理
-            return response('Webhook Signature Verification Failed', 403);
+            // Log::error($e);
+            return response('Webhook Signature Verification Failed', 200);
+            // return response('Webhook Signature Verification Failed', 403);
         }
 
         // イベントタイプごとに処理を実行
@@ -211,11 +226,12 @@ class StripeController extends Controller
         $point_history->save();
 
 
-        # [紹介キャンペーン]ポイント付与
-        CanpaingIntroductoryController::grant($user);
 
-        # [紹介キャンペーン]初回ポイント購入
-        CanpaingFirstPointSailController::grant($user);
+        // # [紹介キャンペーン]ポイント付与
+        // CanpaingIntroductoryController::grant($user);
+
+        // # [キャンペーン]初回ポイント購入
+        // CanpaingFirstPointSailController::grant($user);
     }
 
 

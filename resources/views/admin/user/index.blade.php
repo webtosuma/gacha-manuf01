@@ -26,22 +26,41 @@ $active_key = 'user';
 
         <h2 class="my-5 py-3 border-bottom">登録ユーザー</h2>
 
+        <div class="row">
+            <div class="col-auto">
+                <a href="{{route('admin.user.canpaing_introductory')}}" class="btn border">紹介キャンペーン登録者一覧</a>
+            </div>
+            <div class="col-4">
+                <form action="{{route('admin.user')}}">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="アカウント名" name="search_key" value="{{$search_key}}">
+                        <button class="btn btn-outline-secondary" type="submit">検索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-        <section class="card card-body bg-white my-3 overflow-auto" style="height: 60vh;">
+
+
+
+        <section class="card card-body bg-white my-3 overflow-auto">
             <table class="table bg-white my-3">
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>
                     <tr class="bg-white">
+                        <th></th>
                         <th scope="col">アカウント名</th>
                         <th scope="col">メールアドレス</th>
                         <th scope="col">X(旧twitter)ID</th>
 
-                        <th class="text-center" scope="col"
-                        >保有商品数</th>
+                        <th class="text-center" scope="col">
+                            <a href="{{route('admin.user.user_prize',0)}}">保有商品数</a>
+                        </th>
                         <th class="text-center" scope="col"
                         >ガチャPLAY数</th>
-                        <th class="text-center" scope="col"
-                        >保有ポイント</th>
+                        <th class="text-center" scope="col">
+                            <a href="{{route('admin.user.point_history',0)}}">保有ポイント</a>
+                        </th>
                         <th></th>
 
                         <th scope="col">会員登録日</th>
@@ -50,6 +69,7 @@ $active_key = 'user';
                 <tbody>
                     @forelse ($users as $user)
                         <tr>
+                            <td>{{$user->id}}</td>
                             <td>
                                 @if ($user->admin)
                                     <span class="text-primary">●</span>
@@ -59,13 +79,13 @@ $active_key = 'user';
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->twitter_id ? $user->twitter_id : '---' }}</td>
 
-                            <td class="text-center"><a href="" class="btn btn-link">
-                                <number-comma-component number="{{ $user->u_prizes->count() }}"></number-comma-component>
+                            <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
+                                <number-comma-component number="{{ $user->u_prizes_count }}"></number-comma-component>
                             </a></td>
-                            <td class="text-center"><a href="" class="btn btn-link">
+                            <td class="text-center"><a href="" class="btn btn-link disabled">
                                 <number-comma-component number="{{ $user->gacha_histories->count() }}"></number-comma-component>
                             </a></td>
-                            <td class="text-center"><a href="" class="btn btn-link">
+                            <td class="text-center"><a href="{{route('admin.user.point_history',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->point }}"></number-comma-component>
                             </a></td>
                             <td>

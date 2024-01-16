@@ -17,18 +17,26 @@
     style="min-height: 80vh; max-width:600px;">
 
 
-        @include('auth.register_inputs')
+        {{-- @include('auth.register_inputs') --}}
 
-        {{-- <u-register-form
-        token                = "{{ csrf_token() }}"
-        submit_route         = "{{ route('register') }}"
+        <form action="{{route('register.post')}}" method="POST"
+        novalidate class="w-100"
+        enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+            @csrf
 
-        trems_route          = "{{ route('trems') }}"
-        privacy_policy_route = "{{ route('privacy_policy') }}"
-        login_route          = "{{ route('login') }}"
-        gacha_route          = "{{ route('home') }}"
-        point_sail_route     = "{{ route('point_sail') }}"
-        ></u-register-form > --}}
+            <u-register-form
+            token           ="{{ csrf_token() }}"
+            r_api_step01    ="{{ route('api.register.step01') }}"
+            r_register_post ="{{ route('register.post') }}"
+            r_trems         ="{{ route('trems') }}"
+            r_privacy_policy="{{ route('privacy_policy') }}"
+
+            login_route          = "{{ route('login') }}"
+            gacha_route          = "{{ route('home') }}"
+            point_sail_route     = "{{ route('point_sail') }}"
+            ></u-register-form >
+
+        </form>
 
 
     </div>

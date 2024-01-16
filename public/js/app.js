@@ -7119,28 +7119,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    'steps-component': (__webpack_require__(/*! ./component/steps.vue */ "./resources/js/components/auth/component/steps.vue")["default"]),
+    'step01-component': (__webpack_require__(/*! ./component/step01.vue */ "./resources/js/components/auth/component/step01.vue")["default"]),
+    'step02-component': (__webpack_require__(/*! ./component/step02.vue */ "./resources/js/components/auth/component/step02.vue")["default"]),
+    'step03-component': (__webpack_require__(/*! ./component/step03.vue */ "./resources/js/components/auth/component/step03.vue")["default"])
+  },
   props: {
     token: {
       type: String,
       "default": ''
     },
-    submit_route: {
+    r_api_step01: {
       type: String,
       "default": ''
     },
-    privacy_policy_route: {
+    r_register_post: {
       type: String,
       "default": ''
     },
-    trems_route: {
+    r_privacy_policy: {
+      type: String,
+      "default": ''
+    },
+    r_trems: {
       type: String,
       "default": ''
     },
@@ -7159,52 +7163,38 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   data: function data() {
     return {
+      test: false,
+      // test : true,
+
       loading: false,
       /* 通信中 */
       inputs: {
         name: '',
         email: '',
         password: '',
-        password_confirmation: ''
+        password_confirmation: '',
+        verification_code: ''
       },
       errors: {},
       card_num: 1 /* 表示中カード番号 */
     };
   },
-  mounted: function mounted() {
-    /* トークンの保存 */
-    this.inputs = _objectSpread(_objectSpread({}, this.inputs), {}, {
-      _token: this.token
-    });
-  },
+  mounted: function mounted() {},
   methods: {
-    /* データ送信 */
-    submit: function submit() {
-      var _this = this;
-      this.loading = true; // 通信中
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.submit_route, this.inputs).then(function (json) {
-        // console.log(json.data);
-
-        _this.addCardNum();
-      })["catch"](function (error) {
-        //バリデーション結果の受け取り
-        if (error.response.status == 422) {
-          // console.log( error.response.data.errors );
-          _this.errors = error.response.data.errors;
-          _this.loading = false; // 通信中終了
-        }
-        //その他のエラー
-        else {
-          alert('データ送信エラーが発生しました。');
-        }
-        // console.log( error.response.data );
-      });
+    /** 子コンポーネントの入力値を親コンポーネントへ保存 */insertParentInputs01: function insertParentInputs01(inputs) {
+      this.inputs = inputs;
     },
-
     /* 次へメソッド */
     addCardNum: function addCardNum() {
       this.card_num++;
+      window.scroll({
+        top: 0,
+        behavior: 'smooth'
+      });
+    },
+    /* 前へメソッド */
+    subCardNum: function subCardNum() {
+      this.card_num--;
       window.scroll({
         top: 0,
         behavior: 'smooth'
@@ -7373,6 +7363,319 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     /* 離脱防止アラートの解除 */
     stopOnbeforeunload: function stopOnbeforeunload() {
       window.onbeforeunload = null;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step01.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step01.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    card_num: {
+      type: Number,
+      "default": 1
+    },
+    test: {
+      type: Boolean,
+      "default": false
+    },
+    r_api_step01: {
+      type: String,
+      "default": ''
+    },
+    r_privacy_policy: {
+      type: String,
+      "default": ''
+    },
+    r_trems: {
+      type: String,
+      "default": ''
+    }
+  },
+  data: function data() {
+    return {
+      loading: false,
+      /* 通信中 */
+      route: '/api/worker/auth/register_step01',
+      inputs: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        verification_code: ''
+      },
+      errors: {},
+      /* オプションデータ */
+      form_option: {
+        // 誕生日の最大値
+        max_barthday: this.maxBarthday(),
+        // パスワード入力の表示形式
+        input_password: {
+          type: 'password',
+          text: 'パスワードを表示'
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.insertTestData(); /** テスト用入力データの挿入 */
+    this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
+  },
+
+  methods: {
+    /** Step01 */
+    nextToStep01: function nextToStep01() {
+      var _this = this;
+      this.loading = true; // 通信中
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.r_api_step01, this.inputs).then(function (json) {
+        // console.log(json);
+
+        _this.inputs.verification_code = json.data.verification_code;
+        _this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
+        _this.loading = false; // 通信中
+        _this.addCardNum();
+      })["catch"](function (error) {
+        //バリデーション結果の受け取り
+        if (error.response.status == 422) {
+          // console.log( error.response.data.errors );
+          _this.errors = error.response.data.errors;
+          _this.loading = false; // 通信中終了
+        }
+        //その他のエラー
+        else {
+          alert('データ送信エラーが発生しました。');
+        }
+        // console.log( error.response.data );
+      });
+    },
+
+    /** 入力できる誕生日の最大値 */
+    maxBarthday: function maxBarthday() {
+      var now = new Date();
+      var max_year = now.getFullYear() - 15;
+      return max_year + '-12-31';
+    },
+    /** 子コンポーネントの入力値を親コンポーネントへ保存 */insertParentInputs: function insertParentInputs() {
+      this.$emit('insert-parent-inputs', this.inputs);
+    },
+    /** 次へメソッド */addCardNum: function addCardNum() {
+      this.$emit('add-card-num');
+    },
+    /* 別タブでページを開く */
+    windowOpen: function windowOpen(url) {
+      window.open(url, '_blank');
+    },
+    /* パスワード入力の表示切替 */
+    toggleDisplayPassword: function toggleDisplayPassword() {
+      var type = this.form_option.input_password.type;
+      if (type === 'password') {
+        this.form_option.input_password.text = 'パスワードを非表示';
+        this.form_option.input_password.type = 'text';
+      } else {
+        this.form_option.input_password.text = 'パスワードを表示';
+        this.form_option.input_password.type = 'password';
+      }
+    },
+    /** テスト用入力データの挿入 */
+    insertTestData: function insertTestData() {
+      if (this.test) {
+        this.inputs = {
+          name: 'test太朗',
+          email: 'aek1214@yahoo.co.jp',
+          password: 'password',
+          password_confirmation: 'password'
+        };
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step02.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step02.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    verification_code_confirmation: {
+      type: [String],
+      "default": ''
+    },
+    card_num: {
+      type: Number,
+      "default": 1
+    },
+    test: {
+      type: Boolean,
+      "default": false
+    }
+  },
+  data: function data() {
+    return {
+      loading: false,
+      /* 通信中 */
+      verification_code: '',
+      //認証コード(入力)
+
+      errors: {}
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    /** Step02 */
+    nextToStep02: function nextToStep02() {
+      this.loading = true; // 通信中
+
+      if (this.verification_code == this.verification_code_confirmation)
+        //[ バリデーション・成功 ]
+        {
+          this.errors = {};
+          this.loading = false; // 通信中
+          this.addCardNum();
+        } else
+        //[ バリデーション・失敗 ]
+        {
+          this.errors = {
+            verification_code: ['認証番号が一致しません。']
+          };
+          this.loading = false; // 通信中終了
+        }
+    },
+
+    /* 次へメソッド */
+    addCardNum: function addCardNum() {
+      this.$emit('add-card-num');
+    },
+    /* 前へメソッド */
+    subCardNum: function subCardNum() {
+      this.$emit('sub-card-num');
+    },
+    /* パスワード入力の表示切替 */
+    toggleDisplayPassword: function toggleDisplayPassword() {
+      var type = this.form_option.input_password.type;
+      if (type === 'password') {
+        this.form_option.input_password.text = 'パスワードを非表示';
+        this.form_option.input_password.type = 'text';
+      } else {
+        this.form_option.input_password.text = 'パスワードを表示';
+        this.form_option.input_password.type = 'password';
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step03.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step03.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    r_register_post: {
+      type: String,
+      "default": ''
+    },
+    inputs: {
+      type: Object,
+      "default": {}
+    },
+    card_num: {
+      type: Number,
+      "default": 1
+    },
+    test: {
+      type: Boolean,
+      "default": false
+    }
+  },
+  data: function data() {
+    return {
+      loading: false /* 通信中 */
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    nextToStep03: function nextToStep03() {
+      this.loading = true;
+    },
+    /** 子コンポーネントの入力値を親コンポーネントへ保存 */insertParentInputs: function insertParentInputs() {
+      this.$emit('insert-parent-inputs', this.inputs);
+    },
+    /* 次へメソッド */
+    addCardNum: function addCardNum() {
+      this.$emit('add-card-num');
+    },
+    /* 前へメソッド */
+    subCardNum: function subCardNum() {
+      this.$emit('sub-card-num');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    card_num: {
+      type: Number,
+      "default": 1
+    }
+  },
+  computed: {
+    appName: function appName() {
+      return this.$store.getters['env/appName'];
     }
   }
 });
@@ -10982,234 +11285,55 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "w-100"
-  }, [_vm.card_num === 1 ? _c("div", {
-    staticClass: "anima-fadein-bottom"
-  }, [_vm.card_num === 1 ? _c("form", {
-    staticClass: "w-100",
-    on: {
-      submit: function submit($event) {
-        $event.preventDefault();
-        return _vm.submit();
-      }
-    }
-  }, [_c("h2", {
-    staticClass: "h3 mb-3 fw-bold text-center"
-  }, [_vm._v("会員登録（無料）")]), _vm._v(" "), _c("div", {
-    staticClass: "row mb-3"
-  }, [_c("label", {
-    staticClass: "col-form-label text-start",
+  }, [_c("steps-component", {
     attrs: {
-      "for": "name"
+      card_num: _vm.card_num
     }
-  }, [_vm._v(_vm._s("アカウント名"))]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.inputs.name,
-      expression: "inputs.name"
-    }],
-    staticClass: "form-control",
-    "class": {
-      "is-invalid": _vm.errors.name
-    },
+  }), _vm._v(" "), _c("step01-component", {
     attrs: {
-      name: "name",
-      id: "name",
-      type: "text",
-      autocomplete: "name",
-      autofocus: ""
-    },
-    domProps: {
-      value: _vm.inputs.name
+      card_num: _vm.card_num,
+      r_api_step01: _vm.r_api_step01,
+      r_privacy_policy: _vm.r_privacy_policy,
+      r_trems: _vm.r_trems,
+      test: _vm.test
     },
     on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "name", $event.target.value);
-      }
+      "add-card-num": function addCardNum($event) {
+        return _vm.addCardNum();
+      },
+      "insert-parent-inputs": _vm.insertParentInputs01
     }
-  }), _vm._v(" "), _vm.errors.name ? _c("div", {
-    staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "row mb-3"
-  }, [_c("label", {
-    staticClass: "col-form-label text-start",
+  }), _vm._v(" "), _c("step02-component", {
     attrs: {
-      "for": "email"
-    }
-  }, [_vm._v(_vm._s("メールアドレス"))]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.inputs.email,
-      expression: "inputs.email"
-    }],
-    staticClass: "form-control",
-    "class": {
-      "is-invalid": _vm.errors.email
-    },
-    attrs: {
-      name: "email",
-      id: "email",
-      type: "text",
-      autocomplete: "email",
-      autofocus: ""
-    },
-    domProps: {
-      value: _vm.inputs.email
+      verification_code_confirmation: _vm.inputs.verification_code,
+      card_num: _vm.card_num,
+      test: _vm.test.data
     },
     on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "email", $event.target.value);
+      "add-card-num": function addCardNum($event) {
+        return _vm.addCardNum();
+      },
+      "sub-card-num": function subCardNum($event) {
+        return _vm.subCardNum();
       }
     }
-  }), _vm._v(" "), _vm.errors.email ? _c("div", {
-    staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "row mb-3"
-  }, [_c("label", {
-    staticClass: "col-form-label text-start",
+  }), _vm._v(" "), _c("step03-component", {
     attrs: {
-      "for": "password"
-    }
-  }, [_vm._v(_vm._s("パスワード"))]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.inputs.password,
-      expression: "inputs.password"
-    }],
-    staticClass: "form-control",
-    "class": {
-      "is-invalid": _vm.errors.password
-    },
-    attrs: {
-      name: "password",
-      id: "password",
-      type: "text",
-      autocomplete: "password",
-      autofocus: ""
-    },
-    domProps: {
-      value: _vm.inputs.password
+      token: _vm.token,
+      r_register_post: _vm.r_register_post,
+      inputs: _vm.inputs,
+      card_num: _vm.card_num,
+      test: _vm.test
     },
     on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "password", $event.target.value);
+      "add-card-num": function addCardNum($event) {
+        return _vm.addCardNum();
+      },
+      "sub-card-num": function subCardNum($event) {
+        return _vm.subCardNum();
       }
     }
-  }), _vm._v(" "), _vm.errors.password ? _c("div", {
-    staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.password[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "row mb-3"
-  }, [_c("label", {
-    staticClass: "col-form-label text-start",
-    attrs: {
-      "for": "password_confirmation"
-    }
-  }, [_vm._v(_vm._s("確認用パスワード"))]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.inputs.password_confirmation,
-      expression: "inputs.password_confirmation"
-    }],
-    staticClass: "form-control",
-    "class": {
-      "is-invalid": _vm.errors.password_confirmation
-    },
-    attrs: {
-      name: "password_confirmation",
-      id: "password_confirmation",
-      type: "text",
-      autocomplete: "password_confirmation",
-      autofocus: ""
-    },
-    domProps: {
-      value: _vm.inputs.password_confirmation
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "password_confirmation", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _vm.errors.password_confirmation ? _c("div", {
-    staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.password_confirmation[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "p3"
-  }, [_vm._v("\n                本サービスの\n                "), _c("a", {
-    attrs: {
-      href: ""
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.windowOpen(_vm.trems_route);
-      }
-    }
-  }, [_vm._v("利用規約")]), _vm._v("と\n                "), _c("a", {
-    attrs: {
-      href: ""
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.windowOpen(_vm.privacy_policy_route);
-      }
-    }
-  }, [_vm._v("プライバシーポリシー")]), _vm._v("に\n                同意した時のみ、登録を行なってください。登録後は、同意したものとみなされます。\n\n            ")]), _vm._v(" "), _c("div", {
-    staticClass: "row my-5"
-  }, [_c("div", {
-    staticClass: "col-md-6 mx-auto"
-  }, [_c("disabled-button-component", {
-    attrs: {
-      style_class: "btn btn-lg btn-primary text-white w-100",
-      disabled: _vm.loading,
-      btn_text: "登録する"
-    }
-  })], 1)])]) : _vm._e(), _vm._v(" "), _c("hr", {
-    staticClass: "my-4 w-100"
-  }), _vm._v(" "), _c("div", {
-    staticClass: "text-center w-100"
-  }, [_c("div", {
-    staticClass: "col-md-6 mx-auto"
-  }, [_c("small", {
-    staticClass: "text-body-secondary"
-  }, [_vm._v("既にアカウントをお持ちの方はこちら")]), _vm._v(" "), _c("a", {
-    staticClass: "w-100 py-2 mb-2 btn btn-outline-secondary rounded-3",
-    attrs: {
-      href: _vm.login_route
-    }
-  }, [_vm._v("ログイン")])])])]) : _vm._e(), _vm._v(" "), _vm.card_num === 2 ? _c("div", {
-    staticClass: "anima-fadein-bottom"
-  }, [_c("div", {
-    staticClass: "card shadow-sm border-0 w-100 p-3 mb-3"
-  }, [_c("div", {
-    staticClass: "card-body"
-  }, [_c("h5", {
-    staticClass: "text-secondary fw-bold mb-3 text-center"
-  }, [_vm._v("会員登録が完了しました。")]), _vm._v(" "), _c("h3", {
-    staticClass: "text-secondary fw-bold mb-3 text-center"
-  }, [_vm._v("\n                    ようこそ、" + _vm._s(_vm.inputs.name) + " さん\n                ")]), _vm._v(" "), _c("div", {
-    staticClass: "row g-3 mt-5 mb-3"
-  }, [_c("div", {
-    staticClass: "col-md-8 offset-md-2"
-  }, [_c("a", {
-    staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-primary rounded-pill shadow",
-    attrs: {
-      href: _vm.gacha_route
-    }
-  }, [_vm._v("ガチャで遊ぶ")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-8 offset-md-2"
-  }, [_c("a", {
-    staticClass: "w-100 py-2 mb-2 btn btn-lg text-white btn-warning rounded-pill shadow",
-    attrs: {
-      href: _vm.point_sail_route
-    }
-  }, [_vm._v("ポイントを購入する")])])])])])]) : _vm._e()]);
+  })], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -11651,6 +11775,676 @@ var staticRenderFns = [function () {
     staticClass: "bg-light p-3"
   }, [_vm._v("\n                        入力されたメールアドレス宛にメールをお送りしました。"), _c("br"), _vm._v("\n                        メールに記載された6ケタの認証番号を入力してください。\n                    ")]);
 }];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step01.vue?vue&type=template&id=1ebaa72a":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step01.vue?vue&type=template&id=1ebaa72a ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _vm.card_num === 1 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_c("div", {
+    staticClass: "card shadow border-0 w-100 p-3 mb-3 bg-white"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row mb-3"
+  }, [_c("label", {
+    staticClass: "col-form-label text-start",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v(_vm._s("アカウント名"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.name,
+      expression: "inputs.name"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.errors.name
+    },
+    attrs: {
+      name: "name",
+      id: "name",
+      type: "text",
+      autocomplete: "name",
+      autofocus: ""
+    },
+    domProps: {
+      value: _vm.inputs.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.name ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("label", {
+    staticClass: "col-form-label text-start",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v(_vm._s("メールアドレス"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.email,
+      expression: "inputs.email"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.errors.email
+    },
+    attrs: {
+      name: "email",
+      id: "email",
+      type: "text",
+      autocomplete: "email",
+      autofocus: ""
+    },
+    domProps: {
+      value: _vm.inputs.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "email", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.email ? _c("div", {
+    staticClass: "text-danger"
+  }, [_vm._v("※" + _vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "d-flex justify-content-between align-items-center",
+    attrs: {
+      "for": "password"
+    }
+  }, [_vm._v("\n                    " + _vm._s("パスワード") + "\n                    "), _c("a", {
+    staticClass: "btn btn-link",
+    staticStyle: {
+      "font-size": ".5rem",
+      "text-decoration": "none"
+    },
+    attrs: {
+      href: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.toggleDisplayPassword.apply(null, arguments);
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.form_option.input_password.text))])]), _vm._v(" "), _c("p", {
+    staticClass: "mb-0",
+    staticStyle: {
+      "font-size": ".8rem"
+    }
+  }, [_vm._v("※8文字以上20文字以下の半角英数字")]), _vm._v(" "), _vm.form_option.input_password.type === "checkbox" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password,
+      expression: "inputs.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password",
+      name: "password",
+      required: "",
+      autocomplete: "current-password",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.inputs.password) ? _vm._i(_vm.inputs.password, null) > -1 : _vm.inputs.password
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.inputs.password,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.inputs, "password", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.inputs, "password", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.inputs, "password", $$c);
+        }
+      }
+    }
+  }) : _vm.form_option.input_password.type === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password,
+      expression: "inputs.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password",
+      name: "password",
+      required: "",
+      autocomplete: "current-password",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.inputs.password, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.inputs, "password", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password,
+      expression: "inputs.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password",
+      name: "password",
+      required: "",
+      autocomplete: "current-password",
+      type: _vm.form_option.input_password.type
+    },
+    domProps: {
+      value: _vm.inputs.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "password", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.password ? _c("div", _vm._l(_vm.errors.password, function (error, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "text-danger",
+      attrs: {
+        role: "alert"
+      }
+    }, [_vm._v("※" + _vm._s(error))]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-5"
+  }, [_c("label", {
+    attrs: {
+      "for": "password_confirmation"
+    }
+  }, [_vm._v(_vm._s("パスワードの確認"))]), _vm._v(" "), _c("p", {
+    staticClass: "mb-0",
+    staticStyle: {
+      "font-size": ".8rem"
+    }
+  }, [_vm._v("※8文字以上20文字以下の半角英数字")]), _vm._v(" "), _vm.form_option.input_password.type === "checkbox" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password_confirmation,
+      expression: "inputs.password_confirmation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password_confirmation",
+      name: "password_confirmation",
+      required: "",
+      autocomplete: "current-password_confirmation",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.inputs.password_confirmation) ? _vm._i(_vm.inputs.password_confirmation, null) > -1 : _vm.inputs.password_confirmation
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.inputs.password_confirmation,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.inputs, "password_confirmation", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.inputs, "password_confirmation", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.inputs, "password_confirmation", $$c);
+        }
+      }
+    }
+  }) : _vm.form_option.input_password.type === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password_confirmation,
+      expression: "inputs.password_confirmation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password_confirmation",
+      name: "password_confirmation",
+      required: "",
+      autocomplete: "current-password_confirmation",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.inputs.password_confirmation, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.inputs, "password_confirmation", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.password_confirmation,
+      expression: "inputs.password_confirmation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "password_confirmation",
+      name: "password_confirmation",
+      required: "",
+      autocomplete: "current-password_confirmation",
+      type: _vm.form_option.input_password.type
+    },
+    domProps: {
+      value: _vm.inputs.password_confirmation
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.inputs, "password_confirmation", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.password_confirmation ? _c("div", _vm._l(_vm.errors.password_confirmation, function (error, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "text-danger",
+      attrs: {
+        role: "alert"
+      }
+    }, [_vm._v("※" + _vm._s(error))]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "p-3"
+  }, [_vm._v("\n                本サービスの\n                "), _c("a", {
+    attrs: {
+      href: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.windowOpen(_vm.r_trems);
+      }
+    }
+  }, [_vm._v("利用規約")]), _vm._v("と\n                "), _c("a", {
+    attrs: {
+      href: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.windowOpen(_vm.r_privacy_policy);
+      }
+    }
+  }, [_vm._v("プライバシーポリシー")]), _vm._v("に\n                同意した時のみ、登録を行なってください。登録後は、同意したものとみなされます。\n\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col-sm-8 offset-sm-2"
+  }, [_c("button", {
+    staticClass: "btn btn-curve btn-primary text-white w-100",
+    "class": {
+      disabled: _vm.loading
+    },
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.nextToStep01
+    }
+  }, [!_vm.loading ? _c("span", [_vm._v(_vm._s("次のステップへ　進む"))]) : _c("span", [_vm._v(_vm._s("通信中・・・"))])])])])])])]) : _vm._e();
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step02.vue?vue&type=template&id=1e9e7828":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step02.vue?vue&type=template&id=1e9e7828 ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _vm.card_num === 2 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_c("div", {
+    staticClass: "card shadow border-0 w-100 p-3 mb-3 bg-white"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_vm.test ? _c("div", {
+    staticClass: "card p-2 border-danger"
+  }, [_vm._v(_vm._s(_vm.inputs.verification_code_confirmation))]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "mb-5"
+  }, [_vm._m(0), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "verification_code"
+    }
+  }, [_vm._v(_vm._s("認証番号（半角数字）"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.verification_code,
+      expression: "verification_code"
+    }],
+    staticClass: "form-control w-50",
+    attrs: {
+      id: "verification_code",
+      type: "text",
+      name: "verification_code",
+      autocomplete: "current-verification_code"
+    },
+    domProps: {
+      value: _vm.verification_code
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.verification_code = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.verification_code ? _c("div", _vm._l(_vm.errors.verification_code, function (error, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "text-danger",
+      attrs: {
+        role: "alert"
+      }
+    }, [_vm._v("※" + _vm._s(error))]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col-sm-8 offset-sm-2 mb-3"
+  }, [_c("button", {
+    staticClass: "btn btn-curve btn-primary text-white w-100",
+    "class": {
+      disabled: _vm.loading
+    },
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.nextToStep02
+    }
+  }, [!_vm.loading ? _c("span", [_vm._v(_vm._s("次のステップへ　進む"))]) : _c("span", [_vm._v(_vm._s("通信中・・・"))])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-8 offset-sm-2"
+  }, [_c("button", {
+    staticClass: "btn btn-curve btn-secondary text-white w-100",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.subCardNum
+    }
+  }, [_vm._v("\n                        " + _vm._s("前のステップへ　戻る") + "\n                    ")])])])])])]) : _vm._e();
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "bg-light p-3"
+  }, [_vm._v("\n                    入力されたメールアドレス宛にメールをお送りしました。"), _c("br"), _vm._v("\n                    メールに記載された6ケタの認証番号を入力してください。\n                ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step03.vue?vue&type=template&id=1e824926":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step03.vue?vue&type=template&id=1e824926 ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _vm.card_num === 3 ? _c("div", {
+    staticClass: "anima-fadein-bottom"
+  }, [_c("div", {
+    staticClass: "card shadow border-0 w-100 p-3 mb-3 bg-white"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "card border-light bg-white mb-5"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "card-title fw-bold text-center mb-3"
+  }, [_vm._v("入力内容の確認")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col-md-4 fw-bold"
+  }, [_vm._v(_vm._s("アカウント名"))]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8 text-secondary"
+  }, [_vm._v(_vm._s(_vm.inputs.name))])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col-md-4 fw-bold"
+  }, [_vm._v(_vm._s("メールアドレス"))]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8 text-secondary"
+  }, [_vm._v(_vm._s(_vm.inputs.email))])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col-md-4 fw-bold"
+  }, [_vm._v(_vm._s("パスワード"))]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-8 text-secondary"
+  }, [_vm._v(_vm._s("*".repeat(_vm.inputs.password.length)))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-3"
+  }, [_c("input", {
+    attrs: {
+      type: "hidden",
+      name: "_token"
+    },
+    domProps: {
+      value: _vm.token
+    }
+  }), _vm._v(" "), _vm._l(_vm.inputs, function (value, name) {
+    return _c("input", {
+      key: name,
+      attrs: {
+        name: name,
+        type: "hidden"
+      },
+      domProps: {
+        value: value
+      }
+    });
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-8 offset-sm-2 mb-3"
+  }, [_c("button", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: !_vm.loading,
+      expression: "!loading"
+    }],
+    staticClass: "btn btn-curve btn-primary text-white w-100",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                        " + _vm._s("この内容で登録") + "\n                    ")]), _vm._v(" "), _c("button", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.loading,
+      expression: "loading"
+    }],
+    staticClass: "btn btn-curve btn-primary text-white w-100",
+    attrs: {
+      type: "button",
+      disabled: ""
+    }
+  }, [_vm._v("\n                        " + _vm._s("登録中・・・") + "\n                    ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-8 offset-sm-2"
+  }, [_c("button", {
+    staticClass: "btn btn-curve btn-secondary text-white w-100",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.subCardNum
+    }
+  }, [_vm._v("\n                        " + _vm._s("前のステップへ　戻る") + "\n                    ")])])], 2)])])]) : _vm._e();
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "bg-light p-3"
+  }, [_vm._v("\n                        入力内容にお間違いなければ登録完了へお進みください。"), _c("br"), _vm._v("\n                        ※登録内容は会員登録設定から変更可能です。\n                    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=template&id=5cb6da0e&scoped=true":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=template&id=5cb6da0e&scoped=true ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "mb-3 w-100"
+  }, [_c("div", {
+    staticClass: "form-steps-pill mx-auto text-secondary py-3"
+  }, [_c("div", {
+    staticClass: "step-box",
+    "class": {
+      "text-primary": _vm.card_num >= 1
+    }
+  }, [_c("div", {
+    staticClass: "step_num",
+    "class": {
+      " bg-primary": _vm.card_num >= 1
+    }
+  }, [_vm._v("1")]), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("ステップ1")])]), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-caret-right-fill mb-3",
+    "class": {
+      "text-primary": _vm.card_num >= 2
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "step-box",
+    "class": {
+      "text-primary": _vm.card_num >= 2
+    }
+  }, [_c("div", {
+    staticClass: "step_num",
+    "class": {
+      " bg-primary": _vm.card_num >= 2
+    }
+  }, [_vm._v("2")]), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("ステップ2")])]), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-caret-right-fill mb-3",
+    "class": {
+      "text-primary": _vm.card_num >= 3
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "step-box",
+    "class": {
+      "text-primary": _vm.card_num >= 3
+    }
+  }, [_c("div", {
+    staticClass: "step_num",
+    "class": {
+      " bg-primary": _vm.card_num >= 3
+    }
+  }, [_vm._v("3")]), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("入力確認")])]), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-caret-right-fill mb-3",
+    "class": {
+      "text-primary": _vm.card_num >= 4
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "step-box",
+    "class": {
+      "text-primary": _vm.card_num >= 4
+    }
+  }, [_c("div", {
+    staticClass: "step_num",
+    "class": {
+      " bg-primary": _vm.card_num >= 4
+    }
+  }, [_vm._v("4")]), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("完了")])])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -18092,6 +18886,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\nth[data-v-3e26587a],td[data-v-3e26587a]{ background-color: #fff;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-steps-pill[data-v-5cb6da0e] {\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.form-steps-pill .step-box[data-v-5cb6da0e] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    text-align: center;\n    flex: 1;\n    color: hsl(204deg, 20%, 60%);\n    font-weight: bold;\n    width: 3rem;\n}\n.form-steps-pill .step_num[data-v-5cb6da0e] {\n    width: 2rem;\n    height: 2rem;\n    line-height: 2rem;\n    background-color: hsl(204deg, 20%, 60%);\n    color: white;\n    border-radius: 50%;\n    text-align: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35803,6 +36621,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_style_index_0_id_5cb6da0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_style_index_0_id_5cb6da0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_style_index_0_id_5cb6da0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -37226,6 +38074,164 @@ component.options.__file = "resources/js/components/auth/ResetPasswordFormConpor
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/component/step01.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/auth/component/step01.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _step01_vue_vue_type_template_id_1ebaa72a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./step01.vue?vue&type=template&id=1ebaa72a */ "./resources/js/components/auth/component/step01.vue?vue&type=template&id=1ebaa72a");
+/* harmony import */ var _step01_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./step01.vue?vue&type=script&lang=js */ "./resources/js/components/auth/component/step01.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _step01_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _step01_vue_vue_type_template_id_1ebaa72a__WEBPACK_IMPORTED_MODULE_0__.render,
+  _step01_vue_vue_type_template_id_1ebaa72a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auth/component/step01.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/step02.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/auth/component/step02.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _step02_vue_vue_type_template_id_1e9e7828__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./step02.vue?vue&type=template&id=1e9e7828 */ "./resources/js/components/auth/component/step02.vue?vue&type=template&id=1e9e7828");
+/* harmony import */ var _step02_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./step02.vue?vue&type=script&lang=js */ "./resources/js/components/auth/component/step02.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _step02_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _step02_vue_vue_type_template_id_1e9e7828__WEBPACK_IMPORTED_MODULE_0__.render,
+  _step02_vue_vue_type_template_id_1e9e7828__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auth/component/step02.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/step03.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/auth/component/step03.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _step03_vue_vue_type_template_id_1e824926__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./step03.vue?vue&type=template&id=1e824926 */ "./resources/js/components/auth/component/step03.vue?vue&type=template&id=1e824926");
+/* harmony import */ var _step03_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./step03.vue?vue&type=script&lang=js */ "./resources/js/components/auth/component/step03.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _step03_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _step03_vue_vue_type_template_id_1e824926__WEBPACK_IMPORTED_MODULE_0__.render,
+  _step03_vue_vue_type_template_id_1e824926__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auth/component/step03.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/steps.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/auth/component/steps.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _steps_vue_vue_type_template_id_5cb6da0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./steps.vue?vue&type=template&id=5cb6da0e&scoped=true */ "./resources/js/components/auth/component/steps.vue?vue&type=template&id=5cb6da0e&scoped=true");
+/* harmony import */ var _steps_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./steps.vue?vue&type=script&lang=js */ "./resources/js/components/auth/component/steps.vue?vue&type=script&lang=js");
+/* harmony import */ var _steps_vue_vue_type_style_index_0_id_5cb6da0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css */ "./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _steps_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _steps_vue_vue_type_template_id_5cb6da0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render,
+  _steps_vue_vue_type_template_id_5cb6da0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "5cb6da0e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auth/component/steps.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/contact/FormComponent.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/contact/FormComponent.vue ***!
@@ -37986,6 +38992,70 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/component/step01.vue?vue&type=script&lang=js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/auth/component/step01.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step01_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./step01.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step01.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step01_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/step02.vue?vue&type=script&lang=js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/auth/component/step02.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step02_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./step02.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step02.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step02_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/step03.vue?vue&type=script&lang=js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/auth/component/step03.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step03_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./step03.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step03.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step03_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/steps.vue?vue&type=script&lang=js":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/auth/component/steps.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./steps.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js ***!
@@ -38590,6 +39660,74 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/component/step01.vue?vue&type=template&id=1ebaa72a":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/auth/component/step01.vue?vue&type=template&id=1ebaa72a ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step01_vue_vue_type_template_id_1ebaa72a__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step01_vue_vue_type_template_id_1ebaa72a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step01_vue_vue_type_template_id_1ebaa72a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./step01.vue?vue&type=template&id=1ebaa72a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step01.vue?vue&type=template&id=1ebaa72a");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/step02.vue?vue&type=template&id=1e9e7828":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/auth/component/step02.vue?vue&type=template&id=1e9e7828 ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step02_vue_vue_type_template_id_1e9e7828__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step02_vue_vue_type_template_id_1e9e7828__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step02_vue_vue_type_template_id_1e9e7828__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./step02.vue?vue&type=template&id=1e9e7828 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step02.vue?vue&type=template&id=1e9e7828");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/step03.vue?vue&type=template&id=1e824926":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/auth/component/step03.vue?vue&type=template&id=1e824926 ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step03_vue_vue_type_template_id_1e824926__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step03_vue_vue_type_template_id_1e824926__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_step03_vue_vue_type_template_id_1e824926__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./step03.vue?vue&type=template&id=1e824926 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/step03.vue?vue&type=template&id=1e824926");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/steps.vue?vue&type=template&id=5cb6da0e&scoped=true":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/auth/component/steps.vue?vue&type=template&id=5cb6da0e&scoped=true ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_template_id_5cb6da0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_template_id_5cb6da0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_template_id_5cb6da0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./steps.vue?vue&type=template&id=5cb6da0e&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=template&id=5cb6da0e&scoped=true");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2":
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2 ***!
@@ -38813,6 +39951,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_style_index_0_id_3e26587a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=style&index=0&id=3e26587a&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/prize/Index.vue?vue&type=style&index=0&id=3e26587a&scoped=true&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css ***!
+  \******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_steps_vue_vue_type_style_index_0_id_5cb6da0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/component/steps.vue?vue&type=style&index=0&id=5cb6da0e&scoped=true&lang=css");
 
 
 /***/ }),
