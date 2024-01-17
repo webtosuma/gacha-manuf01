@@ -20,13 +20,13 @@
         <h3>ポイント購入</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item bg-white py-4 fs-">
-                {{-- 購入するポイントを選択してください --}}
+                購入するポイントを選択してください
 
-                {{-- <div class="mt-2" >
+                <div class="mt-2" >
                     ご利用可能な決済方法 <img src="{{asset('storage/site/image/stripe_card.png')}}" alt="ご利用可能な決済方法" style="height:3rem;">
-                </div> --}}
+                </div>
 
-                <h3 class="text-danger">只今、ポイント購入を停止しています。</h3>
+                {{-- <h3 class="text-danger">只今、ポイント購入を停止しています。</h3>
                 <p class="border border-warning border-3 p-3">
                     現在、お客様がご購入いただいたポイント購入のに関するエラーが発生しており、重複し
                     て処理されている状況が確認されました。<br>
@@ -40,7 +40,7 @@
                     お客様には、これに伴い一時的にポイント購入が制限され、また復旧までしばらくお時間
                     をいただくかもしれませんが、お客様のご理解とご協力を賜りますようお願い申し上げま
                     す。
-                </p>
+                </p> --}}
             </li>
 
 

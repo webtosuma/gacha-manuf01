@@ -79,6 +79,8 @@ class AdminUserController extends Controller
         ? PointHistory::orderByDesc('created_at')->orderByDesc('id')->where('user_id', $user->id)->get()
         : PointHistory::orderByDesc('created_at')->orderByDesc('id')->get();
 
+        // dd($point_histories->toArray());
+
         return view('admin.user.point_history', compact('point_histories','user') );
     }
 
