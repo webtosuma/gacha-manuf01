@@ -22,19 +22,36 @@ class AdminUserController extends Controller
      */
     public function index(Request $request)
     {
-        // $users = User::doesntHave('admin')//adminユーザーは非表示
-        // ->orderByDesc('created_at')->get();
-
         # 検索キー
-        $search_key = $request->search_key ? $request->search_key : '';
+        $search_id    = $request->search_id ? $request->search_id : '';
+        $search_name  = $request->search_name ? $request->search_name : '';
+        $search_email = $request->search_email ? $request->search_email : '';
 
 
-        $users = $search_key
-        ? User::where('name','like','%'.$search_key.'%')->orderByDesc('created_at')->get()//絞り込み
-        : User::orderByDesc('created_at')->get();
+        # 絞り込み
+        $query = User::query();
+
+            if($search_id){
+                $query->where('id','like','%'.$search_id.'%');
+            }
+            if($search_name){
+                $query->where('name','like','%'.$search_name.'%');
+            }
+            if($search_email){
+                $query->where('email','like','%'.$search_email.'%');
+            }
+
+        $users = $query->orderByDesc('created_at')->get();
 
 
-        return view('admin.user.index', compact('users','search_key') );
+
+
+        // $users = $search_name
+        // ? User::where('name','like','%'.$search_name.'%')->orderByDesc('created_at')->get()//絞り込み
+        // : User::orderByDesc('created_at')->get();
+
+
+        return view('admin.user.index', compact('users','search_id','search_name','search_email') );
     }
 
 

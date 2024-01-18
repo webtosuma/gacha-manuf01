@@ -30,10 +30,17 @@ $active_key = 'user';
             <div class="col-auto">
                 <a href="{{route('admin.user.canpaing_introductory')}}" class="btn border">紹介キャンペーン登録者一覧</a>
             </div>
-            <div class="col-4">
+            <div class="col-8">
                 <form action="{{route('admin.user')}}">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="アカウント名" name="search_key" value="{{$search_key}}">
+
+                        <input type="number" class="form-control col-auto" placeholder="ID" name="search_id" value="{{$search_id}}" style="flex:none; width:6rem;" min="1">
+
+                        <input type="text"   class="form-control" placeholder="アカウント名" name="search_name" value="{{$search_name}}">
+
+                        <input type="text"   class="form-control" placeholder="メールアドレス" name="search_email" value="{{$search_email}}">
+
+
                         <button class="btn btn-outline-secondary" type="submit">検索</button>
                     </div>
                 </form>
@@ -117,7 +124,7 @@ $active_key = 'user';
 
 
                             </td>
-                            <td>{{ $user->created_at->format('Y年m月d日') }}</td>
+                            <td>{{ $user->created_at->format('Y年m月d日 H:i') }}</td>
                         </tr>
                     @empty
                         <tr>
@@ -129,5 +136,13 @@ $active_key = 'user';
                 </tbody>
             </table>
         </section>
+
+        {{-- <div class="my-3">
+            <!-- ページネーション -->
+            <div class="mb-5 d-flex justify-content-center">
+                {{ $users->links('vendor.pagination.bootstrap-4') }}
+            </div>
+        </div> --}}
+
     </div>
 @endsection

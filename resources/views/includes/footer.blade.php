@@ -8,6 +8,14 @@
                     alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">
                 </a>
                 <small class="d-block mb-3 text-muteddd">&copy;fobees</small>
+
+
+                <div class="form-text my-3">
+                    古物商営業許可<br>
+                    第 931010002606 号<br>
+                    熊本県公安委員会<br>
+                    合同会社 Fobees<br>
+                </div>
             </div>
             <div class="col-12 col-md">
                 <h3>{{ __('カテゴリー') }}</h3>
