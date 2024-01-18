@@ -100,15 +100,16 @@ class AdminPointHistoryController extends Controller
 
     /**
      * 時系列一覧
-     *
+     * @param \Illuminate\Http\Request $request
      * @param String $month_text
      * @return \Illuminate\Http\Response
      */
-    public function datetime()
+    public function datetime(Request $request)
     {
         $point_histories =  PointHistory::where('reason_id',11)//購入履歴
         ->orderByDesc('created_at')
-        ->get();
+        ->paginate(100);//ページネーション
+        // ->get();
 
 
         return view('admin.point_history.datetime', compact('point_histories') );

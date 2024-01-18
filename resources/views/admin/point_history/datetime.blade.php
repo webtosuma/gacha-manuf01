@@ -28,12 +28,22 @@ $active_key = 'point_history';
 
 
 
-        <h2 class="my-5 py-3 border-bottom">ポイント売上履歴</h2>
+        <h2 class="my- py-3 border-bottom">ポイント売上履歴</h2>
 
+
+        <a href="{{route('admin.point_history')}}"
+        class="btn my-3 border rounded-pill"
+        ><i class="bi bi-arrow-left-short"></i>戻る</a>
+
+
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start mt-3">
+            {{ $point_histories->links('vendor.pagination.bootstrap-4') }}
+        </div>
 
 
         <!--テーブル-->
-        <section class="card card-body bg-white my-5 overflow-auto">
+        <section class="card card-body bg-white overflow-auto">
             <div class="mb-3">ポイント購入顧客情報</div>
             <table class="table bg-white ">
                 <!--ヘッド（並べ替えボタン）-->
@@ -73,5 +83,12 @@ $active_key = 'point_history';
                 </tbody>
             </table>
         </section>
+
+
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start mt-3">
+            {{ $point_histories->links('vendor.pagination.bootstrap-4') }}
+        </div>
+
     </div>
 @endsection

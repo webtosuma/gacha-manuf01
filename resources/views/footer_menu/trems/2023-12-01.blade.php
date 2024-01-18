@@ -121,7 +121,7 @@ $body =  <<<__
 ユーザーは，所定の退会手続により，本サービスから退会できるものとします。
 
 下記URLのフォームより、退会希望と添えてご連絡ください。
-http://localhost:8888/tradingcard_site/public/contact
+https://cardfesta.jp/contact
 
 
 

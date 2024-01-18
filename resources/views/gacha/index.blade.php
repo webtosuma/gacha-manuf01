@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 <!--title-->
-@section('title',$category_name.'のガチャ一覧')
+@section('title', $category_name.'のガチャ一覧')
 
 <!--meta-->
 @section('meta')
     @php
-    $meta_title = $category_name.'のガチャ一覧';
+    $meta_title = $category_code=='all' ? null : $category_name.'のガチャ一覧';
     @endphp
 @endsection
 

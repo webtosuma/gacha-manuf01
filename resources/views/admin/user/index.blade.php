@@ -48,25 +48,31 @@ $active_key = 'user';
         </div>
 
 
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start mt-3">
+            {{ $users->links('vendor.pagination.bootstrap-4') }}
+        </div>
 
 
-        <section class="card card-body bg-white my-3 overflow-auto">
+        <section class="card card-body bg-white mb-3 overflow-auto">
             <table class="table bg-white my-3">
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>
                     <tr class="bg-white">
+                        <th></th>
                         <th></th>
                         <th scope="col">アカウント名</th>
                         <th scope="col">メールアドレス</th>
                         <th scope="col">X(旧twitter)ID</th>
 
                         <th class="text-center" scope="col">
-                            <a href="{{route('admin.user.user_prize',0)}}">保有商品数</a>
+                            {{ '商品' }}
+                            {{-- <a href="{{route('admin.user.user_prize',0)}}">保有商品数</a> --}}
                         </th>
                         <th class="text-center" scope="col"
-                        >ガチャPLAY数</th>
+                        >ガチャ履歴</th>
                         <th class="text-center" scope="col">
-                            <a href="{{route('admin.user.point_history',0)}}">保有ポイント</a>
+                            <a href="{{route('admin.user.point_history',0)}}">ポイント履歴</a>
                         </th>
                         <th></th>
 
@@ -78,12 +84,25 @@ $active_key = 'user';
                         <tr>
                             <td>{{$user->id}}</td>
                             <td>
-                                @if ($user->admin)
-                                    <span class="text-primary">●</span>
-                                @endif
-                                {{ $user->name }}
+                                <div style="width:1.6rem;">
+                                    <ratio-image-component
+                                    style_class="rounded-circle ratio ratio-1x1 border"
+                                    url="{{$user->image_path}}"
+                                    ></ratio-image-component>
+                                </div>
                             </td>
-                            <td>{{ $user->email }}</td>
+                            <td>
+                                <!-- アカウント名 -->
+                                <a href="{{route('admin.user.show',$user)}}">
+                                    @if ($user->admin)<span class="text-primary">●</span> @endif
+
+                                    {{ strlen($user->name) <= 14 ? $user->name : substr($user->name,0,14).'...' }}
+                                </a>
+                            </td>
+                            <!-- メールアドレス -->
+                            <td>
+                                {{ strlen($user->email) <= 14 ? $user->email : substr($user->email,0,14).'...' }}
+                            </td>
                             <td>{{ $user->twitter_id ? $user->twitter_id : '---' }}</td>
 
                             <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
@@ -137,12 +156,11 @@ $active_key = 'user';
             </table>
         </section>
 
-        {{-- <div class="my-3">
-            <!-- ページネーション -->
-            <div class="mb-5 d-flex justify-content-center">
-                {{ $users->links('vendor.pagination.bootstrap-4') }}
-            </div>
-        </div> --}}
+
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start mt-3">
+            {{ $users->links('vendor.pagination.bootstrap-4') }}
+        </div>
 
     </div>
 @endsection

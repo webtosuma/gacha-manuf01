@@ -24,13 +24,14 @@ class AdminGachaController extends Controller
      */
     public function index($category_code=null)
     {
-        # カテゴリーコードの認証
+        # カテゴリーコードの確認
         $gacha_category = GachaCategory::where('code_name',$category_code)->first();
         if(!$gacha_category&&$category_code){ return \App::abort(404); }//該当なし
 
         # 表示できるガチャ一覧
-        $gachas = $gacha_category ? $gacha_category->gachas
-        : Gacha::orderByDesc('created_at')->get();
+        $gachas = $gacha_category
+        ? Gacha::where('category_id',$gacha_category->id)->orderByDesc('published_at')->get()
+        : Gacha::orderByDesc('published_at')->get();
 
         # カテゴリーデータ(select要素用)
         $categories = GachaCategory::orderBy('created_at')->get();

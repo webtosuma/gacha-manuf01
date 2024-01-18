@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','キャンペーン紹介一覧')
+@section('title','紹介キャンペーン一覧')
 
 
 @section('meta') @php
@@ -22,13 +22,28 @@ $active_key = 'user';
                 <li class="breadcrumb-item"><a href="{{ route('admin.user') }}"
                     >{{ '登録ユーザー' }}</a></li>
 
-                <li class="breadcrumb-item active" aria-current="page">キャンペーン紹介一覧</li>
+                <li class="breadcrumb-item active" aria-current="page">紹介キャンペーン一覧</li>
             </ol>
         </nav>
 
 
 
-        <h2 class="my-5 py-3 border-bottom">キャンペーン紹介一覧</h2>
+        <h2 class="mt-5 py-3 border-bottom">紹介キャンペーン一覧</h2>
+
+
+        <a href="{{route('admin.user')}}"
+        class="btn my-3 border rounded-pill"
+        ><i class="bi bi-arrow-left-short"></i>戻る</a>
+
+
+
+
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start align-items-center gap-3 mt-3">
+            <span class="mb-3">紹介者情報</span>
+            {{ $recruiters->links('vendor.pagination.bootstrap-4') }}
+        </div>
+
 
         <section class="card card-body bg-white my-3 overflow-auto">
             <table class="table bg-white my-3">
@@ -47,18 +62,23 @@ $active_key = 'user';
                     </tr>
                 </thead>
                 <tbody>
+                    @php $old_recruiter = null; /* 一列前の紹介者 */ @endphp
                     @forelse ($recruiters as $recruiter)
-                        @foreach ($recruiter->friends as $friend)
+                        @foreach ($recruiter->friends as $f_key => $friend)
                             <tr>
                                 <!--紹介者-->
-                                @php
-                                $canpaing_recruiter_count = \App\Models\PointHistory::where('user_id',$recruiter->id)
-                                ->where('reason_id',31)->get()->count();
-                                @endphp
-                                <td>{{$recruiter->id}}</td>
-                                <td>{{$recruiter->name}}</td>
-                                <td>{{$recruiter->email}}</td>
-                                <td>{{$canpaing_recruiter_count.'回'}}</td>
+                                @if( $f_key==0 )
+                                    @php
+                                    $canpaing_recruiter_count = \App\Models\PointHistory::where('user_id',$recruiter->id)
+                                    ->where('reason_id',31)->get()->count();
+                                    @endphp
+                                    <td >{{$recruiter->id}}</td>
+                                    <td>{{$recruiter->name}}</td>
+                                    <td>{{$recruiter->email}}</td>
+                                    <td>{{$canpaing_recruiter_count.'回'}}</td>
+                                @else
+                                    <td colspan="4" class="text-secondary text-center">*同上</td>
+                                @endif
                                 <!--ご友人-->
                                 @php
                                 $canpaing_friend_count = \App\Models\PointHistory::where('user_id',$friend->id)
@@ -80,6 +100,8 @@ $active_key = 'user';
                                 </td>
                             </tr>
                         @endforeach
+
+                        @php $old_recruiter = $recruiter; /* 一列前の紹介者 */ @endphp
                     @empty
                         <tr>
                             <td colspan="4" class="text-center text-secondary border-0 py-5">
@@ -90,5 +112,12 @@ $active_key = 'user';
                 </tbody>
             </table>
         </section>
+
+
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start align-items-center gap-3 mt-3">
+            <span class="mb-3">紹介者情報</span>
+            {{ $recruiters->links('vendor.pagination.bootstrap-4') }}
+        </div>
     </div>
 @endsection

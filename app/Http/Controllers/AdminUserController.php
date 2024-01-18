@@ -10,7 +10,7 @@ use App\Models\PointHistory;
 use App\Models\CanpaingIntroductory;
 /*
 | =============================================
-|  サイト管理者 ユーザー コントローラー
+|  サイト管理者 登録ユーザー コントローラー
 | =============================================
 */
 class AdminUserController extends Controller
@@ -28,6 +28,9 @@ class AdminUserController extends Controller
         $search_email = $request->search_email ? $request->search_email : '';
 
 
+        // dd($request->all());
+
+
         # 絞り込み
         $query = User::query();
 
@@ -41,14 +44,8 @@ class AdminUserController extends Controller
                 $query->where('email','like','%'.$search_email.'%');
             }
 
-        $users = $query->orderByDesc('created_at')->get();
-
-
-
-
-        // $users = $search_name
-        // ? User::where('name','like','%'.$search_name.'%')->orderByDesc('created_at')->get()//絞り込み
-        // : User::orderByDesc('created_at')->get();
+        $users = $query->orderByDesc('created_at')
+        ->paginate(100);//ページネーション
 
 
         return view('admin.user.index', compact('users','search_id','search_name','search_email') );
@@ -83,74 +80,14 @@ class AdminUserController extends Controller
 
 
 
-    /**
-     * ポイント履歴(個人・全体)
-     *
-    */
-    public function point_history($user_id)
-    {
-        # ユーザー情報
-        $user = $user_id ? User::find($user_id) : null;
-
-        $point_histories = $user_id
-        ? PointHistory::orderByDesc('created_at')->orderByDesc('id')->where('user_id', $user->id)->get()
-        : PointHistory::orderByDesc('created_at')->orderByDesc('id')->get();
-
-        // dd($point_histories->toArray());
-
-        return view('admin.user.point_history', compact('point_histories','user') );
-    }
-
-
-
-        /**
-         * ポイント履歴削除確認（ユーザー指定）
-         *
-        */
-        public function point_history_destroy_confirm(Request $request, User $user)
-        {
-            // dd($request->all());
-            $point_history_id = $request->point_history_id;
-
-            $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')->where('user_id', $user->id)
-            ->where('id','>=',$point_history_id)//「ポイント購入」を除く
-            ->where('reason_id','<>',11)//「ポイント購入」を除く
-            ->get();
-
-            return view('admin.user.point_history_destroy_confirm', compact('point_histories','user') );
-        }
-
-
-        /**
-        * ポイント履歴削除（ユーザー指定）
-        *
-       */
-       public function point_history_destroy(Request $request, User $user)
-       {
-
-           $point_histories = PointHistory::find($request->point_history_ids);
-
-           foreach ($point_histories as $point_history) {
-               $point_history->delete();
-           }
-
-
-           return redirect()->route('admin.user.point_history',$user->id)
-           ->with(['alert-danger'=>'ポイント履歴を削除しました。']);
-       }
-
-
 
 
     /**
      * ユーザーの取得商品履歴(個人・全体)
      *
     */
-    public function user_prize($user_id)
+    public function user_prize(User $user)
     {
-        # ユーザー情報
-        $user = $user_id ? User::find($user_id) : null;
-
         # ユーザーの取得商品情報
         $user_prizes = UserPrize::onlyPossessionScope($user->id)->get();
 
@@ -205,15 +142,15 @@ class AdminUserController extends Controller
     */
     public function canpaing_introductory()
     {
-
-
-
         # 紹介書ID
         $recruiter_ids = CanpaingIntroductory::all()->pluck('recruiter_id')->toArray();
         $recruiter_ids = array_unique($recruiter_ids);//重複除去
 
         # 紹介書
-        $recruiters = User::find($recruiter_ids);
+        $recruiters =
+        // User::find($recruiter_ids)->paginate(100);
+        User::whereIn('id', $recruiter_ids)->paginate(20);
+        // dd($recruiters);
 
         foreach ($recruiters as $recruiter)
         {
@@ -233,21 +170,11 @@ class AdminUserController extends Controller
             //
             $recruiter->done_at =  CanpaingIntroductory::where('recruiter_id',$recruiter->id)->first()->done_at;
 
-
-            ///test///
-
-            // foreach ($friend_ids as $id) {
-            //     $user = User::find($id);
-
-            //     CanpaingIntroductoryController::grant($user);
-            // }
-
-
-
         }
 
 
         return view('admin.user.canpaing_introductory', compact('recruiters') );
     }
+
 
 }

@@ -406,58 +406,118 @@ use \App\Http\Controllers;
 /*
 |--------------------------------------------------------------------------
 | 登録ユーザー一覧
+| AdminUserController
+| AdminUserUserPrizeController    //商品一覧
+| AdminUserGachaHistoryController //ガチャ履歴
+| AdminUserPointHistoryController //ポイント履歴
 |--------------------------------------------------------------------------
 */
 
     Route::middleware(['admin_auth'])->group(function () {
+
 
         # 登録ユーザー一覧
         Route::get('/admin/user',
         [Controllers\AdminUserController ::class, 'index'])
         ->name('admin.user');
 
-
         # ポイント付与
         Route::patch('/admin/user/add_point/{user}',
         [Controllers\AdminUserController ::class, 'add_point'])
         ->name('admin.user.add_point');
 
-        # ポイント履歴(個人・全体)
-        Route::get('/admin/user/point_history/{user_id}',
-        [Controllers\AdminUserController ::class, 'point_history'])
-        ->name('admin.user.point_history');
-
-            # 削除確認
-            Route::post('/admin/user/point_history/destroy_confirm/{user}',
-            [Controllers\AdminUserController ::class, 'point_history_destroy_confirm'])
-            ->name('admin.user.point_history.destroy_confirm');
-
-            # 削除確認
-            Route::delete('/admin/user/point_history/destroy/{user}',
-            [Controllers\AdminUserController ::class, 'point_history_destroy'])
-            ->name('admin.user.point_history.destroy');
-
-
-        # ユーザー商品履歴(個人・全体)
-        Route::get('/admin/user/user_prize/{user_id}',
-        [Controllers\AdminUserController ::class, 'user_prize'])
-        ->name('admin.user.user_prize');
-
-            # 削除確認
-            Route::post('/admin/user/user_prize/destroy_confirm/{user}',
-            [Controllers\AdminUserController ::class, 'user_prize_destroy_confirm'])
-            ->name('admin.user.user_prize.destroy_confirm');
-
-            # 削除確認
-            Route::delete('/admin/user/user_prize/destroy/{user}',
-            [Controllers\AdminUserController ::class, 'user_prize_destroy'])
-            ->name('admin.user.user_prize.destroy');
-
-
         # 紹介キャンペーン一覧
         Route::get('/admin/user/canpaing_introductory/',
         [Controllers\AdminUserController ::class, 'canpaing_introductory'])
         ->name('admin.user.canpaing_introductory');
+
+
+
+    });//end middleware
+    /*
+    |--------------------------------------------------------------------------
+    | 登録ユーザー詳細　AdminUserShowControlle
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['admin_auth'])->group(function () {
+
+
+        # 詳細
+        Route::get('/admin/user/s/{user}',
+        [Controllers\AdminUserShowControlle::class, 'index'])
+        ->name('admin.user.show');
+
+
+        # 退会処理
+        Route::delete('/admin/user/destroy/{user}',
+        [Controllers\AdminUserShowControlle::class, 'destroy'])
+        ->name('admin.user.destroy');
+
+
+
+    });//end middleware
+    /*
+    |--------------------------------------------------------------------------
+    | ユーザー商品履歴(個人・全体)　AdminUserUserPrizeController
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['admin_auth'])->group(function () {
+
+
+        # ユーザー商品履歴(個人・全体)
+        Route::get('/admin/user/user_prize/{user}',
+        [Controllers\AdminUserController ::class, 'user_prize'])//AdminUserUserPrizeController
+        ->name('admin.user.user_prize');
+
+        # 削除確認
+        Route::post('/admin/user/user_prize/destroy_confirm/{user}',
+        [Controllers\AdminUserController ::class, 'user_prize_destroy_confirm'])
+        ->name('admin.user.user_prize.destroy_confirm');
+
+        # 削除確認
+        Route::delete('/admin/user/user_prize/destroy/{user}',
+        [Controllers\AdminUserController ::class, 'user_prize_destroy'])
+        ->name('admin.user.user_prize.destroy');
+
+
+
+    });//end middleware
+    /*
+    |--------------------------------------------------------------------------
+    | ユーザー　ガチャPLAY数　AdminUserGachaHistoryController
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['admin_auth'])->group(function () {
+
+
+        # ガチャPLAY数 //AdminUserGachaHistoryController
+
+
+
+    });//end middleware
+    /*
+    |--------------------------------------------------------------------------
+    | ユーザー　ポイント履歴(個人・全体)　AdminUserPointHistoryController
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['admin_auth'])->group(function () {
+
+
+        # ポイント履歴(個人・全体)
+        Route::get('/admin/user/point_history/{user_id}',
+        [Controllers\AdminUserPointHistoryController ::class, 'index'])
+        ->name('admin.user.point_history');
+
+        # 削除確認
+        Route::post('/admin/user/point_history/destroy_confirm/{user}',
+        [Controllers\AdminUserPointHistoryController ::class, 'destroy_confirm'])
+        ->name('admin.user.point_history.destroy_confirm');
+
+        # 削除確認
+        Route::delete('/admin/user/point_history/destroy/{user}',
+        [Controllers\AdminUserPointHistoryController ::class, 'destroy'])
+        ->name('admin.user.point_history.destroy');
+
 
 
     });//end middleware
