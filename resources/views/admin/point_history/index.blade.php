@@ -91,7 +91,7 @@ $active_key = 'point_history';
 
 
         <div class="mb-3">
-            <a href="{{route('admin.point_history.datetime')}}" class="btn border">ポイント購入履歴</a>
+            <a href="{{route('admin.point_history.datetime')}}" class="btn border">売上履歴</a>
         </div>
 
         <!--テーブル-->

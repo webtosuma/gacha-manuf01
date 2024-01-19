@@ -35,23 +35,6 @@
                 </div>
             </div></li>
             @break
-        {{-- @case(14)
-            <!--特別付与-->
-            <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">
-                <div class="">
-                    <div class="form-text">{{ $point_history->created_at->format('Y/m/d H:i') }}</div>
-                    <div class="fw-bold"><span class="text-warning">●</span>特別付与</div>
-                </div>
-
-                <div class="">
-                    {{'+'}}
-                    <number-comma-component number="{{ $point_history->value }}"></number-comma-component>
-                    {{'pt'}}
-                </div>
-            </div></li>
-            @break --}}
-
-
         @case(21)
             {{-- ガチャる --}}
             <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">

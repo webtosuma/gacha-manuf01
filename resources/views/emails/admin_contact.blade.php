@@ -6,7 +6,7 @@
         詳細については、管理者ページよりご確認ください。
     </div>
     <div>
-        <a href="{{ url('/admin/contact') }}">{{ url('/admin/contact') }}</a>
+        <a href="{{ route('admin.contact') }}">{{ route('admin.contact') }}</a>
     </div>
 
     <br><br>

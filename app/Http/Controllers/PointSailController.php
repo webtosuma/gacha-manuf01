@@ -121,6 +121,8 @@ class PointSailController extends Controller
 
 
 
+
+
                 DB::commit();
                 return redirect(route('point_sail.comp',$point_history));
 

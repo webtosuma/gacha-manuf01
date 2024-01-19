@@ -65,8 +65,13 @@ class StripeInnerController extends Controller
         $user = Auth::user();
 
 
-        DB::beginTransaction();
+        # ポイント購入完了メールの送信
+        $request->user       = $user;
+        $request->point_sail = $point_sail;
+        $request->email      = env('PAYMENT_COMP_EMAIL');
+        SendMailController::PaymentComp( $request );
 
+        DB::beginTransaction();
         try {
 
             # ポイント履歴の登録
@@ -86,6 +91,13 @@ class StripeInnerController extends Controller
                 'currency' => 'jpy',
             ]);
             DB::commit();
+
+
+            # [キャンペーン]初回ポイント購入
+            CanpaingFirstPointSailController::grant($user);
+
+            # [紹介キャンペーン]ポイント付与
+            CanpaingIntroductoryController::grant($user);
 
 
             // 二重送信防止
@@ -112,12 +124,6 @@ class StripeInnerController extends Controller
     public function comp($stripe_id)
     {
         $user = Auth::user();
-
-        # [キャンペーン]初回ポイント購入
-        CanpaingFirstPointSailController::grant($user);
-
-        # [紹介キャンペーン]ポイント付与
-        CanpaingIntroductoryController::grant($user);
 
 
         $point_sail = PointSail::where('stripe_id',$stripe_id)->first();

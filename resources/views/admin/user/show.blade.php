@@ -31,71 +31,18 @@ $active_key = 'user';
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
         <!-- プロフィール -->
-        <section class="">
+        <section class="mb-5">
             <h2 class="mb-3 my- py-3 border-bottom">
                 @if ($user->admin)<span class="text-primary">●</span> @endif
-                {{ $user->name }}
-            </h2>
-            <div class="row ">
-                <div class="col">
-
-
-                    <!-- アカウント画像 -->
-                    <div style="width:8rem;">
-                        <ratio-image-component
-                        style_class="rounded-circle ratio ratio-1x1 border"
-                        url="{{$user->image_path}}"
-                        ></ratio-image-component>
-                    </div>
-
-
-                </div>
-                <div class="col">
-
-                    <div class="my-2">
-                        ID：{{ $user->id }}
-                        <a href="{{ route('admin.user.show',$user) }}" class="ms-3">{{ $user->name }}</a>
-                    </div>
-                    <div class="my-2">
-                        <h6>メールアドレス</h6>
-                        <div class="col-md-">
-                            <coppy-button-component copy_word="{{$user->email}}"></coppy-button-component>
-                        </div>
-                    </div>
-                    <div class="my-2">
-                        <h6>X(旧twitter)ID</h6>
-                        <div class="col-md-">
-                            <coppy-button-component copy_word="{{$user->twitter_id}}"></coppy-button-component>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-            <!-- アカウント名 -->
-            {{-- <h2 class="mb-3">
-                @if ($user->admin)<span class="text-primary">●</span> @endif
-                {{ $user->name }}
+                {{ $user->name }}様
             </h2>
 
-            <div class="my-2">
-                ID：{{ $user->id }}
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <h6>メールアドレス</h6>
-                    <coppy-button-component copy_word="{{$user->email}}"></coppy-button-component>
-                </div>
-                <div class="col-12 col-md-6">
-                    <h6>X(旧twitter)ID</h6>
-                    <coppy-button-component copy_word="{{$user->email}}"></coppy-button-component>
-                </div>
-            </div> --}}
+            @include('admin.user.common.profile')
 
         </section>
 
 
-        <section class="my-5">
+        <section class="mb-5">
             <div class="row g-2">
                 <div class="col">
                     <a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-light border py-3 w-100">
@@ -134,7 +81,7 @@ $active_key = 'user';
 
 
         <!-- 退会処理 -->
-        <section class="card card-body my-5">
+        <section class="card card-body mb-5">
             <div class="d-flex justify-content-between">
                 <h5 class="m-0">退会処理</h5>
                 <div class="">

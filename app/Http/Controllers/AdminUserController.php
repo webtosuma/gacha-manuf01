@@ -17,6 +17,7 @@ class AdminUserController extends Controller
 {
     /**
      * 一覧
+     *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -26,9 +27,6 @@ class AdminUserController extends Controller
         $search_id    = $request->search_id ? $request->search_id : '';
         $search_name  = $request->search_name ? $request->search_name : '';
         $search_email = $request->search_email ? $request->search_email : '';
-
-
-        // dd($request->all());
 
 
         # 絞り込み
@@ -44,7 +42,7 @@ class AdminUserController extends Controller
                 $query->where('email','like','%'.$search_email.'%');
             }
 
-        $users = $query->orderByDesc('created_at')
+        $users = $query->orderByDesc('created_at')->orderByDesc('id')
         ->paginate(100);//ページネーション
 
 
@@ -77,63 +75,6 @@ class AdminUserController extends Controller
         ->with(['alert-warning'=>$user->name.'さんにポイントを付与しました。']);
     }
 
-
-
-
-
-
-    /**
-     * ユーザーの取得商品履歴(個人・全体)
-     *
-    */
-    public function user_prize(User $user)
-    {
-        # ユーザーの取得商品情報
-        $user_prizes = UserPrize::onlyPossessionScope($user->id)->get();
-
-        # 画像パスの登録
-        foreach ($user_prizes as $user_prize) {
-
-            $user_prize->prize->image_path =  $user_prize->prize->image_path;
-
-        }
-
-
-        return view('admin.user.user_prize', compact('user_prizes','user') );
-    }
-
-
-        /**
-         * ユーザーの取得商品削除確認（ユーザー指定）
-         *
-        */
-        public function user_prize_destroy_confirm(Request $request, User $user)
-        {
-            $created_at = str_replace('T',' ', $request->created_at .':00');
-
-            $user_prizes = UserPrize::onlyPossessionScope($user->id)
-            ->where('created_at','>=',$created_at)//指定の日時以降
-            ->get();
-
-            return view('admin.user.user_prize_destroy_confirm', compact('user_prizes','user') );
-        }
-
-
-        /**
-         * ユーザーの取得商品削除（ユーザー指定）
-         *
-        */
-        public function user_prize_destroy(Request $request, User $user)
-        {
-            $user_prizes = UserPrize::find($request->user_prize_ids);
-            foreach ($user_prizes as $user_prize) {
-                $user_prize->delete();
-            }
-
-
-            return redirect()->route('admin.user.user_prize',$user->id)
-            ->with(['alert-danger'=>'ユーザーの取得商品を削除しました。']);
-        }
 
 
     /**

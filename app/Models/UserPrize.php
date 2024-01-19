@@ -74,6 +74,14 @@ class UserPrize extends Model
         }
 
 
+        /**
+         * UserGachaHistoryモデル リレーション
+         * @return \App\Models\UserGachaHistory
+        */
+        public function ug_history(){
+            return $this->belongsTo(UserGachaHistory::class,'gacha_history_id');
+        }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +94,7 @@ class UserPrize extends Model
         public function scopeOnlyPossessionScope( $query ,$user_id )
         {
             # ログインユーザーのデータに絞る
-            if($user_id>0){
+            if($user_id){
                 $query->where('user_id',$user_id);
             }
 

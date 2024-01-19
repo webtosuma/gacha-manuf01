@@ -465,20 +465,13 @@ use \App\Http\Controllers;
 
 
         # ユーザー商品履歴(個人・全体)
-        Route::get('/admin/user/user_prize/{user}',
-        [Controllers\AdminUserController ::class, 'user_prize'])//AdminUserUserPrizeController
+        Route::get('/admin/user/user_prize/{user_id}',
+        [Controllers\AdminUserUserPrizeController::class, 'index'])//AdminUserUserPrizeController
         ->name('admin.user.user_prize');
 
-        # 削除確認
-        Route::post('/admin/user/user_prize/destroy_confirm/{user}',
-        [Controllers\AdminUserController ::class, 'user_prize_destroy_confirm'])
-        ->name('admin.user.user_prize.destroy_confirm');
-
-        # 削除確認
-        Route::delete('/admin/user/user_prize/destroy/{user}',
-        [Controllers\AdminUserController ::class, 'user_prize_destroy'])
-        ->name('admin.user.user_prize.destroy');
-
+        Route::get('/admin/user/user_prize/column/{user}',
+        [Controllers\AdminUserUserPrizeController::class, 'column'])//AdminUserUserPrizeController
+        ->name('admin.user.user_prize.column');
 
 
     });//end middleware

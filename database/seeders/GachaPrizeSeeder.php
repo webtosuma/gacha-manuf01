@@ -35,7 +35,7 @@ class GachaPrizeSeeder extends Seeder
     public function create( $gacha )
     {
         $data_array = [
-            // ['rank'=>'ss', 'count'=>1, 'rank_id'=>'1', 'gacha_rank_id'=>'100', 'max_count'=>1,],
+            ['rank'=>'ss', 'count'=>1, 'rank_id'=>'1', 'gacha_rank_id'=>'100', 'max_count'=>1,],
             ['rank'=>'s',  'count'=>2, 'rank_id'=>'2', 'gacha_rank_id'=>'200', 'max_count'=>2,],
             ['rank'=>'a',  'count'=>4, 'rank_id'=>'3', 'gacha_rank_id'=>'300', 'max_count'=>50,],
 

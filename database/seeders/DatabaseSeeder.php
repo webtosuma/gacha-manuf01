@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         /* アカウント */
-        // $this->call(UserSeeder::class);//テスト用
         $this->call(AdminSeeder::class);
+        $this->call(UserSeeder::class);//テスト用
 
         /* 本番利用 */
         $this->call(PointSailSeeder::class);//販売用ポイント

@@ -59,6 +59,7 @@ class PointHistory extends Model
 
             33 => '初回ポイント購入キャンペーン',
 
+
         ];
     }
 

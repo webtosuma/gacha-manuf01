@@ -66,8 +66,8 @@ $active_key = 'user';
                         <th scope="col">X(旧twitter)ID</th>
 
                         <th class="text-center" scope="col">
-                            {{ '商品' }}
-                            {{-- <a href="{{route('admin.user.user_prize',0)}}">保有商品数</a> --}}
+                            {{-- {{ '商品' }} --}}
+                            <a href="{{route('admin.user.user_prize',0)}}">商品</a>
                         </th>
                         <th class="text-center" scope="col"
                         >ガチャ履歴</th>
@@ -96,7 +96,8 @@ $active_key = 'user';
                                 <a href="{{route('admin.user.show',$user)}}">
                                     @if ($user->admin)<span class="text-primary">●</span> @endif
 
-                                    {{ strlen($user->name) <= 14 ? $user->name : substr($user->name,0,14).'...' }}
+                                    {{-- {{ $user->name }} --}}
+                                    {{ mb_strlen($user->name) <= 14 ? $user->name : mb_substr($user->name,0,14).'...' }}
                                 </a>
                             </td>
                             <!-- メールアドレス -->

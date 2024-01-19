@@ -18,19 +18,34 @@ class AdminUserPointHistoryController extends Controller
     /**
      * ポイント履歴(個人・全体)
      *
+     * @param \Illuminate\Http\Request $request
+     * @param Integer $user_id(0:全て n:個人)
+     * @return \Illuminate\Http\Response
     */
     public function index($user_id)
     {
         # ユーザー情報
         $user = $user_id ? User::find($user_id) : null;
 
-        $point_histories = $user_id
-        ? PointHistory::orderByDesc('created_at')->orderByDesc('id')->where('user_id', $user->id)->get()
-        : PointHistory::orderByDesc('created_at')->orderByDesc('id')->get();
+
+        $query = PointHistory::query();
+
+            if($user){
+                $query->where('user_id', $user->id);
+            }
+
+            $query->orderByDesc('created_at')->orderByDesc('id');
+
+
+        $point_histories = $query->paginate(100);//ページネーション
+
+        // $point_histories = $user_id
+        // ? PointHistory::orderByDesc('created_at')->orderByDesc('id')->where('user_id', $user->id)->get()
+        // : PointHistory::orderByDesc('created_at')->orderByDesc('id')->get();
 
         // dd($point_histories->toArray());
 
-        return view('admin.user.point_history', compact('point_histories','user') );
+        return view('admin.user.point_history.index', compact('point_histories','user') );
     }
 
 

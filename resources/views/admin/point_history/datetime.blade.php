@@ -61,9 +61,13 @@ $active_key = 'point_history';
                 <tbody>
                     @forelse ($point_histories as $point_history)
                         <tr>
-                            <td>{{ $point_history->user->id }}</td>
-                            <td>{{ $point_history->user->name }}</td>
-                            <td>{{ $point_history->user->email }}</td>
+                            @if($point_history->user)
+                                <td>{{ $point_history->user->id }}</td>
+                                <td>{{ $point_history->user->name }}</td>
+                                <td>{{ $point_history->user->email }}</td>
+                            @else
+                                <td colspan="3" class="text-seondary">{{ '*退会済み' }}</td>
+                            @endif
                             <td>
                                 <number-comma-component number="{{ $point_history->value }}"></number-comma-component>pt
                             </td>
