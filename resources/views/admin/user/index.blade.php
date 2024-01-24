@@ -69,8 +69,9 @@ $active_key = 'user';
                             {{-- {{ '商品' }} --}}
                             <a href="{{route('admin.user.user_prize',0)}}">商品</a>
                         </th>
-                        <th class="text-center" scope="col"
-                        >ガチャ履歴</th>
+                        <th class="text-center" scope="col">
+                            <a href="{{route('admin.user.point_history',['user_id'=>0,'reason_id'=>21,])}}">ガチャ履歴</a>
+                        </th>
                         <th class="text-center" scope="col">
                             <a href="{{route('admin.user.point_history',0)}}">ポイント履歴</a>
                         </th>
@@ -109,7 +110,8 @@ $active_key = 'user';
                             <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->u_prizes_count }}"></number-comma-component>
                             </a></td>
-                            <td class="text-center"><a href="" class="btn btn-link disabled">
+                            <td class="text-center"><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
+                            class="btn btn-link">
                                 <number-comma-component number="{{ $user->gacha_histories->count() }}"></number-comma-component>
                             </a></td>
                             <td class="text-center"><a href="{{route('admin.user.point_history',$user->id)}}" class="btn btn-link">

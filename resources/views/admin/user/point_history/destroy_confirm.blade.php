@@ -22,8 +22,14 @@ $active_key = 'user';
                 <li class="breadcrumb-item"><a href="{{ route('admin.user') }}"
                     >{{ '登録ユーザー' }}</a></li>
 
-                <li class="breadcrumb-item"><a href="{{ route('admin.user.point_history',$user->id) }}"
+                @if($user){{--個人--}}
+                <li class="breadcrumb-item"><a href="{{ route('admin.user.show', $user) }}"
+                    >{{ $user->name }}</a></li>
+                @endif
+
+                <li class="breadcrumb-item"><a href="{{ route('admin.user.point_history', $user?$user->id:0 ) }}"
                     >{{ 'ポイント履歴' }}</a></li>
+
 
                 <li class="breadcrumb-item active" aria-current="page">ポイント履歴削除</li>
             </ol>
@@ -35,22 +41,32 @@ $active_key = 'user';
 
 
         <ul class="list-group list-group-flush">
-            @include('admin.user.._types')
+            @php $confirm = true; @endphp
+            @include('admin.user.point_history._types')
         </ul>
 
 
 
-        <div class="fs-2 text-center mb-5">よろしいですか？</div>
+        <div class="fs-2 text-center mt-5 my-3">よろしいですか？</div>
 
-        <form action="{{route('admin.user.point_history.destroy',$user)}}" method="POST">
+        <form action="{{route('admin.user.point_history.destroy', $user?$user->id:0 )}}" method="POST">
             @csrf
             @method('DELETE')
+
+
             @foreach ($point_histories as $point_history)
                 <input type="hidden" name="point_history_ids[]" value="{{$point_history->id}}">
             @endforeach
 
-            <div class="col-8 mx-auto">
-                <button class="btn btn-lg btn-danger text-white w-100 " type="submit">削除する</button>
+
+            <div class="row g-3 justify-content-center">
+                <div class="col-12 col-md-4">
+                    <button class="btn btn-lg btn-danger text-white w-100 " type="submit">削除する</button>
+                </div>
+                <div class="col-12 col-md-4">
+                    <a href="{{ route('admin.user.point_history', $user?$user->id:0 ) }}"
+                    class="btn btn-lg btn-light border w-100 " type="submit">やめる</a>
+                </div>
             </div>
         </form>
     </div>

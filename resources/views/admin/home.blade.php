@@ -102,7 +102,7 @@
                             </td>
 
                             </td>
-                            <td>{{ $gacha->published_at->format('Y年m月d日公開') }}</td>
+                            <td>{{ $gacha->published_at->format('Y年m月d日 H:i') }}</td>
                         </tr>
                     @empty
                         <tr>

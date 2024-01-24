@@ -32,7 +32,11 @@ class AdminShippedWaitingController extends Controller
         # 発送申請：発送待ち
         $shippeds = UserShipped::where('state_id', $state_id)->get();
 
-        return view('admin.shipped.waiting.index', compact('shippeds') );
+        $paginate_shippeds = UserShipped::where('state_id', $state_id)
+        ->paginate(100);//ページネーション
+
+
+        return view('admin.shipped.waiting.index', compact('shippeds','paginate_shippeds') );
     }
 
 

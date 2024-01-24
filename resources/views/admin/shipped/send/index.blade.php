@@ -55,9 +55,16 @@ $active_key = 'shipped';
             </div>
 
 
+            <!-- ページネーション -->
+            @if( $paginate_shippeds->count() )
+            <div class="d-flex justify-content-start mt-3">
+                {{ $paginate_shippeds->links('vendor.pagination.bootstrap-4') }}
+            </div>
+            @endif
+
             <table class="table bg-white my-3">
                 <!--ヘッド（並べ替えボタン）-->
-                @if ($shippeds->count())
+                @if ($paginate_shippeds->count())
                 <thead>
                     <tr class="bg-white">
                         <th scope="col">商品コード</th>
@@ -69,7 +76,7 @@ $active_key = 'shipped';
                 </thead>
                 @endif
                 <tbody>
-                    @forelse ($shippeds as $shipped)
+                    @forelse ($paginate_shippeds as $shipped)
                         <tr>
                             <td class="py-3">{{ $shipped->code}}</td>
                             <td class="py-3">
@@ -89,6 +96,15 @@ $active_key = 'shipped';
                     @endforelse
                 </tbody>
             </table>
+
+            <!-- ページネーション -->
+            @if( $paginate_shippeds->count() )
+            <div class="d-flex justify-content-start mt-3">
+                {{ $paginate_shippeds->links('vendor.pagination.bootstrap-4') }}
+            </div>
+            @endif
+
+
         </section>
 
 

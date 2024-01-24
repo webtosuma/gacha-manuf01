@@ -1,4 +1,4 @@
-<div class="row p-3 border-bottom">
+<div class="row p-3 border-bottom mb-5">
     <div class="col">
 
 

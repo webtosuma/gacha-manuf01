@@ -15,7 +15,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('shipped') }}">発送履歴</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('shipped.waiting') }}">発送済み</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('shipped.send') }}">発送済み</a></li>
                 <li class="breadcrumb-item active" aria-current="page">詳細</li>
             </ol>
         </nav>

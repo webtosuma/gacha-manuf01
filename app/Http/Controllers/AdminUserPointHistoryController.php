@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\UserPrize;
+use App\Models\UserShipped;
 use App\Models\PointHistory;
 use App\Models\CanpaingIntroductory;
 /*
@@ -22,30 +23,37 @@ class AdminUserPointHistoryController extends Controller
      * @param Integer $user_id(0:全て n:個人)
      * @return \Illuminate\Http\Response
     */
-    public function index($user_id)
+    public function index(Request $request, $user_id)
     {
         # ユーザー情報
         $user = $user_id ? User::find($user_id) : null;
 
+        # ポイントの入出理由　絞り込み
+        $reason_id = $request->reason_id ?? 0;
 
+
+        # ポイント履歴の取得
         $query = PointHistory::query();
 
             if($user){
                 $query->where('user_id', $user->id);
             }
+            if($reason_id){
+                $query->where('reason_id', $reason_id);
+            }
 
             $query->orderByDesc('created_at')->orderByDesc('id');
 
-
         $point_histories = $query->paginate(100);//ページネーション
 
-        // $point_histories = $user_id
-        // ? PointHistory::orderByDesc('created_at')->orderByDesc('id')->where('user_id', $user->id)->get()
-        // : PointHistory::orderByDesc('created_at')->orderByDesc('id')->get();
 
-        // dd($point_histories->toArray());
 
-        return view('admin.user.point_history.index', compact('point_histories','user') );
+
+        # ポイントの入出理由　一覧
+        $reasons   = PointHistory::reasons();
+
+
+        return view('admin.user.point_history.index', compact('point_histories','user','reasons','reason_id') );
     }
 
 
@@ -53,38 +61,196 @@ class AdminUserPointHistoryController extends Controller
         /**
          * ポイント履歴削除確認（ユーザー指定）
          *
+         * @param \Illuminate\Http\Request $request
+         * @param Integer $user_id(0:全て n:個人)
+         * @return \Illuminate\Http\Response
         */
-        public function destroy_confirm(Request $request, User $user)
+        public function destroy_confirm(Request $request, $user_id)
         {
-            // dd($request->all());
-            $point_history_id = $request->point_history_id;
 
-            $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')->where('user_id', $user->id)
-            ->where('id','>=',$point_history_id)//「ポイント購入」を除く
-            ->where('reason_id','<>',11)//「ポイント購入」を除く
+
+            # ユーザー情報
+            $user = $user_id ? User::find($user_id) : null;
+
+            # 削除するポイント履歴ID
+            $point_history_ids = $request->point_history_ids;
+
+            if( !isset($point_history_ids) ){
+                return back()->with(['alert-danger'=>'削除するポイント履歴が選択されていません。','icon'=>'bi-question-lg']);
+            }
+
+            $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
+            ->whereIn('id',$point_history_ids)//「ポイント購入」を除く
             ->get();
 
-            return view('admin.user.point_history_destroy_confirm', compact('point_histories','user') );
+            // dd($point_histories->toArray());
+
+            return view('admin.user.point_history.destroy_confirm', compact('point_histories','user') );
         }
 
 
+
+
         /**
-        * ポイント履歴削除（ユーザー指定）
-        *
-       */
-       public function destroy(Request $request, User $user)
+         * ポイント履歴削除（ユーザー指定）
+         *
+         * @param \Illuminate\Http\Request $request
+         * @param Integer $user_id(0:全て n:個人)
+         * @return \Illuminate\Http\Response
+        */
+        public function destroy(Request $request,$user_id)
        {
 
-           $point_histories = PointHistory::find($request->point_history_ids);
+            # 削除するポイント履歴データの取得
+            $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
+            ->find($request->point_history_ids);
+            foreach ($point_histories as $point_history) {
 
-           foreach ($point_histories as $point_history) {
-               $point_history->delete();
-           }
+
+                switch ( $point_history->reason_id ) {
+
+                    case 12:
+                        # 12. 商品のポイント交換履歴の処理
+                        self::DeleteExchangePointHistory($point_history);
+                        break;
+
+                    case 22:
+                        # 22. 発送履歴の処理
+                        self::DeletePrizeShippedHistory($point_history);
+                        break;
+
+                    case 21:
+                        # 21. ガチャ履歴の処理
+                        self::DeleteGachaHistory($point_history);
+                        break;
+
+                    default:
+                        dd('hoge');
+                        # ポイント履歴の削除
+                        $point_history->delete();
+                        break;
+                    //
+
+                }
 
 
-           return redirect()->route('admin.user.point_history',$user->id)
+            }
+
+
+           return redirect()->route('admin.user.point_history',$user_id)
            ->with(['alert-danger'=>'ポイント履歴を削除しました。']);
-       }
+        }
+
+
+
+        /** 12.ポイント交換履歴の削除 */
+        public function DeleteExchangePointHistory($point_history)
+        {
+            if( $point_history->user_prizes )
+            {
+                # ユーザー商品から、ポイント履歴を削除
+                $user_prizes = $point_history->user_prizes;
+                foreach ($user_prizes as $user_prize) {
+                    $user_prize->update(['point_history_id'=>null]);//ポイント交換履歴のリセット
+                }
+
+
+                # ポイント履歴の削除
+                $point_history->delete();
+            }
+        }
+
+
+        /** 22.商品発送履歴の削除 */
+        public function DeletePrizeShippedHistory($point_history)
+        {
+            $bool = false;
+
+            if(
+                $point_history->user_shipped
+                && !$point_history->user_shipped->shipment_at //発送ずみではないとき(発送済みの時は削除できない)
+            )
+            {
+                # 発送申請したユーザー商品から、発送履歴を削除
+                $user_prizes = $point_history->user_shipped->user_prizes;
+                foreach ($user_prizes as $user_prize) {
+                    $user_prize->update(['shipped_id'=>null]);//発送履歴のリセット
+                }
+
+                # 発送履歴のリセット
+                $point_history->user_shipped->delete();
+
+                # ポイント履歴の削除
+                $point_history->delete();
+
+                # 処理実行の有無
+                $bool = true;
+            }
+
+            return $bool;
+        }
+
+
+        /** 21.ガチャ履歴の削除 */
+        public function DeleteGachaHistory($point_history)
+        {
+            if( $point_history->user_gacha_history )
+            {
+                ## ガチャで取得した「ユーザー商品」を削除
+                $user_prizes = $point_history->user_gacha_history->user_prizes;
+                foreach ($user_prizes as $user_prize) {
+
+
+                    # ポイント交換積みの商品があるとき
+                    if($user_prize->point_history_id)
+                    {
+                        $point_history = PointHIstory::find($user_prize->point_history_id);
+
+                        # 12. 商品のポイント交換履歴の処理
+                        self::DeleteExchangePointHistory($point_history);
+
+                        # ユーザー商品を削除
+                        $user_prize->delete();
+                    }
+
+
+                    # 発送依頼ずみ商品があるとき
+                    else if($user_prize->shipped_id)
+                    {
+                        $user_shipped  = UserShipped::find($user_prize->shipped_id);
+                        $point_history = PointHIstory::find($user_shipped->point_history_id);
+                        if($point_history){
+
+                            # 22. 発送履歴の処理
+                            $bool = self::DeletePrizeShippedHistory($point_history);
+
+                            # ユーザー商品を削除(商品が発送済みの場合を除く)
+                            if($bool){ $user_prize->delete(); }
+
+                        }
+                    }
+
+
+                    # その他
+                    else
+                    {
+                        $user_prize->delete();
+                    }
+                }
+
+
+                ## ガチャ履歴を削除
+                $user_gacha_history = $point_history->user_gacha_history;
+                if($user_gacha_history){
+                    $user_gacha_history->delete();
+                }
+
+
+                ## ポイント履歴の削除
+                $point_history->delete();
+            }
+
+        }
 
 
 }

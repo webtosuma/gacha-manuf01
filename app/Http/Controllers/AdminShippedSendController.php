@@ -33,7 +33,11 @@ class AdminShippedSendController extends Controller
         $shippeds = UserShipped::where('state_id', $state_id)
         ->orderByDesc('shipment_at')->get();
 
-        return view('admin.shipped.send.index', compact('shippeds') );
+        $paginate_shippeds = UserShipped::where('state_id', $state_id)
+        ->orderByDesc('shipment_at')
+        ->paginate(100);//ページネーション
+
+        return view('admin.shipped.send.index', compact('shippeds','paginate_shippeds') );
     }
 
 

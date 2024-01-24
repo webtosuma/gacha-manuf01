@@ -57,34 +57,58 @@ $active_key = 'shipped';
             </div>
 
 
+            <!-- ページネーション -->
+            @if( $paginate_shippeds->count() )
+            <div class="d-flex justify-content-start mt-3">
+                {{ $paginate_shippeds->links('vendor.pagination.bootstrap-4') }}
+            </div>
+            @endif
+
             <table class="table bg-white my-3">
                 <!--ヘッド（並べ替えボタン）-->
-                @if ($shippeds->count())
+                @if ($paginate_shippeds->count())
                 <thead>
                     <tr class="bg-white">
                         <th scope="col">商品コード</th>
                         <th scope="col">宛名</th>
-                        <th scope="col">ユーザーID</th>
+                        {{-- <th scope="col">ユーザーID</th> --}}
                         <th scope="col">都道府県</th>
                         <th scope="col">商品数</th>
                         <th scope="col">申請日時</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 @endif
                 <tbody>
-                    @forelse ($shippeds as $shipped)
+                    @forelse ($paginate_shippeds as $shipped)
                         <tr>
                             <td class="py-3">{{ $shipped->code}}</td>
                             <td class="py-3">
                                 <a href="{{ route('admin.shipped.waiting.show',$shipped) }}"
                                 >{{ $shipped->user_address->name }}様</a>
                             </td>
-                            <td class="py-3">
+                            {{-- <td class="py-3">
                                 <a href="{{route('admin.user.show',$shipped->user)}}">{{ $shipped->user->id }}</a>
-                            </td>
+                            </td> --}}
                             <td class="py-3">{{ $shipped->user_address->todohuken }}</td>
                             <td class="py-3">{{ $shipped->user_prizes->count() }}</td>
                             <td class="py-3">{{ $shipped->created_at->format('Y年m月d日 H:i') }}</td>
+                            <td class="py-3" style="width:2rem;">
+                                <div class="dropdown">
+                                    <button class="btn btn-light border rounded-pill" type="button"
+                                    id="{{'dropdownMenuButton'.$shipped->id}}" data-bs-toggle="dropdown" aria-expanded="false"
+                                    ><i class="bi bi-three-dots-vertical"></i></button>
+
+
+                                    @php $user = $shipped->user; @endphp
+                                    <ul class="dropdown-menu bg-white" aria-labelledby="{{'dropdownMenuButton'.$shipped->id}}">
+                                        <li><a  href="{{route('admin.user.show',$user)}}"
+                                        class="dropdown-item">ユーザー情報</a></li>
+                                        <li><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>22,])}}"
+                                        class="dropdown-item">発送申請履歴</a></li>
+                                    </ul>
+                                </div>
+                            </td>
                         </tr>
                     @empty
                         <tr>
@@ -95,6 +119,15 @@ $active_key = 'shipped';
                     @endforelse
                 </tbody>
             </table>
+
+            <!-- ページネーション -->
+            @if( $paginate_shippeds->count() )
+            <div class="d-flex justify-content-start mt-3">
+                {{ $paginate_shippeds->links('vendor.pagination.bootstrap-4') }}
+            </div>
+            @endif
+
+
         </section>
 
 

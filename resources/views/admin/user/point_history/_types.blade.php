@@ -53,6 +53,12 @@
                                 {{'pt'}}
                             </div>
                         </div>
+
+                        @if(isset($confirm))
+                            <div class="text-warning">
+                                ＊履歴削除後に、「ポイントと交換した商品」はユーザーの取得商品として返却されます。
+                            </div>
+                        @endif
                         @break
                     @case(21)
                         {{-- ガチャる --}}
@@ -77,6 +83,13 @@
                                 {{'pt'}}
                             </div>
                         </div>
+
+                        @if(isset($confirm))
+                            <div class="text-warning">
+                                ＊履歴削除後に、このガチャで取得した「商品」は、ユーザーの取得商品から削除されます。
+                            </div>
+                        @endif
+
                         @break
 
                     @case(22)
@@ -85,6 +98,10 @@
                             @php
                             $text_color = $point_history->value >= 0 ? 'text-secondary' : 'text-danger';
                             $sine = $point_history->value > 0 ? '+' : ( $point_history->value < 0 ? '-' : '' );
+
+                            $href = !$point_history->user_shipped->shipment_at
+                            ? route('admin.shipped.waiting.show',$point_history->user_shipped)
+                            : route('admin.shipped.send.show'   ,$point_history->user_shipped);
                             @endphp
                             <div class="">
                                 <div class="form-text">{{$point_history->created_at->format('Y/m/d H:i').'履歴ID:'.$point_history->id}}</div>
@@ -92,8 +109,20 @@
                                     <a href="{{route('admin.user.point_history',$user_id)}}"
                                     >{{ 'ID:'.$user_id.' '.$user_name.' '.$user_email}}</a>
                                 @endif
-                                <div class="fw-bold"><span class="{{$text_color}}">●</span>商品発送</div>
-                                <div class="">配送料・手数料</div>
+                                <div class="fw-bold">
+                                    <span class="{{$text_color}}">●</span>
+
+
+                                    <a href="{{$href}}">
+                                        <span>商品発送</span>
+                                    </a>
+
+                                    @if ($point_history->user_shipped->shipment_at)
+                                        <span class="badge bg-success">発送済み</span>
+                                    @else
+                                        <span class="badge bg-danger">未発送</span>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="col-auto {{$text_color}}">
@@ -102,6 +131,14 @@
                             </div>
 
                         </div>
+
+                        @if(isset($confirm))
+                            <div class="text-warning">
+                                ＊履歴削除後に、「発送申請した商品」はユーザーの取得商品として返却されます。<br>
+                                ＊発送済みの履歴については、削除することができません。
+                            </div>
+                        @endif
+
                         @break
 
                     @default
@@ -130,7 +167,7 @@
 
 
             </div>
-            <div class="col-auto">
+            <div class="col-auto {{isset($confirm)?'d-none':''}}">
 
 
                 <input
@@ -138,7 +175,6 @@
                 value="{{$point_history->id}}"
                 class="form-check-input" type="checkbox">
 
-                {{-- <div class="text-center">{{$point_history->id}}</div> --}}
 
 
             </div>

@@ -65,12 +65,6 @@ class StripeInnerController extends Controller
         $user = Auth::user();
 
 
-        # ポイント購入完了メールの送信
-        $request->user       = $user;
-        $request->point_sail = $point_sail;
-        $request->email      = env('PAYMENT_COMP_EMAIL');
-        SendMailController::PaymentComp( $request );
-
         DB::beginTransaction();
         try {
 
@@ -91,6 +85,13 @@ class StripeInnerController extends Controller
                 'currency' => 'jpy',
             ]);
             DB::commit();
+
+
+            // # ポイント購入完了メールの送信
+            $request->user       = $user;
+            $request->point_sail = $point_sail;
+            $request->email      = env('PAYMENT_COMP_EMAIL');
+            SendMailController::PaymentComp( $request );
 
 
             # [キャンペーン]初回ポイント購入

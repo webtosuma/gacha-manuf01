@@ -18,17 +18,22 @@ class AdminPointHistoryController extends Controller
     /**
      * 一覧
      *
+     * @param \Illuminate\Http\Request $request
      * @param String $month_text
      * @return \Illuminate\Http\Response
      */
-    public function index( $month_text=null )
+    public function index( Request $request, $month_text=null )
     {
+        // dd($request->all());
+
+
         # 指定月のオブジェクト
         $month_text = $month_text ?? now()->format('Y-m-01');
         $month = Carbon::parse($month_text);
 
+        # 月の顧客レポートの並び替えキー
+        $sort_by_key = $request->sort_by_key;
 
-        # グラフ用データ
 
         # パラメーター
         $params = [
@@ -37,13 +42,14 @@ class AdminPointHistoryController extends Controller
 
             'day_reports' => Monthly::DayReports($month),// 月間の日別レポート
             'sales'       => Monthly::Sales($month),      // 月間の合計売上
-            'visiters'    => Monthly::Visiters($month),   // 月間の顧客レポート
+            'visiters'    => Monthly::Visiters($month, $sort_by_key),// 月間の顧客レポート
 
             'this_month'     => $month,// 今月
             'next_month'     => $month->copy()->addMonth(),// 翌月
             'previous_month' => $month->copy()->subMonth(),// 先月
             'all_months'     => self::AllMonths(),// 表示可能な全ての月
 
+            'table' => $request->table ? $request->table : 'daily_report'
         ];
 
         return view('admin.point_history.index', $params );

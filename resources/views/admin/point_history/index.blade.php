@@ -76,7 +76,7 @@ $active_key = 'point_history';
                 <div class="col-3">
                     <div class="">月間顧客数</div>
                     <h3 class="fw-bold">
-                        <number-comma-component number="{{ $visiters->count() }}"></number-comma-component>
+                        <number-comma-component number="{{ count($visiters) }}"></number-comma-component>
                     </h3>
                 </div>
             </div>
@@ -91,42 +91,29 @@ $active_key = 'point_history';
 
 
         <div class="mb-3">
-            <a href="{{route('admin.point_history.datetime')}}" class="btn border">売上履歴</a>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a  href="{{route('admin.point_history',['month_text'=>$this_month->format('Y-m-01'),'table'=>'daily_report'])}}"
+                    class="nav-link
+                    @if($table=='daily_report') active @endif" aria-current="page">{{'月間日別レポート'}}</a>
+                </li>
+                <li class="nav-item">
+                    <a  href="{{route('admin.point_history',['month_text'=>$this_month->format('Y-m-01'),'table'=>'customer_report'])}}"
+                    class="nav-link
+                    @if($table=='customer_report') active @endif">{{'月間顧客'}}</a>
+                </li>
+                <li class="nav-item">
+                    <a  href="{{route('admin.point_history.datetime')}}"
+                    class="nav-link">売上履歴</a>
+                </li>
+              </ul>
+            {{-- <a href="" class="btn border"></a> --}}
         </div>
 
-        <!--テーブル-->
-        <section class="card card-body bg-white mb-5 overflow-auto">
-            <div class="mb-3">ポイント購入顧客情報</div>
-            <table class="table bg-white ">
-                <!--ヘッド（並べ替えボタン）-->
-                <thead>
-                    <tr class="bg-white">
-                        <th scope="col" style="width:4rem;">アカウント名</th>
-                        <th scope="col" style="width:4rem;">購入ポイント</th>
-                        <th scope="col" style="width:4rem;">回数</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($visiters as $visiter)
-                        <tr>
-                            <td>{{ $visiter->name }}</td>
-                            <td>
-                                <number-comma-component number="{{ $visiter->point_price }}"></number-comma-component>
-                            </td>
-                            <td>
-                                <number-comma-component number="{{ $visiter->count }}"></number-comma-component>
-                            </td>
-                        </tr>
 
-                    @empty
-                        <tr>
-                            <td colspan="3" class="text-center text-secondary border-0 py-5">
-                                *ポイント購入した顧客情報はありません
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </section>
+        <!--テーブル-->
+        @include('admin.point_history.table.'.$table)
+
+        {{-- customer_report --}}
     </div>
 @endsection

@@ -70,25 +70,31 @@ $active_key = 'user';
 
 
 
-        <!-- 削除 -->
-        {{-- @if( $user )
-        <form action="{{route('admin.user.point_history.destroy_confirm',$user)}}" class="col-md-4" method="post">
-            @csrf
+        <!-- 絞り込み -->
+        <form action="#">
+            <div class="d-flex justify-content-end mt-3">
+                <div class="col-4 col-md-3">
+                    <div class="input-group mb-3">
+                        <select class="form-select" name="reason_id">
+                            <option value="0"
+                            @if($reason_id==0) selected @endif
+                            >すべて</option>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">ポイント履歴ID</span>
-                <input type="number" class="form-control" name="point_history_id" value="1" >
-                <button class="btn btn-outline-secondary" type="submit">以降を削除</button>
+                            @foreach ($reasons as $value => $label)
+                                <option value="{{$value}}"
+                                @if($reason_id==$value) selected @endif
+                                >{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-light border">絞り込み</button>
+                    </div>
+                </div>
             </div>
-            <div class="form-text">*購入分除く</div>
         </form>
-        @endif --}}
 
 
-        <form action="" method="post">
+        <form action="{{route('admin.user.point_history.destroy_confirm',$user?$user->id:0)}}" method="post">
             @csrf
-            @method('DELETE')
-
 
             <!-- 削除ボタン・ページネーション -->
             @if( $point_histories->count() )
@@ -98,9 +104,8 @@ $active_key = 'user';
                     </div>
 
                     <div class="col-auto">
-                        <button type="button"
-                        data-bs-target="#deleteModal" data-bs-toggle="modal"
-                        class="btn btn-light border text-danger  disabled"
+                        <button type="submit"
+                        class="btn btn-light border text-danger  disabled "
                         >一括削除</button>
                     </div>
                 </div>
@@ -121,27 +126,13 @@ $active_key = 'user';
                     </div>
 
                     <div class="col-auto">
-                        <button type="button"
-                        data-bs-target="#deleteModal" data-bs-toggle="modal"
-                        class="btn btn-light border text-danger  disabled"
+                        {{-- data-bs-target="#deleteModal" data-bs-toggle="modal" --}}
+                        <button type="submit"
+                        class="btn btn-light border text-danger  disabled "
                         >一括削除</button>
                     </div>
                 </div>
             @endif
-
-
-            <!-- 削除モーダル -->
-            <delete-modal-component
-            index_key=""
-            icon="bi-trash"
-            func_btn_type="submit"
-            button_class="invisible">
-                <div>
-                    選択したポイント履歴を
-                    <br />全て削除します。
-                    <br />よろしいですか？
-                </div>
-            </delete-modal-component>
 
         </form>
 

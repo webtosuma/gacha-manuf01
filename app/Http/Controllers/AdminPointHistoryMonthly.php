@@ -46,6 +46,7 @@ class AdminPointHistoryMonthly extends Controller
                 'visiters' => Daily::Visiters($date), //日別の顧客レポート
             ];
             $date->addDay();
+
         }
 
 
@@ -83,7 +84,7 @@ class AdminPointHistoryMonthly extends Controller
      * @param User
      * @return mixed
     */
-    public static function Visiters( $month )
+    public static function Visiters( $month, $sortByKey )
     {
         # ポイントの入出理由ID (ポイント購入)
         $reason_id = self::ReasonId();
@@ -95,12 +96,29 @@ class AdminPointHistoryMonthly extends Controller
         ->pluck('user_id')->toArray();
 
         # 訪問者データ
-        $visiters = User::find( $id_array );
+        $visiters_model = User::orderByDesc('created_at')
+        ->orderByDesc('id')
+        ->whereIn('id',$id_array)->get();
+
 
         # ポイント購入金額データの追加
-        foreach ($visiters as $visiter) {
+        foreach ($visiters_model as $visiter) {
             $visiter->point_price = self::VisiterPointPrice( $month, $visiter );
-            $visiter->count = self::VisiterCount( $month, $visiter );
+            $visiter->count       = self::VisiterCount( $month, $visiter );
+        }
+
+
+        # 並べ替え
+        $visiters=[];
+        foreach($visiters_model as $visiter) { $visiters[] = $visiter; }
+
+        // $sortByKey = 'point_price';
+        if($sortByKey)
+        {
+            uasort($visiters, function ($a, $b) use ($sortByKey) {
+                // return $a[$sortByKey] - $b[$sortByKey]; //照準
+                return $b[$sortByKey] - $a[$sortByKey];//降順
+            });
         }
 
 

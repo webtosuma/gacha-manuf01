@@ -502,12 +502,12 @@ use \App\Http\Controllers;
         ->name('admin.user.point_history');
 
         # 削除確認
-        Route::post('/admin/user/point_history/destroy_confirm/{user}',
+        Route::post('/admin/user/point_history/destroy_confirm/{user_id}',
         [Controllers\AdminUserPointHistoryController ::class, 'destroy_confirm'])
         ->name('admin.user.point_history.destroy_confirm');
 
         # 削除確認
-        Route::delete('/admin/user/point_history/destroy/{user}',
+        Route::delete('/admin/user/point_history/destroy/{user_id}',
         [Controllers\AdminUserPointHistoryController ::class, 'destroy'])
         ->name('admin.user.point_history.destroy');
 

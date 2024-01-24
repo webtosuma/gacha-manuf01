@@ -95,6 +95,27 @@ class PointHistory extends Model
 
 
 
+        /**
+         * UserPrizeモデル リレーション
+         * @return \App\Models\UserPrize
+        */
+        public function user_prizes()
+        {
+            return $this->hasMany(UserPrize::class,'point_history_id');
+        }
+
+
+
+        /**
+         * UserShippedモデル リレーション
+         * @return \App\Models\UserShipped
+        */
+        public function user_shipped()
+        {
+            return $this->hasOne(UserShipped::class,'point_history_id');
+        }
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

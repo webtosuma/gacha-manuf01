@@ -23,6 +23,10 @@ class AdminUserShowControlle extends Controller
      */
     public function index(User $user)
     {
+        // $price = PointHistory::where('user_id',$user->id)
+        // ->where('reason_id',11)->get()->sum('price');
+        // dd($price);
+
         return view('admin.user.show', compact('user') );
     }
 

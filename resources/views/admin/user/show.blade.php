@@ -53,7 +53,8 @@ $active_key = 'user';
                     </a>
                 </div>
                 <div class="col">
-                    <a href="" class="btn btn-light border py-3 w-100   disabled">
+                    <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
+                        class="btn btn-light border py-3 w-100">
                         <h6>ガチャ履歴</h6>
                         <div class="mt-3">
                             <number-comma-component number="{{ $user->gacha_histories->count() }}"></number-comma-component>
@@ -69,10 +70,29 @@ $active_key = 'user';
                     </a>
                 </div>
                 <div class="col">
-                    <a href="" class="btn btn-light border py-3 w-100   disabled">
+                    <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>11,])}}"
+                    class="btn btn-light border py-3 w-100">
+                        @php
+                        $price = \App\Models\PointHistory::where('user_id',$user->id)
+                        ->where('reason_id',11)->get()->sum('price');
+                        @endphp
+
                         <h6>購入履歴</h6>
                         <div class="mt-3">
-                            ¥<number-comma-component number="{{ '000' }}"></number-comma-component>
+                            ¥<number-comma-component number="{{ $price }}"></number-comma-component>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>22,])}}" class="btn btn-light border py-3 w-100">
+                        @php
+                        $shipped_count = \App\Models\PointHistory::where('user_id',$user->id)
+                        ->where('reason_id',22)->get()->count();
+                        @endphp
+
+                        <h6>発送申請履歴</h6>
+                        <div class="mt-3">
+                            <number-comma-component number="{{ $shipped_count }}"></number-comma-component>
                         </div>
                     </a>
                 </div>
