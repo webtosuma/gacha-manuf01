@@ -30,7 +30,7 @@ $active_key = 'user';
             <div class="col-auto">
                 <a href="{{route('admin.user.canpaing_introductory')}}" class="btn border">紹介キャンペーン登録者一覧</a>
             </div>
-            <div class="col-8">
+            <div class="col col-md-8">
                 <form action="{{route('admin.user')}}">
                     <div class="input-group mb-3">
 
@@ -40,6 +40,7 @@ $active_key = 'user';
 
                         <input type="text"   class="form-control" placeholder="メールアドレス" name="search_email" value="{{$search_email}}">
 
+                        <input type="text"   class="form-control" placeholder="X(旧Twitter) ID" name="search_twitter_id" value="{{$search_twitter_id}}">
 
                         <button class="btn btn-outline-secondary" type="submit">検索</button>
                     </div>
@@ -63,7 +64,7 @@ $active_key = 'user';
                         <th></th>
                         <th scope="col">アカウント名</th>
                         <th scope="col">メールアドレス</th>
-                        <th scope="col">X(旧twitter)ID</th>
+                        <th scope="col">X(旧Twitter)ID</th>
 
                         <th class="text-center" scope="col">
                             {{-- {{ '商品' }} --}}

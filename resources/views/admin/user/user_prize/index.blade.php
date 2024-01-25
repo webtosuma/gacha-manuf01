@@ -115,7 +115,8 @@ $active_key = 'user';
                         @php
                         $user_id    = $user_prize->user ? $user_prize->user->id  : '';
                         $user_name  = $user_prize->user ? $user_prize->user->name  : '退会済み';
-                        $gacha_name = $user_prize->ug_history->gacha ? $user_prize->ug_history->gacha->name : '削除済み';
+                        $gacha_name = isset($user_prize->ug_history) && $user_prize->ug_history->gacha
+                        ? $user_prize->ug_history->gacha->name : '*削除済み';
                         @endphp
 
 
@@ -134,7 +135,7 @@ $active_key = 'user';
                             </td>
                             <td>{{$user_prize->prize->code}}</td>
                             <td>{{$user_prize->prize->name}}</td>
-                            <td>[{{$user_prize->ug_history->gacha->name}}]</td>
+                            <td>{{$gacha_name}}</td>
 
                             <td>{{ $user_prize->created_at->format('Y年m月d日 H:i:s') }}</td>
                             <td>{{$user_prize->id}}</td>

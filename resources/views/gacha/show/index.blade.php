@@ -45,21 +45,23 @@
                         </span>pt
                     </div>
                 </div>
-                <div class="progress">
-                    @php
-                    $ratio = $gacha->remaining_ratio;
-                    $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
-                    $style_class = 'progress-bar progress-bar-striped '.$bg_color
-                    @endphp
-                    <div class="{{ $style_class }}" role="progressbar"
-                    style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
+                <div class="@if( !$gacha->is_meter ) d-none @endif">
+                    <div class="progress">
+                        @php
+                        $ratio = $gacha->remaining_ratio;
+                        $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
+                        $style_class = 'progress-bar progress-bar-striped '.$bg_color
+                        @endphp
+                        <div class="{{ $style_class }}" role="progressbar"
+                        style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
+                    </div>
+                    <p class="form-text text-white text-center m-0">
+                        残り
+                        <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
+                        /
+                        <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
+                    </p>
                 </div>
-                <p class="form-text text-white text-center m-0">
-                    残り
-                    <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
-                    /
-                    <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
-                </p>
 
             </div>
 

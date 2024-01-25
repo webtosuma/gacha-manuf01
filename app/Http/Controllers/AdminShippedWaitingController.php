@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserShipped;
 use App\Models\Prize;
-
+use Illuminate\Support\Facades\Mail;
 /*
 | =============================================
 |  サイト管理者 発送待ち コントローラー
@@ -82,12 +82,46 @@ class AdminShippedWaitingController extends Controller
      */
     public function update( UserShipped $user_shipped )
     {
+        # 発送情報の更新
         $user_shipped->update([
             'state_id' => 21,//発送状況:'発送済み'
             'shipment_at'=>now(), //発送日時
         ]);
 
+
+        # ユーザーへのメール送信
+        self::SendEmail($user_shipped);
+
+
         return redirect()->route('admin.shipped.send.show',$user_shipped)
         ->with('alert-warning','発送通知を送信しました');
+    }
+
+
+
+    /** ユーザーへのメール送信 */
+    public function SendEmail($user_shipped)
+    {
+        # ユーザー情報
+        $user = $user_shipped->user;
+
+        # 発送する商品:種類別($shipped_prizes)
+        $user_prizes = $user_shipped->user_prizes;
+        $id_array = $user_prizes->pluck('prize_id')->toArray();
+        $shipped_prizes = Prize::find( $id_array );//カードの重複除去
+        foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
+            $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
+        }
+
+        # 変数の保存
+        $inputs = compact('user','user_shipped','shipped_prizes');
+
+        // return view('emails.user_shipped_send',$inputs);
+        Mail::to( $user->email ) //宛先
+        ->send(new \App\Mail\SendHtmlMailMailable([
+            'inputs'  => $inputs, //入力変数
+            'view'    => 'emails.user_shipped_send' , //テンプレート
+            'subject' => 'ご注文の商品が発送されました', //件名
+        ]) );
     }
 }

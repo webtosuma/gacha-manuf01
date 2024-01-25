@@ -172,8 +172,8 @@
                 </div>
 
                 <!--error message-->
-                @if ( $errors->has('type') )
-                    <div class="text-danger"> {{$errors->first('type')}} </div>
+                @if ( $errors->has('is_slide') )
+                    <div class="text-danger"> {{$errors->first('is_slide')}} </div>
                 @endif
 
             </div>

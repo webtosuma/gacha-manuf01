@@ -102,8 +102,10 @@ class AdminUserPointHistoryController extends Controller
        {
 
             # 削除するポイント履歴データの取得
-            $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
-            ->find($request->point_history_ids);
+            // $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
+            // ->find($request->point_history_ids);
+            $point_histories = PointHistory::find($request->point_history_ids);
+
             foreach ($point_histories as $point_history) {
 
 
@@ -125,7 +127,6 @@ class AdminUserPointHistoryController extends Controller
                         break;
 
                     default:
-                        dd('hoge');
                         # ポイント履歴の削除
                         $point_history->delete();
                         break;
@@ -146,7 +147,8 @@ class AdminUserPointHistoryController extends Controller
         /** 12.ポイント交換履歴の削除 */
         public function DeleteExchangePointHistory($point_history)
         {
-            if( $point_history->user_prizes )
+
+            if( $point_history->reason_id==12 && $point_history->user_prizes )
             {
                 # ユーザー商品から、ポイント履歴を削除
                 $user_prizes = $point_history->user_prizes;
@@ -204,10 +206,13 @@ class AdminUserPointHistoryController extends Controller
                     # ポイント交換積みの商品があるとき
                     if($user_prize->point_history_id)
                     {
-                        $point_history = PointHIstory::find($user_prize->point_history_id);
+                        // ユーザー商品のポイント交換履歴
+                        $ex_point_history = PointHIstory::find($user_prize->point_history_id);
 
                         # 12. 商品のポイント交換履歴の処理
-                        self::DeleteExchangePointHistory($point_history);
+                        if($ex_point_history){
+                            self::DeleteExchangePointHistory($ex_point_history);
+                        }
 
                         # ユーザー商品を削除
                         $user_prize->delete();
@@ -218,11 +223,11 @@ class AdminUserPointHistoryController extends Controller
                     else if($user_prize->shipped_id)
                     {
                         $user_shipped  = UserShipped::find($user_prize->shipped_id);
-                        $point_history = PointHIstory::find($user_shipped->point_history_id);
-                        if($point_history){
+                        $shipped_point_history = $user_shipped ? PointHIstory::find($user_shipped->point_history_id) : NULL;
+                        if($shipped_point_history){
 
                             # 22. 発送履歴の処理
-                            $bool = self::DeletePrizeShippedHistory($point_history);
+                            $bool = self::DeletePrizeShippedHistory($shipped_point_history);
 
                             # ユーザー商品を削除(商品が発送済みの場合を除く)
                             if($bool){ $user_prize->delete(); }
@@ -241,9 +246,7 @@ class AdminUserPointHistoryController extends Controller
 
                 ## ガチャ履歴を削除
                 $user_gacha_history = $point_history->user_gacha_history;
-                if($user_gacha_history){
-                    $user_gacha_history->delete();
-                }
+                $user_gacha_history->delete();
 
 
                 ## ポイント履歴の削除

@@ -51,7 +51,6 @@ $active_key = 'point_history';
                     <tr class="bg-white">
                         <th></th>
                         <th scope="col">アカウント名</th>
-                        {{-- <th scope="col">メールアドレス</th> --}}
                         <th scope="col">購入ポイント</th>
                         <th scope="col">売上金額</th>
 
@@ -70,9 +69,8 @@ $active_key = 'point_history';
                                 <td><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>11,])}}"
                                 >{{ $point_history->user->name }}</a></td>
 
-                                {{-- <td>{{ $point_history->user->email }}</td> --}}
                             @else
-                                <td colspan="3" class="text-seondary">{{ '*退会済み' }}</td>
+                                <td colspan="2" class="text-seondary">{{ '*退会済み' }}</td>
                             @endif
                             <td>
                                 <number-comma-component number="{{ $point_history->value }}"></number-comma-component>pt

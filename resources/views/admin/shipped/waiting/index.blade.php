@@ -71,7 +71,6 @@ $active_key = 'shipped';
                     <tr class="bg-white">
                         <th scope="col">商品コード</th>
                         <th scope="col">宛名</th>
-                        {{-- <th scope="col">ユーザーID</th> --}}
                         <th scope="col">都道府県</th>
                         <th scope="col">商品数</th>
                         <th scope="col">申請日時</th>
@@ -87,12 +86,10 @@ $active_key = 'shipped';
                                 <a href="{{ route('admin.shipped.waiting.show',$shipped) }}"
                                 >{{ $shipped->user_address->name }}様</a>
                             </td>
-                            {{-- <td class="py-3">
-                                <a href="{{route('admin.user.show',$shipped->user)}}">{{ $shipped->user->id }}</a>
-                            </td> --}}
                             <td class="py-3">{{ $shipped->user_address->todohuken }}</td>
                             <td class="py-3">{{ $shipped->user_prizes->count() }}</td>
                             <td class="py-3">{{ $shipped->created_at->format('Y年m月d日 H:i') }}</td>
+                            <!--menu-->
                             <td class="py-3" style="width:2rem;">
                                 <div class="dropdown">
                                     <button class="btn btn-light border rounded-pill" type="button"

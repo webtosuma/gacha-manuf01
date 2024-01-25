@@ -6312,9 +6312,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         this.new_prizes = [];
       }
     },
-    /** 登録ずみ商品を削除 */removePrizeIds: function removePrizeIds(g_prize) {
-      this.$emit('send-delete-gp-id', g_prize.id); //削除対象のガチャ商品IDを送信
-      return;
+    /** 登録ずみ商品を削除 */removeGachaPrizeIds: function removeGachaPrizeIds(g_prize) {
+      // g_prize.delete = true;
+      // console.log(g_prize);
+      // this.$emit('send-delete-gp-id',g_prize.id);//削除対象のガチャ商品IDを送信
+      // return
 
       // 商品ID配列の更新
       var new_prize_ids = this.prize_ids.filter(function (prize_id) {
@@ -9848,7 +9850,7 @@ var render = function render() {
     staticClass: "row g-1"
   }, [_c("div", {
     staticClass: "col"
-  }, [_vm._v("\n\n        " + _vm._s(_vm.prize_ids) + _vm._s(_vm.new_prizes_ids) + "\n        "), _c("div", {
+  }, [_c("div", {
     staticClass: "card bg-white overflow-auto",
     staticStyle: {
       height: "90vh"
@@ -9937,14 +9939,25 @@ var render = function render() {
       staticStyle: {
         width: "2rem"
       }
-    }, [ true ? _c("label", {
+    }, [_c("input", {
+      staticClass: "btn-check",
+      attrs: {
+        name: "gri" + _vm.gacha_rank_id + "-delete_gacha_prize_ids[]",
+        type: "checkbox",
+        id: "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id,
+        autocomplete: "off"
+      },
+      domProps: {
+        value: g_prize.id
+      }
+    }), _vm._v(" "),  true ? _c("label", {
       staticClass: "btn btn-sm border text-danger",
       attrs: {
         "for": "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id
       },
       on: {
         click: function click($event) {
-          return _vm.removePrizeIds(g_prize);
+          return _vm.removeGachaPrizeIds(g_prize);
         }
       }
     }, [_c("i", {
@@ -10085,7 +10098,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {}, [_vm._v("\n    " + _vm._s(_vm.delete_gacha_prize_ids) + "\n\n    "), _vm._l(_vm.delete_gacha_prize_ids, function (delete_gacha_prize_id, key) {
+  return _c("div", {}, [_vm._l(_vm.delete_gacha_prize_ids, function (delete_gacha_prize_id, key) {
     return _c("input", {
       key: key,
       attrs: {
@@ -10250,7 +10263,7 @@ var render = function render() {
     staticClass: "bi bi-caret-left"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "col"
-  }, [_vm._v("\n\n        " + _vm._s(_vm.parent_prize_ids) + "\n        " + _vm._s(_vm.ids) + "\n\n\n        "), _c("div", {
+  }, [_c("div", {
     staticClass: "card overflow-auto",
     staticStyle: {
       height: "90vh"

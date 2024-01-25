@@ -24,9 +24,10 @@ class AdminUserController extends Controller
     public function index(Request $request)
     {
         # 検索キー
-        $search_id    = $request->search_id ? $request->search_id : '';
-        $search_name  = $request->search_name ? $request->search_name : '';
-        $search_email = $request->search_email ? $request->search_email : '';
+        $search_id         = $request->search_id ? $request->search_id : '';
+        $search_name       = $request->search_name ? $request->search_name : '';
+        $search_email      = $request->search_email ? $request->search_email : '';
+        $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : '';
 
 
         # 絞り込み
@@ -41,12 +42,15 @@ class AdminUserController extends Controller
             if($search_email){
                 $query->where('email','like','%'.$search_email.'%');
             }
+            if($search_twitter_id){
+                $query->where('twitter_id','like','%'.$search_twitter_id.'%');
+            }
 
         $users = $query->orderByDesc('created_at')->orderByDesc('id')
         ->paginate(100);//ページネーション
 
 
-        return view('admin.user.index', compact('users','search_id','search_name','search_email') );
+        return view('admin.user.index', compact('users','search_id','search_name','search_email', 'search_twitter_id') );
     }
 
 

@@ -72,6 +72,7 @@ $active_key = 'shipped';
                         <th scope="col">都道府県</th>
                         <th scope="col">商品数</th>
                         <th scope="col">発送日時</th>
+                        <th></th>
                     </tr>
                 </thead>
                 @endif
@@ -86,6 +87,24 @@ $active_key = 'shipped';
                             <td class="py-3">{{ $shipped->user_address->todohuken }}</td>
                             <td class="py-3">{{ $shipped->user_prizes->count() }}</td>
                             <td class="py-3">{{ $shipped->shipment_at->format('Y年m月d日 H:i') }}</td>
+                            <!--menu-->
+                            <td class="py-3" style="width:2rem;">
+                                <div class="dropdown">
+                                    <button class="btn btn-light border rounded-pill" type="button"
+                                    id="{{'dropdownMenuButton'.$shipped->id}}" data-bs-toggle="dropdown" aria-expanded="false"
+                                    ><i class="bi bi-three-dots-vertical"></i></button>
+
+
+                                    @php $user = $shipped->user; @endphp
+                                    <ul class="dropdown-menu bg-white" aria-labelledby="{{'dropdownMenuButton'.$shipped->id}}">
+                                        <li><a  href="{{route('admin.user.show',$user)}}"
+                                        class="dropdown-item">ユーザー情報</a></li>
+                                        <li><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>22,])}}"
+                                        class="dropdown-item">発送申請履歴</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+
                         </tr>
                     @empty
                         <tr>

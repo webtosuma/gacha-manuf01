@@ -2,7 +2,7 @@
     <div class="row g-1">
         <div class="col">
 
-            {{ prize_ids }}{{ new_prizes_ids }}
+            <!-- {{ prize_ids }}{{ new_prizes_ids }} -->
             <div class="card bg-white overflow-auto" style="height: 90vh">
 
                 <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
@@ -63,19 +63,19 @@
                             <td class=""  style="width:2rem;">
 
                                 <!-- 削除 -->
-                                <!-- <input :value="g_prize.id"
+                                <input :value="g_prize.id"
                                 :name="'gri'+gacha_rank_id+'-delete_gacha_prize_ids[]'"
                                 type="checkbox" class="btn-check"
                                 :id="'delete_gasha_prizes'+gacha_rank_id+'-'+g_prize.id"
-                                autocomplete="off"> -->
+                                autocomplete="off">
 
                                 <label v-if="true"
-                                @click="removePrizeIds( g_prize )"
+                                @click="removeGachaPrizeIds( g_prize )"
                                 class="btn btn-sm border text-danger"
                                 :for="'delete_gasha_prizes'+gacha_rank_id+'-'+g_prize.id"
                                 ><i class="bi bi-trash3"></i></label>
 
-                                <!-- @click="removePrizeIds( g_prize )" -->
+                                <!-- @click="removeGachaPrizeIds( g_prize )" -->
                             </td>
                         </tr>
 
@@ -129,6 +129,8 @@
                                 <button @click="removeGachaPrize(prize.id)"
                                 class="btn btn-sm border text-danger" type="button"
                                 ><i class="bi bi-trash3"></i></button>
+
+
                             </td>
                         </tr>
                     </tbody>
@@ -257,10 +259,12 @@
 
 
             /** 登録ずみ商品を削除 */
-            removePrizeIds( g_prize ){
+            removeGachaPrizeIds( g_prize ){
 
-                this.$emit('send-delete-gp-id',g_prize.id);//削除対象のガチャ商品IDを送信
-                return
+                // g_prize.delete = true;
+                // console.log(g_prize);
+                // this.$emit('send-delete-gp-id',g_prize.id);//削除対象のガチャ商品IDを送信
+                // return
 
 
 

@@ -55,11 +55,18 @@ class GachaController extends Controller
             $slide_infos = InfomationController::GetInfomationsQuery()
             ->where('is_slide',1)
             ->limit(3)->get();;
+
+
+            ## スライド
+            $slides = self::getSlides($gachas);
+
         //
 
         # viewの表示
         return view('gacha.index', compact(
-            'category_code', 'category_name', 'bg_image',  'categories', 'gachas', 'infomations', 'slide_infos',
+            'category_code', 'category_name', 'bg_image',  'categories', 'gachas', 'infomations',
+            // 'slide_infos',
+            'slides',
          ) );
 
     }
@@ -99,6 +106,40 @@ class GachaController extends Controller
 
             # ID配列を指定して、ガチャの取得
             return Gacha::orderBy('published_at','desc')->find($id_array);
+        }
+
+
+
+        /**
+         * スレイド情報
+        */
+        public function getSlides($gachas)
+        {
+            $slides = [];
+
+            // お知らせ
+            $slide_infos = InfomationController::GetInfomationsQuery()
+            ->where('is_slide',1)
+            ->limit(3)->get();
+            foreach ($slide_infos as $slide_info) {
+                $slides[] = [
+                    'href' => route('infomation.show',$slide_info),
+                    'image'=> $slide_info->image_path,
+                ];
+            }
+            //ガチャ
+            foreach ($gachas as $gacha) {
+                if($gacha->is_slide){
+                    $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key];
+                    $slides[] = [
+                        'href' => route('gacha',$params),
+                        'image'=> $gacha->image_path
+                    ];
+                }
+            }
+
+
+            return $slides;
         }
     //
 

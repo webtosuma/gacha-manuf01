@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        {{ delete_gacha_prize_ids }}
+        <!-- {{ delete_gacha_prize_ids }} -->
 
         <input v-for="(delete_gacha_prize_id, key) in delete_gacha_prize_ids" :key="key"
         :value="delete_gacha_prize_id"

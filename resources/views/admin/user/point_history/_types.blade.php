@@ -55,7 +55,7 @@
                         </div>
 
                         @if(isset($confirm))
-                            <div class="text-warning">
+                            <div class="alert alert-warning border-0">
                                 ＊履歴削除後に、「ポイントと交換した商品」はユーザーの取得商品として返却されます。
                             </div>
                         @endif
@@ -85,8 +85,11 @@
                         </div>
 
                         @if(isset($confirm))
-                            <div class="text-warning">
-                                ＊履歴削除後に、このガチャで取得した「商品」は、ユーザーの取得商品から削除されます。
+                            <div class="alert alert-warning border-0">
+                                ＊このガチャで取得した「商品」は、履歴削除後にユーザーの取得商品から削除されます。<br>
+                                ＊このガチャで取得した商品の「ポイント交換記録」は、この履歴削除後と共に削除されます。<br>
+                                ＊このガチャで取得した商品の「発送受付(発送待ち)」は、この履歴削除後と共に削除されます。<br>
+                                ＊このガチャで取得した商品の「発送受付(発送済み)」は、削除されません。<br>
                             </div>
                         @endif
 
@@ -133,9 +136,12 @@
                         </div>
 
                         @if(isset($confirm))
-                            <div class="text-warning">
-                                ＊履歴削除後に、「発送申請した商品」はユーザーの取得商品として返却されます。<br>
-                                ＊発送済みの履歴については、削除することができません。
+                            <div class="alert alert-warning border-0">
+                                @if (!$point_history->user_shipped->shipment_at)
+                                    ＊履歴削除後に、「発送申請した商品」はユーザーの取得商品として返却されます。
+                                @else
+                                    ＊発送済みの履歴については、削除することができません。
+                                @endif
                             </div>
                         @endif
 

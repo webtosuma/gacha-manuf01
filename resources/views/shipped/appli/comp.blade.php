@@ -35,7 +35,7 @@
 
                             <div class="col-md-8 mx-auto my-4">
                                 <a href="{{ route('user_prize') }}"
-                                class="btn btn-lg btn-light border w-100"
+                                class="btn btn-lg btn-light border rounded-pill w-100"
                                 >取得した商品一覧に戻る</a>
                             </div>
                         </li>

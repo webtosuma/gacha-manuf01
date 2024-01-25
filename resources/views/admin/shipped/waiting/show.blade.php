@@ -84,9 +84,31 @@ $active_key = 'shipped';
                         @csrf
                         @method('PATCH')
 
-                        <button type="submit"
+                        {{-- <button type="button"
                         class="btn btn-lg btn-warning text-white w-100"
-                        >{{ '発送通知をする' }}</button>
+                        >{{ '発送通知をする' }}</button> --}}
+                        <button type="button" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{'send'}}"
+                        class="btn btn-lg btn-warning text-white w-100"
+                        >{{ '発送通知を送る' }}</button>
+
+
+                        <delete-modal-component
+                        index_key="send"
+                        icon="bi-send"
+                        color="warning"
+                        func_btn_type="submit"
+                        button_class="invisible">
+                            <div>
+                                <h5 class="text-warning">
+                                    発送する内容にお間違いはありませんか？
+                                </h5>
+                                <p class="form-text">
+                                    発送内容に間違いがなければ、「OK」ボタンを押してください。
+                                </p>
+                            </div>
+                        </delete-modal-component>
+
                     </form>
                 </div>
 

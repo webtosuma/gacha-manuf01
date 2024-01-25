@@ -12,8 +12,8 @@
         <!--商品リスト-->
         <div class="col">
 
-            {{ parent_prize_ids }}
-            {{ ids }}
+            <!-- {{ parent_prize_ids }}
+            {{ ids }} -->
 
 
             <div class="card overflow-auto"  style="height: 90vh">

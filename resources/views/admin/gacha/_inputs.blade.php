@@ -83,21 +83,87 @@
         <div class="d-block mb-4">
             <div class="form-label">ガチャの種類</div>
 
-            <div class="d-flex flex-column gap-3 ps-3">
-                @foreach ($gacha->types() as $value => $lable)
-                    <label class="form-check">
-                        <input name="type" value="{{$value}}"
-                        @if( $value == $gacha->type ) checked @endif
-                        class="form-check-input" type="radio">
-                        <div class="form-check-div">{{ $lable }}</div>
-                    </label>
-                @endforeach
-            </div>
+            <div class="card p-2 mx-2">
+                <div class="form-text">ガチャの種類を選択してください。</div>
+                <div class="d-flex flex-column gap-3 ps-3">
+                    @foreach ($gacha->types() as $value => $lable)
+                        <label class="form-check">
+                            <input name="type" value="{{$value}}"
+                            @if( $value == $gacha->type ) checked @endif
+                            class="form-check-input" type="radio">
+                            <div class="form-check-div">{{ $lable }}</div>
+                        </label>
+                    @endforeach
+                </div>
 
-            <!--error message-->
-            @if ( $errors->has('type') )
-                <div class="text-danger"> {{$errors->first('type')}} </div>
-            @endif
+                <!--error message-->
+                @if ( $errors->has('type') )
+                    <div class="text-danger"> {{$errors->first('type')}} </div>
+                @endif
+            </div>
+        </div>
+
+
+
+        <!--残数メーター表示設定(is_meter)-->
+        <div class="d-block mb-4">
+            <div class="form-label">残数メーター表示設定</div>
+
+            <div class="card p-2 mx-2">
+
+                <div class="d-flex flex-column gap-3 ps-4">
+                    <div class="form-text">残数メーターを表示させますか？</div>
+                    <label class="form-check">
+                        <input name="is_meter" value="1"
+                        {{ $gacha->is_meter==true ? 'checked' : '' }}
+                        class="form-check-input" type="radio">
+                        <div class="form-check-div">表示させる</div>
+                    </label>
+                    <label class="form-check">
+                        <input name="is_meter" value="0"
+                        {{ $gacha->is_meter==false ? 'checked' : '' }}
+                        class="form-check-input" type="radio">
+                        <div class="form-check-div">表示させない</div>
+                    </label>
+                </div>
+
+                <!--error message-->
+                @if ( $errors->has('is_meter') )
+                    <div class="text-danger"> {{$errors->first('is_meter')}} </div>
+                @endif
+
+            </div>
+        </div>
+
+
+        <!--スライド設定(is_slide-->
+        <div class="d-block mb-4">
+            <div class="form-label">スライド設定</div>
+
+            <div class="card p-2 mx-2">
+
+                <div class="d-flex flex-column gap-3 ps-4">
+                    <div class="form-text">トップページのスライドに表示させますか？</div>
+                    <label class="form-check">
+                        <input name="is_slide" value="1"
+                        {{ $gacha->is_slide==true ? 'checked' : '' }}
+                        class="form-check-input" type="radio">
+                        <div class="form-check-div">表示させる</div>
+                    </label>
+                    <label class="form-check">
+                        <input name="is_slide" value="0"
+                        {{ $gacha->is_slide==false ? 'checked' : '' }}
+                        class="form-check-input" type="radio">
+                        <div class="form-check-div">表示させない</div>
+                    </label>
+                </div>
+
+                <!--error message-->
+                @if ( $errors->has('is_slide') )
+                    <div class="text-danger"> {{$errors->first('is_slide')}} </div>
+                @endif
+
+            </div>
         </div>
 
 

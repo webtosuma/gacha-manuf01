@@ -36,7 +36,8 @@ $active_key = 'user';
         </nav>
 
 
-        <h2 class="my-5 py-3 border-bottom">以下の{{$point_histories->count()}}件の取得商の記録を削除します</h2>
+        <h2 class="my-5 py-3 border-bottom">以下の履歴を削除します</h2>
+        {{-- {{$point_histories->count()}} --}}
 
 
 

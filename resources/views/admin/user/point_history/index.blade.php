@@ -73,7 +73,7 @@ $active_key = 'user';
         <!-- 絞り込み -->
         <form action="#">
             <div class="d-flex justify-content-end mt-3">
-                <div class="col-4 col-md-3">
+                <div class="col-8 col-md-3">
                     <div class="input-group mb-3">
                         <select class="form-select" name="reason_id">
                             <option value="0"
@@ -105,7 +105,7 @@ $active_key = 'user';
 
                     <div class="col-auto">
                         <button type="submit"
-                        class="btn btn-light border text-danger  disabled "
+                        class="btn btn-light border text-danger "
                         >一括削除</button>
                     </div>
                 </div>
@@ -126,9 +126,8 @@ $active_key = 'user';
                     </div>
 
                     <div class="col-auto">
-                        {{-- data-bs-target="#deleteModal" data-bs-toggle="modal" --}}
                         <button type="submit"
-                        class="btn btn-light border text-danger  disabled "
+                        class="btn btn-light border text-danger "
                         >一括削除</button>
                     </div>
                 </div>

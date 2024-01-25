@@ -83,6 +83,34 @@
 
     <section class="bg-dark" style="height:4.2rem;"></section>
 
+
+    <!-- 紹介キャンペーン　トースト -->
+    {{-- @if( $category_code=='all' )
+    <div class="toast-container position-fixed bottom-0 end-0 p-3 d-flex justify-content-end" style="z-index:99;">
+        <div class="col-8 col-md-12">
+            <div class="toast fade show border-0 rounded-3 overflow-hidden shadow" role="alert" aria-live="assertive" aria-atomic="true">
+
+                <div class="toast-header justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body p-0">
+
+                    <a href="{{route('settings.canpaing_introductory')}}" class="d-block">
+                        <ratio-image-component
+                        style_class="ratio ratio-4x3"
+                        url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.jpg' ) }}"
+                        ></ratio-image-component>
+                    </a>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif --}}
+
+
+
     <!--カルーセル-->
     <section class="overflow-hidden" style="background:rgb(0, 0, 0,.8);">
 
@@ -90,17 +118,34 @@
             <div class="mx-auto"  style="max-width: 900px;">
                 <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 
-                    <!--image スライド -->
+                    <!--image  お知らせスライド -->
                     <div class="carousel-inner">
-                        @foreach ($slides as $si => $slide)
+                        @foreach ($slide_infos as $si => $slide_info)
 
-                            <a href="{{ $slide['href'] }}" class="carousel-item pb- bg-dark
+                            <a href="{{ route('infomation.show',$slide_info) }}" class="carousel-item pb- bg-dark
                             {{ $si==0 ? 'active' : ''}}">
 
                                 <div class="">
                                     <ratio-image-component
                                     style_class="ratio ratio-4x3"
-                                    url="{{ $slide['image'] }}"
+                                    url="{{ $slide_info->image_path }}"
+                                    ></ratio-image-component>
+                                </div>
+
+                            </a>
+                        @endforeach
+
+                        <!--image ガチャスライド -->
+                        @foreach ($gachas as $gi => $gacha)
+
+                            @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+                            <a href="{{ route('gacha',$params) }}" class="carousel-item pb- bg-dark
+                            {{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}">
+
+                                <div class="">
+                                    <ratio-image-component
+                                    style_class="ratio ratio-4x3"
+                                    url="{{ $gacha->image_path }}"
                                     ></ratio-image-component>
                                 </div>
 
@@ -122,10 +167,17 @@
 
                     <!--bottom menu-->
                     <div class="carousel-indicators mb-0">
-                        @foreach ($slides as $si => $slide)
+                        <!--お知らせスライド -->
+                        @foreach ($slide_infos as $si => $slide_info)
                             <button type="button" data-bs-target="#carouselIndicators"
                             class="{{ $si==0 ? 'active' : ''}}"
                             data-bs-slide-to="{{$si}}" aria-current="true" aria-label="{{'Slide '.($si+1)}}x"></button>
+                        @endforeach
+                        <!--ガチャスライド -->
+                        @foreach ($gachas as $gi => $gacha)
+                            <button type="button" data-bs-target="#carouselIndicators"
+                            class="{{ $slide_infos->count()==0 && $gi==0 ? 'active' : ''}}"
+                            data-bs-slide-to="{{$gi+$slide_infos->count()}}" aria-current="true" aria-label="{{'Slide '.($gi+$slide_infos->count()+1)}}x"></button>
                         @endforeach
                     </div>
 
@@ -195,23 +247,21 @@
                                         </span>pt
                                     </div>
                                 </div>
-                                <div class="@if( !$gacha->is_meter ) invisible @endif">
-                                    <div class="progress">
-                                        @php
-                                        $ratio = $gacha->remaining_ratio;
-                                        $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
-                                        $style_class = 'progress-bar progress-bar-striped '.$bg_color
-                                        @endphp
-                                        <div class="{{ $style_class }}" role="progressbar"
-                                        style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
-                                    </div>
-                                    <p class="form-text text-center m-0">
-                                        残り
-                                        <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
-                                        /
-                                        <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
-                                    </p>
+                                <div class="progress">
+                                    @php
+                                    $ratio = $gacha->remaining_ratio;
+                                    $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
+                                    $style_class = 'progress-bar progress-bar-striped '.$bg_color
+                                    @endphp
+                                    <div class="{{ $style_class }}" role="progressbar"
+                                    style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
                                 </div>
+                                <p class="form-text text-center m-0">
+                                    残り
+                                    <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
+                                    /
+                                    <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
+                                </p>
                             </div>
                         </a>
 

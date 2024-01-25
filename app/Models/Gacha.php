@@ -26,6 +26,9 @@ class Gacha extends Model
         'type',  //ガチャの種類
         'one_play_point',   //1回PLAYポイント数
         'published_at',     //公開設定(利用しない->非公開*消さない)
+
+        'is_meter',//残数メーターの表示有無
+        'is_slide',//スライドの表示有無
     ];
 
 
