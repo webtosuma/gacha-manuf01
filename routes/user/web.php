@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Auth;
         [App\Http\Controllers\GachaController::class, 'index']
     )->name('home');
 
+
+    Route::get('/pwa',function(){
+        return view('pwa');
+    });
+
+
 /*
 |--------------------------------------------------------------------------
 | 認証・登録・パスワード変更
@@ -23,6 +29,16 @@ use Illuminate\Support\Facades\Auth;
 |--------------------------------------------------------------------------
 */
     Auth::routes();
+
+    # ログイン
+    Route::get('/login',
+    [Controllers\Auth\LoginController::class, 'index'])
+    ->name('login');
+
+    # 会員登録
+    Route::get('/register',
+    [Controllers\Auth\RegisterController::class, 'index'])
+    ->name('register');
 
     # 会員登録処理
     Route::post('register/post', //canpaing_introductory_key:紹介キャンペーン キー
@@ -56,6 +72,7 @@ use Illuminate\Support\Facades\Auth;
     Route::get('auth/completed_destroy',
     function () { return view('auth.completed_destroy'); })
     ->name('auth.completed_destroy');        //
+
 
 /*
 |--------------------------------------------------------------------------

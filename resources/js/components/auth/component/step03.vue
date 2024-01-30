@@ -41,6 +41,7 @@
                     <div class="col-sm-8 offset-sm-2 mb-3">
 
                         <button type="submit" v-show="!loading"
+                        @click="registerComp"
                         class="btn btn-curve btn-primary text-white w-100">
                             {{ 'この内容で登録' }}
                         </button>
@@ -85,6 +86,14 @@
         mounted() {
         },
         methods: {
+
+
+            /** ローカルストレージに登録完了保存 */
+            registerComp(){
+                localStorage.setItem('registerComp', true);
+            },
+
+
 
             nextToStep03() { this.loading = true; },
 

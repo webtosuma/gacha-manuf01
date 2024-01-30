@@ -421,6 +421,11 @@ use \App\Http\Controllers;
         [Controllers\AdminUserController ::class, 'index'])
         ->name('admin.user');
 
+        # CSVファイルのダウンロード
+        Route::get('/admin/user/download/csv',
+        [Controllers\AdminUserController ::class, 'download_csv'])
+        ->name('admin.user.download_csv');
+
         # ポイント付与
         Route::patch('/admin/user/add_point/{user}',
         [Controllers\AdminUserController ::class, 'add_point'])

@@ -13,6 +13,8 @@
 
     <title>{{ $meta_title }}</title>
 
+    <!-- wbマニフェスト -->
+    <link rel="manifest" href="/manifest.json">
 
     <!-- ファビコン画像の読み込み -->
     <link rel="shortcut icon" href="{{asset('storage/site/image/favicon.png')}}">

@@ -33,8 +33,27 @@ class RegisterController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
 
+
     /**
-     * ユーザー登録
+     * 会員登録
+     *
+     * @param \Illuminate\Http\UserRegisterRequest $request
+     * @return JSON
+    */
+    public function index(Request $request)
+    {
+
+        # ログイン中の時は、トップへリダイレクト
+        if(Auth::check()){
+            return redirect()->route('home');
+        }
+
+
+        return view('auth.register');
+    }
+
+    /**
+     * 会員登録処理
      *
      * @param \Illuminate\Http\UserRegisterRequest $request
      * @return JSON
@@ -63,6 +82,9 @@ class RegisterController extends Controller
         Auth::attempt( $request->only('email','password'), true );
         $request->session()->regenerate();
 
+
+        # 連続会員登録防止セッションの登録
+        $request->session()->put('register_comp',true);
 
         # リダイレクト
         return redirect()->route('gacha_category')

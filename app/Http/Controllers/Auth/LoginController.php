@@ -35,6 +35,25 @@ class LoginController extends Controller
 
 
     /**
+     * ログインフォーム
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+    */
+    public function index()
+    {
+        # ログイン中の時は、トップへリダイレクト
+        if(Auth::check()){
+            return redirect()->route('home');
+        }
+
+        return view('auth.login');
+    }
+
+
+
+
+    /**
      * ログイン処理(login)
      *
      * @param \Illuminate\Http\Request $request

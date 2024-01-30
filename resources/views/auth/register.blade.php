@@ -4,9 +4,11 @@
 @section('title','会員登録')
 
 @section('script')
- <script src="{{ asset('js/app.js') }}" defer></script>
- <!-- フォームのページ離脱防止アラート -->
- <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="{{ asset('js/app.register.js') }}" defer></script>
+
+    <!-- フォームのページ離脱防止アラート -->
+    <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
 @endsection
 
 @section('content')
@@ -17,7 +19,7 @@
     style="min-height: 80vh; max-width:600px;">
 
 
-        {{-- @include('auth.register_inputs') --}}
+        <h2 class="h3 mb-3 fw-bold">会員登録</h2>
 
         <form action="{{route('register.post')}}" method="POST"
         novalidate class="w-100"

@@ -22,11 +22,11 @@
         main{ padding-top: 0rem; }
 
         /* カルーセル */
-        .carousel-indicators [data-bs-target] {
+        /* .carousel-indicators [data-bs-target] {
             border-radius: 100%;
             widows: 30px; height: 30px;
             margin-bottom:0;
-        }
+        } */
         .carousel-control-prev-icon, .carousel-control-next-icon {
             display: inline-block;
             width:  4rem;

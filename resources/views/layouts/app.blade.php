@@ -16,6 +16,8 @@
     <title>@yield('title') - {{ config('app.name') }}</title>
 
 
+    <!-- wbマニフェスト -->
+    <link rel="manifest" href="/manifest.json">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

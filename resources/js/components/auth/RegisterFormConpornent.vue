@@ -5,6 +5,8 @@
 
         <steps-component :card_num="card_num" />
 
+        <!----- [ ステップ0 ] ----->
+        <step00-component :card_num="card_num"/>
 
         <!----- [ ステップ1 ] ----->
         <step01-component
@@ -40,6 +42,7 @@
     export default {
         components: {
             'steps-component' : require('./component/steps.vue').default,
+            'step00-component': require('./component/step00.vue').default,
             'step01-component': require('./component/step01.vue').default,
             'step02-component': require('./component/step02.vue').default,
             'step03-component': require('./component/step03.vue').default,
@@ -70,8 +73,17 @@
             errors: {},
             card_num : 1,/* 表示中カード番号 */
 
+
+            registerComp: false,/* このブラウザで会員登録が行われたか、否か */
+
         } },
-        mounted() { },
+        mounted() {
+            this.registerComp = localStorage.getItem('registerComp') || false;
+            if(this.registerComp){
+                this.card_num = 0;
+            }
+
+         },
         methods:{
 
             /** 子コンポーネントの入力値を親コンポーネントへ保存 */

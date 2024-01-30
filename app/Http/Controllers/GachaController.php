@@ -77,8 +77,7 @@ class GachaController extends Controller
          */
         public static function getPublishedGachas( $category_code )
         {
-            $now = now()->toDateString();
-
+            $now = now()->toDateTimeString();
 
             # 該当するガチャのID配列
             $id_array =  $category_code != 'all'
@@ -89,7 +88,7 @@ class GachaController extends Controller
                 ->where('gacha_categories.code_name', $category_code) //コードネームの指定
                 ->where('gacha_categories.is_published', true)        //公開中のカテゴリー
                 ->whereNotNull('gachas.published_at')                 //公開設定
-                ->whereDate('gachas.published_at', '<=', $now)        //公開済み
+                ->where('gachas.published_at', '<=', $now)        //公開済み
                 ->select('gachas.*')
                 ->get()->pluck('id')->toArray()
 
@@ -98,20 +97,22 @@ class GachaController extends Controller
                 ->join('gachas', 'gacha_categories.id', '=', 'gachas.category_id')
                 ->where('gacha_categories.is_published', true)        //公開中のカテゴリー
                 ->whereNotNull('gachas.published_at')                 //公開設定
-                ->whereDate('gachas.published_at', '<=', $now)        //公開済み
+                ->where('gachas.published_at', '<=', $now)        //公開済み
                 ->select('gachas.*')
                 ->get()->pluck('id')->toArray()
             ;
 
 
             # ID配列を指定して、ガチャの取得
-            return Gacha::orderBy('published_at','desc')->find($id_array);
+            return Gacha::orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->find($id_array);
         }
 
 
 
         /**
-         * スレイド情報
+         * スライド情報
         */
         public function getSlides($gachas)
         {
