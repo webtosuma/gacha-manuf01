@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\User;
 use App\Models\PointHistory;
 use App\Models\CanpaingIntroductory;
@@ -17,9 +19,26 @@ class CanpaingIntroductoryController extends Controller
 {
     /** 付与するポイント */
     public static function grantPoint(){
-        return 1000;
+        $now = now()->toDateTimeString();
+        return $now < '2024-02-01 00:00:00'
+        ? 1000 : 500 ;
     }
 
+    /** キャンペーン画像 */
+    public static function imagePath(){
+
+        $now = now()->toDateTimeString();
+        $path = $now < '2024-02-01 00:00:00'
+        ? 'site/image/campaign_introductory/index.png'
+        : 'site/image/campaign_introductory/500.png' ;
+
+
+        return $path && Storage::exists($path)
+        ? asset( 'storage/'.$path )
+        : asset( 'storage/site/image/no_image.jpg' );
+
+        return asset( 'storage/'.'site/image/campaign_introductory/index.png' );
+    }
 
     /** キャンペーンが実施されてるか */
     public static function active(){
@@ -64,11 +83,17 @@ class CanpaingIntroductoryController extends Controller
         # キャンペーンが実施されてるかチェック
         if( !$this->active() ){ return \App::abort(404); }
 
-        # 変数
+        # 紹介URL
         $key = $this->createKey( Auth::user() );
         $url = route('canpaing.introductory.register',$key);
 
-        return  view('canpaing.introductory', compact('url'));
+        # 付与ポイント
+        $point = number_format( self::grantPoint() );
+
+        # キャンペーン画像
+        $image_path = self::imagePath();
+
+        return  view('canpaing.introductory', compact('url','point','image_path'));
     }
 
 

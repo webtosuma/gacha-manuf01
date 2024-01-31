@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRegisterRequest;
@@ -49,7 +50,11 @@ class RegisterController extends Controller
         }
 
 
-        return view('auth.register');
+        # IPアドレスのチェック
+        $ip_check = self::ipCheck($request);
+
+
+        return view('auth.register',compact('ip_check'));
     }
 
     /**
@@ -83,8 +88,9 @@ class RegisterController extends Controller
         $request->session()->regenerate();
 
 
-        # 連続会員登録防止セッションの登録
-        $request->session()->put('register_comp',true);
+        # ユーザーIPアドレスの保存
+        // self::ipPost($request);
+
 
         # リダイレクト
         return redirect()->route('gacha_category')
@@ -140,5 +146,66 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+
+
+
+    /** IPアドレスファイルの保存パス */
+    public function ipPath(){
+        return 'upload/auth/register/ips.json';
+    }
+
+
+    /** IPアドレスの保存 */
+    public function ipPost($request)
+    {
+        $path = self::ipPath();//ファイルパス
+        $ip = $request-> ip();//ユーザーのIPアドレス
+
+        # IPアドレス配列の取得
+        $array = Storage::exists($path)
+        ? json_decode( Storage::get($path) ) : [];
+
+        # IPアドレスの保存
+        $array[] = $ip;
+        $jsonData = json_encode($array);
+        Storage::put($path,$jsonData);
+
+    }
+
+
+
+    /** IPアドレスのチェック */
+    public function ipCheck($request)
+    {
+        $path = self::ipPath();//ファイルパス
+        $ip = $request-> ip();//ユーザーのIPアドレス
+
+        # IPアドレス配列の取得
+        $array = Storage::exists($path)
+        ? json_decode( Storage::get($path) ) : [];
+
+        $bool = false;// IPアドレスが登録ずみか否か
+        if( in_array($ip, $array) ){ $bool = true; }
+
+
+        // dd( $bool );
+        return $bool;
+    }
+
+
+
+    public function ipTest(Request $request)
+    {
+
+        $path = self::ipPath();//ファイルパス
+        $ip = $request-> ip();//ユーザーのIPアドレス
+
+        # IPアドレス配列の取得
+        $array = Storage::exists($path)
+        ? json_decode( Storage::get($path) ) : [];
+
+        return $array;
     }
 }

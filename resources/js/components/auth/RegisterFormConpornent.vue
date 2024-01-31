@@ -78,10 +78,10 @@
 
         } },
         mounted() {
-            this.registerComp = localStorage.getItem('registerComp') || false;
-            if(this.registerComp){
-                this.card_num = 0;
-            }
+
+            // ローカルストレージのチェック
+            // this.registerComp = localStorage.getItem('registerComp') || false;
+            // if(this.registerComp){ his.card_num = 0; }
 
          },
         methods:{

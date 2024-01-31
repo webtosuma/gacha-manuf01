@@ -7186,10 +7186,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.registerComp = localStorage.getItem('registerComp') || false;
-    if (this.registerComp) {
-      this.card_num = 0;
-    }
+
+    // ローカルストレージのチェック
+    // this.registerComp = localStorage.getItem('registerComp') || false;
+    // if(this.registerComp){ his.card_num = 0; }
   },
   methods: {
     /** 子コンポーネントの入力値を親コンポーネントへ保存 */insertParentInputs01: function insertParentInputs01(inputs) {

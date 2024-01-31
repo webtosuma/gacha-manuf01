@@ -4,8 +4,8 @@
 @section('title','会員登録')
 
 @section('script')
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-    <script src="{{ asset('js/app.register.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.register.js') }}" defer></script> --}}
 
     <!-- フォームのページ離脱防止アラート -->
     <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
@@ -21,25 +21,43 @@
 
         <h2 class="h3 mb-3 fw-bold">会員登録</h2>
 
-        <form action="{{route('register.post')}}" method="POST"
-        novalidate class="w-100"
-        enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
-            @csrf
 
-            <u-register-form
-            token           ="{{ csrf_token() }}"
-            r_api_step01    ="{{ route('api.register.step01') }}"
-            r_register_post ="{{ route('register.post') }}"
-            r_trems         ="{{ route('trems') }}"
-            r_privacy_policy="{{ route('privacy_policy') }}"
+        {{-- @if ( !$ip_check ) --}}
 
-            login_route          = "{{ route('login') }}"
-            gacha_route          = "{{ route('home') }}"
-            point_sail_route     = "{{ route('point_sail') }}"
-            ></u-register-form >
+            <form action="{{route('register.post')}}" method="POST"
+            novalidate class="w-100"
+            enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+                @csrf
 
-        </form>
+                <u-register-form
+                token           ="{{ csrf_token() }}"
+                r_api_step01    ="{{ route('api.register.step01') }}"
+                r_register_post ="{{ route('register.post') }}"
+                r_trems         ="{{ route('trems') }}"
+                r_privacy_policy="{{ route('privacy_policy') }}"
 
+                login_route          = "{{ route('login') }}"
+                gacha_route          = "{{ route('home') }}"
+                point_sail_route     = "{{ route('point_sail') }}"
+                ></u-register-form >
+
+            </form>
+
+        {{-- @else
+
+            <div class="card shadow border-0 w-100 p-3 mb-3 bg-white">
+                <div class="card-body">
+
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold  text-center mb-3">警告</h5>
+                        <p class="">
+                            一人のユーザーが、アカウントを複数作成することはできません。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        @endif --}}
 
     </div>
 @endsection

@@ -127,13 +127,20 @@ style="max-width:90vw; min-width:30vw;">
             $canpaing_introductory_active = \App\Http\Controllers\CanpaingIntroductoryController::active();
             @endphp
             @if( $canpaing_introductory_active )
+                @php
+                # キャンペーン画像
+                $canpaing = new \App\Http\Controllers\CanpaingIntroductoryController;
+                $image_path = $canpaing::imagePath();
+                @endphp
+
+
                 <div class="list-group-item p-3 p-2">
                     <div class="row g-2">
                         <div class="col">
                             <a href="{{route('canpaing.introductory')}}" class="d-block rounded-4 overflow-hidden">
                                 <ratio-image-component
                                 style_class="ratio ratio-4x3"
-                                url="{{ asset( 'storage/'.'site/image/campaign_introductory/index.png' ) }}"
+                                url="{{ $image_path }}"
                                 ></ratio-image-component>
                             </a>
                         </div>

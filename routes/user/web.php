@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Auth;
         return view('pwa');
     });
 
+    Route::get('/ip',
+    [Controllers\Auth\RegisterController::class, 'ipTest']);
 
 /*
 |--------------------------------------------------------------------------
