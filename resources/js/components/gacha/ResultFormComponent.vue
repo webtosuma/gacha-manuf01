@@ -15,7 +15,7 @@
             <div v-if="userPrizes.length==0"
             class="text-center fs-5">*表示できる商品はありません</div>
             <div v-for="(userPrize, key) in userPrizes" :key="key"
-            class="col-3 col-md-3">
+            :class="userPrizes.length==1 ? 'col-6' : 'col-3'">
                 <div class="d-flex align-items-center justify-content-center h-100">
 
 

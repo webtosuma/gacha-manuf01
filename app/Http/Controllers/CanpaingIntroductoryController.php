@@ -20,17 +20,18 @@ class CanpaingIntroductoryController extends Controller
     /** 付与するポイント */
     public static function grantPoint(){
         $now = now()->toDateTimeString();
-        return $now < '2024-02-01 00:00:00'
-        ? 1000 : 500 ;
+        return $now < '2024-02-01 08:00:00'
+        ? 1000
+        : 500 ;
     }
 
     /** キャンペーン画像 */
     public static function imagePath(){
 
         $now = now()->toDateTimeString();
-        $path = $now < '2024-02-01 00:00:00'
+        $path = $now < '2024-02-01 08:00:00'
         ? 'site/image/campaign_introductory/index.png'
-        : 'site/image/campaign_introductory/500.png' ;
+        : 'site/image/campaign_introductory/500.jpg' ;
 
 
         return $path && Storage::exists($path)

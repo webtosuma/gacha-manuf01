@@ -117,6 +117,11 @@ class GachaPlayController extends Controller
         $remaining_count  = (int) $gacha->remaining_count; //残りのプレイできる回数
         $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
 
+
+        // dd($gacha->published_at->toDateTimeString());
+
+
+
         # ログインしていないとき
         if( !Auth::check() ){
             return 'ガチャを始めるには、ログインが必要です';
@@ -129,6 +134,13 @@ class GachaPlayController extends Controller
         else if( $play_count > $remaining_count ){
             return '残りの商品数が少ないため、複数回ガチャをすることができません';
         }
+        # 非公開ガチャの利用不可(非公開または、公開日が現在より先のとき)
+        else if(
+            !$gacha->published_at || $gacha->published_at->toDateTimeString() > now()->toDateTimeString()
+        ){
+            return '現在、このガチャを利用することはできません。';
+        }
+
         # 売り切れ
         else if( $is_sold_out ){
             return '売り切れです';

@@ -27,11 +27,13 @@ $active_key = 'user';
         <h2 class="my-5 py-3 border-bottom">登録ユーザー</h2>
 
         <div class="row g-2">
-            <div class="col">
-                <form action="{{route('admin.user')}}">
+            <div class="col-12 col-md">
+                <form action="{{route('admin.user.search')}}" method="post">
+                    @csrf
+
                     <div class="input-group mb-3">
 
-                        <input type="number" class="form-control col-auto" placeholder="ID" name="search_id" value="{{$search_id}}" style="flex:none; width:6rem;" min="1">
+                        <input type="number" class="form-control col-auto" placeholder="ID" name="search_id" value="{{$search_id}}" style="flex:none; width:4rem;" min="1">
 
                         <input type="text"   class="form-control" placeholder="アカウント名" name="search_name" value="{{$search_name}}">
 
@@ -44,22 +46,20 @@ $active_key = 'user';
                 </form>
             </div>
             <div class="col-auto">
-                <a href="{{route('admin.user.canpaing_introductory')}}" class="btn border">紹介キャンペーン登録者一覧</a>
+                <a href="{{route('admin.user.canpaing_introductory')}}" class="btn border">紹介登録者一覧</a>
             </div>
             <div class="col-auto">
-                <form action="{{route('admin.user.download_csv')}}">
-                    {{-- <div class="input-group mb-3"> --}}
+                <form action="{{route('admin.user.download_csv')}}" class="w-100">
 
-                        <input type="hidden" class="form-control col-auto" placeholder="ID" name="search_id" value="{{$search_id}}" style="flex:none; width:6rem;" min="1">
+                    <input type="hidden" class="form-control col-auto" placeholder="ID" name="search_id" value="{{$search_id}}" style="flex:none; width:6rem;" min="1">
 
-                        <input type="hidden"   class="form-control" placeholder="アカウント名" name="search_name" value="{{$search_name}}">
+                    <input type="hidden"   class="form-control" placeholder="アカウント名" name="search_name" value="{{$search_name}}">
 
-                        <input type="hidden"   class="form-control" placeholder="メールアドレス" name="search_email" value="{{$search_email}}">
+                    <input type="hidden"   class="form-control" placeholder="メールアドレス" name="search_email" value="{{$search_email}}">
 
-                        <input type="hidden"   class="form-control" placeholder="X(旧Twitter) ID" name="search_twitter_id" value="{{$search_twitter_id}}">
+                    <input type="hidden"   class="form-control" placeholder="X(旧Twitter) ID" name="search_twitter_id" value="{{$search_twitter_id}}">
 
-                        <button class="btn border" type="submit">CSVダウンロード</button>
-                    {{-- </div> --}}
+                    <button class="btn border w-100" type="submit">CSVダウンロード</button>
                 </form>
             </div>
         </div>

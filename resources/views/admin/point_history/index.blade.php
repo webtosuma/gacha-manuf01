@@ -67,13 +67,13 @@ $active_key = 'point_history';
             </div>
 
             <div class="row text-secondary">
-                <div class="col-3">
+                <div class="col col-md-3">
                     <div class="">月間売上</div>
                     <h3 class="fw-bold">
                         <number-comma-component number="{{ $sales }}"></number-comma-component>
                     </h3>
                 </div>
-                <div class="col-3">
+                <div class="col col-md-3">
                     <div class="">月間顧客数</div>
                     <h3 class="fw-bold">
                         <number-comma-component number="{{ count($visiters) }}"></number-comma-component>

@@ -122,8 +122,9 @@
                         <span class="input-group-text" >公開予約日時</span>
                         <input name="published_at"
                         type="datetime-local" class="form-control"
-                        value="{{ now()->format('Y-m-d\T00:00') }}"
+                        value="{{ $infomation->published_at ? $infomation->published_at->format('Y-m-d\TH:i') : now()->format('Y-m-d\T00:00') }}"
                         min="{{ now()->format('Y-m-d\T00:00') }}">
+
                     </div>
                 </label>
 

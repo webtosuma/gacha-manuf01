@@ -62,7 +62,10 @@
 
             <!-- お届け先と利用ポイント -->
             <section class="my-4">
-                <div class="mb-2">発送コード：{{ $user_shipped->code}} </div>
+                <div class="mb-2">発送コード：{{ $user_shipped->code}}</div>
+                <div class="mb-2">申請日時：{{ $user_shipped->created_at->format('Y年m月d日 H:i') }}</div>
+                {{-- <div class="mb-2">発送日時：{{ $user_shipped->shipment_at->format('Y年m月d日 H:i') }}</div> --}}
+
                 @include('shipped.common.confirm_list')
             </section>
 

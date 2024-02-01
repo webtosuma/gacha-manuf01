@@ -50,15 +50,13 @@ $active_key = 'user';
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>
                     <tr class="bg-white">
-                        <th></th>
+                        <th>ID</th>
                         <th scope="col">紹介者</th>
-                        <th scope="col">メールアドレス</th>
                         <th scope="col">紹介pt付与回数</th>
-                        <th></th>
+                        <th>ID</th>
                         <th scope="col">ご友人</th>
-                        <th scope="col">メールアドレス</th>
                         <th scope="col">購入回数</th>
-                        <th scope="col"></th>
+                        <th scope="col">友人pt付与回数</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,8 +71,13 @@ $active_key = 'user';
                                     ->where('reason_id',31)->get()->count();
                                     @endphp
                                     <td >{{$recruiter->id}}</td>
-                                    <td>{{$recruiter->name}}</td>
-                                    <td>{{$recruiter->email}}</td>
+                                    <td>
+                                        <a href="{{route('admin.user.show', $recruiter)}}">
+                                            {{ mb_strlen($recruiter->name) <= 14 ? $recruiter->name : mb_substr($recruiter->name,0,14).'...' }}
+                                        </a>
+
+                                        {{-- {{$recruiter->name}} --}}
+                                    </td>
                                     <td>{{$canpaing_recruiter_count.'回'}}</td>
                                 @else
                                     <td colspan="4" class="text-secondary text-center">*同上</td>
@@ -85,8 +88,13 @@ $active_key = 'user';
                                 ->where('reason_id',32)->get()->count();
                                 @endphp
                                 <td>{{$friend->id}}</td>
-                                <td>{{$friend->name}}</td>
-                                <td>{{$friend->email}}</td>
+                                <td>
+                                    <a href="{{route('admin.user.show',$friend)}}">
+                                        {{ mb_strlen($friend->name) <= 14 ? $friend->name : mb_substr($friend->name,0,14).'...' }}
+                                    </a>
+
+                                    {{-- {{$friend->name}} --}}
+                                </td>
                                 <td>{{$friend->point_sail_histories->count()}}</td>
 
                                 <td>

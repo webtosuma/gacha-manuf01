@@ -13115,7 +13115,7 @@ var render = function render() {
   }, [_vm._v("*表示できる商品はありません")]) : _vm._e(), _vm._v(" "), _vm._l(_vm.userPrizes, function (userPrize, key) {
     return _c("div", {
       key: key,
-      staticClass: "col-3 col-md-3"
+      "class": _vm.userPrizes.length == 1 ? "col-6" : "col-3"
     }, [_c("div", {
       staticClass: "d-flex align-items-center justify-content-center h-100"
     }, [_c("label", {

@@ -23,13 +23,16 @@ class AdminUserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request,
+        $search_id='', $search_name='', $search_email='', $search_twitter_id=''
+    )
     {
+
         # 検索キー
-        $search_id         = $request->search_id ? $request->search_id : '';
-        $search_name       = $request->search_name ? $request->search_name : '';
-        $search_email      = $request->search_email ? $request->search_email : '';
-        $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : '';
+        $search_id         = $search_id ? $search_id : '';
+        $search_name       = $search_name ? $search_name : '';
+        $search_email      = $search_email ? $search_email : '';
+        $search_twitter_id = $search_twitter_id ? $search_twitter_id : '';
 
 
         # 絞り込み
@@ -57,6 +60,25 @@ class AdminUserController extends Controller
 
 
 
+    /**
+     * ユーザー絞り込み
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+    */
+    public function search(Request $request)
+    {
+        # 検索キー
+        $search_id         = $request->search_id ? $request->search_id : 0;
+        $search_name       = $request->search_name ? $request->search_name : 0;
+        $search_email      = $request->search_email ? $request->search_email : 0;
+        $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : 0;
+
+        // dd(compact('search_name'));
+        return redirect()->route('admin.user', compact('search_id', 'search_name', 'search_email', 'search_twitter_id'));
+        // return redirect()->route('admin.user', compact('search_name'));
+
+    }
 
     /**
      * CSVファイルのダウンロード
