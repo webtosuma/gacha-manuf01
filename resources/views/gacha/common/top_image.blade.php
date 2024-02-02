@@ -10,7 +10,7 @@
     >売り切れました</div></div>
     @endif
 
-    <!-- 1回限定 -->
+    {{-- <!-- 1回限定 -->
     @if ($gacha->type=='one_time')
     <div class="position-absolute top-0 end-0">
         <div class="m-2 p-2 px-3 border border-danger bg-info text-white fs-5 rounded-3"
@@ -25,6 +25,6 @@
         <div class="m-2 p-2 px-3 border border-white bg-danger text-white fs-5 rounded-3"
         >{{$gacha->types()[$gacha->type]}}</div>
     </div>
-    @endif
+    @endif --}}
 
 </div>

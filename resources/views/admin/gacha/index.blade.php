@@ -76,79 +76,82 @@ $active_key = 'gacha';
 
             </div>
             @foreach ($gachas as $gacha)
-                <div class="col-12 col-md-4 col-lg-3 position-relative">
+                <div class="col-12 col-md-4 col-lg-3 ">
+                    <div class="position-relative">
+
+                    @include('gacha.common.type_lable')
+
+                        <a href="{{route('admin.gacha.show',$gacha)}}"
+                        class="card border-secondary border-3 shadow bg-white h-100
+                        text-dark text-center overflow-hidden text-decoration-none
+                        hover_anime" style="border-radius:1rem;">
+
+                            <!--image-->
+                            @include('gacha.common.top_image')
 
 
-
-                    <a href="{{route('admin.gacha.show',$gacha)}}"
-                    class="card border-secondary border-3 shadow bg-white h-100
-                    text-dark text-center overflow-hidden text-decoration-none
-                    hover_anime" style="border-radius:1rem;">
-
-                        <!--image-->
-                        @include('gacha.common.top_image')
-
-
-                        <!--metter-->
-                        @if ( $gacha->is_published )
-                            <div class="card-body py-1">
-                                <div class="d-flex justify-content-center">
-                                    <div class="d-flex align-items-center justify-content-center gap-2">
-                                        @include('includes.point_icon')
-                                        <div class="">
-                                            1回×
-                                            <span class="fs-3">
-                                                <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
-                                            </span>pt
+                            <!--metter-->
+                            @if ( $gacha->is_published )
+                                <div class="card-body py-1">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="d-flex align-items-center justify-content-center gap-2">
+                                            @include('includes.point_icon')
+                                            <div class="">
+                                                1回×
+                                                <span class="fs-3">
+                                                    <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
+                                                </span>pt
+                                            </div>
                                         </div>
                                     </div>
+                                    <p class="card-text m-0">
+                                        残り
+                                        <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
+                                        /
+                                        <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
+                                    </p>
                                 </div>
-                                <p class="card-text m-0">
-                                    残り
-                                    <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
-                                    /
-                                    <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
-                                </p>
-                            </div>
-                        @elseif( $gacha->published_at )
-                            <div class="card-body bg-success text-center text-white">
-                                <h3>公開予約中</h3>
-                                <div >{{
-                                    \Carbon\Carbon::parse($gacha->published_at)->format('Y/m/d').'公開予定'
-                                }}</div>
-                            </div>
-                        @else
-                            <div class="card-body bg-secondary text-center text-white">
-                                <h3>非公開</h3>
-                            </div>
-                        @endif
+                            @elseif( $gacha->published_at )
+                                <div class="card-body bg-success text-center text-white">
+                                    <h3>公開予約中</h3>
+                                    <div >{{
+                                        \Carbon\Carbon::parse($gacha->published_at)->format('Y/m/d').'公開予定'
+                                    }}</div>
+                                </div>
+                            @else
+                                <div class="card-body bg-secondary text-center text-white">
+                                    <h3>非公開</h3>
+                                </div>
+                            @endif
 
-                    </a>
+                        </a>
 
 
-                    <div class="dropdown position-absolute top-0 end-0" style="z-index:100;">
-                        <button class="btn border bg-white rounded-circle" type="button"
-                        id="dropdownMenuButton{{ $gacha->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots-vertical"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $gacha->id }}"  style="z-index:100;">
-                            <li><a class="dropdown-item"
-                            href="{{ route('admin.gacha.show',$gacha) }}"
-                            >詳細情報を見る</a></li>
-                            <li><a class="dropdown-item"
-                            href="{{ route('admin.gacha.edit',$gacha) }}"
-                            >編集する</a></li>
-                            <li><form action="{{route('admin.gacha.copy', $gacha)}}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item"
-                                >コピーする</button>
-                            </form></li>
+                        <div class="dropdown position-absolute top-0 end-0" style="z-index:100;">
+                            <button class="btn border bg-white rounded-circle" type="button"
+                            id="dropdownMenuButton{{ $gacha->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $gacha->id }}"  style="z-index:100;">
+                                <li><a class="dropdown-item"
+                                href="{{ route('admin.gacha.show',$gacha) }}"
+                                >詳細情報を見る</a></li>
+                                <li><a class="dropdown-item"
+                                href="{{ route('admin.gacha.edit',$gacha) }}"
+                                >編集する</a></li>
+                                <li><form action="{{route('admin.gacha.copy', $gacha)}}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item"
+                                    >コピーする</button>
+                                </form></li>
 
-                            <li><button type="button" data-bs-toggle="modal"
-                            data-bs-target="#deleteModal{{'delete'.$gacha->id}}"
-                            class="dropdown-item"
-                            >削除する</button></li>
-                        </ul>
+                                <li><button type="button" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal{{'delete'.$gacha->id}}"
+                                class="dropdown-item"
+                                >削除する</button></li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
             @endforeach

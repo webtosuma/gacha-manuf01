@@ -23,7 +23,7 @@
 
 </head>
 <body class="bg-white">
-    <header class="mx-auto" style="max-width:600px;">
+    <header class="mx-auto p-2" style="max-width:600px;">
         <h1 class="m-0 fs-6">
             {{-- <a href="{{route('top')}}" class="navbar-brand  fs-2 fw-bold"> --}}
                 <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:2rem;">

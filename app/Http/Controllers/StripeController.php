@@ -59,7 +59,7 @@ class StripeController extends Controller
             'customer' => $customer->id, //顧客ID
             'customer_update'=>['address'=> 'auto'],
 
-            'payment_method_types' => ['card'],
+            // 'payment_method_types' => ['card'],//Stripeの管理画面より設定
             'mode' => 'payment',
             'line_items' => [[
                 'price' => $point_sail->stripe_id,

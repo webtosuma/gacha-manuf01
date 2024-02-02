@@ -1,33 +1,33 @@
+<div class="form-text mb-3">
+    <span class="text-danger">＊</span>入力必須
+</div>
+
 <div class="row">
     <div class="col">
 
 
-        <div class="px-3 col-8 mx-auto">
-             <!--アカウント画像(image)-->
-            <label class="d-block mb-4">
-                <div class="form-label">アカウント画像</div>
+            <!--アカウント画像(image)-->
+        <label class="d-block mb-4">
+            <div class="form-label">アカウント画像</div>
 
+            <div class="p-3 col-8 mx-auto">
                 <read-image-file-component
                 img_path="{{ Auth::user()->image_path }}"
                 noimg_path="{{asset('storage/site/image/user_no_image.png')}}"
                 style_class="ratio ratio-1x1 rounded-pill border"
                 name="image"
                 ></read-image-file-component>
+            </div>
 
-                <!--error message-->
-                @if ( $errors->has('image') )
-                    <div class="text-danger"> {{$errors->first('image')}} </div>
-                @endif
-            </label>
-        </div>
+            <!--error message-->
+            @if ( $errors->has('image') )
+                <div class="text-danger"> {{$errors->first('image')}} </div>
+            @endif
+        </label>
 
 
     </div>
     <div class="col-md-8">
-        <div class="form-text mb-3">
-            <span class="text-danger">＊</span>入力必須
-        </div>
-
         <!--アカウント名(name)-->
         <label class="d-block mb-4">
             <div class="form-label">

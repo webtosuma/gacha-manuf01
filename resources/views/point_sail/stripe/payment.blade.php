@@ -33,7 +33,7 @@
                             <div class="text-danger text-center">
                                 @if (session('error-message'))
                                     <!--エラーメッセージ-->
-                                    <p>{{ session('error-message') }}</p> //point_sail.create
+                                    <p>{{ session('error-message') }}</p>
                                 @endif
                             </div>
 

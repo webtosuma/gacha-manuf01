@@ -1,4 +1,4 @@
-<header class="position-fixed bg-body w-100" style="z-index:100;">
+<header class="position-fixed bg-body w-100 shadow" style="z-index:100;">
     <div class="container py- px-0">
 
         <nav class="d-flex justify-content-between align-items-center">
@@ -6,10 +6,10 @@
             p-1 border border-primary border-3 rounded-pill ps-4 shadow
          --}}
 
-            <h1 class="d-flex align-items-center gap-3 m-0">
+            <h1 class="d-flex align-items-center gap-3 m-0 ms-3">
                 <a class="navbar-brand" href="{{ url('/') }}" style="shad">
                     <img src="{{asset('storage/site/image/logo.png')}}"
-                    alt="{{ config('app.name') }}" class="d-brock" style="height:1.6rem;">
+                    alt="{{ config('app.name') }}" class="d-brock" style="height:2.4rem;">
                 </a>
             </h1>
 
@@ -48,10 +48,10 @@
                     </a>
 
                     <!-- ハンバーガーボタン -->
-                    <button class="btn btn- bg- px-2 py-0 mx-2" type="button"
+                    <button class="btn bg-primary px-2 py-0 ms-2 text-white rounded-0" type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasHumberge"
                     aria-controls="offcanvasHumberge">
-                        <i class="bi bi-list fs-4"></i>
+                        <i class="bi bi-list fs-1"></i>
                     </button>
 
                 @endguest

@@ -31,8 +31,6 @@ class StripeInnerController extends Controller
     */
     public function index()
     {
-        // return \App::abort(404);
-
         # 販売用ポイント情報取得
         $point_sails = PointSail::where('is_published',1)//公開ずみのみ
         ->orderBy('value','asc')->get();//ポイントが低い順
@@ -63,6 +61,7 @@ class StripeInnerController extends Controller
     {
         Stripe::setApiKey(config('stripe.secret_key'));
         $user = Auth::user();
+
 
 
         DB::beginTransaction();

@@ -349,15 +349,15 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-    Route::middleware(['auth'])->group(function () {
+    // Route::middleware(['auth'])->group(function () {
 
-        # お友達紹介キャンペーンURL(canpaing_introductory)
-        Route::get('/canpaing/introductory',
-        [Controllers\CanpaingIntroductoryController::class, 'index'])
-        ->name('canpaing.introductory');
+    # お友達紹介キャンペーンURL(canpaing_introductory)
+    Route::get('/canpaing/introductory',
+    [Controllers\CanpaingIntroductoryController::class, 'index'])
+    ->name('canpaing.introductory');
 
 
-    });
+    // });
 
 /*
 |--------------------------------------------------------------------------

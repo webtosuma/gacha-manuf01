@@ -19,6 +19,7 @@
                             ご利用可能な決済方法 <img src="{{asset('storage/site/image/stripe_card.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
                         </div>
 
+
                         <div class="mb-3">
                             <label for="card_number">カード番号</label>
                             <div id="card-number" class="form-control p-2"></div>
@@ -91,6 +92,11 @@
             displayError.textContent = '';
         }
     });
+
+
+
+
+
 
     var form = document.getElementById('card-form');
     form.addEventListener('submit', function(event) {

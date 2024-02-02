@@ -1,10 +1,18 @@
 <!--トップー-->
 <section class="p- pb-md-5">
-    <div class="container mx-auto overflow-auto px-3" style="max-widthh:1200px;">
+    <div class="container mx-auto px-3" style="max-widthh:1200px;">
 
-        <div class="overflow-hidden" style="border-radius:1rem;">
+        <div class="position-relative">
 
-            @include('gacha.common.top_image')
+
+            @include('gacha.common.type_lable')
+
+            <div class="overflow-hidden rounded-4">
+
+                @include('gacha.common.top_image')
+
+            </div>
+
 
         </div>
 

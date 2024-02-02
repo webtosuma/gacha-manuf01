@@ -1,10 +1,10 @@
 <header class="position-fixed w-100" style="z-index:100;">
     <div class="container py-2 px-0">
 
-        <nav class="d-flex justify-content-between p-1 border border-primary border-3
-        rounded-pill ps-4 shadow" style="background:rgb(255, 255, 255, .9);">
+        <nav class="d-flex justify-content-between align-items-center p- border border-primary border-3
+        rounded-pill ps-3 mx-1 shadow" style="background:rgb(255, 255, 255, .9);">
 
-            <h1 class="d-flex align-items-center gap-3 m-0">
+            <h1 class="d-flex align-items-center gap-3 m-0 ">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{asset('storage/site/image/logo.png')}}"
                     alt="{{ config('app.name') }}" class="d-brock" style="height:2.4rem;">
@@ -13,7 +13,7 @@
 
 
             @if ( config('app.debug') )
-                <h3 class="text-danger m-0 mt-2">TEST MODE</h3>
+                <h6 class="text-danger m-0 mt-2">TEST MODE</h6>
             @endif
 
 
@@ -46,17 +46,10 @@
                     </a>
 
                     <!-- ハンバーガーボタン -->
-                    <button class="btn btn-  py-0 " type="button"
+                    <button class="btn btn- bg-primary rounded-pill text-white ms-2 py-0 " type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasHumberge"
-                    aria-controls="offcanvasHumberge"style="width:3.2rem;">
-                        <i class="bi bi-list fs-3"></i>
-
-                        {{-- <ratio-image-component
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="ユーザーメニュー"
-                        style_class="ratio ratio-1x1 rounded-pill border"
-                        url="{{ Auth::user()->image_path }}"
-                        ></ratio-image-component> --}}
-
+                    aria-controls="offcanvasHumberge"style="transform: translateX(1px);">
+                        <i class="bi bi-list fs-2"></i>
                     </button>
 
                 @endguest

@@ -25,6 +25,13 @@ Route::middleware(['admin_auth'])->group(function () {
         [Controllers\AdminGachaPrizeController ::class, 'update'])
         ->name('admin.gacha.prize.update');
 
+    // # 商品残数の編集
+    // Route::get('/admin/gacha/prize/edit/{gacha}',
+    // [Controllers\AdminGachaPrizeController ::class, 'edit'])
+    // ->name('admin.gacha.prize.edit');
+
+
+
 
     # 演出動画情報の編集
     Route::get('/admin/gacha/movie/edit/{gacha}',

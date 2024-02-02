@@ -50,6 +50,9 @@ class CanpaingIntroductoryController extends Controller
 
     /** 紹介ユーザー認証キーの生成 */
     public static function createKey($user){
+
+        if(!$user){ return '';}
+
         return  $user->id.'-'.$user->created_at->format('ymdHis');
     }
 

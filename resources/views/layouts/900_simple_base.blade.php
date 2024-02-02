@@ -35,7 +35,7 @@
 
 </head>
 <body class="bg-white">
-    <header class="container p-0 mb-3">
+    <header class="container p-2 mb-3">
         <h1 class="m-0">
             {{-- <a href="{{route('top')}}" class="navbar-brand  fs-2 fw-bold"> --}}
                 <img src="{{asset('storage/site/image/logo.png')}}" alt="サイトロゴ" class="d-brock" style="height:2rem;">
