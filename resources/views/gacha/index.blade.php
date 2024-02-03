@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
 <!--title-->
-@section('title', $category_name.'のガチャ一覧')
+@section('title')
+    @php
+    $title = "cardFesta（カードフェスタ）|オンラインオリパ・ネットオリパを24時間365日楽しめる！国内送料は無料！ ";
+    $title = $category_code=='all' ? $title : $category_name.'のガチャ一覧';
+    @endphp
+
+    {{$title}}
+@endsection
+
 
 <!--meta-->
 @section('meta')
@@ -97,12 +105,18 @@
                             <a href="{{ $slide['href'] }}" class="carousel-item pb- bg-dark
                             {{ $si==0 ? 'active' : ''}}">
 
-                                <div class="">
+                                <!--image-->
+                                @if( $slide['type'] == 'gacha' )
+
+                                    @php $gacha = $slide['gacha'];@endphp
+                                    @include('gacha.common.top_image')
+
+                                @else
                                     <ratio-image-component
                                     style_class="ratio ratio-4x3"
                                     url="{{ $slide['image'] }}"
                                     ></ratio-image-component>
-                                </div>
+                                @endif
 
                             </a>
                         @endforeach
@@ -137,27 +151,51 @@
 
 
     <!--カテゴリー-->
-    @php
-    $bg = $category_code=='all' ? 'bg-whiteee' : '';
-    @endphp
-    <section class="py-3 {{$bg}}">
+    <section class="mt-3 mb-2">
         <div class="container px-0 col-md-12 mx-auto overflow-auto">
             <nav class="nav gap-1 flex-nowrap" style="min-width:{{$categories->count()*6 + 10}}rem;">
                 @php
                 $sc = "col fs- py-2 fw-bold btn btn-dark border-0";
                 $style_class = $category_code=='all' ? $sc.' disabled bg-primary' : $sc;
+                $params = ['category_code'=>'all', 'search_key'=>$search_key];
+
                 @endphp
-                <a  href="{{ route('gacha_category','all') }}"
+                <a  href="{{ route('gacha_category',$params) }}"
                 class="{{ $style_class }}">{{ 'すべて' }}</a>
 
 
                 @foreach ($categories as $category)
                     @php
                     $style_class = $category_code == $category->code_name ? $sc.' disabled bg-primary' : $sc;
+                    $params = ['category_code'=>$category->code_name, 'search_key'=>$search_key];
                     @endphp
 
-                    <a  href="{{ route('gacha_category', $category->code_name ) }}"
+                    <a  href="{{ route('gacha_category', $params ) }}"
                     class="{{ $style_class }}">{{ $category->name }}</a>
+                @endforeach
+            </nav>
+        </div>
+    </section>
+
+    <!--絞り込みキー-->
+    <section class="mb-3">
+        <div class="container px-0 col-md-12 mx-auto overflow-auto">
+            @php
+            $sc = "col- fs- py-2 fw-bold btn btn-sm btn-light border px-3 rounded-pill";
+            $search_key = $search_key ? $search_key : 'desc_crated';
+            @endphp
+            <nav class="nav gap-1 flex-nowrap" style="min-width:{{count($searchs)*5 + 10}}rem;">
+
+                @foreach ($searchs as $search)
+                    @php
+                    $style_class = $search_key==$search['key'] ? $sc.' disabled text-primary border-primary' : $sc;
+
+                    $params = ['category_code'=>$category_code, 'search_key'=>$search['key']];
+                    @endphp
+
+
+                    <a  href="{{route('gacha_category',$params)}}"
+                    class="{{ $style_class }}">{{ $search['label'] }}</a>
                 @endforeach
             </nav>
         </div>
@@ -170,12 +208,12 @@
 
             <!--card-->
             <div class="row gy-5 overflow-hidden">
-                @foreach ($gachas as $gacha)
+                @forelse ($gachas as $gacha)
                     <div class="col-12 col-md-6 col-lg-4  ">
 
-                        <div class="position-relative">
+                        {{-- <div class="position-relative"> --}}
 
-                            @include('gacha.common.type_lable')
+                            {{-- @include('gacha.common.type_lable') --}}
 
                             @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
                             <a href="{{route('gacha',$params)}}"
@@ -219,12 +257,20 @@
                                 </div>
                             </a>
 
-                        </div>
+                        {{-- </div> --}}
+
+
                         <!--play_buttons-->
                         @include('gacha.common.play_buttons')
 
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-12 text-secondary bg-light-subtle
+                    p-3 fs-5 rounded-3 shadow
+                     ">
+                        *該当するガチャがありません。
+                    </div>
+                @endforelse
             </div>
 
 

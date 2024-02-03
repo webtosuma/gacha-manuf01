@@ -2,7 +2,8 @@
     <div class="">
 
         <!--ボトムメニュー-->
-        <div class="position-fixed bottom-0 end-0 w-100 pb-3 bg-white border"
+        <div v-if="bottom_menu == 'true'"
+        class="position-fixed bottom-0 end-0 w-100 pb-3 bg-white border"
         style="border-radius: 1rem 1rem 0 0; z-index:50;">
             <div class="container" style="max-width:900px;">
 
@@ -52,12 +53,43 @@
             </div>
         </div>
 
-        <div class="text-end">
+
+        <!--Headー-->
+        <div class="row align-items-center gy-2">
+            <div class="col-12 col-lg position-relative">
+                <input v-model="search_key"
+                @change="getData()"
+                type="text" class="form-control rounded-pill" placeholder="商品名検索">
+
+                <button @click="resetSearchKey"
+                class="btn position-absolute top-50 translate-middle-y"
+                style="right:1rem;">×</button>
+            </div>
+            <div class="col-12 col-md">
+                <div class="d-flex gap-1">
+                    <button v-for="(select_order,key) in select_orders" :key="key"
+                    @click="changeOrder( select_order.value )"
+                    class="btn btn-sm border rounded-pill"
+                    :class=" order==select_order.value ? 'disabled btn-primary' : '' "
+                    >{{ select_order.lable }}</button>
+                </div>
+            </div>
+            <div class="col-auto">
+                取得商品数：
+                <span class="fs-1 fw-bold">
+                    <number-comma-component :number="userPrizes.length" />
+                </span>
+            </div>
+        </div>
+
+        <!-- <div class="text-end">
             取得商品数：
             <span class="fs-1 fw-bold">
                 <number-comma-component :number="userPrizes.length" />
             </span>
-        </div>
+        </div> -->
+
+
         <!--商品一覧-->
         <ul class="row px-3 bg-white rounded-3 mx-2 gy-3 mt-0" style="list-style:none;">
 
@@ -76,7 +108,8 @@
                 <div class="row" v-if="userPrize.prize">
                     <div class="col-4 px-0 pe-3 position-relative">
                         <!--チェックボックス-->
-                        <div class="position-absolute top-0 start-0 translate-middle" style="z-index:5">
+                        <div v-if="bottom_menu == 'true'"
+                        class="position-absolute top-0 start-0 translate-middle" style="z-index:5">
 
                             <input @change="changeChildren()"
                             v-model="ids" :value="userPrize.id"
@@ -161,6 +194,9 @@
     export default {
         props: {
             token:{ type: String,  default: '', },
+            user_id:{ type: [String,Number],  default: '', },
+            bottom_menu:{ type: String,  default: 'true', },
+
             r_api_user_prize:{ type: String,  default: '', },
             r_api_user_prize:{ type: String,  default: '', },//データ取得ルート
             r_exchange_points:{ type: String,  default: '', },//ポイント交換ルート
@@ -179,6 +215,16 @@
             totalPoint: 0,/*チェック中のユーザー商品の合計ポイント*/
 
             disabled: true,
+
+            search_key: '',//検索キーワード
+            order: 'desc_created',//並び順
+
+            select_orders :[
+                { lable: '新しい順',      value:'desc_created', },
+                { lable: '古い順',        value:'asc_created', },
+                { lable: '高ポイント順', value:'desc_point', },
+                { lable: '低ポイント順', value:'asc_point', },
+            ],
         } },
         mounted() {
 
@@ -188,16 +234,30 @@
         },
         methods:{
 
+
             /* データ取得 */
             getData :function(){
 
-                const route = this.r_api_user_prize;　
-                axios.post( route ,{ _token: this.token })
+                const route = this.r_api_user_prize;
+                const params = {
+                    _token:     this.token,
+                    user_id:    this.user_id,
+                    search_key: this.search_key,//検索キーワード
+                    order:      this.order,     //並び順
+                };
+
+
+                axios.post( route, params )
                 .then(json => {
                     // console.log(json.data);
 
                     this.userPrizes = json.data;
                     this.loading = false;//読み込み中
+
+                    this.ids = [];//チェックボックスのリセット
+                    this.allCheck = false;
+                    this.totalPoint = 0; //ポイント合計値のリセット
+
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')
@@ -207,6 +267,19 @@
 
             },
 
+
+            /* 並び順の変更 */
+            changeOrder :function( value ){
+                this.order = value;
+                this.getData();
+            },
+
+
+            /* 検索キーワードのリセット */
+            resetSearchKey :function(){
+                this.search_key = '';
+                this.getData();
+            },
 
 
             /** 全て選択をクリック */

@@ -54,10 +54,10 @@ class Gacha extends Model
     {
         return [
             'nomal'       => '通常',
-            'one_time'    => '１回限定',
-            'only_oneday' => '一日限定',
             // 'one_time'    => '１回限定',
-            // 'only_oneday' => '１日限定',
+            // 'only_oneday' => '一日限定',
+            'one_time'    => '一回限定',
+            'only_oneday' => '１日１回',
         ];
     }
 

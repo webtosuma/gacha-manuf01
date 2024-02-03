@@ -18,7 +18,7 @@
             "sizes": "96x96"
         },
         {
-            "src": "storage/site/image/logo192.png",
+            "src": "storage/site/image/logo512.png",
             "type": "image/png",
             "sizes": "192x192"
         },

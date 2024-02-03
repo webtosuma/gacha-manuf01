@@ -64,7 +64,7 @@ $active_key = 'user';
         @if( $user_prizes->count() )
             <div class="d-flex justify-content-between mt-3">
                 <div class="col">
-                    {{ $user_prizes->links('vendor.pagination.bootstrap-4') }}
+                    {{-- {{ $user_prizes->links('vendor.pagination.bootstrap-4') }} --}}
                 </div>
 
                 <div class="col-auto">
@@ -75,8 +75,16 @@ $active_key = 'user';
             </div>
         @endif
 
+        <u-user-prize-form
+        token=  "{{ csrf_token() }}"
+        user_id="{{ $user->id }}"
+        bottom_menu="false"
+        r_api_user_prize ="{{ route('api_user_prize') }}"
+        r_exchange_points="{{ route('user_prize.exchange_points') }}"
+        r_shipped_appli  ="{{ route('shipped.appli') }}"
+        ></u-user-prize-form>
 
-        <!--商品一覧-->
+        {{-- <!--商品一覧-->
         <ul class="row px-3 bg-white rounded-3 mx-2 gy-3 mt-0" style="list-style:none;">
 
             @forelse ($user_prizes as $user_prize)
@@ -107,14 +115,15 @@ $active_key = 'user';
                 </li>
             @endforelse
 
-        </ul>
+        </ul> --}}
+
 
 
         <!-- 表示切り替え・ページネーション -->
         @if( $user_prizes->count() )
             <div class="d-flex justify-content-between mt-3">
                 <div class="col">
-                    {{ $user_prizes->links('vendor.pagination.bootstrap-4') }}
+                    {{-- {{ $user_prizes->links('vendor.pagination.bootstrap-4') }} --}}
                 </div>
 
                 <div class="col-auto">

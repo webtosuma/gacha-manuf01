@@ -20,10 +20,12 @@ class GachaController extends Controller
 {
     /**
      * カテゴリー選択・一覧表示
+     *
+     * @param \Illuminate\Http\Request $request
      * @param String $category_code
      * @return \Illuminate\Http\Response
      */
-    public function index( $category_code='all' )
+    public function index(Request $request, $category_code='all' )
     {
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
@@ -42,20 +44,19 @@ class GachaController extends Controller
             ->orderBy('created_at')
             ->get();
 
+            ## 絞り込みキー
+            $search_key = $request ? $request->search_key : null;
+
+            ## 検索キーワード
+            $searchs = self::getsearchs();
+
             ## 表示できるガチャ一覧
-            $gachas = self::getPublishedGachas( $category_code );
-            // dd($gachas[0]->image_path);
+            $gachas = self::getPublishedGachas( $category_code, $search_key );
 
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
             ->limit(3)->get();
-
-            ## スライドお知らせ
-            $slide_infos = InfomationController::GetInfomationsQuery()
-            ->where('is_slide',1)
-            ->limit(3)->get();;
-
 
             ## スライド
             $slides = self::getSlides($gachas);
@@ -64,8 +65,8 @@ class GachaController extends Controller
 
         # viewの表示
         return view('gacha.index', compact(
-            'category_code', 'category_name', 'bg_image',  'categories', 'gachas', 'infomations',
-            // 'slide_infos',
+            'category_code', 'category_name', 'bg_image',  'categories',
+            'search_key', 'searchs', 'gachas', 'infomations',
             'slides',
          ) );
 
@@ -75,7 +76,7 @@ class GachaController extends Controller
         /**
          * ガチャ一覧で表示できるガチャ一覧の取得
          */
-        public static function getPublishedGachas( $category_code )
+        public static function getPublishedGachas($category_code, $search_key=null )
         {
             $now = now()->toDateTimeString();
 
@@ -104,9 +105,58 @@ class GachaController extends Controller
 
 
             # ID配列を指定して、ガチャの取得
-            return Gacha::orderByDesc('published_at')
-            ->orderByDesc('created_at')
-            ->find($id_array);
+            $query = Gacha::query();
+
+            // 並び替え・絞り込み
+            switch ($search_key) {
+
+                # 高ポイント順
+                case 'desc_point':
+                    $query->orderByDesc('one_play_point');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                # 低ポイント順
+                case 'asc_point':
+                    $query->orderBy('one_play_point');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                # 一回限定
+                case 'one_time':
+                    $query->where('type','one_time');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                # １日１回
+                case 'only_oneday':
+                    $query->where('type','only_oneday');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                # 全ての限定　
+                case 'other_types':
+                    $query->where('type','<>','nomal');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                # 古い順
+                case 'asc_created':
+                    $query->orderBy('published_at');
+                    break;
+
+                # 新着順
+                default:
+                    $query->orderByDesc('published_at');
+                    break;
+            }
+
+            return $query->orderByDesc('created_at')->find($id_array);
+
+
+            // return Gacha::orderByDesc('published_at')
+            // ->orderByDesc('created_at')
+            // ->find($id_array);
         }
 
 
@@ -122,8 +172,10 @@ class GachaController extends Controller
             $slide_infos = InfomationController::GetInfomationsQuery()
             ->where('is_slide',1)
             ->limit(3)->get();
+
             foreach ($slide_infos as $slide_info) {
                 $slides[] = [
+                    'type' => 'info',
                     'href' => route('infomation.show',$slide_info),
                     'image'=> $slide_info->image_path,
                 ];
@@ -133,14 +185,33 @@ class GachaController extends Controller
                 if($gacha->is_slide){
                     $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key];
                     $slides[] = [
+                        'type' => 'gacha',
                         'href' => route('gacha',$params),
-                        'image'=> $gacha->image_path
+                        'image'=> $gacha->image_path,
+                        'gacha'=> $gacha,
                     ];
                 }
             }
 
 
             return $slides;
+        }
+
+
+
+        /**
+         * 検索キーワード
+        */
+        public function getsearchs()
+        {
+            return [
+                ['label'=>'新着', 'key'=>'desc_crated'],
+                ['label'=>'高ポイント', 'key'=>'desc_point'],
+                ['label'=>'低ポイント', 'key'=>'asc_point'],
+                ['label'=>'一回限定', 'key'=>'one_time'],
+                ['label'=>'１日１回', 'key'=>'only_oneday'],
+                ['label'=>'全ての限定', 'key'=>'other_types'],
+            ];
         }
     //
 

@@ -19,7 +19,7 @@
                 <button type="submit" name="play_count" disabled
                 class="btn btn-light bg-gradient fw-bold w-100 py-md-3 text-danger
                 rounded-pill border-secondary border-3"
-                >売り切れ</button>
+                >終了</button>
             @endif
 
         </form>

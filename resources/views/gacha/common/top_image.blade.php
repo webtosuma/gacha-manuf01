@@ -1,4 +1,6 @@
-<div class="position-relative">
+<div class="position-relative"
+data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
+
     <ratio-image-component
     url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
     ></ratio-image-component>
@@ -26,5 +28,25 @@
         >{{$gacha->types()[$gacha->type]}}</div>
     </div>
     @endif --}}
+
+
+    <!-- 1回限定 -->
+    @if ($gacha->type=='one_time')
+    <div class="position-absolute p-2 pe-3 top-0 end-0">
+        <div class="p-2 px-4 bg- bg-gradient text-warning fw-bold border border-3 border-warning fs-5 "
+        style="transform: skew(-15deg); background-color: rgba(0, 0, 0, .8)"
+        >{{$gacha->types()[$gacha->type]}}</div>
+    </div>
+    @endif
+
+
+    <!-- 1日限定 -->
+    @if ($gacha->type=='only_oneday')
+    <div class="position-absolute p-2 pe-3 top-0 end-0">
+        <div class="p-2 px-4 bg- bg-gradient text-white fw-bold border border-3 border-danger fs-5"
+        style="transform: skew(-15deg); background-color: rgba(216, 85, 150, .8)"
+        >{{$gacha->types()[$gacha->type]}}</div>
+    </div>
+    @endif
 
 </div>

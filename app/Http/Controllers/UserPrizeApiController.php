@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserPrize;
+use App\Models\Prize;
+use App\Models\User;
+
 /*
 | =============================================
 |  取得した商品 API コントローラー
@@ -15,11 +18,13 @@ class UserPrizeApiController extends Controller
     /**
      * ユーザーの取得積み商品（ポイント交換・発送済みを除く）
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
+        $user = $request->user_id ? User::find($request->user_id) : Auth::user();
 
 
         # ユーザーの取得商品情報
@@ -37,8 +42,6 @@ class UserPrizeApiController extends Controller
             # 発送済みデータを除く
             $query->where('shipped_id',Null);
 
-            # 取得が新しい順
-            $query->orderByDesc('created_at');
 
             # 商品テーブル(prize)とのリレーション
             $query->with(['prize.rank' => function ($query) {
@@ -48,7 +51,42 @@ class UserPrizeApiController extends Controller
 
             }]);
 
+            # 並び替え
+            $order = $request->order;
+            switch ($order) {
+
+                # 高いポイント順
+                case 'desc_point':
+                    $query->orderByDesc('point');
+                    break;
+
+                # 低いポイント順
+                case 'asc_point':
+                    $query->orderBy('point');
+                    break;
+
+                # 取得が古い順
+                case 'asc_created':
+                    $query->orderBy('created_at');
+                    break;
+
+                # 取得が新しい順
+                default:
+                    $query->orderByDesc('created_at');
+                    break;
+                //
+            }
+
+            # 商品名検索
+            $search_key = $request->search_key;
+            if($search_key){
+                $prize_ids = Prize::where('name','like','%'.$search_key.'%')->get()->pluck('id')->toArray();
+                $query->whereIn('prize_id',$prize_ids);
+            }
+
         $user_prizes = $query->get();
+
+
 
         # 画像パスの登録
         foreach ($user_prizes as $user_prize) {
@@ -63,7 +101,7 @@ class UserPrizeApiController extends Controller
 
 
     /**
-     * IDを指定して、ユーザーの取得積み商品取得（ポイント交換・発送済みを除く）
+     * 商品IDを指定して、ユーザーの取得積み商品取得（ポイント交換・発送済みを除く）
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response

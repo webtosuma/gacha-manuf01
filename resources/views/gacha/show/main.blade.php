@@ -2,10 +2,8 @@
 <section class="p- pb-md-5">
     <div class="container mx-auto px-3" style="max-widthh:1200px;">
 
-        <div class="position-relative">
-
-
-            @include('gacha.common.type_lable')
+        {{-- <div class="position-relative"> --}}
+            {{-- @include('gacha.common.type_lable') --}}
 
             <div class="overflow-hidden rounded-4">
 
@@ -15,7 +13,6 @@
 
 
         </div>
-
     </div>
 </section>
 <!--各賞-->

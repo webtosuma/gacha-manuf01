@@ -80,7 +80,8 @@ $active_key = 'user';
                                     </td>
                                     <td>{{$canpaing_recruiter_count.'回'}}</td>
                                 @else
-                                    <td colspan="4" class="text-secondary text-center">*同上</td>
+                                    <td colspan="2" class="text-secondary text-center">*同上</td>
+                                    <td></td>
                                 @endif
                                 <!--ご友人-->
                                 @php

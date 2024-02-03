@@ -103,6 +103,7 @@ $active_key = 'user';
                         <th scope="col"></th>
                         <th scope="col">商品コード</th>
                         <th scope="col">商品名</th>
+                        <th scope="col">ポイント</th>
                         <th scope="col">ガチャ</th>
                         <th scope="col">取得日時</th>
                         <th scope="col">履歴ID</th>
@@ -135,6 +136,7 @@ $active_key = 'user';
                             </td>
                             <td>{{$user_prize->prize->code}}</td>
                             <td>{{$user_prize->prize->name}}</td>
+                            <td>{{$user_prize->point}}pt</td>
                             <td>{{$gacha_name}}</td>
 
                             <td>{{ $user_prize->created_at->format('Y年m月d日 H:i:s') }}</td>

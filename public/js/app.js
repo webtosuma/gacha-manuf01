@@ -8450,6 +8450,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       type: String,
       "default": ''
     },
+    user_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    bottom_menu: {
+      type: String,
+      "default": 'true'
+    },
     r_api_user_prize: {
       type: String,
       "default": ''
@@ -8479,7 +8487,25 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       totalPoint: 0,
       /*チェック中のユーザー商品の合計ポイント*/
 
-      disabled: true
+      disabled: true,
+      search_key: '',
+      //検索キーワード
+      order: 'desc_created',
+      //並び順
+
+      select_orders: [{
+        lable: '新しい順',
+        value: 'desc_created'
+      }, {
+        lable: '古い順',
+        value: 'asc_created'
+      }, {
+        lable: '高ポイント順',
+        value: 'desc_point'
+      }, {
+        lable: '低ポイント順',
+        value: 'asc_point'
+      }]
     };
   },
   mounted: function mounted() {
@@ -8491,19 +8517,39 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     getData: function getData() {
       var _this = this;
       var route = this.r_api_user_prize;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
-        _token: this.token
-      }).then(function (json) {
+      var params = {
+        _token: this.token,
+        user_id: this.user_id,
+        search_key: this.search_key,
+        //検索キーワード
+        order: this.order //並び順
+      };
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, params).then(function (json) {
         // console.log(json.data);
 
         _this.userPrizes = json.data;
         _this.loading = false; //読み込み中
+
+        _this.ids = []; //チェックボックスのリセット
+        _this.allCheck = false;
+        _this.totalPoint = 0; //ポイント合計値のリセット
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
         // console.log( error.response.data );
       });
     },
 
+    /* 並び順の変更 */
+    changeOrder: function changeOrder(value) {
+      this.order = value;
+      this.getData();
+    },
+    /* 検索キーワードのリセット */
+    resetSearchKey: function resetSearchKey() {
+      this.search_key = '';
+      this.getData();
+    },
     /** 全て選択をクリック */
     changeAll: function changeAll() {
       var ids = this.userPrizes.map(function (value) {
@@ -13886,7 +13932,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {}, [_c("div", {
+  return _c("div", {}, [_vm.bottom_menu == "true" ? _c("div", {
     staticClass: "position-fixed bottom-0 end-0 w-100 pb-3 bg-white border",
     staticStyle: {
       "border-radius": "1rem 1rem 0 0",
@@ -13992,15 +14038,66 @@ var render = function render() {
       "data-bs-toggle": "modal",
       "data-bs-target": "#exchangeModal"
     }
-  }, [_vm._v("ポイント交換")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "text-end"
-  }, [_vm._v("\n        取得商品数：\n        "), _c("span", {
+  }, [_vm._v("ポイント交換")])])])])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "row align-items-center gy-2"
+  }, [_c("div", {
+    staticClass: "col-12 col-lg position-relative"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.search_key,
+      expression: "search_key"
+    }],
+    staticClass: "form-control rounded-pill",
+    attrs: {
+      type: "text",
+      placeholder: "商品名検索"
+    },
+    domProps: {
+      value: _vm.search_key
+    },
+    on: {
+      change: function change($event) {
+        return _vm.getData();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.search_key = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("button", {
+    staticClass: "btn position-absolute top-50 translate-middle-y",
+    staticStyle: {
+      right: "1rem"
+    },
+    on: {
+      click: _vm.resetSearchKey
+    }
+  }, [_vm._v("×")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-md"
+  }, [_c("div", {
+    staticClass: "d-flex gap-1"
+  }, _vm._l(_vm.select_orders, function (select_order, key) {
+    return _c("button", {
+      key: key,
+      staticClass: "btn btn-sm border rounded-pill",
+      "class": _vm.order == select_order.value ? "disabled btn-primary" : "",
+      on: {
+        click: function click($event) {
+          return _vm.changeOrder(select_order.value);
+        }
+      }
+    }, [_vm._v(_vm._s(select_order.lable))]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_vm._v("\n            取得商品数：\n            "), _c("span", {
     staticClass: "fs-1 fw-bold"
   }, [_c("number-comma-component", {
     attrs: {
       number: _vm.userPrizes.length
     }
-  })], 1)]), _vm._v(" "), _c("ul", {
+  })], 1)])]), _vm._v(" "), _c("ul", {
     staticClass: "row px-3 bg-white rounded-3 mx-2 gy-3 mt-0",
     staticStyle: {
       "list-style": "none"
@@ -14020,7 +14117,7 @@ var render = function render() {
       staticClass: "row"
     }, [_c("div", {
       staticClass: "col-4 px-0 pe-3 position-relative"
-    }, [_c("div", {
+    }, [_vm.bottom_menu == "true" ? _c("div", {
       staticClass: "position-absolute top-0 start-0 translate-middle",
       staticStyle: {
         "z-index": "5"
@@ -14065,7 +14162,7 @@ var render = function render() {
           return _vm.changeChildren();
         }]
       }
-    })]), _vm._v(" "), _c("ratio-image-component", {
+    })]) : _vm._e(), _vm._v(" "), _c("ratio-image-component", {
       attrs: {
         style_class: "ratio ratio-3x4 rounded-3",
         url: userPrize.prize.image_path

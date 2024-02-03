@@ -79,7 +79,7 @@ $active_key = 'gacha';
                 <div class="col-12 col-md-4 col-lg-3 ">
                     <div class="position-relative">
 
-                    @include('gacha.common.type_lable')
+                        {{-- @include('gacha.common.type_lable') --}}
 
                         <a href="{{route('admin.gacha.show',$gacha)}}"
                         class="card border-secondary border-3 shadow bg-white h-100
