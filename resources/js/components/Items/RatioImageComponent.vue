@@ -1,7 +1,17 @@
 <template>
     <div :class="style_class" class="ratio-image-parent-component">
 
-        <div class="ratio-image-component" :style="'background-image: url('+ url +');'"></div>
+        <div v-if="!loading"
+        class="ratio-image-component" :style="'background-image: url('+ url +');'"></div>
+
+
+        <div v-else
+        class="bg-secondary d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
 
     </div>
 </template>
@@ -17,10 +27,17 @@
             style_class:{ type: String, default: 'ratio ratio-1x1', },
 
         },
-        data : function() {
-            return{/* ~ */}
+        data() { return{
+            /* 読み込み中 */
+            loading: true,
+
+        } },
+        mounted() {
+
+            /* 読み込み完了 */
+            this.loading = false;
+
         },
-        mounted() {/* ~ */},
         methods:  {/* ~ */},
     }
 </script>

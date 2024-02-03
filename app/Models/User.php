@@ -114,6 +114,33 @@ class User extends Authenticatable
             return $this->hasMany(UserPrize::class,'user_id');
         }
 
+        /**
+         * UserPrize （高ポイント　トップ3）best_u_prizes //ハンバーガーメニュー
+         * @return String
+        */
+        public function getBestUPrizesAttribute()
+        {
+            $query = UserPrize::query();
+
+                # 商品情報とのリレーションがあること
+                $query->has('prize');
+
+                # ログインユーザーのデータに絞る
+                $query->where('user_id',$this->id);
+
+                # ポイント交換ずみのデータを除く
+                $query->where('point_history_id',NULL);
+
+                # 発送済みデータを除く
+                $query->where('shipped_id',Null);
+
+                $query->orderByDesc('point');
+                // $query->orderByDesc('created_at');
+
+
+            return $query->limit(3)->get();
+        }
+
 
         /**
          * UserGachaHistoryモデル リレーション ($user->u_prizes)

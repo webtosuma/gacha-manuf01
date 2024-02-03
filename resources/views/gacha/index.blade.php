@@ -43,19 +43,20 @@
             background-position: 50%;
             background-size: 100% 100%;
         }
-
+        .carousel-indicators{
+            z-index: 7;
+        }
         .carousel-control-prev, .carousel-control-next {
             width: 3rem;
-            opacity: .8;
+            opacity: 1;
+            z-index: 5;
         }
+
         .carousel-control-prev-icon {
             background-image:url({{asset('storage/site/image/carousel/prev.png')}});
         }
         .carousel-control-next-icon {
             background-image:url({{asset('storage/site/image/carousel/next.png')}});
-        }
-        .carousel-control-prev, .carousel-control-next{
-            opacity: 1;
         }
 
         /* タブメニュー */
@@ -227,14 +228,28 @@
 
                                 <!--metter-->
                                 <div class="card-body py-0">
-                                    <div class="d-flex align-items-center justify-content-center gap-2 fs-5">
-                                        @include('includes.point_icon')
+                                    <div class="row align-items-center justify-content-between">
+                                        <div class="col">
+                                            @include('gacha.common.new_label')
+                                        </div>
 
-                                        <div class="">
-                                            1回×
-                                            <span class="fs-3">
-                                                <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
-                                            </span>pt
+
+                                        <div class="col-auto">
+                                            <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
+                                                    @include('includes.point_icon')
+
+                                                <div class="">
+                                                    1回×
+                                                    <span class="fs-4">
+                                                        <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
+                                                    </span>pt
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col">
+                                            {{-- @include('gacha.common.type_label') --}}
                                         </div>
                                     </div>
                                     <div class="@if( !$gacha->is_meter ) invisible @endif">

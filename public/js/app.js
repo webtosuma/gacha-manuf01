@@ -5818,9 +5818,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {/* ~ */};
+    return {
+      /* 読み込み中 */
+      loading: true
+    };
   },
-  mounted: function mounted() {/* ~ */},
+  mounted: function mounted() {
+    /* 読み込み完了 */
+    this.loading = false;
+  },
   methods: {/* ~ */}
 });
 
@@ -9477,12 +9483,25 @@ var render = function render() {
   return _c("div", {
     staticClass: "ratio-image-parent-component",
     "class": _vm.style_class
-  }, [_c("div", {
+  }, [!_vm.loading ? _c("div", {
     staticClass: "ratio-image-component",
     style: "background-image: url(" + _vm.url + ");"
-  })]);
+  }) : _c("div", {
+    staticClass: "bg-secondary d-flex align-items-center justify-content-center"
+  }, [_vm._m(0)])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "spinner-border text-light",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])]);
+}];
 render._withStripped = true;
 
 

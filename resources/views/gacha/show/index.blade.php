@@ -35,15 +35,35 @@
     style="z-index:50; background:rgb(0, 0, 0, .7);">
         <div class="container mx-auto" style="max-width:900px;">
             <div class="card-body">
-                <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
-                    @include('includes.point_icon')
 
-                    <div class="">
-                        1回×
-                        <span class="fs-4">
-                            <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
-                        </span>pt
+                <div class="row align-items-center justify-content-between">
+
+
+                    <div class="col">
+                        @include('gacha.common.new_label')
                     </div>
+
+                    <div class="col-auto">
+                        <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
+                            @include('includes.point_icon')
+
+                            <div class="">
+                                1回×
+                                <span class="fs-4">
+                                    <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
+                                </span>pt
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        {{-- <div class="">
+                            @include('gacha.common.type_label')
+                        </div> --}}
+                    </div>
+
+
+
                 </div>
                 <div class="@if( !$gacha->is_meter ) d-none @endif">
                     <div class="progress">
