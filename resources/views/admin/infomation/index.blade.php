@@ -117,5 +117,10 @@ $active_submenu = true;
 
         </section>
 
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start mt-3">
+            {{ $infomations->links('vendor.pagination.bootstrap-4') }}
+        </div>
+
     </div>
 @endsection

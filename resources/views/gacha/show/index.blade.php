@@ -113,4 +113,17 @@
         </div>
     </section>
 
+
+    <section class="list-group-item mb-5">
+
+        <div class="fw-bold text-center mb-2">このガチャをシェアする</div>
+        @php
+        $sns_url  = request()->url();
+        $sns_text = $gacha->name;
+        @endphp
+        @include('includes.sns_btn')
+
+    </section>
+
+
 @endsection

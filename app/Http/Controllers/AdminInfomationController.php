@@ -20,8 +20,9 @@ class AdminInfomationController extends Controller
      */
     public function index()
     {
-        $infomations = Infomation::orderByDesc('created_at')
-        ->get();
+        $infomations = Infomation::orderByDesc('published_at')
+        ->orderByDesc('created_at')
+        ->paginate(20);
 
 
         return view('admin.infomation.index', compact('infomations'));

@@ -21,7 +21,7 @@ class InfomationController extends Controller
 
         $query->where('published_at','<=', now()); //非公開を除く
 
-        $query->orderByDesc('created_at');
+        $query->orderByDesc('published_at')->orderByDesc('created_at');
 
         return $query;
     }
@@ -36,7 +36,9 @@ class InfomationController extends Controller
     public function index()
     {
         # ユーザーページのお知らせモデルを取得
-        $infomations = self::GetInfomationsQuery()->get();
+        $infomations = self::GetInfomationsQuery()
+        ->paginate(20);
+        // ->get();
 
         // $user = Auth::user();
         // dd($user->unread_infomation_count);

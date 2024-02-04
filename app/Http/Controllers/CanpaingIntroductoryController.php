@@ -217,9 +217,11 @@ class CanpaingIntroductoryController extends Controller
             # 紹介者へメール送信
             $recruiter = User::find($canpaing_introductory->recruiter_id);
             $friend    = User::find($canpaing_introductory->friend_id);
+            $point = number_format( self::grantPoint() );
+
             Mail::to( $recruiter->email ) //宛先
             ->send(new \App\Mail\SendHtmlMailMailable([
-                'inputs' => ['recruiter'=>$recruiter, 'friend'=>$friend] , //入力変数
+                'inputs' => ['recruiter'=>$recruiter, 'friend'=>$friend, 'point'=>$point] , //入力変数
                 'view' => 'emails.canpaing.introductory_friend_register' , //テンプレート
                 'subject' => '紹介したお友達の会員登録が完了いたしました。' , //件名
             ]) );

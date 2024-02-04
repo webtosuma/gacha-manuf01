@@ -113,10 +113,22 @@
                                     @include('gacha.common.top_image')
 
                                 @else
-                                    <ratio-image-component
-                                    style_class="ratio ratio-4x3"
-                                    url="{{ $slide['image'] }}"
-                                    ></ratio-image-component>
+                                    <div class="ratio ratio-4x3 position-relative">
+                                        <div style="z-index:1;">
+                                            <ratio-image-component
+                                            style_class="ratio ratio-4x3"
+                                            url="{{ $slide['image'] }}"
+                                            ></ratio-image-component>
+                                        </div>
+
+
+                                        <div class="absolute h-100 w-100 bg-dark d-flex align-items-center justify-content-center"
+                                        style="z-index:0;">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
 
                             </a>
@@ -189,7 +201,7 @@
 
                 @foreach ($searchs as $search)
                     @php
-                    $style_class = $search_key==$search['key'] ? $sc.' disabled text-primary border-primary' : $sc;
+                    $style_class = $search_key==$search['key'] ? $sc.' disabled bg-primary text-white border-primary' : $sc;
 
                     $params = ['category_code'=>$category_code, 'search_key'=>$search['key']];
                     @endphp
@@ -352,10 +364,17 @@
 
 
     <!--twitterタイムライン-->
-    <section class="bg-" style="background:rgb(0, 0, 0, 1);">
+    <section id="timeline" class="bg-" style="background:rgb(0, 0, 0, 1);">
         <div class="container py-5">
 
-            <h3 class="text-center text-white fs-3 fw-bold mb-4 py-3">公式 X（旧Twitter）</h3>
+            <h3 class="text-center text-white fs-3 fw-bol mb-4 py-3">
+
+                <span>公式</span>
+                <img src="{{asset('storage/site/image/x-logo/logo-white.png')}}"
+                alt="xロゴ" class="d-inline-block mb-2" style="height:1.8rem;">
+                <span class="ms-3">（旧Twitter）</span>
+
+            </h3>
 
 
             <div class="col-md-8 mx-auto bg-dark rounded-4 overflow-auto" style="max-height:90vh;">
@@ -363,8 +382,6 @@
             </div>
         </div>
     </section>
-
-
 
 
 @endsection

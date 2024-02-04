@@ -44,7 +44,7 @@ $active_submenu = true;
 
 
         <section>
-            <form action="{{ route('admin.infomation.update',$infomation) }}" method="POST"
+            <form action="{{ route('admin.infomation.update',$infomation) }}" method="POST" novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
                 @method('PATCH')

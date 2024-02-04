@@ -2,6 +2,7 @@
 
 <!----- title ----->
 @section('title','お知らせ')
+
 @section('meta')
     @php
         $meta_title = 'お知らせ';
@@ -19,6 +20,7 @@
             </ol>
         </nav>
     </div>
+
 
 
 
@@ -62,6 +64,13 @@
                     </div>
                 @endforelse
             </div>
+
+
+            <!-- ページネーション -->
+            <div class="d-flex justify-content-start mt-3">
+                {{ $infomations->links('vendor.pagination.bootstrap-4') }}
+            </div>
+
         </div>
     </div>
 @endsection

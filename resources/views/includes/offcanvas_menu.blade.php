@@ -1,12 +1,12 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasHumberge" aria-labelledby="offcanvasHumbergeLabel"
 style="max-width:90vw; min-width:30vw;">
 
-    <div class="offcanvas-header align-items-center">
+    <div class="offcanvas-header align-items-center pb-0">
         <!--閉じる-->
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-header align-items-center">
-        <h5 id="offcanvasHumbergeLabel">
+    <div class="offcanvas-header align-items-center border-bottom">
+        <h5 id="offcanvasHumbergeLabel" class="m-0">
             <a href="{{ route('settings.acount') }}" class="d-block text-dark">
                 <div class="row align-items-center g-2">
 
@@ -32,34 +32,35 @@ style="max-width:90vw; min-width:30vw;">
         </h5>
     </div>
 
-    @guest
-        <div class="d-flex gap-3 p-3">
-            <div class="col">
-                <a href="" class="btn btn-lg btn-primary text-white rounded-pill border-warning border-3 shadow w-100">会員登録</a>
-            </div>
-            <div class="col">
-                <a href="" class="btn btn-lg rounded-pill shadow w-100">ログイン</a>
-            </div>
-        </div>
-    @else
-        <div class="d-flex justify-content-between align-items-center p-3 bg-white">
-            <div class="col">
-                <div class="">所持ポイント：</div>
-                <div class="">
-                    <span class="fs-3 fw-bold">
-                        <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
-                    </span>
-                    <span>pt</span>
+
+    <div class="offcanvas-body px-0 pt-0">
+        @guest
+            <div class="d-flex gap-3 p-3">
+                <div class="col">
+                    <a href="" class="btn btn-lg btn-primary text-white rounded-pill border-warning border-3 shadow w-100">会員登録</a>
+                </div>
+                <div class="col">
+                    <a href="" class="btn btn-lg rounded-pill shadow w-100">ログイン</a>
                 </div>
             </div>
-            <div class="col-auto">
-                <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+        @else
+            <div class="d-flex justify-content-between align-items-center p-3 bg-white">
+                <div class="col">
+                    <div class="">所持ポイント：</div>
+                    <div class="">
+                        <span class="fs-3 fw-bold">
+                            <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                        </span>
+                        <span>pt</span>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+                </div>
             </div>
-        </div>
-    @endguest
+        @endguest
 
 
-    <div class="offcanvas-body px-0">
         <div class="list-group list-group-flush">
 
             {{-- <a href="" class="list-group-item list-group-item-action py-3"
@@ -124,6 +125,17 @@ style="max-width:90vw; min-width:30vw;">
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
+            <a href="{{route('home')}}/#timeline"
+            class="list-group-item list-group-item-action py-3 position-relative">
+
+                <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
+                alt="xロゴ" class="d-inline-block" style="height:1rem;">
+
+                <span>タイムライン</span>
+
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
 
             @if ( Auth::check() )
                 <form action="{{ route('logout') }}" method="POST">
@@ -164,6 +176,13 @@ style="max-width:90vw; min-width:30vw;">
                 </div>
             @endif
 
+
+            <div class="list-group-item ">
+
+                <div class="fw-bold text-center mb-2">{{ config('app.name') }}をシェアする</div>
+                @include('includes.sns_btn')
+
+            </div>
 
         </div>
     </div>

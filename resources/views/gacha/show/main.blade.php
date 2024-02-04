@@ -2,24 +2,29 @@
 <section class="p- pb-md-5">
     <div class="container mx-auto px-3" style="max-widthh:1200px;">
 
-        {{-- <div class="position-relative"> --}}
-            {{-- @include('gacha.common.type_lable') --}}
+        <div class="overflow-hidden rounded-4">
 
-            <div class="overflow-hidden rounded-4">
+            @include('gacha.common.top_image')
 
-                @include('gacha.common.top_image')
-
-            </div>
+        </div>
 
 
-        {{-- </div> --}}
+        <div class="d-flex justify-content-end mt-3">
+            {{-- <div class="fw-bold text-center mb-2">このガチャをシェアする</div> --}}
+            @php
+            $sns_url  = request()->url();
+            $sns_text = $gacha->name;
+            $sns_size = '2rem';
+            @endphp
+            @include('includes.sns_btn')
+        </div>
+
     </div>
 </section>
 <!--各賞-->
 <div class="row justify-content-center mx-auto" style="max-width:900px;">
 
     @foreach ($gacha->discriptions as $discription)
-
 
 
         @include('gacha.show.section')

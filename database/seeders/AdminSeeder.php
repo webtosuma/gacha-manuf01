@@ -83,16 +83,16 @@ class AdminSeeder extends Seeder
     public function dataList()
     {
         return   [
-            // [
-            //     'user' => [
-            //         'email' => 't.sakai@tosuma.ltd',
-            //         'password' => Hash::make('password'),
-            //         'name' => '酒井　貴弘',
-            //     ],
-            //     'admin' => [
-            //         'master' => 1,
-            //     ],
-            // ],
+            [
+                'user' => [
+                    'email' => 't.sakai@tosuma.ltd',
+                    'password' => Hash::make('password'),
+                    'name' => '酒井　貴弘',
+                ],
+                'admin' => [
+                    'master' => 1,
+                ],
+            ],
             [
                 'user' => [
                     'email' => 'contact@fobees.jp',
@@ -105,17 +105,17 @@ class AdminSeeder extends Seeder
                     'get_mail'=>0,
                 ],
             ],
-            [
-                'user' => [
-                    'email' => 'na@tosuma.ltd',
-                    'password' => Hash::make('password'),
-                    'name' => 'TOSUMA',
-                ],
-                'admin' => [
-                    'master' => 1,
-                    'get_mail'=>0,
-                ],
-            ],
+            // [
+            //     'user' => [
+            //         'email' => 'na@tosuma.ltd',
+            //         'password' => Hash::make('password'),
+            //         'name' => 'TOSUMA',
+            //     ],
+            //     'admin' => [
+            //         'master' => 1,
+            //         'get_mail'=>0,
+            //     ],
+            // ],
 
 
         ];

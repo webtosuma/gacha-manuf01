@@ -1,9 +1,25 @@
 <div class="position-relative"
 data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
 
-    <ratio-image-component
-    url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
-    ></ratio-image-component>
+    <!--loading-->
+    <div class="ratio ratio-4x3">
+        <div class="bg-dark d-flex align-items-center justify-content-center"
+        style="z-index:0;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--gacha image-->
+    <div class="position-absolute top-0 start-0 w-100 h-100"
+    style="z-index:0; background: rgba(0, 0, 0, .7);">
+        <ratio-image-component
+        url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
+        ></ratio-image-component>
+    </div>
 
     @if ($gacha->remaining_count==0)
     <div class="position-absolute top-0 start-0 w-100 h-100"
@@ -34,7 +50,7 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     @if ($gacha->type=='one_time')
     <div class="position-absolute p-2 pe-3 top-0 end-0">
         <div class="p-2 px-4 bg- bg-gradient text-warning fw-bold border border-3 border-warning fs-5 "
-        style="transform: skew(-15deg); background-color: rgba(0, 0, 0, .8)"
+        style="z-index:2; transform: skew(-15deg); background-color: rgba(0, 0, 0, .8)"
         >{{$gacha->types()[$gacha->type]}}</div>
     </div>
     @endif
@@ -44,7 +60,7 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     @if ($gacha->type=='only_oneday')
     <div class="position-absolute p-2 pe-3 top-0 end-0">
         <div class="p-2 px-4 bg- bg-gradient text-white fw-bold border border-3 border-danger fs-5"
-        style="transform: skew(-15deg); background-color: rgba(216, 85, 150, .8)"
+        style="z-index:2; transform: skew(-15deg); background-color: rgba(216, 85, 150, .8)"
         >{{$gacha->types()[$gacha->type]}}</div>
     </div>
     @endif

@@ -56,7 +56,8 @@ class GachaController extends Controller
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
-            ->limit(3)->get();
+            ->limit(3)
+            ->get();
 
             ## スライド
             $slides = self::getSlides($gachas);
@@ -171,7 +172,8 @@ class GachaController extends Controller
             // お知らせ
             $slide_infos = InfomationController::GetInfomationsQuery()
             ->where('is_slide',1)
-            ->limit(3)->get();
+            // ->limit(3)
+            ->get();
 
             foreach ($slide_infos as $slide_info) {
                 $slides[] = [
