@@ -57,12 +57,16 @@ class UserPrizeApiController extends Controller
 
                 # 高いポイント順
                 case 'desc_point':
-                    $query->orderByDesc('point');
+                    $query->orderByDesc('point')
+                    ->orderByDesc('prize_id')
+                    ->orderByDesc('created_at');
                     break;
 
                 # 低いポイント順
                 case 'asc_point':
-                    $query->orderBy('point');
+                    $query->orderBy('point')
+                    ->orderByDesc('prize_id')
+                    ->orderByDesc('created_at');
                     break;
 
                 # 取得が古い順

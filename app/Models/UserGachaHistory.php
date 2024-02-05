@@ -77,7 +77,10 @@ class UserGachaHistory extends Model
         */
         public function user_prizes()
         {
-            return $this->hasMany(UserPrize::class,'gacha_history_id');
+            return $this->hasMany(UserPrize::class,'gacha_history_id')
+            ->orderByDesc('point')
+            ->orderByDesc('prize_id')
+            ;
         }
 
 

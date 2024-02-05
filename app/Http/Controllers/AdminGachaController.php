@@ -233,14 +233,12 @@ class AdminGachaController extends Controller
      */
     public function destroy(Request $request, Gacha $gacha)
     {
-        # ストレージファイルの削除
-        // Method::deleteStorageFile($gacha->image);
+        # 削除用のデータ整理
+        $gacha->is_meter = 0;//メーター非表示
+        $gacha->is_slide = 0;//スライド非表示
+        $gacha->published_at=null;//非公開
+        $gacha->save();
 
-        // $discriptions  = $gacha->discriptions; //ガチャ詳細
-        // foreach ($discriptions as $discription) {
-        //     Method::deleteStorageFile($discription->image);
-        //     Method::deleteStorageFile($discription->sorce);
-        // }
 
         # DBデータの論理削除
         $gacha->delete();

@@ -48,6 +48,11 @@ class UserGachaHistoryApiContloller extends Controller
                 $query->orderBy('order', 'desc');
             }]);
 
+            # ポイント順、商品ID順
+            $query->orderByDesc('point')
+            ->orderByDesc('prize_id');
+
+
             # 指定した『ガチャ履歴』に該当する商品のみ
             $query->where('gacha_history_id', $user_gacha_history->id);
 
