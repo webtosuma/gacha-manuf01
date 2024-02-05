@@ -12,7 +12,7 @@
 
             @if ($gacha->remaining_count >=1 && !$gacha->played_only_oneday)
                 <button type="submit" name="play_count" value="{{ 1 }}"
-                class="btn btn-light bg-gradient fw-bold w-100 py-md-
+                class="btn btn-light bg-gradient fw-bold w-100 pb-0
                 rounded-pill border-secondary border-3"
                 >
                     <div class="">1回ガチャる</div>
@@ -21,7 +21,7 @@
 
             @elseif ($gacha->played_only_oneday)
                 <button type="submit" name="play_count" disabled
-                class="btn btn-light bg-gradient fw-bold w-100 py-md- text-danger
+                class="btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger
                 rounded-pill border-secondary border-3"
                 >
                     <div class="">本日は終了</div>
@@ -30,7 +30,7 @@
 
             @else
                 <button type="submit" name="play_count" disabled
-                class="btn btn-light bg-gradient fw-bold w-100 py-md- text-danger
+                class="btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger
                 rounded-pill border-secondary border-3"
                 >
                     <div class="">終了</div>
@@ -45,7 +45,7 @@
 
     <div class="col-6">
         <button type="submit" name="play_count" disabled
-        class="btn btn-dark bg-gradient text- fw-bold w-100 py-md- text-danger
+        class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger
         rounded-pill border-secondary border-3"
         >
             <div class="">終了</div>

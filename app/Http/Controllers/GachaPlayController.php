@@ -126,14 +126,22 @@ class GachaPlayController extends Controller
         if( !Auth::check() ){
             return 'ガチャを始めるには、ログインが必要です';
         }
+
+        # 売り切れ
+        else if( $is_sold_out ){
+            return '売り切れです';
+        }
+
         # ポイントが不足しているとき
         else if( $total_play_point > $user->point ){
             return 'ポイントが不足しています';
         }
+
         # 商品数が、プレイ回数より少ないとき
         else if( $play_count > $remaining_count ){
             return '残りの商品数が少ないため、複数回ガチャをすることができません';
         }
+
         # 非公開ガチャの利用不可(非公開または、公開日が現在より先のとき)
         else if(
             !$gacha->published_at || $gacha->published_at->toDateTimeString() > now()->toDateTimeString()
@@ -141,10 +149,20 @@ class GachaPlayController extends Controller
             return '現在、このガチャを利用することはできません。';
         }
 
-        # 売り切れ
-        else if( $is_sold_out ){
-            return '売り切れです';
+        # [限定ガチャ]１回限定ガチャ
+        else if(
+            $gacha->type=='one_time' && $gacha->played_one_time
+        ){
+            return '現在、このガチャを利用することはできません。';
         }
+
+        # [限定ガチャ]一日一回限定限定ガチャ
+        else if(
+            $gacha->type=='only_oneday' && $gacha->played_only_oneday
+        ){
+            return '本日既に、このガチャは利用済みです。';
+        }
+
         else{
             return null;
         }

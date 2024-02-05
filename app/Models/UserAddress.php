@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
 |  ユーザーアドレス テーブル
@@ -11,7 +12,10 @@ use Illuminate\Database\Eloquent\Model;
 */
 class UserAddress extends Model
 {
+    // use SoftDeletes; //論理削除の利用
+
     public $timestamps = true;
+
 
     protected $fillable = [
         'name',//宛名

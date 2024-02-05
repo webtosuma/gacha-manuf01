@@ -91,7 +91,7 @@
                             >紹介URLをポスト</a>
                         </div> --}}
 
-                        <h5 class="text-center fs-5 fw-bold mb-3">紹介登録URLをシェアしよう！</h5>
+                        <h5 class="text-center fs-5 fw-bold mb-3">紹介登録URLをポストしよう！</h5>
                         @php
                         $sns_url  = $url;
                         $sns_text = config('app.name').'ご友人紹介キャンペーン!!紹介URLから「会員登録」と「初回ポイント購入完了」後、紹介ユーザー様とご友人に、それぞれ'.$point.'ptプレゼント！！';

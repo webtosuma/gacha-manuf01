@@ -81,4 +81,20 @@ class UserGachaHistory extends Model
         }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * アクセスキー key
+         * @return String
+        */
+        public function getKeyAttribute()
+        {
+            return sprintf('%d-%d-%d',$this->id,$this->created_at->format('YmdHis'),$this->user_id);
+        }
+
 }

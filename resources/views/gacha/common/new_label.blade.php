@@ -1,7 +1,7 @@
 
 @php
 /* NEW ラベル */
-$published_at = $gacha->published_at->toDateTimeString();
+$published_at = $gacha->published_at ? $gacha->published_at->toDateTimeString() : '';
 $new_start_at = now()->subday(7)->toDateTimeString();//減算
 $bool = $new_start_at < $published_at;
 @endphp

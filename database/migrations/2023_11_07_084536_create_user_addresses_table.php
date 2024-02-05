@@ -31,6 +31,7 @@ class CreateUserAddressesTable extends Migration
             $table->foreignId('user_id')->constrained('users')
             ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
             $table->timestamps();
+
         });
     }
 

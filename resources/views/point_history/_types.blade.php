@@ -44,8 +44,12 @@
                         <span class="text-danger">●</span>ガチャ
                     </div>
                     <div class="">
-                        <span>{{ '['.$point_history->user_gacha_history->gacha->name.']' }}</span>
-                        <span>{{ '（'.$point_history->user_gacha_history->play_count.'回）' }}</span>
+                        <a href="{{route('gacha.result_history',$point_history->user_gacha_history->key)}}">
+
+                            <span>{{ '['.$point_history->user_gacha_history->gacha->name.']' }}</span>
+                            <span>{{ '（'.$point_history->user_gacha_history->play_count.'回）' }}</span>
+
+                        </a>
                     </div>
                 </div>
 
@@ -62,10 +66,26 @@
                 @php
                 $text_color = $point_history->value >= 0 ? 'text-secondary' : 'text-danger';
                 $sine = $point_history->value > 0 ? '+' : ( $point_history->value < 0 ? '-' : '' );
+
+                $href = !$point_history->user_shipped->shipment_at
+                ? route('shipped.waiting.show',$point_history->user_shipped)
+                : route('shipped.send.show'   ,$point_history->user_shipped);
                 @endphp
                 <div class="">
                     <div class="form-text">{{$point_history->created_at->format('Y/m/d H:i')}}</div>
-                    <div class="fw-bold"><span class="{{$text_color}}">●</span>商品発送</div>
+                    <div class="fw-bold">
+                        <a href="{{$href}}" class="d-flex align-items-center">
+                            <span class="{{$text_color}}">●</span>
+
+                            <span class="me-1">商品発送</span>
+
+                            @if ($point_history->user_shipped->shipment_at)
+                                <span class="badge bg-success">発送済み</span>
+                            @else
+                                <span class="badge bg-danger">未発送</span>
+                            @endif
+                        </a>
+                    </div>
                     <div class="">配送料・手数料</div>
                 </div>
 

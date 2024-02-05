@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-
 /*
 ==========================================================================
  ユーザールーティング　web
@@ -11,403 +10,54 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-    Route::get('/',
-        // function(){ return redirect()->route('gacha_category'); }
-        [App\Http\Controllers\GachaController::class, 'index']
-    )->name('home');
+Route::get('/',
+    [App\Http\Controllers\GachaController::class, 'index']
+)->name('home');
 
 
-    Route::get('/pwa',function(){
-        return view('pwa');
-    });
+# WPAローディングページ
+Route::get('/pwa',function(){
+    return view('pwa');
+});
 
-    Route::get('/ip',
-    [Controllers\Auth\RegisterController::class, 'ipTest']);
+Route::get('/ip',
+[Controllers\Auth\RegisterController::class, 'ipTest']);
 
-/*
-|--------------------------------------------------------------------------
-| 認証・登録・パスワード変更
-|  UserController
-|--------------------------------------------------------------------------
-*/
-    Auth::routes();
 
-    # ログイン
-    Route::get('/login',
-    [Controllers\Auth\LoginController::class, 'index'])
-    ->name('login');
+# 認証
+include('web/auth.php');
 
-    # 会員登録
-    Route::get('/register',
-    [Controllers\Auth\RegisterController::class, 'index'])
-    ->name('register');
+# ガチャ
+include('web/gacha.php');
 
-    # 会員登録処理
-    Route::post('register/post', //canpaing_introductory_key:紹介キャンペーン キー
-    [Controllers\Auth\RegisterController::class, 'register_post'])
-    ->name('register.post');
 
+# ポイント購入・履歴
 
-    # ログインが必要ですページ(require_login)　
-    // ※ログイン前にログインが必要なページにアクセスした際に表示されるページ
-    Route::get('/require_login', function () { return view('auth.require_login'); })
-    ->name('require_login');
+    ##(webhook)
+    // include('web/stripe.php');
 
-    # パスワード変更API ステップ01(reset_pass_step01)
-    Route::post('reset_pass_step01',
-    [Controllers\UserController::class, 'reset_pass_step01'])
-    ->name('reset_pass_step01');
-
-    # パスワード変更API ステップ02(reset_pass_step02)
-    Route::post('reset_pass_step02',
-    [Controllers\UserController::class, 'reset_pass_step02'])
-    ->name('reset_pass_step02');
-
-
-    # 退会処理(destroy)
-    Route::delete('auth/destroy',
-    [Controllers\UserController::class,'destroy'])
-    ->middleware(['auth'])
-    ->name('auth.destroy');
-
-    # 退会完了ページの表示(completed_destroy)
-    Route::get('auth/completed_destroy',
-    function () { return view('auth.completed_destroy'); })
-    ->name('auth.completed_destroy');        //
-
-
-/*
-|--------------------------------------------------------------------------
-| ガチャ
-|  GachaController
-|  GachaPlayController
-|--------------------------------------------------------------------------
-*/
-
-    # ガチャカのテゴリー選択
-    Route::get('/g/{category_code?}',
-    [App\Http\Controllers\GachaController::class, 'index'])
-    ->name('gacha_category');
-
-    # ガチャカの詳細表示
-    Route::get('/g/{category_code}/{gacha}/{key}',
-    [App\Http\Controllers\GachaController::class, 'show'])
-    ->name('gacha');
-
-    Route::middleware(['auth'])->group(function () {
-        # ガチャカで遊ぶ
-        Route::post('/g/play/{category_code}/{gacha}/{key}',
-        [App\Http\Controllers\GachaPlayController::class, 'play'])
-        ->name('gacha.play');
-
-        # ガチャカの結果表示
-        Route::get('/result/{category_code}/{user_gacha_history}',
-        [App\Http\Controllers\GachaController::class, 'result'])
-        ->name('gacha.result');
-
-
-        # 商品のポイント交換
-        Route::patch('/g/exchange_points/{category_code}/{user_gacha_history}',
-        [App\Http\Controllers\GachaController::class, 'exchange_points'])
-        ->name('gacha.exchange_points');
-    });
-
-/*
-|--------------------------------------------------------------------------
-| ポイント購入・履歴 (webhook)
-|  PointSailController
-|  PointHistoryController
-|--------------------------------------------------------------------------
-*/
-    // # ポイント一覧
-    // Route::get('point_sail',
-    // // [Controllers\PointSailController::class, 'index'])
-    // [Controllers\StripeController::class, 'index'])
-    // ->name('point_sail');
-
-
-    // Route::middleware(['auth'])->group(function () {
-
-    //     # 購入手続き
-    //     Route::get('point_sail/payment/{point_sail}',
-    //     [Controllers\StripeController::class, 'payment'])
-    //     ->name('point_sail.payment');
-
-    //     # 購入処理
-    //     // Route::get('point_sail/payment_post/{stripe_id}',
-    //     // [Controllers\StripeController::class, 'payment_post'])
-    //     // ->name('point_sail.payment_post');
-
-    //     # ポイント購入完了
-    //     Route::get('point_sail/comp/{stripe_id}',
-    //     [Controllers\StripeController::class, 'comp'])
-    //     ->name('point_sail.comp');
-
-    //     # ポイント購入履歴
-    //     Route::get('point_history/{month?}',
-    //     [Controllers\PointHistoryController::class, 'index'])
-    //     ->name('point_history');
-
-    // });
-/*
-|--------------------------------------------------------------------------
-| ポイント購入・履歴  (Stripe・プロジェクト内で購入処理の実行)
-
-|  PointSailController
-|  PointHistoryController
-|--------------------------------------------------------------------------
-*/
-    # ポイント一覧
-    Route::get('point_sail',
-    [Controllers\StripeInnerController::class, 'index'])
-    ->name('point_sail');
-
-
-    Route::middleware(['auth'])->group(function () {
-
-        # 購入手続き
-        Route::get('point_sail/payment/{point_sail}',
-        [Controllers\StripeInnerController::class, 'payment'])
-        ->name('point_sail.payment');
-
-        # 購入処理
-        Route::post('point_sail/store/{point_sail}',
-        [Controllers\StripeInnerController::class, 'store'])
-        ->name('point_sail.store');
-
-        # ポイント購入完了
-        Route::get('point_sail/comp/{stripe_id}',
-        [Controllers\StripeInnerController::class, 'comp'])
-        ->name('point_sail.comp');
-
-        # ポイント購入履歴
-        Route::get('point_history/{month?}',
-        [Controllers\PointHistoryController::class, 'index'])
-        ->name('point_history');
-
-    });
-
-
-/*
-|--------------------------------------------------------------------------
-| 取得した商品
-|  UserPrizeController
-|--------------------------------------------------------------------------
-*/
-    Route::middleware(['auth'])->group(function () {
-
-        # 商品一覧
-        Route::get('user_prize',
-        [Controllers\UserPrizeController::class, 'index'])
-        ->name('user_prize');
-
-        # 商品のポイント交換
-        Route::patch('user_prize/exchange_points',
-        [Controllers\UserPrizeController::class, 'exchange_points'])
-        ->name('user_prize.exchange_points');
-
-    });
-
-/*
-|--------------------------------------------------------------------------
-| 発送申請　ShippedAppliController
-|--------------------------------------------------------------------------
-*/
-    Route::middleware(['auth'])->group(function () {
-
-        # 発送申請入力
-        Route::post('shipped/appli',
-        [Controllers\ShippedAppliController::class, 'index'])
-        ->name('shipped.appli');
-
-        # 発送申請確認
-        Route::post('shipped/appli/confirm',
-        [Controllers\ShippedAppliController::class, 'confirm'])
-        ->name('shipped.appli.confirm');
-
-        # 発送申請完了
-        Route::post('shipped/appli/comp',
-        [Controllers\ShippedAppliController::class, 'comp'])
-        ->name('shipped.appli.comp');
-
-        # 発送申請完了
-        Route::get('shipped/appli/comp', function(){
-            return view('shipped.appli.comp');
-        })->name('shipped.appli.comp.get');
-
-    });
-
-
-/*
-|--------------------------------------------------------------------------
-| 発送申請履歴 ShippedWaitingController ShippedSentController
-|--------------------------------------------------------------------------
-*/
-    Route::middleware(['auth'])->group(function () {
-
-        Route::get('shipped', //発送申請履歴・発送待ちへリダイレクト
-        function () { return redirect()->route('shipped.waiting'); })
-        ->name('shipped');
-
-        # 発送申請履歴・発送待ち
-        Route::get('shipped/waiting',
-        [Controllers\ShippedWaitingController::class, 'index'])
-        ->name('shipped.waiting');
-
-            # 発送申請履歴・発送待ち　詳細
-            Route::get('shipped/waiting/{user_shipped}',
-            [Controllers\ShippedWaitingController::class, 'show'])
-            ->name('shipped.waiting.show');
-
-        # 発送申請履歴・発送済み
-        Route::get('shipped/send',
-        [Controllers\ShippedSendController::class, 'index'])
-        ->name('shipped.send');
-
-            # 発送申請履歴・発送済み　詳細
-            Route::get('shipped/send/{user_shipped}',
-            [Controllers\ShippedSendController::class, 'show'])
-            ->name('shipped.send.show');
-        //
-    });
-/*
-|--------------------------------------------------------------------------
-| ユーザー設定
-|--------------------------------------------------------------------------
-*/
-    Route::middleware(['auth'])->group(function () {
-
-        Route::get('settings',
-        function () { return view('settings.index'); })
-        ->name('settings');
-
-
-        /* フォームの表示 */
-
-            # アカウント設定(acount)
-            Route::get('/settings/acount',
-            function () { return  view('settings.acount.index'); })
-            ->name('settings.acount');
-
-            # クレジット情報設定(credit_card)
-            Route::get('/settings/credit_card',
-            [Controllers\SettingsController::class, 'credit_card'])
-            ->name('settings.credit_card');
-
-            # 商品発送先の住所設定(shipped_address)
-            Route::get('/settings/shipped_address',
-            function () { return  view('settings.shipped_address'); })
-            ->name('settings.shipped_address');
-
-            # メール受信設定(email_reception) 未使用
-            Route::get('/settings/email_reception',
-            function () { return  view('settings.email_reception'); })
-            ->name('settings.email_reception');
-
-            # 退会の手続き(withdraw)
-            Route::get('/settings/withdraw',
-            function () { return  view('settings.withdraw'); })
-            ->name('settings.withdraw');
-
-
-        /* 更新処理 */
-
-            # アカウント情報変更(acount_update)
-            Route::patch('/settings/acount/update',
-            [Controllers\SettingsController::class, 'acount_update'])
-            ->name('settings.acount.update');
-
-
-            # クレジット情報・新規登録
-            Route::post('/settings/credit_card/create',
-            [Controllers\SettingsController::class, 'credit_card_create'])
-            ->name('settings.credit_card.create');
-
-            # クレジット情報・削除
-            Route::delete('/settings/credit_card/destroy',
-            [Controllers\SettingsController::class, 'credit_card_destroy'])
-            ->name('settings.credit_card.destroy');
-
-
-            # メール受信設定(email_reception_update) 未使用
-            Route::patch('/settings/email_reception/update',
-            [Controllers\SettingsController::class, 'email_reception_update'])
-            ->name('settings.email_reception.update');
-
-    });
-
-
-/*
-|--------------------------------------------------------------------------
-| キャンペーン
-|--------------------------------------------------------------------------
-*/
-    # 会員登録:紹介キャンペーン
-    Route::get('register/ci/{key}', //key:紹介キャンペーン キー
-    [Controllers\CanpaingIntroductoryController::class, 'register'])
-    ->name('canpaing.introductory.register');
-
-
-
-    // Route::middleware(['auth'])->group(function () {
-
-    # お友達紹介キャンペーンURL(canpaing_introductory)
-    Route::get('/canpaing/introductory',
-    [Controllers\CanpaingIntroductoryController::class, 'index'])
-    ->name('canpaing.introductory');
-
-
-    // });
-
-/*
-|--------------------------------------------------------------------------
-| フッターメニュー
-|--------------------------------------------------------------------------
-*/
-    # ガイド(guide)
-    Route::get('guide',
-    function () { return view('footer_menu.guide.index'); })
-    ->name('guide');
-
-    # 利用規約(trems)
-    Route::get('/trems/{revision_date?}',
-    function ($revision_date='2023-12-01')
-    { return view('footer_menu.trems.index', compact('revision_date') )
-    ->with('affiliate_key',session('affiliate_key') ?? '');} )
-    ->name('trems');
-
-    # プライバシーポリシー(privacy_policy)
-    Route::get('/privacy_policy/{revision_date?}',
-    function ($revision_date='2023-12-01') {
-    return view('footer_menu.privacy_policy.index', compact('revision_date') )
-    ->with('affiliate_key',session('affiliate_key') ?? '');} )
-    ->name('privacy_policy');
-
-    # 特定商取引法に基づく表記(tradelaw)
-    Route::get('tradelaw',
-    function () { return view('footer_menu.tradelaw.index'); })
-    ->name('tradelaw');
-
-    # お知らせ(news)
-    Route::get('infomation',
-    [App\Http\Controllers\InfomationController::class,'index'])
-    ->name('infomation');
-
-        Route::get('infomation/{infomation}',
-        [App\Http\Controllers\InfomationController::class,'show'])
-        ->name('infomation.show');
-
-    # お問い合わせ(contact)
-    Route::get('/contact', function(){ return view('footer_menu.contact.index'); })
-    ->name('contact');
-
-    # 運営会社(operating_company)
-    Route::get('/operating_company', function () {
-        return redirect('https://fobees.jp/');
-    })->name('operating_company');
+    ## (Stripe・プロジェクト内で購入処理の実行)
+    include('web/stripe_inner.php');
 
 //
 
 
+# 取得した商品
+include('web/user_prize.php');
+
+# 発送申請
+include('web/shipped.php');
+
+# 発送申請履歴
+include('web/shipped_history.php');
+
+# ユーザー設定
+include('web/settings.php');
+
+# キャンペーン
+include('web/canpaing.php');
+
+# ユーザー設定
+include('web/footer_menu.php');
 
 

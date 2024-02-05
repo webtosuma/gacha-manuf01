@@ -32,9 +32,9 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <button @click="destroy(address.id)"
+                            <!-- <button @click="destroy(address.id)"
                             type="button"
-                            class="btn btn-sm border">削除</button>
+                            class="btn btn-sm border">削除</button> -->
                         </div>
                     </div>
                 </label>

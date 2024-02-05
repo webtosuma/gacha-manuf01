@@ -16,6 +16,7 @@
                     熊本県公安委員会<br>
                     合同会社 Fobees<br>
                 </div>
+
             </div>
             <div class="col-12 col-md">
                 <h3>{{ __('カテゴリー') }}</h3>
@@ -54,6 +55,20 @@
                             href="{{ route('contact') }}">お問い合わせ</a></li>
                             <li class="mb-2"><a class="link-secondary text-decoration-none"
                             href="{{ route('operating_company') }}">運営会社</a></li>
+                            <li class="my-3">
+                                <div class="col-auto">
+                                    <a href="https://twitter.com/CardFesta7627" rel="nofollow" target="_blank"
+                                    class="d-inline-block rounded-pill" style="background-color:#000; border-color:#000;"
+                                    >
+                                        <div class="d-flex align-items-center rounded-0 p-2 px-3 btn">
+                                            <img src="{{asset('storage/site/image/x-logo/logo-white.png')}}"
+                                            alt="xロゴ" class="d-block" style=" width:1rem; height:1rem;">
+
+                                            <span class="text-white ms-2"> {{'cardFesta公式'}}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -64,7 +79,7 @@
                 </a>
                 <small class="d-block mb-3 text-muteddd">&copy;fobees</small>
             </div>
- --}}
+            --}}
         </div>
     </div>
 </footer>

@@ -7,7 +7,7 @@
 @section('meta')
     @php
         $meta_title = '「'.$gacha->name.'」の結果';
-        $meta_image = asset('storage/site/image/gacha/bg_result.jpg');
+        $meta_image = $bg_image;
     @endphp
 @endsection
 
@@ -15,9 +15,12 @@
 @section('style')
     <style>
         main{ padding-top: 0rem; }
-        #result {
+        /* #result {
             background: no-repeat center center / cover;
-            background-image: url({{asset('storage/site/image/gacha/bg_result.jpg')}});
+            background-image: url({{$bg_image}});
+        } */
+        body{
+            background-image: url({{ $bg_image }});
         }
     </style>
 @endsection
@@ -26,12 +29,10 @@
 
 @section('content')
     <section id="result" style="padding-top:3rem; min-height: 80vh;">
-
         <div class="container px-3 py-4"  style="max-width:500px;">
 
 
             <h3 class="text-secondaryy fw-bold rounded-3 p-2 text-center w-100 mb-4"
-            style="background: rgb(255, 255, 255, .0);"
             >ガチャ結果</h3>
 
             <!--ポイント交換フォーム-->
@@ -52,10 +53,45 @@
                 ></u-gacha-result-form>
 
             </form>
+
+
         </div>
-
     </section>
+    <section class="my-5">
+        <div class="container px-5 py-5"  style="max-width:500px;">
 
+
+            <h5 class="fw-bold text-center mb-">ガチャ情報</h5>
+
+            @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+            <a href="{{route('gacha',$params)}}"
+            class="card border-secondary border-0 shadow bg-white
+            text-dark text-center overflow-hidden text-decoration-none
+            hover_anime" style="border-radius:1rem;">
+
+
+                <!--image-->
+                @include('gacha.common.top_image')
+
+                <!--metter-->
+                @include('gacha.common.metter')
+
+            </a>
+
+        </div>
+        <div class="py-5 my-5">
+
+
+            <h5 class="text-center fs-5 fw-bold mb-3">ガチャ結果を送る</h5>
+            @php
+            $sns_url  = route('gacha.result_history',$user_gacha_history->key);
+            $sns_text = $page_title
+            @endphp
+            @include('includes.sns_btn')
+
+
+        </div>
+    </section>
 
 
     <!--ボトムメニュー-->
@@ -77,43 +113,5 @@
         </div>
     </div>
 
-
-
-
-
-    <!--ボトムメニュー-->
-    {{-- <section class="position-fixed bottom-0 end-0 w-100 py-2 text-white"
-    style="z-index:50; background:rgb(0, 0, 0, .7);">
-        <div class="container">
-
-
-            @php
-            $params = [
-                'category_code'=>$gacha->category->code_name,
-                'gacha'=>$gacha,
-                'key'=>$gacha->key
-            ];
-            @endphp
-
-            <div class="row g-3 justify-content-center">
-                <div class="col-6 col-md-4">
-                    <a href="{{ route('gacha', $params ) }}"
-                    class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
-                    >{{ 'もう一度ガチャる' }}
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-1 text-warning"><i class="bi bi-chevron-right"></i></div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-4">
-                    <a href="{{ route('gacha_category', $gacha->category->code_name ) }}"
-                    class="btn btn-light border-warning border-3 rounded-pill w-100 position-relative"
-                    >{{ '他のガチャを選ぶ' }}
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-1 text-warning"><i class="bi bi-chevron-right"></i></div>
-                    </a>
-                </div>
-            </div>
-
-
-        </div>
-    </section> --}}
 
 @endsection

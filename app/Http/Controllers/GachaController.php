@@ -207,9 +207,9 @@ class GachaController extends Controller
         public function getsearchs()
         {
             return [
-                ['label'=>'新着', 'key'=>'desc_crated'],
-                ['label'=>'高ポイント', 'key'=>'desc_point'],
-                ['label'=>'低ポイント', 'key'=>'asc_point'],
+                ['label'=>'新着順', 'key'=>'desc_crated'],
+                ['label'=>'高額ポイント順', 'key'=>'desc_point'],
+                ['label'=>'低額ポイント順', 'key'=>'asc_point'],
                 ['label'=>'一回限定', 'key'=>'one_time'],
                 ['label'=>'１日１回', 'key'=>'only_oneday'],
                 ['label'=>'全ての限定', 'key'=>'other_types'],
@@ -229,7 +229,7 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
-        if( $gacha->key!=$key ){ return \App::abort(404); }
+        if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 
         return view('gacha.show.index', compact( 'gacha' ));
     }
@@ -252,10 +252,55 @@ class GachaController extends Controller
         # ガチャ
         $gacha = $user_gacha_history->gacha;
 
+        # ページタイトル
+        $page_title = '「'.$gacha->name.'」の結果';
 
-        return view('gacha.result',compact('gacha','user_gacha_history',));
+        # 背景画像
+        $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
+
+        return view('gacha.result',compact('gacha','user_gacha_history', 'page_title', 'bg_image'));
     }
 
+
+
+    /**
+     * PLAYガチャの結果履歴の表示
+     * @param String $history_key      //カテゴリーコード名
+     * @return \Illuminate\Http\Response
+     */
+    public function result_history($history_key)
+    {
+        # ガチャ履歴情報の取得
+        list($id,$created_at,$user_id) = explode('-',$history_key);
+        $user_gacha_history = UserGachaHistory::where('id',$id)
+        ->where('user_id',$user_id)
+        ->where('created_at',$created_at)
+        ->first();
+        if( !$user_gacha_history ){ return \App::abort(404); }
+
+
+        // dd($user_gacha_history);
+
+        # ガチャ
+        $gacha = $user_gacha_history->gacha;
+
+        # 取得商品
+        $user_prizes = $user_gacha_history->user_prizes;
+
+        # ユーザー情報
+        $user = $user_gacha_history->user;
+
+        # ページタイトル
+        $page_title = '「'.$gacha->name.'」の結果';
+
+        # 背景画像
+        $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
+
+
+        return view('gacha.result_history',compact(
+            'gacha','user_gacha_history', 'user_prizes', 'user', 'page_title', 'bg_image'
+        ) );
+    }
 
 
 
