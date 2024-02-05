@@ -91,10 +91,12 @@
                                 </div>
                             </td>
                             <td>
-                                残り
-                                <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
-                                /
-                                <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
+                                <a href="{{route('admin.gacha.history',$gacha)}}">
+                                    残り
+                                    <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
+                                    /
+                                    <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
+                                </a>
                             </td>
 
                             <td class="text-center">

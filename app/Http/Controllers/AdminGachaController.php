@@ -9,6 +9,7 @@ use App\Models\Gacha;
 use App\Models\GachaDiscription;
 use App\Models\GachaPrize;
 use App\Models\Prize;
+use App\Models\UserGachaHistory;
 /*
 | =============================================
 |  サイト管理者 ガチャ コントローラー
@@ -283,5 +284,35 @@ class AdminGachaController extends Controller
         //
 
         return $inputs;
+    }
+
+
+
+
+    /**
+     * 履歴
+     *
+     * @param  \App\Models\Gacha  $gacha
+     * @return \Illuminate\Http\Response
+     */
+    public function history(Gacha $gacha)
+    {
+        $user = null;
+
+        # ポイントの入出理由　絞り込み
+        $reason_id = 21;
+
+
+        # ポイント履歴の取得
+        $query = UserGachaHistory::query();
+
+            $query->where('gacha_id', $gacha->id);
+
+            $query->orderByDesc('created_at')->orderByDesc('id');
+
+        $user_gacha_histories = $query->paginate(100);//ページネーション
+
+
+        return view('admin.gacha.history.index',compact('gacha','user','user_gacha_histories'));
     }
 }
