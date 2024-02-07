@@ -39,6 +39,9 @@ include('web/gacha.php');
     ## (Stripe・プロジェクト内で購入処理の実行)
     include('web/stripe_inner.php');
 
+    ## (Stripe・React)
+    // include('web/stripe_react.php');
+
 //
 
 

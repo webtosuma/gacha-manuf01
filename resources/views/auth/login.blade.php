@@ -7,7 +7,7 @@
 <!----- meta ----->
 @section('meta')
 @php
-$email    = config('app.debug') ? 'na@tosuma.ltd' : '';
+$email    = config('app.debug') ? 't.sakai@tosuma.ltd' : '';
 $password = config('app.debug') ? 'password' : '';
 @endphp
 @endsection

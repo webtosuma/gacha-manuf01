@@ -49,6 +49,12 @@ class GachaPlayController extends Controller
         if( $gacha->key!=$key ){ return \App::abort(404); }
 
 
+        # ポイントが不足しているとき
+        if( $total_play_point > $user->point ){
+            $params = ['gacha_id'=>$gacha->id];
+            return redirect()->route('point_sail.shortage', $params);
+        }
+
         # ガチャ開始前チェック
         $message =  self::StartCheckMessage( $request, $gacha );
         if( $message ){

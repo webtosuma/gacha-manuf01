@@ -66,10 +66,9 @@ $active_key = 'user';
 
 
         <!-- ページネーション -->
-        <div class="d-flex justify-content-start mt-3">
-            {{ $users->links('vendor.pagination.bootstrap-4') }}
+        <div class="d-flex justify-content-start  mt-3">
+            {{ $users->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
         </div>
-
 
         <section class="card card-body bg-white mb-3 overflow-auto">
             <table class="table bg-white my-3">
@@ -152,7 +151,7 @@ $active_key = 'user';
                                             <div class="col-8 mx-auto">
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text" id="basic-addon3">付与ポイント</span>
-                                                    <input class="form-control text-end"  type="number" name="value" value="1000" min="100">
+                                                    <input class="form-control text-end"  type="number" name="value" value="800" min="100">
                                                     <span class="input-group-text" id="basic-addon3">pt</span>
                                                 </div>
                                             </div>
@@ -179,8 +178,7 @@ $active_key = 'user';
 
         <!-- ページネーション -->
         <div class="d-flex justify-content-start mt-3">
-            {{ $users->links('vendor.pagination.bootstrap-4') }}
+            {{ $users->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
         </div>
-
     </div>
 @endsection

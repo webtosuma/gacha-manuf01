@@ -66,6 +66,10 @@ class LoginController extends Controller
         $remember = true; //$request->remember(ログイン状態の維持)
         Auth::attempt( $request->only('email','password'), $remember );
 
+        # ログイン前に訪れたページ
+        $before_admin_url = $request->session()->get( 'before_admin_url') ;
+
+
         # ログイン処理
         if( Auth::check() ){
 
@@ -74,16 +78,15 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             # ログイン前に訪れたページがある場合、前のページに戻る
-            if(session('before_worker_url'))
+            if($before_admin_url)
             {
-                return redirect( session('before_worker_url') )
+                return redirect( $before_admin_url )
                 ->with('alert-primary','ログインしました。');
             }
 
 
             // マイページTOPへリダイレクト
             return
-            // redirect()->route('home')
             redirect()->route('gacha_category')
             ->with('alert-primary','ログインしました。');
 

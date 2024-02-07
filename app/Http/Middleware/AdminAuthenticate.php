@@ -21,17 +21,6 @@ class AdminAuthenticate extends Middleware
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        # TESTユーザーとしてログイン
-        // if(
-        //     env('APP_TEST_AUTH') &&
-        //     !( Auth::check() && Auth::user()->admin )
-        // )
-        // {
-        //     $user = \App\Models\Administrator::first()->user;
-        //     $param = [ 'email'=>$user->email, 'password'=>'password' ];
-        //     if( Auth::attempt( $param ) ) {  $request->session()->regenerate(); }
-        // }
-
 
         # 管理者アカウント(admin)でログイン中ではないとき、リダイレクト
         if ( !( Auth::check() && Auth::user()->admin ) )

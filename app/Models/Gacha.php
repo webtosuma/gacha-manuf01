@@ -125,6 +125,15 @@ class Gacha extends Model
         }
 
 
+        /**
+         * ガチャ詳細ページ ルーティング route
+         * @return String
+        */
+        public function getRouteAttribute()
+        {
+            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
+            return route('gacha',$params);
+        }
 
 
 

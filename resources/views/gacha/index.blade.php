@@ -190,6 +190,7 @@
         </div>
     </section>
 
+
     <!--絞り込みキー-->
     <section class="mb-3">
         <div class="container px-0 col-md-12 mx-auto overflow-auto">
@@ -207,7 +208,7 @@
                     @endphp
 
 
-                    <a  href="{{route('gacha_category',$params)}}"
+                    <a id="{{$search['key']}}"  href="{{route('gacha_category',$params)}}"
                     class="{{ $style_class }}">{{ $search['label'] }}</a>
                 @endforeach
             </nav>
@@ -225,8 +226,7 @@
                     <div class="col-12 col-md-6 col-lg-4  ">
 
 
-                        @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
-                        <a href="{{route('gacha',$params)}}"
+                        <a href="{{$gacha->route}}"
                         class="card border-secondary border-3 shadow bg-white
                         text-dark text-center overflow-hidden text-decoration-none
                         hover_anime" style="border-radius:1rem;">

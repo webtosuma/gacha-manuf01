@@ -7,7 +7,7 @@
 @section('meta')
     @php
         $meta_title = $page_title;
-        $meta_image = $bg_image;
+        $meta_image = $gacha->image_path;
     @endphp
 @endsection
 
@@ -21,6 +21,9 @@
         } */
         body{
             background-image: url({{ $bg_image }});
+        }
+        .ratio-3x4{
+            --bs-aspect-ratio: 133.3%;
         }
     </style>
 @endsection
@@ -36,24 +39,12 @@
             <h2 class="p- mb-3 fs-6">
                 <div class="rounded-3 p-3 text-light" style="background: rgb(0, 0, 0, .7);">
 
-                    {{-- <div class="mb-3" style="font-size:.8rem;">
-                        <div class="">{{$user_gacha_history->key}}</div>
-                    </div> --}}
                     <div class="mb-2" style="font-size:10px;">
                         <div class="">{{$user_gacha_history->created_at->format('Y/m/d H:i')}}</div>
                     </div>
 
                     <div class="mb-3">
                         <div class="row align-items-center g-2">
-
-
-                            {{-- <div class="col-auto" style="width: 3rem;">
-                                <ratio-image-component
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" title="ユーザーメニュー"
-                                style_class="ratio ratio-1x1 rounded-pill border bg-white"
-                                url="{{ $user->image_path }}"
-                                ></ratio-image-component>
-                            </div> --}}
 
                             <div class="col">
                                 <div class="fs-">{{ $user->name }} さん</div>
@@ -77,14 +68,29 @@
                 @forelse ($user_prizes as $user_prize)
                 <li  class="{{ $user_prizes->count()==1? 'col-6' : 'col-3' }}">
                     <div class="d-flex align-items-center justify-content-center h-100">
-
                         <div class="w-100">
-                            <!--カード画像-->
-                            <ratio-image-component
-                            style_class="ratio ratio-3x4 rounded-3"
-                            url="{{ $user_prize->prize->image_path }}"
-                            ></ratio-image-component>
 
+
+                            <div class="position-relative">
+                                <!--loading-->
+                                <div class="ratio ratio-3x4">
+                                    <div class="d-flex align-items-center justify-content-center"
+                                    style="z-index:0;">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--image-->
+                                <div class="position-absolute top-0 start-0 w-100 h-100"
+                                style="z-index:1;">
+                                    <ratio-image-component
+                                    url="{{ $user_prize->prize->image_path }}" style_class="ratio ratio-3x4 rounded-3"
+                                    ></ratio-image-component>
+                                </div>
+                            </div>
 
                             <!--ポイント表示-->
                             <div class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
@@ -107,6 +113,7 @@
 
                             </div>
 
+
                         </div>
                     </div>
                 </li>
@@ -117,7 +124,7 @@
                 @endforelse
 
             </ul>
-            <div class="mb-3" style="font-size:10px;">
+            <div class="mb-3 text-center" style="font-size:10px;">
                 <div class="">
                     <span class="text-warning">●</span>
                     <span>ポイント交換済み</span>
@@ -132,13 +139,12 @@
 
 
             <!-- ガチャ情報 -->
-            <div class="p-5 my-5">
+            <div class="pt-5 my-5">
 
 
                 <h5 class="fw-bold text-center mb-">ガチャ情報</h5>
 
-                @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
-                <a href="{{route('gacha',$params)}}"
+                <a href="{{ $gacha->route }}"
                 class="card border-secondary border-0 shadow bg-white
                 text-dark text-center overflow-hidden text-decoration-none
                 hover_anime" style="border-radius:1rem;">
