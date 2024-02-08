@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('settings.credit_card.destroy');
 
 
-        # メール受信設定(email_reception_update) 未使用
+        # メール受信設定(email_reception_update)
         Route::patch('/settings/email_reception/update',
         [Controllers\SettingsController::class, 'email_reception_update'])
         ->name('settings.email_reception.update');

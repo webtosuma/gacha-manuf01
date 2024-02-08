@@ -31,6 +31,7 @@ class User extends Authenticatable
         'payjp_customer_id',
         'image',
         'twitter_id',//X(旧twitter)ID
+        'get_email',
     ];
 
 

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 */
 class UserAddress extends Model
 {
-    // use SoftDeletes; //論理削除の利用
+    use SoftDeletes; //論理削除の利用
 
     public $timestamps = true;
 

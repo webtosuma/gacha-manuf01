@@ -101,5 +101,31 @@ class SettingsController extends Controller
             # 設定ページへリダイレクト
             return redirect()->route('settings.credit_card');
         }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | メール受信設定
+    |--------------------------------------------------------------------------
+    */
+        /**
+         * メール受信設定変更
+         *
+         * @param \App\Http\Requests\Request $request
+         * @return \Illuminate\Http\Response
+         */
+        public function email_reception_update( Request $request )
+        {
+            $user = Auth::user();
+            $get_email = $request->get_email ? 1 : 0;
+
+            # 求職者情報の保存
+            $user->update( compact('get_email') );
+            $request->session()->regenerateToken();// 二重送信防止
+
+            return redirect()->route('settings')
+            ->with(['alert-warning'=>'メール受信設定を更新しました']);
+        }
     //
 }

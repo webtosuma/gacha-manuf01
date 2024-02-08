@@ -50,26 +50,34 @@ class AdminSeeder extends Seeder
             # ポイント付与
             $point_history = new \App\Models\PointHistory([
                 'user_id'   => $user->id,          //ユーザー　リレーション
-                'value'     => 100000, //ポイント数
+                'value'     => 100, //ポイント数
                 'reason_id' => 14 //入出理由ID
             ]);
             $point_history->save();
 
-            $point_history = new \App\Models\PointHistory([
-                'user_id'   => $user->id,          //ユーザー　リレーション
-                'value'     => 10000, //ポイント数
-                'price'     => 10000,
-                'reason_id' => 11 //入出理由ID
-            ]);
-            $point_history->save();
+            // # ポイント付与
+            // $point_history = new \App\Models\PointHistory([
+            //     'user_id'   => $user->id,          //ユーザー　リレーション
+            //     'value'     => 100000, //ポイント数
+            //     'reason_id' => 14 //入出理由ID
+            // ]);
+            // $point_history->save();
 
-            $point_history = new \App\Models\PointHistory([
-                'user_id'   => $user->id,          //ユーザー　リレーション
-                'value'     => 50000, //ポイント数
-                'price'     => 50000,
-                'reason_id' => 11 //入出理由ID
-            ]);
-            $point_history->save();
+            // $point_history = new \App\Models\PointHistory([
+            //     'user_id'   => $user->id,          //ユーザー　リレーション
+            //     'value'     => 10000, //ポイント数
+            //     'price'     => 10000,
+            //     'reason_id' => 11 //入出理由ID
+            // ]);
+            // $point_history->save();
+
+            // $point_history = new \App\Models\PointHistory([
+            //     'user_id'   => $user->id,          //ユーザー　リレーション
+            //     'value'     => 50000, //ポイント数
+            //     'price'     => 50000,
+            //     'reason_id' => 11 //入出理由ID
+            // ]);
+            // $point_history->save();
         }
     }
 

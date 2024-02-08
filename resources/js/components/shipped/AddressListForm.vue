@@ -35,6 +35,26 @@
                             <!-- <button @click="destroy(address.id)"
                             type="button"
                             class="btn btn-sm border">削除</button> -->
+
+
+                            <button type="button" data-bs-toggle="modal"
+                            :data-bs-target="'#deleteModal'+address.id"
+                            class="btn btn-sm border"
+                            >削除する</button>
+
+                            <!-- Modal -->
+                            <delete-modal-component
+                            @parent-func="destroy(address.id)"
+                            :index_key="address.id"
+                            icon="bi-trash"
+                            func_btn_type="submit"
+                            button_class="invisible">
+                                <div>
+                                    <span class="fw-bold">{{ address.name }} 様</span>のお届け先情報を削除します。
+                                    <br />よろしいですか？
+                                </div>
+                            </delete-modal-component>
+
                         </div>
                     </div>
                 </label>
@@ -113,7 +133,7 @@
 
                 axios.delete( route, { _token: this.token } )
                 .then(json => {
-                    console.log( json.data );
+                    // console.log( json.data );
                     /* 一覧取得 */
                     this.getList();
                 })

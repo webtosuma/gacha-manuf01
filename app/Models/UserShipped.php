@@ -92,8 +92,12 @@ class UserShipped extends Model
          * PointHistoryモデル リレーション
          * @return \App\Models\PointHistory
         */
+        // public function user_address(){
+        //     return $this->belongsTo(UserAddress::class);
+        // }
         public function user_address(){
-            return $this->belongsTo(UserAddress::class);
+            return $this->belongsTo(UserAddress::class)
+            ->withTrashed(); // withTrashed() メソッドを追加
         }
 
         /**

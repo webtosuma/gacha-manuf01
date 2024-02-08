@@ -22,11 +22,13 @@ class Infomation extends Model
         'image',       //画像
         'is_slide',    //スライドの表示有無
         'published_at',//公開日時
+        'send_email_at',//メール送信日時
     ];
 
     /** Carbonオブジェクトとして利用 */
     protected $dates = [
         'published_at',//公開設定(利用しない->非公開*消さない)
+        'send_email_at',//メール送信日時
     ];
 
 

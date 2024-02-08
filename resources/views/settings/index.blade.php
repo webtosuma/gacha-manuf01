@@ -78,18 +78,18 @@
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            {{-- <a href="{{ route('settings.email_reception') }}"
+            <a href="{{ route('settings.email_reception') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >
                 <div class="row align-items-center">
-                    <div class="col-auto fs-3 text-primary">
+                    <div class="col-auto fs-3 text-warning">
                         <i class="bi bi-envelope"></i>
                     </div>
                     <div class="col">{{ 'メール受信設定' }}</div>
                 </div>
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a> --}}
+            </a>
 
             {{-- <a href="{{ route('settings.withdraw') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"

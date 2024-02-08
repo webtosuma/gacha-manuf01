@@ -8121,7 +8121,7 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](route, {
         _token: this.token
       }).then(function (json) {
-        console.log(json.data);
+        // console.log( json.data );
         /* 一覧取得 */
         _this2.getList();
       })["catch"](function (error) {
@@ -13463,7 +13463,28 @@ var render = function render() {
       staticClass: "fw-bold"
     }, [_c("span", [_vm._v(_vm._s("〒" + address.postal_code.substring(0, 3) + "-" + address.postal_code.substring(3, 7)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.todohuken))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.shikuchoson))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.number))])])]), _vm._v(" "), _c("div", {
       staticClass: "col-auto"
-    })])])]);
+    }, [_c("button", {
+      staticClass: "btn btn-sm border",
+      attrs: {
+        type: "button",
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#deleteModal" + address.id
+      }
+    }, [_vm._v("削除する")]), _vm._v(" "), _c("delete-modal-component", {
+      attrs: {
+        index_key: address.id,
+        icon: "bi-trash",
+        func_btn_type: "submit",
+        button_class: "invisible"
+      },
+      on: {
+        "parent-func": function parentFunc($event) {
+          return _vm.destroy(address.id);
+        }
+      }
+    }, [_c("div", [_c("span", {
+      staticClass: "fw-bold"
+    }, [_vm._v(_vm._s(address.name) + " 様")]), _vm._v("のお届け先情報を削除します。\n                                "), _c("br"), _vm._v("よろしいですか？\n                            ")])])], 1)])])]);
   }), _vm._v(" "), _vm.addresses.length == 0 ? _c("li", {
     staticClass: "list-group-item py-4"
   }, [_vm._v("\n            お届け先情報を登録してください。\n        ")]) : _vm._e(), _vm._v(" "), _c("li", {

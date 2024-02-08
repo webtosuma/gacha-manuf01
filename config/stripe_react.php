@@ -6,5 +6,4 @@ return [
 
     'child_app_url'  => env('STRIPE_REACT_CHILD_APP_URL',''),
 
-
 ];

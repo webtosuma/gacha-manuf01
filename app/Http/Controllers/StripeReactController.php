@@ -46,10 +46,16 @@ class StripeReactController extends Controller
     */
     public function payment(PointSail $point_sail)
     {
+        $user = Auth::user();
+
+        # 支払いAppへリダイレクト
+        $path = '/point_sail/li/payment/'.$point_sail->id.'/'.$user->id.'/'.$user->email;
+        $parent_app_url = config('stripe_react.child_app_url').$path;
+        return redirect($parent_app_url);
+
+
+
         return redirect()->route('point_sail.comp',$point_sail->stripe_id);
-
-
-        return view('point_sail.stripe.payment',compact('point_sail'));
     }
 
 
@@ -62,6 +68,15 @@ class StripeReactController extends Controller
     */
     public function comp(Request $request, $stripe_id)
     {
+        $user = Auth::user();
+
+        # [キャンペーン]初回ポイント購入
+        CanpaingFirstPointSailController::grant($user);
+
+        # [紹介キャンペーン]ポイント付与
+        CanpaingIntroductoryController::grant($user);
+
+
         # 購入ポイント情報
         $point_sail = PointSail::where('stripe_id',$stripe_id)->first();
 

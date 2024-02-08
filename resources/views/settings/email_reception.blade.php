@@ -20,7 +20,41 @@
 <div class="container py-4 mb-5">
     <h3>メール受信設定</h3>
 
-    <div class="mx-auto" style="max-width:900px;">
+    <div class="mx-auto mt-5" style="max-width:900px;">
+        <form method="post" action="{{ route('settings.email_reception.update' ) }}" novalidate>
+            @csrf
+            @method('PATCH')
+            <div class="card card-body bg-white border-0 row g-2">
+
+
+                <!-- メール連絡受取り設定 -->
+                <div class="col-12">
+                    <label class="form-check-label fw-bold" for="get_email">メール連絡受取り設定</label>
+
+                    <div class="d-flex align-items-end mb-3">
+                        <div style="width:7rem;">受け取らない</div>
+                        <div class="form-check form-switch ms-3">
+                            <input class="form-check-input fs-3" type="checkbox" name="get_email" id="get_email"
+                            {{ Auth::user()->get_email ? 'checked' : ''}}
+                            >
+                        </div>
+                        <div class="">受け取る</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-5">
+                <div class="col-md-6 mx-auto my-3">
+                    <disabled-button style_class="btn btn-lg btn-warning text-white rounded-pill w-100"
+                    btn_text="更新する"></button>
+                </div>
+                <div class="col-md-6 mx-auto my-3">
+                    <a href="{{ route('settings') }}"
+                    class="btn btn-lg btn-light border rounded-pill w-100"
+                    >会員情報設定に戻る</a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

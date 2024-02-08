@@ -24,8 +24,9 @@ class Gacha extends Model
         'image', //イメージ画像
         'key',   //認証キー
         'type',  //ガチャの種類
-        'one_play_point',   //1回PLAYポイント数
-        'published_at',     //公開設定(利用しない->非公開*消さない)
+        'one_play_point',//1回PLAYポイント数
+        'published_at',  //公開設定(利用しない->非公開*消さない)
+        'sold_out_at',   //売り切れ日時
 
         'is_meter',//残数メーターの表示有無
         'is_slide',//スライドの表示有無
@@ -46,6 +47,7 @@ class Gacha extends Model
     /** Carbonオブジェクトとして利用 */
     protected $dates = [
         'published_at',//公開設定(利用しない->非公開*消さない)
+        'sold_out_at', //売り切れ日時
     ];
 
 
