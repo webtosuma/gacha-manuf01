@@ -27,6 +27,27 @@
             @endif
         </label>
 
+
+        <!--イメージ画像(image)-->
+        <label class="d-block col-md-12 mx-auto mb-4">
+            <div class="form-label">イメージ画像</div>
+
+            <div class="px-3">
+                <read-image-file-component
+                img_path="{{ $infomation->image_path }}"
+                noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
+                style_class="ratio ratio-4x3 rounded-3"
+                name="image"
+                ></read-image-file-component>
+            </div>
+
+            <!--error message-->
+            @if ( $errors->has('image') )
+                <div class="text-danger"> {{$errors->first('image')}} </div>
+            @endif
+        </label>
+
+
         <!--本文(body)-->
         <label class="d-block mb-4">
             <div class="form-label">
@@ -53,26 +74,6 @@
             @endif
         </label>
 
-
-
-        <!--イメージ画像(image)-->
-        <label class="d-block col-md-12 mx-auto mb-4">
-            <div class="form-label">イメージ画像</div>
-
-            <div class="px-3">
-                <read-image-file-component
-                img_path="{{ $infomation->image_path }}"
-                noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
-                style_class="ratio ratio-4x3 rounded-3"
-                name="image"
-                ></read-image-file-component>
-            </div>
-
-            <!--error message-->
-            @if ( $errors->has('image') )
-                <div class="text-danger"> {{$errors->first('image')}} </div>
-            @endif
-        </label>
 
 
     </div>

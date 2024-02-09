@@ -76,14 +76,26 @@ $active_submenu = true;
                                     <i class="bi bi-eye"></i>
                                     {{ $infomation->published_at? $infomation->published_at->format('Y.m.d') : '----.--.--' }}
                                 </div>
+                                <div class="">
+                                    <!--メール送信日-->
+                                    <i class="bi bi-envelope"></i>
+                                    {{ $infomation->send_email_at? $infomation->send_email_at->format('Y.m.d') : '----.--.--' }}
+                                </div>
+
                             </div>
                             <div class="col-auto">
                                 <!--編集ボタン-->
                                 <a href="{{ route('admin.infomation.edit',$infomation) }}"
                                 class="btn btn-sm btn-light border "
                                 ><i class="bi bi-pencil-fill"></i></a>
-
                             </div>
+                            <div class="col-auto">
+                                <!--メール送信ボタン-->
+                                <a href="{{route('admin.infomation.email',$infomation)}}"
+                                class="btn btn-sm btn-light border "
+                                ><i class="bi bi-envelope"></i></a>
+                            </div>
+
                             <div class="col-auto">
 
                                 <!--削除モーダル-->

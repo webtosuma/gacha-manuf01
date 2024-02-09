@@ -18,7 +18,7 @@ class UpdateAddGetEmailToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('get_email')->default(0); // 新しいカラムの追加、デフォルト値は0
+            $table->boolean('get_email')->default(1); // 新しいカラムの追加、デフォルト値は0
         });
     }
 

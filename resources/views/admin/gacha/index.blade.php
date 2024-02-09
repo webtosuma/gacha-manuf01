@@ -80,8 +80,8 @@ $active_key = 'gacha';
                     <div class="position-relative">
 
 
-                        <div class="">{{ $gacha->is_sold_out ? '売り切れ' : '販売中' }} {{$gacha->remaining_count}}</div>
-                        <div class="">{{ $gacha->sold_out_at }}</div>
+                        {{-- <div class="">{{ $gacha->is_sold_out ? '売り切れ' : '販売中' }} {{$gacha->remaining_count}}</div>
+                        <div class="">{{ $gacha->sold_out_at }}</div> --}}
 
 
                         <a href="{{route('admin.gacha.show',$gacha)}}"

@@ -43,5 +43,15 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminInfomationController ::class, 'destroy'])
     ->name('admin.infomation.destroy');
 
+    # メール・プレビュー
+    Route::get('/admin/infomation/email/{infomation}',
+    [Controllers\AdminInfomationController ::class, 'email'])
+    ->name('admin.infomation.email');
+
+        # メール・送信
+        Route::post('/admin/infomation/email/post/{infomation}',
+        [Controllers\AdminInfomationController ::class, 'email_post'])
+        ->name('admin.infomation.email.post');
+
 });//end middleware
 

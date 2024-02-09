@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminInfomationRequest;
 use App\Models\Infomation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
 /*
 | =============================================
 |  サイト管理者　お知らせ コントローラー
@@ -134,6 +137,53 @@ class AdminInfomationController extends Controller
         # リダイレクト
         return redirect()->route('admin.infomation')
         ->with(['alert-danger'=>'お知らせ情報を削除しました。']);
+    }
+
+
+
+    /**
+     * メール・プレビュー
+     *
+     * @param  \App\Models\Infomation $infomation
+     * @return \Illuminate\Http\Response
+     */
+    public function email(Infomation $infomation)
+    {
+        return view('admin.infomation.email', compact('infomation'));
+    }
+
+
+
+
+    /**
+     * メール・一括送信
+     *
+     * @param  \App\Models\Infomation $infomation
+     * @return \Illuminate\Http\Response
+     */
+    public function email_post(Infomation $infomation)
+    {
+        $users = User::where('get_email',1)->get();
+        foreach ($users as $user) {
+
+            $email = $user->email;
+
+            Mail::to( $email ) //宛先
+            ->send(new \App\Mail\SendHtmlMailMailable([
+                'inputs'  => compact('infomation'), //入力変数
+                'view'    => 'emails.infomation.index' , //テンプレート
+                'subject' => $infomation->title, //件名
+            ]) );
+        }
+
+
+        # メール送信日の登録
+        $infomation->update(['send_email_at'=>now()]);
+
+
+        # リダイレクト
+        return redirect()->route('admin.infomation')
+        ->with(['alert-success'=>'『'.$infomation->title.'』を一括メール送信しました。']);
     }
 
 
