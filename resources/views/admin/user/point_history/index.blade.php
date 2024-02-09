@@ -98,12 +98,12 @@ $active_key = 'user';
 
             <!-- 削除ボタン・ページネーション -->
             @if( $point_histories->count() )
-                <div class="d-flex justify-content-between mt-3">
-                    <div class="col">
+                <div class="d-flex flex-column flex-md-row justify-content-between mt-3">
+                    <div class="col-12 col-md">
                         {{ $point_histories->links('vendor.pagination.bootstrap-4') }}
                     </div>
 
-                    <div class="col-auto">
+                    <div class="col-12 col-md-auto">
                         <button type="submit"
                         class="btn btn-light border text-danger "
                         >一括削除</button>
@@ -120,12 +120,12 @@ $active_key = 'user';
 
             <!-- 削除ボタン・ページネーション -->
             @if( $point_histories->count() )
-                <div class="d-flex justify-content-between mt-3">
-                    <div class="col">
+                <div class="d-flex flex-column flex-md-row justify-content-between mt-3">
+                    <div class="col-12 col-md">
                         {{ $point_histories->links('vendor.pagination.bootstrap-4') }}
                     </div>
 
-                    <div class="col-auto">
+                    <div class="col-12 col-md-auto">
                         <button type="submit"
                         class="btn btn-light border text-danger "
                         >一括削除</button>

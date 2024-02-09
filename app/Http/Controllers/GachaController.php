@@ -108,49 +108,52 @@ class GachaController extends Controller
             # ID配列を指定して、ガチャの取得
             $query = Gacha::query();
 
-            // 並び替え・絞り込み
-            switch ($search_key) {
+                //
+                $query->orderBy('is_sold_out');//売り切れは下
 
-                # 高ポイント順
-                case 'desc_point':
-                    $query->orderByDesc('one_play_point');
-                    $query->orderByDesc('published_at');
-                    break;
+                // 並び替え・絞り込み
+                switch ($search_key) {
 
-                # 低ポイント順
-                case 'asc_point':
-                    $query->orderBy('one_play_point');
-                    $query->orderByDesc('published_at');
-                    break;
+                    # 高ポイント順
+                    case 'desc_point':
+                        $query->orderByDesc('one_play_point');
+                        $query->orderByDesc('published_at');
+                        break;
 
-                # 一回限定
-                case 'one_time':
-                    $query->where('type','one_time');
-                    $query->orderByDesc('published_at');
-                    break;
+                    # 低ポイント順
+                    case 'asc_point':
+                        $query->orderBy('one_play_point');
+                        $query->orderByDesc('published_at');
+                        break;
 
-                # １日１回
-                case 'only_oneday':
-                    $query->where('type','only_oneday');
-                    $query->orderByDesc('published_at');
-                    break;
+                    # 一回限定
+                    case 'one_time':
+                        $query->where('type','one_time');
+                        $query->orderByDesc('published_at');
+                        break;
 
-                # 全ての限定　
-                case 'other_types':
-                    $query->where('type','<>','nomal');
-                    $query->orderByDesc('published_at');
-                    break;
+                    # １日１回
+                    case 'only_oneday':
+                        $query->where('type','only_oneday');
+                        $query->orderByDesc('published_at');
+                        break;
 
-                # 古い順
-                case 'asc_created':
-                    $query->orderBy('published_at');
-                    break;
+                    # 全ての限定　
+                    case 'other_types':
+                        $query->where('type','<>','nomal');
+                        $query->orderByDesc('published_at');
+                        break;
 
-                # 新着順
-                default:
-                    $query->orderByDesc('published_at');
-                    break;
-            }
+                    # 古い順
+                    case 'asc_created':
+                        $query->orderBy('published_at');
+                        break;
+
+                    # 新着順
+                    default:
+                        $query->orderByDesc('published_at');
+                        break;
+                }
 
             return $query->orderByDesc('created_at')->find($id_array);
 

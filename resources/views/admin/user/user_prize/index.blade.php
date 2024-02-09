@@ -77,13 +77,13 @@ $active_key = 'user';
 
         <!-- 表示切り替え・ページネーション -->
         @if( $user_prizes->count() )
-            <div class="d-flex justify-content-between mt-3">
-                <div class="col">
+            <div class="d-flex flex-column flex-md-row justify-content-between mt-3">
+                <div class="col-12 col-md">
                     {{ $user_prizes->links('vendor.pagination.bootstrap-4') }}
                 </div>
 
                 @if($user)
-                <div class="col-auto">
+                    <div class="col-12 col-md-auto">
                     <a href="{{route('admin.user.user_prize.column',$user->id)}}"
                     class="btn btn-light border"
                     >カラム表示</a>
@@ -156,13 +156,13 @@ $active_key = 'user';
 
         <!-- 表示切り替え・ページネーション -->
         @if( $user_prizes->count() )
-            <div class="d-flex justify-content-between mt-3">
-                <div class="col">
+            <div class="d-flex flex-column flex-md-row justify-content-between mt-3">
+                <div class="col-12 col-md">
                     {{ $user_prizes->links('vendor.pagination.bootstrap-4') }}
                 </div>
 
                 @if($user)
-                <div class="col-auto">
+                    <div class="col-12 col-md-auto">
                     <a href="{{route('admin.user.user_prize.column',$user->id)}}"
                     class="btn btn-light border"
                     >カラム表示</a>

@@ -80,6 +80,8 @@ $active_key = 'user';
                         <th scope="col">アカウント名</th>
                         <th scope="col">メールアドレス</th>
                         <th scope="col">X(旧Twitter)ID</th>
+                        <th scope="col" class="text-center">メール受取</th>
+
 
                         <th class="text-center" scope="col">
                             {{-- {{ '商品' }} --}}
@@ -121,7 +123,16 @@ $active_key = 'user';
                             <td>
                                 {{ strlen($user->email) <= 14 ? $user->email : substr($user->email,0,14).'...' }}
                             </td>
+                            <!-- X(旧Twitter)ID -->
                             <td>{{ $user->twitter_id ? $user->twitter_id : '---' }}</td>
+                            <!-- メール受取 -->
+                            <td class="text-center">
+                                @if ($user->get_email)
+                                    <div class="text-success">ON</div>
+                                @else
+                                    <div class="text-secondary">--</div>
+                                @endif
+                            </td>
 
                             <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->u_prizes_count }}"></number-comma-component>

@@ -67,7 +67,7 @@ class GachaPlayController extends Controller
         DB::beginTransaction();
         try {
 
-            # ポイント履歴の保登録
+            # ポイント履歴の登録
             $point_history = self::CreatePointHistory( $total_play_point );
 
             # ガチャ履歴の登録
@@ -96,6 +96,18 @@ class GachaPlayController extends Controller
             ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
 
         }
+
+
+
+        # 売り切れ登録
+        $new_remaining_count = Gacha::find($gacha->id)->remaining_count;
+        if( $new_remaining_count < 1 ){
+            $gacha->update([
+                'sold_out_at' => now(),
+                'is_sold_out' => 1,
+            ]);
+        }
+
 
         // 二重送信防止
         $request->session()->regenerateToken();

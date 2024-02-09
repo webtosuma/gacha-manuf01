@@ -31,8 +31,13 @@ class AdminGachaController extends Controller
 
         # 表示できるガチャ一覧
         $gachas = $gacha_category
-        ? Gacha::where('category_id',$gacha_category->id)->orderByDesc('published_at')->get()
-        : Gacha::orderByDesc('published_at')->get();
+            ? Gacha::where('category_id',$gacha_category->id)
+            ->orderBy('is_sold_out')//売り切れは下
+            ->orderByDesc('published_at')->get()
+
+            : Gacha::orderBy('is_sold_out')//売り切れは下
+            ->orderByDesc('published_at')->get()
+        ;
 
         # カテゴリーデータ(select要素用)
         $categories = GachaCategory::orderBy('created_at')->get();

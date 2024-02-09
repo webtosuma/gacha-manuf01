@@ -25,7 +25,10 @@
 
 
     <div class="container py-4 mb-5">
-        <h3>お知らせ</h3>
+        <!-- [ 見出し ] -->
+        <h2 class="text-center my-3">
+            お知らせ
+        </h2>
 
 
         <div class="mx-auto my-5" style="max-width:900px;">

@@ -5,10 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 /*
 | =============================================
-|  お知らせ　テーブル (メール送信日時　カラムの追加)
+|  ガチャ　テーブル (売り切れ　カラムの追加)
 | =============================================
 */
-class UpdateAddSendEmailAtToInfomationsTable extends Migration
+class UpdateAddIsSoldOutToGachasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,8 +17,8 @@ class UpdateAddSendEmailAtToInfomationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('infomations', function (Blueprint $table) {
-            $table->dateTime('send_email_at')->nullable()->default(null);//メール送信日時
+        Schema::table('gachas', function (Blueprint $table) {
+            $table->boolean('is_sold_out')->default(0); // bool型でデフォルト値を0に設定
         });
     }
 
@@ -29,8 +29,8 @@ class UpdateAddSendEmailAtToInfomationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('infomations', function (Blueprint $table) {
-            $table->dropColumn('send_email_at'); // 追加したカラムの削除
+        Schema::table('gachas', function (Blueprint $table) {
+            $table->dropColumn('is_sold_out'); // ロールバック用の処理
         });
     }
 }

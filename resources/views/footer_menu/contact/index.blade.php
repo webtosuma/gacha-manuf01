@@ -25,7 +25,10 @@
 <!----- contents ----->
 @section('content')
     <div class="container py-4 mb-5">
-        <h3 class="mb-">お問い合わせ</h3>
+        <!-- [ 見出し ] -->
+        <h2 class="text-center my-3">
+            お問い合わせ
+        </h2>
 
         <section class="mb-5 col-md-8 mx-auto">
 

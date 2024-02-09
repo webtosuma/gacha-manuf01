@@ -79,7 +79,10 @@ $active_key = 'gacha';
                 <div class="col-12 col-md-4 col-lg-3 ">
                     <div class="position-relative">
 
-                        {{-- @include('gacha.common.type_lable') --}}
+
+                        <div class="">{{ $gacha->is_sold_out ? '売り切れ' : '販売中' }} {{$gacha->remaining_count}}</div>
+                        <div class="">{{ $gacha->sold_out_at }}</div>
+
 
                         <a href="{{route('admin.gacha.show',$gacha)}}"
                         class="card border-secondary border-3 shadow bg-white h-100
