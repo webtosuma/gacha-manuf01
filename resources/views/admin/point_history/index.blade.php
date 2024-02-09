@@ -50,10 +50,6 @@ $active_key = 'point_history';
                         ></a-pointhistory-selectmonth>
 
 
-
-
-
-
                     </div>
                     <div class="col">
                         @php
@@ -67,18 +63,31 @@ $active_key = 'point_history';
             </div>
 
             <div class="row text-secondary">
-                <div class="col col-md-3">
+                <div class="col-6 col-md">
                     <div class="">月間売上</div>
                     <h3 class="fw-bold">
                         <number-comma-component number="{{ $sales }}"></number-comma-component>
                     </h3>
                 </div>
-                <div class="col col-md-3">
+                <div class="col-6 col-md">
                     <div class="">月間顧客数</div>
                     <h3 class="fw-bold">
                         <number-comma-component number="{{ count($visiters) }}"></number-comma-component>
                     </h3>
                 </div>
+                <div class="col-6 col-md">
+                    <div class="">月間リピーター数</div>
+                    <h3 class="fw-bold">
+                        <number-comma-component number="{{ $repeater_count }}"></number-comma-component>
+                    </h3>
+                </div>
+                <div class="col-6 col-md">
+                    <div class="">月間購入数</div>
+                    <h3 class="fw-bold">
+                        <number-comma-component number="{{ $payment_count }}"></number-comma-component>
+                    </h3>
+                </div>
+
             </div>
 
             <!--グラフコンポーネント-->

@@ -36,6 +36,39 @@ $active_key = 'point_history';
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
 
+        <!-- 数値データ -->
+        <div class="row text-secondary">
+            <div class="col-6 col-md">
+                <div class="">通算売上</div>
+                <h3 class="fw-bold">
+                    <number-comma-component number="{{ $sales }}"></number-comma-component>
+                </h3>
+            </div>
+            <div class="col-6 col-md">
+                <div class="">通算顧客数</div>
+                <h3 class="fw-bold">
+                    <number-comma-component number="{{ count($visiters) }}"></number-comma-component>
+                </h3>
+            </div>
+            <div class="col-6 col-md">
+                <div class="">通算リピーター数</div>
+                <h3 class="fw-bold">
+                    <number-comma-component number="{{ $repeater_count }}"></number-comma-component>
+                </h3>
+            </div>
+            <div class="col-6 col-md">
+                <div class="">通算購入数</div>
+                <h3 class="fw-bold">
+                    <number-comma-component number="{{ $payment_count }}"></number-comma-component>
+                </h3>
+            </div>
+
+        </div>
+
+
+
+
+
         <!-- ページネーション -->
         <div class="d-flex justify-content-start mt-3">
             {{ $point_histories->links('vendor.pagination.bootstrap-4') }}

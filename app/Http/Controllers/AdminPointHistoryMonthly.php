@@ -68,10 +68,17 @@ class AdminPointHistoryMonthly extends Controller
         # ポイントの入出理由ID (ポイント購入)
         $reason_id = self::ReasonId();
 
-        return PointHIstory::where('reason_id',$reason_id)
-        ->whereYear('created_at',$month)
-        ->whereMonth('created_at',$month)
-        ->sum('price');
+
+        # データの抽出
+        $query = PointHIstory::query();
+
+            if( $month )
+            {
+                $query->whereYear('created_at',$month);
+                $query->whereMonth('created_at',$month);
+            }
+
+        return $query->where('reason_id',$reason_id)->sum('price');
     }
 
 
@@ -90,10 +97,15 @@ class AdminPointHistoryMonthly extends Controller
         $reason_id = self::ReasonId();
 
         # 訪問者ID
-        $id_array = PointHIstory::where('reason_id',$reason_id)
-        ->whereYear('created_at',$month)
-        ->whereMonth('created_at',$month)
+        $query = PointHIstory::query();
+        if( $month )
+        {
+            $query->whereYear('created_at',$month);
+            $query->whereMonth('created_at',$month);
+        }
+        $id_array = $query->where('reason_id',$reason_id)
         ->pluck('user_id')->toArray();
+
 
         # 訪問者データ
         $visiters_model = User::orderByDesc('created_at')
@@ -140,11 +152,21 @@ class AdminPointHistoryMonthly extends Controller
         # ポイントの入出理由ID (ポイント購入)
         $reason_id = self::ReasonId();
 
-        return PointHIstory::where('reason_id',$reason_id)
-        ->whereYear('created_at',$month)
-        ->whereMonth('created_at',$month)
+        $query = PointHIstory::query();
+        if( $month )
+        {
+            $query->whereYear('created_at',$month);
+            $query->whereMonth('created_at',$month);
+        }
+        return $query->where('reason_id',$reason_id)
         ->where('user_id', $visiter->id)
         ->sum('price');
+
+        // return PointHIstory::where('reason_id',$reason_id)
+        // ->whereYear('created_at',$month)
+        // ->whereMonth('created_at',$month)
+        // ->where('user_id', $visiter->id)
+        // ->sum('price');
     }
 
 
@@ -161,12 +183,62 @@ class AdminPointHistoryMonthly extends Controller
         # ポイントの入出理由ID (ポイント購入)
         $reason_id = self::ReasonId();
 
-        return PointHIstory::where('reason_id',$reason_id)
-        ->whereYear('created_at',$month)
-        ->whereMonth('created_at',$month)
+        $query = PointHIstory::query();
+        if( $month )
+        {
+            $query->whereYear('created_at',$month);
+            $query->whereMonth('created_at',$month);
+        }
+        return $query->where('reason_id',$reason_id)
         ->where('user_id', $visiter->id)
         ->count();
     }
 
 
+
+    /**
+     * 月間のリピーター数
+     *
+     * @param User $visiters
+     * @param App\Models\User $visiter
+     * @return mixed
+    */
+    public static function RepeaterCount( $visiters )
+    {
+        $count = 0;
+        foreach ($visiters as $visiter) {
+            if( $visiter->count >1 ){ $count ++; }
+        }
+        return $count;
+    }
+
+
+
+
+    /**
+     * 月間の購入回数
+     *
+     * @param Carbon\Carbon $month
+     * @param App\Models\User $visiter
+     * @return mixed
+    */
+    public static function PaymentCount( $month )
+    {
+        # ポイントの入出理由ID (ポイント購入)
+        $reason_id = self::ReasonId();
+
+
+        # データ抽出
+        $query = PointHistory::query();
+
+            if( $month )
+            {
+                $query->whereYear('created_at',$month);
+                $query->whereMonth('created_at',$month);
+            }
+            $query->where('reason_id',$reason_id);
+
+
+        return $query->get()->count();
+    }
 }

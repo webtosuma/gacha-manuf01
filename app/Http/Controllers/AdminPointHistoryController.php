@@ -34,15 +34,22 @@ class AdminPointHistoryController extends Controller
         # 月の顧客レポートの並び替えキー
         $sort_by_key = $request->sort_by_key;
 
+        # 月間の顧客レポート
+        $visiters = Monthly::Visiters($month, $sort_by_key);
+
 
         # パラメーター
         $params = [
 
             'chart'  => self::Chart($month),//グラフ用データ(文字列データの配列)
 
-            'day_reports' => Monthly::DayReports($month),// 月間の日別レポート
-            'sales'       => Monthly::Sales($month),      // 月間の合計売上
-            'visiters'    => Monthly::Visiters($month, $sort_by_key),// 月間の顧客レポート
+            'day_reports'    => Monthly::DayReports($month),        // 月間の日別レポート
+            'sales'          => Monthly::Sales($month),             // 月間の合計売上
+            'visiters'       => $visiters,// 月間の顧客レポート
+
+            'repeater_count' => Monthly::RepeaterCount( $visiters ),// 月間のリピーター数
+            'payment_count'  => Monthly::PaymentCount( $month ),    // 月間の購入数
+
 
             'this_month'     => $month,// 今月
             'next_month'     => $month->copy()->addMonth(),// 翌月
@@ -115,10 +122,23 @@ class AdminPointHistoryController extends Controller
         $point_histories =  PointHistory::where('reason_id',11)//購入履歴
         ->orderByDesc('created_at')
         ->paginate(100);//ページネーション
-        // ->get();
 
 
-        return view('admin.point_history.datetime', compact('point_histories') );
+        # 月間の顧客レポート
+        $visiters = Monthly::Visiters(null, null);
+
+
+        $params = [
+
+            'point_histories'  => $point_histories,
+
+            'sales'          => Monthly::Sales( null ),             // 通算の合計売上
+            'visiters'       => $visiters,// 通算の顧客レポート
+            'repeater_count' => Monthly::RepeaterCount( $visiters ),// 通算のリピーター数
+            'payment_count'  => Monthly::PaymentCount( null ),    // 通算の購入数
+        ];
+
+        return view('admin.point_history.datetime', $params );
     }
 
 }

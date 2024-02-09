@@ -65,14 +65,17 @@ class AdminGachaCopyController extends Controller
 
         # コピー情報の新規登録
         $copy_gacha = new Gacha([
-            'category_id'      => $gacha['category_id'] ,      //リレーション
-            'name'             => 'コピー'.$gacha['name'] ,     //名前
-            'type'             => $gacha['type'] ,             //ガチャの種類
-            'one_play_point'   => $gacha['one_play_point'] ,   //1回PLAYポイント数
+            'category_id'    => $gacha['category_id'] ,      //リレーション
+            'name'           => 'コピー'.$gacha['name'] ,     //名前
+            'type'           => $gacha['type'] ,             //ガチャの種類
+            'one_play_point' => $gacha['one_play_point'] ,   //1回PLAYポイント数
 
-            'published_at'     => NULL,                        //公開設定(非公開)
-            'image'            => $new_image_path,             //イメージ画像
-            'key'              => \Illuminate\Support\Str::random(16), //認証キー
+            'published_at'   => NULL,                        //公開設定(非公開)
+            'image'          => $new_image_path,             //イメージ画像
+            'key'            => \Illuminate\Support\Str::random(16), //認証キー
+
+            'sold_out_at'    => NULL,//売り切れ日時
+            'is_sold_out'    => 0,//売り切れか否か
         ]);
         $copy_gacha->save();
 
