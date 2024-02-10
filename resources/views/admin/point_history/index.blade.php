@@ -82,12 +82,17 @@ $active_key = 'point_history';
                     </h3>
                 </div>
                 <div class="col-6 col-md">
-                    <div class="">月間購入数</div>
+                    <div class="">月間PT購入数</div>
                     <h3 class="fw-bold">
                         <number-comma-component number="{{ $payment_count }}"></number-comma-component>
                     </h3>
                 </div>
-
+                <div class="col-6 col-md">
+                    <div class="">月間ガチャ回転数</div>
+                    <h3 class="fw-bold">
+                        <number-comma-component number="{{ $gacha_play_count }}"></number-comma-component>
+                    </h3>
+                </div>
             </div>
 
             <!--グラフコンポーネント-->
@@ -116,7 +121,6 @@ $active_key = 'point_history';
                     class="nav-link">売上履歴</a>
                 </li>
               </ul>
-            {{-- <a href="" class="btn border"></a> --}}
         </div>
 
 

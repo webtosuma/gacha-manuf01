@@ -57,7 +57,7 @@ $active_key = 'user';
                         class="btn btn-light border py-3 w-100">
                         <h6>ガチャ履歴</h6>
                         <div class="mt-3">
-                            <number-comma-component number="{{ $user->gacha_histories->count() }}"></number-comma-component>
+                            <number-comma-component number="{{ $user->gacha_play_count }}"></number-comma-component>
                         </div>
                     </a>
                 </div>

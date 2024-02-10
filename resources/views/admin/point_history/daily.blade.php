@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','ポイント売上履歴')
+@section('title','日別ポイント売上履歴')
 
 
 @section('meta') @php
@@ -22,13 +22,14 @@ $active_key = 'point_history';
                 <li class="breadcrumb-item"><a href="{{ route('admin.point_history') }}"
                     >{{ 'ポイント売上' }}</a></li>
 
-                <li class="breadcrumb-item active" aria-current="page">履歴</li>
+                <li class="breadcrumb-item active" aria-current="page">日別履歴 {{$date->format('Y年m月d日')}}</li>
             </ol>
         </nav>
 
 
 
-        <h2 class="my- py-3 border-bottom">ポイント売上履歴</h2>
+        <h2 class="my- py-3 border-bottom">{{'日別ポイント売上履歴'}}</h2>
+        <h3>{{$date->format('Y年m月d日')}}</h3>
 
 
         <a href="{{route('admin.point_history')}}"
@@ -39,31 +40,31 @@ $active_key = 'point_history';
         <!-- 数値データ -->
         <div class="row text-secondary">
             <div class="col-6 col-md">
-                <div class="">通算売上</div>
+                <div class="">日別売上</div>
                 <h3 class="fw-bold">
                     <number-comma-component number="{{ $sales }}"></number-comma-component>
                 </h3>
             </div>
             <div class="col-6 col-md">
-                <div class="">通算顧客数</div>
+                <div class="">日別顧客数</div>
                 <h3 class="fw-bold">
                     <number-comma-component number="{{ count($visiters) }}"></number-comma-component>
                 </h3>
             </div>
             <div class="col-6 col-md">
-                <div class="">通算リピーター数</div>
+                <div class="">日別リピーター数</div>
                 <h3 class="fw-bold">
                     <number-comma-component number="{{ $repeater_count }}"></number-comma-component>
                 </h3>
             </div>
             <div class="col-6 col-md">
-                <div class="">通算PT購入数</div>
+                <div class="">日別PT購入数</div>
                 <h3 class="fw-bold">
                     <number-comma-component number="{{ $payment_count }}"></number-comma-component>
                 </h3>
             </div>
             <div class="col-6 col-md">
-                <div class="">通算ガチャ回転数</div>
+                <div class="">日別ガチャ回転数</div>
                 <h3 class="fw-bold">
                     <number-comma-component number="{{ $gacha_play_count }}"></number-comma-component>
                 </h3>
@@ -92,8 +93,7 @@ $active_key = 'point_history';
                         <th scope="col">アカウント名</th>
                         <th scope="col">購入ポイント</th>
                         <th scope="col">売上金額</th>
-
-                        <th scope="col">受付日時</th>
+                        <th scope="col">受付時間</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -117,7 +117,8 @@ $active_key = 'point_history';
                             <td>
                                 ¥<number-comma-component number="{{ $point_history->price }}"></number-comma-component>
                             </td>
-                            <td>{{ $point_history->created_at->format('Y年m月d日 H:i:s') }}</td>
+                            <td>{{ $point_history->created_at->format('H:i:s') }}</td>
+
 
                             <td class="py-3" style="width:2rem;">
                                 @if($user)

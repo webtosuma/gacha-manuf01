@@ -22,20 +22,20 @@
         </p>
     </div>
 </section>
-{{-- <section>
+<section>
     <div class="mail-container mail-border-bottom">
         <p>
-            hogehoge <br>
-            hogehoge <br>
-            hogehoge <br>
-            hogehoge <br>
+            <a href="{{route('login')}}" class="mail-btn mail-btn-primary mail-btn-lg">ログインはこちら</a>
+            <br><br>
         </p>
     </div>
-</section> --}}
+</section>
 <section>
     <div class="mail-container mail-bg-white">
         <div class="mail-center-image">
-            <img class="mail-img" src="{{asset('storage/site/image/logo192.png')}}" alt="サイトロゴ">
+            <a href="{{route('home')}}">
+                <img class="mail-img" src="{{asset('storage/site/image/logo192.png')}}" alt="サイトロゴ">
+            </a>
         </div>
 
         <div class="mail-copy">&copy; fobees</div>

@@ -230,5 +230,14 @@ class User extends Authenticatable
 
 
 
+        /**
+         * ガチャを回した回数 $user->gacha_play_count
+         * @return String
+        */
+        public function getGachaPlayCountAttribute()
+        {
+            return \App\Models\UserGachaHistory::where('user_id',$this->id)
+            ->sum('play_count');
+        }
 
 }

@@ -163,6 +163,10 @@ class AdminInfomationController extends Controller
      */
     public function email_post(Infomation $infomation)
     {
+        # メール送信日の登録
+        $infomation->update(['send_email_at'=>now()]);
+
+
         $users = User::where('get_email',1)->get();
         foreach ($users as $user) {
 
@@ -175,10 +179,6 @@ class AdminInfomationController extends Controller
                 'subject' => $infomation->title, //件名
             ]) );
         }
-
-
-        # メール送信日の登録
-        $infomation->update(['send_email_at'=>now()]);
 
 
         # リダイレクト

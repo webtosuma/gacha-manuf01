@@ -42,13 +42,14 @@ class AdminPointHistoryController extends Controller
         $params = [
 
             'chart'  => self::Chart($month),//グラフ用データ(文字列データの配列)
-
             'day_reports'    => Monthly::DayReports($month),        // 月間の日別レポート
-            'sales'          => Monthly::Sales($month),             // 月間の合計売上
-            'visiters'       => $visiters,// 月間の顧客レポート
 
-            'repeater_count' => Monthly::RepeaterCount( $visiters ),// 月間のリピーター数
-            'payment_count'  => Monthly::PaymentCount( $month ),    // 月間の購入数
+
+            'sales'           => Monthly::Sales($month),             // 月間の合計売上
+            'visiters'        => $visiters,// 月間の顧客レポート
+            'repeater_count'  => Monthly::RepeaterCount( $visiters, $month ),// 月間のリピーター数
+            'payment_count'   => Monthly::PaymentCount( $month ),    // 月間の購入数
+            'gacha_play_count'=> Monthly::GachaPlayCount( $month ),    // 月間のガチャ回転数
 
 
             'this_month'     => $month,// 今月
@@ -132,13 +133,52 @@ class AdminPointHistoryController extends Controller
 
             'point_histories'  => $point_histories,
 
-            'sales'          => Monthly::Sales( null ),             // 通算の合計売上
-            'visiters'       => $visiters,// 通算の顧客レポート
-            'repeater_count' => Monthly::RepeaterCount( $visiters ),// 通算のリピーター数
-            'payment_count'  => Monthly::PaymentCount( null ),    // 通算の購入数
+            'sales'           => Monthly::Sales( null ),             // 通算の合計売上
+            'visiters'        => $visiters,// 通算の顧客レポート
+            'repeater_count'  => Monthly::RepeaterCount( $visiters, null ),// 通算のリピーター数
+            'payment_count'   => Monthly::PaymentCount( null ),    // 通算の購入数
+            'gacha_play_count'=> Monthly::GachaPlayCount( null ),  // 通算のガチャ回転数
         ];
 
         return view('admin.point_history.datetime', $params );
     }
 
+
+
+
+
+    /**
+     * 日別レポート
+     *
+     * @param String $date_text
+     * @return \Illuminate\Http\Response
+     */
+    public function daily( $date_text )
+    {
+        # 指定日のオブジェクト
+        $date = Carbon::parse($date_text);
+
+        // dd();
+        $point_histories =  PointHistory::where('reason_id',11)//購入履歴
+        ->whereDate('created_at',$date)
+        ->orderByDesc('created_at')
+        ->paginate(100);//ページネーション
+
+        $visiters = Daily::Visiters($date);
+
+        $params = [
+
+            'date' => $date,
+            'point_histories'  => $point_histories,
+
+            'sales'    => Daily::Sales($date),    //日別の売上
+            'visiters' => $visiters,              //日別の顧客レポート
+            'repeater_count'  => Daily::RepeaterCount( $visiters, $date ),// 日別のリピーター数
+            'payment_count'   => Daily::PaymentCount( $date ),   // 日別の購入数
+            'gacha_play_count'=> Daily::GachaPlayCount( $date ), // 日別のガチャ回転数
+        ];
+
+
+        return view('admin.point_history.daily', $params );
+    }
 }

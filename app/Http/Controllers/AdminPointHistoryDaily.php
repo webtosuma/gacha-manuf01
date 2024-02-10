@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PointHistory;
 use App\Models\User;
+use App\Models\UserGachaHistory;
 use Carbon\Carbon;
 /*
 | =============================================
@@ -74,7 +75,6 @@ class AdminPointHistoryDaily extends Controller
 
 
 
-
     /**
      * 日別の顧客のポイント購入金額
      *
@@ -93,4 +93,77 @@ class AdminPointHistoryDaily extends Controller
         ->sum('price');
     }
 
+
+
+    /**
+     * 日別のリピーター数
+     *
+     * @param User $visiters
+     * @param App\Models\User $visiter
+     * @return mixed
+    */
+    public static function RepeaterCount( $visiters, $date )
+    {
+        # ポイントの入出理由ID (ポイント購入)
+        $reason_id = self::ReasonId();
+
+        $count = 0;
+        foreach ($visiters as $visiter) {
+
+
+            $query = PointHIstory::query();
+            $query->where('created_at','<=',$date->format('Y-m-d 23:59:59'));
+            $query->where('reason_id',$reason_id)
+            ->where('user_id', $visiter->id);
+
+
+            $visiter_count = $query->count();
+
+            if( $visiter_count >1 ){ $count ++; }
+        }
+        return $count;
+    }
+
+
+
+
+    /**
+     * 日別の購入数
+     *
+     * @param Carbon\Carbon $month
+     * @param App\Models\User $visiter
+     * @return mixed
+    */
+    public static function PaymentCount( $date )
+    {
+        # ポイントの入出理由ID (ポイント購入)
+        $reason_id = self::ReasonId();
+
+
+        # データ抽出
+        $query = PointHistory::query();
+
+            $query->whereDate('created_at',$date);
+            $query->where('reason_id',$reason_id);
+
+        return $query->get()->count();
+    }
+
+
+
+    /**
+     * 日別のガチャ回転数
+     *
+     * @param Carbon\Carbon $month
+     * @param App\Models\User $visiter
+    */
+    public static function GachaPlayCount( $date )
+    {
+        # データ抽出
+        $query = UserGachaHistory::query();
+
+            $query->whereDate('created_at',$date);
+
+        return $query->sum('play_count');
+    }
 }

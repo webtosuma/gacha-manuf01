@@ -63,5 +63,6 @@
         border-radius: 4.8px;
         color: #fff;
         background-color: #00b8e6;
+        width: 100%;
     }
 </style>

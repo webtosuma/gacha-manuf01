@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PointHistory;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\UserGachaHistory;
 
 use App\Http\Controllers\AdminPointHistoryDaily as Daily;
 /*
@@ -39,11 +40,17 @@ class AdminPointHistoryMonthly extends Controller
         $day_reports = [];
         while( $date->format('Y-m-d') <= $end_date->format('Y-m-d') )
         {
+            $visiters = Daily::Visiters($date);
+
             $day_reports[] = [
                 'date_text'=> $date->format('Y-m-d'),
                 'date'     => $date->copy(),
                 'sales'    => Daily::Sales($date),    //日別の売上
-                'visiters' => Daily::Visiters($date), //日別の顧客レポート
+                'visiters' => $visiters,              //日別の顧客レポート
+                'repeater_count'  => Daily::RepeaterCount( $visiters, $date ),// 日別のリピーター数
+                'payment_count'   => Daily::PaymentCount( $date ),   // 日別の購入数
+                'gacha_play_count'=> Daily::GachaPlayCount( $date ), // 日別のガチャ回転数
+
             ];
             $date->addDay();
 
@@ -203,11 +210,28 @@ class AdminPointHistoryMonthly extends Controller
      * @param App\Models\User $visiter
      * @return mixed
     */
-    public static function RepeaterCount( $visiters )
+    public static function RepeaterCount( $visiters, $month )
     {
+        # ポイントの入出理由ID (ポイント購入)
+        $reason_id = self::ReasonId();
+
         $count = 0;
         foreach ($visiters as $visiter) {
-            if( $visiter->count >1 ){ $count ++; }
+
+
+            $query = PointHIstory::query();
+            if( $month )
+            {
+                $next_month = $month->copy()->addMonth();
+                $query->where('created_at','<',$next_month->format('y-m-01'));
+            }
+            $query->where('reason_id',$reason_id)
+            ->where('user_id', $visiter->id);
+
+
+            $visiter_count = $query->count();
+
+            if( $visiter_count >1 ){ $count ++; }
         }
         return $count;
     }
@@ -216,7 +240,7 @@ class AdminPointHistoryMonthly extends Controller
 
 
     /**
-     * 月間の購入回数
+     * 月間の購入数
      *
      * @param Carbon\Carbon $month
      * @param App\Models\User $visiter
@@ -240,5 +264,27 @@ class AdminPointHistoryMonthly extends Controller
 
 
         return $query->get()->count();
+    }
+
+
+
+    /**
+     * 月間のガチャ回転数
+     *
+     * @param Carbon\Carbon $month
+     * @param App\Models\User $visiter
+    */
+    public static function GachaPlayCount( $month )
+    {
+        # データ抽出
+        $query = UserGachaHistory::query();
+
+            if( $month )
+            {
+                $query->whereYear('created_at',$month);
+                $query->whereMonth('created_at',$month);
+            }
+
+        return $query->sum('play_count');
     }
 }

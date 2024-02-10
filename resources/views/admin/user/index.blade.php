@@ -137,10 +137,15 @@ $active_key = 'user';
                             <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->u_prizes_count }}"></number-comma-component>
                             </a></td>
-                            <td class="text-center"><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
+                            {{-- <td class="text-center"><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
                             class="btn btn-link">
                                 <number-comma-component number="{{ $user->gacha_histories->count() }}"></number-comma-component>
+                            </a></td> --}}
+                            <td class="text-center"><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
+                            class="btn btn-link">
+                                <number-comma-component number="{{ $user->gacha_play_count }}"></number-comma-component>
                             </a></td>
+
                             <td class="text-center"><a href="{{route('admin.user.point_history',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->point }}"></number-comma-component>
                             </a></td>
