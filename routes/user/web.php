@@ -50,6 +50,9 @@ include('web/user_prize.php');
 # 発送申請
 include('web/shipped.php');
 
+# ガチャ履歴
+include('web/gacha_history.php');
+
 # 発送申請履歴
 include('web/shipped_history.php');
 

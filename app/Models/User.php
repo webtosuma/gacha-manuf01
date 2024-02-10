@@ -144,12 +144,12 @@ class User extends Authenticatable
 
 
         /**
-         * UserGachaHistoryモデル リレーション ($user->u_prizes)
+         * UserGachaHistoryモデル リレーション ($user->gacha_histories)
          * @return \App\Models\UserGachaHistory
         */
         public function gacha_histories()
         {
-            return $this->hasMany(UserGachaHistory::class,'user_id');
+            return $this->hasMany(UserGachaHistory::class,'user_id')->orderByDesc('created_at');
         }
 
     /*

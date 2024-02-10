@@ -68,8 +68,12 @@ style="max-width:90vw; min-width:30vw;">
 
 
 
-            <a href="{{ route('user_prize') }}" class="list-group-item list-group-item-action py-3 position-relative pe-5"
+            <a href="{{ route('user_prize') }}"
+            class="list-group-item list-group-item-action py-3 px-5 position-relative pe-5"
             >
+            <div class="position-absolute top-0 start-0 p-3 pt-2 mt-1"
+            ><i class="bi bi-stars fs-5"></i></div>
+
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
 
@@ -89,49 +93,90 @@ style="max-width:90vw; min-width:30vw;">
                     @endforeach
                 </div>
             </a>
+            <a href="{{ route('gacha_history') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
+            >ガチャ履歴
 
-            <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3 position-relative"
-            >ポイント履歴
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                ><i class="bi bi-clock-history fs-5"></i></div>
+
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3 position-relative">
-                発送申請履歴
+            <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
+            >ポイント履歴
+
+                {{-- <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                ><i class="bi bi-clock-history fs-5"></i></div> --}}
+
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3">
+                    <div class="rounded-circle border border-secondary fw-bold fs-6 bg-gradient text-secondary
+                    d-flex align-items-center justify-content-center
+                    " style="width:1.125rem; height:1.125rem;">P</div>
+                </div>
+
+
+                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                ><i class="bi bi-chevron-right"></i></div>
+            </a>
+
+            <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative">
+                発送履歴
                 @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
                 @if ( $unread_count )
                     <!--お問い合わせ　未対応-->
                     <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
                 @endif
+
+
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                ><i class="bi bi-box-seam fs-5"></i></div>
+
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('settings') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            <a href="{{ route('settings') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >会員情報設定
+
+
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                ><i class="bi bi-gear-fill fs-5"></i></div>
+
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >利用ガイド
+
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                ><i class="bi bi-book fs-5"></i></div>
+
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3 position-relative"
+            <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >お知らせ
+
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                ><i class="bi bi-megaphone fs-5"></i></div>
+
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
             <a href="{{route('home')}}/#timeline"
-            class="list-group-item list-group-item-action py-3 position-relative">
+            class="list-group-item list-group-item-action py-3 px-5 position-relative">
 
-                <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
-                alt="xロゴ" class="d-inline-block" style="height:1rem;">
 
                 <span>タイムライン</span>
+
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3">
+                    <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
+                    alt="xロゴ" class="d-inline-block" style="height:1.125rem;">
+                </div>
 
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
@@ -140,8 +185,12 @@ style="max-width:90vw; min-width:30vw;">
             @if ( Auth::check() )
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button class="list-group-item list-group-item-action py-3 position-relative"
+                    <button class="list-group-item list-group-item-action py-3 px-5 position-relative"
                     type="submit">{{ __('ログアウト') }}
+
+                        <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                        ><i class="bi bi-box-arrow-right fs-5"></i></div>
+
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                         ><i class="bi bi-chevron-right"></i></div>
                     </button>
