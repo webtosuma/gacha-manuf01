@@ -22,6 +22,7 @@ class PointHistory extends Model
         'value',     //ポイント数
         'price',     //販売価格(税込み)＊ポイント販売時
         'reason_id', //入出理由ID
+        'stripe_checkout_session_id'//Stripe チェックアウト処理ID
     ];
 
 

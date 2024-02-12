@@ -12,6 +12,9 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+
+        'stripe/webhook' //決済完了ウェブホック //https://cardfesta.jp/stripe/webhook
+
+
     ];
 }

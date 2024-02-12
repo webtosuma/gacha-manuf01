@@ -17,8 +17,9 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
 
             # 前ページのURLをセッションに保存
-            $before_admin_url = $request->path();
-            $request->session()->put( 'before_admin_url', $before_admin_url);
+            // $before_admin_url = $request->url();
+
+            // $request->session()->put( 'before_admin_url', $before_admin_url);
 
 
             return route('require_login');

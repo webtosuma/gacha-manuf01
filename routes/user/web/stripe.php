@@ -9,11 +9,17 @@ use App\Http\Controllers;
 |  PointHistoryController
 |--------------------------------------------------------------------------
 */
-# ポイント一覧
-Route::get('point_sail',
-// [Controllers\PointSailController::class, 'index'])
-[Controllers\StripeController::class, 'index'])
-->name('point_sail');
+
+    # ポイント一覧
+    Route::get('point_sail',
+    [Controllers\StripeController::class, 'index'])
+    ->name('point_sail');
+
+
+    # 決済完了ウェブホック //https://cardfesta.jp/stripe/webhook
+    Route::post('stripe/webhook',
+    [Controllers\StripeController::class, 'webhook']);
+
 
 
 Route::middleware(['auth'])->group(function () {
@@ -27,6 +33,15 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('point_sail/payment_post/{stripe_id}',
     // [Controllers\StripeController::class, 'payment_post'])
     // ->name('point_sail.payment_post');
+
+
+
+
+    # ポイントが不足しています(StripeReactController)
+    Route::get('point_sail/shortage',
+    [Controllers\StripeReactController::class, 'shortage'])
+    ->name('point_sail.shortage');
+
 
     # ポイント購入完了
     Route::get('point_sail/comp/{stripe_id}',

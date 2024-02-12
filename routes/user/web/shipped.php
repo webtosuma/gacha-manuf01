@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     [Controllers\ShippedAppliController::class, 'comp'])
     ->name('shipped.appli.comp');
 
-    # 発送申請完了
+    # 発送申請完了//get
     Route::get('shipped/appli/comp', function(){
         return view('shipped.appli.comp');
     })->name('shipped.appli.comp.get');

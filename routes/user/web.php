@@ -32,14 +32,24 @@ include('web/gacha.php');
 
 # ポイント購入・履歴
 
-    ##(webhook)
-    // include('web/stripe.php');
 
     ## (Stripe・プロジェクト内で購入処理の実行)
-    include('web/stripe_inner.php');
+    // include('web/stripe_inner.php');
 
     ## (Stripe・React)
     // include('web/stripe_react.php');
+
+
+    ##(webhook)
+    include('web/stripe.php');
+
+    # Stripe 照明URL
+    Route::get('.well-known/apple-developer-merchantid-domain-association', function(){
+        #jp
+        // return view('point_sail.stripe.apple-developer-merchantid-domain-association.jp');
+        #online
+        // return view('point_sail.stripe.apple-developer-merchantid-domain-association.online');
+    });
 
 //
 

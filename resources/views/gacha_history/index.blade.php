@@ -22,21 +22,43 @@
 
         <div class="list-group-item bg-white py-4">
             {{-- 所持ポイント --}}
-            <div class="">ガチャPLAY数：<span class="fs-3 fw-bold ms-3">
-                <number-comma-component number="{{ Auth::user()->gacha_play_count.'回' }}"></number-comma-component>
-            </span></div>
+            <div class="d-flex alignitems-center justify-content-between">
+                <span>ガチャPLAY数：</span>
+
+                <span class="fs-3 fw-bold ms-3">
+                    <number-comma-component
+                    number="{{ Auth::user()->gacha_play_count.'回' }}"
+                    ></number-comma-component>
+                </span>
+            </div>
         </div>
-        @foreach (Auth::user()->gacha_histories as $gacha_history)
+        @foreach ($gacha_histories as $gacha_history)
         <a href="{{route('gacha.result_history',$gacha_history->key)}}"
-        class="list-group-item list-group-item-action py-0 position-relative pe-5 bg-white"
+        class="list-group-item list-group-item-action py-1 border-0 position-relative bg-white"
         ><div class="row">
-            <div class="col-4 col-md-2 p-0">
+            <div class="col-4 col-md-2 p-0 position-relative">
 
 
-                <ratio-image-component
-                url="{{ $gacha_history->gacha->image_path }}"
-                style_class="ratio ratio-4x3 rounded"
-                ></ratio-image-component>
+                <!--loading-->
+                <div class="ratio ratio-4x3">
+                    <div class="bg- d-flex align-items-center justify-content-center rounded"
+                    style="z-index:0;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--gacha image-->
+                <div class="position-absolute top-0 start-0 w-100 h-100"
+                style="z-index:0;">
+                    <ratio-image-component
+                    url="{{ $gacha_history->gacha->image_path }}"
+                    style_class="ratio ratio-4x3 rounded"
+                    ></ratio-image-component>
+                </div>
 
 
             </div>
@@ -52,5 +74,11 @@
         @endforeach
 
     </div>
+
+    <!-- ページネーション -->
+    <div class="d-flex justify-content-start  mt-3">
+        {{ $gacha_histories->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
+    </div>
+
 </div>
 @endsection

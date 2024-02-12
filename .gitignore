@@ -4,8 +4,10 @@
 /storage/*.key
 /vendor
 .env
+.env_copy
 .env_heteml
 .env_heteml_test
+.env_heteml_webhook_test
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml

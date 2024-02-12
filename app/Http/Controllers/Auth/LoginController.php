@@ -69,7 +69,6 @@ class LoginController extends Controller
         # ログイン前に訪れたページ
         $before_admin_url = $request->session()->get( 'before_admin_url') ;
 
-
         # ログイン処理
         if( Auth::check() ){
 
@@ -121,8 +120,12 @@ class LoginController extends Controller
         $request->session()->regenerateToken(); //セッションの再作成(二重送信の防止)
 
         # へリダイレクト
+        // return redirect()->route('home')
+        // ->with('alert-secondary','ログアウトしました。');
+
         return redirect()->route('home')
         ->with('alert-secondary','ログアウトしました。');
+
     }
 
 }

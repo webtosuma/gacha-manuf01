@@ -28,8 +28,10 @@
                 <div class="col-6">ポイント数</div>
                 <div class="col-6 border-bottom fw-bold text-center">{{ number_format($point_sail->value).'pt' }}</div>
 
-                <div class="col-6">支払い方法</div>
-                <div class="col-6 border-bottom fw-bold text-center">{{ $source }}</div>
+                @if( isset($source) )
+                    <div class="col-6">支払い方法</div>
+                    <div class="col-6 border-bottom fw-bold text-center">{{ $source }}</div>
+                @endif
 
                 <div class="col-6">支払い金額</div>
                 <div class="col-6 border-bottom fw-bold text-center">{{ number_format($point_sail->price).'円（税込）' }}</div>
