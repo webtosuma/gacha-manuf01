@@ -18,9 +18,12 @@
 
 <div class="container py-4 mb-5">
     <h3 class="text-center my-3">ポイント購入が完了しました</h3>
-    {{-- <div class="border border-danger p-3">
+
+    <div class="form-text borderrrr border-danger p-3 mx-auto mb-3" style="max-width:600px;">
         通信が混み合っている場合、決済サービスとの通信が遅れる場合があり、ポイントの反映が<strong>1分程</strong>、遅れる場合があります。
-    </div> --}}
+    </div>
+
+
 
     <ul class="list-group list-group-flush mb-5 mx-auto" style="max-width:600px;">
         <li class="list-group-item bg-white py-">

@@ -22,9 +22,12 @@
             <li class="list-group-item bg-white py-4 fs-">
                 購入するポイントを選択してください
 
-                <div class="mt-2" >
-                    ご利用可能な決済方法 <img src="{{asset('storage/site/image/stripe_card.png')}}" alt="ご利用可能な決済方法" style="height:3rem;">
-                </div>
+                {{-- <div class="mt-2" >
+                    ご利用可能な決済方法
+                    <img src="{{asset('storage/site/image/stripe_card.png')}}" alt="ご利用可能な決済方法" style="height:3rem;">
+                </div> --}}
+
+
 
                 {{-- <h3 class="text-danger">只今、ポイント購入を停止しています。</h3>
                 <p class="border border-warning border-3 p-3">

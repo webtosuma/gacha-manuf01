@@ -18,7 +18,7 @@
             <small>2023/01/15 発行</small>
         </p>
         <p>
-            {!! nl2br(e( $infomation->body_text )) !!}
+            {!! nl2br(preg_replace('/\b(https?:\/\/\S+)/i', '<a href="$1">$1</a>', $infomation->body_text) )!!}
         </p>
     </div>
 </section>

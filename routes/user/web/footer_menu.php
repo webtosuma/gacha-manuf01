@@ -14,22 +14,21 @@ use App\Http\Controllers;
 
     # 利用規約(trems)
     Route::get('/trems/{revision_date?}',
-    function ($revision_date='2023-12-01')
-    { return view('footer_menu.trems.index', compact('revision_date') )
-    ->with('affiliate_key',session('affiliate_key') ?? '');} )
-    ->name('trems');
+    function ($revision_date='2024-01-15'){
+         return view('footer_menu.trems.index', compact('revision_date') );
+    })->name('trems');
 
     # プライバシーポリシー(privacy_policy)
     Route::get('/privacy_policy/{revision_date?}',
-    function ($revision_date='2023-12-01') {
-    return view('footer_menu.privacy_policy.index', compact('revision_date') )
-    ->with('affiliate_key',session('affiliate_key') ?? '');} )
-    ->name('privacy_policy');
+    function ($revision_date='2024-01-15') {
+        return view('footer_menu.privacy_policy.index', compact('revision_date') );
+    })->name('privacy_policy');
 
     # 特定商取引法に基づく表記(tradelaw)
-    Route::get('tradelaw',
-    function () { return view('footer_menu.tradelaw.index'); })
-    ->name('tradelaw');
+    Route::get('tradelaw/{revision_date?}',
+    function ($revision_date='2024-02-13') {
+        return view('footer_menu.tradelaw.index', compact('revision_date'));
+    })->name('tradelaw');
 
     # お知らせ(news)
     Route::get('infomation',

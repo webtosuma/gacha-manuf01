@@ -176,11 +176,17 @@ class GachaPlayController extends Controller
 
         # [限定ガチャ]一日一回限定限定ガチャ
         else if(
-            $gacha->type=='only_oneday' && $gacha->played_only_oneday
+            ( $gacha->type=='only_oneday' && $gacha->played_only_oneday ) or
+            ( $gacha->type=='only_oneday' && $gacha->played_one_time )
         ){
             return '本日既に、このガチャは利用済みです。';
         }
-
+        # [限定ガチャ]一日一回限定限定ガチャ
+        else if(
+            $gacha->type=='only_new_user' && Auth::user()->sevendays_affter_registar
+        ){
+            return 'このガチャを利用することはできません。';
+        }
         else{
             return null;
         }

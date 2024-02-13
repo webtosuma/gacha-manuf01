@@ -1,5 +1,9 @@
 <!--metter-->
-<div class="card-body py-0">
+@php
+$bg_color = '';
+$bg_color = $gacha->type=='only_new_user' ? 'bg-success text-white' : $bg_color;//新機械委員限定
+@endphp
+<div class="card-body py-0 {{$bg_color}}">
     <div class="row align-items-center justify-content-between">
         <div class="col">
             @include('gacha.common.new_label')
@@ -26,8 +30,9 @@
     </div>
 
 
-
-    <div class="@if( !$gacha->is_meter ) invisible @endif">
+    @if($gacha->is_meter)
+    <!-- ノーマル -->
+    <div class="">
         <div class="progress">
             @php
             $ratio = $gacha->remaining_ratio;
@@ -44,4 +49,37 @@
             <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
         </p>
     </div>
+
+
+    {{-- <!-- 1回限定 -->
+    @elseif ($gacha->type=='one_time')
+    <div class="">
+        <div style="line-height:2rem">
+            ＊お一人さま一回限定で利用でます
+        </div>
+    </div> --}}
+
+    {{-- <!-- 1日限定 -->
+    @elseif ($gacha->type=='only_oneday')
+    <div class="">
+        <div style="line-height:2rem">
+            ＊１日１回で利用できます。（0時切り替わり）
+        </div>
+    </div> --}}
+
+    <!-- 新規会委員限定 -->
+    @elseif ($gacha->type=='only_new_user')
+    <div class="">
+        <div style="line-height:2rem">
+            ＊会員登録から一週間限定で利用できます
+        </div>
+    </div>
+
+
+    <!-- メーター表示なし -->
+    @else
+    <div style="height:2rem"><!--  --></div>
+    @endif
+
+
 </div>

@@ -28,23 +28,6 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     >売り切れました</div></div>
     @endif
 
-    {{-- <!-- 1回限定 -->
-    @if ($gacha->type=='one_time')
-    <div class="position-absolute top-0 end-0">
-        <div class="m-2 p-2 px-3 border border-danger bg-info text-white fs-5 rounded-3"
-        >{{$gacha->types()[$gacha->type]}}</div>
-    </div>
-    @endif
-
-
-    <!-- 1日限定 -->
-    @if ($gacha->type=='only_oneday')
-    <div class="position-absolute top-0 end-0">
-        <div class="m-2 p-2 px-3 border border-white bg-danger text-white fs-5 rounded-3"
-        >{{$gacha->types()[$gacha->type]}}</div>
-    </div>
-    @endif --}}
-
 
     <!-- 1回限定 -->
     @if ($gacha->type=='one_time')
@@ -65,4 +48,13 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     </div>
     @endif
 
+
+    <!-- 新規会委員限定 -->
+    @if ($gacha->type=='only_new_user')
+    <div class="position-absolute p-2 pe-3 top-0 end-0">
+        <div class="p-2 px-4 bg- bg-gradient text-white fw-bold border border-3 border-success fs-5"
+        style="z-index:2; transform: skew(-15deg); background-color: rgba(85, 216, 177, .8)"
+        >{{$gacha->types()[$gacha->type]}}</div>
+    </div>
+    @endif
 </div>

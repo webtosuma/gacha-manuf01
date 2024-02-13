@@ -27,6 +27,7 @@ class GachaController extends Controller
      */
     public function index(Request $request, $category_code='all' )
     {
+
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
         if( $category_code!='all' && !$category ){ return \App::abort(404); }
@@ -108,8 +109,14 @@ class GachaController extends Controller
             # ID配列を指定して、ガチャの取得
             $query = Gacha::query();
 
-                //
-                $query->orderBy('is_sold_out');//売り切れは下
+                //売り切れは下
+                $query->orderBy('is_sold_out');
+
+                // 新規会委員のみ表示のガチャ(それ以外は非表示)
+                if( !(Auth::check() && !Auth::user()->sevendays_affter_registar) )
+                {
+                    $query->where('type','<>','only_new_user');
+                }
 
                 // 並び替え・絞り込み
                 switch ($search_key) {
@@ -209,7 +216,9 @@ class GachaController extends Controller
         */
         public function getsearchs()
         {
-            return [
+            $array = [
+                // ['label'=>'新規会員限定', 'key'=>'only_new_user'],
+
                 ['label'=>'新着順', 'key'=>'desc_crated'],
                 ['label'=>'高額ポイント順', 'key'=>'desc_point'],
                 ['label'=>'低額ポイント順', 'key'=>'asc_point'],
@@ -217,6 +226,14 @@ class GachaController extends Controller
                 ['label'=>'１日１回', 'key'=>'only_oneday'],
                 ['label'=>'全ての限定', 'key'=>'other_types'],
             ];
+
+            return $array;
+
+            // if( !(Auth::check() && !Auth::user()->sevendays_affter_registar) )
+            // {
+            //     $query->where('type','<>','only_new_user');
+            // }
+
         }
     //
 

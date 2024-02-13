@@ -64,6 +64,11 @@ https://cardfesta.jp/contact
 第 931010002606 号
 熊本県公安委員会
 合同会社 Fobees
+
+
+
+
+制定日2024年01月15日
 __;
 @endphp
 

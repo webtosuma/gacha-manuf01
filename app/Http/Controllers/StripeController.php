@@ -60,7 +60,21 @@ class StripeController extends Controller
             'customer' => $customer->id, //顧客ID
             'customer_update'=>['address'=> 'auto'],
 
-            // 'payment_method_types' => ['card'],//Stripeの管理画面より設定
+            'payment_method_types' => [
+                'card',
+                // 'konbini',
+                'customer_balance'
+            ],
+
+            'payment_method_options' => [
+                'customer_balance'=> [
+                    'funding_type'=> 'bank_transfer',
+                    'bank_transfer'=> [
+                        'type'=> 'jp_bank_transfer',
+                    ],
+                ],
+            ],
+
             'mode' => 'payment',
             'line_items' => [[
                 'price' => $point_sail->stripe_id,
@@ -143,12 +157,40 @@ class StripeController extends Controller
 
         // イベントタイプごとに処理を実行
         switch ($event->type) {
-            case 'checkout.session.completed':
-                // 支払いが成功した場合の処理
-                $this->handleCheckoutSessionCompleted($event->data->object);
 
-                return response('Webhook Handled', 200);
+            ## クレジット・ウォレットで支払いが成功した場合の処理
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+                if ( isset($session->payment_status) && $session->payment_status === 'paid') {
+                    $point_history = $this->handleCheckoutSessionCompleted($session);
+                }
+
+                return response(compact('point_history'), 200);
                 break;
+
+
+            ## 銀行振込などの非同期型決済での、発送業務等のシステム連携処理
+            case 'checkout.session.async_payment_succeeded':
+                $session = $event->data->object;
+                if (isset($session->payment_status) && $session->payment_status === 'paid') {
+                    $point_history = $this->handleCheckoutSessionCompleted($session);
+                }
+
+                return response(compact('point_history'), 200);
+                break;
+
+
+            // ## payment_intent.succeeded
+            // case 'payment_intent.succeeded':
+            //     $session = $event->data->object;
+            //     // if ($session->payment_status === 'paid') {
+            //         $point_history = $this->handleCheckoutSessionCompleted($session);
+            //     // }
+
+            //     return response(compact('point_history'), 200);
+            //     break;
+
+
 
             default:
                 // 未知のイベントに対する処理
@@ -170,7 +212,7 @@ class StripeController extends Controller
         $session_id = $session['id'];
         $column = 'stripe_checkout_session_id';
         $previous_point_history = PointHistory::where($column,$session_id)->first();
-        if( $previous_point_history ){ return; }
+        if( $previous_point_history ){ return null; }
 
 
         // 客の情報
@@ -200,7 +242,15 @@ class StripeController extends Controller
         CanpaingFirstPointSailController::grant($user);
 
 
-        return ;
+        # ポイント購入完了メールの送信
+        // $request->user       = $user;
+        // $request->point_sail = $point_sail;
+        // $request->email      = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : '';//ローカルではメール送信しない
+        // SendMailController::PaymentComp( $request );
+
+
+
+        return $point_history;
     }
 
 

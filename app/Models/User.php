@@ -240,4 +240,14 @@ class User extends Authenticatable
             ->sum('play_count');
         }
 
+
+
+        /**
+         * 会員登録一週間後 sevendays_affter_registar
+         * @return String
+        */
+        public function getSevendaysAffterRegistarAttribute()
+        {
+            return $this->created_at->format('Ymd') < now()->subDay(7)->format('Ymd');
+        }
 }

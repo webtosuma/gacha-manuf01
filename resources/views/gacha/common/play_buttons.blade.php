@@ -10,6 +10,12 @@
         @include('gacha.common.play_buttons_only_oneday')
         @break
 
+    @case('only_new_user')
+        <!-- 新規会員限定 -->
+        @include('gacha.common.play_buttons_only_new_user')
+        @break
+
+
 
     @default
         {{-- 通常ボタン --}}

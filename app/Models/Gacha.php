@@ -56,11 +56,11 @@ class Gacha extends Model
     public static function types()
     {
         return [
-            'nomal'       => '通常',
-            // 'one_time'    => '１回限定',
-            // 'only_oneday' => '一日限定',
-            'one_time'    => '一回限定',
-            'only_oneday' => '１日１回',
+            'nomal'        => '通常',
+
+            'one_time'     => '一回限定',
+            'only_oneday'  => '１日１回',
+            'only_new_user'=> '新規会員限定',
         ];
     }
 

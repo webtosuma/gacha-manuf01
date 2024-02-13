@@ -22,9 +22,8 @@
 
         <!-- [ 本文 ] -->
         <section class="my-5 mx-auto" style="max-width:900px;">
-            @include('footer_menu.tradelaw.'.'body')
+            @include('footer_menu.tradelaw.'.$revision_date)
         </section>
-
     </div>
 
 @endsection
