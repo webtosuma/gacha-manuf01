@@ -14,14 +14,18 @@
                     </div>
                     <div class="modal-body text-center fs-5">
 
-                        <replace-text-component :text="body " />
+                        <slot></slot>
+
+
+                        <!-- <replace-text-component :text="body " /> -->
 
                     </div>
                     <div class="modal-footer border-0">
 
                         <div class="col-12">
                             <button @click="fadeAlertComp()"
-                            type="button" :class="'btn-'+color" class="btn text-white w-100">OK</button>
+                            type="button" :class="'btn-'+color" class="btn text-white w-100"
+                            >{{ btn_text }}</button>
                         </div>
 
                     </div>
@@ -38,9 +42,10 @@
 <script>
     export default{
         props: {
-            color: { type: String, default: '',},
-            body:  { type: String, default: '',},
-            icon:  { type: String, default: 'bi-check-circle',},
+            color:   { type: String, default: '',},
+            body:    { type: String, default: '',},
+            icon:    { type: String, default: 'bi-check-circle',},
+            btn_text:{ type: String, default: '閉じる',},
         },
         mounted() {
             this.show = this.color!='';

@@ -94,7 +94,8 @@ class RegisterController extends Controller
 
         # リダイレクト
         return redirect()->route('gacha_category')
-        ->with(['alert-success'=>'会員登録が完了しました。']);
+        ->with(['alert_register'=>'会員登録が完了しました。']);
+        // ->with(['alert-success'=>'会員登録が完了しました。']);
     }
 
 

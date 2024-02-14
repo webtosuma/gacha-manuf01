@@ -20,15 +20,23 @@
     <h3>ポイント履歴</h3>
     <ul class="list-group list-group-flush">
 
-        <li class="list-group-item bg-white py-4 fs-"><div class="d-flex align-items-center justify-content-between">
-            {{-- 所持ポイント --}}
-            <div class="">所持ポイント：<span class="fs-3 fw-bold">
-                <number-comma-component number="{{ Auth::user()->point.'pt' }}"></number-comma-component>
-            </span></div>
-            <div class="col-auto">
-                <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+        {{-- 所持ポイント --}}
+        <li class="list-group-item bg-white py-4 fs-">
+            <div class="d-flex justify-content-between align-items-center p-3 bg-white">
+                <div class="col">
+                    <div class="">所持ポイント：</div>
+                    <div class="">
+                        <span class="fs-3 fw-bold">
+                            <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                        </span>
+                        <span>pt</span>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+                </div>
             </div>
-        </div></li>
+        </li>
 
 
         @include('point_history._types')

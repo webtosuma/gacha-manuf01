@@ -2,6 +2,7 @@
 @php
 $bg_color = '';
 $bg_color = $gacha->type=='only_new_user' ? 'bg-success text-white' : $bg_color;//新機械委員限定
+$bg_color = isset($metter_bg_color) ? $metter_bg_color : $bg_color;
 @endphp
 <div class="card-body py-0 {{$bg_color}}">
     <div class="row align-items-center justify-content-between">
@@ -69,10 +70,8 @@ $bg_color = $gacha->type=='only_new_user' ? 'bg-success text-white' : $bg_color;
 
     <!-- 新規会委員限定 -->
     @elseif ($gacha->type=='only_new_user')
-    <div class="">
-        <div style="line-height:2rem">
-            ＊会員登録から一週間限定で利用できます
-        </div>
+    <div class="text-center" style="line-height:2rem">
+        ＊一週間限定・一回限定で利用できます
     </div>
 
 

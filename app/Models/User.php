@@ -248,6 +248,6 @@ class User extends Authenticatable
         */
         public function getSevendaysAffterRegistarAttribute()
         {
-            return $this->created_at->format('Ymd') < now()->subDay(7)->format('Ymd');
+            return $this->created_at->format('Ymd') < now()->subDay(6)->format('Ymd');
         }
 }

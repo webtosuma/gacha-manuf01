@@ -161,9 +161,8 @@ class StripeController extends Controller
             ## クレジット・ウォレットで支払いが成功した場合の処理
             case 'checkout.session.completed':
                 $session = $event->data->object;
-                if ( isset($session->payment_status) && $session->payment_status === 'paid') {
-                    $point_history = $this->handleCheckoutSessionCompleted($session);
-                }
+
+                $point_history = $this->handleCheckoutSessionCompleted($session);
 
                 return response(compact('point_history'), 200);
                 break;
@@ -172,20 +171,19 @@ class StripeController extends Controller
             ## 銀行振込などの非同期型決済での、発送業務等のシステム連携処理
             case 'checkout.session.async_payment_succeeded':
                 $session = $event->data->object;
-                if (isset($session->payment_status) && $session->payment_status === 'paid') {
-                    $point_history = $this->handleCheckoutSessionCompleted($session);
-                }
+
+                $point_history = $this->handleCheckoutSessionCompleted($session);
 
                 return response(compact('point_history'), 200);
                 break;
 
 
-            // ## payment_intent.succeeded
+            ##
             // case 'payment_intent.succeeded':
             //     $session = $event->data->object;
-            //     // if ($session->payment_status === 'paid') {
+            //     if (isset($session->payment_status) && $session->payment_status === 'paid') {
             //         $point_history = $this->handleCheckoutSessionCompleted($session);
-            //     // }
+            //     }
 
             //     return response(compact('point_history'), 200);
             //     break;
@@ -208,6 +206,11 @@ class StripeController extends Controller
      */
     private function handleCheckoutSessionCompleted($session)
     {
+        # Stripe側で決済が完了済(paid)でなければ、スキップ
+        $paid = isset($session->payment_status) && $session->payment_status === 'paid';
+        if( !$paid ){ return null; }
+
+
         # CheckoutSessionが処理済みの時は、スキップ
         $session_id = $session['id'];
         $column = 'stripe_checkout_session_id';
@@ -215,10 +218,10 @@ class StripeController extends Controller
         if( $previous_point_history ){ return null; }
 
 
-        // 客の情報
+        # 客の情報
         $user = User::where('stripe_id', $session['customer'])->first();
 
-        // 購入アイテムの情報
+        # 購入アイテムの情報
         $amounSubtotal = $session['amount_subtotal'];
         $point_sail    = PointSail::where('price', $amounSubtotal)->first();
 

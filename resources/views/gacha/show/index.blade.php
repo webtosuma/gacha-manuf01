@@ -35,6 +35,7 @@
         <div class="container mx-auto" style="max-width:900px;">
 
             <!--metter-->
+            @php $metter_bg_color = ''; @endphp
             @include('gacha.common.metter')
 
             <!--play_buttons-->
