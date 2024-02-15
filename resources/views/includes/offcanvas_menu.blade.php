@@ -22,7 +22,9 @@ style="max-width:90vw; min-width:30vw;">
                     <div class="col">
                         <div class="">{{ Auth::user()->name }}さん</div>
                         @if( Auth::user()->twitter_id )
-                            <div class="form-text">X(旧twitter)ID：{{ Auth::user()->twitter_id }}</div>
+                            <div class="form-text">
+                            {{-- X(旧twitter)ID： --}}
+                            {{ Auth::user()->twitter_id }}</div>
                         @endif
                     </div>
 
@@ -69,15 +71,16 @@ style="max-width:90vw; min-width:30vw;">
 
 
             <a href="{{ route('user_prize') }}"
-            class="list-group-item list-group-item-action py-3 px-5 position-relative pe-5"
-            >
-            <div class="position-absolute top-0 start-0 p-3 pt-2 mt-1"
-            ><i class="bi bi-stars fs-5"></i></div>
+            class="list-group-item list-group-item-action py-3
+            position-relative">
+                <div class="position-absolute top-0 start-0 p-3 pt-2 mt-1"
+                ><i class="bi bi-stars fs-5"></i></div>
 
-                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                <div class="position-absolute top-0 end-0 p-3 pt-2 mt-1"
                 ><i class="bi bi-chevron-right"></i></div>
 
-                <div class="">取得した商品</div>
+                <div class=" px-5">取得した商品</div>
+
                 <div class="row g-2 mt-2">
                     @foreach (Auth::user()->best_u_prizes as $u_prize)
                         <div class="col-4 text-center">
@@ -224,9 +227,12 @@ style="max-width:90vw; min-width:30vw;">
                     </div>
                 </div>
             @endif
-
-
             <div class="list-group-item ">
+
+                <!-- PWAインストールボタン -->
+                <div class="">
+                    <pwa-install-btn></pwa-install-btn>
+                </div>
 
                 <div class="fw-bold text-center mb-2">{{ config('app.name') }}をシェアする</div>
                 @include('includes.sns_btn')

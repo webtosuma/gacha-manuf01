@@ -26,7 +26,7 @@ use App\Http\Controllers;
 
     # 特定商取引法に基づく表記(tradelaw)
     Route::get('tradelaw/{revision_date?}',
-    function ($revision_date='2024-02-13') {
+    function ($revision_date='2024-02-14') {
         return view('footer_menu.tradelaw.index', compact('revision_date'));
     })->name('tradelaw');
 

@@ -15,7 +15,7 @@
     <div class="mail-container mail-bg-white mail-border-bottom">
         <h3>{{ $infomation->title }}</h3>
         <p class="">
-            <small>2023/01/15 発行</small>
+            <small>{{ now()->format('Y/m/d') }} 発行</small>
         </p>
         <p>
             {!! nl2br(preg_replace('/\b(https?:\/\/\S+)/i', '<a href="$1">$1</a>', $infomation->body_text) )!!}
@@ -26,7 +26,11 @@
     <div class="mail-container mail-border-bottom">
         <p>
             <a href="{{route('login')}}" class="mail-btn mail-btn-primary mail-btn-lg">ログインはこちら</a>
-            <br><br>
+
+        </p>
+        <br>
+        <p>
+            @include('emails._signature')
         </p>
     </div>
 </section>

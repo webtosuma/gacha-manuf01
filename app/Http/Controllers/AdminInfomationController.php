@@ -21,14 +21,27 @@ class AdminInfomationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $infomations = Infomation::orderByDesc('published_at')
+        # 非公開か否か
+        $anpublished = $request->anpublished ? 1 : 0;
+
+        // dd($request->all());
+
+        $query = Infomation::query();
+
+            if($anpublished){
+                $query->where('published_at',null);
+            }else{
+                $query->where('published_at','<>',null);
+            }
+
+        $infomations = $query->orderByDesc('published_at')
         ->orderByDesc('created_at')
         ->paginate(20);
 
 
-        return view('admin.infomation.index', compact('infomations'));
+        return view('admin.infomation.index', compact('infomations','anpublished'));
     }
 
 

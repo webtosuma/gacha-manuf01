@@ -58,6 +58,7 @@
     <div id="app">
         @include('includes.header')
 
+
         @if ( isset( $message ) )
             <section class="bg-dark text-warning text-center">{{$message}}</section>
         @endif
@@ -77,8 +78,8 @@
 
 
     <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-    <script src="{{ asset('js/20240214app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/20240214app.js') }}" defer></script> --}}
 
     <script src="{{ asset('js/animation.js') }}"></script>
 

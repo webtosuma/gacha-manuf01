@@ -30,11 +30,28 @@ $active_submenu = true;
         <section class="mx-auto px-3" style="max-width:900px;">
 
 
-            <a href="{{ route('admin.infomation.create') }}"
-            class="btn btn-primary text-white shadow mb-3">
-            <i class="bi bi-plus-lg"></i>
-            {{'新規登録'}}
-            </a>
+            <div class="d-flex gap-2 mb-3">
+                <a href="{{ route('admin.infomation.create') }}"
+                class="btn btn-primary text-white shadow">
+                <i class="bi bi-plus-lg"></i>
+                {{'新規登録'}}
+                </a>
+
+
+
+                <a href="{{ route('admin.infomation') }}"
+                class="btn border rounded-pill
+                @if($anpublished==0) disabled text-white btn-success  @endif">
+                {{'公開中'}}
+                </a>
+
+                <a href="{{ route('admin.infomation',['anpublished'=>1]) }}"
+                class="btn border rounded-pill
+                    @if($anpublished==1) disabled text-white btn-danger @endif">
+                {{'非公開'}}
+                </a>
+
+            </div>
 
             <div class="list-group "
             style="background:rgb(255, 255, 255, .7);">
@@ -44,7 +61,7 @@ $active_submenu = true;
                             <div class="col-auto">
                                 @if( $infomation->is_published )
                                     <!--公開-->
-                                    <span class="badge rounded-pill bg-primary">{{ '公開中' }}</span>
+                                    <span class="badge rounded-pill bg-success">{{ '公開中' }}</span>
                                 @elseif( $infomation->published_at > now() )
                                     <!--公開予約-->
                                     <span class="badge rounded-pill bg-warning">{{ '予約中' }}</span>
@@ -58,14 +75,14 @@ $active_submenu = true;
                                     <div class="d-inline-block px-2 py-1 bg-light form-text">スライド</div>
                                 @endif
                             </div>
-                            <div class="col">
+                            <div class="col-12 col-md">
                                 <a href="{{ route('admin.infomation.show',$infomation) }}" class="border-bottom border-primary">
 
                                     {{ $infomation->title }}
 
                                 </a>
                             </div>
-                            <div class="col-auto text-secondary">
+                            <div class="col text-secondary">
                                 <div class="">
                                     <!--登録日-->
                                     <i class="bi bi-pencil-fill"></i>

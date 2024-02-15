@@ -62,7 +62,7 @@
 
             <!--商品一覧-->
 
-            <ul class="row justify-content-center align-items-center ps-0 g-3 gy-4 mb-4"
+            <ul class="row justify-content-center align-items-center ps-0 g-2 gy-4 mb-4"
             style="list-style:none;">
 
                 @forelse ($user_prizes as $user_prize)
@@ -124,14 +124,34 @@
                 @endforelse
 
             </ul>
-            <div class="mb-3 text-center" style="font-size:10px;">
-                <div class="">
-                    <span class="text-warning">●</span>
-                    <span>ポイント交換済み</span>
+
+
+            <div class="row mb-3 align-items-center">
+                <div class="col">
+                    @if($prev_gacha_history)
+                        <a href="{{route('gacha.result_history',$prev_gacha_history->key)}}"
+                        class="btn w-100 py-0 fs-1 text-dark"
+                        ><i class="bi bi-arrow-left-circle"></i></a>
+                    @endif
                 </div>
-                <div class="">
-                    <span class="text-primary">●</span>
-                    <span>発送申請済み</span>
+                <div class="col">
+                    <div class="text-center" style="font-size:10px;">
+                        <div class="">
+                            <span class="text-warning">●</span>
+                            <span>ポイント交換済み</span>
+                        </div>
+                        <div class="">
+                            <span class="text-primary">●</span>
+                            <span>発送申請済み</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    @if($next_gacha_history)
+                        <a href="{{route('gacha.result_history',$next_gacha_history->key)}}"
+                        class="btn w-100 py-0 fs-1 text-dark"
+                        ><i class="bi bi-arrow-right-circle"></i></a>
+                    @endif
                 </div>
             </div>
 

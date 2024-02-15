@@ -156,7 +156,14 @@ require('./components/ExampleComponent.vue').default);
 
 
     /* 動画モーダルコンポーネント */
-    Vue.component('movie-modal-component',  require('./components/Items/MovieModalComponent.vue').default);
+    Vue.component('movie-modal-component',
+    require('./components/Items/MovieModalComponent.vue').default);
+
+
+    /* PWAインストールボタン */
+    Vue.component('pwa-install-btn',
+    require('./components/Items/PwaInstallBtn.vue').default);
+
 
 
 const app = new Vue({ el: '#app', });

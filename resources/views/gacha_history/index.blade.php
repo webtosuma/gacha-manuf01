@@ -32,6 +32,16 @@
                 </span>
             </div>
         </div>
+
+
+        <div class="list-group-item bg-white border-0 py-">
+            <!-- ページネーション -->
+            <div class="d-flex justify-content-start  mt-3">
+                {{ $gacha_histories->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
+            </div>
+        </div>
+
+
         @foreach ($gacha_histories as $gacha_history)
         <a href="{{route('gacha.result_history',$gacha_history->key)}}"
         class="list-group-item list-group-item-action py-1 border-0 position-relative bg-white"
@@ -73,12 +83,13 @@
         </div></a>
         @endforeach
 
-    </div>
 
-    <!-- ページネーション -->
-    <div class="d-flex justify-content-start  mt-3">
-        {{ $gacha_histories->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
+        <div class="list-group-item bg-white border-0 py-">
+            <!-- ページネーション -->
+            <div class="d-flex justify-content-start  mt-3">
+                {{ $gacha_histories->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
+            </div>
+        </div>
     </div>
-
 </div>
 @endsection

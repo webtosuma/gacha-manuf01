@@ -297,17 +297,36 @@ class GachaController extends Controller
         ->first();
         if( !$user_gacha_history ){ return \App::abort(404); }
 
-
-        // dd($user_gacha_history);
-
         # ガチャ
         $gacha = $user_gacha_history->gacha;
+
 
         # 取得商品
         $user_prizes = $user_gacha_history->user_prizes;
 
         # ユーザー情報
         $user = $user_gacha_history->user;
+
+
+        # 前のガチャ履歴(ガチャ履歴のユーザー==本人のとき)
+        $prev_gacha_history = $user_id != Auth::user()->id ? null :
+        UserGachaHistory::where('id','<',$id)
+        ->where('user_id',$user_id)
+        ->orderByDesc('created_at')
+        ->first();
+
+        # 次ののガチャ履歴(ガチャ履歴のユーザー==本人のとき)
+        $next_gacha_history = $user_id != Auth::user()->id ? null :
+        UserGachaHistory::where('id','>',$id)
+        ->where('user_id',$user_id)
+        ->orderBy('created_at')
+        ->first();
+
+        // dd($prev_gacha_history);
+
+
+
+
 
         # ページタイトル
         $page_title = '「'.$gacha->name.'」の結果';
@@ -317,7 +336,8 @@ class GachaController extends Controller
 
 
         return view('gacha.result_history',compact(
-            'gacha','user_gacha_history', 'user_prizes', 'user', 'page_title', 'bg_image'
+            'gacha','user_gacha_history', 'user_prizes', 'user', 'page_title', 'bg_image',
+            'prev_gacha_history', 'next_gacha_history',
         ) );
     }
 
