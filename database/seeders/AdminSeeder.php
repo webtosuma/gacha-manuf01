@@ -103,9 +103,9 @@ class AdminSeeder extends Seeder
             ],
             [
                 'user' => [
-                    'email' => 'contact@fobees.jp',
+                    'email' => 'pay@cardfesta.jp',
                     'password' => Hash::make('password'),
-                    'name' => 'Fobees',
+                    'name' => 'pay',
                     'twitter_id'=>'@TosuCare'
                 ],
                 'admin' => [
@@ -113,6 +113,19 @@ class AdminSeeder extends Seeder
                     'get_mail'=>0,
                 ],
             ],
+            [
+                'user' => [
+                    'email' => 'aek1214@yahoo.co.jp',
+                    'password' => Hash::make('password'),
+                    'name' => 'たかひろ',
+                    'twitter_id'=>''
+                ],
+                'admin' => [
+                    'master' => 0,
+                    'get_mail'=>0,
+                ],
+            ],
+
             // [
             //     'user' => [
             //         'email' => 'na@tosuma.ltd',

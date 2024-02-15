@@ -8,7 +8,7 @@ use App\Models\Infomation;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-
+use App\Jobs\SendEmailInfomationJob;
 /*
 | =============================================
 |  サイト管理者　お知らせ コントローラー
@@ -180,17 +180,18 @@ class AdminInfomationController extends Controller
         $infomation->update(['send_email_at'=>now()]);
 
 
+        # メール受信設定ユーザーの取得
         $users = User::where('get_email',1)->get();
+
+        # test用
+        // $users = User::where('email','t.sakai@tosuma.ltd')->get();
+
+
         foreach ($users as $user) {
 
-            $email = $user->email;
+            SendEmailInfomationJob::dispatch($user,$infomation)
+            ->delay(now()->addMinutes(1));
 
-            Mail::to( $email ) //宛先
-            ->send(new \App\Mail\SendHtmlMailMailable([
-                'inputs'  => compact('infomation'), //入力変数
-                'view'    => 'emails.infomation.index' , //テンプレート
-                'subject' => $infomation->title, //件名
-            ]) );
         }
 
 

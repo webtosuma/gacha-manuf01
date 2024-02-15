@@ -16,5 +16,6 @@ __;
 @endphp
 
 
-<replace-text-component text="{{ $body }}"></replace-text-component>
+{!! nl2br(preg_replace('/\b(https?:\/\/\S+)/i', '<a href="$1">$1</a>', $body) )!!}
+
 
