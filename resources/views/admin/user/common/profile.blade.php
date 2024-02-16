@@ -1,9 +1,9 @@
-<div class="row p-3 border-bottom mb-5">
-    <div class="col">
+<div class="row p-3 border-bottom mb-5 justify-content-center gx-5">
+    <div class="col-12 col-md">
 
 
         <!-- アカウント画像 -->
-        <div style="width:8rem;">
+        <div class="mx-auto" style="width:8rem;">
             <ratio-image-component
             style_class="rounded-circle ratio ratio-1x1 border"
             url="{{$user->image_path}}"
@@ -12,7 +12,7 @@
 
 
     </div>
-    <div class="col">
+    <div class="col-12 col-md-8">
 
         <div class="my-3">
             ID：{{ $user->id }}

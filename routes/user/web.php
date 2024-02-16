@@ -3,11 +3,33 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+
 /*
 ==========================================================================
  ユーザールーティング　web
 ==========================================================================
 */
+// use App\Http\Controllers\SendMailController;
+// Route::get('test', function(\Illuminate\Http\Request $request){
+
+//     $user = \App\Models\User::find(163);
+//     $point_sail = \App\Models\PointSail::first();
+
+//     // dd($user);
+//     # ポイント購入完了メールの送信
+//     if($user){
+//         $request->user       = $user;
+//         $request->point_sail = $point_sail;
+//         $request->email      = 't.sakai@tosuma.ltd';//ローカルではメール送信しない
+//         SendMailController::PaymentComp( $request );
+
+//         return 'test';
+//     }else{
+//         return 'NG!';
+//     }
+// } );
+
+
 
 Route::get('/',
     [App\Http\Controllers\GachaController::class, 'index']

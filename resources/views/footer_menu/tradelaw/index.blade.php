@@ -25,10 +25,10 @@
             @include('footer_menu.tradelaw.'.$revision_date)
 
             <div class="mt-5">
+                <a href="{{route('tradelaw','2023-12-01')}}"
+                >2023年12月1日制定</a><br>
                 <a href="{{route('tradelaw','2024-02-14')}}"
                 >2024年02月14日改訂</a><br>
-                <a href="{{route('tradelaw','2024-01-15')}}"
-                >2024年01月15日制定</a><br>
             </div>
         </section>
 

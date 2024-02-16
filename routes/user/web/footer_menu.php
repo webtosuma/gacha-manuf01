@@ -14,7 +14,7 @@ use App\Http\Controllers;
 
     # 利用規約(trems)
     Route::get('/trems/{revision_date?}',
-    function ($revision_date='2024-01-15'){
+    function ($revision_date='2024-02-16'){
          return view('footer_menu.trems.index', compact('revision_date') );
     })->name('trems');
 

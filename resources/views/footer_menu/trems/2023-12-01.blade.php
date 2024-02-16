@@ -189,7 +189,7 @@ https://cardfesta.jp/contact
 以上
 
 
-制定日2024年01月15日
+制定日2023年12月1日
 __;
 @endphp
 
