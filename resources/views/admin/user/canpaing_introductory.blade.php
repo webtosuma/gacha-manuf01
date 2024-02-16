@@ -50,17 +50,15 @@ $active_key = 'user';
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>
                     <tr class="bg-white">
-                        <th>ID</th>
                         <th scope="col">紹介者</th>
                         <th scope="col">紹介pt付与回数</th>
-                        <th>ID</th>
                         <th scope="col">ご友人</th>
                         <th scope="col">購入回数</th>
                         <th scope="col">友人pt付与回数</th>
+                        <th scope="col">登録日時間</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $old_recruiter = null; /* 一列前の紹介者 */ @endphp
                     @forelse ($recruiters as $recruiter)
                         @foreach ($recruiter->friends as $f_key => $friend)
                             <tr>
@@ -70,8 +68,8 @@ $active_key = 'user';
                                     $canpaing_recruiter_count = \App\Models\PointHistory::where('user_id',$recruiter->id)
                                     ->where('reason_id',31)->get()->count();
                                     @endphp
-                                    <td >{{$recruiter->id}}</td>
                                     <td>
+                                        {{$recruiter->id}}：
                                         <a href="{{route('admin.user.show', $recruiter)}}">
                                             {{ mb_strlen($recruiter->name) <= 14 ? $recruiter->name : mb_substr($recruiter->name,0,14).'...' }}
                                         </a>
@@ -81,15 +79,14 @@ $active_key = 'user';
                                     <td>{{$canpaing_recruiter_count.'回'}}</td>
                                 @else
                                     <td colspan="2" class="text-secondary text-center">*同上</td>
-                                    <td></td>
                                 @endif
                                 <!--ご友人-->
                                 @php
                                 $canpaing_friend_count = \App\Models\PointHistory::where('user_id',$friend->id)
                                 ->where('reason_id',32)->get()->count();
                                 @endphp
-                                <td>{{$friend->id}}</td>
                                 <td>
+                                    {{$friend->id}}：
                                     <a href="{{route('admin.user.show',$friend)}}">
                                         {{ mb_strlen($friend->name) <= 14 ? $friend->name : mb_substr($friend->name,0,14).'...' }}
                                     </a>
@@ -107,10 +104,9 @@ $active_key = 'user';
                                         <span class="text-danger">{{$canpaing_friend_count.'回'}}</span>
                                     @endif
                                 </td>
+                                <td>{{$friend->created_at->format('Y年m月d日 H:i') }}</td>
                             </tr>
                         @endforeach
-
-                        @php $old_recruiter = $recruiter; /* 一列前の紹介者 */ @endphp
                     @empty
                         <tr>
                             <td colspan="4" class="text-center text-secondary border-0 py-5">

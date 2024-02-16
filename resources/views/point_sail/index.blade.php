@@ -84,7 +84,48 @@
             <li class="list-group-item bg-white py-1 form-text text-end"
             >*価格は全て税込み価格です。</li>
         </ul>
+
+
+        <div class="mt-5">
+            <h6>ご利用可能な決済方法</h6>
+            <div class="row g-2">
+                <div class="col">
+                    <div class="card card-body px- bg-body">
+                        <div class="">クレジットカード</div>
+                        <i class="bi bi-credit-card-fill fs-4"></i>
+                        <div class="">
+                            <img src="{{asset('storage/site/image/stripe_card.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md">
+                    <div class="card card-body px- bg-body h-100">
+                        <div class="">銀行振込</div>
+
+                        <div class=""><i class="bi bi-bank2 fs-4"></i></div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md">
+                    <div class="card card-body px- bg-body h-100">
+                        <div class="">Apple Pay</div>
+
+                        <div class=""><i class="bi bi-apple fs-4"></i></div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md">
+                    <div class="card card-body px- bg-body h-100">
+                        <div class="">Google Pay</div>
+
+                        <div class=""><i class="bi bi-google fs-4"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <div class="my-5 p-3">
         <div class="col-md-4 mx-auto my-3">

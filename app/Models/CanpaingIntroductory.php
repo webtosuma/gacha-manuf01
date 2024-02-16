@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 /*
 | =============================================
-|  [キャンペーン]　お友達紹介 rank
+|  [キャンペーン]　お友達紹介
 | =============================================
 */
 class CanpaingIntroductory extends Model
@@ -27,5 +27,22 @@ class CanpaingIntroductory extends Model
         'done_at',
     ];
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * User リレーション (紹介者) recruiter
+         * @return \App\Models\User
+        */
+        public function recruiter()
+        {
+            return $this->belongsTo(User::class,'recruiter_id');
+        }
 
 }

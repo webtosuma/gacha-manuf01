@@ -162,7 +162,7 @@ class StripeController extends Controller
             case 'checkout.session.completed':
                 $session = $event->data->object;
 
-                $point_history = $this->handleCheckoutSessionCompleted($session);
+                $point_history = $this->handleCheckoutSessionCompleted($request,$session);
 
                 return response(compact('point_history'), 200);
                 break;
@@ -172,7 +172,7 @@ class StripeController extends Controller
             case 'checkout.session.async_payment_succeeded':
                 $session = $event->data->object;
 
-                $point_history = $this->handleCheckoutSessionCompleted($session);
+                $point_history = $this->handleCheckoutSessionCompleted($request,$session);
 
                 return response(compact('point_history'), 200);
                 break;
@@ -204,7 +204,7 @@ class StripeController extends Controller
      * @param  Object $session //Stripe Checkout Session オブジェクト
      * @return Void
      */
-    private function handleCheckoutSessionCompleted($session)
+    private function handleCheckoutSessionCompleted($request, $session)
     {
         # Stripe側で決済が完了済(paid)でなければ、スキップ
         $paid = isset($session->payment_status) && $session->payment_status === 'paid';
@@ -246,10 +246,10 @@ class StripeController extends Controller
 
 
         # ポイント購入完了メールの送信
-        // $request->user       = $user;
-        // $request->point_sail = $point_sail;
-        // $request->email      = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : '';//ローカルではメール送信しない
-        // SendMailController::PaymentComp( $request );
+        $request->user       = $user;
+        $request->point_sail = $point_sail;
+        $request->email      = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : 't.sakai@tosuma.ltd';//ローカルではメール送信しない
+        SendMailController::PaymentComp( $request );
 
 
 

@@ -32,20 +32,20 @@ class SendMailController extends Controller
 
 
             # ユーザーへ送信
-            if($user->get_email){
+            // if($user->get_email){
 
-                Mail::to( $user->email ) //宛先
-                ->send(new \App\Mail\SendHtmlMailMailable([
-                    'inputs'  => $inputs, //入力変数
-                    'view'    => 'emails.payment_comp' , //テンプレート
-                    'subject' => $point_sail->value.'ptのご購入、ありがとうございます。', //件名
-                ]) );
+            //     Mail::to( $user->email ) //宛先
+            //     ->send(new \App\Mail\SendHtmlMailMailable([
+            //         'inputs'  => $inputs, //入力変数
+            //         'view'    => 'emails.payment_comp' , //テンプレート
+            //         'subject' => $point_sail->value.'ptのご購入、ありがとうございます。', //件名
+            //     ]) );
 
-            }
+            // }
 
 
             # サイト管理者へ送信
-            $subject = 'ID:'.$user->id.' '.$user->name.'様が、'.$point_sail->value.'pt購入されました';
+            $subject = 'ID:'.$user->id.' '.$user->name.'様が、'.$point_sail->value.'pt購入しました';
             Mail::to( $request->email ) //宛先
             ->send(new \App\Mail\SendHtmlMailMailable([
                 'inputs'  => $inputs, //入力変数

@@ -23,11 +23,25 @@ class AdminUserShowControlle extends Controller
      */
     public function index(User $user)
     {
-        // $price = PointHistory::where('user_id',$user->id)
-        // ->where('reason_id',11)->get()->sum('price');
-        // dd($price);
+        # お友達情報
+        $friend_ids = CanpaingIntroductory::where('recruiter_id',$user->id)
+        ->pluck('friend_id')->toArray();
 
-        return view('admin.user.show', compact('user') );
+        $friends_count = count($friend_ids);
+
+        $friends = User::orderByDesc('created_at')->whereIn('id',$friend_ids)
+        ->paginate(20);//ページネーション
+
+        # ポイント購入履歴
+        foreach ($friends as $friend) {
+
+            $point_sail_histories = PointHistory::where('user_id',$friend->id)
+            ->where('reason_id','11')->get();
+
+            $friend->point_sail_histories = $point_sail_histories;
+        }
+
+        return view('admin.user.show', compact('user','friends','friends_count') );
     }
 
 

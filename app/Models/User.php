@@ -250,4 +250,16 @@ class User extends Authenticatable
         {
             return $this->created_at->format('Ymd') < now()->subDay(6)->format('Ymd');
         }
+
+
+
+        /**
+         * [キャンペーン]紹介元ユーザー recruiter
+         * @return String
+        */
+        public function getRecruiterAttribute()
+        {
+            $ra = CanpaingIntroductory::where('friend_id',$this->id)->first();
+            return $ra ? $ra->recruiter : null;
+        }
 }

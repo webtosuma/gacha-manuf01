@@ -71,17 +71,27 @@ style="max-width:90vw; min-width:30vw;">
 
 
             <a href="{{ route('user_prize') }}"
-            class="list-group-item list-group-item-action py-3
+            class="list-group-item list-group-item-action py-3 px-0
             position-relative">
-                <div class="position-absolute top-0 start-0 p-3 pt-2 mt-1"
+                {{-- <div class="position-absolute top-0 start-0 p-3 pt-2 mt-1"
                 ><i class="bi bi-stars fs-5"></i></div>
 
                 <div class="position-absolute top-0 end-0 p-3 pt-2 mt-1"
-                ><i class="bi bi-chevron-right"></i></div>
+                ><i class="bi bi-chevron-right"></i></div> --}}
 
-                <div class=" px-5">取得した商品</div>
+                <div class="position-relative px-5">
 
-                <div class="row g-2 mt-2">
+                    <span>取得した商品</span>
+
+                    <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                    ><i class="bi bi-stars fs-5"></i></div>
+
+                    <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                    ><i class="bi bi-chevron-right"></i></div>
+
+                </div>
+
+                <div class="row g-2 mt-2 px-3">
                     @foreach (Auth::user()->best_u_prizes as $u_prize)
                         <div class="col-4 text-center">
                             <ratio-image-component
@@ -89,7 +99,7 @@ style="max-width:90vw; min-width:30vw;">
                             url="{{$u_prize->prize->image_path}}"
                             ></ratio-image-component>
 
-                            <div class="mt-1 px-3 border rounded-pill d-inline-block">
+                            <div class="mt-1 w-100 border rounded-pill d-inline-block">
                                 {{number_format($u_prize->prize->point).'pt'}}
                             </div>
                         </div>

@@ -100,10 +100,73 @@ $active_key = 'user';
         </section>
 
 
+
+        <!-- 紹介したご友人 -->
+        @if($friends->count() > 0)
+            <section class="card card-body bg-white my-5 overflow-auto">
+                <h5 class="mb-5 fw-bold">
+                    紹介したご友人(<number-comma-component number="{{ $friends_count }}"></number-comma-component>)
+                </h5>
+                <!-- ページネーション -->
+                {{-- <div class="d-flex justify-content-start mt-3">
+                    {{ $friends->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
+                </div> --}}
+
+                <table class="table bg-white my-3">
+                    <!--ヘッド（並べ替えボタン）-->
+                    <thead>
+                        <tr class="bg-white">
+                            <th scope="col">ご友人</th>
+                            <th scope="col">メールアドレス</th>
+                            <th scope="col">購入回数</th>
+                            <th scope="col">友人pt付与回数</th>
+                            <th scope="col">登録日時間</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($friends as $f_key => $friend)
+                            <tr>
+                                <!--ご友人-->
+                                @php
+                                $canpaing_friend_count = \App\Models\PointHistory::where('user_id',$friend->id)
+                                ->where('reason_id',32)->get()->count();
+                                @endphp
+                                <td>
+                                    {{$friend->id}}：
+                                    <a href="{{route('admin.user.show',$friend)}}">
+                                        {{ mb_strlen($friend->name) <= 14 ? $friend->name : mb_substr($friend->name,0,14).'...' }}
+                                    </a>
+                                </td>
+                                <td>{{$friend->email}}</td>
+                                <td>{{$friend->point_sail_histories->count()}}</td>
+
+                                <td>
+                                    <!--pt購入履歴があるのに、キャンペーン付与がない(NG)-->
+
+                                    @if ( $canpaing_friend_count )
+                                        <span>{{$canpaing_friend_count.'回'}}</span>
+                                    @else
+                                        <span class="text-danger">{{$canpaing_friend_count.'回'}}</span>
+                                    @endif
+                                </td>
+                                <td>{{$friend->created_at->format('Y年m月d日 H:i') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <!-- ページネーション -->
+                <div class="d-flex justify-content-start mt-3">
+                    {{ $friends->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
+                </div>
+            </section>
+        @endif
+
+
         <!-- 退会処理 -->
         <section class="card card-body mb-5">
             <div class="d-flex justify-content-between">
-                <h5 class="m-0">退会処理</h5>
+                <h5 class="m-0 fw-bold">退会処理</h5>
                 <div class="">
                     <button type="button" data-bs-toggle="modal"
                     data-bs-target="#deleteModal{{'delete'.$user->id}}"
