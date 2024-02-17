@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','メール受信設定')
@@ -18,7 +19,7 @@
 
 
 <div class="container py-4 mb-5">
-    <h3>メール受信設定</h3>
+    <h3 class="d-none d-md-block ">メール受信設定</h3>
 
     <div class="mx-auto mt-5" style="max-width:900px;">
         <form method="post" action="{{ route('settings.email_reception.update' ) }}" novalidate>

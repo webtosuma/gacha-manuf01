@@ -332,8 +332,8 @@
             </h3>
 
 
-            <div class="col-md-8 mx-auto bg-dark rounded-4 overflow-auto" style="max-height:90vh;">
-                <a class="twitter-timeline" href="https://twitter.com/CardFesta7627?ref_src=twsrc%5Etfw">Tweets by CardFesta7627</a>
+            <div class="col-md-8 mx-auto bg- text-center rounded-4 overflow-auto" style="max-height:90vh;">
+                <a class="twitter-timeline" href="https://twitter.com/CardFesta7627?ref_src=twsrc%5Etfw">...読み込み中</a>
             </div>
         </div>
     </section>

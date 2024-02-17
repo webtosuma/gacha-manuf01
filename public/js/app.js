@@ -12915,7 +12915,10 @@ var render = function render() {
   }, [_c("h5", {
     staticClass: "card-title fw-bold text-center"
   }, [_vm._v("個人情報の取り扱いについて")]), _vm._v(" "), _c("p", {
-    staticClass: "card-text"
+    staticClass: "card-text text-center",
+    staticStyle: {
+      "font-size": "11px"
+    }
   }, [_c("a", {
     attrs: {
       href: "#"
@@ -12926,7 +12929,7 @@ var render = function render() {
         return _vm.windowOpen.apply(null, arguments);
       }
     }
-  }, [_vm._v("プライバシーポリシー")]), _vm._v("をご確認ください。"), _c("br"), _vm._v("\n                    同意いただけた場合のみ「同意する」にチェックを入れ、確認画面へお進みください。\n                ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("プライバシーポリシー")]), _vm._v("をご確認ください。"), _c("br"), _vm._v("\n                    同意いただけた場合のみ「同意する」にチェックを入れ、"), _c("br"), _vm._v("\n                    確認画面へお進みください。\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "mt-3 form-check text-center"
   }, [_c("div", {
     staticClass: "d-inline-block"
@@ -13071,7 +13074,10 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("p", {
-    staticClass: "text-secondary text-center mb-4"
+    staticClass: "text-secondary text-center mb-4",
+    staticStyle: {
+      "font-size": "11px"
+    }
   }, [_vm._v("\n            ご不明な点は、下記フォームよりお問い合わせください。"), _c("br"), _vm._v("\n            お問合せ内容の確認後、担当者よりご連絡致します。\n        ")]);
 }, function () {
   var _vm = this,

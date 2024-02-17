@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','ガチャ履歴')
@@ -17,7 +18,7 @@
 
 
 <div class="container py-4 mb-5">
-    <h3>ガチャ履歴</h3>
+    <h3 class="d-none d-md-block">ガチャ履歴</h3>
     <div class="list-group list-group-flush">
 
         <div class="list-group-item bg-white py-4">

@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','お知らせ')
@@ -24,9 +25,9 @@
 
 
 
-    <div class="container py-4 mb-5">
+    <div class="container  py-md-4 mb-5">
         <!-- [ 見出し ] -->
-        <h2 class="text-center my-3">
+        <h2 class="d-none d-md-block text-center my-3">
             お知らせ
         </h2>
 

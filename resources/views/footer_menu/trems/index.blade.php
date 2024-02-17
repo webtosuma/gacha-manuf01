@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 
 <!----- title ----->
@@ -14,10 +15,10 @@
 <!----- contents ----->
 @section('content')
 
-    <div class="container my-5">
+    <div class="container my-md-5">
 
         <!-- [ 見出し ] -->
-        <h2 class="text-center my-3">
+        <h2 class="d-none d-md-block text-center my-3">
             利用規約
         </h2>
 

@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','発送済み詳細')
@@ -25,10 +26,10 @@
 
 
     <div class="container py-4 mb-5">
-        <h3 class="mb-5">発送済み詳細</h3>
+        <h3 class="d-none d-md-block mb-5">発送済み詳細</h3>
 
 
-        <div class="mx-auto mt-5" style="max-width:900px;">
+        <div class="mx-auto" style="max-width:900px;">
 
             <!-- ステップ -->
             <section class="form-steps-pill mx-auto text-secondary py-4">

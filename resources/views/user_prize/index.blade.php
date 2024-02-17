@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','取得した商品')
@@ -20,7 +21,7 @@
 
 
     <div class="container py-4 mb-5">
-        <h3>取得した商品</h3>
+        <h3 class="d-none d-md-block">取得した商品</h3>
 
         <u-user-prize-form
         token="{{ csrf_token() }}"

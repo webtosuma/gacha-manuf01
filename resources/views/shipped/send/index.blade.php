@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','発送履歴・発送済み')
@@ -20,17 +21,19 @@
 
 
     <div class="container py-4 mb-5">
-        <h3 class="mb-5">発送履歴</h3>
+        <h3 class="d-none d-md-block mb-5">発送履歴</h3>
 
         <section>
             <div class="card p-3 bg-white">
-                <ul class="nav nav-tabs text-center mb-5">
-                    <li class="nav-item col">
-                        <a class="nav-link bg-light" href="{{ route('shipped.waiting') }}"
-                        >発送待ち</a>
+                <ul class="nav text-center mb-md-5">
+                    <li class="col">
+                        <div class="nav-link text-dark border-bottom ">
+                            <a class="text-dark" href="{{ route('shipped.waiting') }}"
+                            >発送待ち</a>
+                        </div>
                     </li>
-                    <li class="nav-item col">
-                        <div class="nav-link active bg-white" aria-current="page">
+                    <li class="col">
+                        <div class="nav-link text-dark border-bottom border-primary border-2" aria-current="page">
                             発送済み
                             @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
                             @if ( $unread_count )
@@ -40,6 +43,21 @@
                         </div>
                     </li>
                 </ul>
+                {{-- <ul class="nav text-center mb-5">
+                    <li class="col">
+                      <div class="nav-link text-dark border-bottom border-primary border-2" aria-current="page">発送待ち</div>
+                    </li>
+                    <li class="nav-link text-dark border-bottom col">
+                        <a class="text-dark" href="{{ route('shipped.send') }}">
+                            発送済み
+                            @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
+                            @if ( $unread_count )
+                                <!--未読-->
+                                <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
+                            @endif
+                        </a>
+                    </li>
+                </ul> --}}
 
                 <table class="table bg-white my-3">
                     <!--ヘッド（並べ替えボタン）-->

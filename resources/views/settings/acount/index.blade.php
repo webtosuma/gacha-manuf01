@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','アカウント設定')
@@ -24,7 +25,7 @@
 
 
 <div class="container py-4 mb-5">
-    <h3>アカウント設定</h3>
+    <h3 class="d-none d-md-block ">アカウント設定</h3>
 
     <div class="mx-auto my-3" style="max-width:900px;">
 

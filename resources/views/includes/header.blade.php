@@ -57,10 +57,4 @@
 
         </nav>
     </div>
-
-
-    @if(Auth::check())
-        @include('includes.offcanvas_menu')
-    @endif
-
 </header>

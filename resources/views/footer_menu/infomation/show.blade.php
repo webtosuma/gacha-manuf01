@@ -1,7 +1,8 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
-@section('title',$infomation->title.'-お知らせ' )
+@section('title',$infomation->title )
 
 @section('meta')
     @php

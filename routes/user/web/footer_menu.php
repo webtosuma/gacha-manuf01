@@ -43,6 +43,12 @@ use App\Http\Controllers;
     Route::get('/contact', function(){ return view('footer_menu.contact.index'); })
     ->name('contact');
 
+
+    # タイムライン(timeline)
+    Route::get('/timeline', function () {
+        return view('footer_menu.timeline.index');
+    })->name('timeline');
+
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {
         return redirect('https://fobees.jp/');

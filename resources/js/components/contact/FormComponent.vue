@@ -29,7 +29,7 @@
         <section  v-show="step_num===1"
         class="fs-5">
 
-            <p class="text-secondary text-center mb-4">
+            <p class="text-secondary text-center mb-4" style="font-size:11px;">
                 ご不明な点は、下記フォームよりお問い合わせください。<br>
                 お問合せ内容の確認後、担当者よりご連絡致します。
             </p>
@@ -85,10 +85,11 @@
             <div class="card border-light  mt-5">
                 <div class="card-body text-md-center">
                     <h5 class="card-title fw-bold  text-center">個人情報の取り扱いについて</h5>
-                    <p class="card-text">
+                    <p class="card-text text-center" style="font-size:11px;">
                         <a href="#" @click.prevent="windowOpen"
                         >プライバシーポリシー</a>をご確認ください。<br>
-                        同意いただけた場合のみ「同意する」にチェックを入れ、確認画面へお進みください。
+                        同意いただけた場合のみ「同意する」にチェックを入れ、<br>
+                        確認画面へお進みください。
                     </p>
                     <div class="mt-3 form-check  text-center">
                         <div class="d-inline-block">

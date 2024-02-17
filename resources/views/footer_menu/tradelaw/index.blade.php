@@ -1,5 +1,5 @@
-@extends('layouts.app')
-
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','特定商取引法に基づく表記')
@@ -13,10 +13,10 @@
 
 @section('content')
 
-    <div class="container my-5">
+    <div class="container my-md-5">
 
         <!-- [ 見出し ] -->
-        <h2 class="text-center my-3">
+        <h2 class="d-none d-md-block text-center my-3">
             特定商取引法に基づく表記
         </h2>
 

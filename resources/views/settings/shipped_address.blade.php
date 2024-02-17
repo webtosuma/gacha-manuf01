@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','商品発送先の住所設定')
@@ -18,7 +19,7 @@
 
 
 <div class="container py-4 mb-5">
-    <h3>商品発送先の住所設定</h3>
+    <h3 class="d-none d-md-block ">商品発送先の住所設定</h3>
 
     <div class="mx-auto" style="max-width:900px;">
 

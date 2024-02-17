@@ -180,7 +180,7 @@ style="max-width:90vw; min-width:30vw;">
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{route('home')}}/#timeline"
+            <a href="{{route('timeline')}}"
             class="list-group-item list-group-item-action py-3 px-5 position-relative">
 
 

@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','ポイント購入')
@@ -17,7 +18,7 @@
 
 
     <div class="container py-4 mb-5">
-        <h3>ポイント購入</h3>
+        <h3 class="d-none d-md-block">ポイント購入</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item bg-white py-4 fs-">
                 購入するポイントを選択してください

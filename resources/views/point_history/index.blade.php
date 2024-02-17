@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','ポイント履歴')
@@ -17,12 +18,12 @@
 
 
 <div class="container py-4 mb-5">
-    <h3>ポイント履歴</h3>
+    <h3 class="d-none d-md-block">ポイント履歴</h3>
     <ul class="list-group list-group-flush">
 
         {{-- 所持ポイント --}}
         <li class="list-group-item bg-white py-4 fs-">
-            <div class="d-flex justify-content-between align-items-center p-3 bg-white">
+            <div class="d-flex justify-content-between align-items-center bg-white">
                 <div class="col">
                     <div class="">所持ポイント：</div>
                     <div class="">

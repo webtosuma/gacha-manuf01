@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','発送履歴・発送待ち')
@@ -20,23 +21,25 @@
 
 
     <div class="container py-4 mb-5">
-        <h3 class="mb-5">発送履歴</h3>
+        <h3 class="d-none d-md-block mb-5">発送履歴</h3>
 
         <section>
             <div class="card p-3 bg-white">
-                <ul class="nav nav-tabs text-center mb-5">
-                    <li class="nav-item col">
-                      <div class="nav-link active bg-white" aria-current="page">発送待ち</div>
+                <ul class="nav text-center mb-md-5">
+                    <li class="col">
+                      <div class="nav-link text-dark border-bottom border-primary border-2" aria-current="page">発送待ち</div>
                     </li>
-                    <li class="nav-item col">
-                        <a class="nav-link bg-light" href="{{ route('shipped.send') }}">
-                            発送済み
-                            @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
-                            @if ( $unread_count )
-                                <!--未読-->
-                                <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
-                            @endif
-                        </a>
+                    <li class="col">
+                        <div class="nav-link text-dark border-bottom ">
+                            <a class="text-dark" href="{{ route('shipped.send') }}">
+                                発送済み
+                                @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
+                                @if ( $unread_count )
+                                    <!--未読-->
+                                    <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
+                                @endif
+                            </a>
+                        </div>
                     </li>
                 </ul>
 

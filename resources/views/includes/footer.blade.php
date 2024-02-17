@@ -52,6 +52,8 @@
                             <li class="mb-2"><a class="link-secondary text-decoration-none"
                             href="{{ route('infomation') }}">お知らせ</a></li>
                             <li class="mb-2"><a class="link-secondary text-decoration-none"
+                            href="{{ route('timeline') }}">タイムライン</a></li>
+                            <li class="mb-2"><a class="link-secondary text-decoration-none"
                             href="{{ route('contact') }}">お問い合わせ</a></li>
                             <li class="mb-2"><a class="link-secondary text-decoration-none"
                             href="{{ route('operating_company') }}">運営会社</a></li>
