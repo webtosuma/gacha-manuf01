@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','発送申請')
@@ -19,8 +20,8 @@
 
 
 
-    <div class="container py-4 mb-5">
-        <h3 class="mb-">発送申請</h3>
+    <div class="container py-md-4 mb-5">
+        <h3  class="d-none d-md-block ">発送申請</h3>
 
         <form action="{{ route('shipped.appli.confirm') }}" method="POST">
             @csrf

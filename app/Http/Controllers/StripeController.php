@@ -53,7 +53,6 @@ class StripeController extends Controller
         # 顧客情報
         $user = Auth::user();
         $customer = $user->createOrGetStripeCustomer();
-        // dd($customer->id == $user->stripe_id);
 
         $checkout_session = Session::create([
 
@@ -143,6 +142,48 @@ class StripeController extends Controller
 
             $event = Event::constructFrom($payload, $sigHeader, $endpointSecret);
 
+
+            // イベントタイプごとに処理を実行
+            switch ($event->type) {
+
+                ## クレジット・ウォレットで支払いが成功した場合の処理
+                case 'checkout.session.completed':
+                    $session = $event->data->object;
+
+                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
+
+                    return response(compact('point_history'), 200);
+                    break;
+
+
+                ## 銀行振込などの非同期型決済での、発送業務等のシステム連携処理
+                case 'checkout.session.async_payment_succeeded':
+                    $session = $event->data->object;
+
+                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
+
+                    return response(compact('point_history'), 200);
+                    break;
+
+
+                ##
+                // case 'payment_intent.succeeded':
+                //     $session = $event->data->object;
+                //     if (isset($session->payment_status) && $session->payment_status === 'paid') {
+                //         $point_history = $this->handleCheckoutSessionCompleted($session);
+                //     }
+
+                //     return response(compact('point_history'), 200);
+                //     break;
+
+
+
+                default:
+                    // 未知のイベントに対する処理
+                    break;
+            }
+
+
         } catch (\UnexpectedValueException $e) {
             // 署名が無効な場合、またはその他のエラーが発生した場合の処理
             Log::error($e);
@@ -153,48 +194,6 @@ class StripeController extends Controller
             Log::error($e);
             return response(['Error verifying webhook signature: ' => $e->getMessage()], 403);
         }
-
-
-        // イベントタイプごとに処理を実行
-        switch ($event->type) {
-
-            ## クレジット・ウォレットで支払いが成功した場合の処理
-            case 'checkout.session.completed':
-                $session = $event->data->object;
-
-                $point_history = $this->handleCheckoutSessionCompleted($request,$session);
-
-                return response(compact('point_history'), 200);
-                break;
-
-
-            ## 銀行振込などの非同期型決済での、発送業務等のシステム連携処理
-            case 'checkout.session.async_payment_succeeded':
-                $session = $event->data->object;
-
-                $point_history = $this->handleCheckoutSessionCompleted($request,$session);
-
-                return response(compact('point_history'), 200);
-                break;
-
-
-            ##
-            // case 'payment_intent.succeeded':
-            //     $session = $event->data->object;
-            //     if (isset($session->payment_status) && $session->payment_status === 'paid') {
-            //         $point_history = $this->handleCheckoutSessionCompleted($session);
-            //     }
-
-            //     return response(compact('point_history'), 200);
-            //     break;
-
-
-
-            default:
-                // 未知のイベントに対する処理
-                break;
-        }
-
     }
 
 

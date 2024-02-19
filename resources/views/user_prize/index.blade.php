@@ -20,7 +20,7 @@
 
 
 
-    <div class="container py-4 mb-5">
+    <div class="container py-4 pb-5 mb-5">
         <h3 class="d-none d-md-block">取得した商品</h3>
 
         <u-user-prize-form

@@ -12,21 +12,10 @@ use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\SendMailController;
 // Route::get('test', function(\Illuminate\Http\Request $request){
 
-//     $user = \App\Models\User::find(163);
-//     $point_sail = \App\Models\PointSail::first();
+//     $user = \App\Models\User::withTrashed()->where('email','taku19931121@gmail.com')->first();
+//     dd($user);
 
-//     // dd($user);
-//     # ポイント購入完了メールの送信
-//     if($user){
-//         $request->user       = $user;
-//         $request->point_sail = $point_sail;
-//         $request->email      = 't.sakai@tosuma.ltd';//ローカルではメール送信しない
-//         SendMailController::PaymentComp( $request );
 
-//         return 'test';
-//     }else{
-//         return 'NG!';
-//     }
 // } );
 
 

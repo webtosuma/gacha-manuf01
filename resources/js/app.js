@@ -84,6 +84,10 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('a-pointhistory-chart',
     require('./components/admin/point_history/Chart.vue').default);
 
+    /* お知らせ */
+    Vue.component('a-infomation-sendemail',
+    require('./components/admin/infomation/Sendemail.vue').default);
+
 
     /* お問い合わせ一覧 */
     Vue.component('contact-list-component',

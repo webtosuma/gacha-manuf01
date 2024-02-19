@@ -39,6 +39,12 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminApiPrizeController::class, 'destroy'])
     ->name('admin.api.prize.destroy');
 
+
+    # メール・送信
+    Route::post('admin/api/prize/{infomation}',
+    [Controllers\AdminInfomationController::class, 'api_email_post'])
+    ->name('admin.api.infomation.email_post');
+
 });
 
 Route::middleware(['admin_auth'])->group(function () {

@@ -11,7 +11,12 @@
         $meta_description =mb_substr($meta_description, 0, 130).'...';
         $meta_image = $infomation->image_path;
     @endphp
+
+    <!--ヘッダーの戻るボタン-->
+    @php $header_back_btn = true; @endphp
+
 @endsection
+
 
 
 @section('style')

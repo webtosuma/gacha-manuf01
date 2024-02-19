@@ -5,6 +5,11 @@
 @section('title','メール受信設定')
 
 
+@section('meta')
+    @php $header_back_btn = true; @endphp
+@endsection
+
+
 @section('content')
 <!--breadcrumb-->
 <div class="container mt-3">

@@ -5,6 +5,11 @@
 @section('title','発送待ち詳細')
 
 
+@section('meta')
+    @php $header_back_btn = true; @endphp
+@endsection
+
+
 @section('style')
 <link href="{{ asset('css/steps.css') }}" rel="stylesheet">
 @endsection

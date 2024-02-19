@@ -4,11 +4,18 @@
 <!----- title ----->
 @section('title','パスワード変更')
 
+
+@section('meta')
+    @php $header_back_btn = true; @endphp
+@endsection
+
+
 @section('script')
 <script src="{{ asset('js/app.js') }}" defer></script>
  <!-- フォームのページ離脱防止アラート -->
  <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
 @endsection
+
 
 @section('content')
 <div class="mx-auto" style="max-width:600px;">

@@ -5,6 +5,11 @@
 @section('title','アカウント設定')
 
 
+@section('meta')
+    @php $header_back_btn = true; @endphp
+@endsection
+
+
 @section('script')
  <!-- フォームのページ離脱防止アラート -->
  <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>

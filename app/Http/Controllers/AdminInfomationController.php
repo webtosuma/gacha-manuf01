@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AdminInfomationRequest;
 use App\Models\Infomation;
 use App\Models\User;
+use App\Models\InfomationSentEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendEmailInfomationJob;
@@ -162,40 +163,81 @@ class AdminInfomationController extends Controller
      */
     public function email(Infomation $infomation)
     {
-        return view('admin.infomation.email', compact('infomation'));
+        # 送信済み
+        $sent_emails = InfomationSentEmail::orderByDesc('created_at')
+        ->where('infomation_id', $infomation->id)
+        ->paginate(100);
+
+
+        return view('admin.infomation.email', compact('infomation','sent_emails'));
     }
 
 
 
-
     /**
-     * メール・一括送信
+     * メール・一括送信API
      *
+     * @param \Illuminate\Http\Request $request
      * @param  \App\Models\Infomation $infomation
      * @return \Illuminate\Http\Response
      */
-    public function email_post(Infomation $infomation)
+    public function api_email_post( Request $request, Infomation $infomation )
     {
-        # メール送信日の登録
-        $infomation->update(['send_email_at'=>now()]);
+        # ユーザー情報の取得
+        $users = User::where('get_email',1)->paginate(100);
 
 
-        # メール受信設定ユーザーの取得
-        $users = User::where('get_email',1)->get();
+        # メール送信
+        foreach ($users as $user)
+        {
+            ## メール送信履歴の確認
+            $sent_email = InfomationSentEmail::
+            where('infomation_id', $infomation->id)
+            ->where('user_id', $user->id)->first();
 
-        # test用
-        // $users = User::where('email','t.sakai@tosuma.ltd')->get();
+            if( !$sent_email )
+            {
+                ## メールの送信
+                Mail::to( $user->email ) //宛先
+                ->send(new \App\Mail\SendHtmlMailMailable([
+                    'inputs'  => compact('infomation'), //入力変数
+                    'view'    => 'emails.infomation.index' , //テンプレート
+                    'subject' => $infomation->title, //件名
+                ]) );
 
 
-        foreach ($users as $user) {
-
-            SendEmailInfomationJob::dispatch($user,$infomation)
-            ->delay(now()->addMinutes(1));
-
+                ##　送信済みモデルの保存
+                $post_email = new InfomationSentEmail([
+                    'infomation_id' => $infomation->id,
+                    'user_id'       => $user->id,
+                ]);
+                $post_email->save();
+            }
         }
 
 
-        # リダイレクト
+        # メール送信日の登録
+        $current_page = $users->currentPage();
+        $last_page    = $users->lastPage();
+        if($current_page == $last_page){
+            $infomation->update(['send_email_at'=>now()]);
+        }
+
+
+        return response()->json( $users  );
+    }
+
+
+
+    /**
+     * メール・一括送信完了
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Infomation $infomation
+     * @return \Illuminate\Http\Response
+     */
+    public function comp_email_post( Request $request, Infomation $infomation )
+    {
         return redirect()->route('admin.infomation')
         ->with(['alert-success'=>'『'.$infomation->title.'』を一括メール送信しました。']);
     }

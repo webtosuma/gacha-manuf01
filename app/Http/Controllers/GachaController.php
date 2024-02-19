@@ -307,20 +307,22 @@ class GachaController extends Controller
         # ユーザー情報
         $user = $user_gacha_history->user;
 
-
+        // dd(Auth::check());
         # 前のガチャ履歴(ガチャ履歴のユーザー==本人のとき)
-        $prev_gacha_history = $user_id != Auth::user()->id ? null :
-        UserGachaHistory::where('id','<',$id)
+        $prev_gacha_history = Auth::check() && ($user_id == Auth::user()->id)
+        ? UserGachaHistory::where('id','<',$id)
         ->where('user_id',$user_id)
         ->orderByDesc('created_at')
-        ->first();
+        ->first()
+        : null;
 
         # 次ののガチャ履歴(ガチャ履歴のユーザー==本人のとき)
-        $next_gacha_history = $user_id != Auth::user()->id ? null :
-        UserGachaHistory::where('id','>',$id)
+        $next_gacha_history = Auth::check() && ($user_id == Auth::user()->id)
+        ? UserGachaHistory::where('id','>',$id)
         ->where('user_id',$user_id)
         ->orderBy('created_at')
-        ->first();
+        ->first()
+        : null;
 
         // dd($prev_gacha_history);
 

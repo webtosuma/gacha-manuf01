@@ -50,7 +50,7 @@
     }
     .mail-text-center{ text-align: center; }
     .mail-btn{
-        display: inline-block;
+        display: block;
         font-weight: 400;
         line-height: 1.6;
         text-align: center;
@@ -60,9 +60,11 @@
         border: none;
         padding: 8px 16px;
         font-size: 18px;
-        border-radius: 4.8px;
+        /* border-radius: 4.8px; */
+        border-radius: 50px;
         color: #fff;
         background-color: #00b8e6;
-        width: 100%;
+        margin:0 auto ;
+        /* width: 100%; */
     }
 </style>

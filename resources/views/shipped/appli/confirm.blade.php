@@ -1,7 +1,14 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.sub')
+
 
 <!----- title ----->
 @section('title','発送申請・確認')
+
+
+@section('meta')
+    @php $header_back_btn = true; @endphp
+@endsection
 
 
 @section('content')
@@ -17,8 +24,8 @@
     </div>
 
 
-    <div class="container py-4 mb-5">
-        <h3 class="mb-">発送申請・確認</h3>
+    <div class="container py-md-4 mb-5">
+        <h3 class="d-none d-md-block ">発送申請・確認</h3>
 
         <form action="{{ route('shipped.appli.comp') }}" method="POST">
             @csrf

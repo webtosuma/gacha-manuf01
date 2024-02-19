@@ -5,6 +5,11 @@
 @section('title','商品発送先の住所設定')
 
 
+@section('meta')
+    @php $header_back_btn = true; @endphp
+@endsection
+
+
 @section('content')
 <!--breadcrumb-->
 <div class="container mt-3">
