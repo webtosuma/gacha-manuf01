@@ -62,7 +62,7 @@ $active_submenu = true;
                         <!--メール送信日-->
                         <i class="bi bi-envelope"></i>
                         {{ $infomation->send_email_at? $infomation->send_email_at->format('Y.m.d') : '----.--.--' }}
-                        {{ $infomation->send_email_at? '送信済み' : '未送信' }}
+                        {{ $infomation->send_email_at? '送信完了' : '未完了' }}
 
                     </div>
 

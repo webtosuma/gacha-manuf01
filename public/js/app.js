@@ -7999,6 +7999,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    initial_time: {
+      type: String,
+      "default": '01:00:00'
+    }
+  },
+  data: function data() {
+    return {
+      remainingTime: this.timeToSeconds(this.initial_time),
+      timer: null
+    };
+  },
+  computed: {
+    formattedTime: function formattedTime() {
+      var hours = Math.floor(this.remainingTime / 3600);
+      var minutes = Math.floor(this.remainingTime % 3600 / 60);
+      var seconds = this.remainingTime % 60;
+      return "".concat(this.padZero(hours), ":").concat(this.padZero(minutes), ":").concat(this.padZero(seconds));
+    }
+  },
+  methods: {
+    startTimer: function startTimer() {
+      var _this = this;
+      this.timer = setInterval(function () {
+        if (_this.remainingTime > 0) {
+          _this.remainingTime--;
+        } else {
+          clearInterval(_this.timer);
+          window.location.reload(); // タイマーが0になったときにページをリロード
+        }
+      }, 1000);
+    },
+    padZero: function padZero(value) {
+      return (value < 10 ? '0' : '') + value;
+    },
+    timeToSeconds: function timeToSeconds(time) {
+      var _time$split$map = time.split(':').map(Number),
+        _time$split$map2 = _slicedToArray(_time$split$map, 3),
+        hours = _time$split$map2[0],
+        minutes = _time$split$map2[1],
+        seconds = _time$split$map2[2];
+      return hours * 3600 + minutes * 60 + seconds;
+    }
+  },
+  created: function created() {
+    this.startTimer();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js ***!
@@ -13291,6 +13360,41 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=template&id=389dfec4":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=template&id=389dfec4 ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "position-absolute top-0 start-0 w-100 h-100",
+    staticStyle: {
+      "z-index": "1",
+      "background-color": "rgb(0 0 0 / 70%)"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center h-100"
+  }, [_c("div", {}, [_c("div", {
+    staticClass: "fs-3 fw-bold text-white"
+  }, [_vm._v("新作公開まであと")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-1 fw-bold text-white"
+  }, [_vm._v(_vm._s(_vm.formattedTime))])])])]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=template&id=96067e1e ***!
@@ -14587,6 +14691,9 @@ Vue.component('u-register-form', (__webpack_require__(/*! ./components/auth/Regi
 
 /* パスワード変更フォーム */
 Vue.component('u-reset-password-form', (__webpack_require__(/*! ./components/auth/ResetPasswordFormConpornent.vue */ "./resources/js/components/auth/ResetPasswordFormConpornent.vue")["default"]));
+
+/* カウントダウンガチャコンポーネント */
+Vue.component('u-countdown-gacha', (__webpack_require__(/*! ./components/gacha/CountdownGachaComponent.vue */ "./resources/js/components/gacha/CountdownGachaComponent.vue")["default"]));
 
 /* 動画自動再生コンポーネント */
 Vue.component('u-movie-play', (__webpack_require__(/*! ./components/gacha/MoviePlayComponent.vue */ "./resources/js/components/gacha/MoviePlayComponent.vue")["default"]));
@@ -38874,6 +38981,45 @@ component.options.__file = "resources/js/components/contact/FormComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/gacha/CountdownGachaComponent.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/gacha/CountdownGachaComponent.vue ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CountdownGachaComponent_vue_vue_type_template_id_389dfec4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CountdownGachaComponent.vue?vue&type=template&id=389dfec4 */ "./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=template&id=389dfec4");
+/* harmony import */ var _CountdownGachaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CountdownGachaComponent.vue?vue&type=script&lang=js */ "./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CountdownGachaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CountdownGachaComponent_vue_vue_type_template_id_389dfec4__WEBPACK_IMPORTED_MODULE_0__.render,
+  _CountdownGachaComponent_vue_vue_type_template_id_389dfec4__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/gacha/CountdownGachaComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/gacha/MoviePlayComponent.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/gacha/MoviePlayComponent.vue ***!
@@ -39723,6 +39869,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountdownGachaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountdownGachaComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountdownGachaComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js":
 /*!**************************************************************************************!*\
   !*** ./resources/js/components/gacha/MoviePlayComponent.vue?vue&type=script&lang=js ***!
@@ -40443,6 +40605,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormComponent.vue?vue&type=template&id=beaa52e2 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=template&id=389dfec4":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=template&id=389dfec4 ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountdownGachaComponent_vue_vue_type_template_id_389dfec4__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountdownGachaComponent_vue_vue_type_template_id_389dfec4__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountdownGachaComponent_vue_vue_type_template_id_389dfec4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountdownGachaComponent.vue?vue&type=template&id=389dfec4 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gacha/CountdownGachaComponent.vue?vue&type=template&id=389dfec4");
 
 
 /***/ }),

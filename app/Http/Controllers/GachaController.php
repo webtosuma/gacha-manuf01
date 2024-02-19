@@ -53,6 +53,9 @@ class GachaController extends Controller
             ## 表示できるガチャ一覧
             $gachas = self::getPublishedGachas( $category_code, $search_key );
 
+            ## カウントダウンガチャ
+            $countdown_gachas = self::getCountdownGachas($category_code);
+
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
@@ -67,22 +70,20 @@ class GachaController extends Controller
         # viewの表示
         return view('gacha.index', compact(
             'category_code', 'category_name', 'bg_image',  'categories',
-            'search_key', 'searchs', 'gachas', 'infomations',
+            'search_key', 'searchs', 'gachas', 'countdown_gachas', 'infomations',
             'slides',
          ) );
 
     }
-
-
-        /**
-         * ガチャ一覧で表示できるガチャ一覧の取得
-         */
-        public static function getPublishedGachas($category_code, $search_key=null )
+        /*
+         * カテゴリーに該当するガチャのID配列の取得
+        */
+        public static function getGachaIdOfCategory($category_code)
         {
             $now = now()->toDateTimeString();
 
-            # 該当するガチャのID配列
-            $id_array =  $category_code != 'all'
+
+            return  $category_code != 'all'
 
                 // カテゴリーを指定
                 ? DB::table('gacha_categories')
@@ -103,6 +104,18 @@ class GachaController extends Controller
                 ->select('gachas.*')
                 ->get()->pluck('id')->toArray()
             ;
+
+        }
+
+
+        /**
+         * ガチャ一覧で表示できるガチャ一覧の取得
+         */
+        public static function getPublishedGachas($category_code, $search_key=null )
+        {
+
+            # カテゴリーに該当するガチャのID配列
+            $id_array = self::getGachaIdOfCategory($category_code);
 
 
             # ID配列を指定して、ガチャの取得
@@ -233,6 +246,41 @@ class GachaController extends Controller
             //     $query->where('type','<>','only_new_user');
             // }
 
+        }
+
+
+
+        /*
+         * カウントダウンガチャ
+        */
+        public static function getCountdownGachas($category_code)
+        {
+            # カテゴリーID
+            $category_id = $category_code == 'all' ? null
+            : GachaCategory::where('code_name',$category_code)->first()->id;
+
+
+
+            # ID配列を指定して、ガチャの取得
+            $query = Gacha::query();
+
+                // カテゴリーIDの指定
+                if($category_id){ $query->where('category_id',$category_id);}
+
+                $query->where('published_at','>',now());//予約中
+
+                $query->where('published_at','<',now()->copy()->addMinutes(30));//30分前
+
+
+            $countdown_gachas = $query->orderByDesc('created_at')->get();
+
+
+            # データの追加(カウントダウンの時間)
+            foreach ($countdown_gachas as $countdown_gacha) {
+                $countdown_gacha->initial_time = now()->diff($countdown_gacha->published_at)->format('%H:%I:%S');
+            }
+
+            return $countdown_gachas;
         }
     //
 

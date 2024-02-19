@@ -220,8 +220,51 @@
     <section class="py-3 pb-5">
         <div class="container" style="min-height:50vh;">
 
+
+
+
             <!--card-->
             <div class="row gy-5 overflow-hidden">
+
+
+
+                <!-- countdown gachas -->
+                @foreach ($countdown_gachas as $countdown_gacha)
+                    <div class="col-12 col-md-6 col-lg-4  ">
+                        <div class="card border-secondary border-3 shadow bg-white
+                        text-dark text-center overflow-hidden text-decoration-none
+                        hover_anime position-relative" style="border-radius:1rem;">
+
+                            <u-countdown-gacha initial_time="{{$countdown_gacha->initial_time}}" ></u-countdown-gacha>
+
+                            <div class="position-relative">
+                                <!--loading-->
+                                <div class="ratio ratio-4x3">
+                                    <div class="bg-dark d-flex align-items-center justify-content-center"
+                                    style="z-index:0;">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--gacha image-->
+                                <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden"
+                                style="z-index:0; -ms-filter: blur(10px); filter: blur(10px); ">
+                                    <ratio-image-component
+                                    url="{{ $countdown_gacha->image_path }}" style_class="ratio ratio-4x3"
+                                    ></ratio-image-component>
+                                </div>
+                            </div>
+
+
+                            <div class="card-body bg-dark" style="height:4.3rem;"></div>
+                        </div>
+                    </div>
+                @endforeach
+
+
+                <!--nomal gacha card-->
                 @forelse ($gachas as $gacha)
                     <div class="col-12 col-md-6 col-lg-4  ">
 
