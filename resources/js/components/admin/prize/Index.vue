@@ -142,17 +142,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--読み込み中-->
-                        <tr v-if="loading">
-                            <td colspan="8" class="text-center text-secondary border-0 py-5">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div class="spinner-border" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
                         <tr v-for="(prize, key) in prizes" :key="key">
                             <td>
                                 <input v-model="ids" :value="prize.id"
@@ -200,6 +189,16 @@
                         <tr v-if="!loading && prizes.length==0">
                             <td colspan="8" class="text-center text-secondary border-0 py-5">
                                 *商品の登録情報はありません。
+                            </td>
+                        </tr>
+                        <!--読み込み中-->
+                        <tr v-if="loading">
+                            <td colspan="8" class="text-center text-secondary border-0 py-5">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
 
@@ -293,20 +292,42 @@
 
 
             /* 商品データ取得 */
-            getData() {
+            getData(route = this.r_api_prize) {
 
                 // this.prizes  = [];
                 this.loading = true;//読み込み中
 
-                const route = this.r_api_prize;
+                // return;
+                // const route = this.r_api_prize;
+                console.log(this.inputs);
+
+
                 axios.post( route , {_token: this.token, ...this.inputs} )
                 .then(json => {
-                    // console.log(json.data);
+                    console.log(json.data);
 
-                    this.prizes = json.data.prizes;
+                    // this.prizes = json.data.prizes;
+                    //ページネーションデータ
+                    const paginate = json.data.prizes;
+
+                    // 商品情報の登録（新規登録・ページネーション追加）
+                    this.prizes = route == this.r_api_prize ? paginate.data
+                    : [ ...this.prizes, ...paginate.data];
+
+                    // ランクの登録
                     this.selects.prize_ranks = json.data.prize_ranks;
 
                     this.loading = false;//読み込み中
+
+
+
+                    /* 次のデータの読み込み */
+                    const current_page = paginate.current_page;//表示中ページ
+                    const last_page    = paginate.last_page;   //最終ページ
+                    if( current_page != last_page ){
+                        const nextPageUrl = paginate.next_page_url;     //URLの更新
+                        this.getData( nextPageUrl );
+                    }
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')

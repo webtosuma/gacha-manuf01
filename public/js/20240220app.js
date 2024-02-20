@@ -10888,7 +10888,8 @@ var render = function render() {
   return _c("div", {}, [_c("button", {
     staticClass: "btn btn-success text-white w-100 shadow",
     attrs: {
-      type: "button"
+      type: "button",
+      disabled: _vm.disabled != ""
     },
     on: {
       click: function click($event) {

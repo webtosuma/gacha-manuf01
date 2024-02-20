@@ -118,7 +118,7 @@ $active_key = 'gacha';
                                 <div class="card-body bg-success text-center text-white">
                                     <h3>公開予約中</h3>
                                     <div >{{
-                                        \Carbon\Carbon::parse($gacha->published_at)->format('Y/m/d').'公開予定'
+                                        \Carbon\Carbon::parse($gacha->published_at)->format('Y/m/d H:i').'公開予定'
                                     }}</div>
                                 </div>
                             @else

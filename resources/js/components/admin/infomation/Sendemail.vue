@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <button class="btn btn-success text-white w-100 shadow"
-        @click="postEmail()" type="button" :disabled="disabled!=''"
+        @click="postEmail()" type="button"
         >メールを送信する</button>
 
         <div v-show="sending"

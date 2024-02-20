@@ -88,7 +88,8 @@ class AdminApiPrizeController extends Controller
                     $query->whereNotIn('id', $request->not_ids);
                 }
 
-            $prizes = $query->with('rank')->get();
+            // $prizes = $query->with('rank')->get();
+            $prizes = $query->with('rank')->paginate(10);
 
             # 画像パスの登録
             foreach ($prizes as $prize) {

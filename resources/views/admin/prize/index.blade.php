@@ -24,7 +24,6 @@ $active_submenu = true;
         </nav>
 
 
-
         <h2 class="mb-5 py-3 border-bottom">商品管理</h2>
 
         <a-prize-list

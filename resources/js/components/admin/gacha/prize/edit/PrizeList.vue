@@ -92,16 +92,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--読み込み中-->
-                        <tr v-if="loading">
-                            <td colspan="8" class="text-center text-secondary border-0 py-5">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div class="spinner-border" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
 
                         <tr v-for="(prize, key) in prizes" :key="key">
                             <td>
@@ -126,6 +116,17 @@
                         <tr v-if="!loading && prizes.length==0">
                             <td colspan="8" class="text-center text-secondary border-0 py-5">
                                 *商品の登録情報はありません。
+                            </td>
+                        </tr>
+
+                        <!--読み込み中-->
+                        <tr v-if="loading">
+                            <td colspan="8" class="text-center text-secondary border-0 py-5">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
 
@@ -232,22 +233,48 @@
                     this.ids=[];
                 }
 
-                const route = this.r_api_prize;
+                this.getPagenateData();
+
+                return;
+            },
+
+
+            getPagenateData( route = this.r_api_prize ) {
                 axios.post( route , this.inputs )
                 .then(json => {
                     // console.log(json.data);
-                    this.prizes = json.data.prizes;
+
+                    //ページネーションデータ
+                    const paginate = json.data.prizes;
+
+                    // 商品情報の登録（新規登録・ページネーション追加）
+                    this.prizes = route == this.r_api_prize ? paginate.data
+                    : [ ...this.prizes, ...paginate.data];
+
+                    // ランクの登録
                     this.selects.prize_ranks = json.data.prize_ranks;
 
                     this.loading = false;//読み込み中
+
+
+
+                    /* 次のデータの読み込み */
+                    const current_page = paginate.current_page;//表示中ページ
+                    const last_page    = paginate.last_page;   //最終ページ
+                    if( current_page != last_page ){
+                        const nextPageUrl = paginate.next_page_url;     //URLの更新
+                        this.getPagenateData( nextPageUrl );
+                    }
                 })
                 .catch(error => {
                     // alert('通信エラーが発生しました。')
                     // console.log( error.response.data );
 
                 });
-
             },
+
+
+
 
             /** キーワード検索 */
             changeKeyWord() {
