@@ -262,4 +262,17 @@ class User extends Authenticatable
             $ra = CanpaingIntroductory::where('friend_id',$this->id)->first();
             return $ra ? $ra->recruiter : null;
         }
+
+
+        /**
+         * 最終アクセス時間 last_access_at
+         * @return String
+        */
+        public function getLastAccessAtAttribute()
+        {
+            $ug_history = UserGachaHistory::where('user_id',$this->id)
+            ->orderByDesc('created_at')->first();
+
+            return $ug_history ? $ug_history->created_at : $this->created_at;
+        }
 }

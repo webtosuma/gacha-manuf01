@@ -95,7 +95,7 @@ $active_key = 'user';
                         </th>
                         <th></th>
 
-                        <th scope="col">会員登録日</th>
+                        <th scope="col">会員登/最終アクセス</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -178,7 +178,10 @@ $active_key = 'user';
 
 
                             </td>
-                            <td>{{ $user->created_at->format('Y年m月d日 H:i') }}</td>
+                            <td>
+                                <div class="text-">{{ $user->created_at->format('Y年m月d日 H:i') }}</div>
+                                <div class="text-success">{{ $user->last_access_at->format('Y年m月d日 H:i') }}</div>
+                            </td>
                         </tr>
                     @empty
                         <tr>

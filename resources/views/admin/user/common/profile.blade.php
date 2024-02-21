@@ -31,8 +31,12 @@
             </div>
         </div>
         <div class="my-2">
-            <h6>会員登録日</h6>
+            <h6>会員登録</h6>
             <div class="border p-2 rounded">{{$user->created_at->format('Y年m月d日 H:i') }}</div>
+        </div>
+        <div class="my-2">
+            <h6>最終アクセス</h6>
+            <div class="border p-2 rounded  text-success">{{ $user->last_access_at->format('Y年m月d日 H:i') }}</div>
         </div>
 
         @if($user->recruiter)

@@ -96,7 +96,7 @@ style="max-width:90vw; min-width:30vw;">
 
                 </div>
 
-                <div class="row g-2 mt-2 px-3">
+                <div class="row g-2 mt-2 px-3 mx-1">
                     @foreach (Auth::user()->best_u_prizes as $u_prize)
                         <div class="col-4 text-center">
                             <ratio-image-component

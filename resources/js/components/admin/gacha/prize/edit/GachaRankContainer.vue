@@ -21,16 +21,6 @@
                         <td></td>
                     </tr></thead>
 
-                    <!--読み込み中-->
-                    <tr v-if="loading">
-                        <td colspan="8" class="text-center text-secondary border-0 py-5">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <div class="spinner-border" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
                     <!--登録ずみガチャ商品-->
                     <tbody v-for="(g_prize, key) in g_prizes" :key="key">
                         <tr  v-show=" g_prize.show ">
@@ -134,6 +124,17 @@
                             </td>
                         </tr>
                     </tbody>
+                    <!--読み込み中-->
+                    <tr v-if="loading">
+                        <td colspan="8" class="text-center text-secondary border-0 py-5">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
                 </table>
             </div>
 

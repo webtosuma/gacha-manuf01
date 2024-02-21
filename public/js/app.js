@@ -10264,7 +10264,7 @@ var render = function render() {
     staticStyle: {
       width: "6rem"
     }
-  }, [_vm._v("口数")]), _vm._v(" "), _c("td")])]), _vm._v(" "), _vm.loading ? _c("tr", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.g_prizes, function (g_prize, key) {
+  }, [_vm._v("口数")]), _vm._v(" "), _c("td")])]), _vm._v(" "), _vm._l(_vm.g_prizes, function (g_prize, key) {
     return _c("tbody", {
       key: key
     }, [_c("tr", {
@@ -10357,7 +10357,7 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "bi bi-trash3"
     })]) : 0])])]);
-  }), _vm._v(" "), !_vm.loading && _vm.prize_ids.length == 0 && _vm.new_prizes.length == 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(), _vm._v(" "), _c("tbody", _vm._l(_vm.new_prizes, function (prize, p_key) {
+  }), _vm._v(" "), !_vm.loading && _vm.prize_ids.length == 0 && _vm.new_prizes.length == 0 ? _c("tbody", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _c("tbody", _vm._l(_vm.new_prizes, function (prize, p_key) {
     return _c("tr", {
       key: p_key
     }, [_c("td", {
@@ -10427,7 +10427,7 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "bi bi-trash3"
     })])])]);
-  }), 0)], 2)])]), _vm._v(" "), _c("div", {
+  }), 0), _vm._v(" "), _vm.loading ? _c("tr", [_vm._m(1)]) : _vm._e()], 2)])]), _vm._v(" "), _c("div", {
     staticClass: "col"
   }, [_c("a-gachaprize-prize-list", {
     attrs: {
@@ -10447,6 +10447,15 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
+  return _c("tr", [_c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
   return _c("td", {
     staticClass: "text-center text-secondary border-0 py-5",
     attrs: {
@@ -10462,15 +10471,6 @@ var staticRenderFns = [function () {
   }, [_c("span", {
     staticClass: "visually-hidden"
   }, [_vm._v("Loading...")])])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("tr", [_c("td", {
-    staticClass: "text-center text-secondary border-0 py-5",
-    attrs: {
-      colspan: "8"
-    }
-  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]);
 }];
 render._withStripped = true;
 
