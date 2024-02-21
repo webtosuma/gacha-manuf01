@@ -1,85 +1,112 @@
 @php
-$active_class = "text-primary fw-bold border-end border-bottom border-start border-top border-primary border-2 bg-white active_menu disabled";
+    $active_class = "text-primary fw-bold border-end border-bottom border-start border-top border-primary border-2 bg-white active_menu disabled";
 
-$menu_array = [
-    [
-        'route' => route('admin.gacha'),
-        'key'   => 'gacha',
-        'icon'  => 'bi-gift',
-        'label' => 'ガチャ管理',
-    ],
-    [
-        'route' => route('admin.point_history'),
-        'key'   => 'point_history',
-        'icon'  => 'bi-graph-up',
-        'label' => 'ポイント売上',
-    ],
-    [
-        'route' => route('admin.shipped'),
-        'key'   => 'shipped',
-        'icon'  => 'bi-cart4',
-        'label' => '発送受付',
-    ],
-    [
-        'route' => route('admin.user'),
-        'key'   => 'user',
-        'icon'  => 'bi-people',
-        'label' => '登録ユーザー',
-    ],
-    [
-        'route' => route('admin.contact'),
-        'key'   => 'contact',
-        'icon'  => 'bi-telephone',
-        'label' => 'お問い合わせ',
-    ],
-    [
-        'route' => route('admin.register'),
-        'key'   => 'register',
-        'icon'  => 'bi-person-circle',
-        'label' => 'サイト管理者',
-    ],
-];
-$submenu_array = [
-    [
-        'route' => route('admin.category'),
-        'key'   => 'category',
-        'label' => 'カテゴリー',
-    ],
-    [
-        'route' => route('admin.prize'),
-        'key'   => 'prize',
-        'label' => '商品',
-    ],
-    [
-        'route' => route('admin.movie'),
-        'key'   => 'movie',
-        'label' => '演出動画',
-    ],
-    [
-        'route' => route('admin.point_sail'),
-        'key'   => 'point',
-        'label' => '販売ポイント',
-    ],
-    [
-        'route' => route('admin.infomation'),
-        'key'   => 'infomation',
-        'label' => 'お知らせ',
-    ],
-];
+
+    /* メインメニュー */
+    $menu_array = [
+        [
+            'route' => route('admin.gacha'),
+            'key'   => 'gacha',
+            'icon'  => 'bi-gift',
+            'label' => 'ガチャ管理',
+        ],
+        [
+            'route' => '#',
+            'key'   => 'ticket',
+            'icon'  => 'bi-ticket-perforated',
+            'label' => 'チケット管理(作成中)',
+        ],
+        [
+            'route' => route('admin.shipped'),
+            'key'   => 'shipped',
+            'icon'  => 'bi-cart4',
+            'label' => '発送受付',
+        ],
+        [
+            'route' => route('admin.user'),
+            'key'   => 'user',
+            'icon'  => 'bi-people',
+            'label' => '登録ユーザー',
+        ],
+        [
+            'route' => route('admin.contact'),
+            'key'   => 'contact',
+            'icon'  => 'bi-telephone',
+            'label' => 'お問い合わせ',
+        ],
+        [
+            'route' => route('admin.register'),
+            'key'   => 'register',
+            'icon'  => 'bi-person-circle',
+            'label' => 'サイト管理者',
+        ],
+    ];
+
+
+    /* 登録管理メニュー */
+    $ragistation_array = [
+        [
+            'route' => route('admin.category'),
+            'key'   => 'category',
+            'label' => 'カテゴリー',
+        ],
+        [
+            'route' => route('admin.prize'),
+            'key'   => 'prize',
+            'label' => '商品',
+        ],
+        [
+            'route' => route('admin.movie'),
+            'key'   => 'movie',
+            'label' => '演出動画',
+        ],
+        [
+            'route' => route('admin.point_sail'),
+            'key'   => 'point',
+            'label' => '販売ポイント',
+        ],
+        [
+            'route' => route('admin.infomation'),
+            'key'   => 'infomation',
+            'label' => 'お知らせ',
+        ],
+    ];
+
+
+    /* レポートメニュー */
+    $report_array = [
+        [
+            'route' => route('admin.point_history'),
+            'key'   => 'point_history',
+            'label' => 'ポイント売上',
+        ],
+        [
+            'route' => '#',
+            'key'   => 'gacha_history',
+            'label' => 'ガチャレポート(*製作中)',
+        ],
+        [
+            'route' => '#',
+            'key'   => 'shipped_history',
+            'label' => '発送申請レポート(*製作中)',
+        ],
+    ];
+
 @endphp
 <div class="d-flex flex-column justify-content-between py-3 px-2">
     <div class="border-bottom bg-body" id="sideMenuAccordion">
 
+        <!-- 登録管理 -->
         <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle"
-        data-bs-toggle="collapse" href="#collapseAdminSideMenu" role="button" aria-expanded="false" aria-controls="collapseAdminSideMenu"
+        data-bs-toggle="collapse" href="#collapseAdminRagistationMenu" role="button" aria-expanded="false" aria-controls="collapseAdminRagistationMenu"
         type="button" >
             <i class="bi bi-globe text-primary fs-4 me-3"></i>
             {{ __('登録管理') }}
         </button>
         <div class="collapse ps-3 {{ isset($active_submenu)&&$active_submenu==true ? 'show' :  ''}}"
-        id="collapseAdminSideMenu">
+        id="collapseAdminRagistationMenu">
 
-            @foreach ($submenu_array as $menu)
+            @foreach ($ragistation_array as $menu)
             <a href="{{ $menu['route'] }}"
             class="list-group-item border-0 p-2 px-3 w-100 text-start
             {{ isset($active_key)&&$active_key==$menu['key'] ? $active_class :  ''}}"
@@ -88,6 +115,28 @@ $submenu_array = [
             @endforeach
 
         </div>
+
+
+        <!-- レポート -->
+        <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle"
+        data-bs-toggle="collapse" href="#collapseAdminReportMenu" role="button" aria-expanded="false" aria-controls="collapseAdminReportMenu"
+        type="button" >
+            <i class="bi bi-graph-up text-primary fs-4 me-3"></i>
+            {{ __('レポート') }}
+        </button>
+        <div class="collapse ps-3 {{ isset($active_report_menu)&&$active_report_menu==true ? 'show' :  ''}}"
+        id="collapseAdminReportMenu">
+
+            @foreach ($report_array as $menu)
+            <a href="{{ $menu['route'] }}"
+            class="list-group-item border-0 p-2 px-3 w-100 text-start
+            {{ isset($active_key)&&$active_key==$menu['key'] ? $active_class :  ''}}"
+            style="border-radius: 2rem  2rem;"
+            >{{ $menu['label'] }}</a>
+            @endforeach
+
+        </div>
+
 
         @foreach ($menu_array as $menu)
             @php

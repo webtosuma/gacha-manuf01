@@ -32,7 +32,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/animation.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/20240220animation.css') }}" rel="stylesheet">
+
     <style>
         a{ text-decoration: none; }
         th,td{ background-color: #fff !important; }

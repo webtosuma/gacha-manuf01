@@ -6,6 +6,7 @@
 
 @section('meta') @php
 $active_key = 'point_history';
+$active_report_menu = true;
 @endphp @endsection
 
 

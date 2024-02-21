@@ -23,8 +23,13 @@ style="max-width:90vw; min-width:30vw;">
                         <div class="">{{ Auth::user()->name }}さん</div>
                         @if( Auth::user()->twitter_id )
                             <div class="form-text">
-                            {{-- X(旧twitter)ID： --}}
-                            {{ Auth::user()->twitter_id }}</div>
+                                {{-- X(旧twitter)ID： --}}
+                                <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
+                                alt="xロゴ" class="d-inline-block" style="height:1rem;">
+
+
+                                {{ Auth::user()->twitter_id }}
+                            </div>
                         @endif
                     </div>
 
