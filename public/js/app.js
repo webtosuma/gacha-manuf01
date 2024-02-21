@@ -6314,7 +6314,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   methods: {
     /** ガチャ商品 */getData: function getData() {
       var _this = this;
-      this.loading = true; //読み込み中
+      this.loading = true; //読み込み中　
 
       // パラメーター
       var route = this.r_api_ranks_gacha_prizes;
@@ -6380,20 +6380,38 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     /** 新規商品データ取得 */getPrizeData: function getPrizeData() {
       var _this2 = this;
+      var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.r_api_prize;
       this.loading = true; //読み込み中
 
       // パラメーター
       var inputs = {
         _token: this.token,
-        // ids: this.prize_ids,
         ids: this.new_prizes_ids
       };
-      var route = this.r_api_prize;
+
+      // const route = this.r_api_prize;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs).then(function (json) {
         // console.log(json.data);
 
-        _this2.new_prizes = json.data.prizes;
+        //ページネーションデータ
+        var paginate = json.data.prizes;
+
+        // console.log(paginate.data);
+        // return
+
+        // 商品情報の登録（新規登録・ページネーション追加）
+        _this2.new_prizes = route == _this2.r_api_prize ? paginate.data : [].concat(_toConsumableArray(_this2.new_prizes), _toConsumableArray(paginate.data));
+        // return
+
         _this2.loading = false; //読み込み中
+
+        /* 次のデータの読み込み */
+        var current_page = paginate.current_page; //表示中ページ
+        var last_page = paginate.last_page; //最終ページ
+        if (current_page != last_page) {
+          var nextPageUrl = paginate.next_page_url; //URLの更新
+          _this2.getPrizeData(nextPageUrl);
+        }
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
         // console.log( error.response.data );

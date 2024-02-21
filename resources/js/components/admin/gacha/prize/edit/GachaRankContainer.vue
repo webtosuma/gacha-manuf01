@@ -198,7 +198,7 @@
             /** ガチャ商品 */
             getData() {
 
-                this.loading = true;//読み込み中
+                this.loading = true;//読み込み中　
 
                 // パラメーター
                 const route = this.r_api_ranks_gacha_prizes;
@@ -281,24 +281,44 @@
 
 
             /** 新規商品データ取得 */
-            getPrizeData() {
+            getPrizeData( route = this.r_api_prize ) {
 
                 this.loading = true;//読み込み中
 
                 // パラメーター
                 const inputs = {
                     _token : this.token,
-                    // ids: this.prize_ids,
                     ids: this.new_prizes_ids
                 };
 
-                const route = this.r_api_prize;
+                // const route = this.r_api_prize;
                 axios.post( route , inputs )
                 .then(json => {
                     // console.log(json.data);
 
-                    this.new_prizes = json.data.prizes;
+                    //ページネーションデータ
+                    const paginate = json.data.prizes;
+
+                    // console.log(paginate.data);
+                    // return
+
+
+
+                    // 商品情報の登録（新規登録・ページネーション追加）
+                    this.new_prizes = route == this.r_api_prize ? paginate.data
+                    : [ ...this.new_prizes, ...paginate.data];
+                    // return
+
                     this.loading = false;//読み込み中
+
+
+                    /* 次のデータの読み込み */
+                    const current_page = paginate.current_page;//表示中ページ
+                    const last_page    = paginate.last_page;   //最終ページ
+                    if( current_page != last_page ){
+                        const nextPageUrl = paginate.next_page_url;     //URLの更新
+                        this.getPrizeData( nextPageUrl );
+                    }
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')
