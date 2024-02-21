@@ -77,6 +77,8 @@
             transition: all .2s;
         }
 
+
+
     </style>
 @endsection
 
@@ -229,13 +231,13 @@
 
 
                 <!-- countdown gachas -->
-                @foreach ($countdown_gachas as $countdown_gacha)
+                @foreach ($countdown_gachas as $gacha)
                     <div class="col-12 col-md-6 col-lg-4  ">
                         <div class="card border-secondary border-3 shadow bg-white
                         text-dark text-center overflow-hidden text-decoration-none
                         hover_anime position-relative" style="border-radius:1rem;">
 
-                            <u-countdown-gacha initial_time="{{$countdown_gacha->initial_time}}" ></u-countdown-gacha>
+                            <u-countdown-gacha initial_time="{{$gacha->initial_time}}" ></u-countdown-gacha>
 
                             <div class="position-relative">
                                 <!--loading-->
@@ -250,9 +252,9 @@
 
                                 <!--gacha image-->
                                 <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden"
-                                style="z-index:0; -ms-filter: blur(10px); filter: blur(10px); ">
+                                style="z-index:0; -ms-filter: blur(6px); filter: blur(6px); ">
                                     <ratio-image-component
-                                    url="{{ $countdown_gacha->image_path }}" style_class="ratio ratio-4x3"
+                                    url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
                                     ></ratio-image-component>
                                 </div>
                             </div>
@@ -272,6 +274,7 @@
                         <a href="{{$gacha->route}}"
                         class="card border-secondary border-3 shadow bg-white
                         text-dark text-center overflow-hidden text-decoration-none
+                        position-relative shiny
                         hover_anime" style="border-radius:1rem;">
 
 

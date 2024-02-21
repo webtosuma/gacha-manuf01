@@ -103,3 +103,29 @@
         transform: translateX(0rem);
     }
 }
+
+
+/* キラリンアニメーション */
+.shiny:after{
+    position:absolute;
+    top:-200%;
+    left:-150%;
+    content:"";
+    height:500%;
+    width:70px;
+    background:linear-gradient(90deg, rgba(255,255,255,0),rgba(255,255,255,0.6) 40%,rgba(255,255,255,0),rgba(255,255,255,0.6),rgba(255,255,255,0));
+    transform: rotate(60deg);
+    animation:10s shine infinite linear;
+}
+
+@keyframes shine{
+    0%{
+        left:-100%;
+    }
+    95%{
+        left:-100%;
+    }
+    100%{
+        left:200%;
+    }
+}

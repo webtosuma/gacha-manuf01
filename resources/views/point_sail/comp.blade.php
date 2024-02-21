@@ -4,6 +4,12 @@
 @section('title','ポイント購入完了')
 
 
+@section('script')
+    {{--- 紙吹雪　CDN ---}}
+    @include('includes.confetti_js')
+@endsection
+
+
 @section('content')
 <!--breadcrumb-->
 <div class="container mt-3">

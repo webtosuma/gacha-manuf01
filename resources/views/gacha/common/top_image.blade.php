@@ -21,6 +21,9 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
         ></ratio-image-component>
     </div>
 
+
+
+
     @if ($gacha->remaining_count==0)
     <div class="position-absolute top-0 start-0 w-100 h-100"
     style="z-index:3; background: rgba(0, 0, 0, .7);"

@@ -13,8 +13,9 @@
             @if ($gacha->remaining_count >=1)
                 <button type="submit" name="play_count" value="{{ 1 }}"
                 class="btn btn-light bg-gradient fw-bold w-100 pb-0
-                rounded-pill border-secondary border-3"
-                >
+                rounded-pill border-secondary border-3
+                position-relative shiny overflow-hidden
+                ">
                     <div class="">1回ガチャる</div>
                     <div class="text-warning">{{number_format($gacha->one_play_point).'pt'}}</div>
                 </button>
@@ -39,8 +40,9 @@
             @if ($gacha->remaining_count >=10)
                 <button type="submit" name="play_count" value="{{ 10 }}"
                 class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0
-                rounded-pill border-danger border-3"
-                >
+                rounded-pill border-danger border-3
+                position-relative shiny overflow-hidden
+                ">
                     <div class="">10連ガチャる</div>
                     <div class="text-warning">{{number_format($gacha->one_play_point*10).'pt'}}</div>
                 </button>

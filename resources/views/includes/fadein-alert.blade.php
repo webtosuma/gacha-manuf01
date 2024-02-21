@@ -69,4 +69,7 @@ $session_alerts = [ 'alert-primary','alert-success','alert-info','alert-warning'
 
     </alert-modal-comp-component>
 
+    {{--- 紙吹雪　CDN ---}}
+    @include('includes.confetti_js')
+
 @endif
