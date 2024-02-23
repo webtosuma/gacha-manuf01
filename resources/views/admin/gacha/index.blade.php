@@ -65,7 +65,7 @@ $active_key = 'gacha';
         </section>
 
         <!--card-->
-        <section class="row gy-5 my-3 overflow-hidden">
+        <section class="row gy-5 my-3 overflow-hidden g-2">
             <div class="col-12 col-md-4 col-lg-3 ">
                 <a href="{{ route('admin.gacha.create',$category_code) }}"
                 class="btn btn-primary shadow text-white
@@ -85,7 +85,7 @@ $active_key = 'gacha';
 
 
                         <a href="{{route('admin.gacha.show',$gacha)}}"
-                        class="card border-secondary border-3 shadow bg-white h-100
+                        class="card border-secondary border-0 shadow bg-white h-100
                         text-dark text-center overflow-hidden text-decoration-none
                         hover_anime" style="border-radius:1rem;">
 

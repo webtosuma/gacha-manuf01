@@ -44,8 +44,12 @@ class GachaController extends Controller
             ->orderBy('created_at')
             ->get();
 
+
+            ## カードサイズ
+            $card_size = $request->card_size ? $request->card_size : null;
+
             ## 絞り込みキー
-            $search_key = $request ? $request->search_key : null;
+            $search_key = $request->search_key ? $request->search_key : null;
 
             ## 検索キーワード
             $searchs = self::getsearchs();
@@ -69,7 +73,7 @@ class GachaController extends Controller
 
         # viewの表示
         return view('gacha.index', compact(
-            'category_code', 'category_name', 'bg_image',  'categories',
+            'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
             'search_key', 'searchs', 'gachas', 'countdown_gachas', 'infomations',
             'slides',
          ) );

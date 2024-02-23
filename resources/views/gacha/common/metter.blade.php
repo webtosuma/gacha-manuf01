@@ -70,14 +70,14 @@ $bg_color = isset($metter_bg_color) ? $metter_bg_color : $bg_color;
 
     <!-- 新規会委員限定 -->
     @elseif ($gacha->type=='only_new_user')
-    <div class="text-center" style="line-height:2rem">
-        ＊一週間限定・一回限定で利用できます
-    </div>
+        <div class="text-center" style="line-height:2rem">
+            ＊一週間限定・一回限定で利用できます
+        </div>
 
 
     <!-- メーター表示なし -->
     @else
-    <div style="height:2rem"><!--  --></div>
+        <div style="height:2rem"><!--  --></div>
     @endif
 
 

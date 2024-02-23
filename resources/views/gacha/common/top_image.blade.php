@@ -27,7 +27,7 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     @if ($gacha->remaining_count==0)
     <div class="position-absolute top-0 start-0 w-100 h-100"
     style="z-index:3; background: rgba(0, 0, 0, .7);"
-    ><div class="d-flex align-items-center justify-content-center h-100 fs-1 text-white"
+    ><div class="d-flex align-items-center justify-content-center h-100 fs-3 text-white"
     >売り切れました</div></div>
     @endif
 

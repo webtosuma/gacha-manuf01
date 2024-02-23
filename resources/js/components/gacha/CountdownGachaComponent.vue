@@ -3,7 +3,7 @@
     style="z-index:1; background-color: rgb(0 0 0 / 70%);">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="">
-                <div class="fs-3 fw-bold text-white">新作公開まであと</div>
+                <div class="fs-5 fw-bold text-white">新作公開まであと</div>
                 <div class="fs-1 fw-bold text-white">{{ formattedTime }}</div>
             </div>
         </div>

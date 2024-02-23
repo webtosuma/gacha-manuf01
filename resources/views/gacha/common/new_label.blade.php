@@ -7,8 +7,8 @@ $bool = $new_start_at < $published_at;
 @endphp
 
 @if($bool)
-    <div class="d-inline-block bg-warninggg border border-warning border-3
-     p-0 px-2 text-warning fw-bold"
+    <div class="d-inline-block bg-warning border border-warning border-
+     p-0 px-2 text-white fw-bold"
     style="transform: skew(-15deg); font-size:.8rem;"
     >NEW</div>
 @endif

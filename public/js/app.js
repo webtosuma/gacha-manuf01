@@ -13444,7 +13444,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-center align-items-center h-100"
   }, [_c("div", {}, [_c("div", {
-    staticClass: "fs-3 fw-bold text-white"
+    staticClass: "fs-5 fw-bold text-white"
   }, [_vm._v("新作公開まであと")]), _vm._v(" "), _c("div", {
     staticClass: "fs-1 fw-bold text-white"
   }, [_vm._v(_vm._s(_vm.formattedTime))])])])]);

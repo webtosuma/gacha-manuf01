@@ -51,7 +51,7 @@ class PointHistory extends Model
             14 => '特別付与',
 
             //ポイント減算
-            21 => 'ガチャる',
+            21 => 'ガチャPLAY',
             22 => '商品発送',
 
             //キャンペーン
