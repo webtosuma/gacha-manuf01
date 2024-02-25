@@ -36,7 +36,7 @@
 
             <!-- カードサイズ変更 -->
             @php
-            $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size=='sm' ?'':'sm' ];
+            $params = ['category_code'=>$category_code, 'search_key'=>$search_key, 'card_size'=>$card_size=='sm' ?'':'sm' ];
             @endphp
             <a href="{{route('gacha_category',$params)}}"
             class="{{ $sc }}">{{ $card_size=='sm' ?'大きく表示':'小さく表示'}}</a>

@@ -109,7 +109,7 @@
 .shiny:after{
     position:absolute;
     top:-200%;
-    left:-150%;
+    left:-200%;
     content:"";
     height:500%;
     width:70px;
@@ -120,10 +120,10 @@
 
 @keyframes shine{
     0%{
-        left:-100%;
+        left:-200%;
     }
     90%{
-        left:-100%;
+        left:-200%;
     }
     100%{
         left:200%;

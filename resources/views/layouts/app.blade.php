@@ -32,8 +32,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('css/animation.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('css/20240220animation.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/20240220animation.css') }}" rel="stylesheet"> --}}
 
     <style>
         a{ text-decoration: none; }
@@ -61,7 +61,15 @@
 
         @include('includes.header')
         @if(Auth::check())
-            @include('includes.offcanvas_menu')
+
+
+            @if ( env('NEW_TICKET_SISTEM',false) )
+                @include('includes.offcanvas_menu02')
+            @else
+                @include('includes.offcanvas_menu')
+            @endif
+
+
         @endif
 
 

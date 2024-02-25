@@ -102,8 +102,13 @@
             </header>
         </div>
 
+
         @if(Auth::check())
-            @include('includes.offcanvas_menu')
+            @if ( env('NEW_TICKET_SISTEM',false) )
+                @include('includes.offcanvas_menu02')
+            @else
+                @include('includes.offcanvas_menu')
+            @endif
         @endif
 
 

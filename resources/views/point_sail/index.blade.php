@@ -1,5 +1,5 @@
-{{-- @extends('layouts.app') --}}
-@extends('layouts.sub')
+@extends('layouts.app')
+{{-- @extends('layouts.sub') --}}
 
 <!----- title ----->
 @section('title','ポイント購入')
@@ -7,7 +7,7 @@
 
 @section('content')
     <!--breadcrumb-->
-    <div class="container mt-3">
+    <div class="container mt-">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>

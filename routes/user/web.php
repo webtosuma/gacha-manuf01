@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Auth;
 
 
 // } );
+Route::get('/mypage',function(){
+    return view('mypage.index');
+});
 
 
 
@@ -64,6 +67,11 @@ include('web/gacha.php');
 
 //
 
+# チケット購入・履歴
+include('web/ticket_sail.php');
+
+# チケット ストアー
+include('web/ticket_store.php');
 
 # 取得した商品
 include('web/user_prize.php');
