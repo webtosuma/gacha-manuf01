@@ -31,6 +31,7 @@ class Gacha extends Model
         'is_slide',//スライドの表示有無
         'sold_out_at',//売り切れ日時
         'is_sold_out',//売り切れか否か
+        'user_rank_id',//会員ランクの指定
     ];
 
 

@@ -20,10 +20,11 @@ class UserPrize extends Model
     protected $fillable = [
         'user_id',    //ユーザー　リレーション
         'prize_id',   //商品リレーション
-        'gacha_history_id',//主テーブルに関連する従テーブルのレコードを削除
+        'gacha_history_id',//入手したガチャのID
         'point_history_id',//ポイント収支履歴リレーション（ポイント交換した時のみ）
         'shipped_id',//発送履歴（発送した時のみ）
         'point',  //(商品取得時の)交換ポイント値
+        'ticket_history_id',//チケット収支履歴リレーション(チッケトと交換て入手した時のみ)
     ];
 
 
