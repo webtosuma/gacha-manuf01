@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 |  会員ランク履歴　テーブル
 | =============================================
 */
-class CreateUseRankHistoriesTable extends Migration
+class CreateUserRankHistoriesTable extends Migration
 {
     /**
      * Run the migrations.　
@@ -17,7 +17,7 @@ class CreateUseRankHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('use_rank_histories', function (Blueprint $table) {
+        Schema::create('user_rank_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('rank_id');
@@ -34,6 +34,6 @@ class CreateUseRankHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('use_rank_histories');
+        Schema::dropIfExists('user_rank_histories');
     }
 }

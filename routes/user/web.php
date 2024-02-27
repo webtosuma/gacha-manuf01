@@ -9,14 +9,28 @@ use Illuminate\Support\Facades\Auth;
  ユーザールーティング　web
 ==========================================================================
 */
-// use App\Http\Controllers\SendMailController;
-// Route::get('test', function(\Illuminate\Http\Request $request){
+Route::get('test', function(\Illuminate\Http\Request $request){
 
-//     $user = \App\Models\User::withTrashed()->where('email','taku19931121@gmail.com')->first();
-//     dd($user);
+    $user = \App\Models\User::first();
+
+    // $user_rank_history = new \App\Models\UserRankHistory([
+    //     'user_id'=>$user->id,
+    //     'rank_id'=>0,
+    // ]);
+    // $user_rank_history->save();
+
+    # 次に昇格する会員ランク情報 next_rank
+    dd($user->now_rank->next_rank);
+
+    # 今月のランクの会員ランク情報
+    dd($user->now_rank->this_rank);
+
+    # 今月のランク
+    dd($user->now_rank->toArray());
 
 
-// } );
+} );
+
 Route::get('/mypage',function(){
     return view('mypage.index');
 });

@@ -74,7 +74,6 @@ class User extends Authenticatable
     | リレーション
     |--------------------------------------------------------------------------
     |
-    |
     */
         /**
          * Adminモデル リレーション ($user->admin)
@@ -161,6 +160,7 @@ class User extends Authenticatable
     */
         /** 画像なしの時の画像 */
         public static function noImage(){ return asset( 'storage/site/image/user_no_image.png' );}
+
 
         /**
          * 画像ファイルパス image_path
@@ -274,5 +274,21 @@ class User extends Authenticatable
             ->orderByDesc('created_at')->first();
 
             return $ug_history ? $ug_history->created_at : $this->created_at;
+        }
+
+
+        /**
+         * ユーザーの今月の会員ランク now_rank
+         * ・・・データがないときは、nullを返す
+         * @return String
+        */
+        public function getNowRankAttribute()
+        {
+            $user_rank_history = UserRankHistory::where('user_id',$this->id)
+            ->whereYear('created_at',now())
+            ->whereMonth('created_at',now())
+            ->orderByDesc('created_at')->first();
+
+            return $user_rank_history;
         }
 }

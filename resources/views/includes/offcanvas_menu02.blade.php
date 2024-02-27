@@ -77,7 +77,7 @@ style="max-width:90vw; min-width:30vw;">
                     </div>
                     <div class="col">
 
-                        <h6 class="fw-bold mb-3">ビギナーランク</h6>
+                        <h6 class="fw-bold mb-3">ビギナー</h6>
 
 
                         <div class="progress rounded-0" style="height: .5rem; transform: skew(-15deg);">
@@ -109,7 +109,7 @@ style="max-width:90vw; min-width:30vw;">
                             </span>
                             <span>pt</span>
                         </div>
-                        <a href="#" style="font-size:11px;"
+                        <a href="#" style="font-size:11px;" target="_blank"
                         ><i class="bi bi-question-circle me-2"></i>ポイントについて</a>
                     </div>
                     <div class="col-auto">
@@ -132,7 +132,7 @@ style="max-width:90vw; min-width:30vw;">
                             </span>
                             <span>枚</span>
                         </div>
-                        <a href="#" style="font-size:11px;"
+                        <a href="#" style="font-size:11px;" target="_blank"
                         ><i class="bi bi-question-circle me-2"></i>チケットについて</a>
                     </div>
                     <div class="col-auto">
@@ -229,10 +229,32 @@ style="max-width:90vw; min-width:30vw;">
             <h6 class="fw-bole pb-0">よく使かう</h6>
             <div class="row g-2">
                 <div class="col-3">
+                    <a href="{{ route('ticket_sail') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <img src="{{asset('storage/site/image/ticket/darks.png')}}"
+                        alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem; margin:.2rem 0;">
+
+                        <div class="text-secondary">チケット購入</div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <i class="bi bi-megaphone fs-5 "></i>
+                        <div class="text-secondary">お知らせ</div>
+                    </a>
+                </div>
+
+                <div class="col-3">
                     <a href="https://twitter.com/CardFesta7627" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" target="_blank">
                         <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
                         alt="xロゴ" class="d-block mx-auto"  style=" width:1rem; height:1rem; margin:.4rem 0;">
                         <div class="text-secondary">タイムライン</div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="https://www.instagram.com/cardfesta/" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" target="_blank">
+                        <img src="{{asset('storage/site/image/instagram-logo/03/black.png')}}"
+                        alt="インスタグラムロゴ" class="d-block mx-auto"  style=" width:1.0rem; height:1.0rem; margin:.4rem 0;">
+                        <div class="text-secondary">インスタグラム</div>
                     </a>
                 </div>
                 <div class="col-3">
@@ -243,23 +265,9 @@ style="max-width:90vw; min-width:30vw;">
                     </a>
                 </div>
                 <div class="col-3">
-                    <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
-                        <i class="bi bi-megaphone fs-5 "></i>
-                        <div class="text-secondary">お知らせ</div>
-                    </a>
-                </div>
-                <div class="col-3">
                     <a href="{{ route('settings') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
                         <i class="bi bi-gear-fill fs-5 "></i>
                         <div class="text-secondary">設定</div>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="{{ route('ticket_sail') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
-                        <img src="{{asset('storage/site/image/ticket/darks.png')}}"
-                        alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem; margin:.2rem 0;">
-
-                        <div class="text-secondary">チケット購入</div>
                     </a>
                 </div>
                 <div class="col-3">
@@ -276,7 +284,7 @@ style="max-width:90vw; min-width:30vw;">
         </div>
 
         <!-- PWAインストールボタン -->
-        <div class="">
+        <div class="px-3">
             <pwa-install-btn></pwa-install-btn>
         </div>
 

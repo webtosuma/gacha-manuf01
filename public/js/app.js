@@ -5813,6 +5813,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       deferredPrompt: null,
       ready: false
+      // ready: true,
     };
   },
   mounted: function mounted() {
@@ -9742,9 +9743,24 @@ var render = function render() {
     }
   }, [_vm._v("アプリをインストール"), _c("i", {
     staticClass: "bi bi-box-arrow-in-down ms-3"
-  })])]) : _vm._e();
+  })]), _vm._v(" "), _vm._m(0)]) : _vm._e();
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "mt-2",
+    staticStyle: {
+      "font-size": "11px"
+    },
+    attrs: {
+      href: "https://note.com/cardfesta/n/nd0b9e0fdcc15",
+      target: "_blank"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-question-circle me-2"
+  }), _vm._v("プログレッシブ ウェブアプリ（PWA）について")]);
+}];
 render._withStripped = true;
 
 

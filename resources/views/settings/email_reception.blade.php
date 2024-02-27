@@ -47,7 +47,11 @@
                         <div class="">受け取る</div>
                     </div>
                 </div>
+                <div class="">
+                    <a href="https://note.com/cardfesta/n/ne1fe05bfbe31" target="_blank">メールが届かない場合</a>はこちら
+                </div>
             </div>
+
 
             <div class="my-5">
                 <div class="col-md-6 mx-auto my-3">
