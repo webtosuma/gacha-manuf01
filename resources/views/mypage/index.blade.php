@@ -143,7 +143,20 @@
                             ><i class="bi bi-question-circle me-2"></i>ポイントについて</a> --}}
                         </div>
                         <div class="col-auto">
-                            <a href="{{ route('point_sail') }}" class="btn btn-sm btn-warning text-white rounded-pill shadow">ポイント購入</a>
+                            {{-- <a href="{{ route('point_sail') }}"
+                            class="d-block btn py-1  btn-warning text-white rounded-pill shadow w-100">
+                                <div class="d-flex gap-2 align-items-center">
+                                    <div class="">
+                                        <div class="rounded-circle border border-white fw-bold bg-gradient text-white
+                                        d-flex align-items-center justify-content-center mx-auto
+                                        " style=" width:1rem; height:1rem; margin:.4rem 0; font-size:11px;">P</div>
+                                    </div>
+
+                                    <div class="">ポイント購入</div>
+                                </div>
+                            </a> --}}
+
+                            <a href="{{ route('point_sail') }}" class="btn btn- btn-warning text-white rounded-pill shadow">ポイント購入</a>
                         </div>
                     </div>
 
@@ -158,7 +171,7 @@
                             <div  style="font-size:14px;">所持チケット：</div>
                             <div class="">
                                 <span class="fs-5 fw-bold">
-                                    <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                                    <number-comma-component number="{{ Auth::user()->ticket }}"></number-comma-component>
                                 </span>
                                 <span>枚</span>
                             </div>
@@ -166,7 +179,17 @@
                             ><i class="bi bi-question-circle me-2"></i>チケットについて</a>
                         </div>
                         <div class="col-auto">
-                            <a href="{{ route('ticket_store') }}" class="btn btn-sm btn-success text-white rounded-pill shadow">チケット交換</a>
+                            <a href="{{ route('ticket_store') }}"
+                            class="d-block btn py-1 btn-success text-white rounded-pill shadow w-100">
+                                <div class="d-flex gap-2 align-items-center">
+                                    <i class="bi bi-gift fs-5 "></i>
+
+                                    <div class="">商品と交換</div>
+                                </div>
+                            </a>
+
+                            {{-- <a href="{{ route('ticket_store') }}"
+                            class="btn btn-sm btn-success text-white rounded-pill shadow px-3">商品と交換</a> --}}
                         </div>
                     </div>
 
@@ -215,21 +238,27 @@
                 <h6 class="fw-bole pb-0">メニュー</h6>
                 <div class="row g-2">
                     <div class="col-3">
-                        <a href="{{ route('ticket_sail') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <a href="{{ route('ticket_sail') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px; line-height:18px;">
                             <img src="{{asset('storage/site/image/ticket/darks.png')}}"
                             alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem; margin:.2rem 0;">
 
                             <div class="text-secondary">チケット購入</div>
                         </a>
                     </div>
+                    {{-- <div class="col-3">
+                        <a href="{{ route('ticket_store') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" >
+                            <i class="bi bi-gift fs-5 "></i>
+                            <div class="text-secondary" style="font-size:8px; line-height:18px;">チケット交換</div>
+                        </a>
+                    </div> --}}
                     <div class="col-3">
-                        <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                             <i class="bi bi-megaphone fs-5 "></i>
                             <div class="text-secondary">お知らせ</div>
                         </a>
                     </div>
                     <div class="col-3">
-                        <a href="{{ route('settings') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <a href="{{ route('settings') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                             <i class="bi bi-gear-fill fs-5 "></i>
                             <div class="text-secondary">設定</div>
                         </a>
@@ -237,7 +266,7 @@
                     <div class="col-3">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" type="submit">
+                            <button class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;" type="submit">
                                 <i class="bi bi-box-arrow-right fs-5 "></i>
                                 <div class="text-secondary">ログアウト</div>
                             </button>
@@ -252,13 +281,13 @@
                 <h6 class="fw-bole pb-0">履歴</h6>
                 <div class="row g-2">
                     <div class="col-3">
-                        <a href="{{ route('gacha_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <a href="{{ route('gacha_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                             <i class="bi bi-stars fs-5 "></i>
                             <div class="text-secondary">ガチャ</div>
                         </a>
                     </div>
                     <div class="col-3">
-                        <a href="{{ route('point_history') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <a href="{{ route('point_history') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                             <div class="rounded-circle border border-dark fw-bold bg-gradient text-dark
                             d-flex align-items-center justify-content-center mx-auto
                             " style=" width:1rem; height:1rem; margin:.4rem 0; font-size:11px;">P</div>
@@ -266,7 +295,7 @@
                         </a>
                     </div>
                     <div class="col-3">
-                        <a href="{{route('ticket_history')}}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <a href="{{route('ticket_history')}}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                             <img src="{{asset('storage/site/image/ticket/dark.png')}}"
                             alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem; margin:.2rem 0;">
 
@@ -274,7 +303,13 @@
                         </a>
                     </div>
                     <div class="col-3">
-                        <a href="{{ route('shipped') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <a href="{{ route('user_rank_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
+                            <i class="bi bi-person-square fs-5 "></i>
+                            <div class="text-secondary">会員ランク</div>
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a href="{{ route('shipped') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                             <i class="bi bi-box-seam fs-5 "></i>
                             <div class="text-secondary">
                                 <span>発送</span>

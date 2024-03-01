@@ -211,6 +211,14 @@ class User extends Authenticatable
         }
 
 
+        /**
+         * チケット残数 $user->ticket
+         * @return String
+        */
+        public function getTicketAttribute() {
+            return $this->ticket_histories->sum('value');
+        }
+
 
         /**
          * 未読の発送ずみ数 $user->unread_send_shippeds_count

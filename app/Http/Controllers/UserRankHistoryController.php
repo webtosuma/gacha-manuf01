@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use App\Models\UserRankHistory;
 use App\Models\PointHistory;
 use App\Models\TicketHistory;
@@ -15,6 +16,25 @@ use App\Models\TicketHistory;
 */
 class UserRankHistoryController extends Controller
 {
+    /**
+     * 履歴一覧
+     * @return \Illuminate\View\View
+    */
+    public function index()
+    {
+        $user = Auth::user();
+
+        # 販売用チケット情報取得
+        $user_rank_histories = UserRankHistory::where('user_id',$user->id)
+        ->orderByDesc('created_at')
+        ->get();
+
+        return view('user_rank_history.index',compact('user_rank_histories'));
+    }
+
+
+
+
     /**
      * 会員ランクの総合的な更新処理
      *

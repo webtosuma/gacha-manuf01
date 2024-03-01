@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
         $this->call(GachaPrizeSeeder::class);//各ガチャの景品
         $this->call(GachaRankMovieSeeder::class);//各ガチャの演出動画設定
         $this->call(InfomationSeeder::class);//お知らせ
+        $this->call(TicketSailSeeder::class);//販売用チケット
+
 
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\TicketHistory;
 /*
 | =============================================
 |  チケット 履歴 コントローラー
@@ -16,10 +19,12 @@ class TicketHistoryController extends Controller
     */
     public function index()
     {
+        $user = Auth::user();
+
         # 販売用チケット情報取得
-        // $point_sails = PointSail::where('is_published',1)//公開ずみのみ
-        // ->orderBy('value','asc')->get();//チケットが低い順
-        $ticket_histories = [];
+        $ticket_histories = TicketHistory::where('user_id',$user->id)
+        ->orderByDesc('created_at')
+        ->get();
 
         return view('ticket_history.index',compact('ticket_histories'));
     }

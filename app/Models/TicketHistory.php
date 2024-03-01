@@ -45,4 +45,55 @@ class TicketHistory extends Model
             22 => '商品のチケット交換',
         ];
     }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * USERモデル リレーション
+         * @return \App\Models\User
+        */
+        public function user(){
+            return $this->belongsTo(User::class);
+        }
+
+
+        /**
+         * PointHistoryモデル リレーション
+         * @return \App\Models\PointHistory
+        */
+        public function point_history(){
+            return $this->belongsTo(PointHistory::class);
+        }
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * ポイント入出理由 reason
+         * @return String
+        */
+        public function getreasonAttribute()
+        {
+            $reasons = $this->reasons();
+
+            return isset( $reasons[ $this->reason_id ] )
+            ? $reasons[ $this->reason_id ]
+            : 'その他' ;
+        }
+
 }

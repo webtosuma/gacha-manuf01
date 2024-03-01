@@ -19,8 +19,13 @@ use App\Http\Controllers;
     })->name('trems');
 
     # プライバシーポリシー(privacy_policy)
+    // Route::get('/privacy_policy/{revision_date?}',
+    // function ($revision_date='2024-01-15') {
+    //     return view('footer_menu.privacy_policy.index', compact('revision_date') );
+    // })->name('privacy_policy');
+
     Route::get('/privacy_policy/{revision_date?}',
-    function ($revision_date='2024-01-15') {
+    function ($revision_date='2024-03-01') {
         return view('footer_menu.privacy_policy.index', compact('revision_date') );
     })->name('privacy_policy');
 

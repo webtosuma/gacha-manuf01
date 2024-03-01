@@ -80,7 +80,8 @@ $active_key = 'user';
                         <th scope="col">アカウント名</th>
                         <th scope="col">メールアドレス</th>
                         <th scope="col">X(旧Twitter)ID</th>
-                        <th scope="col" class="text-center">メール受取</th>
+                        <th scope="col" class="text-center">メール</th>
+                        <th scope="col" class="text-center">会員ランク</th>
 
 
                         <th class="text-center" scope="col">
@@ -88,12 +89,14 @@ $active_key = 'user';
                             <a href="{{route('admin.user.user_prize',0)}}">商品</a>
                         </th>
                         <th class="text-center" scope="col">
-                            <a href="{{route('admin.user.point_history',['user_id'=>0,'reason_id'=>21,])}}">ガチャ履歴</a>
+                            <a href="{{route('admin.user.point_history',['user_id'=>0,'reason_id'=>21,])}}">ガチャ</a>
                         </th>
                         <th class="text-center" scope="col">
-                            <a href="{{route('admin.user.point_history',0)}}">ポイント履歴</a>
+                            <a href="{{route('admin.user.point_history',0)}}">ポイント</a>
                         </th>
-                        <th></th>
+                        <th class="text-center" scope="col">
+                            <a href="{{route('admin.user.ticket_history',0)}}">チケット</a>
+                        </th>
 
                         <th scope="col">会員登/最終アクセス</th>
                     </tr>
@@ -134,13 +137,22 @@ $active_key = 'user';
                                 @endif
                             </td>
 
+                            <td class="text-center"><a href="{{route('admin.user.user_rank_history',$user)}}" class="btn btn-link text-decoration-none">
+                                {{-- @if( $user->now_rank )
+                                    <div style="width:50px;">
+                                        <ratio-image-component
+                                        style_class="ratio ratio-16x9 rounded-3 overflow-hidden position-relative shiny"
+                                        url="{{ $user->now_rank->image_path }}"
+                                        ></ratio-image-component>
+                                    </div>
+                                    <div class="form-text" style="font-size:8px;">{{ $user->now_rank->label }}</div>
+                                @else
+                                    <span class="text-danger">*未更新</span>
+                                @endif --}}
+                            </a></td>
                             <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->u_prizes_count }}"></number-comma-component>
                             </a></td>
-                            {{-- <td class="text-center"><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
-                            class="btn btn-link">
-                                <number-comma-component number="{{ $user->gacha_histories->count() }}"></number-comma-component>
-                            </a></td> --}}
                             <td class="text-center"><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
                             class="btn btn-link">
                                 <number-comma-component number="{{ $user->gacha_play_count }}"></number-comma-component>
@@ -149,35 +161,9 @@ $active_key = 'user';
                             <td class="text-center"><a href="{{route('admin.user.point_history',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->point }}"></number-comma-component>
                             </a></td>
-                            <td>
-                                {{-- <a href="" class="btn btn-warning btn-sm rounded-pill form-text">+PT付与</a> --}}
-                                <!--ポイント付与モーダル-->
-                                <form action="{{ route('admin.user.add_point', $user) }}" method="post">
-                                    @csrf
-                                    @method('PATCH')
-
-                                    <delete-modal-component
-                                    index_key="{{'delete'.$user->id}}"
-                                    icon="bi-coin" color="warning"
-                                    func_btn_type="submit"
-                                    button_text="+PT付与"
-                                    button_class="btn btn-warning btn-sm text-white rounded-pill form-text">
-                                        <div>
-                                            <span class="fw-bold">『{{$user->name}}』さんに</span>ポイントを付与します。
-                                            <div class="col-8 mx-auto">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon3">付与ポイント</span>
-                                                    <input class="form-control text-end"  type="number" name="value" value="1000" min="0">
-                                                    <span class="input-group-text" id="basic-addon3">pt</span>
-                                                </div>
-                                            </div>
-                                            よろしいですか？
-                                        </div>
-                                    </delete-modal-component>
-                                </form>
-
-
-                            </td>
+                            <td class="text-center"><a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-link">
+                                {{-- <number-comma-component number="{{ $user->ticket }}"></number-comma-component> --}}
+                            </a></td>
                             <td>
                                 <div class="text-">{{ $user->created_at->format('Y年m月d日 H:i') }}</div>
                                 <div class="text-success">{{ $user->last_access_at->format('Y年m月d日 H:i') }}</div>

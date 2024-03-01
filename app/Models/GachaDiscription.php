@@ -53,6 +53,7 @@ class GachaDiscription extends Model
         ];
     }
 
+
     // /** 特別なガチャランク */
     // public static function special_gacha_rank_ids()
     // {

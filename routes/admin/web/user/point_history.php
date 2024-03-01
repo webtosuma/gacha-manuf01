@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers;
 /*
 |--------------------------------------------------------------------------
-| ユーザー　ポイント履歴(個人・全体)　AdminUserPointHistoryController
+| Admin ユーザー　ポイント履歴(個人・全体)　AdminUserPointHistoryController
 |--------------------------------------------------------------------------
 */
 Route::middleware(['admin_auth'])->group(function () {

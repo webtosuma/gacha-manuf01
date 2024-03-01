@@ -14,7 +14,7 @@
             <a href="{{ route('admin.user.show',$user) }}" class="ms-3">{{ $user->name }}</a>
         </div>
         <!-- 会員ランク -->
-        @if( $user->now_rank )
+        {{-- @if( $user->now_rank )
             @php $now_rank = $user->now_rank; @endphp
 
             <div class="d-flex justify-content-between gap-3 mt-3">
@@ -47,16 +47,12 @@
                     >{{ number_format($now_rank->next_rankup_ptcount-$now_rank->total_play_ptcount) }}pt</div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
 
     </div>
     <div class="col-12 col-md-6">
 
-        {{-- <div class="my-3">
-            ID：{{ $user->id }}
-            <a href="{{ route('admin.user.show',$user) }}" class="ms-3">{{ $user->name }}</a>
-        </div> --}}
         <div class="my-2">
             <h6>メールアドレス</h6>
             <div class="col-md-">
@@ -117,7 +113,7 @@
 
 
                 <!--チケット付与モーダル-->
-                <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
+                {{-- <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
                     @csrf
                     @method('PATCH')
 
@@ -139,7 +135,7 @@
                             よろしいですか？
                         </div>
                     </delete-modal-component>
-                </form>
+                </form> --}}
 
 
             </div>

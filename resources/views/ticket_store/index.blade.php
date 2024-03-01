@@ -21,7 +21,7 @@
     <h3 class="d-none d-md-block ">チケット交換</h3>
 
 
-    <a href="{{ route('ticket_sail') }}" class="btn btn-sm btn-success text-white rounded-pill shadow"
+    <a href="{{ route('ticket_sail') }}" class="btn btn-sm btn-outline-success text- rounded-pill shadow"
     >チケットをポイントで購入する</a>
 
 </div>
