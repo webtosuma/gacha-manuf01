@@ -167,7 +167,7 @@ $active_key = 'user';
                                             <div class="col-8 mx-auto">
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text" id="basic-addon3">付与ポイント</span>
-                                                    <input class="form-control text-end"  type="number" name="value" value="800" min="100">
+                                                    <input class="form-control text-end"  type="number" name="value" value="1000" min="0">
                                                     <span class="input-group-text" id="basic-addon3">pt</span>
                                                 </div>
                                             </div>

@@ -12,6 +12,7 @@ style="max-width:90vw; min-width:30vw;">
     <div class="offcanvas-body px-0 pt-0">
 
         <section class="bg-dark bg-gradient text-white p-3">
+            <!-- プロフィール -->
             <div class="row align-items-center mb-3">
                 <div class="col">
                     <a href="{{ route('settings.acount') }}" class="d-block text-white">
@@ -65,33 +66,43 @@ style="max-width:90vw; min-width:30vw;">
 
             <div class="collapse multi-collapse show" id="collapseMypage" >
                 <!-- 会員ランク -->
-                <div class="d-flex justify-content-between gap-3">
-                    <div class="col-6">
-                        <div style="font-size:11px;" class="mb-2">会員ランク：</div>
+                @if( Auth::user()->now_rank )
+                    @php $now_rank = Auth::user()->now_rank; @endphp
 
-                        <ratio-image-component
-                        style_class="ratio ratio-16x9 rounded-3 overflow-hidden
-                        position-relative shiny"
-                        url="{{asset('storage/site/image/user_rank/beginner.jpg')}}"
-                        ></ratio-image-component>
-                    </div>
-                    <div class="col">
+                    <div class="d-flex justify-content-between gap-3">
+                        <div class="col-6">
+                            <div style="font-size:11px;" class="mb-2">会員ランク：</div>
 
-                        <h6 class="fw-bold mb-3">ビギナー</h6>
-
-
-                        <div class="progress rounded-0" style="height: .5rem; transform: skew(-15deg);">
-                            <div class="progress-bar bg-gradient bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                            <div class="progress-bar bg-gradient bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                            <ratio-image-component
+                            style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                            position-relative shiny"
+                            url="{{ $now_rank->image_path }}"
+                            ></ratio-image-component>
                         </div>
-                        <div class="text-end" style="font-size:11px;">pt消費数</div>
-                        <div class="text-end" style="font-size:11px;">1,000,000/2,000,000</div>
+                        <div class="col">
+
+                            <h6 class="fw-bold mb-3">{{$now_rank->label}}</h6>
 
 
-                        <a href="#" class="my-2" style="font-size:11px;"
-                        ><i class="bi bi-question-circle me-2"></i>会員ランクについて</a>
+                            <div class="progress rounded-0" style="height: .5rem; transform: skew(-15deg);">
+                                <div class="progress-bar bg-gradient bg-success" role="progressbar"
+                                style="width: {{$now_rank->meter_warning}}%" aria-valuenow="{{$now_rank->meter_warning}}"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+
+                                <div class="progress-bar bg-gradient bg-primary" role="progressbar"
+                                style="width: {{$now_rank->meter_success}}%" aria-valuenow="{{$now_rank->meter_success}}"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="text-end" style="font-size:11px;">pt消費数</div>
+                            <div class="text-end" style="font-size:11px;"
+                            >{{ number_format($now_rank->total_play_ptcount) }}/{{ number_format($now_rank->next_rankup_ptcount) }}</div>
+
+
+                            <a href="#" class="my-2" style="font-size:11px;"
+                            ><i class="bi bi-question-circle me-2"></i>会員ランクについて</a>
+                        </div>
                     </div>
-                </div>
+                @endif
 
 
                 <!-- 所持ポイント -->
@@ -109,8 +120,8 @@ style="max-width:90vw; min-width:30vw;">
                             </span>
                             <span>pt</span>
                         </div>
-                        <a href="#" style="font-size:11px;" target="_blank"
-                        ><i class="bi bi-question-circle me-2"></i>ポイントについて</a>
+                        {{-- <a href="#" style="font-size:11px;" target="_blank"
+                        ><i class="bi bi-question-circle me-2"></i>ポイントについて</a> --}}
                     </div>
                     <div class="col-auto">
                         <a href="{{ route('point_sail') }}" class="btn btn-sm btn-warning text-white rounded-pill shadow">ポイント購入</a>
@@ -179,6 +190,44 @@ style="max-width:90vw; min-width:30vw;">
         </section>
 
 
+
+        <!-- メニュー -->
+        <div class="bg-white border- p-3">
+            <h6 class="fw-bole pb-0">メニュー</h6>
+            <div class="row g-2">
+                <div class="col-3">
+                    <a href="{{ route('ticket_sail') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <img src="{{asset('storage/site/image/ticket/darks.png')}}"
+                        alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem; margin:.2rem 0;">
+
+                        <div class="text-secondary">チケット購入</div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <i class="bi bi-megaphone fs-5 "></i>
+                        <div class="text-secondary">お知らせ</div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="{{ route('settings') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
+                        <i class="bi bi-gear-fill fs-5 "></i>
+                        <div class="text-secondary">設定</div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" type="submit">
+                            <i class="bi bi-box-arrow-right fs-5 "></i>
+                            <div class="text-secondary">ログアウト</div>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
         <!-- 履歴 -->
         <div class="bg-white border- p-3">
             <h6 class="fw-bole pb-0">履歴</h6>
@@ -224,62 +273,36 @@ style="max-width:90vw; min-width:30vw;">
         </div>
 
 
-        <!-- よく使かう -->
+        <!-- SNS -->
         <div class="bg-white border- p-3">
-            <h6 class="fw-bole pb-0">よく使かう</h6>
+            <h6 class="fw-bole pb-0">公式SNS</h6>
             <div class="row g-2">
-                <div class="col-3">
-                    <a href="{{ route('ticket_sail') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
-                        <img src="{{asset('storage/site/image/ticket/darks.png')}}"
-                        alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem; margin:.2rem 0;">
-
-                        <div class="text-secondary">チケット購入</div>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
-                        <i class="bi bi-megaphone fs-5 "></i>
-                        <div class="text-secondary">お知らせ</div>
-                    </a>
-                </div>
-
                 <div class="col-3">
                     <a href="https://twitter.com/CardFesta7627" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" target="_blank">
                         <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
                         alt="xロゴ" class="d-block mx-auto"  style=" width:1rem; height:1rem; margin:.4rem 0;">
-                        <div class="text-secondary">タイムライン</div>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="https://www.instagram.com/cardfesta/" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" target="_blank">
-                        <img src="{{asset('storage/site/image/instagram-logo/03/black.png')}}"
-                        alt="インスタグラムロゴ" class="d-block mx-auto"  style=" width:1.0rem; height:1.0rem; margin:.4rem 0;">
-                        <div class="text-secondary">インスタグラム</div>
+                        {{-- <div class="text-secondary">タイムライン</div> --}}
                     </a>
                 </div>
                 <div class="col-3">
                     <a href="https://note.com/cardfesta" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" target="_blank">
                         <img src="{{asset('storage/site/image/note-logo/main/icon.png')}}"
                         alt="noteロゴ" class="d-block mx-auto"  style=" width:1.8rem; height:1.8rem; margin:.0rem 0;">
-                        <div class="text-secondary">ブログ</div>
+                        {{-- <div class="text-secondary">ブログ</div> --}}
                     </a>
                 </div>
                 <div class="col-3">
-                    <a href="{{ route('settings') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;">
-                        <i class="bi bi-gear-fill fs-5 "></i>
-                        <div class="text-secondary">設定</div>
+                    <a href="https://www.instagram.com/cardfesta/" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" target="_blank">
+                        <i class="bi bi-instagram fs-5 "></i>
+                        {{-- <div class="text-secondary">インスタグラム</div> --}}
                     </a>
                 </div>
                 <div class="col-3">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" type="submit">
-                            <i class="bi bi-box-arrow-right fs-5 "></i>
-                            <div class="text-secondary">ログアウト</div>
-                        </button>
-                    </form>
+                    <a href="https://www.tiktok.com/@cardfesta" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:8px;" target="_blank">
+                        <i class="bi bi-tiktok fs-5 "></i>
+                        {{-- <div class="text-secondary">TikTok</div> --}}
+                    </a>
                 </div>
-
             </div>
         </div>
 

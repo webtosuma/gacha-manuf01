@@ -29,7 +29,7 @@ class UserRankHistory extends Model
     public static function MaxRankId(){ return 600; }
 
 
-    /** ガチャの種類　一覧 */
+    /** 会員ランク　一覧 */
     public static function UserRanks()
     {
         return [
@@ -116,6 +116,21 @@ class UserRankHistory extends Model
 
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * USERモデル リレーション
+         * @return \App\Models\User
+        */
+        public function user(){
+            return $this->belongsTo(User::class);
+        }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -179,8 +194,11 @@ class UserRankHistory extends Model
             # 今の会員ランクIDの順位
             $id_num = array_search( $this->rank_id, $rank_id_array );
 
+            # ランクアップ後の会員ランクIDの順位(レジェンドの時は、レジェンド)
+            $next_num = count($rank_id_array)>$id_num+1 ? $id_num+1 : count($rank_id_array)-1;
+
             # 次の会員ランクID
-            $next_rank_id= $rank_id_array[$id_num+1];
+            $next_rank_id= $rank_id_array[$next_num];
 
             # 次の会員ランク情報モデル
             $next_rank_history = new UserRankHistory(['rank_id'=>$next_rank_id]);//次のランクIDを保存
@@ -191,6 +209,38 @@ class UserRankHistory extends Model
             ? $next_rank_history : null;
         }
 
+
+
+        /**
+         * 下に降格する会員ランク情報 $user->now_rank->down_rank
+         * @return Array
+        */
+        public function getDownRankAttribute()
+        {
+            # 会員ランクID配列(0,100,200...)
+            $rank_id_array = array_keys( $this->UserRanks() );
+
+            # 今の会員ランクIDの順位
+            $id_num = array_search( $this->rank_id, $rank_id_array );
+            // $id_num = array_search( 100, $rank_id_array );
+
+
+            # ランクアップ後の会員ランクIDの順位(ビギナーの時は、ビギナー)
+            $down_num = $id_num-1>-1 ? $id_num-1 : 0;
+
+            # 次の会員ランクID
+            $down_rank_id= $rank_id_array[$down_num];
+
+            # 次の会員ランク情報モデル
+            $down_rank_history = new UserRankHistory(['rank_id'=>$down_rank_id]);//次のランクIDを保存
+
+
+            # 次の会員ランクがなければ、nullを返す
+            return $this->rank_id != 0
+            ? $down_rank_history : null;
+        }
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー ユーザー情報
@@ -198,6 +248,72 @@ class UserRankHistory extends Model
     |
     |
     */
+        /**
+         * ユーザーの今月のpt消費数 total_play_ptcount
+         * @return String
+        */
+        public function getTotalPlayPtcountAttribute()
+        {
+            $user = $this->user;
+
+            $query = PointHistory::query();
+
+                $query->where('user_id',$user->id)
+                ->whereYear( 'created_at',now())
+                ->whereMonth('created_at',now())
+                ->where('reason_id',21);//入出理由:ガチャPLAY
+
+            return abs( $query->sum('value') );
+        }
+
+
+        /**
+         * 今の会員ランクを維持するために必要なpt消費数 maintain_rank_ptcount
+         * @return String
+        */
+        public function getMaintainRankPtcountAttribute()
+        {
+            return $this->this_rank['rankup_ptcount'] * 0.50;
+        }
+
+
+        /**
+         * 次のランクアップに必要なpt消費数 next_rankup_ptcount
+         * @return String
+        */
+        public function getNextRankupPtcountAttribute()
+        {
+            return $this->rank_id != $this->MaxRankId()//レジェンドランクでないとき
+            ? $this->next_rank->rankup_ptcount
+            : $this->maintain_rank_ptcount;//今の会員ランクを維持するために必要なpt消費数
+        }
+
+
+        /**
+         * メーター値① meter_warning
+         * @return String
+        */
+        public function getMeterWarningAttribute()
+        {
+            $value = $this->maintain_rank_ptcount > $this->total_play_ptcount
+            ? $this->total_play_ptcount
+            : $this->maintain_rank_ptcount;
+
+            return $value / $this->next_rankup_ptcount * 100;
+        }
+
+
+        /**
+         * メーター値② meter_success
+         * @return String
+        */
+        public function getMeterSuccessAttribute()
+        {
+            $value = $this->maintain_rank_ptcount > $this->total_play_ptcount
+            ? 0 : $this->total_play_ptcount - $this->maintain_rank_ptcount;
+
+            return $value / $this->next_rankup_ptcount * 100;
+        }
 
 }
 

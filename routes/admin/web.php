@@ -49,7 +49,9 @@ use \App\Http\Controllers;
     include('web/user/index.php');//一覧
     include('web/user/detail.php');//詳細
     include('web/user/user_prize.php');//商品履歴
-    include('web/user/point_history.php');//商品履歴
+    include('web/user/point_history.php');//ポイント履歴
+    include('web/user/user_rank_history.php');//会員ランク履歴
+    include('web/user/ticket_history.php');//チケット履歴
 
 
     # お問い合わせ一覧

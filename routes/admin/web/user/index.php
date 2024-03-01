@@ -28,8 +28,13 @@ Route::middleware(['admin_auth'])->group(function () {
 
     # ポイント付与
     Route::patch('/admin/user/add_point/{user}',
-    [Controllers\AdminUserController ::class, 'add_point'])
+    [Controllers\AdminUserController::class, 'add_point'])
     ->name('admin.user.add_point');
+
+    # チケット付与
+    Route::patch('/admin/user/add_ticket/{user}',
+    [Controllers\AdminUserController::class, 'add_ticket'])
+    ->name('admin.user.add_ticket');
 
     # 紹介キャンペーン一覧
     Route::get('/admin/user/canpaing_introductory/',

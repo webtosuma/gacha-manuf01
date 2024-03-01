@@ -25,4 +25,22 @@ class UserStoreKeep extends Model
     ];
 
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * Storeモデル リレーション
+         * @return \App\Models\Store
+        */
+        public function store(){
+            return $this->belongsTo(Store::class);
+        }
+
+
 }

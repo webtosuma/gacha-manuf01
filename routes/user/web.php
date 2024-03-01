@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
  ユーザールーティング　web
 ==========================================================================
 */
+
+# メンテナンス中
+// Route::get('/{any?}', function()  { return view('maintenance'); })->where('any', '.*')
+// ->name('maintenance');
+
+
 Route::get('test', function(\Illuminate\Http\Request $request){
 
     $user = \App\Models\User::first();
@@ -18,6 +24,17 @@ Route::get('test', function(\Illuminate\Http\Request $request){
     //     'rank_id'=>0,
     // ]);
     // $user_rank_history->save();
+    // dd($user->user_rank_histories);
+
+    \App\Http\Controllers\UserRankHistoryController::CreateUserRankHistory( $user );
+    dd('hoge');
+
+
+    # 直近の会員ランク履歴
+    dd($user->desc_first_rank->meter_success);
+
+    # 下に昇格する会員ランク情報 down_rank
+    dd($user->now_rank->down_rank);
 
     # 次に昇格する会員ランク情報 next_rank
     dd($user->now_rank->next_rank);
@@ -25,7 +42,7 @@ Route::get('test', function(\Illuminate\Http\Request $request){
     # 今月のランクの会員ランク情報
     dd($user->now_rank->this_rank);
 
-    # 今月のランク
+    # 今月の会員ランク履歴
     dd($user->now_rank->toArray());
 
 

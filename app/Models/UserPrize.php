@@ -83,6 +83,13 @@ class UserPrize extends Model
             return $this->belongsTo(UserGachaHistory::class,'gacha_history_id');
         }
 
+        /**
+         * TicketHistoryモデル リレーション
+         * @return \App\Models\TicketHistory
+        */
+        public function ticket_history(){
+            return $this->belongsTo(TicketHistory::class,'ticket_history_id');
+        }
 
     /*
     |--------------------------------------------------------------------------

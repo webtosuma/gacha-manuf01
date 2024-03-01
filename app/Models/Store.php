@@ -21,7 +21,7 @@ class Store extends Model
     protected $fillable = [
         'prize_id',    //商品ID
         'category_id', //カテゴリーID
-        'user_id',     //ユーザーID
+        'user_id',     //出品者ID
 
         'ticket_count',//交換チケット数
         'point_count' ,//交換ポイント数
@@ -34,5 +34,41 @@ class Store extends Model
     protected $dates = [
         'published_at',//公開設定(利用しない->非公開*消さない)
     ];
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * USERモデル リレーション
+         * @return \App\Models\User
+        */
+        public function user(){
+            return $this->belongsTo(User::class);
+        }
+
+
+        /**
+         * GachaCategoryモデル リレーション
+         * @return \App\Models\GachaCategory
+        */
+        public function category(){
+            return $this->belongsTo(GachaCategory::class, 'category_id');
+        }
+
+
+        /**
+         * Prizeモデル リレーション
+         * @return \App\Models\Prize
+        */
+        public function prize(){
+            return $this->belongsTo(Prize::class);
+        }
 
 }

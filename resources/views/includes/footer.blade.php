@@ -25,7 +25,13 @@
                         <img src="{{asset('storage/site/image/instagram-logo/01/gradient.png')}}"
                         alt="インスタグラムロゴ" class="d-block p-1"  style=" width:2rem; height:2rem;">
                     </a>
+                    <a href="https://www.tiktok.com/@cardfesta" rel="nofollow" target="_blank">
+                        <img src="{{asset('storage/site/image/tiktok-icons/black_circle.png')}}"
+                        alt="tiktokロゴ" class="d-block p-1"  style=" width:2rem; height:2rem;">
+                    </a>
                 </div>
+
+
                 <div class="form-text mb-3">
                     古物商営業許可<br>
                     第 931010002606 号<br>

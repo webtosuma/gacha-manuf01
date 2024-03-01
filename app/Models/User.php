@@ -151,6 +151,36 @@ class User extends Authenticatable
             return $this->hasMany(UserGachaHistory::class,'user_id')->orderByDesc('created_at');
         }
 
+
+        /**
+         * UserRankHistoryモデル リレーション ($user->user_rank_histories)
+         * @return \App\Models\UserRankHistory
+        */
+        public function user_rank_histories()
+        {
+            return $this->hasMany(UserRankHistory::class,'user_id');
+        }
+
+
+        /**
+         * TicketHistoryモデル リレーション ($user->ticket_histories)
+         * @return \App\Models\TicketHistory
+        */
+        public function ticket_histories()
+        {
+            return $this->hasMany(TicketHistory::class,'user_id');
+        }
+
+
+        /**
+         * UserStoreKeepモデル リレーション ($user->user_store_keeps)
+         * @return \App\Models\UserStoreKeep
+        */
+        public function user_store_keeps()
+        {
+            return $this->hasMany(UserStoreKeep::class,'user_id');
+        }
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー
@@ -277,18 +307,34 @@ class User extends Authenticatable
         }
 
 
+
         /**
-         * ユーザーの今月の会員ランク now_rank
+         * 今月の会員ランク now_rank
          * ・・・データがないときは、nullを返す
          * @return String
         */
         public function getNowRankAttribute()
         {
-            $user_rank_history = UserRankHistory::where('user_id',$this->id)
+            return UserRankHistory::where('user_id',$this->id)
             ->whereYear('created_at',now())
             ->whereMonth('created_at',now())
-            ->orderByDesc('created_at')->first();
-
-            return $user_rank_history;
+            ->orderByDesc('created_at')
+            ->first();
         }
+
+
+
+        /**
+         * 直近の会員ランク desc_first_rank
+         * ・・・データがないときは、nullを返す
+         * @return String
+        */
+        public function getDescFirstRankAttribute()
+        {
+            return UserRankHistory::where('user_id',$this->id)
+            ->orderByDesc('created_at')
+            ->first();
+        }
+
+
 }

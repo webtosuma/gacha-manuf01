@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\UserPrize;
 use App\Models\PointHistory;
+use App\Models\TicketHistory;
 use App\Models\CanpaingIntroductory;
 /*
 | =============================================
@@ -171,8 +172,6 @@ class AdminUserController extends Controller
      */
     public function add_point(Request $request, User $user)
     {
-        // dd( $request->value );
-
         $point_history = new PointHistory([
             'user_id'   => $user->id,          //ユーザー　リレーション
             'value'     => $request->value, //ポイント数
@@ -182,10 +181,32 @@ class AdminUserController extends Controller
         $point_history->save();
 
         # リダイレクト
-        return redirect()->route('admin.user')
-        ->with(['alert-warning'=>$user->name.'さんにポイントを付与しました。']);
+        return redirect()->back()
+        ->with(['alert-warning'=>$user->name.'さんにポイントを'.$request->value.'pt付与しました。']);
     }
 
+
+    /**
+     * チケット付与
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function add_ticket(Request $request, User $user)
+    {
+        $ticket_history = new TicketHistory([
+            'user_id'   => $user->id,          //ユーザー　リレーション
+            'value'     => $request->value, //チケット数
+            'price'     => 0, //販売価格(税込み)
+            'reason_id' => 14, // '特別付与'
+        ]);
+        $ticket_history->save();
+
+        # リダイレクト
+        return redirect()->back()
+        ->with(['alert-success'=>$user->name.'さんにチケットを'.$request->value.'枚付与しました。']);
+    }
 
 
     /**

@@ -24,4 +24,25 @@ class TicketHistory extends Model
         'reason_id', //入出理由ID
         'point_history_id',//ポイント収支履歴リレーション
     ];
+
+
+
+    /**
+     * チケットの入出理由　一覧
+     *
+     * @return Array　
+     */
+    public static function reasons()
+    {
+        return [
+            //チケット加算
+            11 => 'チケット購入',
+
+            14 => '特別付与',
+            15 => '会員ランクボーナス',
+
+            //チケット減算
+            22 => '商品のチケット交換',
+        ];
+    }
 }
