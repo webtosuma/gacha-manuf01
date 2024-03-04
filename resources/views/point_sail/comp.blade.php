@@ -35,12 +35,23 @@
         <li class="list-group-item bg-white py-">
             <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">
                 <div class="col-6">ポイント数</div>
-                <div class="col-6 border-bottom fw-bold text-center">{{ number_format($point_sail->value).'pt' }}</div>
+                <div class="col-6 border-bottom fw-bold text-center">
+                    <div>{{ number_format($point_sail->value * $rank_ratio).'pt' }}</div>
 
-                @if( isset($source) )
+
+                    {{-- 会員ランク還元 --}}
+                    @if( $rank_ratio > 1 )
+                    <div class="badge bg-success-subtle rounded-pill fw-bold px-3 mb-1">
+                        <span class="text-success fw-bold fs-6">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                        <span class="text-success fw-bold">pt 会員ランク還元！</span>
+                    </div>
+                    @endif
+                </div>
+
+                {{-- @if( isset($source) )
                     <div class="col-6">支払い方法</div>
                     <div class="col-6 border-bottom fw-bold text-center">{{ $source }}</div>
-                @endif
+                @endif --}}
 
                 <div class="col-6">支払い金額</div>
                 <div class="col-6 border-bottom fw-bold text-center">{{ number_format($point_sail->price).'円（税込）' }}</div>

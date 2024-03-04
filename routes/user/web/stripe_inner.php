@@ -16,7 +16,7 @@ Route::get('point_sail',
 ->name('point_sail');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','user_rank'])->group(function () {
 
     # 購入手続き
     Route::get('point_sail/payment/{point_sail}',

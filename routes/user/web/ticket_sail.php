@@ -8,21 +8,25 @@ use App\Http\Controllers;
 |  TicketSailController
 |--------------------------------------------------------------------------
 */
+    Route::middleware(['user_rank'])->group(function () {
 
-    # 一覧
-    Route::get('ticket_sail',
-    [Controllers\TicketSailController::class, 'index'])
-    ->name('ticket_sail');
+        # 一覧
+        Route::get('ticket_sail',
+        [Controllers\TicketSailController::class, 'index'])
+        ->name('ticket_sail');
+
+    });
+    Route::middleware(['auth','user_rank'])->group(function () {
+
+        # 購入確認
+
+        # 購入完了
 
 
-Route::middleware(['auth'])->group(function () {
+        # 履歴
+        Route::get('ticket_history',
+        [Controllers\TicketHistoryController::class, 'index'])
+        ->name('ticket_history');
 
-
-
-    # 履歴
-    Route::get('ticket_history',
-    [Controllers\TicketHistoryController::class, 'index'])
-    ->name('ticket_history');
-
-});
+    });
 

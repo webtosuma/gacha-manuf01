@@ -9,18 +9,26 @@ use App\Http\Controllers;
 |  GachaPlayController
 |--------------------------------------------------------------------------
 */
+    Route::middleware(['user_rank'])->group(function () {
 
-    # ガチャカのテゴリー選択
-    Route::get('/g/{category_code?}',
-    [App\Http\Controllers\GachaController::class, 'index'])
-    ->name('gacha_category');
+        # ガチャカのテゴリー選択
+        Route::get('/g/{category_code?}',
+        [App\Http\Controllers\GachaController::class, 'index'])
+        ->name('gacha_category');
 
-    # ガチャカの詳細表示
-    Route::get('/g/{category_code}/{gacha}/{key}',
-    [App\Http\Controllers\GachaController::class, 'show'])
-    ->name('gacha');
+        # ガチャカの詳細表示
+        Route::get('/g/{category_code}/{gacha}/{key}',
+        [App\Http\Controllers\GachaController::class, 'show'])
+        ->name('gacha');
 
-    Route::middleware(['auth'])->group(function () {
+        # ガチャカの結果履歴(SNS等の公開用)
+        Route::get('/result_history/{history_key}',
+        [App\Http\Controllers\GachaController::class, 'result_history'])
+        ->name('gacha.result_history');
+
+
+    });
+    Route::middleware(['auth','user_rank'])->group(function () {
 
 
         # ガチャカで遊ぶ
@@ -42,8 +50,3 @@ use App\Http\Controllers;
 
     });
 
-
-    # ガチャカの結果履歴(SNS等の公開用)
-    Route::get('/result_history/{history_key}',
-    [App\Http\Controllers\GachaController::class, 'result_history'])
-    ->name('gacha.result_history');

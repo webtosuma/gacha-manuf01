@@ -36,11 +36,15 @@
     <style>
         a{ text-decoration: none; }
         th,td{ background-color: #fff !important; }
+
         /* サイトデフォルト背景 */
-        body{
-            background: no-repeat center center / cover fixed;
-            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+        @media screen and (min-width: 768px) {
+            body{
+                background: no-repeat center center / cover fixed;
+                background-image: url({{asset('storage/site/image/bg01.jpg')}});
+            }
         }
+
         main{
             padding-top: 4.2rem;
             min-height: 80vh;
@@ -54,7 +58,7 @@
 
 
 </head>
-<body class="">
+<body class="bg-white">
     <div id="app">
 
 
@@ -75,7 +79,7 @@
                             {{-- <span>戻る</span> --}}
                             </button>
                         @else
-                            <a href="{{route('home')}}" class="btn p-0 px-2 borderrr rounded-pill text-secondary
+                            <a href="{{route('home')}}" class="btn p-0 px-2 borderrr rounded-pill text-primary
                             d-flex gap-1 align-items-center"
                             ><i class="bi bi-arrow-left fs-4"></i>
                             {{-- <span>トップ</span> --}}

@@ -16,6 +16,11 @@ use App\Models\TicketHistory;
 */
 class UserRankHistoryController extends Controller
 {
+    /** 制度開始日 */
+    public static function StartDate(){ return Carbon::parse('2024-03-01'); }
+
+
+
     /**
      * 履歴一覧
      * @return \Illuminate\View\View
@@ -31,8 +36,6 @@ class UserRankHistoryController extends Controller
 
         return view('user_rank_history.index',compact('user_rank_histories'));
     }
-
-
 
 
     /**
@@ -58,7 +61,6 @@ class UserRankHistoryController extends Controller
             $month = Carbon::parse($format);
 
 
-            // dd($month->format('Y-m-d H:i:s'));
             ## ランク履歴の無い月を繰り返し
             while ( $month->format('Ym') != now()->copy()->addMonth()->format('Ym'))
             {
@@ -88,10 +90,10 @@ class UserRankHistoryController extends Controller
 
 
         # ガチャの後にランクアップしたとき(ガチャのあと)
-        if( self::CreateRankUpHistory( $user, now(), $user->now_rank ))
-        {
+        // if( self::CreateRankUpHistory( $user, now(), $user->now_rank ))
+        // {
 
-        }
+        // }
     }
 
 
@@ -105,12 +107,15 @@ class UserRankHistoryController extends Controller
      */
     public static function CreateBignnerRankHistory($user)
     {
+        # 会員ランク制度開始日より前 ?(true)会員ランク制度開始日 :(false)ユーザー登録日
+        $date = self::StartDate() > $user->created_at ? self::StartDate() : $user->created_at ;
+
         $user_rank_history = new UserRankHistory([
             'user_id'    => $user->id,
             'rank_id'    => 0,
         ]);
-        $user_rank_history->created_at = $user->created_at;
-        $user_rank_history->updated_at = $user->created_at;
+        $user_rank_history->created_at = $date;
+        $user_rank_history->updated_at = $date;
         $user_rank_history->save();
     }
 

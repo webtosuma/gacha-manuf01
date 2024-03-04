@@ -7,7 +7,7 @@ use App\Http\Controllers;
 | 発送申請　ShippedAppliController
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','user_rank'])->group(function () {
 
     # 発送申請入力
     Route::post('shipped/appli',

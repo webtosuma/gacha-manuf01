@@ -48,15 +48,18 @@ Route::get('test', function(\Illuminate\Http\Request $request){
 
 } );
 
+
 Route::get('/mypage',function(){
     return view('mypage.index');
-});
+})->middleware(['auth','user_rank'])
+->name('mypage');
 
 
 
 Route::get('/',
     [App\Http\Controllers\GachaController::class, 'index']
-)->name('home');
+)->middleware(['user_rank'])
+->name('home');
 
 
 # WPAローディングページ
@@ -115,14 +118,13 @@ include('web/gacha_history.php');
 
 
 # 会員ランク履歴
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','user_rank'])->group(function () {
 
     Route::get('user_rank_history',
     [Controllers\UserRankHistoryController::class, 'index'])
     ->name('user_rank_history');
 
 });
-
 
 # 発送申請履歴
 include('web/shipped_history.php');

@@ -36,7 +36,12 @@ class StripeController extends Controller
         $point_sails = PointSail::where('is_published',1)//公開ずみのみ
         ->orderBy('value','asc')->get();//ポイントが低い順
 
-        return view('point_sail.index',compact('point_sails'));
+        # ランクごとのポイント還元率
+        $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
+        ? Auth::user()->now_rank->point_sail_ratio : 1 ;
+
+
+        return view('point_sail.index',compact('point_sails', 'rank_ratio'));
     }
 
 
@@ -110,6 +115,11 @@ class StripeController extends Controller
 
         $point_sail = PointSail::where('stripe_id',$stripe_id)->first();
 
+        # ランクごとのポイント還元率
+        $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
+        ? Auth::user()->now_rank->point_sail_ratio : 1 ;
+
+
         # 表示するガチャ情報
         $before_gacha_id = $request->session()->get('before_gacha_id') ;
         $before_gacha = Gacha::find($before_gacha_id);
@@ -118,7 +128,7 @@ class StripeController extends Controller
         $gachas = GachaController::getPublishedGachas( $category_code='all', null );
 
         return $point_sail
-        ? view('point_sail.comp', compact('point_sail', 'before_gacha', 'gachas'))
+        ? view('point_sail.comp', compact('point_sail', 'rank_ratio', 'before_gacha', 'gachas'))
         : \App::abort(404);
     }
 
@@ -224,12 +234,15 @@ class StripeController extends Controller
         $amounSubtotal = $session['amount_subtotal'];
         $point_sail    = PointSail::where('price', $amounSubtotal)->first();
 
+        # ランクごとのポイント還元率
+        $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
+        ? $user->now_rank->point_sail_ratio : 1 ;
 
 
         # ポイント履歴の登録
         $point_history = new PointHistory([
             'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => $point_sail->value, //ポイント数
+            'value'     => $point_sail->value * $rank_ratio,//ポイント数
             'price'     => $point_sail->price, //販売価格(税込み)
             'reason_id' => 11, //入出理由ID
 

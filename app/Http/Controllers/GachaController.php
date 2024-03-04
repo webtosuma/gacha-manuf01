@@ -329,7 +329,16 @@ class GachaController extends Controller
         # 背景画像
         $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
 
-        return view('gacha.result',compact('gacha','user_gacha_history', 'page_title', 'bg_image'));
+
+        # ユーザーランク:昇格の評価
+        $rank_up = false;
+        if( $user->now_rank && env('NEW_TICKET_SISTEM',false) )
+        {
+           $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
+        }
+
+
+        return view('gacha.result',compact('gacha','user_gacha_history', 'page_title', 'bg_image', 'rank_up'));
     }
 
 

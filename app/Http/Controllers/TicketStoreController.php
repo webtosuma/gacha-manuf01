@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Store;
 /*
 | =============================================
 |  チケット ストアー コントローラー
@@ -17,10 +18,10 @@ class TicketStoreController extends Controller
     public function index()
     {
         # 販売用チケット情報取得
-        // $point_sails = PointSail::where('is_published',1)//公開ずみのみ
-        // ->orderBy('value','asc')->get();//チケットが低い順
-        $ticket_stores = [];
+        $stores = Store::where('published_at','<=', now())//非公開を除く
+        ->orderByDesc('published_at')->orderByDesc('created_at')->get();//チケットが低い順
+        // dd($stores[0]->prize->toArray());
 
-        return view('ticket_store.index',compact('ticket_stores'));
+        return view('ticket_store.index',compact('stores'));
     }
 }

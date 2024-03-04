@@ -138,7 +138,7 @@ $active_key = 'user';
                             </td>
 
                             <td class="text-center"><a href="{{route('admin.user.user_rank_history',$user)}}" class="btn btn-link text-decoration-none">
-                                {{-- @if( $user->now_rank )
+                                @if( $user->now_rank )
                                     <div style="width:50px;">
                                         <ratio-image-component
                                         style_class="ratio ratio-16x9 rounded-3 overflow-hidden position-relative shiny"
@@ -148,7 +148,7 @@ $active_key = 'user';
                                     <div class="form-text" style="font-size:8px;">{{ $user->now_rank->label }}</div>
                                 @else
                                     <span class="text-danger">*未更新</span>
-                                @endif --}}
+                                @endif
                             </a></td>
                             <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->u_prizes_count }}"></number-comma-component>
@@ -162,7 +162,7 @@ $active_key = 'user';
                                 <number-comma-component number="{{ $user->point }}"></number-comma-component>
                             </a></td>
                             <td class="text-center"><a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-link">
-                                {{-- <number-comma-component number="{{ $user->ticket }}"></number-comma-component> --}}
+                                <number-comma-component number="{{ $user->ticket }}"></number-comma-component>
                             </a></td>
                             <td>
                                 <div class="text-">{{ $user->created_at->format('Y年m月d日 H:i') }}</div>

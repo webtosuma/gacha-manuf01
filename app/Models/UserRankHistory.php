@@ -178,7 +178,7 @@ class UserRankHistory extends Model
         public function getTicketBonusAttribute(){ return $this->this_rank['ticket_bonus'];}
 
         /** ポイント購入還元率 point_sail_ratio　*/
-        public function getPointSailRatioAttribute(){ return $this->this_rank['point_sail_ratio'];}
+        public function getPointSailRatioAttribute(){ return 1+($this->this_rank['point_sail_ratio']/100);}
 
 
 

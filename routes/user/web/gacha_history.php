@@ -12,8 +12,7 @@ use App\Models\UserGachaHistory;
 */
 
 
-
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','user_rank'])->group(function () {
 
     # ガチャ履歴
     Route::get('gacha_history', function(){

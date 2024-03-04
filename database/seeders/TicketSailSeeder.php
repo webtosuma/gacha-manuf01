@@ -29,7 +29,7 @@ class TicketSailSeeder extends Seeder
 
 
     /**
-     * DATS
+     * DATA
      *
      * @return Array
      */
@@ -37,34 +37,19 @@ class TicketSailSeeder extends Seeder
     {
         return   [
             [
-                'value'   => 1000,  //実際付与されるポイント
-                'price'   => 1000,  //支払い金額
-                'service' => 0,//サービス差異
-                'stripe_id'=>'price_1OXZ2OKoJdkajOL0BOK0AkIi',
+                'value'        => 1,     //チケット数
+                'point'        => 1*1000,//交換するポイント数
+                'is_published' => 1,//公開設定(利用しない->非公開*消さない)
             ],
             [
-                'value'   => 3100,  //実際付与されるポイント
-                'price'   => 3000,  //支払い金額
-                'service' => 100,//サービス差異
-                'stripe_id'=>'price_1OXZ2zKoJdkajOL0eOBChesf',
+                'value'        => 3,     //チケット数
+                'point'        => 3*1000,//交換するポイント数
+                'is_published' => 1,//公開設定(利用しない->非公開*消さない)
             ],
             [
-                'value'   => 5300,  //実際付与されるポイント
-                'price'   => 5000,  //支払い金額
-                'service' => 300,//サービス差異
-                'stripe_id'=>'price_1OXZ3YKoJdkajOL0Xuh40BWc',
-            ],
-            [
-                'value'   => 10500,  //実際付与されるポイント
-                'price'   => 10000,  //支払い金額
-                'service' => 500,//サービス差異
-                'stripe_id'=>'price_1OXZ4GKoJdkajOL0Rhb98kYK',
-            ],
-            [
-                'value'   => 53000,  //実際付与されるポイント
-                'price'   => 50000,  //支払い金額
-                'service' => 3000,//サービス差異
-                'stripe_id'=>'price_1OXZ55KoJdkajOL042ykDRjf',
+                'value'        => 5,     //チケット数
+                'point'        => 5*1000,//交換するポイント数
+                'is_published' => 1,//公開設定(利用しない->非公開*消さない)
             ],
 
         ];

@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'admin_auth'   => \App\Http\Middleware\AdminAuthenticate::class,//サイト管理者ログイン認証
+        'admin_auth' => \App\Http\Middleware\AdminAuthenticate::class,//サイト管理者ログイン認証
+        'user_rank'  => \App\Http\Middleware\UserRankMiddleware::class,//会員ランク更新
     ];
 }

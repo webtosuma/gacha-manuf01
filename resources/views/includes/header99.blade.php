@@ -2,9 +2,6 @@
     <div class="container py- px-0">
 
         <nav class="d-flex justify-content-between align-items-center">
-        {{--
-            p-1 border border-primary border-3 rounded-pill ps-4 shadow
-         --}}
 
             <h1 class="d-flex align-items-center gap-3 m-0 ms-3">
                 <a class="navbar-brand" href="{{ url('/') }}" style="shad">
@@ -59,10 +56,4 @@
 
         </nav>
     </div>
-
-
-    @if(Auth::check())
-        @include('includes.offcanvas_menu')
-    @endif
-
 </header>

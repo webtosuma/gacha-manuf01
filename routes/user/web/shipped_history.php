@@ -7,7 +7,7 @@ use App\Http\Controllers;
 | 発送申請履歴 ShippedWaitingController ShippedSentController
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','user_rank'])->group(function () {
 
     Route::get('shipped', //発送申請履歴・発送待ちへリダイレクト
     function () { return redirect()->route('shipped.waiting'); })

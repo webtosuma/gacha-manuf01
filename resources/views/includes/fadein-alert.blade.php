@@ -73,3 +73,30 @@ $session_alerts = [ 'alert-primary','alert-success','alert-info','alert-warning'
     @include('includes.confetti_js')
 
 @endif
+
+
+
+{{-- ランクアップアラート：ガチャの結果 --}}
+@if( isset($rank_up) && $rank_up )
+
+    @php
+    $color = 'success';
+    $icon  = 'bi-check-circle';
+    $user = Auth::user();
+    @endphp
+    <alert-modal-comp-component color="{{$color}}" icon="" btn_text="閉じる">
+
+        <h3 class="fw-bold text-success mb-3">会員ランクが昇格しました！</h5>
+
+        <ratio-image-component
+        style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+        position-relative shiny"
+        url="{{ $user->now_rank->image_path }}"
+        ></ratio-image-component>
+
+    </alert-modal-comp-component>
+
+    {{--- 紙吹雪　CDN ---}}
+    @include('includes.confetti_js')
+
+@endif

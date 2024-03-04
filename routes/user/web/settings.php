@@ -8,7 +8,7 @@ use App\Http\Controllers;
 | ユーザー設定
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','user_rank'])->group(function () {
 
     Route::get('settings',
     function () { return view('settings.index'); })

@@ -8,7 +8,7 @@ use App\Http\Controllers;
 |  UserPrizeController
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','user_rank'])->group(function () {
 
     # 商品一覧
     Route::get('user_prize',

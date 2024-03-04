@@ -25,15 +25,15 @@
                 </div>
             </a>
         </div>
-        {{-- <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3">
             <a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-light border py-3 w-100">
                 <h6>チケット履歴</h6>
                 <div class="mt-3">
                     <number-comma-component number="{{ $user->ticket }}"></number-comma-component>枚
                 </div>
             </a>
-        </div> --}}
-        {{-- <div class="col-6 col-md-3">
+        </div>
+        <div class="col-6 col-md-3">
             @if( $user->now_rank )
                 <a href="{{route('admin.user.user_rank_history',$user)}}"
                     class="btn btn-light border py-3 w-100">
@@ -46,7 +46,7 @@
                     <div class="mt-3 text-danger">*未更新</div>
                 </button>
             @endif
-        </div> --}}
+        </div>
         <div class="col-6 col-md-3">
             <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>11,])}}"
             class="btn btn-light border py-3 w-100">

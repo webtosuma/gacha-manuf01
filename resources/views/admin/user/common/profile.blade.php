@@ -113,7 +113,7 @@
 
 
                 <!--チケット付与モーダル-->
-                {{-- <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
+                <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
                     @csrf
                     @method('PATCH')
 
@@ -135,7 +135,7 @@
                             よろしいですか？
                         </div>
                     </delete-modal-component>
-                </form> --}}
+                </form>
 
 
             </div>

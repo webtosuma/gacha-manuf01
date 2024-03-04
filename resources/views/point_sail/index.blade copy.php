@@ -55,26 +55,15 @@
                         <div class="d-flex align-items-center gap-2">
                             @include('includes.point_icon')
                             <h3 class="m-0 fw-bold">
-                                <number-comma-component number="{{ $point_sail->value * $rank_ratio }}"></number-comma-component>
+                                <number-comma-component number="{{ $point_sail->value }}"></number-comma-component>
                             </h3>
                             <span>pt</span>
                         </div>
 
-
-                        {{-- 会員ランク還元 --}}
-                        @if( $rank_ratio > 1 )
-                        <div class="badge bg-success-subtle rounded-pill fw-bold px-3">
-                            <span class="text-success fw-bold fs-6">{{ $point_sail->value*($rank_ratio-1) }}</span>
-                            <span class="text-success fw-bold">pt 会員ランク還元！</span>
-                        </div>
-                        @endif
-
-
-                        {{-- お得 --}}
                         @if( $point_sail->service )
                         <div class="badge bg-danger-subtle rounded-pill fw-bold px-3">
-                            <span class="text-danger fw-bold fs-6">{{ $point_sail->service*$rank_ratio }}</span>
-                            <span class="text-danger fw-bold">pt お得！</span>
+                            <span class="text-danger fw-bold fs-6">{{ '+'.$point_sail->service }}</span>
+                            <span class="text-danger fw-bold">ポイントお得！</span>
                         </div>
                         @endif
                     </div>
