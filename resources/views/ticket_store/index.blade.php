@@ -14,7 +14,7 @@
 
 @section('content')
 <!--breadcrumb-->
-<div class="container mt-">
+<div class="container mt-md-3">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -24,7 +24,7 @@
 </div>
 
 
-<div class="container py-4 mb-5">
+<div class="container py-md-4 mb-5">
     <h3 class="d-none d-md-block ">チケット交換</h3>
 
     <div class="row gx-4 gy-4">

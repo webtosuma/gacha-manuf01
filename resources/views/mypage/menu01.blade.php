@@ -80,13 +80,17 @@
                         style="width: {{$now_rank->meter_success}}%" aria-valuenow="{{$now_rank->meter_success}}"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <div class="text-end" style="font-size:14px;">pt消費数</div>
-                    {{-- <div class="text-end" style="font-size:14px;"
-                    >{{ number_format($now_rank->total_play_ptcount) }} / {{ number_format($now_rank->next_rankup_ptcount) }}</div> --}}
-                    <div class="text- mt-2" style="font-size:11px;">『{{$now_rank->next_rank->label}}』まであと、</div>
-                    <div class="text-end" style="font-size:14px;"
-                    >{{ number_format($now_rank->next_rankup_ptcount-$now_rank->total_play_ptcount) }}pt</div>
+                    <div class="text-end" style="font-size:11px;">
+                        pt消費数/月
+                        <span style="font-size:14px;">{{ number_format($now_rank->total_play_ptcount) }}</span>
+                        pt
+                    </div>
 
+                    @if($now_rank->next_rank)
+                        <div class="text-end mt-2" style="font-size:11px;">『{{$now_rank->next_rank->label}}』まであと、</div>
+                        <div class="text-end" style="font-size:14px;"
+                        >{{ number_format($now_rank->next_rankup_ptcount-$now_rank->total_play_ptcount) }}pt</div>
+                    @endif
 
                     <a href="#" class="my-2" style="font-size:11px;"
                     ><i class="bi bi-question-circle me-2"></i>会員ランクについて</a>
@@ -115,19 +119,6 @@
                     ><i class="bi bi-question-circle me-2"></i>ポイントについて</a> --}}
                 </div>
                 <div class="col-auto">
-                    {{-- <a href="{{ route('point_sail') }}"
-                    class="d-block btn py-1  btn-warning text-white rounded-pill shadow w-100">
-                        <div class="d-flex gap-2 align-items-center">
-                            <div class="">
-                                <div class="rounded-circle border border-white fw-bold bg-gradient text-white
-                                d-flex align-items-center justify-content-center mx-auto
-                                " style=" width:1rem; height:1rem; margin:.4rem 0; font-size:11px;">P</div>
-                            </div>
-
-                            <div class="">ポイント購入</div>
-                        </div>
-                    </a> --}}
-
                     <a href="{{ route('point_sail') }}" class="btn btn- btn-warning text-white rounded-pill shadow">ポイント購入</a>
                 </div>
             </div>
@@ -153,9 +144,9 @@
                     <a href="{{ route('ticket_store') }}"
                     class="d-block btn py-1 btn-success text-white rounded-pill shadow w-100">
                         <div class="d-flex gap-2 align-items-center">
-                            <i class="bi bi-gift fs-5 "></i>
+                            {{-- <i class="bi bi-gift fs-5 "></i> --}}
 
-                            <div class="">商品と交換</div>
+                            <div class="">チケット交換</div>
                         </div>
                     </a>
 
@@ -168,7 +159,7 @@
         </div>
 
         <!-- 取得した商品 -->
-        <div class="mt-3 border-top pt-2">
+        <a href="{{ route('user_prize') }}" class="d-block text-white mt-3 border-top pt-2">
             <div  style="font-size:14px;">取得した商品：</div>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="col-auto fs-3 pe-2">
@@ -182,8 +173,9 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ route('user_prize') }}" style="font-size:11px;"
-                    >一覧を見る<i class="bi bi-chevron-right"></i></a>
+                    <span class="text-primary" style="font-size:11px;">一覧を見る<i class="bi bi-chevron-right"></i></span>
+                    {{-- <a href="{{ route('user_prize') }}" style="font-size:11px;"
+                    >一覧を見る<i class="bi bi-chevron-right"></i></a> --}}
                 </div>
             </div>
             <div class="row g-2 mt-2 px- mx-1 border-bottom pb-2">
@@ -200,6 +192,6 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </a>
     </div>
 </section>

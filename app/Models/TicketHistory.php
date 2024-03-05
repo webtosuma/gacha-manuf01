@@ -40,6 +40,7 @@ class TicketHistory extends Model
 
             14 => '特別付与',
             15 => '会員ランクボーナス',
+            16 => 'ポイント購入時プレゼント',
 
             //チケット減算
             22 => '商品のチケット交換',
@@ -87,7 +88,7 @@ class TicketHistory extends Model
          * ポイント入出理由 reason
          * @return String
         */
-        public function getreasonAttribute()
+        public function getReasonAttribute()
         {
             $reasons = $this->reasons();
 

@@ -109,12 +109,20 @@ class GachaPlayController extends Controller
         }
 
 
+        # ユーザーランク:昇格の評価
+        $rank_up = false;
+        if( $user->now_rank && env('NEW_TICKET_SISTEM',false) )
+        {
+           $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
+        }
+
+
         // 二重送信防止
         $request->session()->regenerateToken();
 
 
         # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
-        return view('gacha.play', compact('user_gacha_history', 'movie_path' ));
+        return view('gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
     }
 
 

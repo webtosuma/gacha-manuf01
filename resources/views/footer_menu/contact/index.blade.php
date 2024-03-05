@@ -25,7 +25,7 @@
 
 <!----- contents ----->
 @section('content')
-    <div class="container py-4 mb-5">
+    <div class="container py-md-4 mb-5">
         <!-- [ 見出し ] -->
         <h2 class="d-none d-md-block text-center my-3">
             お問い合わせ

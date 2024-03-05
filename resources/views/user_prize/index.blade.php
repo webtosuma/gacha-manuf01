@@ -7,7 +7,7 @@
 
 @section('content')
     <!--breadcrumb-->
-    <div class="container mt-">
+    <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -20,7 +20,7 @@
 
 
 
-    <div class="container py-4 pb-5 mb-5">
+    <div class="container py-md-4 pb-5 mb-5">
         <h3 class="d-none d-md-block">取得した商品</h3>
 
         <u-user-prize-form

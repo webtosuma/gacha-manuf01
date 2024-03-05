@@ -63,9 +63,9 @@ $active_key = 'user';
                 チケット履歴
             </h2>
 
-            @if($user)
+            {{-- @if($user)
                 @include('admin.user.common.profile')
-            @endif
+            @endif --}}
         </section>
 
 

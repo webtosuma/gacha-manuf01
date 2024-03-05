@@ -35,4 +35,46 @@ class AdminUserUserRankHistoryController extends Controller
 
         return view('admin.user.user_rank_history.index', compact('user_rank_histories', 'user',) );
     }
+
+
+
+    /**
+     * 会員ランク更新(個人)
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Response
+    */
+    public function update(User $user)
+    {
+        # 会員ランクの更新
+        UserRankHistoryController::CreateUserRankHistory( $user );
+
+        # リダイレクト
+        return redirect()->back()
+        ->with(['alert-info'=>$user->name.'さんの会員ランクを更新しました。']);
+
+    }
+
+
+
+    /**
+     * 会員ランク更新(個人)
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function all_update()
+    {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            # 会員ランクの更新
+            UserRankHistoryController::CreateUserRankHistory( $user );
+        }
+
+        # リダイレクト
+        return redirect()->back()
+        ->with(['alert-info'=>'全てのユーザーの会員ランクを更新しました。']);
+
+    }
+
 }

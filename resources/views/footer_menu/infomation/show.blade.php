@@ -42,7 +42,7 @@
 
 @section('content')
     <!--breadcrumb-->
-    <div class="container mt-">
+    <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>

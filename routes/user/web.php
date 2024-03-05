@@ -19,33 +19,9 @@ Route::get('test', function(\Illuminate\Http\Request $request){
 
     $user = \App\Models\User::first();
 
-    // $user_rank_history = new \App\Models\UserRankHistory([
-    //     'user_id'=>$user->id,
-    //     'rank_id'=>0,
-    // ]);
+    $user_rank_history = \App\Models\UserRankHistory::UserRanks();
     // $user_rank_history->save();
-    // dd($user->user_rank_histories);
-
-    \App\Http\Controllers\UserRankHistoryController::CreateUserRankHistory( $user );
-    dd('hoge');
-
-
-    # 直近の会員ランク履歴
-    dd($user->desc_first_rank->meter_success);
-
-    # 下に昇格する会員ランク情報 down_rank
-    dd($user->now_rank->down_rank);
-
-    # 次に昇格する会員ランク情報 next_rank
-    dd($user->now_rank->next_rank);
-
-    # 今月のランクの会員ランク情報
-    dd($user->now_rank->this_rank);
-
-    # 今月の会員ランク履歴
-    dd($user->now_rank->toArray());
-
-
+    dd($user_rank_history);
 } );
 
 

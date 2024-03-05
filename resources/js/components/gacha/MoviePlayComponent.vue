@@ -41,7 +41,8 @@
             <!--スキップボタン-->
             <div class="position-fixed bottom-0 end-0 p-3">
                 <form :action="r_action" method="get">
-                    <!-- <input type="hidden" name="_token" :value="token"> -->
+                    <input v-if="rank_up==1" type="hidden" name="rank_up" :value="rank_up">
+
                     <button type="submit"
                     class="btn btn-light btn-sm flort-right py-0">
                         <div class="d-flex justify-content-center align-items-center">
@@ -68,6 +69,7 @@
             movie_path_mobile:{ type: String,  default: '', },
             movie_path_pc:{ type: String,  default: '', },
             r_action:{ type: String,  default: '', },
+            rank_up:{ type: String,  default: '0', },
         },
         data() { return {
 

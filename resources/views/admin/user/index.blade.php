@@ -62,6 +62,23 @@ $active_key = 'user';
                     <button class="btn border w-100" type="submit">CSVダウンロード</button>
                 </form>
             </div>
+            <div class="col-auto">
+                <!--会員ランク更新モーダル-->
+                <form action="{{ route('admin.user.user_rank_history.all_update') }}" method="post">
+                    @csrf
+                    <delete-modal-component
+                    index_key="{{'all_update_user_rank'}}"
+                    icon="" color="info"
+                    func_btn_type="submit"
+                    button_text="会員ランク一括更新"
+                    button_class="btn border w-100 disabled">
+                        <div>
+                            <span class="fw-bold">全てのユーザー</span>の会員ランクを更新します
+                            <div class="">よろしいですか？</div>
+                        </div>
+                    </delete-modal-component>
+                </form>
+            </div>
         </div>
 
 
@@ -141,7 +158,7 @@ $active_key = 'user';
                                 @if( $user->now_rank )
                                     <div style="width:50px;">
                                         <ratio-image-component
-                                        style_class="ratio ratio-16x9 rounded-3 overflow-hidden position-relative shiny"
+                                        style_class="ratio ratio-16x9 overflow-hidden position-relative shiny"
                                         url="{{ $user->now_rank->image_path }}"
                                         ></ratio-image-component>
                                     </div>

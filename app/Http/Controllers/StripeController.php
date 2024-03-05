@@ -16,6 +16,8 @@ use App\Models\User;
 use App\Models\Gacha;
 use App\Models\PointSail;
 use App\Models\PointHistory;
+use App\Models\TicketHistory;
+
 use App\Http\Controllers\CanpaingIntroductoryController;//お友達紹介キャンペーン
 use App\Http\Controllers\CanpaingFirstPointSailController;//初回ポイント購入キャンペーン
 
@@ -249,6 +251,19 @@ class StripeController extends Controller
             'stripe_checkout_session_id' => $session_id,//CheckoutSession
         ]);
         $point_history->save();
+
+
+        #チケットの付与
+        if( $point_sail->ticket > 0 )
+        {
+            $ticket_history = new TicketHistory([
+                'user_id'   => $user->id,
+                'value'     => $point_sail->ticket,
+                'reason_id' => 16, //ポイント購入時プレゼント
+            ]);
+            $ticket_history->save();
+        }
+
 
         # [紹介キャンペーン]ポイント付与
         CanpaingIntroductoryController::grant($user);

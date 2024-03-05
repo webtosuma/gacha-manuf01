@@ -7,7 +7,7 @@
 
 @section('content')
     <!--breadcrumb-->
-    <div class="container mt-">
+    <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -17,11 +17,39 @@
     </div>
 
 
-    <div class="container py-4 mb-5">
+    <div class="container py-md-4 mb-5">
         <h3 class="d-none d-md-block">ポイント購入</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item bg-white py-4 fs-">
-                購入するポイントを選択してください
+
+                <div class="">購入するポイントを選択してください</div>
+
+
+
+                @if( Auth::check() && $rank_ratio > 1 )
+                    @php $now_rank = Auth::user()->now_rank; @endphp
+                    <div class="row g-2 mt-2 align-items-center">
+                        <div class="col-auto me-2" style="width:6rem;">
+                            <ratio-image-component
+                            style_class="ratio ratio-16x9 rounded overflow-hidden
+                            position-relative shiny"
+                            url="{{ $now_rank->image_path }}"
+                            ></ratio-image-component>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-text"><span class="fw-bold me-1">{{$now_rank->label}}ランク</span>ユーザー様は、</div>
+                            <div class="col-12 col-md-auto fs- text-danger rounded-pill fw-bold">
+
+                                <span>{{ ($rank_ratio-1)*100 }}</span><span class="fs-">%ポイント還元！</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="badge bg-success-subtle rounded-pill fw-bold px-3">
+                        <span class="text-success fw-bold fs-6">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                        <span class="text-success fw-bold">pt 会員ランク還元！</span>
+                    </div> --}}
+                @endif
 
                 {{-- <div class="mt-2" >
                     ご利用可能な決済方法
@@ -49,47 +77,61 @@
 
 
             @foreach ($point_sails as $point_sail)
-                <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">
+                <li class="list-group-item bg-white py-3">
+                    <div class="d-flex align-items-center justify-content-between">
 
-                    <div class="">
-                        <div class="d-flex align-items-center gap-2">
-                            @include('includes.point_icon')
-                            <h3 class="m-0 fw-bold">
-                                <number-comma-component number="{{ $point_sail->value * $rank_ratio }}"></number-comma-component>
-                            </h3>
-                            <span>pt</span>
+                        <div class="">
+                            <div class="d-flex align-items-center gap-2">
+                                @include('includes.point_icon')
+                                <h3 class="m-0 fw-bold fs-">
+                                    <number-comma-component number="{{ $point_sail->value * $rank_ratio }}"></number-comma-component>
+                                </h3>
+                                <span>pt</span>
+                            </div>
                         </div>
 
-
+                        <!--購入ボタン-->
+                        <a href="{{ route('point_sail.payment', $point_sail) }}"
+                        class="btn btn-lg btn-warning text-white rounded-pill shadow py-1 " style="width:8rem;">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <span>¥</span>
+                                <h5 class="m-0 fw-bold">
+                                    <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
+                                </h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-wrap gap-1 mt-2" style="font-size:11px;">
                         {{-- 会員ランク還元 --}}
                         @if( $rank_ratio > 1 )
-                        <div class="badge bg-success-subtle rounded-pill fw-bold px-3">
-                            <span class="text-success fw-bold fs-6">{{ $point_sail->value*($rank_ratio-1) }}</span>
-                            <span class="text-success fw-bold">pt 会員ランク還元！</span>
+                        <div class="badge bg- danger-subtle border border-danger rounded-pill fw-bold px-3">
+                            <span class="text-danger fw-bold fs-">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                            <span class="text-danger fw-bold">pt 還元！</span>
+                        </div>
+                        @endif
+
+
+                        {{-- チケット還元 --}}
+                        @if( $point_sail->ticket > 0 )
+                        <div class="badge bg- success-subtle border border-success rounded-pill fw-bold px-3">
+                            <span class="text-success fw-bold">チケット</span>
+                            <span class="text-success fw-bold fs-">{{ $point_sail->ticket }}</span>
+                            <span class="text-success fw-bold">枚 プレゼント！</span>
                         </div>
                         @endif
 
 
                         {{-- お得 --}}
                         @if( $point_sail->service )
-                        <div class="badge bg-danger-subtle rounded-pill fw-bold px-3">
-                            <span class="text-danger fw-bold fs-6">{{ $point_sail->service*$rank_ratio }}</span>
-                            <span class="text-danger fw-bold">pt お得！</span>
+                        <div class="badge bg- warning-subtle border border-warning rounded-pill fw-bold px-3">
+                            <span class="text-warning fw-bold fs-">{{ $point_sail->service*$rank_ratio }}</span>
+                            <span class="text-warning fw-bold">pt お得！</span>
                         </div>
                         @endif
-                    </div>
 
-                    <!--購入ボタン-->
-                    <a href="{{ route('point_sail.payment', $point_sail) }}"
-                    class="btn btn-lg btn-warning text-white rounded-pill shadow py-1 " style="width:8rem;">
-                        <div class="d-flex align-items-center justify-content-between w-100">
-                            <span>¥</span>
-                            <h5 class="m-0 fw-bold">
-                                <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
-                            </h5>
-                        </div>
-                    </a>
-                </div></li>
+
+                    </div>
+                </li>
             @endforeach
 
 

@@ -14,5 +14,14 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminUserUserRankHistoryController ::class, 'index'])
     ->name('admin.user.user_rank_history');
 
+    # 会員ランクの更新(個人)
+    Route::post('/admin/user/user_rank_history/update/{user}',
+    [Controllers\AdminUserUserRankHistoryController ::class, 'update'])
+    ->name('admin.user.user_rank_history.update');
+
+    # 会員ランクの更新(全員)
+    Route::post('/admin/user/user_rank_history/all_update/',
+    [Controllers\AdminUserUserRankHistoryController ::class, 'all_update'])
+    ->name('admin.user.user_rank_history.all_update');
 
 });//end middleware

@@ -15,8 +15,4 @@
 <br>
 <br>
 <!-- 共通署名 -->
-@if( $inputs['user_type'] === 'company')
-    @include('emails._company_signature')
-@else
-    @include('emails._signature')
-@endif
+@include('emails._signature')

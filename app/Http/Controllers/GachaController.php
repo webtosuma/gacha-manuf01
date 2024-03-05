@@ -310,11 +310,13 @@ class GachaController extends Controller
 
     /**
      * PLAYガチャの結果表示
+     *
+     * @param Request $request
      * @param String $category_code      //カテゴリーコード名
      * @param  \App\Models\UserGachaHistory $user_gacha_history
      * @return \Illuminate\Http\Response
      */
-    public function result($category_code, UserGachaHistory $user_gacha_history)
+    public function result(Request $request, $category_code, UserGachaHistory $user_gacha_history)
     {
         # ユーザの結果のみを表示
         $user = Auth::user();
@@ -329,13 +331,8 @@ class GachaController extends Controller
         # 背景画像
         $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
 
-
-        # ユーザーランク:昇格の評価
-        $rank_up = false;
-        if( $user->now_rank && env('NEW_TICKET_SISTEM',false) )
-        {
-           $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
-        }
+        # ユーザーランク:昇格の評価結果受け取り
+        $rank_up = $request->rank_up;
 
 
         return view('gacha.result',compact('gacha','user_gacha_history', 'page_title', 'bg_image', 'rank_up'));

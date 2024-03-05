@@ -4,7 +4,7 @@
 <br>
 パスワード変更で入力されたメールアドレスが登録されていることを確認致しました。
 パスワード変更に必要な認証番号をお送りいたします。<br>
-認証番号{{ $inputs['reset_pass_code'] }}<br>
+認証番号{{ $inputs['verification_code'] }}<br>
 <br>
 引き続き、パスワード変更の手続きをお進めください。<br>
 <br>
@@ -16,8 +16,4 @@
 <br>
 <br>
 <!-- 共通署名 -->
-@if( $inputs['user_type'] === 'company')
-    @include('emails._company_signature')
-@else
-    @include('emails._signature')
-@endif
+@include('emails._signature')

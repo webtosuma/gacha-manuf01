@@ -12,25 +12,41 @@
         </div>
         <div class="col-3">
             <a href="{{ route('ticket_store') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-shop-window" viewBox="0 0 16 16">
-                    <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"/>
-                </svg>
-                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">ショップ</div>
+                <img src="{{asset('storage/site/image/ticket/dark.png')}}"
+                alt="チケット" class="d-block mx-auto"  style=" width:32px; height:32px;">
+
+                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">チケット交換</div>
             </a>
         </div>
-        <div class="col-3">
+        {{-- <div class="col-3">
             <a href="{{ route('ticket_sail') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100">
                 <img src="{{asset('storage/site/image/ticket/dark.png')}}"
                 alt="チケット" class="d-block mx-auto"  style=" width:32px; height:32px;">
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">チケット購入</div>
             </a>
-        </div>
+        </div> --}}
         <div class="col-3">
             <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-megaphone" viewBox="0 0 16 16">
                     <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49a68.14 68.14 0 0 0-.202-.003A2.014 2.014 0 0 1 0 9V7a2.02 2.02 0 0 1 1.992-2.013 74.663 74.663 0 0 0 2.483-.075c3.043-.154 6.148-.849 8.525-2.199V2.5zm1 0v11a.5.5 0 0 0 1 0v-11a.5.5 0 0 0-1 0zm-1 1.35c-2.344 1.205-5.209 1.842-8 2.033v4.233c.18.01.359.022.537.036 2.568.189 5.093.744 7.463 1.993V3.85zm-9 6.215v-4.13a95.09 95.09 0 0 1-1.992.052A1.02 1.02 0 0 0 1 7v2c0 .55.448 1.002 1.006 1.009A60.49 60.49 0 0 1 4 10.065zm-.657.975 1.609 3.037.01.024h.548l-.002-.014-.443-2.966a68.019 68.019 0 0 0-1.722-.082z"/>
                 </svg>
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">お知らせ</div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a href="{{ route('shipped') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                </svg>
+                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">
+                    <span>発送</span>
+
+                    @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
+                    @if ( $unread_count )
+                        <!--未読-->
+                        <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
+                    @endif
+                </div>
             </a>
         </div>
         <div class="col-3">
@@ -89,22 +105,6 @@
                 <img src="{{asset('storage/site/image/icon/user_rank.png')}}"
                 alt="会員ランク" class="d-block mx-auto" style=" width:32px; height:32px;">
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">会員ランク</div>
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="{{ route('shipped') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
-                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
-                </svg>
-                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">
-                    <span>発送</span>
-
-                    @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
-                    @if ( $unread_count )
-                        <!--お問い合わせ　未対応-->
-                        <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
-                    @endif
-                </div>
             </a>
         </div>
 

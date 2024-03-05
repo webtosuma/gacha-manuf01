@@ -12,7 +12,7 @@
 
 @section('content')
 <!--breadcrumb-->
-<div class="container mt-3">
+<div class="container mt-md-3">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -22,7 +22,7 @@
 </div>
 
 
-<div class="container py-4 mb-5">
+<div class="container py-md-4 mb-5">
     <h3 class="text-center my-3">ポイント購入が完了しました</h3>
 
     <div class="form-text borderrrr border-danger p-3 mx-auto mb-3" style="max-width:600px;">
@@ -36,16 +36,7 @@
             <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">
                 <div class="col-6">ポイント数</div>
                 <div class="col-6 border-bottom fw-bold text-center">
-                    <div>{{ number_format($point_sail->value * $rank_ratio).'pt' }}</div>
-
-
-                    {{-- 会員ランク還元 --}}
-                    @if( $rank_ratio > 1 )
-                    <div class="badge bg-success-subtle rounded-pill fw-bold px-3 mb-1">
-                        <span class="text-success fw-bold fs-6">{{ $point_sail->value*($rank_ratio-1) }}</span>
-                        <span class="text-success fw-bold">pt 会員ランク還元！</span>
-                    </div>
-                    @endif
+                    <div class="fs-5">{{ number_format($point_sail->value * $rank_ratio).'pt' }}</div>
                 </div>
 
                 {{-- @if( isset($source) )
@@ -53,8 +44,34 @@
                     <div class="col-6 border-bottom fw-bold text-center">{{ $source }}</div>
                 @endif --}}
 
+
+                <div class="col-6">サービス</div>
+                <div class="col-6 border-bottom fw-bold text-center">
+
+                    {{-- 会員ランク還元 --}}
+                    @if( $rank_ratio > 1 )
+                    <div class="badge border border-danger rounded-pill fw-bold px-3 mb-1">
+                        <span class="text-danger fw-bold fs-">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                        <span class="text-danger fw-bold">pt 還元！</span>
+                    </div>
+                    @endif
+
+
+                    {{-- チケット還元 --}}
+                    @if( $point_sail->ticket > 0 )
+                    <div class="badge border border-success rounded-pill fw-bold px-3 my-1">
+                        <span class="text-success fw-bold">チケット</span>
+                        <span class="text-success fw-bold fs-">{{ $point_sail->ticket }}</span>
+                        <span class="text-success fw-bold">枚 プレゼント！</span>
+                    </div>
+                    @endif
+
+                </div>
+
+
                 <div class="col-6">支払い金額</div>
                 <div class="col-6 border-bottom fw-bold text-center">{{ number_format($point_sail->price).'円（税込）' }}</div>
+
             </div>
 
 

@@ -53,7 +53,7 @@ class UserRankHistory extends Model
                 'rankup_ptcount'  => 10*1000,
                 'point_bonus'     => 1*1000,
                 'ticket_bonus'    => 10,
-                'point_sail_ratio'=> 0,
+                'point_sail_ratio'=> 1,
             ],
 
             # シルバー
@@ -64,7 +64,7 @@ class UserRankHistory extends Model
                 'rankup_ptcount'  => 50*1000,
                 'point_bonus'     => 3*1000,
                 'ticket_bonus'    => 50,
-                'point_sail_ratio'=> 1,
+                'point_sail_ratio'=> 3,
             ],
 
             # ゴールド
@@ -75,7 +75,7 @@ class UserRankHistory extends Model
                 'rankup_ptcount'  => 200*1000,
                 'point_bonus'     => 5*1000,
                 'ticket_bonus'    => 200,
-                'point_sail_ratio'=> 2,
+                'point_sail_ratio'=> 5,
             ],
 
             # ダイヤモンド
@@ -86,7 +86,7 @@ class UserRankHistory extends Model
                 'rankup_ptcount'  => 500*1000,
                 'point_bonus'     => 10*1000,
                 'ticket_bonus'    => 500,
-                'point_sail_ratio'=> 3,
+                'point_sail_ratio'=> 7,
             ],
 
             # マスター
@@ -97,7 +97,7 @@ class UserRankHistory extends Model
                 'rankup_ptcount'  => 1000*1000,
                 'point_bonus'     => 30*1000,
                 'ticket_bonus'    => 1*1000,
-                'point_sail_ratio'=> 5,
+                'point_sail_ratio'=> 10,
             ],
 
             # レジェンド
@@ -108,7 +108,7 @@ class UserRankHistory extends Model
                 'rankup_ptcount'  => 3000*1000,
                 'point_bonus'     => 50*1000,
                 'ticket_bonus'    => 3*1000,
-                'point_sail_ratio'=> 7,
+                'point_sail_ratio'=> 15,
             ],
 
         ];

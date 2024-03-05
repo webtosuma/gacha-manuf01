@@ -16,7 +16,9 @@
 
 
     <!-- wbマニフェスト -->
-    <link rel="manifest" href="/manifest.json">
+    @if ( !config('app.debug') )
+        <link rel="manifest" href="/manifest.json">
+    @endif
 
     <!-- ファビコン画像の読み込み -->
     <link rel="shortcut icon" href="{{asset('storage/site/image/favicon.png')}}">

@@ -38,12 +38,12 @@
         th,td{ background-color: #fff !important; }
 
         /* サイトデフォルト背景 */
-        @media screen and (min-width: 768px) {
+        /* @media screen and (min-width: 768px) { */
             body{
                 background: no-repeat center center / cover fixed;
                 background-image: url({{asset('storage/site/image/bg01.jpg')}});
             }
-        }
+        /* } */
 
         main{
             padding-top: 4.2rem;
@@ -139,10 +139,10 @@
 
 
     <!-- Scripts -->
+    {{-- <script src="{{ asset('js/animation.js') }}"></script> --}}
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- <script src="{{ asset('js/20240214app.js') }}" defer></script> --}}
 
-    <script src="{{ asset('js/animation.js') }}"></script>
 
     @yield('script')
 

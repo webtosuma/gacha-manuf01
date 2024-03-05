@@ -88,12 +88,9 @@ class UserRankHistoryController extends Controller
         }
 
 
-
         # ガチャの後にランクアップしたとき(ガチャのあと)
-        // if( self::CreateRankUpHistory( $user, now(), $user->now_rank ))
-        // {
+        if( self::CreateRankUpHistory( $user, now(), $user->now_rank )){ /** ~ */}
 
-        // }
     }
 
 

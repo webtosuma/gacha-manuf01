@@ -6,7 +6,7 @@
             <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">
                 <div class="">
                     <div class="form-text">{{$point_history->created_at->format('Y/m/d H:i')}}</div>
-                    <div class="fw-bold"><span class="text-primary">●</span>ポイント購入（カード決済）</div>
+                    <div class="fw-bold"><span class="text-primary">●</span>ポイント購入</div>
                     <div class="">購入金額：¥
                         <number-comma-component number="{{ $point_history->price }}"></number-comma-component>
                     </div>

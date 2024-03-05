@@ -7509,9 +7509,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     nextToStep: function nextToStep(route) {
       var _this = this;
       var addCard = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      console.log(route);
       this.loading = true; // 通信中
       axios.post(route, this.inputs).then(function (json) {
-        // console.log(json.data);
+        console.log(json.data);
 
         // // 認証コードの保存
         var verification_code = json.data.verification_code;
@@ -7527,7 +7528,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })["catch"](function (error) {
         //バリデーション結果の受け取り
         if (error.response.status == 422) {
-          // console.log(error.response.data);
+          console.log(error.response.data);
           _this.errors = error.response.data.errors;
           _this.loading = false;
         }
@@ -8158,6 +8159,10 @@ __webpack_require__.r(__webpack_exports__);
     r_action: {
       type: String,
       "default": ''
+    },
+    rank_up: {
+      type: String,
+      "default": '0'
     }
   },
   data: function data() {
@@ -11875,32 +11880,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "w-100"
-  }, [_vm.test ? _c("form", {
-    attrs: {
-      action: _vm.step01_route,
-      method: "get"
-    }
-  }, [_vm._v("\n        " + _vm._s(_vm.inputs) + "\n        "), _vm._l(_vm.inputs, function (value, name) {
-    return _c("input", {
-      key: name,
-      attrs: {
-        type: "hidden"
-      },
-      domProps: {
-        value: value
-      }
-    });
-  }), _vm._v(" "), _c("input", {
-    attrs: {
-      type: "hidden",
-      name: "_token",
-      value: "NxQ1Dctw51Ghle95hC3bcLmhaKOzRLxgcYhZFyf9"
-    }
-  }), _vm._v(" "), _c("button", {
-    attrs: {
-      type: "submit"
-    }
-  }, [_vm._v("step01送信")])], 2) : _vm._e(), _vm._v(" "), _vm.card_num === 1 ? _c("div", {
+  }, [_vm.card_num === 1 ? _c("div", {
     staticClass: "anima-fadein-bottom"
   }, [_c("div", {
     staticClass: "card shadow border-0 w-100 p-3 mb-3"
@@ -13551,7 +13531,15 @@ var render = function render() {
       action: _vm.r_action,
       method: "get"
     }
-  }, [_vm._m(0)])]), _vm._v(" "), _c("confirm-modal-component", {
+  }, [_vm.rank_up == 1 ? _c("input", {
+    attrs: {
+      type: "hidden",
+      name: "rank_up"
+    },
+    domProps: {
+      value: _vm.rank_up
+    }
+  }) : _vm._e(), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("confirm-modal-component", {
     attrs: {
       body: "音声が出ます。よろしいですか？",
       icon: ""

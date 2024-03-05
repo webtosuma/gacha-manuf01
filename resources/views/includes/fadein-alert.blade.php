@@ -1,5 +1,5 @@
 @php
-$session_alerts = [ 'alert-primary','alert-success','alert-info','alert-warning','alert-danger' ];
+$session_alerts = [ 'alert-primary','alert-success','alert-info','alert-warning','alert-danger','alert-secoundary' ];
 @endphp
 
 

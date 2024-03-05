@@ -241,12 +241,9 @@ class SendMailController extends Controller
                 'subject' => '会員登録認証コード'.$verification_code , //件名
             ]) );
 
-
             # 認証コードを返す
             return $verification_code;
         }
-
-
 
 
 
@@ -267,6 +264,32 @@ class SendMailController extends Controller
         }
 
 
+
+        /**
+         * パスワード変更 メール認証
+         *
+         * @param \Illuminate\Http\Request $request
+         * @return String $verification_code
+        */
+        public static function SendUpdatePassworVerifEmail( $request )
+        {
+            # 認証番号が生成済みであれば、処理を終了
+            if( $request->created_verification_code ){ return $request->created_verification_code; }
+
+            # 認証番号の生成
+            $verification_code = sprintf('%06d', mt_rand(0, 999999) );
+
+            # 認証番号メールの送信
+            Mail::to( $request->email ) //宛先
+            ->send(new \App\Mail\SendMailMailable([
+                'inputs' => compact('verification_code') , //入力変数
+                'view' => 'emails.reset_pass01_verification' , //テンプレート
+                'subject' => 'パスワード変更'.$verification_code , //件名
+            ]) );
+
+            # 認証コードを返す
+            return $verification_code;
+        }
 
 
         /**

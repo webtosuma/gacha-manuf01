@@ -6,7 +6,7 @@
 
 @section('content')
 <!--breadcrumb-->
-<div class="container mt-3">
+<div class="container mt-md-3">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -17,7 +17,7 @@
 </div>
 
 
-<div class="container py-4 mb-5">
+<div class="container py-md-4 mb-5">
     <h3 class="text-center text-danger my-3">ポイントが不足しています</h3>
 
     <ul class="list-group list-group-flush mb-5 mx-auto" style="max-width:600px;">

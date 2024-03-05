@@ -7,7 +7,7 @@
 
 @section('content')
     <!--breadcrumb-->
-    <div class="container mt-">
+    <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -17,7 +17,7 @@
         </nav>
     </div>
 
-    <div class="container py-4 mb-5">
+    <div class="container py-md-4 mb-5">
         <h3 class="mb-">発送申請・完了</h3>
         <form action="{{ route('shipped.appli.confirm') }}" method="POST">
             @csrf

@@ -7,7 +7,7 @@
 
 @section('content')
 <!--breadcrumb-->
-<div class="container mt-">
+<div class="container mt-md-3">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -17,13 +17,13 @@
 </div>
 
 
-<div class="container py-4 mb-5">
+<div class="container py-md-4 mb-5">
     <h3 class="d-none d-md-block ">チケット履歴</h3>
 
 
 
     <ul class="list-group list-group-flush">
-        {{-- 所持ポイント --}}
+        {{-- 所持チケット --}}
         <li class="list-group-item bg-white py-4 fs-">
             <div class="d-flex justify-content-between align-items-center bg-white">
                 <div class="col">
@@ -36,17 +36,15 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <div class="mb-3">
+                    <div class="mb-">
                         <a href="{{ route('ticket_store') }}"
                         class="d-block btn py-1 btn-success text-white rounded-pill shadow w-100">
                             <div class="d-flex gap-2 align-items-center">
-                                <i class="bi bi-gift fs-5 "></i>
-
-                                <div class="">商品と交換</div>
+                                <div class="">チケット交換</div>
                             </div>
                         </a>
                     </div>
-                    <div class="">
+                    {{-- <div class="mt-3">
                         <a href="{{ route('ticket_sail') }}"
                         class="d-block btn py-1 border-success text-success rounded-pill shadow w-100">
                             <div class="d-flex gap-2 align-items-center">
@@ -59,7 +57,7 @@
                                 <div class="">チケット購入</div>
                             </div>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </li>

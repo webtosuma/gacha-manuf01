@@ -21,7 +21,7 @@
                                     <a href="{{route('admin.user.point_history',$user_id)}}"
                                     >{{ 'ID:'.$user_id.' '.$user_name.' '.$user_email}}</a>
                                 @endif
-                                <div class="fw-bold"><span class="text-primary">●</span>ポイント購入（カード決済）</div>
+                                <div class="fw-bold"><span class="text-primary">●</span>ポイント購入</div>
                                 <div class="">購入金額：¥
                                     <number-comma-component number="{{ $point_history->price }}"></number-comma-component>
                                 </div>

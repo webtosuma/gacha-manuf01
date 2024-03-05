@@ -2,13 +2,13 @@
     <div class="w-100">
 
 
-        <form :action="step01_route" method="get" v-if="test">
+        <!-- <form :action="step01_route" method="get" v-if="test">
             {{ inputs }}
             <input v-for="( value, name ) in inputs" :key="name"
             type="hidden" :value="value" />
             <input type="hidden" name="_token" value="NxQ1Dctw51Ghle95hC3bcLmhaKOzRLxgcYhZFyf9">
             <button type="submit">step01送信</button>
-        </form>
+        </form> -->
 
 
         <!----- [ ステップ１ ] ----->
@@ -202,13 +202,16 @@
         },
         methods:{
 
+
             /* 次のステップメソッド */
             nextToStep :function( route ,addCard=true ){
+                console.log(route);
+
 
                 this.loading = true;// 通信中
                 axios.post( route, this.inputs )
                 .then(json   => {
-                    // console.log(json.data);
+                    console.log(json.data);
 
                     // // 認証コードの保存
                     const verification_code = json.data.verification_code;
@@ -226,7 +229,7 @@
 
                     //バリデーション結果の受け取り
                     if( error.response.status == 422 ){
-                        // console.log(error.response.data);
+                        console.log(error.response.data);
                         this.errors = error.response.data.errors;
                         this.loading = false;
                     }

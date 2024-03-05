@@ -27,7 +27,7 @@
     <section class="bg-dark" style="height:4.2rem;"></section>
 
     <!--breadcrumb-->
-    <div class="container mt-  bg-light">
+    <div class="container mt-md-3  bg-light">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
@@ -37,7 +37,7 @@
     </div>
 
 
-    <div class="container py-4 mb-5">
+    <div class="container py-md-4 mb-5">
         {{-- <h3>ご友人紹介キャンペーン</h3> --}}
         <div class="mx-auto" style="max-width:900px;">
 

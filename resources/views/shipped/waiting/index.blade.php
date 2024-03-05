@@ -2,16 +2,16 @@
 @extends('layouts.sub')
 
 <!----- title ----->
-@section('title','発送履歴・発送待ち')
+@section('title','発送・発送待ち')
 
 
 @section('content')
     <!--breadcrumb-->
-    <div class="container mt-">
+    <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('shipped') }}">発送履歴</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('shipped') }}">発送</a></li>
             <li class="breadcrumb-item active" aria-current="page">発送待ち</li>
             </ol>
         </nav>
@@ -20,17 +20,18 @@
 
 
 
-    <div class="container py-4 mb-5">
-        <h3 class="d-none d-md-block mb-5">発送履歴</h3>
+    <div class="container py-md-4 mb-5">
+        <h3 class="d-none d-md-block mb-5">発送</h3>
 
         <section>
-            <div class="card p-3 bg-white">
-                <ul class="nav text-center mb-md-5">
+            <div class="card p-3 bg- border-0">
+
+                <ul class="nav text-center bg-white rounded border">
                     <li class="col">
-                      <div class="nav-link text-dark border-bottom border-primary border-2" aria-current="page">発送待ち</div>
+                      <div class="nav-link text-dark border-bottom border-primary border-3" aria-current="page">発送待ち</div>
                     </li>
                     <li class="col">
-                        <div class="nav-link text-dark border-bottom ">
+                        <div class="nav-link text-dark">
                             <a class="text-dark" href="{{ route('shipped.send') }}">
                                 発送済み
                                 @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
@@ -43,7 +44,34 @@
                     </li>
                 </ul>
 
-                <table class="table bg-white my-3">
+
+                @forelse ($shippeds as $shipped)
+                    <a href="{{ route('shipped.waiting.show',$shipped) }}"
+                    class="d-block card card-body py-2 my-2 bg-white">
+                        <div class="form-text">申請日{{ $shipped->created_at->format('Y年m月d日') }}</div>
+                        <div class="row text-primary fs-5">
+                            <div class="col">
+                                {{ $shipped->user_address->name }}様
+                            </div>
+                            <div class="col-auto">
+                                {{ $shipped->user_prizes->count() }}点
+                            </div>
+                        </div>
+                        <div class="form-text">
+                            <span>{{ '〒'.$shipped->user_address->postal_code }}</span>
+                            <span>{{ $shipped->user_address->todohuken }}</span>
+                            <span>{{ $shipped->user_address->shikuchoson }}</span>
+                            <span>{{ $shipped->user_address->number }}</span>
+                        </div>
+                    </a>
+                @empty
+                    <div class="p-3 py-5">*発送待ちの商品はありません</div>
+                @endforelse
+
+
+
+
+                {{-- <table class="table bg-white my-3">
                     <!--ヘッド（並べ替えボタン）-->
                     @if ($shippeds->count())
                     <thead>
@@ -74,7 +102,7 @@
                             </tr>
                         @endforelse
                     </tbody>
-                </table>
+                </table> --}}
             </div>
         </section>
     </div>

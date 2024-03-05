@@ -32,4 +32,24 @@ class PointSail extends Model
     {
         return \Database\Factories\PointSailFactory::new();
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 付与チケット ticket
+         * @return Integer
+        */
+        public function getTicketAttribute()
+        {
+            $ticket = floor( $this->price / 1000 );
+
+            return env('NEW_TICKET_SISTEM',false) ? $ticket: 0 ;
+        }
+
 }

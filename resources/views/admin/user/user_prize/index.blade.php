@@ -53,9 +53,9 @@ $active_key = 'user';
                 ユーザー取得商品一覧
             </h2>
 
-            @if($user)
+            {{-- @if($user)
                 @include('admin.user.common.profile')
-            @endif
+            @endif --}}
         </section>
 
 
