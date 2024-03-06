@@ -13,6 +13,7 @@ class TicketStoreController extends Controller
 {
     /**
      * 一覧
+     *
      * @return \Illuminate\View\View
     */
     public function index()
@@ -23,5 +24,46 @@ class TicketStoreController extends Controller
         // dd($stores[0]->prize->toArray());
 
         return view('ticket_store.index',compact('stores'));
+    }
+
+
+
+
+    /**
+     * 詳細
+     *
+     * @param Store $store
+     * @return \Illuminate\View\View
+    */
+    public function show(Store $store)
+    {
+        return view('ticket_store.show',compact('store'));
+    }
+
+
+
+    /**
+     * チケット交換処理
+     *
+     * @param Request $request
+     * @param Store $store
+     * @return \Illuminate\Http\Response
+     */
+    public function post( Request $request, Store $store )
+    {
+        return redirect()->route('ticket_store.comp');
+    }
+
+
+    /**
+     * 交換完了
+     *
+     * @return \Illuminate\View\View
+     */
+    public function comp()
+    {
+        $store = Store::first();
+
+        return view('ticket_store.comp',compact('store'));
     }
 }

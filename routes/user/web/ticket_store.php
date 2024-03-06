@@ -16,7 +16,7 @@ use App\Http\Controllers;
         ->name('ticket_store');
 
         # 詳細表示
-        Route::get('ticket_store/s/{store}',
+        Route::get('ticket_store/show/{store}',
         [Controllers\TicketStoreController::class, 'show'])
         ->name('ticket_store.show');
 
@@ -24,8 +24,18 @@ use App\Http\Controllers;
     Route::middleware(['auth','user_rank'])->group(function () {
 
         # 買い物かご
+        // Route::get('ticket_store/keep',
+        // [Controllers\TicketStoreController::class, 'keep'])
+        // ->name('ticket_store.keep');
 
-        # 購入確認
+        # チケット交換処理
+        Route::post('ticket_store/post/{store}',
+        [Controllers\TicketStoreController::class, 'post'])
+        ->name('ticket_store.post');
 
-        # 購入完了
+        # 交換完了完了
+        Route::get('ticket_store/comp',
+        [Controllers\TicketStoreController::class, 'comp'])
+        ->name('ticket_store.comp');
+
     });
