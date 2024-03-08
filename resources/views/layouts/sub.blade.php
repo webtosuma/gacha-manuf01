@@ -61,11 +61,12 @@
 <body class="bg-white">
     <div id="app">
 
-
         <!--header-->
         <div class="d-none d-md-block">
             @include('includes.header')
         </div>
+
+
         <div class="d-md-none">
             <header class="position-fixed w-100" style="z-index:100;">
                 <div class="row align-items-center p-3 py-2 bg-white border-bottom border-primary mx-0 px-0">
@@ -80,9 +81,10 @@
                             </button>
                         @else
                             <a href="{{route('home')}}" class="btn p-0 px-2 borderrr rounded-pill text-primary
-                            d-flex gap-1 align-items-center"
-                            ><i class="bi bi-arrow-left fs-4"></i>
-                            {{-- <span>トップ</span> --}}
+                            d-flex flex-column gap-1 align-items-center py-0">
+
+                                <i class="bi bi-arrow-left"></i>
+                                <span style="font-size:8px; line-height:8px;">TOP</span>
                             </a>
                         @endif
                     </div>

@@ -86,26 +86,6 @@
                                     <number-comma-component number="{{ $point_sail->value * $rank_ratio }}"></number-comma-component>
                                 </h3>
                                 <span>pt</span>
-
-
-                                <div class="d-flex flex-column gap-1">
-                                    {{-- 会員ランク還元 --}}
-                                    @if( $rank_ratio > 1 )
-                                    <div class="badge border border-danger rounded-pill fw-bold px-3">
-                                        <span class="text-danger fw-bold fs-">{{ $point_sail->value*($rank_ratio-1) }}</span>
-                                        <span class="text-danger fw-bold">pt 還元！</span>
-                                    </div>
-                                    @endif
-
-
-                                    {{-- お得 --}}
-                                    @if( $point_sail->service )
-                                    <div class="badge border border-warning rounded-pill fw-bold px-3">
-                                        <span class="text-warning fw-bold fs-">{{ $point_sail->service*$rank_ratio }}</span>
-                                        <span class="text-warning fw-bold">pt お得！</span>
-                                    </div>
-                                    @endif
-                                </div>
                             </div>
 
                         <!--購入ボタン-->
@@ -119,30 +99,47 @@
                             </div>
                         </a>
                     </div>
-                    <div class="d-flex flex-wrap gap-1 mt-2" style="font-size:11px;">
+                    <div class="d-flex flex-colum flex-wrap gap-1 mt-2" style="font-size:11px;">
 
-                        {{-- チケット還元 --}}
-                        @if( $point_sail->ticket > 0 )
-                        <div class="">
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="col-auto">
-                                    <img src="{{asset('storage/site/image/ticket/success.png')}}"
-                                    alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem;">
-                                    {{-- <span class="text-success fw-bold" style="font-size:8px;">チケット</span> --}}
-                                </div>
-                                <div class="col">
-                                    <span class="fs-6">×</span>
-                                    <span class="fs-5 fw-bold">
-                                        <number-comma-component number="{{ $point_sail->ticket }}"></number-comma-component>
-                                    </span>
-                                    <span>枚</span>
-                                    <span class="text-success fw-bold">チケットプレゼント！</span>
-                                </div>
-                            </div>
+                        {{-- 会員ランク還元 --}}
+                        @if( $rank_ratio > 1 )
+                        <div class="badge border border-danger rounded-pill fw-bold px-3">
+                            <span class="text-danger fw-bold fs-">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                            <span class="text-danger fw-bold">pt 還元！</span>
+                        </div>
+                        @endif
+
+
+                        {{-- お得 --}}
+                        @if( $point_sail->service )
+                        <div class="badge border border-warning rounded-pill fw-bold px-3">
+                            <span class="text-warning fw-bold fs-">{{ $point_sail->service*$rank_ratio }}</span>
+                            <span class="text-warning fw-bold">pt お得！</span>
                         </div>
                         @endif
 
                     </div>
+                    {{-- チケット還元 --}}
+                    @if( $point_sail->ticket > 0 )
+                    <div class="">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="col-auto">
+                                <img src="{{asset('storage/site/image/ticket/success.png')}}"
+                                alt="チケット" class="d-block mx-auto"  style=" width:1.4rem; height:1.4rem;">
+                                {{-- <span class="text-success fw-bold" style="font-size:8px;">チケット</span> --}}
+                            </div>
+                            <div class="col">
+                                <span class="fs-6">×</span>
+                                <span class="fs-5 fw-bold">
+                                    <number-comma-component number="{{ $point_sail->ticket }}"></number-comma-component>
+                                </span>
+                                <span>枚</span>
+                                <span class="text-success fw-bold fs-6">チケットプレゼント！</span>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                 </li>
             @endforeach
 

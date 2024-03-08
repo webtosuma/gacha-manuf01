@@ -22,8 +22,10 @@ class TicketHistory extends Model
         'user_id', //ユーザーID
         'value',     //チケット数
         'reason_id', //入出理由ID
+        'store_id',  //商品購入ID
         'point_history_id',//ポイント収支履歴リレーション
     ];
+
 
 
 
@@ -75,6 +77,26 @@ class TicketHistory extends Model
         }
 
 
+        /**
+         * Storeモデル リレーション
+         * @return \App\Models\Store
+        */
+        public function store(){
+            return $this->belongsTo(Store::class);
+        }
+
+
+        /**
+         * UserPrizeモデル リレーション
+         * @return \App\Models\UserPrize
+        */
+        public function user_prizes()
+        {
+            return $this->hasMany(UserPrize::class,'ticket_history_id')
+            ->orderByDesc('point')
+            ->orderByDesc('prize_id')
+            ;
+        }
 
 
     /*

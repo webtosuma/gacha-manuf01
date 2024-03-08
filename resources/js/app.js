@@ -64,6 +64,10 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('a-prize-list',
     require('./components/admin/prize/Index.vue').default);
 
+    /* チケット用商品 */
+    Vue.component('a-ticket-store-list',
+    require('./components/admin/ticket_store/Index.vue').default);
+
     /* ガチャ管理 */
 
         // 商品登録

@@ -101,7 +101,6 @@ class AdminApiPrizeController extends Controller
         }
 
 
-
         /**
          * キーワード(key_words)から検索するメソッド holiday_summary
          *
@@ -135,6 +134,7 @@ class AdminApiPrizeController extends Controller
 
             // return $query;
         }
+
 
 
 

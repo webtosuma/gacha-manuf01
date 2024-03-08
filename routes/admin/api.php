@@ -40,8 +40,33 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.api.prize.destroy');
 
 
+
+
+    # チケット交換商品の取得
+    Route::post('admin/api/ticket_store',
+    [Controllers\AdminApiTicketStoreController::class, 'index'])
+    ->name('admin.api.ticket_store');
+
+    # チケット交換商品の新規作成
+    Route::post('admin/api/ticket_store/create',
+    [Controllers\AdminApiTicketStoreController::class, 'create'])
+    ->name('admin.api.ticket_store.create');
+
+    # チケット交換商品の更新
+    Route::patch('admin/api/ticket_store/update/{store?}',
+    [Controllers\AdminApiTicketStoreController::class, 'update'])
+    ->name('admin.api.ticket_store.update');
+
+    # チケット交換商品の削除
+    Route::delete('admin/api/ticket_store/destroy/{store?}',
+    [Controllers\AdminApiTicketStoreController::class, 'destroy'])
+    ->name('admin.api.ticket_store.destroy');
+
+
+
+
     # メール・送信
-    Route::post('admin/api/prize/{infomation}',
+    Route::post('admin/api/infomation/{infomation}',
     [Controllers\AdminInfomationController::class, 'api_email_post'])
     ->name('admin.api.infomation.email_post');
 

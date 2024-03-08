@@ -63,17 +63,12 @@
         [
             'route' => route('admin.point_sail'),
             'key'   => 'point',
-            'label' => '販売ポイント(作成中)',
+            'label' => '販売ポイント',
         ],
         [
-            'route' => '',
-            'key'   => 'ticket',
-            'label' => '販売チケット(作成中)',
-        ],
-        [
-            'route' => '',
-            'key'   => 'store',
-            'label' => '販売商品(作成中)',
+            'route' => route('admin.ticket_store'),
+            'key'   => 'ticket_store',
+            'label' => 'チケット用商品',
         ],
         [
             'route' => route('admin.infomation'),

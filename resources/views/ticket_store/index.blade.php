@@ -34,23 +34,23 @@
 
         <div class="row gx-2 gy-4">
             @forelse ($stores as $store)
-                <div class="col-12 col-md-3">
-                    <a href="{{route('ticket_store.show', $store)}}" class="d-block text-dark btn border-0
-                    @if($store->count<1) disabled @endif">
+                <div class="col-12 col-md-3 col-lg-2">
+                    <a href="{{route('ticket_store.show', $store)}}" class="d-block text-dark btn border-0 ">
+                    {{-- @if($store->count<1) disabled @endif"> --}}
 
                         <div class="row g-3">
                             <div class="col-4 col-md-12">
+
                                 <!--image-->
                                 @include('ticket_store.common.prize_image')
+
                             </div>
 
-                            <div class="col" style="font-size:16px;">
-                                {{-- <div class="rounded-3 bg-dark text-white p-3 mb-3"> --}}
+                            <div class="col">
 
-                                    <!--discription-->
-                                    @include('ticket_store.common.prize_discription')
+                                <!--discription-->
+                                @include('ticket_store.common.prize_discription')
 
-                                {{-- </div> --}}
                             </div>
                         </div>
                     </a>

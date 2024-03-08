@@ -30,6 +30,9 @@ use \App\Http\Controllers;
     # 演出動画
     include('web/movie.php');
 
+    # チケット交換商品
+    include('web/ticket_store.php');
+
     # お知らせ
     include('web/infomation.php');
 

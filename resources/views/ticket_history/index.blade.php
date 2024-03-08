@@ -44,20 +44,6 @@
                             </div>
                         </a>
                     </div>
-                    {{-- <div class="mt-3">
-                        <a href="{{ route('ticket_sail') }}"
-                        class="d-block btn py-1 border-success text-success rounded-pill shadow w-100">
-                            <div class="d-flex gap-2 align-items-center">
-                                <div class="">
-                                    <div class="rounded-circle border border-success fw-bold bg-gradient text-success
-                                    d-flex align-items-center justify-content-center mx-auto
-                                    " style=" width:1rem; height:1rem; margin:.4rem 0; font-size:11px;">P</div>
-                                </div>
-
-                                <div class="">チケット購入</div>
-                            </div>
-                        </a>
-                    </div> --}}
                 </div>
             </div>
         </li>
@@ -70,6 +56,7 @@
                 <div class="row align-items-center ">
                     <div class="col">
 
+
                         <div class="d-flex align-items-center justify-content-between">
                             @php
                             $text_color = $ticket_history->value >= 0 ? 'text-primary' : 'text-danger';
@@ -79,6 +66,11 @@
                             <div class="">
                                 <div class="form-text">{{$ticket_history->created_at->format('Y/m/d H:i')}}</div>
                                 <div class="fw-bold"><span class="{{$text_color}}">●</span>{{ $ticket_history->reason }}</div>
+
+                                {{-- 商品と交換 --}}
+                                @if( $ticket_history->reason_id==22 )
+                                    <div class="form-text">数量：{{$ticket_history->user_prizes->count()}}</div>
+                                @endif
                             </div>
 
                             <div class="col-auto {{$ticket_history->value >= 0 ?'':'text-danger'}}">

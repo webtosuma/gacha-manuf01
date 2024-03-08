@@ -28,6 +28,9 @@
 
 @section('content')
 
+    <!--ボトムメニュー-->
+    @include('ticket_store.common.bottom_menu')
+
     <!--breadcrumb-->
     <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -44,7 +47,7 @@
 
             <h3 class="text-center my-3 mb-5 ">チケット交換が完了しました</h3>
 
-            <div class="row gy-3">
+            <div class="row gy-5">
                 <div class="col-12 col-md-4">
 
                     <!--image-->
@@ -58,8 +61,16 @@
 
                     <!--discription-->
                     <div class="d-inline-block bg-success text-white px-2 mb-2">チケット交換</div>
-                    <h3 class="fs- fw-bold">{{$store->prize->name}}</h3>
-                    <div>取得数：<span class="fs-5">{{$store->count}}</span></div>
+                    <h3 class="fs- fw-bold m-0">{{$store->prize->name}}</h3>
+                    <div class="d-inline-block border px-3 bg-whitee text-center mt-1 px-1 rounded-pill">
+                        <number-comma-component number="{{$store->point_count}}"></number-comma-component>pt
+                    </div>
+
+                    <div class="mt-3">数量：<span class="fs-5">{{$ticket_history->user_prizes->count()}}</span></div>
+                    <div class="text-success">
+                        <span>交換チケット</span>
+                        <span class="fs-3">{{-$ticket_history->value}}</span>枚
+                    </div>
 
 
                     <div class="d-flex align-items-center gap-2 mt-5 border-top pt-3">

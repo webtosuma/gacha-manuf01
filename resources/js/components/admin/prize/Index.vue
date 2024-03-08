@@ -152,7 +152,7 @@
                                 <!--画像-->
                                 <div style="width:3rem;">
                                     <ratio-image-component
-                                    style_class="ratio ratio-3x4 rounded-3"
+                                    style_class="ratio ratio-3x4 rounded"
                                     :url=" prize.image_path " />
                                 </div>
                             </td>
@@ -248,6 +248,7 @@
                 where_rank_id: ''
             },
 
+
             selects: {
                 prize_ranks: {},
             },
@@ -294,19 +295,12 @@
             /* 商品データ取得 */
             getData(route = this.r_api_prize) {
 
-                // this.prizes  = [];
                 this.loading = true;//読み込み中
-
-                // return;
-                // const route = this.r_api_prize;
-                console.log(this.inputs);
-
 
                 axios.post( route , {_token: this.token, ...this.inputs} )
                 .then(json => {
                     console.log(json.data);
 
-                    // this.prizes = json.data.prizes;
                     //ページネーションデータ
                     const paginate = json.data.prizes;
 
@@ -318,8 +312,6 @@
                     this.selects.prize_ranks = json.data.prize_ranks;
 
                     this.loading = false;//読み込み中
-
-
 
                     /* 次のデータの読み込み */
                     const current_page = paginate.current_page;//表示中ページ

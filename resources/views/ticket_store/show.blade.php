@@ -54,26 +54,64 @@
                     @include('ticket_store.common.prize_discription')
 
                 </div>
-                <form action="{{route('ticket_store.post', $store)}}" method="POST"
-                class="mb-5 col-md-10 mx-auto">
-                    @csrf
 
-                    <select class="form-select bg-white fs-3 shadow-sm mb-3">
-                        @for ($num = 1; $num <= $store->count; $num++)
-                            <option value="{{$num}}">{{'数量：'.$num}}</option>
-                        @endfor
-                    </select>
+                <div class="col-md-10 mx-auto">
+                    @if( $store->count > 0)
+                        <form action="{{route('ticket_store.post', $store)}}" method="POST">
+                            @csrf
+
+                            <select name="item_count"
+                            class="form-select bg-white fs-3 shadow-sm mb-3">
+                                @for ($num = 1; $num <= $store->count; $num++)
+                                    <option value="{{$num}}">{{'数量：'.$num}}</option>
+                                @endfor
+                            </select>
 
 
-                    <button class="btn btn-lg btn-danger text-white rounded-pill shadow w-100"
-                    >チケットと交換する</button>
-                    {{-- <button class="btn btn-lg btn-outline-secindary border text-dark rounded-pill shadow w-100 mt-3">チケットと交換する</button> --}}
+                            <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body text-center">
+                                            <h5 class="modal-title" id="exchangeModalLabel">
+                                                <p>チケットと交換します。<br>よろしいですか？</p>
+                                                {{-- <p>商品を<strong class="fs-3">{{ totalPoint }}pt</strong>と交換する</p> --}}
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row g-2">
+                                                <div class="col-6">
+                                                    <button type="button"
+                                                    class="btn btn-light border rounded-pill w-100"
+                                                    data-bs-dismiss="modal"
+                                                    >キャンセル</button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button type="submit"
+                                                    class="btn btn-danger text-white rounded-pill w-100"
+                                                    >交換する</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button class="btn btn-lg btn-danger text-white rounded-pill shadow w-100"
+                            type="button"
+                            data-bs-toggle="modal" data-bs-target="#exchangeModal"
+                            >チケットと交換する</button>
+                        </form>
+                    @else
+                        <div class="fs-3 text-center text-danger mb-3">SOLD OUT</div>
+                    @endif
+
 
                     <a href="{{ route('ticket_store') }}"
                     class="btn btn-lg btn-light rounded-pill border w-100 mt-3"
                     >チケット交換一覧に戻る</a>
 
-                </form>
+                </div>
             </div>
         </div>
     </div>

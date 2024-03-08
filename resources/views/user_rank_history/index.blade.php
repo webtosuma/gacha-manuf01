@@ -25,41 +25,23 @@
     <ul class="list-group list-group-flush">
         {{-- 会員ランク --}}
         <li class="list-group-item bg-white py-4 fs-">
+            <!-- 会員ランク -->
             @if( Auth::user()->now_rank )
-                @php $now_rank = Auth::user()->now_rank; @endphp
+            @php $now_rank = Auth::user()->now_rank; @endphp
+            <div class="d-flex justify-content-between gap-3">
+                <div class="col col-md-3">
+                    <div style="font-size:14px;" class="mb-2">会員ランク：</div>
 
-                <div class="d-flex justify-content-between gap-3">
-                    <div class="col-6 col-md-4">
-                        <div class="mb-2">現在の会員ランク</div>
-
-                        <ratio-image-component
-                        style_class="ratio ratio-16x9 rounded-3 overflow-hidden
-                        position-relative shiny"
-                        url="{{ $now_rank->image_path }}"
-                        ></ratio-image-component>
-                    </div>
-                    <div class="col">
-
-                        <h5 class="fw-bold mb-2">{{$now_rank->label}}</h5>
-
-
-                        <div class="progress rounded-0 mb-" style="height: 1.6rem; transform: skew(-15deg);">
-                            <div class="progress-bar bg-gradient bg-danger" role="progressbar"
-                            style="width: {{$now_rank->meter_warning}}%" aria-valuenow="{{$now_rank->meter_warning}}"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-
-                            <div class="progress-bar bg-gradient bg-primary" role="progressbar"
-                            style="width: {{$now_rank->meter_success}}%" aria-valuenow="{{$now_rank->meter_success}}"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="text-end" style="font-size:14px;">pt消費数</div>
-                        {{-- <div class="text-end" style="font-size:14px;"
-                        >{{ number_format($now_rank->total_play_ptcount) }} / {{ number_format($now_rank->next_rankup_ptcount) }}</div> --}}
-                        <div class="text- mt-2" style="font-size:11px;">『{{$now_rank->next_rank->label}}』まであと、</div>
-                        <div class="text-end fs-5" style="font-size:14px;"
-                        >{{ number_format($now_rank->next_rankup_ptcount-$now_rank->total_play_ptcount) }}pt</div>
-                    </div>
+                    <ratio-image-component
+                    style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                    position-relative shiny"
+                    url="{{ $now_rank->image_path }}"
+                    ></ratio-image-component>
                 </div>
+                <div class="col">
+                    @include('mypage.user_rank')
+                </div>
+            </div>
             @endif
         </li>
 

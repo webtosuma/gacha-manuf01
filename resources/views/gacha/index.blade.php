@@ -92,7 +92,7 @@
 
 @section('content')
 
-    <section class="bg-dark" style="height:4.2rem;"></section>
+    <section class="bg-white" style="height:4.2rem;"></section>
 
 
     <!--カルーセル-->
