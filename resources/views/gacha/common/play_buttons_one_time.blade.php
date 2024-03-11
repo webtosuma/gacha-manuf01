@@ -11,14 +11,15 @@
             @csrf
 
             @if ($gacha->remaining_count >=1 && !$gacha->played_one_time)
-                <button type="submit" name="play_count" value="{{ 1 }}"
-                class="btn btn-light bg-gradient fw-bold w-100 pb-0
+                <disabled-button-slot type="submit" name="play_count" value="{{ 1 }}"
+                disabled="{{ 0 }}"
+                style_class="btn btn-light bg-gradient fw-bold w-100 pb-0
                 rounded-pill border-secondary border-3
                 position-relative shiny overflow-hidden
                 ">
                     <div class="">1回ガチャる</div>
                     <div class="text-warning">{{number_format($gacha->one_play_point).'pt'}}</div>
-                </button>
+                </disabled-button-slot>
             @else
                 <button type="submit" name="play_count" disabled
                 class="btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger

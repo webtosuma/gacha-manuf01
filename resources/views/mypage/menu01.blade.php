@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <span class="text-primary" style="font-size:11px;">一覧を見る<i class="bi bi-chevron-right"></i></span>
+                    <span class="">一覧を見る<i class="bi bi-chevron-right"></i></span>
                     {{-- <a href="{{ route('user_prize') }}" style="font-size:11px;"
                     >一覧を見る<i class="bi bi-chevron-right"></i></a> --}}
                 </div>

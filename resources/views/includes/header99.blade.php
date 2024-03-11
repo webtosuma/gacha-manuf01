@@ -1,4 +1,4 @@
-<header class="position-fixed bg-body w-100 shadow" style="z-index:100;">
+<header class="position-fixed bg-body w-100 " style="z-index:100;">
     <div class="container py- px-0">
 
         <nav class="d-flex justify-content-between align-items-center">

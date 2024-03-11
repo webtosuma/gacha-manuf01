@@ -42,7 +42,7 @@
             <div class="col-12 col-md-4">
 
                 <!--image-->
-                <div class="mx-auto">
+                <div class="col-8 col-md-12 mx-auto">
                     @include('ticket_store.common.prize_image')
                 </div>
 
@@ -61,9 +61,9 @@
                             @csrf
 
                             <select name="item_count"
-                            class="form-select bg-white fs-3 shadow-sm mb-3">
+                            class="form-select bg-white fs-5 shadow-sm mb-3">
                                 @for ($num = 1; $num <= $store->count; $num++)
-                                    <option value="{{$num}}">{{'数量：'.$num}}</option>
+                                    <option value="{{$num}}">{{'数量:'.$num.' / 消費チケット:'.$num*$store->ticket_count.'枚'}}</option>
                                 @endfor
                             </select>
 

@@ -19,9 +19,32 @@
 
 <div class="container py-md-4 mb-5">
     <h3 class="d-none d-md-block">ガチャ履歴</h3>
+
+
     <div class="list-group list-group-flush">
 
-        <div class="list-group-item bg-white py-4">
+        @if( Auth::user()->now_rank )
+        @php $now_rank = Auth::user()->now_rank; @endphp
+        <div class="list-group-item bg-white py-">
+            <div class="d-flex justify-content-between gap-3">
+                <div class="col-6 col-md-4">
+                    <div style="font-size:14px;" class="mb-2">会員ランク：</div>
+
+                    <ratio-image-component
+                    style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                    position-relative shiny"
+                    url="{{ $now_rank->image_path }}"
+                    ></ratio-image-component>
+                </div>
+                <div class="col">
+                    @include('mypage.user_rank')
+                </div>
+            </div>
+        </div>
+        @endif
+
+
+        <div class="list-group-item bg-white py-">
             {{-- 所持ポイント --}}
             <div class="d-flex alignitems-center justify-content-between">
                 <span>ガチャPLAY数：</span>

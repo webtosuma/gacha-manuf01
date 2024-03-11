@@ -38,7 +38,8 @@
     </main>
     <!-- bootstrap JavaScript -->
     @yield('script')
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    @include('includes.appjs')
 
 </body>
 </html>

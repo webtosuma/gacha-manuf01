@@ -61,10 +61,20 @@
 <body class="bg-white">
     <div id="app">
 
-        <!--header-->
         <div class="d-none d-md-block">
             @include('includes.header')
         </div>
+
+        <!--header-->
+        @if(Auth::check())
+
+            @if ( env('NEW_TICKET_SISTEM',false) )
+                @include('includes.offcanvas_menu02')
+            @else
+                @include('includes.offcanvas_menu')
+            @endif
+
+        @endif
 
 
         <div class="d-md-none">
@@ -80,11 +90,11 @@
                             {{-- <span>戻る</span> --}}
                             </button>
                         @else
-                            <a href="{{route('home')}}" class="btn p-0 px-2 borderrr rounded-pill text-primary
+                            <a href="{{route('home')}}" class="btn p-0 px-2 borderr rounded-pill text-primary
                             d-flex flex-column gap-1 align-items-center py-0">
 
                                 <i class="bi bi-arrow-left"></i>
-                                <span style="font-size:8px; line-height:8px;">TOP</span>
+                                <span class="mx-1" style="font-size:8px; line-height:8px;">TOP</span>
                             </a>
                         @endif
                     </div>
@@ -109,13 +119,6 @@
         </div>
 
 
-        @if(Auth::check())
-            @if ( env('NEW_TICKET_SISTEM',false) )
-                @include('includes.offcanvas_menu02')
-            @else
-                @include('includes.offcanvas_menu')
-            @endif
-        @endif
 
 
         @if ( isset( $message ) )
@@ -141,9 +144,7 @@
 
 
     <!-- Scripts -->
-    {{-- <script src="{{ asset('js/animation.js') }}"></script> --}}
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    {{-- <script src="{{ asset('js/20240214app.js') }}" defer></script> --}}
+    @include('includes.appjs')
 
 
     @yield('script')

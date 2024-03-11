@@ -11,6 +11,8 @@
             <span>{{ $user_address->shikuchoson }}</span>
             <span>{{ $user_address->number }}</span>
         </div>
+        <h5 class="mt-3">ご連絡先電話番号</h5>
+        <div class="">{{ $user_address->tell }}</div>
     </li>
     <li class="list-group-item p-3">
         <h5>利用ポイント</h5>

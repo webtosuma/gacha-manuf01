@@ -218,7 +218,7 @@
             r_api_update: { type: String,  default: '', },//更新
             r_api_destroy: { type: String,  default: '', },//削除
 
-            category_id:{ type: String,  default: '', },
+            category_id:{ type: [String,Number],  default: '', },
         },
         data() { return {
 

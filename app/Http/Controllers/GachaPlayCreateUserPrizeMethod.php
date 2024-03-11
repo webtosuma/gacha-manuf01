@@ -126,6 +126,7 @@ class GachaPlayCreateUserPrizeMethod extends Controller
         $gacha_prize->save();
 
 
+        // dd($gacha_prize->prize->point);
         # ユーザー取得商品の登録
         $user_prize = new UserPrize([
             'user_id'  => $user->id,  //ユーザー　リレーション

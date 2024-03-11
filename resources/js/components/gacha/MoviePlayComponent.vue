@@ -69,7 +69,7 @@
             movie_path_mobile:{ type: String,  default: '', },
             movie_path_pc:{ type: String,  default: '', },
             r_action:{ type: String,  default: '', },
-            rank_up:{ type: String,  default: '0', },
+            rank_up:{ type: [String,Number],  default: '0', },
         },
         data() { return {
 

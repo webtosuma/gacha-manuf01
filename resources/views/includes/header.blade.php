@@ -22,10 +22,10 @@
 
                 @guest
                     <!-- ログイン前 -->
-                    <a class="btn btn-sm btn-dark text-white rounded-pill shadow-sm fw-bold border-warning border-3 me-2"
+                    <a class="btn btn-sm btn-dark text-white rounded-pill shadow-sm fw-bold me-2"
                     href="{{ route('register') }}">{{ __('会員登録') }}</a>
 
-                    <a class="btn btn-sm rounded-pill border-light border-3 fw-bold me-2"
+                    <a class="btn btn-sm rounded-pill border border-3 fw-bold me-2"
                     href="{{ route('login') }}">{{ __('ログイン') }}</a>
 
                 @else

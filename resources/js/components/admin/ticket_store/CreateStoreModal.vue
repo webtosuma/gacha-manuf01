@@ -94,13 +94,7 @@
             token:{ type: String,  default: '', },
             r_api_prize:{ type: String,  default: '', },   //商品
             r_api_create: { type: String,  default: '', },//新規作成
-
-            // r_api_update: { type: String,  default: '', },//更新
-            // r_api_destroy: { type: String,  default: '', },//削除
-            // r_create:{ type: String,  default: '', },
-            // r_edit:{ type: String,  default: '', },
-            // r_download_csv:{ type: String,  default: '', },//csvファイルダウンロードパス
-            category_id:{ type: String,  default: '', },
+            category_id:{ type: [String,Number],  default: '', },
         },
         data() { return {
 

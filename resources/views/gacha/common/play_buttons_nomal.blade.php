@@ -11,22 +11,25 @@
             @csrf
 
             @if ($gacha->remaining_count >=1)
-                <button type="submit" name="play_count" value="{{ 1 }}"
-                class="btn btn-light bg-gradient fw-bold w-100 pb-0
+                <disabled-button-slot type="submit" name="play_count" value="{{ 1 }}"
+                disabled="{{ 0 }}"
+                style_class="btn btn-light bg-gradient fw-bold w-100 pb-0
                 rounded-pill border-secondary border-3
                 position-relative shiny overflow-hidden
                 ">
                     <div class="">1回ガチャる</div>
                     <div class="text-warning">{{number_format($gacha->one_play_point).'pt'}}</div>
-                </button>
+                </disabled-button-slot>
             @else
-                <button type="submit" name="play_count" disabled
-                class="btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger
-                rounded-pill border-secondary border-3"
-                >
-                    <div class="">終了</div>
+                <disabled-button-slot type="submit" name="play_count" value="{{ 1 }}"
+                disabled="{{ 1 }}"
+                style_class="btn btn-light bg-gradient fw-bold w-100 pb-0
+                rounded-pill border-secondary border-3
+                position-relative shiny overflow-hidden
+                ">
+                    <div class="text-danger">終了</div>
                     <div class="invisible">{{number_format($gacha->one_play_point).'pt'}}</div>
-                </button>
+                </disabled-button-slot>
             @endif
 
         </form>
@@ -38,22 +41,27 @@
             @csrf
 
             @if ($gacha->remaining_count >=10)
-                <button type="submit" name="play_count" value="{{ 10 }}"
-                class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0
+                <disabled-button-slot
+                type="submit" name="play_count" value="{{ 10 }}"
+                disabled="{{ 0 }}"
+                style_class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0
                 rounded-pill border-danger border-3
                 position-relative shiny overflow-hidden
                 ">
                     <div class="">10連ガチャる</div>
                     <div class="text-warning">{{number_format($gacha->one_play_point*10).'pt'}}</div>
-                </button>
+                </disabled-button-slot>
             @else
-                <button type="submit" name="play_count" disabled
-                class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger
-                rounded-pill border-secondary border-3"
-                >
+                <disabled-button-slot
+                type="submit" name="play_count" value="{{ 10 }}"
+                disabled="{{ 1 }}"
+                style_class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger
+                rounded-pill border-secondary border-3
+                ">
                     <div class="">終了</div>
                     <div class="text-white invisible">{{number_format($gacha->one_play_point*10).'pt'}}</div>
-                </button>
+                </disabled-button-slot>
+
             @endif
 
         </form>

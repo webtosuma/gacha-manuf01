@@ -32,9 +32,10 @@
             movie_path_mobile="{{ $movie_path['mobile'] }}"
             movie_path_pc="{{ $movie_path['pc'] }}"
             r_action="{{ route('gacha.result', $params )}}"
-            rank_up="{{$rank_up ? 1 : 0}}"
+            rank_up="{{ $rank_up ? 1 : 0}}"
             ></u-movie-play>
 
+            {{-- rank_up="{{ isset($rank_up)&&$rank_up ? 1 : 0}}" --}}
 
         </div>
     </main>

@@ -10,6 +10,7 @@ use App\Models\GachaDiscription;
 use App\Models\GachaPrize;
 use App\Models\Prize;
 use App\Models\UserGachaHistory;
+use App\Models\UserRankHistory;
 /*
 | =============================================
 |  サイト管理者 ガチャ コントローラー
@@ -83,10 +84,15 @@ class AdminGachaController extends Controller
 
         ]);
 
+
         # カテゴリーデータ(select要素用)
         $categories = GachaCategory::all();
 
-        return view('admin.gacha.create',compact('gacha','categories'));
+        # ユーザーランク
+        $user_ranks = UserRankHistory::UserRanks();
+
+
+        return view('admin.gacha.create',compact('gacha','categories', 'user_ranks'));
     }
 
 
@@ -149,7 +155,10 @@ class AdminGachaController extends Controller
         # カテゴリーデータ(select要素用)
         $categories = GachaCategory::all();
 
-        return view('admin.gacha.edit', compact('gacha','categories'));
+        # ユーザーランク
+        $user_ranks = UserRankHistory::UserRanks();
+
+        return view('admin.gacha.edit', compact('gacha','categories','user_ranks'));
     }
 
 
@@ -271,6 +280,7 @@ class AdminGachaController extends Controller
             'type',  //ガチャの種類
             'is_meter',//残数メーターの表示有無
             'is_slide',//スライドの表示有無
+            'user_rank_id',//会員ランクの指定
         );
 
 

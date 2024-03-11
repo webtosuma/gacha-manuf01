@@ -30,6 +30,9 @@
                                 <span>{{ address.shikuchoson }}</span>
                                 <span>{{ address.number }}</span>
                             </div>
+                            <div class="fw-bold">
+                                <span>{{ address.tell }}</span>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <!-- <button @click="destroy(address.id)"

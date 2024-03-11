@@ -60,6 +60,7 @@
     <div id="app">
 
         @include('includes.header')
+
         @if(Auth::check())
 
 
@@ -92,8 +93,7 @@
 
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    {{-- <script src="{{ asset('js/20240220app.js') }}" defer></script> --}}
+    @include('includes.appjs')
 
     <script src="{{ asset('js/animation.js') }}"></script>
 

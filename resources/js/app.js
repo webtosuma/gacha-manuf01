@@ -118,6 +118,12 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('disabled-button',
     require('./components/Items/DisabledButton.vue').default);
 
+    /* disabled ボタン ボタン内にslot */
+    Vue.component('disabled-button-slot',
+    require('./components/Items/DisabledButtonSlot.vue').default);
+
+
+
     /* 画像表示 */
     Vue.component('ratio-image-component',
     require('./components/Items/RatioImageComponent.vue').default);

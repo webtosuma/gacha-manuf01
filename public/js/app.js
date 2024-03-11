@@ -5391,6 +5391,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      disabled_data: 0
+    };
+  },
+  props: {
+    //最初に表示する画像のパス
+    disabled: {
+      type: [String, Number],
+      "default": 0
+    },
+    style_class: {
+      type: String,
+      "default": 'btn btn-primary'
+    },
+    name: {
+      type: String,
+      "default": ''
+    },
+    value: {
+      type: String,
+      "default": ''
+    },
+    type: {
+      type: String,
+      "default": 'submit'
+    }
+  },
+  mounted: function mounted() {
+    this.disabled_data = this.disabled;
+  },
+  methods: {
+    /* ボタンをクリックしたとき */
+    click: function click() {
+      this.disabled_data = 1;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/EncodedInputtextComponent.vue?vue&type=script&lang=js":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/EncodedInputtextComponent.vue?vue&type=script&lang=js ***!
@@ -7340,14 +7393,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       "default": ''
     },
     //新規作成
-
-    // r_api_update: { type: String,  default: '', },//更新
-    // r_api_destroy: { type: String,  default: '', },//削除
-    // r_create:{ type: String,  default: '', },
-    // r_edit:{ type: String,  default: '', },
-    // r_download_csv:{ type: String,  default: '', },//csvファイルダウンロードパス
     category_id: {
-      type: String,
+      type: [String, Number],
       "default": ''
     }
   },
@@ -7520,7 +7567,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     //削除
 
     category_id: {
-      type: String,
+      type: [String, Number],
       "default": ''
     }
   },
@@ -8529,7 +8576,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": ''
     },
     rank_up: {
-      type: String,
+      type: [String, Number],
       "default": '0'
     }
   },
@@ -9678,6 +9725,65 @@ var render = function render() {
       type: "button"
     }
   }, [_vm._v("送信中・・・")])]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4 ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("button", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.disabled_data == 0,
+      expression: "disabled_data==0"
+    }],
+    "class": _vm.style_class,
+    attrs: {
+      type: _vm.type,
+      name: _vm.name,
+      value: _vm.value
+    },
+    on: {
+      click: function click($event) {
+        return _vm.click();
+      }
+    }
+  }, [_vm._t("default", function () {
+    return [_vm._v("button")];
+  })], 2), _vm._v(" "), _c("button", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.disabled_data != 0,
+      expression: "disabled_data!=0"
+    }],
+    "class": _vm.style_class,
+    attrs: {
+      disabled: "",
+      type: _vm.type,
+      name: _vm.name,
+      value: _vm.value
+    }
+  }, [_vm._t("default", function () {
+    return [_vm._v("button")];
+  })], 2)]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -14860,7 +14966,9 @@ var render = function render() {
       staticClass: "fw-bold"
     }, [_vm._v("\n                            " + _vm._s(address.name) + " 様\n                        ")]), _vm._v(" "), _c("div", {
       staticClass: "fw-bold"
-    }, [_c("span", [_vm._v(_vm._s("〒" + address.postal_code.substring(0, 3) + "-" + address.postal_code.substring(3, 7)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.todohuken))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.shikuchoson))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.number))])])]), _vm._v(" "), _c("div", {
+    }, [_c("span", [_vm._v(_vm._s("〒" + address.postal_code.substring(0, 3) + "-" + address.postal_code.substring(3, 7)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.todohuken))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.shikuchoson))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.number))])]), _vm._v(" "), _c("div", {
+      staticClass: "fw-bold"
+    }, [_c("span", [_vm._v(_vm._s(address.tell))])])]), _vm._v(" "), _c("div", {
       staticClass: "col-auto"
     }, [_c("button", {
       staticClass: "btn btn-sm border",
@@ -15809,6 +15917,9 @@ Vue.component('disabled-button-component', (__webpack_require__(/*! ./components
 
 /* disabled(ノーマルform用) ボタン */
 Vue.component('disabled-button', (__webpack_require__(/*! ./components/Items/DisabledButton.vue */ "./resources/js/components/Items/DisabledButton.vue")["default"]));
+
+/* disabled ボタン ボタン内にslot */
+Vue.component('disabled-button-slot', (__webpack_require__(/*! ./components/Items/DisabledButtonSlot.vue */ "./resources/js/components/Items/DisabledButtonSlot.vue")["default"]));
 
 /* 画像表示 */
 Vue.component('ratio-image-component', (__webpack_require__(/*! ./components/Items/RatioImageComponent.vue */ "./resources/js/components/Items/RatioImageComponent.vue")["default"]));
@@ -38940,6 +39051,45 @@ component.options.__file = "resources/js/components/Items/DisabledButtonComponen
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/DisabledButtonSlot.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/Items/DisabledButtonSlot.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DisabledButtonSlot_vue_vue_type_template_id_ecdd9eb4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4 */ "./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4");
+/* harmony import */ var _DisabledButtonSlot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DisabledButtonSlot.vue?vue&type=script&lang=js */ "./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DisabledButtonSlot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DisabledButtonSlot_vue_vue_type_template_id_ecdd9eb4__WEBPACK_IMPORTED_MODULE_0__.render,
+  _DisabledButtonSlot_vue_vue_type_template_id_ecdd9eb4__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Items/DisabledButtonSlot.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/EncodedInputtextComponent.vue":
 /*!*********************************************************************!*\
   !*** ./resources/js/components/Items/EncodedInputtextComponent.vue ***!
@@ -40585,6 +40735,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=script&lang=js":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DisabledButtonSlot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DisabledButtonSlot.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DisabledButtonSlot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/EncodedInputtextComponent.vue?vue&type=script&lang=js":
 /*!*********************************************************************************************!*\
   !*** ./resources/js/components/Items/EncodedInputtextComponent.vue?vue&type=script&lang=js ***!
@@ -41324,6 +41490,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DisabledButtonComponent_vue_vue_type_template_id_2eaeb005__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DisabledButtonComponent_vue_vue_type_template_id_2eaeb005__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DisabledButtonComponent.vue?vue&type=template&id=2eaeb005 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/DisabledButtonComponent.vue?vue&type=template&id=2eaeb005");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4 ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DisabledButtonSlot_vue_vue_type_template_id_ecdd9eb4__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DisabledButtonSlot_vue_vue_type_template_id_ecdd9eb4__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DisabledButtonSlot_vue_vue_type_template_id_ecdd9eb4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/DisabledButtonSlot.vue?vue&type=template&id=ecdd9eb4");
 
 
 /***/ }),
