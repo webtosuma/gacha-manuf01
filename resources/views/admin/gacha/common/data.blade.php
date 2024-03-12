@@ -97,3 +97,8 @@
         </div>
     </div>
 </div>
+
+
+<div class="mb-3">
+    @include('admin.gacha.common.play_buttons_nomal')
+</div>

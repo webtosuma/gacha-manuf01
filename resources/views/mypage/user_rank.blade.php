@@ -24,6 +24,7 @@
         >{{ number_format($now_rank->next_rankup_ptcount-$now_rank->total_play_ptcount) }}pt</div>
     @endif
 
-    <a href="#" class="my-2" style="font-size:11px;"
+    <a href="https://note.com/cardfesta/n/ne0c0ee493e97"
+    class="my-2" style="font-size:11px;" target="_blank"
     ><i class="bi bi-question-circle me-2"></i>会員ランクについて</a>
 </div>

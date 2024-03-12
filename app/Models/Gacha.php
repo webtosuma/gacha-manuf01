@@ -251,4 +251,16 @@ class Gacha extends Model
 
             return $bool ? true : false ;
         }
+
+
+
+        /**
+         * ユーザーランク user_rank
+         * @return String
+        */
+        public function getUserRankAttribute()
+        {
+            return new UserRankHistory(['rank_id'=>$this->user_rank_id]);
+            return 'user_rank' ;
+        }
 }

@@ -61,7 +61,7 @@
                 <div style="font-size:14px;" class="mb-2">会員ランク：</div>
 
                 <ratio-image-component
-                style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                style_class="ratio ratio-16x9 rounded- overflow-hidden
                 position-relative shiny"
                 url="{{ $now_rank->image_path }}"
                 ></ratio-image-component>
@@ -128,7 +128,8 @@
                     class="btn btn-sm btn-success text-white rounded-pill shadow px-3">商品と交換</a> --}}
                 </div>
             </div>
-            <a href="#" style="font-size:11px;" target="_blank"
+            <a href="https://note.com/cardfesta/n/ne78f9144184a"
+            style="font-size:11px;" target="_blank"
             ><i class="bi bi-question-circle me-2"></i>チケットについて</a>
         </div>
 

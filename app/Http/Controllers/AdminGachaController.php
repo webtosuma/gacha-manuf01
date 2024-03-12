@@ -283,6 +283,9 @@ class AdminGachaController extends Controller
             'user_rank_id',//会員ランクの指定
         );
 
+        # 会員ランク空文字''=>nullに変換
+        $inputs['user_rank_id'] = $inputs['user_rank_id']==''? null: $inputs['user_rank_id'];
+
 
         # アクセスキー(新規作成のみ)
         if( $gacha == null ){ $inputs['key'] = \Illuminate\Support\Str::random(16); }

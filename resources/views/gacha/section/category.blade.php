@@ -1,5 +1,6 @@
-<!--カテゴリー-->
-<section class="mt-3 mb-2">
+<section class="bg- py-3">
+
+    <!--カテゴリー-->
     <div class="container px-0 col-md-12 mx-auto overflow-auto">
         <nav class="nav gap-1 flex-nowrap" style="min-width:{{$categories->count()*6 + 10}}rem;">
             @php
@@ -22,17 +23,15 @@
             @endforeach
         </nav>
     </div>
-</section>
 
 
-<!--絞り込みキー-->
-<section class="mb-3">
-    <div class="container px-0 col-md-12 mx-auto overflow-auto">
+    <!--絞り込みキー-->
+    <div class="container col-md-12 mx-auto overflow-auto mt-2 px-0">
         @php
         $sc = "col- fs- py-2 fw-bold btn btn-sm btn-light border px-3 rounded-pill";
         $search_key = $search_key ? $search_key : 'desc_crated';
         @endphp
-        <nav class="nav gap-1 flex-nowrap" style="min-width:{{count($searchs)*5 +5 + 10}}rem;">
+        <nav class="nav gap-1 flex-nowrap" style="min-width:{{count($searchs)*6 + 12}}rem;">
 
             <!-- カードサイズ変更 -->
             @php

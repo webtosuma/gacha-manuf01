@@ -52,7 +52,9 @@
 
                     <!--image-->
                     <div class="mx-auto w-50">
-                        @include('ticket_store.common.prize_image')
+                        <ratio-image-component
+                        url="{{ $store->prize->image_path }}" style_class="ratio ratio-3x4 rounded-3"
+                        ></ratio-image-component>
                     </div>
 
 

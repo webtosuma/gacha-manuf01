@@ -116,7 +116,7 @@
                 <select class="form-select" name="user_rank_id">
 
                     <option value=""
-                    @if( $gacha->user_rank_id === '' ) selected @endif
+                    @if( $gacha->user_rank_id === null ) selected @endif
                     >{{ '全ての会員' }}</option>
 
 
@@ -134,32 +134,6 @@
             @if ( $errors->has('user_rank_id') )
                 <div class="text-danger"> {{$errors->first('user_rank_id')}} </div>
             @endif
-
-            {{-- <div class="card p-2 mx-2">
-                <div class="form-text">ガチャの種類を選択してください。</div>
-                <div class="d-flex flex-column gap-3 ps-3">
-
-
-                    <label class="form-check">
-                        <input name="user_rank_id" value=""
-                        @if( $gacha->user_rank_id == '' ) checked @endif
-                        class="form-check-input" type="radio">
-
-                        <div class="form-check-div">{{ '全ての会員' }}</div>
-                    </label>
-
-                    @foreach ($user_ranks as $id => $user_rank)
-                        <label class="form-check">
-                            <input name="user_rank_id" value="{{$id}}"
-                            @if( $gacha->user_rank_id && $gacha->user_rank_id == $id  ) checked @endif
-                            class="form-check-input" type="radio">
-
-                            <div class="form-check-div">{{ $user_rank['label'] }}</div>
-                        </label>
-                    @endforeach
-                </div>
-
-            </div> --}}
         </div>
 
 

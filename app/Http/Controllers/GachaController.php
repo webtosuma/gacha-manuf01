@@ -56,6 +56,11 @@ class GachaController extends Controller
 
             ## 表示できるガチャ一覧
             $gachas = self::getPublishedGachas( $category_code, $search_key );
+            // dd($gachas[0]->user_rank->image_path);
+            // dd($gachas[1]->user_rank->id);
+
+
+
 
             ## カウントダウンガチャ
             $countdown_gachas = self::getCountdownGachas($category_code);
@@ -122,11 +127,27 @@ class GachaController extends Controller
             $id_array = self::getGachaIdOfCategory($category_code);
 
 
+            # ログインユーザーの会員ランク表示
+            $user = Auth::check() ? Auth::user() : null;
+            $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+            $user_rank_id = env('NEW_TICKET_SISTEM',false) ? $user_rank_id : null;// 3/15以降、削除可
+
             # ID配列を指定して、ガチャの取得
             $query = Gacha::query();
 
                 //売り切れは下
                 $query->orderBy('is_sold_out');
+
+
+                // 会員ランク限定ガチャ（ログインユーザーの会員ランク表示）
+                $query->where( function($query) use($user_rank_id)
+                {
+                    $query->where('user_rank_id',null); //全ての会員
+                    if( $user_rank_id!=null ){
+                        $query->orWhere('user_rank_id', $user_rank_id ); //ログインユーザーの会員ランク
+                    }
+                });
+
 
                 // 新規会委員のみ表示のガチャ(それ以外は非表示)
                 if( !(Auth::check() && !Auth::user()->sevendays_affter_registar) )
@@ -149,6 +170,18 @@ class GachaController extends Controller
                         $query->orderByDesc('published_at');
                         break;
 
+                    # 会員ランク限定
+                    case 'user_rank':
+                        $query->where( function($query) use($user_rank_id)
+                        {
+                            $query->where('user_rank_id','<>',null);//限定ガチャ
+                            if( $user_rank_id!=null ){
+                                $query->orWhere('user_rank_id', $user_rank_id ); //ログインユーザーの会員ランク
+                            }
+                        });
+                        $query->orderByDesc('published_at');
+                        break;
+
                     # 一回限定
                     case 'one_time':
                         $query->where('type','one_time');
@@ -163,7 +196,14 @@ class GachaController extends Controller
 
                     # 全ての限定　
                     case 'other_types':
-                        $query->where('type','<>','nomal');
+
+                        $query->where( function($query) use($user_rank_id)
+                        {
+                            $query->where('type','<>','nomal');//限定ガチャ
+                            if( $user_rank_id!=null ){
+                                $query->orWhere('user_rank_id', $user_rank_id ); //ログインユーザーの会員ランク
+                            }
+                        });
                         $query->orderByDesc('published_at');
                         break;
 
@@ -235,12 +275,13 @@ class GachaController extends Controller
             $array = [
                 // ['label'=>'新規会員限定', 'key'=>'only_new_user'],
 
-                ['label'=>'新着順', 'key'=>'desc_crated'],
+                ['label'=>'新着順',        'key'=>'desc_crated'],
                 ['label'=>'高額ポイント順', 'key'=>'desc_point'],
                 ['label'=>'低額ポイント順', 'key'=>'asc_point'],
-                ['label'=>'一回限定', 'key'=>'one_time'],
-                ['label'=>'１日１回', 'key'=>'only_oneday'],
-                ['label'=>'全ての限定', 'key'=>'other_types'],
+                // ['label'=>'会員ランク限定', 'key'=>'user_rank'],
+                ['label'=>'一回限定',      'key'=>'one_time'],
+                ['label'=>'１日１回',      'key'=>'only_oneday'],
+                ['label'=>'全ての限定',    'key'=>'other_types'],
             ];
 
             return $array;
@@ -300,7 +341,18 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
+        # キーのチェック
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
+
+        # 会員ランク専用ガチャ：ログインユーザーのランクと異なれば非表示
+        $user = Auth::check() ? Auth::user() : null;
+        $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+        if(
+            $gacha->user_rank_id != null
+            && $gacha->user_rank_id != $user_rank_id
+
+        ){ return \App::abort(401); }
+
 
         return view('gacha.show.index', compact( 'gacha' ));
     }

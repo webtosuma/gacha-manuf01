@@ -174,7 +174,13 @@ class GachaPlayController extends Controller
         ){
             return '現在、このガチャを利用することはできません。';
         }
-
+        # [会員ランク限定]
+        else if(
+            $gacha->user_rank_id != null
+            && $gacha->user_rank_id != ($user && $user->now_rank ? $user->now_rank->rank_id : null)
+        ){
+            return 'この会員ランクガチャを利用することはできません。';
+        }
         # [限定ガチャ]１回限定ガチャ
         else if(
             $gacha->type=='one_time' && $gacha->played_one_time
@@ -207,7 +213,7 @@ class GachaPlayController extends Controller
      * @param  Integer $total_play_point
      * @return　PointHistory
     */
-    public function CreatePointHistory( $total_play_point )
+    public static function CreatePointHistory( $total_play_point )
     {
         $user = Auth::user(); //ログインユーザー取得
         $point_history = new PointHistory([
@@ -228,7 +234,7 @@ class GachaPlayController extends Controller
      * @param  Integer $play_count
      * @return UserGachaHistory
     */
-    public function CreateGachaHistory( $gacha, $point_history ,$play_count )
+    public static function CreateGachaHistory( $gacha, $point_history ,$play_count )
     {
         $user = Auth::user(); //ログインユーザー取得
         $user_gacha_history = new UserGachaHistory([
@@ -248,7 +254,7 @@ class GachaPlayController extends Controller
      * @param  Array $randReminingGPIdArray
      * @return String
     */
-    public function MaxRank( $randReminingGPIdArray )
+    public static function MaxRank( $randReminingGPIdArray )
     {
         $gacha_prizes = GachaPrize::orderBy('gacha_rank_id','asc')//ランクが高い順
         ->find($randReminingGPIdArray);
@@ -265,7 +271,7 @@ class GachaPlayController extends Controller
      * @param  Array $randReminingGPIdArray //ランダムで選出した、ガチャの商品ID配列
      * @return　Array
     */
-    public function MoviePath( $gacha, $max_rank )
+    public static function MoviePath( $gacha, $max_rank )
     {
 
 
@@ -290,6 +296,7 @@ class GachaPlayController extends Controller
             'mobile' => $movie->mobile,
         ];
     }
+
 
 
 }
