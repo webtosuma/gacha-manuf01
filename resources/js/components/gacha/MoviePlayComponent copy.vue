@@ -1,18 +1,26 @@
 <template>
-    <div class="mx-auto bg-" style="height:100vh; min-width:100vw;">
+    <div class="mx-auto" style="height:100vh; min-width:100vw;">
         <div class="d-flex align-items-center align-items-center h-100 w-100 bg-">
 
-
-
-            <div class="section_video mx-auto" >
+            <div class="section_video w-100">
                 <!-- 動画mobile -->
-                <div class="video-area">
+                <div class="video-area d-md-none">
                     <video class="bg_video"
                     playsinline
                     :muted="muted"
+                    width="100%"
                     poster=""
-                    style="height:100vh;"
                     ><source :src="movie_path_mobile" />
+                    </video>
+                </div>
+                <!-- 動画PC -->
+                <div class="video-area d-none d-md-block">
+                    <video class="bg_video"
+                    playsinline
+                    :muted="muted"
+                    width="100%"
+                    poster=""
+                    ><source :src="movie_path_pc" />
                     </video>
                 </div>
             </div>

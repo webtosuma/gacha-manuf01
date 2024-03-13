@@ -24,7 +24,7 @@
 
 
 <div class="row">
-    <div class="col-md-9">
+    {{-- <div class="col-md-9">
         <!--PC用動画(pc_storage)-->
         <label class="d-block mb-4">
             <div class="form-label">
@@ -42,7 +42,7 @@
                 <div class="text-danger"> {{$errors->first('pc_storage')}} </div>
             @endif
         </label>
-    </div>
+    </div> --}}
     <div class="col-md-3">
         <!--モバイル用動画(mobile_storage)-->
         <label class="d-block mb-4">

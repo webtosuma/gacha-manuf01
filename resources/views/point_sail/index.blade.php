@@ -78,15 +78,34 @@
 
             @foreach ($point_sails as $point_sail)
                 <li class="list-group-item bg-white py-3">
+                    {{-- 会員ランク還元 --}}
+                    @if( $rank_ratio > 1 )
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+
+                            <div class="badge border border-dangerr rounded-pill text-danger fw-bold px-">
+                                <span class="text-dark fs-6">{{ number_format($point_sail->value) }}</span>
+                                <span class="text-dark">pt</span>
+                                <i class="bi bi-plus-lg"></i>
+                                <span class=" fs-6">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                                <span class="">pt 還元！</span>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="d-flex align-items-center justify-content-between">
 
+                        <div class="d-flex align-items-center justify-content-start gap-2">
+
+                            <!--P icon-->
+                            @include('includes.point_icon')
+
                             <div class="d-flex align-items-center gap-2 flex-wrap">
-                                @include('includes.point_icon')
                                 <h3 class="m-0 fw-bold fs-">
                                     <number-comma-component number="{{ $point_sail->value * $rank_ratio }}"></number-comma-component>
                                 </h3>
                                 <span>pt</span>
                             </div>
+                        </div>
 
                         <!--購入ボタン-->
                         <a href="{{ route('point_sail.payment', $point_sail) }}"
@@ -99,24 +118,25 @@
                             </div>
                         </a>
                     </div>
-                    <div class="d-flex flex-colum flex-wrap gap-1 mt-2" style="font-size:11px;">
+                    <div class="d-flex flex-colum flex-wrap gap-1 mt-1" style="font-size:11px;">
 
                         {{-- 会員ランク還元 --}}
-                        @if( $rank_ratio > 1 )
+                        {{-- @if( $rank_ratio > 1 )
                         <div class="badge border border-danger rounded-pill fw-bold px-3">
                             <span class="text-danger fw-bold fs-">{{ $point_sail->value*($rank_ratio-1) }}</span>
                             <span class="text-danger fw-bold">pt 還元！</span>
                         </div>
-                        @endif
+                        @endif --}}
 
 
                         {{-- お得 --}}
-                        @if( $point_sail->service )
-                        <div class="badge border border-warning rounded-pill fw-bold px-3">
-                            <span class="text-warning fw-bold fs-">{{ $point_sail->service*$rank_ratio }}</span>
-                            <span class="text-warning fw-bold">pt お得！</span>
+                        {{-- @if( $point_sail->service )
+                        <div class="badge border border-warning rounded-pill text-warning fw-bold px-">
+                            <span class=" fs-6">{{ number_format($point_sail->value*$rank_ratio - $point_sail->price) }}</span>
+                            <span class="">pt</span>
+                            <span class=" fs-6">お得！</span>
                         </div>
-                        @endif
+                        @endif --}}
 
                     </div>
                     {{-- チケット還元 --}}
@@ -134,7 +154,7 @@
                                     <number-comma-component number="{{ $point_sail->ticket }}"></number-comma-component>
                                 </span>
                                 <span>枚</span>
-                                <span class="text-success fw-bold fs-6">チケットプレゼント！</span>
+                                <span class="form-text text-success fw-bold">チケットプレゼント！</span>
                             </div>
                         </div>
                     </div>

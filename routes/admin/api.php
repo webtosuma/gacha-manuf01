@@ -34,8 +34,13 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminApiPrizeController::class, 'update'])
     ->name('admin.api.prize.update');
 
+    # 商品一覧情報のコピー
+    Route::post('admin/api/prize/copy/{prize?}',
+    [Controllers\AdminApiPrizeController::class, 'copy'])
+    ->name('admin.api.prize.copy');
+
     # 商品情報の削除
-    Route::delete('admin/api/prize/{prize?}',
+    Route::delete('admin/api/prize/destroy/{prize?}',
     [Controllers\AdminApiPrizeController::class, 'destroy'])
     ->name('admin.api.prize.destroy');
 

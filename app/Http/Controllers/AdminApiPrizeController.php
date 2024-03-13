@@ -79,10 +79,22 @@ class AdminApiPrizeController extends Controller
                     $query->orderByDesc('created_at');
                 }
 
+                # ポイント最大値
+                if( $request->max_point ){
+                    $query->where('point','<=', $request->max_point);
+                }
+
+                # ポイント最低値
+                if( $request->min_point ){
+                    $query->where('point','>=', $request->min_point);
+                }
+
+
                 # 指定したIDを含む
                 if( $request->ids ){
                     $query->whereIn('id', $request->ids);
                 }
+
                 # 指定したIDを除く
                 if( $request->not_ids ){
                     $query->whereNotIn('id', $request->not_ids);
@@ -154,6 +166,41 @@ class AdminApiPrizeController extends Controller
         $prize->update($inputs);
 
         return response()->json(['prize'=>$prize,'requests'=>$inputs]);
+    }
+
+
+
+
+    /**
+     * コピー
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Prize;
+     * @return \Illuminate\Http\Response
+     */
+    public function copy(Request $request, Prize $prize)
+    {
+        # 入力データの加工
+        $inputs = AdminPrizeController::processingInputs( $request, $prize );
+
+        # 画像ファイルの複製
+        $dir = 'upload/prize/image/';//保存先ディレクトリ
+        $path = $prize->image;
+        $new_image_path = Method::copyStorageFile( $dir, $path );
+
+        # DBデータのコピー
+        $copy_prize = new Prize([
+            'category_id' => $prize->category_id,//リレーション
+            'code'        => $prize->code,       //商品コード
+            'name'        => $prize->name,       //名前
+            'image'       => $new_image_path,    //画像
+            'rank_id'     => $prize->rank_id,    //ランクID
+            'point'       => $prize->point,      //交換ポイント値
+            'point_updated_at' => now(),//交換ポイント値更新日時
+            ]);
+        $copy_prize->save();
+
+        return response()->json(['prize'=>$prize,'copy_prize'=>$copy_prize]);
     }
 
 

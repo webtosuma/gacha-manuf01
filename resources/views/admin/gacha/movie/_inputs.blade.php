@@ -18,11 +18,27 @@
                 </div>
             </div>
         </button>
-        <div class="collapse mb-3  @if(!$num) showww @endif" id="collapse{{$discription->id}}">
+        <div class="collapse mb-3
+        @if($discription->g_prizes->sum('max_count') > 0) show @endif "
+        id="collapse{{$discription->id}}">
             <div class="card card-body overflow-auto bg-body" style="">
                 <div class="form-text">動画選択</div>
-                @foreach ($movies as $movie)
+                <div class="row">
+                    @foreach ($movies as $movie)
+                    <div class="col-3">
+                        <label class="form-check">
+                            <input name="{{'gri'.$discription->gacha_rank_id.'-movie_ids[]'}}"
+                            class="form-check-input" type="checkbox" value="{{ $movie->id }}"
+                            @if( in_array( $movie->id, $discription->movies->pluck('id')->toArray() ) ) checked @endif
+                            >
+                            <div>{{ $movie->name }}</div>
+                        </label>
+                    </div>
+                    @endforeach
+                </div>
 
+
+                {{-- @foreach ($movies as $movie)
                     <div class="row py-2 border-bottom align-items-center">
                         <div class="col">
                             <label class="form-check">
@@ -54,8 +70,7 @@
                             ></movie-modal-component>
                         </div>
                     </div>
-
-                @endforeach
+                @endforeach --}}
             </div>
         </div>
     </div>

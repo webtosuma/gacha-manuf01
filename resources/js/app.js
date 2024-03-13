@@ -37,6 +37,10 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-user-prize-form',
     require('./components/user_prize/FormComponent.vue').default);
 
+    /* チケット交換一覧フォーム */
+    Vue.component('u-ticket-store',
+    require('./components/ticket_store/TicketStoreComponent.vue').default);
+
     /* 発送申請入力フォーム */
     Vue.component('u-shipped-form',
     require('./components/shipped/Form.vue').default);

@@ -58,7 +58,7 @@ $active_submenu = true;
                 <tbody>
                     <tr class="bg-light">
                         <th scope="col">演出動画名</th>
-                        <th scope="col">PC用動画再生</th>
+                        {{-- <th scope="col">PC用動画再生</th> --}}
                         <th scope="col">モバイル用動画再生</th>
                         <th scope="col"></th>
                     </tr>
@@ -69,7 +69,7 @@ $active_submenu = true;
                         <td>{{ $movie->name }}</td>
 
 
-                        <td>
+                        {{-- <td>
                             <!-- PC用 -->
                             @if ($movie->pc)
                                 <movie-modal-component
@@ -82,7 +82,7 @@ $active_submenu = true;
                             @else
                                 <span>未登録</span>
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             <!-- モバイル用 -->
                             @if ($movie->mobile)

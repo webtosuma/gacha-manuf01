@@ -39,6 +39,20 @@
                     aria-label="Username" aria-describedby="basic-addon1" />
                 </div>
 
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">最大・最低チケット枚数</span>
+                        <input @change="getData()"
+                        v-model="inputs.max_ticket"
+                        type="number" class="form-control"
+                        placeholder="最大チケット" style="width:6rem;">
+                        <input @change="getData()"
+                        v-model="inputs.min_ticket"
+                        type="number" class="form-control"
+                        placeholder="最低チケット" style="width:6rem;">
+                    </div>
+                </div>
+
                 <div class="col-auto" v-if="!edit">
                     <button @click="toggleEdit()"
                     class="btn btn-outline-warning" type="button"
@@ -237,9 +251,12 @@
                 order_published_at: '',
                 order_point_count:  '',
                 order_count: '',
+                max_ticket: null,
+                min_ticket: null,
             },
 
             edit: false,
+            // edit: true,
 
         } },
         mounted() {

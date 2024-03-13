@@ -61,5 +61,8 @@ $active_key = 'gacha';
         </div>
 
 
+        <!--Modal-->
+        @include('admin.gacha.common.custom_button_modal')
+
     </div>
 @endsection

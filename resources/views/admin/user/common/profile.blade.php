@@ -113,7 +113,7 @@
                     func_btn_type="submit"
                     button_text="会員ランク更新"
                     button_class="btn btn-outline-info btn-sm text- rounded-pill form-text
-                    @if( isset($user->now_rank) ) disabled @endif">
+                    ">
                         <div>
                             <span class="fw-bold">『{{$user->name}}』さん</span>の会員ランクを更新します
                             <div class="">よろしいですか？</div>

@@ -44,7 +44,7 @@
 
             <!--操作ボタン-->
             <section class="mb-2">
-                <div class="row g-3 ">
+                <div class="row g-2 ">
                     <div class="col-auto">
                         <a :href="r_create+'?gacha_category_id='+inputs.category_id"
                         class="btn btn- btn-primary text-white px-4 shadow"
@@ -56,9 +56,22 @@
                         aria-label="Username" aria-describedby="basic-addon1" />
                     </div>
                     <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">最大・最低pt</span>
+                            <input @change="getData()"
+                            v-model="inputs.max_point"
+                            type="number" class="form-control"
+                            placeholder="最大pt" style="width:6rem;">
+                            <input @change="getData()"
+                            v-model="inputs.min_point"
+                            type="number" class="form-control"
+                            placeholder="最低pt" style="width:6rem;">
+                        </div>
+                    </div>
+                    <div class="col-auto">
                         <button @click="toggleEdit()"
                         class="btn btn- btn-light border" type="button"
-                        ><i class="bi bi-pencil-fill me-2"></i>一括編集</button>
+                        ><i class="bi bi-pencil-fill fs-"></i>一括編集</button>
                     </div>
                     <div class="col-auto">
                         <form :action="r_download_csv" method="post">
@@ -66,8 +79,8 @@
                             <input v-for="(value, name) in inputs" :key="name"
                             type="hidden" :name="name" :value="value">
 
-                            <button class="btn btn- btn-light border" type="submit"
-                            ><i class="bi bi-download me-2"></i>CSVダウンロード</button>
+                            <button class="btn btn- btn-light border  py-0" type="submit"
+                            ><i class="bi bi-filetype-csv fs-4"></i>ダウンロード</button>
                         </form>
                     </div>
                 </div>
@@ -106,7 +119,7 @@
                                 <div class="col-auto">
                                     <select @change="getData()"
                                     v-model="inputs.where_rank_id"
-                                    class="form-select form-select-sm fw-bold" aria-label="Default select example">
+                                    class="form-select form-select-sm fw-bold">
                                         <option value="">評価ランク</option>
                                         <option v-for="(prize_rank, key) in selects.prize_ranks" :key="key"
                                         :value="prize_rank.id">{{ prize_rank.name }}</option>
@@ -171,6 +184,18 @@
                                     <a class="btn btn-sm btn-light border "
                                     :href="r_edit+'/'+prize.id"><i class="bi bi-pencil-fill"></i></a>
 
+                                    <!--コピーモーダル-->
+                                    <delete-modal-component
+                                    @parent-func="copy(prize.id)"
+                                    :index_key="'copy'+prize.id"
+                                    icon="bi-files" color="warning"
+                                    button_class="btn btn-sm btn-light border">
+                                        <div>この商品をコピーします。<br />よろしいですか？</div>
+                                        <div class="form-text">商品コード：{{ prize.code }}</div>
+                                        <div class="form-text">商品名：{{ prize.name }}</div>
+                                    </delete-modal-component>
+
+
                                     <!--削除モーダル-->
                                     <delete-modal-component
                                     @parent-func="destory(prize.id)"
@@ -224,6 +249,7 @@
             r_api_prize:{ type: String,  default: '', },   //商品
             r_api_category:{ type: String,  default: '', },//ガチャ カテゴリー
             r_api_update: { type: String,  default: '', },//更新
+            r_api_copy: { type: String,  default: '', },//コピー
             r_api_destroy: { type: String,  default: '', },//削除
             r_create:{ type: String,  default: '', },
             r_edit:{ type: String,  default: '', },
@@ -245,7 +271,9 @@
                 order_rank_id: '',
                 order_point: '',
                 updated_at: '',
-                where_rank_id: ''
+                where_rank_id: '',
+                max_point: null,
+                min_point: null,
             },
 
 
@@ -299,7 +327,7 @@
 
                 axios.post( route , {_token: this.token, ...this.inputs} )
                 .then(json => {
-                    console.log(json.data);
+                    // console.log(json.data);
 
                     //ページネーションデータ
                     const paginate = json.data.prizes;
@@ -350,10 +378,27 @@
             },
 
 
+            /** コピー */
+            copy(id) {
+                const route = this.r_api_copy+'/'+id;
+                axios.post( route , {_token: this.token} )
+                .then(json => {
+                    console.log(json);
+                    this.getData(); /* データ取得 */
+                })
+                .catch(error => {
+                    alert('通信エラーが発生しました。')
+                    console.log( error.response.data );
+
+                });
+
+            },
+
+
             /** 削除 */
             destory(id) {
-                // console.log(id);
                 const route = this.r_api_destroy+'/'+id;
+
                 axios.delete( route , {_token: this.token} )
                 .then(json => {
                     this.getData(); /* データ取得 */

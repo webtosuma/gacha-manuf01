@@ -31,8 +31,20 @@
 
                 <div class="p-2">
                     <input @change="changeKeyWord()" v-model="keyWords"
-                    type="text" class="form-control form-control-sm" placeholder="検索：商品名・商品コード名"
+                    type="text" class="form-control form-control mb-1" placeholder="検索：商品名・商品コード名"
                     aria-label="Username" aria-describedby="basic-addon1" />
+
+                    <div class="input-group">
+                        <span class="input-group-text">最大・最低pt</span>
+                        <input @change="getData()"
+                        v-model="inputs.max_point"
+                        type="number" class="form-control"
+                        placeholder="最大pt" style="width:6rem;">
+                        <input @change="getData()"
+                        v-model="inputs.min_point"
+                        type="number" class="form-control"
+                        placeholder="最低pt" style="width:6rem;">
+                    </div>
                 </div>
 
                 <table class="table">
@@ -169,7 +181,10 @@
                 order_point: '',
                 order_updated_at: '',
                 not_ids: [],
-                where_rank_id: ''
+                where_rank_id: '',
+
+                max_point: null,
+                min_point: null,
             },
 
             selects: {

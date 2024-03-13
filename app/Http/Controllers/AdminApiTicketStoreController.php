@@ -67,10 +67,19 @@ class AdminApiTicketStoreController extends Controller
                     $query->orderBy('point_count', $request->order_point_count);
                 }
 
-
                 # 在庫順
                 if( $request->order_count ){
                     $query->orderBy('count', $request->order_count);
+                }
+
+                # ポイント最大値
+                if( $request->max_ticket ){
+                    $query->where('ticket_count','<=', $request->max_ticket);
+                }
+
+                # ポイント最低値
+                if( $request->min_ticket ){
+                    $query->where('ticket_count','>=', $request->min_ticket);
                 }
 
 

@@ -78,7 +78,7 @@ $active_submenu = true;
 
 
         <!--PC用動画(pc_storage)-->
-        <section class="py-5 border-bottom">
+        {{-- <section class="py-5 border-bottom">
             <form action="{{ route('admin.movie.update',$movie) }}" method="POST"
             novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
@@ -113,7 +113,7 @@ $active_submenu = true;
                 </div>
 
             </form>
-        </section>
+        </section> --}}
 
 
         <!--モバイル用動画(mobile_storage)-->

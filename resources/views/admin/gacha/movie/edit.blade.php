@@ -76,7 +76,10 @@ $active_key = 'gacha';
                 <aside class="d-none d-lg-block col-3 ">
                     <div class="position-sticky p-3" style="top: 2rem; ">
                         <disabled-button style_class="btn btn-warning text-white w-100 shadow"
-                        btn_text="更新する"></bdisabled-button>
+                        btn_text="更新する"></disabled-button>
+
+                        <a href="{{route('admin.movie')}}" class="btn border mt-3 py-0 w-100" target="_blank"
+                        ><i class="bi bi-play-btn fs-4 me-2"></i>動画を確認する</a>
                     </div>
                 </aside>
             </div>

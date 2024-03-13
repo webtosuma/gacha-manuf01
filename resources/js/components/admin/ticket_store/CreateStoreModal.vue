@@ -12,12 +12,27 @@
                 <div class="modal-content">
                     <div class="modal-header gap-1 border-0">
                         <!-- <h5 class="modal-title" id="createStoreModalLabel">追加商品の選択</h5> -->
-                        <div class="col">
+                        <div class="col-12">
                             <input @change="changeKeyWord()" v-model="keyWords"
-                            type="text" class="form-control form-control-lgg" placeholder="検索：商品名・商品コード名"
+                            type="text" class="form-control form-control-lgg w-100" placeholder="検索：商品名・商品コード名"
                             aria-label="Username" aria-describedby="basic-addon1" />
                         </div>
+                    </div>
+                    <div class="modal-header pt-0 gap-2">
                         <div class="col-auto">
+                            <div class="input-group">
+                                <span class="input-group-text">最大・最低pt</span>
+                                <input @change="getData()"
+                                v-model="inputs.max_point"
+                                type="number" class="form-control"
+                                placeholder="最大pt" style="width:6rem;">
+                                <input @change="getData()"
+                                v-model="inputs.min_point"
+                                type="number" class="form-control"
+                                placeholder="最低pt" style="width:6rem;">
+                            </div>
+                        </div>
+                        <div class="col">
                             <select @change="getData()"
                             v-model="inputs.where_rank_id"
                             class="form-select fw-bold" aria-label="Default select example">
@@ -106,7 +121,10 @@
             inputs: { },
             reset_inputs: {
                 key_words: '',
-                where_rank_id: 1
+                where_rank_id: 1,
+
+                max_point: null,
+                min_point: null,
             },
 
 

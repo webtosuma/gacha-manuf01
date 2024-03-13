@@ -59,7 +59,7 @@ $active_key = 'user';
 
                     <input type="hidden"   class="form-control" placeholder="X(旧Twitter) ID" name="search_twitter_id" value="{{$search_twitter_id}}">
 
-                    <button class="btn border w-100" type="submit">CSVダウンロード</button>
+                    <button class="btn border w-100 py-0" type="submit"><i class="bi bi-filetype-csv fs-4"></i>ダウンロード</button>
                 </form>
             </div>
             <div class="col-auto">

@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 <!--title-->
-@section('title','test「'.$gacha->name.'」の結果')
+@section('title','「'.$gacha->name.'」の結果')
 
 
 @section('meta')
@@ -14,12 +14,8 @@
 
 @section('style')
     <style>
-        main{ padding-top: 0rem; }
-        /* #result {
-            background: no-repeat center center / cover;
-            background-image: url({{$bg_image}});
-        } */
-        body{
+        #result{
+            background: no-repeat center center / cover fixed;
             background-image: url({{ $bg_image }});
         }
     </style>
@@ -107,5 +103,9 @@
                 </div>
             </aside>
         </div>
+
+        <!--Modal-->
+        @include('admin.gacha.common.custom_button_modal')
+
     </div>
 @endsection
