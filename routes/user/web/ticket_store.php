@@ -16,7 +16,7 @@ use App\Http\Controllers;
         ->name('ticket_store');
 
         # 詳細表示
-        Route::get('ticket_store/show/{store}',
+        Route::get('ticket_store/show/{store?}',
         [Controllers\TicketStoreController::class, 'show'])
         ->name('ticket_store.show');
 

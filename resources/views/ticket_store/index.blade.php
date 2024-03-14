@@ -31,16 +31,21 @@
 
     <div class="container py-md-4 py-5 mb-5">
 
-        <h3 class="d-none d-md-block ">チケット交換</h3>
+        <h3 class="d-none d-md-block mb-3">チケット交換</h3>
 
 
-        {{-- <u-ticket-store></u-ticket-store> --}}
+        <u-ticket-store
+        token="{{ csrf_token() }}"
+        r_api_list="{{route('api.ticket_store')}}"
+        r_api_show="{{route('ticket_store.show')}}"
+        src_ticket_image="{{asset('storage/site/image/ticket/success.png')}}"
+        ></u-ticket-store>
 
 
 
 
 
-        <div class="row gx-2 gy-4">
+        {{-- <div class="row gx-2 gy-4">
             @forelse ($stores as $store)
                 <div class="col-4 col-md-3 col-lg-2">
                     <a href="{{route('ticket_store.show', $store)}}" class="d-block text-dark btn border-0 p-0">
@@ -74,7 +79,7 @@
             @empty
                 <div class="col-12 text-secondary">*交換できる商品はありません</div>
             @endforelse
-        </div>
+        </div> --}}
     </div>
 
 

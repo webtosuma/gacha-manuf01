@@ -29,6 +29,10 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-movie-play',
     require('./components/gacha/MoviePlayComponent.vue').default);
 
+    /* ガチャボタンコンポーネント */
+    Vue.component('u-gacha-btn',
+    require('./components/gacha/DisabledButton.vue').default);
+
     /* ガチャ結果フォーム */
     Vue.component('u-gacha-result-form',
     require('./components/gacha/ResultFormComponent.vue').default);
@@ -123,8 +127,8 @@ require('./components/ExampleComponent.vue').default);
     require('./components/Items/DisabledButton.vue').default);
 
     /* disabled ボタン ボタン内にslot */
-    Vue.component('disabled-button-slot',
-    require('./components/Items/DisabledButtonSlot.vue').default);
+    // Vue.component('disabled-button-slot',
+    // require('./components/Items/DisabledButtonSlot.vue').default);
 
 
 

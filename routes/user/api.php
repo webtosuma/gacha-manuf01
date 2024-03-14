@@ -73,14 +73,12 @@ use App\Http\Controllers;
 | チケット交換商品
 |--------------------------------------------------------------------------
 */
-    Route::middleware(['auth'])->group(function () {
 
-        # 一覧
-        Route::post('ticket_store/api',
-        [Controllers\TicketStoreApiController::class, 'index'])
-        ->name('api.ticket_store');
+    # 一覧
+    Route::post('ticket_store/api',
+    [Controllers\TicketStoreApiController::class, 'index'])
+    ->name('api.ticket_store');
 
-    });
 
 
 

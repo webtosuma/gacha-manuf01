@@ -56,6 +56,15 @@ $active_key = 'gacha';
 
 
         <div class="row mx-0 g-3">
+            <!--flex-c1-->
+            <aside class="col-12 col-md-4 order-md-2">
+                <div class="position-sticky" style="top: 2rem; ">
+
+                    @include('admin.gacha.common.data')
+
+
+                </div>
+            </aside>
             <!--flex-c2-->
             <div class="col bg-white bg_gacha rounded-3">
 
@@ -65,15 +74,6 @@ $active_key = 'gacha';
                 </div>
 
             </div>
-            <!--flex-c1-->
-            <aside class="d-none d-lg-block col-4 ">
-                <div class="position-sticky" style="top: 2rem; ">
-
-                    @include('admin.gacha.common.data')
-
-
-                </div>
-            </aside>
         </div>
 
 

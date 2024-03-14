@@ -71,6 +71,7 @@
                     @click="changeOrder( select_order.value )"
                     class="btn btn-sm border rounded-pill"
                     :class=" order==select_order.value ? 'disabled btn-primary' : '' "
+                    style="opacity:1;"
                     >{{ select_order.lable }}</button>
                 </div>
             </div>

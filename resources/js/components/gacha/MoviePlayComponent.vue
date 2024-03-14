@@ -1,21 +1,23 @@
 <template>
-    <div class="mx-auto bg-" style="height:100vh; min-width:100vw;">
+    <div class="mx-auto bg-" style="height:100vh; max-width:100vw;">
         <div class="d-flex align-items-center align-items-center h-100 w-100 bg-">
 
 
 
-            <div class="section_video mx-auto" >
+            <div class="section_video mx-auto">
                 <!-- 動画mobile -->
                 <div class="video-area">
                     <video class="bg_video"
                     playsinline
                     :muted="muted"
                     poster=""
-                    style="height:100vh;"
+                    width="100%"
+                    height="100%"
                     ><source :src="movie_path_mobile" />
                     </video>
                 </div>
             </div>
+
 
 
             <!-- 音声切り替えボタン -->

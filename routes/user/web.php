@@ -15,27 +15,31 @@ use Illuminate\Support\Facades\Auth;
 // ->name('maintenance');
 
 
+
+
 Route::get('test', function(\Illuminate\Http\Request $request){
 
     $user = \App\Models\User::first();
 
     $user_rank_history = \App\Models\UserRankHistory::UserRanks();
     // $user_rank_history->save();
-    dd($user_rank_history);
+    // dd($user_rank_history);
 } );
 
 
-Route::get('/mypage',function(){
-    return view('mypage.index');
-})->middleware(['auth','user_rank'])
-->name('mypage');
 
 
-
+# トップページ
 Route::get('/',
     [App\Http\Controllers\GachaController::class, 'index']
 )->middleware(['user_rank'])
 ->name('home');
+
+# マイページ
+Route::get('/mypage',function(){
+    return view('mypage.index');
+})->middleware(['auth','user_rank'])
+->name('mypage');
 
 
 # WPAローディングページ

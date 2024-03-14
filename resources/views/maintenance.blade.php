@@ -52,12 +52,12 @@
                 <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:4.4rem;">
             </div> --}}
 
-            <h2 class="mb-3">只今、メンテナンス中です。<br>しばらくお待ちください。</h2>
+            <h2 class="mb-3 text-center">只今、メンテナンス中です。<br>しばらくお待ちください。</h2>
 
 
             <div class="rounded shadow p-3 text-center my-3 bg-light">
                 <h5 class="text-danger">メンテナンス予定時間</h5>
-                2024年3月4日(月) 14:00~14:30
+                2024年3月15日(金) 10:00~11:00
             </div>
 
             <p>

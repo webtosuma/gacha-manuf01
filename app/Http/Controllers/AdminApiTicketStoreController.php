@@ -86,7 +86,7 @@ class AdminApiTicketStoreController extends Controller
                 # 登録が新しい順
                 $query->orderByDesc('created_at');
 
-            $stores = $query->with('prize')->paginate(10);
+            $stores = $query->with('prize')->paginate(100);
 
 
             # 画像パスの登録
@@ -167,8 +167,17 @@ class AdminApiTicketStoreController extends Controller
             'ticket_count' => $this->PositiveNumber($request, $store, 'ticket_count'),//交換チケット数
             'point_count'  => $this->PositiveNumber($request, $store, 'point_count'), //交換ポイント数
             'count'        => $this->PositiveNumber($request, $store, 'count'),       //在庫数
-            'published_at' => $request->is_published ? now() : NULL,//公開設定(利用しない->非公開*消さない)
+            'published_at' => !$request->is_published ? null : (//公開設定(非公開)
+                !$store->published_at ? now() //非公開->公開
+                : $store->published_at
+            ),
         ];
+
+        # 公開日そのまま（公開->公開）
+        // $inputs['published_at'] = $request->published_at == $store->published_at
+        // ? $store->published_at : $inputs['published_at'];
+
+        # 更新
         $store->update( $inputs);
 
 
