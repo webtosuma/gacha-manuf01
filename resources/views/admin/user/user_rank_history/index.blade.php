@@ -104,7 +104,7 @@ $active_key = 'user';
                             </div>
                             <div class="col-auto" style="width:100px;">
                                 <ratio-image-component
-                                style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                                style_class="ratio ratio-16x9 overflow-hidden
                                 position-relative shiny"
                                 url="{{ $user_rank_history->image_path }}"
                                 ></ratio-image-component>

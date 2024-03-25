@@ -3,14 +3,6 @@
 <!----- title ----->
 @section('title','管理者ログイン')
 
-@section('meta')
-@php
-$email    = config('app.debug') ? 'na@tosuma.ltd' : '';
-$password = config('app.debug') ? 'password' : '';
-@endphp
-@endsection
-
-
 
 @section('content')
     <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3"

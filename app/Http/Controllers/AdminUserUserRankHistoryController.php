@@ -19,8 +19,10 @@ class AdminUserUserRankHistoryController extends Controller
      * @param User $user(0:全て n:個人)
      * @return \Illuminate\Http\Response
     */
-    public function index(Request $request, User $user)
+    public function index(Request $request, $user)
     {
+        $user = $user ? User::withTrashed()->find($user) : null;//退会者を含む
+
         # ポイント履歴の取得
         $query = UserRankHistory::query();
 

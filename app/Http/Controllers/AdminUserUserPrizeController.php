@@ -26,7 +26,7 @@ class AdminUserUserPrizeController extends Controller
     public function index($user_id)
     {
         # ユーザー情報
-        $user = $user_id ? User::find($user_id) : null;
+        $user = $user_id ? User::withTrashed()->find($user_id) : null;//退会者を含む
 
         # ユーザーの取得商品情報
         $user_prizes = UserPrize::onlyPossessionScope($user_id)

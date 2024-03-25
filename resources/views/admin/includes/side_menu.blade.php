@@ -99,7 +99,7 @@
 
 @endphp
 <div class="d-flex flex-column justify-content-between py-3 px-2">
-    <div class="border-bottom bg-body" id="sideMenuAccordion">
+    <div class="border-bottom bg-" id="sideMenuAccordion">
 
         <!-- 登録管理 -->
         <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle"
@@ -176,7 +176,7 @@
     </div>
 
 
-    <a href="{{ route('gacha_category') }}"
+    <a href="{{ route('gacha_category') }}" target="_blank"
     class="list-group-item border-0 p-2 px-3 w-100 text-start" style="border-radius: 2rem  2rem;">
         <div class="d-flex align-items-center gap-3">
             <i class="bi bi-house fs-4"></i>

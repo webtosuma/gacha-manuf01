@@ -36,12 +36,12 @@
 
     <!--[ mobile メニュー ]-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasHumberger" aria-labelledby="offcanvasHumbergerLabel" style="max-width: 90vw;">
-        <div class="offcanvas-header bg-dark py-1">
+        <div class="offcanvas-header bg- py-1">
 
-            <a href="" class="text-decoration-none text-white">
+            <a href="{{route('admin.home')}}" class="text-decoration-none text-dark">
                 <h2 class="fs-6 m- text-center">
-                    <img src="" alt="{{ config('app.name', 'Laravel') }}">
-                    <span class="fw-bold text-light" style="font-size:.8rem;">サイト管理者</span>
+                    <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name', 'Laravel') }}" style="height:1rem;">
+                    <span class="fw-bold text-" style="font-size:.8rem;">サイト管理者</span>
                 </h2>
                 <h6>{{ Auth::user()->name }}さん</h6>
             </a>

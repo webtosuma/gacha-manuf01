@@ -24,7 +24,7 @@ class AdminUserTicketHistoryController extends Controller
     public function index(Request $request, $user_id)
     {
         # ユーザー情報
-        $user = $user_id ? User::find($user_id) : null;
+        $user = $user_id ? User::withTrashed()->find($user_id) : null;//退会者を含む
 
         # 入出理由　絞り込み
         $reason_id = $request->reason_id ?? 0;

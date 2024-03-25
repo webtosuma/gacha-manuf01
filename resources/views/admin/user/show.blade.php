@@ -105,49 +105,51 @@ $active_key = 'user';
 
 
         <!-- 退会処理 -->
-        <section class="card card-body mb-5">
-            <div class="d-flex justify-content-between">
-                <h5 class="m-0 fw-bold">退会処理</h5>
-                <div class="">
-                    <button type="button" data-bs-toggle="modal"
-                    data-bs-target="#deleteModal{{'delete'.$user->id}}"
-                    class="btn btn-danger text-white"
-                    >退会</button>
+        @if(!$user->deleted_at)
+            <section class="card card-body mb-5">
+                <div class="d-flex justify-content-between">
+                    <h5 class="m-0 fw-bold">退会処理</h5>
+                    <div class="">
+                        <button type="button" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{'delete'.$user->id}}"
+                        class="btn btn-danger text-white"
+                        >退会</button>
 
 
 
-                    <form action="{{ route('admin.user.destroy', $user) }}" method="post">
-                        @csrf
-                        @method('DELETE')
+                        <form action="{{ route('admin.user.destroy', $user) }}" method="post">
+                            @csrf
+                            @method('DELETE')
 
-                        <delete-modal-component
-                        index_key="{{'delete'.$user->id}}"
-                        icon="bi-person-dash"
-                        func_btn_type="submit"
-                        button_class="invisible">
-                            <div>
-                                <span class="fw-bold">『{{$user->name}}』</span>さんの
-                                <br />アカウントを退会処理します。
-                                <br />よろしいですか？
-                            </div>
-                        </delete-modal-component>
-                    </form>
+                            <delete-modal-component
+                            index_key="{{'delete'.$user->id}}"
+                            icon="bi-person-dash"
+                            func_btn_type="submit"
+                            button_class="invisible">
+                                <div>
+                                    <span class="fw-bold">『{{$user->name}}』</span>さんの
+                                    <br />アカウントを退会処理します。
+                                    <br />よろしいですか？
+                                </div>
+                            </delete-modal-component>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="border border-danger p-3">
-                <h5>注意:以下のことをお伝えください。</h5>
-                <ul>
-                    <li>
-                        登録に使用したメールアドレスで再びアカウントを作成することはできません。
-                    </li>
-                    <li>
-                        退会後は、取得した商品をお渡しすることはできません。
-                    </li>
-                    <li>
-                        ポイントの返金はできません。
-                    </li>
-                </ul>
-            </div>
-        </section>
+                <div class="border border-danger p-3">
+                    <h5>注意:以下のことをお伝えください。</h5>
+                    <ul>
+                        <li>
+                            登録に使用したメールアドレスで再びアカウントを作成することはできません。
+                        </li>
+                        <li>
+                            退会後は、取得した商品をお渡しすることはできません。
+                        </li>
+                        <li>
+                            ポイントの返金はできません。
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        @endif
     </div>
 @endsection

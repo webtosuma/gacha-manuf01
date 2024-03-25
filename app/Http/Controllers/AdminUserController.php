@@ -30,10 +30,15 @@ class AdminUserController extends Controller
     {
 
         # 検索キー
-        $search_id         = $search_id ? $search_id : '';
-        $search_name       = $search_name ? $search_name : '';
-        $search_email      = $search_email ? $search_email : '';
-        $search_twitter_id = $search_twitter_id ? $search_twitter_id : '';
+        // $search_id         = $search_id ? $search_id : '';
+        // $search_name       = $search_name ? $search_name : '';
+        // $search_email      = $search_email ? $search_email : '';
+        // $search_twitter_id = $search_twitter_id ? $search_twitter_id : '';
+
+        $search_id         = $request->search_id ? $request->search_id : '';
+        $search_name       = $request->search_name ? $request->search_name : '';
+        $search_email      = $request->search_email ? $request->search_email : '';
+        $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : '';
 
 
         # 絞り込み
@@ -51,8 +56,12 @@ class AdminUserController extends Controller
             if($search_twitter_id){
                 $query->where('twitter_id','like','%'.$search_twitter_id.'%');
             }
+            if($request->sort){ //退職者のみ
+                $query->where('deleted_at','<>',null);
+            }
 
-        $users = $query->orderByDesc('created_at')->orderByDesc('id')
+        $users = $query->withTrashed()//退会者を含む
+        ->orderByDesc('created_at')->orderByDesc('id')
         ->paginate(100);//ページネーション
 
 
@@ -67,19 +76,16 @@ class AdminUserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
     */
-    public function search(Request $request)
-    {
-        # 検索キー
-        $search_id         = $request->search_id ? $request->search_id : 0;
-        $search_name       = $request->search_name ? $request->search_name : 0;
-        $search_email      = $request->search_email ? $request->search_email : 0;
-        $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : 0;
+    // public function search(Request $request)
+    // {
+    //     # 検索キー
+    //     $search_id         = $request->search_id ? $request->search_id : 0;
+    //     $search_name       = $request->search_name ? $request->search_name : 0;
+    //     $search_email      = $request->search_email ? $request->search_email : 0;
+    //     $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : 0;
 
-        // dd(compact('search_name'));
-        return redirect()->route('admin.user', compact('search_id', 'search_name', 'search_email', 'search_twitter_id'));
-        // return redirect()->route('admin.user', compact('search_name'));
-
-    }
+    //     return redirect()->route('admin.user', compact('search_id', 'search_name', 'search_email', 'search_twitter_id'));
+    // }
 
     /**
      * CSVファイルのダウンロード

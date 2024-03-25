@@ -278,7 +278,7 @@ class GachaController extends Controller
                 ['label'=>'新着順',        'key'=>'desc_crated'],
                 ['label'=>'高額ポイント順', 'key'=>'desc_point'],
                 ['label'=>'低額ポイント順', 'key'=>'asc_point'],
-                // ['label'=>'会員ランク限定', 'key'=>'user_rank'],
+                ['label'=>'会員ランク限定', 'key'=>'user_rank'],
                 ['label'=>'一回限定',      'key'=>'one_time'],
                 ['label'=>'１日１回',      'key'=>'only_oneday'],
                 ['label'=>'全ての限定',    'key'=>'other_types'],

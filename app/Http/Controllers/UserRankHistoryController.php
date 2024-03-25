@@ -136,8 +136,8 @@ class UserRankHistoryController extends Controller
         $month_pt_count = self::GetMonthPtCount($user, $desc_first_rank->created_at); //指定年月のpt消費数
         // $month_pt_count = self::GetMonthPtCount($user, $date); //指定年月のpt消費数
 
-        if(
-            $next_rank->rankup_pt_count <= $month_pt_count //*昇格のpt消費数をクリアしているとき
+        if( $next_rank
+            && $next_rank->rankup_pt_count <= $month_pt_count //*昇格のpt消費数をクリアしているとき
             && $desc_first_rank->rank_id != $max_rank_id //*マスターランクでは無いとき
         ){
             # ランクアップする会員ランク情報($up_rank)

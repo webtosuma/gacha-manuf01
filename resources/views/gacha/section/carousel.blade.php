@@ -1,7 +1,7 @@
 <!--カルーセル-->
 <section class="overflow-hidden" style="background:rgb(0, 0, 0,.8);">
 
-    <div class="container p-3 bg-dar">
+    <div class="container px-4 bg-dar">
         <div class="mx-auto"  style="max-width: 900px;">
             <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
 

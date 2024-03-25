@@ -12,22 +12,27 @@
                 </div>
 
                 @forelse ($infomations as $infomation)
-                    <div class="list-group-item list-group-item-action border-0 pozition-relative">
+                    <div class="list-group-item list-group-item-actionnn border-0 pozition-relative">
                         <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
-                            <div class="d-flex align-items-center px-3">
+                            <div class="d-flex align-items-center px-0">
                                 <div class="col">
-                                    <div class="row py-2">
 
-                                        <div class="col-auto text-primary">
-                                            {{ $infomation->created_at->format('Y.m.d') }}
-                                        </div>
-                                        <div class="col-12 col-md text-white">
-                                            {{ $infomation->title }}
-                                        </div>
-
+                                    <div class="text-primary">
+                                        {{ $infomation->created_at->format('Y.m.d') }}
                                     </div>
+                                    <div class="text-white">
+                                        {{ $infomation->title }}
+                                    </div>
+
                                 </div>
-                                <div class="col-auto text-primary">
+                                @if( $infomation->image_path )
+                                    <div class="col-auto" style="width:3rem;">
+                                        <ratio-image-component
+                                        url="{{ $infomation->image_path }}" style_class="ratio ratio-1x1 w-100 rounded"
+                                        ></ratio-image-component>
+                                    </div>
+                                @endif
+                                <div class="col-auto text-primary ms-2">
                                     <i class="bi bi-chevron-right"></i>
                                 </div>
                             </div>

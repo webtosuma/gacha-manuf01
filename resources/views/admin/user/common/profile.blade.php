@@ -13,6 +13,10 @@
             <div class="col">
                 ID：{{ $user->id }}
                 <a href="{{ route('admin.user.show',$user) }}" class="ms-3">{{ $user->name }}</a>
+
+                @if($user->deleted_at)
+                    <span class="text-danger ms-3">*退会済</span>
+                @endif
             </div>
         </div>
         <!-- 会員ランク -->
@@ -156,6 +160,13 @@
             </div>
         </div>
         @endif
+        @if($user->deleted_at)
+            <div class="my-2">
+                <h6>退会</h6>
+                <div class="border p-2 rounded  text-danger">{{$user->deleted_at->format('Y年m月d日 H:i') }}</div>
+            </div>
+        @endif
+
     </div>
 </div>
 

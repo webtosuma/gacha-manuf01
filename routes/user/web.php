@@ -19,11 +19,10 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('test', function(\Illuminate\Http\Request $request){
 
-    $user = \App\Models\User::first();
+    $user_prize = \App\Models\UserPrize::
+    where('user_id',9528)->where('prize_id',4484)->first();
+    dd($user_prize);
 
-    $user_rank_history = \App\Models\UserRankHistory::UserRanks();
-    // $user_rank_history->save();
-    // dd($user_rank_history);
 } );
 
 
@@ -115,7 +114,7 @@ include('web/settings.php');
 # キャンペーン
 include('web/canpaing.php');
 
-# ユーザー設定
+# フッターメニュー
 include('web/footer_menu.php');
 
 

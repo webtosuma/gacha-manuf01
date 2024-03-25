@@ -37,8 +37,8 @@
         } */
         .carousel-control-prev-icon, .carousel-control-next-icon {
             display: inline-block;
-            width:  4rem;
-            height: 4rem;
+            width:  2rem;
+            height: 2rem;
             background-repeat: no-repeat;
             background-position: 50%;
             background-size: 100% 100%;

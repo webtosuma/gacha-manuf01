@@ -10,15 +10,16 @@ Route::middleware(['admin_auth'])->group(function () {
 
 
     # 登録ユーザー一覧
-    Route::get('/admin/user/l/{search_id?}/{search_name?}/{search_email?}/{search_twitter_id?}',
+    // Route::get('/admin/user/l/{search_id?}/{search_name?}/{search_email?}/{search_twitter_id?}',
+    Route::get('/admin/user/l',
     [Controllers\AdminUserController ::class, 'index'])
     ->name('admin.user');
 
 
     # ユーザー絞り込み
-    Route::post('/admin/user/search',
-    [Controllers\AdminUserController ::class, 'search'])
-    ->name('admin.user.search');
+    // Route::post('/admin/user/search',
+    // [Controllers\AdminUserController ::class, 'search'])
+    // ->name('admin.user.search');
 
 
     # CSVファイルのダウンロード

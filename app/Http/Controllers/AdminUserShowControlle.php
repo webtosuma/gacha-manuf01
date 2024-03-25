@@ -21,8 +21,10 @@ class AdminUserShowControlle extends Controller
      * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index($user)
     {
+        $user = User::withTrashed()->find($user);//退会者を含む
+
         # お友達情報
         $friend_ids = CanpaingIntroductory::where('recruiter_id',$user->id)
         ->pluck('friend_id')->toArray();
@@ -32,6 +34,7 @@ class AdminUserShowControlle extends Controller
         $friends = User::orderByDesc('created_at')->whereIn('id',$friend_ids)
         ->paginate(20);//ページネーション
 
+
         # ポイント購入履歴
         foreach ($friends as $friend) {
 
@@ -40,6 +43,8 @@ class AdminUserShowControlle extends Controller
 
             $friend->point_sail_histories = $point_sail_histories;
         }
+
+        // dd($user->id);
 
         return view('admin.user.show', compact('user','friends','friends_count') );
     }

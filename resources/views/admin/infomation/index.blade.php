@@ -57,7 +57,7 @@ $active_submenu = true;
             style="background:rgb(255, 255, 255, .7);">
                 @forelse ($infomations as $infomation)
                     <div class="list-group-item border- pozition-relative">
-                        <div class="row mx-3 align-items-center py-2 g-2">
+                        <div class="row mx- align-items-center py-2 g-2">
                             <div class="col-auto">
                                 @if( $infomation->is_published )
                                     <!--公開-->
@@ -82,7 +82,7 @@ $active_submenu = true;
 
                                 </a>
                             </div>
-                            <div class="col text-secondary">
+                            <div class="col col-md-auto text-secondary">
                                 <div class="">
                                     <!--登録日-->
                                     <i class="bi bi-pencil-fill"></i>
@@ -100,38 +100,53 @@ $active_submenu = true;
                                 </div>
 
                             </div>
-                            <div class="col-auto">
-                                <!--編集ボタン-->
-                                <a href="{{ route('admin.infomation.edit',$infomation) }}"
-                                class="btn btn-sm btn-light border "
-                                ><i class="bi bi-pencil-fill"></i></a>
-                            </div>
-                            <div class="col-auto">
-                                <!--メール送信ボタン-->
-                                <a href="{{route('admin.infomation.email',$infomation)}}"
-                                class="btn btn-sm btn-light border "
-                                ><i class="bi bi-envelope"></i></a>
+                            @if( $infomation->image_path )
+                                <div class="col-auto" style="width:3rem;">
+                                    <ratio-image-component
+                                    url="{{ $infomation->image_path }}" style_class="ratio ratio-1x1 w-100 rounded"
+                                    ></ratio-image-component>
+                                </div>
+                            @endif
+                            <div class="col-12 col-md-auto">
+                                <div class="row g-1 justify-content-end">
+
+                                    <div class="col-auto">
+                                        <!--編集ボタン-->
+                                        <a href="{{ route('admin.infomation.edit',$infomation) }}"
+                                        class="btn btn-sm btn-light border "
+                                        ><i class="bi bi-pencil-fill"></i></a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <!--メール送信ボタン-->
+                                        <a href="{{route('admin.infomation.email',$infomation)}}"
+                                        class="btn btn-sm btn-light border "
+                                        ><i class="bi bi-envelope"></i></a>
+                                    </div>
+
+                                    <div class="col-auto">
+
+                                        <!--削除モーダル-->
+                                        <form action="{{ route('admin.infomation.destroy', $infomation) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <delete-modal-component
+                                            index_key="{{'delete'.$infomation->id}}"
+                                            icon="bi-trash"
+                                            func_btn_type="submit"
+                                            button_class="btn btn-sm btn-light border ">
+                                                <div>
+                                                    <span class="fw-bold">『{{$infomation->title}}』</span>を削除します。
+                                                    <br />よろしいですか？
+                                                </div>
+                                            </delete-modal-component>
+                                        </form>
+                                    </div>
+
+                                </div>
                             </div>
 
-                            <div class="col-auto">
 
-                                <!--削除モーダル-->
-                                <form action="{{ route('admin.infomation.destroy', $infomation) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <delete-modal-component
-                                    index_key="{{'delete'.$infomation->id}}"
-                                    icon="bi-trash"
-                                    func_btn_type="submit"
-                                    button_class="btn btn-sm btn-light border ">
-                                        <div>
-                                            <span class="fw-bold">『{{$infomation->title}}』</span>を削除します。
-                                            <br />よろしいですか？
-                                        </div>
-                                    </delete-modal-component>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 @empty

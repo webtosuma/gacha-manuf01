@@ -31,7 +31,7 @@
                     <div class="row g-2 mt-2 align-items-center">
                         <div class="col-auto me-2" style="width:6rem;">
                             <ratio-image-component
-                            style_class="ratio ratio-16x9 rounded overflow-hidden
+                            style_class="ratio ratio-16x9 overflow-hidden
                             position-relative shiny"
                             url="{{ $now_rank->image_path }}"
                             ></ratio-image-component>

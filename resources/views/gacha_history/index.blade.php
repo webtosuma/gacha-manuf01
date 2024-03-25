@@ -31,7 +31,7 @@
                     <div style="font-size:14px;" class="mb-2">会員ランク：</div>
 
                     <ratio-image-component
-                    style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                    style_class="ratio ratio-16x9 overflow-hidden
                     position-relative shiny"
                     url="{{ $now_rank->image_path }}"
                     ></ratio-image-component>

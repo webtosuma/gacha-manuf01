@@ -76,19 +76,20 @@
                         <!--登録枚数-->
                         <div v-if="store.count>0"
                         class="position-absolute top-0 end-0 p-" style="transform: translate(6px, -6px);">
-                            <div class="bg-dark text-white px-1 rounded-pill fw-bold fs-5"
+                            <div class="bg-dark text-white px-1 rounded-pill fw-bold fs-"
                             >{{'×'+store.count}}</div>
                         </div>
 
                         <!--チケット枚数-->
                         <div class="position-absolute bottom-0 end-0 p-1 w-100">
-                            <div class="d-flex gap-1 align-items-center justify-content-center text-success
+                            <div class="d-flex gap-0 align-items-center justify-content-center text-success
                             px-2 rounded" style="font-size:11px; background-color: rgb(0 0 0 / 80%);">
                                 <img :src="src_ticket_image"
-                                alt="チケット" class="d-block mb-1"  style="width:20px; height:20px;">
+                                alt="チケット" class="d-block"  style="width:20px; height:20px;">
                                 <i class="bi bi-x"></i>
                                 <div class="text-success">
-                                    <span class="fs-5">{{store.ticket_count}}</span>枚
+                                    <span class="fs-6">{{store.ticket_count}}</span>
+                                    <!-- 枚 -->
                                 </div>
                             </div>
                         </div>

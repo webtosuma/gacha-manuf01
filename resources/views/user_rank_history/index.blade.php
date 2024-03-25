@@ -33,7 +33,7 @@
                     <div style="font-size:14px;" class="mb-2">会員ランク：</div>
 
                     <ratio-image-component
-                    style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                    style_class="ratio ratio-16x9 overflow-hidden
                     position-relative shiny"
                     url="{{ $now_rank->image_path }}"
                     ></ratio-image-component>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-auto" style="width:120px;">
                         <ratio-image-component
-                        style_class="ratio ratio-16x9 rounded-3 overflow-hidden
+                        style_class="ratio ratio-16x9 overflow-hidden
                         position-relative shiny"
                         url="{{ $user_rank_history->image_path }}"
                         ></ratio-image-component>

@@ -1,5 +1,5 @@
 <header class="position-fixed w-100" style="z-index:100;">
-    {{-- <div class="bg-danger text-center">まもなく、メンテナンスを開始します</div> --}}
+    {{-- <div class="bg-danger text-center text-white">3月22日AM11:00より、メンテナンスを行います。</div> --}}
     <div class="container py-2 px-0">
 
         <nav class="d-flex justify-content-between align-items-center p- border border-primary border-3
