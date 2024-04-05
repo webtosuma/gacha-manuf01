@@ -15,7 +15,7 @@
     <style>
         main{ padding-top: 0rem; }
         /* カスタム背景 */
-        body{
+        #bgWindow{
             background-image: url({{ asset( 'storage/'.'site/image/campaign_introductory/bg04.jpg' ) }});
         }
     </style>

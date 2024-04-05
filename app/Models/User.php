@@ -241,6 +241,8 @@ class User extends Authenticatable
         */
         public function getUPrizesCountAttribute()
         {
+            // return 3;
+
             $query = UserPrize::query();
 
                 # ログインユーザーのデータに絞る
@@ -261,9 +263,11 @@ class User extends Authenticatable
                 # 商品テーブル(prize)とのリレーション
                 $query->with(['prize.rank' => function ($query) { }]);
 
-            $user_prizes = $query->get();
+            $count = $query->limit(4999)->get()->count();
 
-            return $user_prizes->count();
+            return $count < 4999 ? $count :'4,999以上';
+
+            // return $user_prizes->count();
         }
 
 

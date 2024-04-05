@@ -5,7 +5,7 @@ use App\Http\Controllers;
 /*
 |--------------------------------------------------------------------------
 | ポイント購入・履歴 (webhook)
-|  PointSailController
+|  StripSubscriptionController
 |  PointHistoryController
 |--------------------------------------------------------------------------
 */

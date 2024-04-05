@@ -57,7 +57,10 @@ class UserRankHistoryController extends Controller
         if( !$user->now_rank )
         {
             # 月初の日付オブジェクトの生成(直近の会員ランク履歴の翌月から)
-            $format = $user->desc_first_rank->created_at->copy()->addMonth()->format('Y-m-01');
+            $format = $user->desc_first_rank->created_at->format('Y-m-01');
+            $old_month = Carbon::parse($format);
+
+            $format = $old_month->addMonth();
             $month = Carbon::parse($format);
 
 
@@ -131,9 +134,9 @@ class UserRankHistoryController extends Controller
     {
 
         # 変数の定義
-        $max_rank_id   = UserRankHistory::MaxRankId(); //会員ランクの最高ランクID
-        $next_rank     = $desc_first_rank->next_rank;//次の昇格後の会員ランク情報
-        $month_pt_count = self::GetMonthPtCount($user, $desc_first_rank->created_at); //指定年月のpt消費数
+        $max_rank_id    = UserRankHistory::MaxRankId(); //会員ランクの最高ランクID
+        $next_rank      = $desc_first_rank ? $desc_first_rank->next_rank : null;//次の昇格後の会員ランク情報
+        $month_pt_count = $desc_first_rank ? self::GetMonthPtCount($user, $desc_first_rank->created_at) : 0; //指定年月のpt消費数
         // $month_pt_count = self::GetMonthPtCount($user, $date); //指定年月のpt消費数
 
         if( $next_rank
@@ -201,20 +204,22 @@ class UserRankHistoryController extends Controller
     {
         # 変数の定義
         $max_rank_id   = UserRankHistory::MaxRankId(); //会員ランクの最高ランクID
-        $next_rank     = $desc_first_rank->next_rank;//次の昇格後の会員ランク情報
-        $month_pt_count = self::GetMonthPtCount($user, $desc_first_rank->created_at); //指定年月のpt消費数
-        // $month_pt_count = self::GetMonthPtCount($user, $date); //指定年月のpt消費数
+        $next_rank      = $desc_first_rank ? $desc_first_rank->next_rank : null;//次の昇格後の会員ランク情報
+        $month_pt_count = $desc_first_rank ? self::GetMonthPtCount($user, $desc_first_rank->created_at) : 0; //指定年月のpt消費数
 
         if( (
-            $next_rank->rankup_pt_count <= $month_pt_count //*昇格のpt消費数をクリアしているとき
+            ($next_rank ? $next_rank->rankup_pt_count : 0) <= $month_pt_count //*昇格のpt消費数をクリアしているとき
             && $desc_first_rank->rank_id == $max_rank_id //*マスターランクのとき
         ) or (
-            $next_rank->rankup_pt_count > $month_pt_count //*昇格のpt消費数をクリアしていない
+            ($next_rank ? $next_rank->rankup_pt_count : 0) > $month_pt_count //*昇格のpt消費数をクリアしていない
             && $desc_first_rank->rankup_pt_count * 0.50 <= $month_pt_count //*現ランクのpt消費数の50%をクリアしているとき
         ) or(
             $desc_first_rank->rankup_pt_count * 0.50 > $month_pt_count //*現ランクのpt消費数の50%をクリアしていない
-            && $desc_first_rank->rank_id == 0 //*ビギナーランクのとき
-        ) ){
+            &&
+            $desc_first_rank->rank_id == 0 //*ビギナーランクのとき
+        ) or
+            $desc_first_rank->rank_id == 0
+        ){
 
             $user_rank_history = new UserRankHistory([
                 'user_id'  => $user->id,
@@ -244,10 +249,9 @@ class UserRankHistoryController extends Controller
     public static function CreateRankRankDownHistory( $user, $date, $desc_first_rank )
     {
         # 変数の定義
-        $max_rank_id = UserRankHistory::MaxRankId(); //会員ランクの最高ランクID
-        $down_rank   = $desc_first_rank-> down_rank;//次の昇格後の会員ランク情報
-        $month_pt_count = self::GetMonthPtCount($user, $desc_first_rank->created_at); //指定年月のpt消費数
-        // $month_pt_count = self::GetMonthPtCount($user, $date); //指定年月のpt消費数
+        $max_rank_id    = UserRankHistory::MaxRankId(); //会員ランクの最高ランクID
+        $down_rank      = $desc_first_rank ? $desc_first_rank->down_rank : null;//次の昇格後の会員ランク情報
+        $month_pt_count = $desc_first_rank ? self::GetMonthPtCount($user, $desc_first_rank->created_at) : 0; //指定年月のpt消費数
 
         if(
             $desc_first_rank->rankup_pt_count * 0.50 > $month_pt_count //*現ランクのpt消費数の50%をクリアしていない

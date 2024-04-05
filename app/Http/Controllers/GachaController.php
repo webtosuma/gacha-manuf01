@@ -27,6 +27,7 @@ class GachaController extends Controller
      */
     public function index(Request $request, $category_code='all' )
     {
+
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
         if( $category_code!='all' && !$category ){ return \App::abort(404); }

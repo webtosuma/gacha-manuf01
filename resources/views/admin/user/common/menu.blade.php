@@ -34,18 +34,18 @@
             </a>
         </div>
         <div class="col-6 col-md-3">
-            @if( $user->now_rank )
+            {{-- @if( $user->now_rank ) --}}
                 <a href="{{route('admin.user.user_rank_history',$user)}}"
                     class="btn btn-light border py-3 w-100">
                     <h6>会員ランク履歴</h6>
-                    <div class="mt-3">{{$user->now_rank->label}}</div>
+                    <div class="mt-3">{{$user->now_rank ? $user->now_rank->label : '*未更新'}}</div>
                 </a>
-            @else
+            {{-- @else
                 <button class="btn btn-light border py-3 w-100 h-100" type="button">
                     <h6>会員ランク履歴</h6>
                     <div class="mt-3 text-danger">*未更新</div>
                 </button>
-            @endif
+            @endif --}}
         </div>
         <div class="col-6 col-md-3">
             <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>11,])}}"

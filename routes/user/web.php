@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 /*
 ==========================================================================
@@ -16,12 +17,12 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-
 Route::get('test', function(\Illuminate\Http\Request $request){
 
-    $user_prize = \App\Models\UserPrize::
-    where('user_id',9528)->where('prize_id',4484)->first();
-    dd($user_prize);
+    // $user = User::find(1);
+    // Auth::login($user);
+
+    // return redirect()->route('home');
 
 } );
 
@@ -30,7 +31,7 @@ Route::get('test', function(\Illuminate\Http\Request $request){
 
 # トップページ
 Route::get('/',
-    [App\Http\Controllers\GachaController::class, 'index']
+[App\Http\Controllers\GachaController::class, 'index']
 )->middleware(['user_rank'])
 ->name('home');
 
@@ -70,7 +71,10 @@ include('web/gacha.php');
     ##(webhook)
     include('web/stripe.php');
 
-    # Stripe 照明URL
+    ##(サブスクプラン)
+    include('web/stripe_subscription.php');
+
+    # Stripe 証明URL
     Route::get('.well-known/apple-developer-merchantid-domain-association', function(){
         #jp
         // return view('point_sail.stripe.apple-developer-merchantid-domain-association.jp');

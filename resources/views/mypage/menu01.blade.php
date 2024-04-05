@@ -89,8 +89,6 @@
                         </span>
                         <span>pt</span>
                     </div>
-                    {{-- <a href="#" style="font-size:11px;" target="_blank"
-                    ><i class="bi bi-question-circle me-2"></i>ポイントについて</a> --}}
                 </div>
                 <div class="col-auto">
                     <a href="{{ route('point_sail') }}" class="btn btn- btn-warning text-white rounded-pill shadow">ポイント購入</a>
@@ -118,14 +116,10 @@
                     <a href="{{ route('ticket_store') }}"
                     class="d-block btn py-1 btn-success text-white rounded-pill shadow w-100">
                         <div class="d-flex gap-2 align-items-center">
-                            {{-- <i class="bi bi-gift fs-5 "></i> --}}
 
                             <div class="">チケット交換</div>
                         </div>
                     </a>
-
-                    {{-- <a href="{{ route('ticket_store') }}"
-                    class="btn btn-sm btn-success text-white rounded-pill shadow px-3">商品と交換</a> --}}
                 </div>
             </div>
             <a href="https://note.com/cardfesta/n/ne78f9144184a"
@@ -149,8 +143,6 @@
                 </div>
                 <div class="col-auto">
                     <span class="">一覧を見る<i class="bi bi-chevron-right"></i></span>
-                    {{-- <a href="{{ route('user_prize') }}" style="font-size:11px;"
-                    >一覧を見る<i class="bi bi-chevron-right"></i></a> --}}
                 </div>
             </div>
             <div class="row g-2 mt-2 px- mx-1 border-bottom pb-2">

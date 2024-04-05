@@ -15,13 +15,12 @@
 @section('style')
     <style>
         main{ padding-top: 0rem; }
-        /* #result {
-            background: no-repeat center center / cover;
-            background-image: url({{$bg_image}});
-        } */
-        body{
+        #bgWindow{
             background-image: url({{ $bg_image }});
         }
+        /* body{
+            background-image: url({{ $bg_image }});
+        } */
     </style>
 @endsection
 

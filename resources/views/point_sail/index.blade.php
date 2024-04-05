@@ -19,6 +19,32 @@
 
     <div class="container py-md-4 mb-5">
         <h3 class="d-none d-md-block">ポイント購入</h3>
+
+
+        <!--サブスクPR-->
+        @if ( config('app.debug') )
+        <a href="{{route('point_sail.subscription')}}"
+        class="d-block col-md-6 mx-auto my-3 "
+        >
+            <img src="{{asset('storage/site/image/pass.png')}}"
+            alt="{{ 'カドフェPASS' }}" class="w-100 rounded-3 shadowww ">
+
+            <div class="text-end mt-2 px-3">お申し込みはこちら＞</div>
+
+            {{-- <div class=" p-3 text-white "
+            style="background: linear-gradient(to right bottom, #406aff, #14cfa0) !important;"
+            >
+                <div class="fs-3">
+                    月額プラン
+                    <span class="fs-1">カドフェPASS</span>
+                </div>
+                <div class="fs-5">お得な特典が盛り沢山!!</div>
+                <div class="text-end mt-2">お申し込みはこちら＞</div>
+            </div> --}}
+        </a>
+        @endif
+
+
         <ul class="list-group list-group-flush">
             <li class="list-group-item bg-white py-4 fs-">
 
@@ -207,7 +233,26 @@
                 </div>
             </div>
         </div>
+
+
+        <section class="bg-whit p-4 border-0 shadow my-5 mx-auto" style="color:red;">
+            <div class="mb-">
+                {{-- <h5 class="border-bottom border-secondary mb-3">お問い合わせのご返信について</h5> --}}
+                <p>
+                    ＊ごく短時間での複数決済及び、複数の手段にてポイントチャージを行った場合、一時的な決済停止になることがございます。<br>
+                    ＊不明瞭なポイントチャージについては、決済停止及び登録本人確認を行う場合がございますのでご了承ください。<br>
+                    本人確認についてのご連絡はアカウント登録時のメールアドレスへ行います。
+                </p>
+            </div>
+        </section>
+
+
     </div>
+
+
+
+
+
 
 
     <div class="my-5 p-3">

@@ -19,7 +19,7 @@
     /* main{ padding-top: 0rem; } */
 
     /* サイトデフォルト背景 */
-    body{
+    #bgWindow{
         background-image: url({{ $gacha->category->bg_image_path }});
     }
 </style>

@@ -39,10 +39,14 @@
         a{ text-decoration: none; }
         th,td{ background-color: #fff !important; }
         /* サイトデフォルト背景 */
-        body{
-            background: no-repeat center center / cover fixed;
+        #bgWindow{
+            background: no-repeat center center / cover;
             background-image: url({{asset('storage/site/image/bg01.jpg')}});
         }
+        /* body{
+            background: no-repeat center center / cover fixed;
+            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+        } */
         main{
             padding-top: 4.2rem;
             min-height: 80vh;
@@ -59,16 +63,21 @@
 <body class="">
     <div id="app">
 
+        <!--背景画像-->
+        <div id="bgWindow"
+        class="position-fixed top-0 start-0 w-100 h-100"
+        style="z-index: -1;"
+        ></div>
+
+
+
+
         @include('includes.header')
 
         @if(Auth::check())
 
 
-            @if ( env('NEW_TICKET_SISTEM',false) )
-                @include('includes.offcanvas_menu02')
-            @else
-                @include('includes.offcanvas_menu')
-            @endif
+            @include('includes.offcanvas_menu02')
 
 
         @endif

@@ -38,13 +38,10 @@
         th,td{ background-color: #fff !important; }
 
         /* サイトデフォルト背景 */
-        /* @media screen and (min-width: 768px) { */
-            body{
-                background: no-repeat center center / cover fixed;
-                background-image: url({{asset('storage/site/image/bg01.jpg')}});
-            }
-        /* } */
-
+        #bgWindow{
+            background: no-repeat center center / cover;
+            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+        }
         main{
             padding-top: 4.2rem;
             min-height: 80vh;
@@ -60,6 +57,14 @@
 </head>
 <body class="bg-white">
     <div id="app">
+
+        <!--背景画像-->
+        <div id="bgWindow"
+        class="position-fixed top-0 start-0 w-100 h-100"
+        style="z-index: -1;"
+        ></div>
+
+
 
         <div class="d-none d-md-block">
             @include('includes.header')

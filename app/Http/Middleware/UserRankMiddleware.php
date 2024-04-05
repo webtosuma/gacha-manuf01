@@ -22,6 +22,7 @@ class UserRankMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+
         # ログイン中 && チケットシステム導入時のみ
         if( Auth::check() && env('NEW_TICKET_SISTEM',false) )
         {

@@ -31,8 +31,8 @@
     <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
     <style>
         /* サイトデフォルト背景 */
-        body{
-            background: no-repeat center center / cover fixed;
+        #bgWindow{
+            background: no-repeat center center / cover;
             background-image: url({{asset('storage/site/image/bg01.jpg')}});
         }
     </style>
@@ -47,6 +47,15 @@
 
 </head>
 <body class="bg-">
+
+    <!--背景画像-->
+    <div id="bgWindow"
+    class="position-fixed top-0 start-0 w-100 h-100"
+    style="z-index: -1;"
+    ></div>
+
+
+
     <header class="mx-auto p-2" style="max-width:600px;">
         <h1 class="m-0 fs-6">
             <a href="{{route('home')}}" class="navbar-brand  fs-2 fw-bold">

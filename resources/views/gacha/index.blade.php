@@ -22,7 +22,7 @@
 @section('style')
     <style>
         /* サイトデフォルト背景 */
-        body{
+        #bgWindow{
             background-image: url({{ $bg_image }});
         }
     </style>
