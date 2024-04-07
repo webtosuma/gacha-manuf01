@@ -18,8 +18,10 @@
                 $params = ['category_code'=>$category->code_name, 'search_key'=>$search_key, 'card_size'=>$card_size];
                 @endphp
 
-                <a  href="{{ route('gacha_category', $params ) }}"
-                class="{{ $style_class }}">{{ $category->name }}</a>
+                <a  href="{{ route('gacha_category', $params ) }}" class="{{ $style_class }}">
+                    <span class="d-none d-md-inline">{{$category->name}}</span>
+                    <span class="d-md-none">{{ mb_substr($category->name,0,5) }}</span>
+                </a>
             @endforeach
         </nav>
     </div>

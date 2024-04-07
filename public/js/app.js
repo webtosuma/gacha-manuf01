@@ -15912,7 +15912,7 @@ var render = function render() {
   }, _vm._l(_vm.categories, function (category, key) {
     return _c("button", {
       key: key,
-      staticClass: "btn btn- border rounded-pill col col-md-auto",
+      staticClass: "btn btn- border rounded-pill col col-md-auto px-1 px-md-3",
       "class": _vm.inputs.category_id == category.id ? "disabled btn-primary" : "",
       staticStyle: {
         opacity: "1"
@@ -15922,7 +15922,7 @@ var render = function render() {
           return _vm.setActiveCategory(category.id);
         }
       }
-    }, [_vm._v(_vm._s(category.name))]);
+    }, [_vm._v(_vm._s(category.name.substring(0, 5)))]);
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-lg position-relative"
   }, [_c("input", {

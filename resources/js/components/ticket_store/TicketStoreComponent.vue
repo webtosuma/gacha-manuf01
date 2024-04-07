@@ -9,8 +9,8 @@
                     <button v-for="(category,key) in categories" :key="key"
                     @click="setActiveCategory( category.id )"
                     :class=" inputs.category_id==category.id ? 'disabled btn-primary' : '' "
-                    class="btn btn- border rounded-pill col col-md-auto" style="opacity:1;"
-                    >{{ category.name }}</button>
+                    class="btn btn- border rounded-pill col col-md-auto px-1 px-md-3" style="opacity:1;"
+                    >{{ category.name.substring(0, 5) }}</button>
                 </div>
             </div>
             <div class="col-12 col-lg position-relative">
