@@ -88,8 +88,10 @@ class UserPrizeApiController extends Controller
                 $query->whereIn('prize_id',$prize_ids);
             }
 
-        $user_prizes = $query->get();
+        // $user_prizes = $query->get();
 
+
+        $user_prizes = $query->paginate(100);
 
 
         # 画像パスの登録
@@ -99,7 +101,9 @@ class UserPrizeApiController extends Controller
 
         }
 
-        return response()->json( $user_prizes );
+        // return response()->json( $user_prizes );
+        return response()->json( compact('user_prizes') );
+
     }
 
 

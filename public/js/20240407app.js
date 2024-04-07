@@ -9341,8 +9341,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       loading: true,
       userPrizes: [],
       /* ユーザー取得商品 */
-      total: 0,
-      /* ユーザー取得商品数 */
 
       ids: [],
       /*チェックボックスのID*/
@@ -9392,14 +9390,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       };
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, params).then(function (json) {
-        // console.log(json.data);
+        console.log(json.data);
+
+        // this.userPrizes = json.data;
+        // this.loading = false;//読み込み中
+
+        // this.ids = [];//チェックボックスのリセット
+        // this.allCheck = false;
+        // this.totalPoint = 0; //ポイント合計値のリセット
+
+        // return
 
         //ページネーションデータ
         var paginate = json.data.user_prizes;
 
         // 商品情報の登録（新規登録・ページネーション追加）
         _this.userPrizes = route == _this.r_api_user_prize ? paginate.data : [].concat(_toConsumableArray(_this.userPrizes), _toConsumableArray(paginate.data));
-        _this.total = paginate.total;
         _this.loading = false; //読み込み中
         _this.ids = []; //チェックボックスのリセット
         _this.allCheck = false;
@@ -16239,7 +16245,7 @@ var render = function render() {
     staticClass: "fs-1 fw-bold"
   }, [_c("number-comma-component", {
     attrs: {
-      number: _vm.total
+      number: _vm.userPrizes.length
     }
   })], 1)])]), _vm._v(" "), _c("ul", {
     staticClass: "row px-3 bg-white rounded-3 mx-2 gy-3 mt-0",

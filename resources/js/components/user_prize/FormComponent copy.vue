@@ -78,8 +78,7 @@
             <div class="col-auto">
                 取得商品数：
                 <span class="fs-1 fw-bold">
-                    <!-- <number-comma-component :number="userPrizes.length" /> -->
-                    <number-comma-component :number="total" />
+                    <number-comma-component :number="userPrizes.length" />
                 </span>
             </div>
         </div>
@@ -209,7 +208,6 @@
             loading: true,
 
             userPrizes: [],/* ユーザー取得商品 */
-            total: 0,/* ユーザー取得商品数 */
 
             ids: [],/*チェックボックスのID*/
 
@@ -239,8 +237,9 @@
 
 
             /* データ取得 */
-            getData :function(route = this.r_api_user_prize){
+            getData :function(){
 
+                const route = this.r_api_user_prize;
                 const params = {
                     _token:     this.token,
                     user_id:    this.user_id,
@@ -253,27 +252,12 @@
                 .then(json => {
                     // console.log(json.data);
 
-                    //ページネーションデータ
-                    const paginate = json.data.user_prizes;
-
-                    // 商品情報の登録（新規登録・ページネーション追加）
-                    this.userPrizes = route == this.r_api_user_prize ? paginate.data
-                    : [ ...this.userPrizes, ...paginate.data];
-
-                    this.total = paginate.total;
-
+                    this.userPrizes = json.data;
                     this.loading = false;//読み込み中
+
                     this.ids = [];//チェックボックスのリセット
                     this.allCheck = false;
                     this.totalPoint = 0; //ポイント合計値のリセット
-
-                    /* 次のデータの読み込み */
-                    const current_page = paginate.current_page;//表示中ページ
-                    const last_page    = paginate.last_page;   //最終ページ
-                    if( current_page != last_page ){
-                        const nextPageUrl = paginate.next_page_url;     //URLの更新
-                        this.getData( nextPageUrl );
-                    }
 
                 })
                 .catch(error => {
