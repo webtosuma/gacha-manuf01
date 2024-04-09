@@ -15,10 +15,10 @@
     <style>
         /* カスタム背景 */
         #bgWindow{
-            background-image: url({{ asset( 'storage/'.'site/image/campaign_introductory/bg04.jpg' ) }});
+            /* background-image: url({{ asset( 'storage/'.'site/image/campaign_introductory/bg04.jpg' ) }}); */
 
             /* background-image: url({{ asset( 'storage/'.'site/image/bg07.jpg' ) }}); */
-            /* background-image: linear-gradient(to right bottom, #406aff, #14cfa0) !important; */
+            background-image: linear-gradient(to right bottom, #406aff, #14cfa0) !important;
             /* background-image:linear-gradient(to right bottom, #ed5565, #ff934c) !important; */
         }
 
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="mt-5 mx-auto col-md-8">
-                        <a href=""
+                        <a href="{{route('point_sail.subscription.payment')}}"
                         class="btn btn-lg rounded-pill text-white w-100 shadow"
                         style="background-image: linear-gradient(to right bottom, #ed559e, #14b3cf) !important;"
                         >このプランを申し込む</a>

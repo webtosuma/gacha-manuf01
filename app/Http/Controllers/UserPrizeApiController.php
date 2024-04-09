@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\UserPrize;
 use App\Models\Prize;
 use App\Models\User;
-
+use App\Models\GachaCategory;
 /*
 | =============================================
 |  取得した商品 API コントローラー
@@ -23,9 +23,13 @@ class UserPrizeApiController extends Controller
      */
     public function index(Request $request)
     {
-        // $user = Auth::user();
         $user = $request->user_id ? User::find($request->user_id) : Auth::user();
 
+
+        # カテゴリー
+        $categories = [ new GachaCategory(['name'=>'全て', 'id'=>0]) ];
+        $get_categories = GachaCategory::where('is_published',1)->orderBy('created_at')->get();
+        foreach ($get_categories as $get_category) { $categories[] = $get_category; }
 
         # ユーザーの取得商品情報
         $query = UserPrize::query();
@@ -50,6 +54,13 @@ class UserPrizeApiController extends Controller
                 // $query->orderBy('point', 'desc');
 
             }]);
+
+            # カテゴリーの選択
+            if(  $request->category_id ){
+                # 商品ID配列
+                $prizeIdArray = Prize::where('category_id',$request->category_id)->get()->pluck('id')->toArray();
+                $query->whereIn('prize_id',$prizeIdArray);
+            }
 
             # 並び替え
             $order = $request->order;
@@ -96,13 +107,11 @@ class UserPrizeApiController extends Controller
 
         # 画像パスの登録
         foreach ($user_prizes as $user_prize) {
-
             $user_prize->prize->image_path =  $user_prize->prize->image_path;
-
         }
 
         // return response()->json( $user_prizes );
-        return response()->json( compact('user_prizes') );
+        return response()->json( compact('categories','user_prizes') );
 
     }
 

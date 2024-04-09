@@ -1,16 +1,15 @@
 <template>
     <div class="m-">
 
-
         <!--Headー-->
         <div class="row align-items-center gy-1 mb-3">
             <div class="col-12">
-                <div class="d-flex gap-1">
+                <div class="d-flex gap-1 flex-wrap">
                     <button v-for="(category,key) in categories" :key="key"
                     @click="setActiveCategory( category.id )"
                     :class=" inputs.category_id==category.id ? 'disabled btn-primary' : '' "
-                    class="btn btn- border rounded-pill col col-md-auto px-1 px-md-3" style="opacity:1;"
-                    >{{ category.name.substring(0, 5) }}</button>
+                    class="btn btn- border rounded-pill col-auto" style="opacity:1;"
+                    >{{ category.name }}</button>
                 </div>
             </div>
             <div class="col-12 col-lg position-relative">
@@ -157,7 +156,7 @@
 
                 axios.post( route , {_token: this.token, ...this.inputs} )
                 .then(json => {
-                    console.log(json.data);
+                    // console.log(json.data);
 
                     // カテゴリー
                     this.categories = json.data.categories;

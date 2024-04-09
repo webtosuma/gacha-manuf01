@@ -9233,7 +9233,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, _objectSpread({
         _token: this.token
       }, this.inputs)).then(function (json) {
-        console.log(json.data);
+        // console.log(json.data);
 
         // カテゴリー
         _this.categories = json.data.categories;
@@ -9339,6 +9339,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   data: function data() {
     return {
       loading: true,
+      categories: [],
+      //ガチャ カテゴリー
       userPrizes: [],
       /* ユーザー取得商品 */
       total: 0,
@@ -9354,6 +9356,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       /*チェック中のユーザー商品の合計ポイント*/
 
       disabled: true,
+      category_id: null,
+      //カテゴリーID
       search_key: '',
       //検索キーワード
       order: 'desc_created',
@@ -9388,11 +9392,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         user_id: this.user_id,
         search_key: this.search_key,
         //検索キーワード
-        order: this.order //並び順
+        order: this.order,
+        //並び順
+        category_id: this.category_id
       };
-
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, params).then(function (json) {
-        // console.log(json.data);
+        console.log(json.data);
+
+        // // カテゴリー
+        _this.categories = json.data.categories;
 
         //ページネーションデータ
         var paginate = json.data.user_prizes;
@@ -9414,10 +9422,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       })["catch"](function (error) {
         alert('通信エラーが発生しました。');
-        // console.log( error.response.data );
+        console.log(error.response.data);
       });
     },
-
     /* 並び順の変更 */
     changeOrder: function changeOrder(value) {
       this.order = value;
@@ -9467,6 +9474,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
 
       return "".concat(year, "/").concat(month, "/").concat(day);
+    },
+    /** アクティブなカテゴリーのセット */setActiveCategory: function setActiveCategory(category_id) {
+      this.search_key = ''; //キーワードのリセット
+
+      this.category_id = category_id; //アクティブなカテゴリーIDのセット
+      this.getData(); /* データ取得 */
     }
   }
 });
@@ -15908,11 +15921,11 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-12"
   }, [_c("div", {
-    staticClass: "d-flex gap-1"
+    staticClass: "d-flex gap-1 flex-wrap"
   }, _vm._l(_vm.categories, function (category, key) {
     return _c("button", {
       key: key,
-      staticClass: "btn btn- border rounded-pill col col-md-auto px-1 px-md-3",
+      staticClass: "btn btn- border rounded-pill col-auto",
       "class": _vm.inputs.category_id == category.id ? "disabled btn-primary" : "",
       staticStyle: {
         opacity: "1"
@@ -15922,7 +15935,7 @@ var render = function render() {
           return _vm.setActiveCategory(category.id);
         }
       }
-    }, [_vm._v(_vm._s(category.name.substring(0, 5)))]);
+    }, [_vm._v(_vm._s(category.name))]);
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-lg position-relative"
   }, [_c("input", {
@@ -16182,6 +16195,24 @@ var render = function render() {
   }, [_vm._v("ポイント交換")])])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row align-items-center gy-2"
   }, [_c("div", {
+    staticClass: "col-12"
+  }, [_c("div", {
+    staticClass: "d-flex gap-1 flex-wrap"
+  }, _vm._l(_vm.categories, function (category, key) {
+    return _c("button", {
+      key: key,
+      staticClass: "btn btn- border rounded-pill col-auto",
+      "class": _vm.category_id == category.id ? "disabled btn-primary" : "",
+      staticStyle: {
+        opacity: "1"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.setActiveCategory(category.id);
+        }
+      }
+    }, [_vm._v(_vm._s(category.name))]);
+  }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-lg position-relative"
   }, [_c("input", {
     directives: [{

@@ -56,6 +56,15 @@
 
         <!--Headー-->
         <div class="row align-items-center gy-2">
+            <div class="col-12">
+                <div class="d-flex gap-1 flex-wrap">
+                    <button v-for="(category,key) in categories" :key="key"
+                    @click="setActiveCategory( category.id )"
+                    :class="category_id==category.id ? 'disabled btn-primary' : '' "
+                    class="btn btn- border rounded-pill col-auto" style="opacity:1;"
+                    >{{ category.name }}</button>
+                </div>
+            </div>
             <div class="col-12 col-lg position-relative">
                 <input v-model="search_key"
                 @change="getData()"
@@ -208,6 +217,7 @@
 
             loading: true,
 
+            categories:[],//ガチャ カテゴリー
             userPrizes: [],/* ユーザー取得商品 */
             total: 0,/* ユーザー取得商品数 */
 
@@ -219,6 +229,7 @@
 
             disabled: true,
 
+            category_id: null,//カテゴリーID
             search_key: '',//検索キーワード
             order: 'desc_created',//並び順
 
@@ -246,12 +257,16 @@
                     user_id:    this.user_id,
                     search_key: this.search_key,//検索キーワード
                     order:      this.order,     //並び順
+                    category_id:this.category_id,
                 };
 
 
                 axios.post( route, params )
                 .then(json => {
-                    // console.log(json.data);
+                    console.log(json.data);
+
+                    // // カテゴリー
+                    this.categories = json.data.categories;
 
                     //ページネーションデータ
                     const paginate = json.data.user_prizes;
@@ -278,7 +293,7 @@
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')
-                    // console.log( error.response.data );
+                    console.log( error.response.data );
 
                 });
 
@@ -338,6 +353,19 @@
 
                 return `${year}/${month}/${day}`;
             },
+
+
+            /** アクティブなカテゴリーのセット */
+            setActiveCategory( category_id ) {
+
+                this.search_key=''; //キーワードのリセット
+
+                this.category_id = category_id;//アクティブなカテゴリーIDのセット
+                this.getData(); /* データ取得 */
+            },
+
+
+
 
         },
 

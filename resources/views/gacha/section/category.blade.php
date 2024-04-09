@@ -4,7 +4,9 @@
     <div class="container px-0 col-md-12 mx-auto overflow-auto">
         <nav class="nav gap-1 flex-nowrap" style="min-width:{{$categories->count()*6 + 10}}rem;">
             @php
-            $sc = "col fs- py-2 fw-bold btn btn-dark border-0";
+            // $sc = "col col-lg fs- py-2 fw-bold btn btn-dark border-0";
+            $sc = "col-auto col-lg fs- py-2 fw-bold btn btn-dark border-0 rounded-pill";
+
             $style_class = $category_code=='all' ? $sc.' disabled bg-primary' : $sc;
             $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
             @endphp
@@ -19,8 +21,7 @@
                 @endphp
 
                 <a  href="{{ route('gacha_category', $params ) }}" class="{{ $style_class }}">
-                    <span class="d-none d-md-inline">{{$category->name}}</span>
-                    <span class="d-md-none">{{ mb_substr($category->name,0,5) }}</span>
+                    <span>{{$category->name}}</span>
                 </a>
             @endforeach
         </nav>

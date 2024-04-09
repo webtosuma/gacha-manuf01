@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\UserPrize;
 use App\Models\Prize;
 use App\Models\PointHistory;
+use App\Models\GachaCategory;
+
 /*
 | =============================================
 |  取得した商品一覧 コントローラー
@@ -21,6 +23,13 @@ class UserPrizeController extends Controller
      */
     public function index()
     {
+        // $prizeIdArray = Prize::where('category_id',1)->get()->pluck('id')->toArray();
+        // dd($prizeIdArray );
+        // $user_prizes = UserPrize::whereIn('prize_id',[1])->get();
+        // dd($user_prizes);
+
+
+
         return view('user_prize.index');
     }
 
