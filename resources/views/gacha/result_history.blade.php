@@ -18,9 +18,6 @@
         #bgWindow{
             background-image: url({{ $bg_image }});
         }
-        /* body{
-            background-image: url({{ $bg_image }});
-        } */
         .ratio-3x4{
             --bs-aspect-ratio: 133.3%;
         }
@@ -158,7 +155,7 @@
 
 
             <!-- ガチャ情報 -->
-            <div class="pt-5 my-5">
+            <div class="pt- my-5">
 
 
                 <h5 class="fw-bold text-center mb-">ガチャ情報</h5>
@@ -183,7 +180,7 @@
             </div>
 
 
-            <div class="py-5 my-5">
+            <div class="py- my-5">
                 <h5 class="text-center fs-5 fw-bold mb-3">ガチャ結果を送る</h5>
                 @php
                 $sns_url  = route('gacha.result_history',$user_gacha_history->key);
@@ -191,8 +188,17 @@
                 @endphp
                 @include('includes.sns_btn')
             </div>
+
+
+            <!-- その他のガチャ情報 -->
+            <div class="pt- my-5">
+
+                @include('gacha.common.result_gachas')
+
+            </div>
         </div>
     </section>
+
 
 
 @endsection

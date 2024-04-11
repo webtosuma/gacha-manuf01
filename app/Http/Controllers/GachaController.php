@@ -388,7 +388,14 @@ class GachaController extends Controller
         $rank_up = $request->rank_up;
 
 
-        return view('gacha.result',compact('gacha','user_gacha_history', 'page_title', 'bg_image', 'rank_up'));
+        ## 表示できるガチャ一覧
+        // $category_code = $gacha->category->code_name;
+        $gachas = self::getPublishedGachas( $category_code, null );
+
+        return view('gacha.result',compact(
+            'gacha','user_gacha_history', 'page_title', 'bg_image', 'rank_up',
+            'gachas','category_code'
+        ));
     }
 
 
@@ -427,18 +434,13 @@ class GachaController extends Controller
         ->first()
         : null;
 
-        # 次ののガチャ履歴(ガチャ履歴のユーザー==本人のとき)
+        # 次のガチャ履歴(ガチャ履歴のユーザー==本人のとき)
         $next_gacha_history = Auth::check() && ($user_id == Auth::user()->id)
         ? UserGachaHistory::where('id','>',$id)
         ->where('user_id',$user_id)
         ->orderBy('created_at')
         ->first()
         : null;
-
-        // dd($prev_gacha_history);
-
-
-
 
 
         # ページタイトル
@@ -448,9 +450,17 @@ class GachaController extends Controller
         $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
 
 
+
+
+        ## 表示できるガチャ一覧
+        $category_code = $gacha->category->code_name;
+        $gachas = self::getPublishedGachas( $category_code, null );
+
+
         return view('gacha.result_history',compact(
             'gacha','user_gacha_history', 'user_prizes', 'user', 'page_title', 'bg_image',
             'prev_gacha_history', 'next_gacha_history',
+            'gachas','category_code'
         ) );
     }
 
