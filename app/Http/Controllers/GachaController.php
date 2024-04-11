@@ -355,7 +355,14 @@ class GachaController extends Controller
         ){ return \App::abort(401); }
 
 
-        return view('gacha.show.index', compact( 'gacha' ));
+        ## 表示できるガチャ一覧
+        $category_code = $gacha->category->code_name;
+        $gachas = self::getPublishedGachas( $category_code, null );
+
+        return view('gacha.show.index', compact(
+            'gacha',
+            'gachas','category_code'
+        ));
     }
 
 

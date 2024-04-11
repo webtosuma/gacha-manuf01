@@ -57,7 +57,7 @@
         </div>
     </section>
     <section class="my-5">
-        <div class="container px-5 py-"  style="max-width:500px;">
+        <div class="container px- py-"  style="max-width:500px;">
 
 
             <h5 class="fw-bold text-center mb-">ガチャ情報</h5>

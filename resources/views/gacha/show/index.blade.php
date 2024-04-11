@@ -50,7 +50,7 @@
 
     <!--注意事項ー-->
     <section class="py-5">
-        <div class="container px-0 overflow-auto mx-auto" style="max-width:900px;">
+        <div class="container px-2 overflow-auto mx-auto" style="max-width:900px;">
             <div class="p-3" style="border-radius:1rem; background:rgb(255, 255, 255, .9);">
 
                 <h6 class="border border-danger border-2 p-2 text-danger text-center">
@@ -78,5 +78,13 @@
 
     </section>
 
+
+
+    <!-- その他のガチャ情報 -->
+    <div class="container my-5 mx-auto" style="max-width:900px;">
+
+        @include('gacha.common.result_gachas')
+
+    </div>
 
 @endsection
