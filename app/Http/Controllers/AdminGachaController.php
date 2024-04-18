@@ -82,6 +82,8 @@ class AdminGachaController extends Controller
             'is_meter'=>1,//残数メーターの表示有無
             'is_slide'=>1,//スライドの表示有無
 
+            'min_time'=>'00:00',// 表示時間下限　2024/04/17追加
+            'max_time'=>'24:00',// 表示時間上限　2024/04/17追加
         ]);
 
 
@@ -273,19 +275,26 @@ class AdminGachaController extends Controller
     public function processingInputs( $request, $gacha=null )
     {
         $inputs = $request->only(
-            'category_id',  //リレーション
-            'name',  //名前
-            'image', //イメージ画像
+            'category_id',    //リレーション
+            'name',           //名前
+            'type',           //ガチャの種類
             'one_play_point', //1回PLAYポイント数
-            'type',  //ガチャの種類
-            'is_meter',//残数メーターの表示有無
-            'is_slide',//スライドの表示有無
-            'user_rank_id',//会員ランクの指定
+
+            'image',          //イメージ画像
+
+            'is_meter',       //残数メーターの表示有無
+            'is_slide',       //スライドの表示有無
+            'user_rank_id',   //会員ランクの指定
+            'min_time',       // 表示時間下限　2024/04/17追加
+            'max_time',       // 表示時間上限　2024/04/17追加
         );
 
         # 会員ランク空文字''=>nullに変換
         $inputs['user_rank_id'] = $inputs['user_rank_id']==''? null: $inputs['user_rank_id'];
 
+
+        # 表示時間の日を跨ぐか否か
+        $inputs['is_over_date'] = $inputs['min_time'] > $inputs['max_time'];
 
         # アクセスキー(新規作成のみ)
         if( $gacha == null ){ $inputs['key'] = \Illuminate\Support\Str::random(16); }

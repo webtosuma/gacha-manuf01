@@ -89,9 +89,14 @@ $active_key = 'gacha';
                         text-dark text-center overflow-hidden text-decoration-none
                         hover_anime" style="border-radius:1rem;">
 
+                            <div class="d-flex gap-1 flex-wrap p-2" style="font-size:11px;">
+                                <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
+                                <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
+                                <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
+                            </div>
+
                             <!--image-->
                             @include('gacha.common.top_image')
-
 
                             <!--metter-->
                             @if ( $gacha->is_published )
@@ -116,7 +121,7 @@ $active_key = 'gacha';
                                 </div>
                             @elseif( $gacha->published_at )
                                 <div class="card-body bg-success text-center text-white">
-                                    <h3>公開予約中</h3>
+                                    <h5 class="m-0">公開予約中</h5>
                                     <div >{{
                                         \Carbon\Carbon::parse($gacha->published_at)->format('Y/m/d H:i').'公開予定'
                                     }}</div>
@@ -126,7 +131,6 @@ $active_key = 'gacha';
                                     <h3>非公開</h3>
                                 </div>
                             @endif
-
                         </a>
 
 

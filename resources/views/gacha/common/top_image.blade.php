@@ -12,6 +12,14 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     </div>
 
 
+    @if( $gacha->initial_timezone ){{-- (時間帯限定)カウントダウン --}}
+        <u-countdown-gacha
+        text="販売開始まであと"
+        initial_time="{{$gacha->initial_timezone}}"
+        ></u-countdown-gacha>
+    @endif
+
+
 
     <!--gacha image-->
     <div class="position-absolute top-0 start-0 w-100 h-100"

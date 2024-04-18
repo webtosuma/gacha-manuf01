@@ -27,6 +27,11 @@ use App\Http\Controllers;
         ->name('gacha.result_history');
 
 
+        # ガチャ回数のカスタム
+        Route::get('/g/custom_count/{category_code}/{gacha}/{key}',
+        [App\Http\Controllers\GachaController::class, 'custom_count'])
+        ->name('gacha.custom_count');
+
     });
     Route::middleware(['auth','user_rank'])->group(function () {
 

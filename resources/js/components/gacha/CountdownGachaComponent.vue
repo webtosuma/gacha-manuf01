@@ -1,10 +1,13 @@
 <template>
-    <div class="position-absolute top-0 start-0 w-100 h-100"
-    style="z-index:1; background-color: rgb(0 0 0 / 70%);">
-        <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="">
-                <div class="fs-5 fw-bold text-white">新作公開まであと</div>
-                <div class="fs-1 fw-bold text-white">{{ formattedTime }}</div>
+    <div class="">
+        <div class="position-absolute top-0 start-0 w-100 h-100"
+        style="z-index:1; background-color: rgb(0, 0, 0, .7 );"
+        >
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="">
+                    <div class="fs-5 fw-bold text-white">{{ text }}</div>
+                    <div class="fs-1 fw-bold text-white">{{ formattedTime }}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -13,7 +16,7 @@
 export default {
     props: {
         initial_time:{ type: String,  default: '01:00:00', },
-
+        text:{ type: String,  default: '新作公開まであと', },
     },
     data() { return {
 

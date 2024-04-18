@@ -37,10 +37,9 @@ use App\Http\Controllers;
 
 
 
-
-        # ポイントが不足しています(StripeReactController)
+        # ポイントが不足しています(StripeController)
         Route::get('point_sail/shortage',
-        [Controllers\StripeReactController::class, 'shortage'])
+        [Controllers\StripeController::class, 'shortage'])
         ->name('point_sail.shortage');
 
 
@@ -48,6 +47,7 @@ use App\Http\Controllers;
         Route::get('point_sail/comp/{stripe_id}',
         [Controllers\StripeController::class, 'comp'])
         ->name('point_sail.comp');
+
 
         # ポイント購入履歴
         Route::get('point_history/{month?}',

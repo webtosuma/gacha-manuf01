@@ -32,6 +32,7 @@ class User extends Authenticatable
         'image',
         'twitter_id',//X(旧twitter)ID
         'get_email',
+        'subscription_id'//サブスクIDカラム　2024/04/18追加
     ];
 
 

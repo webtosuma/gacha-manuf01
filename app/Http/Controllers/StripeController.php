@@ -47,6 +47,30 @@ class StripeController extends Controller
     }
 
 
+    /**
+     * ポイントが不足しています
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+    */
+    public function shortage(Request $request)
+    {
+        # 変数
+        $gacha = Gacha::find($request->gacha_id);//ガチャ
+        $play_count = $request->play_count;
+
+        # ガチャIDをセッションに保存
+        $request->session()->put('before_gacha_id', $gacha->id);
+
+        ## 表示できるガチャ一覧
+        $category_code = $gacha->category->code_name;
+        $gachas = GachaController::getPublishedGachas( $category_code, null );
+
+
+        return view('point_sail.shortage',compact('gacha','play_count','gachas','category_code'));
+    }
+
+
 
     /**
      * 購入　手続き

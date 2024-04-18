@@ -92,7 +92,6 @@ class GachaController extends Controller
         {
             $now = now()->toDateTimeString();
 
-
             return  $category_code != 'all'
 
                 // カテゴリーを指定
@@ -131,47 +130,82 @@ class GachaController extends Controller
             # ログインユーザーの会員ランク表示
             $user = Auth::check() ? Auth::user() : null;
             $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-            $user_rank_id = env('NEW_TICKET_SISTEM',false) ? $user_rank_id : null;// 3/15以降、削除可
+
+
+
 
             # ID配列を指定して、ガチャの取得
             $query = Gacha::query();
 
-                //売り切れは下
+
+                ## 公開中のみ
+                // $query->where('published_at', '<=', now());
+
+                ## 売り切れは下
                 $query->orderBy('is_sold_out');
 
 
-                // 会員ランク限定ガチャ（ログインユーザーの会員ランク表示）
+                ## 時間帯の指定
+
+                    $now = now()->copy()->addMinutes(30);//表示時間(30分前)
+                    // $now = now();//表示時間(30分前)
+                    $now_time = $now->format('H:i');//現在時刻
+
+                    $query->where(function ($query) use ($now_time) {
+                        $query->where('is_over_date', 1)//日を跨ぐ時間帯
+                        ->where(function ($query) use ($now_time) {
+                            $query->where('min_time', '<=', $now_time)
+                            ->orwhere('max_time', '>', $now_time)
+                            ;
+                        })
+                        ;
+
+                    })
+                    ->orWhere(function ($query) use ($now_time) {
+                        $query->where('is_over_date', 0)//日中の時間帯
+                        ->where(function ($query) use ($now_time) {
+                            $query->where('min_time', '<=', $now_time)
+                            ->where('max_time', '>', $now_time)
+                            ;
+                        });
+                    });
+
+
+                ## 会員ランク限定ガチャ（ログインユーザーの会員ランク表示）
                 $query->where( function($query) use($user_rank_id)
                 {
                     $query->where('user_rank_id',null); //全ての会員
-                    if( $user_rank_id!=null ){
+                    if( $user_rank_id!==null ){
                         $query->orWhere('user_rank_id', $user_rank_id ); //ログインユーザーの会員ランク
                     }
                 });
 
 
-                // 新規会委員のみ表示のガチャ(それ以外は非表示)
+                ## 新規会委員のみ表示のガチャ(それ以外は非表示)
                 if( !(Auth::check() && !Auth::user()->sevendays_affter_registar) )
                 {
                     $query->where('type','<>','only_new_user');
                 }
 
-                // 並び替え・絞り込み
+
+
+
+                ## 並び替え・絞り込み
                 switch ($search_key) {
 
-                    # 高ポイント順
+                    //* 高ポイント順 */
                     case 'desc_point':
                         $query->orderByDesc('one_play_point');
                         $query->orderByDesc('published_at');
                         break;
 
-                    # 低ポイント順
+                    //* 低ポイント順 */
                     case 'asc_point':
                         $query->orderBy('one_play_point');
                         $query->orderByDesc('published_at');
                         break;
 
-                    # 会員ランク限定
+                    //* 会員ランク限定 */
                     case 'user_rank':
                         $query->where( function($query) use($user_rank_id)
                         {
@@ -183,24 +217,26 @@ class GachaController extends Controller
                         $query->orderByDesc('published_at');
                         break;
 
-                    # 一回限定
+                    //* 一回限定 */
                     case 'one_time':
                         $query->where('type','one_time');
                         $query->orderByDesc('published_at');
                         break;
 
-                    # １日１回
+                    //* １日１回 */
                     case 'only_oneday':
                         $query->where('type','only_oneday');
                         $query->orderByDesc('published_at');
                         break;
 
-                    # 全ての限定　
+                    //* 全ての限定 */
                     case 'other_types':
 
                         $query->where( function($query) use($user_rank_id)
                         {
-                            $query->where('type','<>','nomal');//限定ガチャ
+                            $query->where('type','<>','nomal');//通常ガチャを除く
+                            $query->where('type','<>','no_custom');//カスタムボタンなしガチャを除く
+
                             if( $user_rank_id!=null ){
                                 $query->orWhere('user_rank_id', $user_rank_id ); //ログインユーザーの会員ランク
                             }
@@ -208,23 +244,24 @@ class GachaController extends Controller
                         $query->orderByDesc('published_at');
                         break;
 
-                    # 古い順
+                    //* 古い順 */
                     case 'asc_created':
                         $query->orderBy('published_at');
                         break;
 
-                    # 新着順
+                    //* 新着順 */
                     default:
                         $query->orderByDesc('published_at');
                         break;
                 }
 
+
             return $query->orderByDesc('created_at')->find($id_array);
+            // return $query->whereNotNull('published_at')
+            // ->where('published_at', '<=', now())
+            // ->orderByDesc('created_at')->get();
 
 
-            // return Gacha::orderByDesc('published_at')
-            // ->orderByDesc('created_at')
-            // ->find($id_array);
         }
 
 
@@ -286,12 +323,6 @@ class GachaController extends Controller
             ];
 
             return $array;
-
-            // if( !(Auth::check() && !Auth::user()->sevendays_affter_registar) )
-            // {
-            //     $query->where('type','<>','only_new_user');
-            // }
-
         }
 
 
@@ -322,9 +353,9 @@ class GachaController extends Controller
 
 
             # データの追加(カウントダウンの時間)
-            foreach ($countdown_gachas as $countdown_gacha) {
-                $countdown_gacha->initial_time = now()->diff($countdown_gacha->published_at)->format('%H:%I:%S');
-            }
+            // foreach ($countdown_gachas as $countdown_gacha) {
+            //     $countdown_gacha->initial_time = now()->diff($countdown_gacha->published_at)->format('%H:%I:%S');
+            // }
 
             return $countdown_gachas;
         }
@@ -342,6 +373,8 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
+        // dd($gacha->is_show_timezone);
+
         # キーのチェック
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 
@@ -365,6 +398,39 @@ class GachaController extends Controller
         ));
     }
 
+
+
+    /**
+     * 詳細表示
+     * @param String $category_code      //カテゴリーコード名
+     * @param  \App\Models\Gacha  $gacha
+     * @param String $key                //ガチャモデル・キー
+     * @return \Illuminate\Http\Response
+     */
+    public function custom_count( $category_code, Gacha $gacha, $key)
+    {
+        # キーのチェック
+        if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
+
+        # 会員ランク専用ガチャ：ログインユーザーのランクと異なれば非表示
+        $user = Auth::check() ? Auth::user() : null;
+        $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+        if(
+            $gacha->user_rank_id != null
+            && $gacha->user_rank_id != $user_rank_id
+
+        ){ return \App::abort(401); }
+
+
+        ## 表示できるガチャ一覧
+        $category_code = $gacha->category->code_name;
+        $gachas = self::getPublishedGachas( $category_code, null );
+
+        return view('gacha.custom_count', compact(
+            'gacha',
+            'gachas','category_code'
+        ));
+    }
 
 
 

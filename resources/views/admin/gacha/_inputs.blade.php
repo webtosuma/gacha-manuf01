@@ -121,7 +121,7 @@
 
 
                     @foreach ($user_ranks as $id => $user_rank)
-                        <option value="{{$id}}" value="1"
+                        <option value="{{$id}}"
                         @if( $gacha->user_rank_id !=='' && $gacha->user_rank_id === $id  ) selected @endif
                         >{{ $user_rank['label'] }}</option>
                     @endforeach
@@ -134,6 +134,39 @@
             @if ( $errors->has('user_rank_id') )
                 <div class="text-danger"> {{$errors->first('user_rank_id')}} </div>
             @endif
+        </div>
+
+
+
+        <!--会員ランクの指定(min_time max_time)-->
+        <div class="d-block mb-4">
+            <div class="form-label">表示時間帯の指定（24時間表記）</div>
+
+
+            <div class="px-2">
+                <div class="input-group mb-3">
+                    <select class="form-select text-center" name="{{'min_time'}}">
+                        @foreach ($gacha->times() as $time)
+                            <option value="{{$time}}"
+                            @if( $gacha->min_time === $time  ) selected @endif
+                            >{{ $time }}</option>
+                        @endforeach
+                    </select>
+
+                    <span class="input-group-text">〜</span>
+
+                    <select class="form-select text-center" name="{{'max_time'}}">
+                        @foreach ($gacha->times() as $time)
+                            <option value="{{$time}}"
+                            @if( $gacha->max_time === $time  ) selected @endif
+                            >{{ $time }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+
+            <!--error message-->
         </div>
 
 

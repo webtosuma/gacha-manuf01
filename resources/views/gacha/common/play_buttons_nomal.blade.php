@@ -58,4 +58,24 @@
             @endif
         </form>
     </div>
+
+    @if($gacha->type=='nomal')
+    <div class="col-12">
+
+        <a href="{{ route('gacha.custom_count',$params) }}"
+        class="btn btn-info bg-gradient text-white fw-bold w-100 pb-0
+        rounded-pill border-danger border-3
+        position-relative shiny overflow-hidden
+        @if($gacha->remaining_count ==0) disabled @endif
+        ">
+            @if ($gacha->remaining_count ==0)
+                <div class="text-danger">終了</div>
+            @else
+                <div class="">回数をカスタム</div>
+            @endif
+
+        </a>
+    </div>
+    @endif
 </div>
+

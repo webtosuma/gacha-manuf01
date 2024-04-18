@@ -32,6 +32,10 @@ class Gacha extends Model
         'sold_out_at',//売り切れ日時
         'is_sold_out',//売り切れか否か
         'user_rank_id',//会員ランクの指定
+
+        'min_time',// 表示時間下限　2024/04/17追加
+        'max_time',// 表示時間上限　2024/04/17追加
+        'is_over_date',// 日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
     ];
 
 
@@ -58,10 +62,32 @@ class Gacha extends Model
     {
         return [
             'nomal'        => '通常',
+            'no_custom'    => '通常（カスタムボタンなし）',
 
             'one_time'     => '一回限定',
             'only_oneday'  => '１日１回',
             'only_new_user'=> '新規会員限定',
+        ];
+    }
+
+    /** ガチャの表示可能時間　一覧 */
+    public static function times()
+    {
+        return [
+            // '00:00','01:00','02:00','03:00','04:00','05:00',
+            // '06:00','07:00','08:00','09:00','10:00','11:00',
+            // '12:00','13:00','14:00','15:00','16:00','17:00',
+            // '18:00','19:00','20:00','21:00','22:00','23:00',
+            // '24:00',
+
+            '00:00','00:30','01:00','01:30','02:00','02:30','03:00','03:30',
+            '04:00','04:30','05:00','05:30','06:00','06:30','07:00','07:30',
+            '08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30',
+            '12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30',
+            '16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30',
+            '20:00','20:30','21:00','21:30','22:00','22:30','23:00','23:30',
+            '24:00',
+
         ];
     }
 
@@ -260,7 +286,57 @@ class Gacha extends Model
         */
         public function getUserRankAttribute()
         {
+            // dd(new UserRankHistory(['rank_id'=>$this->user_rank_id]));
             return new UserRankHistory(['rank_id'=>$this->user_rank_id]);
-            return 'user_rank' ;
         }
+
+
+
+        /**
+         * (新作ガチャ)カウントダウン時間 initial_time
+         * @return String
+        */
+        public function getInitialTimeAttribute()
+        {
+            if( $this->published_at > now()){
+                return now()->diff($this->published_at)->format('%H:%I:%S');
+            }
+            return null;
+        }
+
+
+        /**
+         * (時間帯限定)カウントダウン時間 initial_timezone
+         * @return String
+        */
+        public function getInitialTimezoneAttribute()
+        {
+            $befor = now()->copy()->subMinutes(30);//表示開始
+            $start   = \Carbon\Carbon::parse($this->min_time);//表示終了
+
+            if( $befor <= now()  &&  now() < $start ){
+                return now()->diff( $start )->format('%H:%I:%S');
+            }
+            return null;
+        }
+
+
+        /**
+         * (時間帯限定)表示可能か否か is_show_timezone
+         * @return String
+        */
+        public function getIsShowTimezoneAttribute()
+        {
+            $now_time = now()->format('H:i');//現在時刻
+
+            if( ! $this->is_over_date ){ //日中間の時間帯
+                return $this->min_time <= $now_time  &&  $now_time < $this->max_time;
+
+            }else{ //日を跨ぐ時間帯
+                return $this->min_time <= $now_time  ||  $now_time < $this->max_time;
+
+            }
+            return 'is show';
+        }
+
 }

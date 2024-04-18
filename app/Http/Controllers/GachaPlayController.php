@@ -51,8 +51,8 @@ class GachaPlayController extends Controller
 
         # ポイントが不足しているとき
         if( $total_play_point > $user->point ){
-            $params = ['gacha_id'=>$gacha->id];
-            return redirect()->route('point_sail.shortage', $params);
+            $params = ['gacha_id'=>$gacha->id,'play_count'=>$play_count];
+            return redirect()->route('point_sail.shortage',$params);
         }
 
         # ガチャ開始前チェック
@@ -147,12 +147,10 @@ class GachaPlayController extends Controller
         // dd($gacha->published_at->toDateTimeString());
 
 
-
         # ログインしていないとき
         if( !Auth::check() ){
             return 'ガチャを始めるには、ログインが必要です';
         }
-
         # 売り切れ
         else if( $is_sold_out ){
             return '売り切れです';
@@ -200,6 +198,11 @@ class GachaPlayController extends Controller
             ( $gacha->type=='only_new_user' && $gacha->played_one_time )
         ){
             return 'このガチャを利用することはできません。';
+        }
+        # [時間限定ガチャ]
+        else if(!$gacha->is_show_timezone) /*-- (時間帯限定)表示可能か否か --*/
+        {
+            return '只今このガチャは公開時間外です。';
         }
         else{
             return null;

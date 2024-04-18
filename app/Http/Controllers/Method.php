@@ -170,10 +170,15 @@ class Method
 
             // ストレージファイルのコピー・DBにパスの値を渡す
             storage::copy( $old_path, $new_path );
+
+
+            return $new_path;
+
+        }else{
+
+            return $path;
         }
 
-
-        return $new_path;
     }
 
 }

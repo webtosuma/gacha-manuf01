@@ -55,8 +55,8 @@
             </div>
 
             <div class="mb-3">
-                @php $play_point = $gacha->one_play_point * 10; @endphp
-                <div class="fw-bold">10連続ガチャる {{ number_format($play_point) }}pt</div>
+                @php $play_point = $gacha->one_play_point * $play_count; @endphp
+                <div class="fw-bold">{{ number_format($play_count).'連ガチャる' }} {{ number_format($play_point) }}pt</div>
 
 
                 @php $shortage_point = $play_point - Auth::user()->point; @endphp
@@ -79,4 +79,15 @@
         >ポイントを購入する</a>
     </div>
 </div>
+
+
+<!-- その他のガチャ情報 -->
+<div class="container py-4 mb-5"  style="max-width:500px;">
+
+    @include('gacha.common.result_gachas')
+
+</div>
+
 @endsection
+
+

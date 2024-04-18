@@ -9,7 +9,6 @@
         position-relative shiny
         hover_anime" style="border-radius:1rem;">
 
-
             <!--image-->
             @include('gacha.common.top_image')
 
@@ -19,9 +18,9 @@
         </a>
 
 
-
         <!--play_buttons-->
         @include('gacha.common.play_buttons')
+
 
     </div>
 @empty

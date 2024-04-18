@@ -188,9 +188,9 @@
     <div class="col-12">
         <div class="col-md-6 mx-auto my-5">
             @if (!$infomation->id)
-            <disabled-button style_class="btn btn-lg btn-primary text-white w-100 shadow" btn_text="登録する"></bdisabled-button>
+            <disabled-button style_class="btn btn-lg btn-primary text-white w-100 shadow" btn_text="登録する"></disabled-button>
             @else
-            <disabled-button style_class="btn btn-lg btn-warning text-white w-100 shadow" btn_text="更新する"></bdisabled-button>
+            <disabled-button style_class="btn btn-lg btn-warning text-white w-100 shadow" btn_text="更新する"></disabled-button>
             @endif
         </div>
     </div>
