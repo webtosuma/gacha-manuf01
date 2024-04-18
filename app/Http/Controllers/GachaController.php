@@ -299,7 +299,6 @@ class GachaController extends Controller
                 }
             }
 
-
             return $slides;
         }
 

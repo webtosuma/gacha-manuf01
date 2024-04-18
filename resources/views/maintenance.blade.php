@@ -40,17 +40,13 @@
             background-image: url({{asset('storage/site/image/bg01.jpg')}});
         }
     </style>
-
 </head>
 <body class="" >
+
 
     <div class="d-flex align-items-center justify-content-center bg-" style="height: 100vh;">
         <div class="text- p-3">
 
-
-            {{-- <div class="text-center mb-5">
-                <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:4.4rem;">
-            </div> --}}
 
             <h2 class="mb-3 text-center">只今、メンテナンス中です。<br>しばらくお待ちください。</h2>
 
