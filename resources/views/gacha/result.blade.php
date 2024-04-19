@@ -56,8 +56,8 @@
 
         </div>
     </section>
-    <section class="my-5">
-        <div class="container px- py-"  style="max-width:500px;">
+    <section class="mb-5">
+        {{-- <div class="container px- py-"  style="max-width:500px;">
 
 
             <h5 class="fw-bold text-center mb-">ガチャ情報</h5>
@@ -77,8 +77,8 @@
 
             </a>
 
-        </div>
-        <div class="my-5 py-">
+        </div> --}}
+        <div class="mb-5 py-">
 
 
             <h5 class="text-center fs-5 fw-bold mb-3">ガチャ結果を送る</h5>
@@ -91,7 +91,7 @@
 
         </div>
         <!-- その他のガチャ情報 -->
-        <div class="container px- py-"  style="max-width:500px;">
+        <div class="container px- pb-5"  style="max-width:500px;">
 
             @include('gacha.common.result_gachas')
 

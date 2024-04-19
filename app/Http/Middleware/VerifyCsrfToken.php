@@ -13,7 +13,11 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
 
-        'stripe/webhook' //決済完了ウェブホック //https://cardfesta.jp/stripe/webhook
+        # //決済完了ウェブホック //https://cardfesta.jp/stripe/webhook
+        'stripe/webhook',
+
+        # サブスク決済完了ウェブホック //https://cardfesta.jp/stripe/subscription/webhook
+        'stripe/subscription/webhook',
 
 
     ];

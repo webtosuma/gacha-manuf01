@@ -56,7 +56,7 @@ class StripSubscriptionController extends Controller
 
 
         # 商品情報
-        $price_id = 'price_1P1fYnKoJdkajOL0nIegnltI';//月時テスト
+        // $price_id = 'price_1P1fYnKoJdkajOL0nIegnltI';//月時テスト
         $price_id = 'price_1P3AfaKoJdkajOL0gGm7CMDU';//日時テスト
 
         $checkout_session = Session::create([
@@ -110,29 +110,10 @@ class StripSubscriptionController extends Controller
                 case 'customer.subscription.created':
                     $session = $event->data->object;
 
-                    $responses = $this->handlePaymentIntentSucceeded($request,$session);
+                    // $responses = $this->handlePaymentIntentSucceeded($request,$session);
 
-                    return response($responses, 200);
-                    break;
-
-
-                ## サブスクが削除されました
-                case 'customer.subscription.deleted':
-                    $session = $event->data->object;
-
-                    $responses = $this->handlePaymentIntentSucceeded($request,$session);
-
-                    return response($responses, 200);
-                    break;
-
-
-                ## クレジット・ウォレットで支払いが成功した場合の処理
-                case 'payment_intent.succeeded':
-                    $session = $event->data->object;
-
-                    $responses = $this->handlePaymentIntentSucceeded($request,$session);
-
-                    return response($responses, 200);
+                    // return response($responses, 200);
+                    return response([], 200);
                     break;
 
 
@@ -140,7 +121,28 @@ class StripSubscriptionController extends Controller
                 case 'customer.subscription.updated':
                     $session = $event->data->object;
 
-                    $responses = $this->handlePaymentIntentSucceeded($request,$session);
+                    // $responses = $this->handlePaymentIntentSucceeded($request,$session);
+
+                    return response([], 200);
+                    break;
+
+
+
+                ## サブスクが削除されました
+                case 'customer.subscription.deleted':
+                    $session = $event->data->object;
+
+                    // $responses = $this->handlePaymentIntentSucceeded($request,$session);
+
+                    return response([], 200);
+                    break;
+
+
+                ## クレジット・ウォレットで支払いが成功した場合の処理
+                case 'payment_intent.succeeded':
+                    $session = $event->data->object;
+
+                    // $responses = $this->handlePaymentIntentSucceeded($request,$session);
 
                     return response([], 200);
                     break;
@@ -150,14 +152,15 @@ class StripSubscriptionController extends Controller
                 case 'invoice.payment_failed':
                     $session = $event->data->object;
 
-                    $responses = $this->handlePaymentIntentSucceeded($request,$session);
+                    // $responses = $this->handlePaymentIntentSucceeded($request,$session);
 
-                    return response($responses, 200);
+                    return response([], 200);
                     break;
 
 
                 default:
                     // 未知のイベントに対する処理
+                    return response([], 200);
                     break;
             }
 
@@ -195,7 +198,7 @@ class StripSubscriptionController extends Controller
         if( $previous_point_history ){ return null; }
 
 
-        return [];
+        return ['message'=>'OK'];
 
 
         # 客の情報
@@ -244,4 +247,7 @@ class StripSubscriptionController extends Controller
 
         return $point_history;
     }
+
+
+    // private function handleCustomerSubscriptionCreated
 }

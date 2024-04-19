@@ -4,18 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 /*
 |--------------------------------------------------------------------------
-| ポイント購入・履歴 (webhook)
+| サブスクプラン購入 (checkout)
 |  StripSubscriptionController
 |--------------------------------------------------------------------------
 */
 
-    # ポイント一覧
+    # サブスクリプションページ
     Route::get('point_sail/subscription',
     [Controllers\StripSubscriptionController::class, 'index'])
     ->name('point_sail.subscription');
 
 
-    # 決済完了ウェブホック //https://cardfesta.jp/stripe/subscription/webhook
+    # サブスク決済完了ウェブホック //https://cardfesta.jp/stripe/subscription/webhook
+    /* ! * App\Http\Middleware\VerifyCsrfTokenにて、CSRF除外処理を行うこと！ * ! */
     Route::post('stripe/subscription/webhook',
     [Controllers\StripSubscriptionController::class, 'webhook']);
 

@@ -63,7 +63,7 @@
     <div class="col-12">
 
         <a href="{{ route('gacha.custom_count',$params) }}"
-        class="btn btn-info bg-gradient text-white fw-bold w-100 pb-0
+        class="btn btn-info bg-gradient text-white fw-bold w-100 pb-
         rounded-pill border-danger border-3
         position-relative shiny overflow-hidden
         @if($gacha->remaining_count ==0) disabled @endif

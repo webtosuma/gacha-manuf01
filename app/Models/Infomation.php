@@ -41,7 +41,6 @@ class Infomation extends Model
     |
     |
     */
-
         /**
          * 画像ファイルパス image_path
          * @return String

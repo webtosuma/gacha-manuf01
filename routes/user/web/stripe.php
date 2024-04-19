@@ -18,6 +18,7 @@ use App\Http\Controllers;
 
 
         # 決済完了ウェブホック //https://cardfesta.jp/stripe/webhook
+        /* ! * App\Http\Middleware\VerifyCsrfTokenにて、CSRF除外処理を行うこと！ * ! */
         Route::post('stripe/webhook',
         [Controllers\StripeController::class, 'webhook']);
 

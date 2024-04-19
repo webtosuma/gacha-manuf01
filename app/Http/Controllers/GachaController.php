@@ -27,6 +27,8 @@ class GachaController extends Controller
      */
     public function index(Request $request, $category_code='all' )
     {
+        // dd(Auth::user()->now_rank->point_sail_ratio);
+
 
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
@@ -283,7 +285,7 @@ class GachaController extends Controller
                 $slides[] = [
                     'type' => 'info',
                     'href' => route('infomation.show',$slide_info),
-                    'image'=> $slide_info->image_path,
+                    'image'=> $slide_info->image_path ??  asset( 'storage/site/image/no_image.jpg' ),
                 ];
             }
             //ガチャ

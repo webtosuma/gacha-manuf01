@@ -22,25 +22,38 @@
 
 
         <!--サブスクPR-->
-        @if ( config('app.debug') )
+        @if ( env('SUBSCRIPTION',false) )
         <a href="{{route('point_sail.subscription')}}"
-        class="d-block col-md-6 mx-auto my-3 "
+        class="d-block col-md- mx-auto my-3 "
         >
-            <img src="{{asset('storage/site/image/pass.png')}}"
+            {{-- <img src="{{asset('storage/site/image/pass.png')}}"
             alt="{{ 'カドフェPASS' }}" class="w-100 rounded-3 shadowww ">
 
-            <div class="text-end mt-2 px-3">お申し込みはこちら＞</div>
+            <div class="text-end mt-2 px-3">お申し込みはこちら＞</div> --}}
 
-            {{-- <div class=" p-3 text-white "
+            <div class=" p-3 text-white "
             style="background: linear-gradient(to right bottom, #406aff, #14cfa0) !important;"
             >
-                <div class="fs-3">
-                    月額プラン
-                    <span class="fs-1">カドフェPASS</span>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="">
+
+                        </div>
+                        <img src="{{asset('storage/site/image/pass.png')}}"
+                        alt="{{ 'カドフェPASS' }}" class="w-100 rounded-3 shadowww ">
+                    </div>
+
+                    <div class="col">
+                        <div class="fs-3">
+                            月額プラン
+                            <span class="fs-1">カドフェPASS</span>
+                        </div>
+                        {{-- <div class="fs-5">お得な特典が盛り沢山!!</div> --}}
+                        <div class="text-end mt-2">お申し込みはこちら＞</div>
+                    </div>
                 </div>
-                <div class="fs-5">お得な特典が盛り沢山!!</div>
-                <div class="text-end mt-2">お申し込みはこちら＞</div>
-            </div> --}}
+
+            </div>
         </a>
         @endif
 
