@@ -138,6 +138,16 @@ class Gacha extends Model
             return $this->hasMany(GachaRankMovie::class,'gacha_id');
         }
 
+
+        /**
+         * SponsorAdモデル リレーション (sponsorAd)
+         * @return \App\Models\SponsorAd
+        */
+        public function sponsor_ad()
+        {
+            return $this->hasOne(SponsorAd::class,'gacha_id');
+        }
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

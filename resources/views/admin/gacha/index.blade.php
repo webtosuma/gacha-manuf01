@@ -90,8 +90,15 @@ $active_key = 'gacha';
                         hover_anime" style="border-radius:1rem;">
 
                             <div class="d-flex gap-1 flex-wrap p-2" style="font-size:11px;">
+                                <!--広告-->
+                                @if($gacha->sponsor_ad)
+                                    <div class="border border-danger text-danger px-3 rounded-pill">広告</div>
+                                @endif
+                                <!--ガチャの種類-->
                                 <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
+                                <!--ランクの指定-->
                                 <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
+                                <!--時間帯-->
                                 <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
                             </div>
 

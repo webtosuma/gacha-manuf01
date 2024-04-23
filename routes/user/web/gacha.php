@@ -5,8 +5,9 @@ use App\Http\Controllers;
 /*
 |--------------------------------------------------------------------------
 | ガチャ
-|  GachaController
-|  GachaPlayController
+| GachaController
+| GachaPlayController
+| GachaSponsorAdController
 |--------------------------------------------------------------------------
 */
     Route::middleware(['user_rank'])->group(function () {
@@ -51,6 +52,13 @@ use App\Http\Controllers;
         Route::patch('/g/exchange_points/{category_code}/{user_gacha_history}',
         [App\Http\Controllers\GachaController::class, 'exchange_points'])
         ->name('gacha.exchange_points');
+
+
+
+        # スポンサーガチャカで遊ぶ
+        Route::post('/g/sponsor_ad_gacha/movie/{category_code}/{gacha}/{key}',
+        [App\Http\Controllers\GachaSponsorAdController::class, 'movie'])
+        ->name('gacha.sponsor_ad_gacha.movie');
 
 
     });

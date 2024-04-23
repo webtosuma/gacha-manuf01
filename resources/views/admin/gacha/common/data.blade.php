@@ -31,7 +31,19 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="d-flex flex-wrap gap-1">
+            <!--広告-->
+            @if($gacha->sponsor_ad)
+                <div class="border px-3 rounded-pill">広告</div>
+            @endif
+            <!--ガチャの種類-->
+            <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
+            <!--ランクの指定-->
+            <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
+            <!--時間帯-->
+            <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
+        </div>
+        {{-- <div class="mb-3">
             表示時間：
             <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
         </div>
@@ -42,7 +54,7 @@
         <div class="mb-3">
             ガチャの種類：
             <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
-        </div>
+        </div> --}}
     </div>
 </div>
 

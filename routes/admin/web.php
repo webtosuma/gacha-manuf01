@@ -37,14 +37,17 @@ use \App\Http\Controllers;
     include('web/infomation.php');
 
 
+    # ポイント売上
+    include('web/point_history.php');
 
     # ガチャ
     include('web/gacha/index.php');//(基本情報)
     include('web/gacha/detail.php');//(詳細情報)
     include('web/gacha/play.php');//(play)
 
-    # ポイント売上
-    include('web/point_history.php');
+    # スポンサー・スポンサー広告
+    include('web/sponsor.php');
+    include('web/sponsor_ad.php');
 
     # 発送受付
     include('web/shipped.php');

@@ -19,10 +19,18 @@
 
 
         @default
-            {{-- 通常ボタン --}}
-            @include('gacha.common.play_buttons_nomal')
-            @break
 
+            {{-- 通常ボタン --}}
+            @if( ! $gacha->sponsor_ad )
+                @include('gacha.common.play_buttons_nomal')
+
+            {{-- 広告ボタン --}}
+            @else
+                @include('gacha.common.play_buttons_sponsor_ad')
+            @endif
+
+
+            @break
         {{----}}
     @endswitch
 

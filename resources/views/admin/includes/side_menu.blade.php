@@ -10,12 +10,12 @@
             'icon'  => 'bi-gift',
             'label' => 'ガチャ管理',
         ],
-        // [
-        //     'route' => '#',
-        //     'key'   => 'ticket',
-        //     'icon'  => 'bi-ticket-perforated',
-        //     'label' => 'チケット管理(作成中)',
-        // ],
+        [
+            'route' => route('admin.sponsor_ad'),
+            'key'   => 'sponsor_ad',
+            'icon'  => 'bi-badge-ad',
+            'label' => '広告管理',
+        ],
         [
             'route' => route('admin.shipped'),
             'key'   => 'shipped',

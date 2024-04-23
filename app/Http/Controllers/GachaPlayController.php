@@ -26,7 +26,7 @@ class GachaPlayController extends Controller
 {
 
     /**
-     * PLAYガチャで遊ぶ
+     * スポンサーガチャカで遊ぶ
      * @param \Illuminate\Http\Request $request
      * @param String $category_code      //カテゴリーコード名
      * @param  \App\Models\Gacha  $gacha //ガチャモデル
