@@ -12,4 +12,8 @@
     </script>
 
 
+    <!-- Google Adsence (広告) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6765911421863887"
+    crossorigin="anonymous"></script>
+
 @endif

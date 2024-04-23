@@ -24,7 +24,7 @@ use App\Http\Controllers;
     Route::middleware(['auth','user_rank'])->group(function () {
 
         # サブスクプラン手続き
-        Route::get('point_sail/subscription/payment',
+        Route::get('point_sail/subscription/payment/{subscription_id}',
         [Controllers\StripSubscriptionController::class, 'payment'])
         ->name('point_sail.subscription.payment');
 
