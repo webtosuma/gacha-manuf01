@@ -55,11 +55,26 @@ use App\Http\Controllers;
 
 
 
-        # スポンサーガチャカで遊ぶ
-        Route::post('/g/sponsor_ad_gacha/movie/{category_code}/{gacha}/{key}',
-        [App\Http\Controllers\GachaSponsorAdController::class, 'movie'])
-        ->name('gacha.sponsor_ad_gacha.movie');
 
+
+
+    });
+
+
+    /*  スポンサー広告ガチャ */
+    Route::middleware(['auth','user_rank'])->group(function () {
+
+
+        # スポンサーガチャカで遊ぶ
+        Route::get('/gacha/sponsor_ad/movie/{user_gacha_history}',
+        [App\Http\Controllers\GachaSponsorAdController::class, 'movie'])
+        ->name('gacha.sponsor_ad.movie');
+
+
+        # スポンサーサイトへリダイレクト
+        Route::get('/gacha/sponsor_ad/redirect/{sponsor_ad}',
+        [App\Http\Controllers\GachaSponsorAdController::class, 'redirect'])
+        ->name('gacha.sponsor_ad.redirect');
 
     });
 

@@ -270,6 +270,30 @@ class Gacha extends Model
 
 
         /**
+         * スポンサー広告ガチャを上限までプレイしたか？ played_ad_limit　
+         * @return String
+        */
+        public function getPlayedAdLimitAttribute()
+        {
+            # スポンサー広告ガチャのみ
+            if( !$this->sponsor_ad ){ return false; }
+
+            # 最大値
+            $max_count = 10;
+            $user_id = Auth::check() ? Auth::user()->id : 0;
+
+            $count = UserGachaHistory::where('user_id',$user_id)
+            ->where('gacha_id',$this->id)
+            ->whereDate('created_at', now() )
+            ->get()->count();
+
+            // return $count;
+            return $count >= $max_count  ;
+        }
+
+
+
+        /**
          * 1日1回をプレイしたか？ played_only_oneday
          * @return String
         */

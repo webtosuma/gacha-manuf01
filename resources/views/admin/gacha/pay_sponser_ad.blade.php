@@ -23,12 +23,15 @@
 
     <u-movie-play
     token="{{ csrf_token() }}"
-    movie_path_mobile="{{ $movie_path['mobile'] }}"
-    r_action="{{ route('gacha.result', $params )}}"
+    movie_path_mobile="{{ $sponsor_ad->movie_path }}"
+    r_action="{{ route('admin.gacha.result', $params )}}"
+    r_redirect="{{ route('gacha.sponsor_ad.redirect',$sponsor_ad) }}"
+    redirect_text="{{'このサイトを見る'}}"
     rank_up="{{ $rank_up ? 1 : 0}}"
+    max_time="15"
     ></u-movie-play>
-
-    {{-- rank_up="{{ isset($rank_up)&&$rank_up ? 1 : 0}}" --}}
 
 
 @endsection
+
+

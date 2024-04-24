@@ -1,9 +1,9 @@
 <header class="position-fixed w-100" style="z-index:100;">
 
-    @php $now = now()->format('Ymd-Hi'); @endphp
-    @if( $now > '20240415-1000' && $now < '20240415-1130' )
+    {{-- @php $now = now()->format('Ymd-Hi'); @endphp
+    @if( $now > '20240424-1000' && $now < '20240424-1130' )
         <div class="bg-danger text-center text-white">本日AM11:00より、メンテナンスを行います。</div>
-    @endif
+    @endif --}}
 
     <div class="container py-2 px-0">
 

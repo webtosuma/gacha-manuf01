@@ -27,4 +27,11 @@ Route::middleware(['admin_auth'])->group(function () {
 
 
 
+
+    # スポンサーガチャカで遊ぶ
+    Route::get('/admin/gacha/sponsor_ad/movie/{user_gacha_history}',
+    [App\Http\Controllers\AdminGachaSponsorAdController::class, 'movie'])
+    ->name('admin.gacha.sponsor_ad.movie');
+
+
 });//end middleware

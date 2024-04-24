@@ -89,4 +89,15 @@ class SponsorAd extends Model
             asset( 'storage/'.$this->movie ) : null;
         }
 
+
+
+
+        /**
+         * 動画再生数 movie_play_count
+         * @return Integer
+        */
+        public function getMoviePlayCountAttribute()
+        {
+            return $this->gacha->played_count;
+        }
 }

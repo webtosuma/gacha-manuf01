@@ -14,7 +14,7 @@ use App\Models\User;
 # メンテナンス中
 // $now = now()->format('Ymd-Hi');
 // if(
-//  $now >= '20240418-1100' && $now < '20240418-1130'
+//     $now >= '20240424-1100' && $now < '20240424-1130'
 // ){
 //     Route::get('/{any?}', function()  { return view('maintenance'); })->where('any', '.*')
 //     ->name('maintenance');

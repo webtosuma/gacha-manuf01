@@ -86,6 +86,15 @@ class User extends Authenticatable
         }
 
         /**
+         * Sponsorモデル リレーション ($user->sponsor) 削除データも含む
+         * @return \App\Models\Sponsor
+        */
+        public function sponsor()
+        {
+            return $this->hasOne(Sponsor::class,'user_id')->withTrashed();
+        }
+
+        /**
          * UserAddressモデル リレーション ($user->address)
          * @return \App\Models\UserAddress
         */

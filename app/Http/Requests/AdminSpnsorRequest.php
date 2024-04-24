@@ -27,11 +27,23 @@ class AdminSpnsorRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'user_name'  => ['required',],
             'user_email' => ['required','email', 'unique:users,email'],
             'user_address_tell'=> ['required','regex:/^0([0-9]{9,10})$/'],
         ];
+
+        // dd($this->old_user_email);
+        // 更新時のルール
+        if(
+            $this->_method=='PATCH'
+            &&  $this->user_email == $this->old_user_email
+        ) {
+            $rules['user_email'] = ['required','email'];
+        }
+
+
+        return $rules;
     }
 
 

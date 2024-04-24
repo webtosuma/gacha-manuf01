@@ -4,16 +4,18 @@
         <div class="container overflow-auto">
 
 
-            <!-- Rankラベル -->
-            @if ( $discription->rank_label_image )
+            <!-- Rankラベル(広告がある時は非表示) -->
+            @if ( !$gacha->sponsor_ad )
+
                 <div class="col-12 mx-auto p-5 my-3">
                     <img class="d-block w-100"
                     src="{{ $discription->rank_label_image }}"
                     alt="{{ $discription->rank_label }}">
                 </div>
-            @else
-                <div class="text-center" style="font-size:3rem;">{{ $discription->rank_label }}</div>
+
             @endif
+
+
             {{-- <div class="text-center" style="font-size:2rem;">{{$discription->rank_label_image }}</div> --}}
 
 

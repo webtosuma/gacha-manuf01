@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','広告管理　新規登録')
+@section('title',$sponsor_ad->title.'編集')
 
 
 @section('meta') @php
@@ -26,24 +26,27 @@ $active_key = 'sponsor_ad';
                 >{{ 'Top' }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.sponsor_ad') }}"
                 >{{ '広告管理' }}</a></li>
+                {{-- <li class="breadcrumb-item"><a href="{{ route('admin.sponsor_ad',$sponsor_ad) }}"
+                >{{  $sponsor_ad->title }}</a></li> --}}
                 <li class="breadcrumb-item active" aria-current="page"
-                >{{ '新規登録' }}</li>
+                >{{ $sponsor_ad->title.'編集' }}</li>
             </ol>
         </nav>
 
 
 
-        <h2 class="mb- py-3 border-bottom">{{ '広告管理　新規登録' }}</h2>
+        <h2 class="mb- py-3 border-bottom">{{ $sponsor_ad->title.'編集' }}</h2>
 
         <a href="{{route('admin.sponsor_ad')}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
         <section>
-            <form action="{{ route('admin.sponsor_ad.store',) }}" method="POST"
+            <form action="{{ route('admin.sponsor_ad.update',$sponsor_ad) }}" method="POST"
             novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
+                @method('PATCH')
 
                 @include('admin.sponsor_ad._inputs')
 

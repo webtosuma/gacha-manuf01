@@ -44,6 +44,9 @@
                 {{-- <span class="input-group-text">円</span> --}}
             </div>
 
+            <!--更新バリデーション用-->
+            <input type="hidden" name="old_user_email" value="{{$user->email}}">
+
             <!--error message-->
             @if ( $errors->has('user_email') )
                 <div class="text-danger"> {{$errors->first('user_email')}} </div>

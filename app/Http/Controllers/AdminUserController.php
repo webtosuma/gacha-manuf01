@@ -40,9 +40,11 @@ class AdminUserController extends Controller
         $search_email      = $request->search_email ? $request->search_email : '';
         $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : '';
 
+        // dd(User::doesntHave('sponsor')->get() );
 
         # 絞り込み
         $query = User::query();
+
 
             if($search_id){
                 $query->where('id','like','%'.$search_id.'%');
@@ -59,6 +61,9 @@ class AdminUserController extends Controller
             if($request->sort){ //退職者のみ
                 $query->where('deleted_at','<>',null);
             }
+
+
+            $query->doesntHave('sponsor'); //スポンサーアカウントを含まない
 
         $users = $query->withTrashed()//退会者を含む
         ->orderByDesc('created_at')->orderByDesc('id')

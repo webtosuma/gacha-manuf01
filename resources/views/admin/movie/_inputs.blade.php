@@ -24,25 +24,6 @@
 
 
 <div class="row">
-    {{-- <div class="col-md-9">
-        <!--PC用動画(pc_storage)-->
-        <label class="d-block mb-4">
-            <div class="form-label">
-                PC用動画
-                <span class="text-danger">＊</span>
-            </div>
-
-            <read-movie-file-component
-            name="pc_storage"
-            video_path="{{ $movie->pc }}"
-            ></read-movie-file-component>
-
-            <!--error message-->
-            @if ( $errors->has('pc_storage') )
-                <div class="text-danger"> {{$errors->first('pc_storage')}} </div>
-            @endif
-        </label>
-    </div> --}}
     <div class="col-md-3">
         <!--モバイル用動画(mobile_storage)-->
         <label class="d-block mb-4">

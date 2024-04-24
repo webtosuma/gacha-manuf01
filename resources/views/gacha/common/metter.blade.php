@@ -27,6 +27,12 @@ $bg_color = isset($metter_bg_color) ? $metter_bg_color : $bg_color;
 
         <div class="col">
             {{-- @include('gacha.common.type_label') --}}
+            <!-- 広告ガチャ -->
+            @if ($gacha->sponsor_ad)
+                <div class="px-1 border form-text fw-bold"
+                style="background: rgb(255 255 255 / 70%);">広告</div>
+            @endif
+
         </div>
     </div>
 

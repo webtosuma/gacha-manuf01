@@ -73,12 +73,12 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     @endif
 
 
-    <!-- 広告ガチャ -->
+    {{-- <!-- 広告ガチャ -->
     @if ($gacha->sponsor_ad)
     <div class="position-absolute p-2 bottom-0 end-0 text-end ">
         <div class="p-2 px-3 border border-2 border-white text-secondary fw-bold"
         style="background: rgb(255 255 255 / 70%);">広告</div>
     </div>
-    @endif
+    @endif --}}
 
 </div>

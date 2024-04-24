@@ -118,7 +118,7 @@
 
 
         <!--広告動画(movie)-->
-        <label class="d-block mb-4 col-6 mx-auto">
+        <label class="d-block mb-3 col-6 mx-auto">
             <div class="form-label">
                 広告動画
                 <span class="text-danger">＊</span>
@@ -126,7 +126,7 @@
 
             <read-movie-file-component
             name="movie"
-            video_path="{{ $sponsor_ad->movie }}"
+            video_path="{{ $sponsor_ad->movie_path }}"
             ></read-movie-file-component>
 
             <!--error message-->

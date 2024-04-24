@@ -4,7 +4,7 @@
 
 
 
-            <div class="section_video mx-auto">
+            <div class="section_video mx-auto col-sm-4 col-lg-2">
                 <!-- 動画mobile -->
                 <div class="video-area">
                     <video class="bg_video"
@@ -20,31 +20,50 @@
 
 
 
-            <!-- 音声切り替えボタン -->
-            <div class="position-fixed top-0 start-0 p-3">
-                <button @click="switchMuted()"
-                class="btn btn-light btn-sm py-0 fs-3"
-                id="muteButton" >
+            <div class="position-fixed top-0 start-0 p-3 w-100">
+                <div class="d-flex justify-content-between align-items-center">
 
-                    <i v-if="!muted" class="bi bi-volume-up-fill"></i>
-                    <i v-else class="bi bi-volume-mute-fill"></i>
-                </button>
+                    <!-- 音声切り替えボタン -->
+                    <button @click="switchMuted()"
+                    class="btn btn-light btn-sm py-0 fs-3"
+                    id="muteButton" >
+                        <i v-if="!muted" class="bi bi-volume-up-fill"></i>
+                        <i v-else class="bi bi-volume-mute-fill"></i>
+                    </button>
+
+
+                    <!--スキップボタン-->
+                    <form :action="r_action" method="get">
+                        <input v-if="rank_up==1" type="hidden" name="rank_up" :value="rank_up">
+
+                        <button v-if="time==0"
+                        type="submit"
+                        class="btn btn-light btn-sm py-0">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <span>演出をスキップ</span>
+                                <i class="bi bi-skip-end-fill fs-3"></i>
+                            </div>
+                        </button>
+                        <div v-else
+                        class="d-flex align-items-center justify-content-center rounded-pill border bg-light"
+                        style="width:2rem; height:2rem;">
+                            <div>{{ time }}</div>
+                        </div>
+                    </form>
+
+
+                </div>
             </div>
 
 
-            <!--スキップボタン-->
-            <div class="position-fixed bottom-0 end-0 p-3">
-                <form :action="r_action" method="get">
-                    <input v-if="rank_up==1" type="hidden" name="rank_up" :value="rank_up">
-
-                    <button type="submit"
-                    class="btn btn-light btn-sm flort-right py-0">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <span>演出をスキップ</span>
-                            <i class="bi bi-skip-end-fill fs-3"></i>
-                        </div>
-                    </button>
-                </form>
+            <!--URLボタン-->
+            <div v-if="r_redirect"
+            class="position-fixed bottom-0 end-0 p-3 pb-4 w-100 ">
+                <div class="col-12 col-md-6 mx-auto">
+                    <a :href="r_redirect"  target="_blank"
+                    class="btn btn-light border fs- w-100"
+                    >{{ redirect_text }}</a>
+                </div>
             </div>
 
             <!--音声コンフォーム-->
@@ -61,14 +80,18 @@
         props: {
             token:{ type: String,  default: '', },
             movie_path_mobile:{ type: String,  default: '', },
-            movie_path_pc:{ type: String,  default: '', },
             r_action:{ type: String,  default: '', },
+            r_redirect:{ type: String,  default: '', },
+            redirect_text:{ type: String,  default: 'このサイトを見る', },
             rank_up:{ type: [String,Number],  default: '0', },
+            max_time:{ type: [String,Number],  default: 0, },
         },
         data() { return {
 
             videos : '',
             form   : '',
+            time   : 0,
+            timer  : null,
 
             muted: true,
             moviePlaying: false,//動画再生中
@@ -83,6 +106,7 @@
             set() {
                 this.videos = document.querySelectorAll('video');
                 this.form   = document.querySelector('form');
+                this.time   = this.max_time;
             },
 
             /** 自動再生 */
@@ -96,13 +120,16 @@
                     const form = this.form;
                     video.addEventListener('ended', function() {
 
-                        // フォーム送信
+                        // フォーム送信　*広告の時は不要
                         form.submit();
 
                     });
 
                     // メディアの再生を開始
                     video.play();
+
+                    // タイマーの再生
+                    this.startTimer();
 
                     this.moviePlaying = true;
                 });
@@ -111,6 +138,22 @@
 
             /** 音声切り替え */
             switchMuted() { this.muted = !this.muted; },
+
+
+            /** カウントダウンタイマー **/
+            startTimer() {
+                this.timer = setInterval(() => {
+                    if (this.time > 0) {
+                        this.time--;
+                    } else {
+                        clearInterval(this.timer);
+                    }
+
+                    console.log('hoge');
+                }, 1000);
+            },
+
+
         }
 
     };

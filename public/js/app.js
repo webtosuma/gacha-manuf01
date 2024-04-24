@@ -8605,23 +8605,33 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       "default": ''
     },
-    movie_path_pc: {
-      type: String,
-      "default": ''
-    },
     r_action: {
       type: String,
       "default": ''
     },
+    r_redirect: {
+      type: String,
+      "default": ''
+    },
+    redirect_text: {
+      type: String,
+      "default": 'このサイトを見る'
+    },
     rank_up: {
       type: [String, Number],
       "default": '0'
+    },
+    max_time: {
+      type: [String, Number],
+      "default": 0
     }
   },
   data: function data() {
     return {
       videos: '',
       form: '',
+      time: 0,
+      timer: null,
       muted: true,
       moviePlaying: false //動画再生中
     };
@@ -8633,6 +8643,7 @@ __webpack_require__.r(__webpack_exports__);
     set: function set() {
       this.videos = document.querySelectorAll('video');
       this.form = document.querySelector('form');
+      this.time = this.max_time;
     },
     /** 自動再生 */autoPlay: function autoPlay() {
       var _this = this;
@@ -8642,17 +8653,31 @@ __webpack_require__.r(__webpack_exports__);
         // 動画が再生された後にフォーム送信
         var form = _this.form;
         video.addEventListener('ended', function () {
-          // フォーム送信
+          // フォーム送信　*広告の時は不要
           form.submit();
         });
 
         // メディアの再生を開始
         video.play();
+
+        // タイマーの再生
+        _this.startTimer();
         _this.moviePlaying = true;
       });
     },
     /** 音声切り替え */switchMuted: function switchMuted() {
       this.muted = !this.muted;
+    },
+    /** カウントダウンタイマー **/startTimer: function startTimer() {
+      var _this2 = this;
+      this.timer = setInterval(function () {
+        if (_this2.time > 0) {
+          _this2.time--;
+        } else {
+          clearInterval(_this2.timer);
+        }
+        console.log('hoge');
+      }, 1000);
     }
   }
 });
@@ -15024,7 +15049,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex align-items-center align-items-center h-100 w-100 bg-"
   }, [_c("div", {
-    staticClass: "section_video mx-auto"
+    staticClass: "section_video mx-auto col-sm-4 col-lg-2"
   }, [_c("div", {
     staticClass: "video-area"
   }, [_c("video", {
@@ -15043,7 +15068,9 @@ var render = function render() {
       src: _vm.movie_path_mobile
     }
   })])])]), _vm._v(" "), _c("div", {
-    staticClass: "position-fixed top-0 start-0 p-3"
+    staticClass: "position-fixed top-0 start-0 p-3 w-100"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-between align-items-center"
   }, [_c("button", {
     staticClass: "btn btn-light btn-sm py-0 fs-3",
     attrs: {
@@ -15058,9 +15085,7 @@ var render = function render() {
     staticClass: "bi bi-volume-up-fill"
   }) : _c("i", {
     staticClass: "bi bi-volume-mute-fill"
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "position-fixed bottom-0 end-0 p-3"
-  }, [_c("form", {
+  })]), _vm._v(" "), _c("form", {
     attrs: {
       action: _vm.r_action,
       method: "get"
@@ -15073,7 +15098,28 @@ var render = function render() {
     domProps: {
       value: _vm.rank_up
     }
-  }) : _vm._e(), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("confirm-modal-component", {
+  }) : _vm._e(), _vm._v(" "), _vm.time == 0 ? _c("button", {
+    staticClass: "btn btn-light btn-sm py-0",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._m(0)]) : _c("div", {
+    staticClass: "d-flex align-items-center justify-content-center rounded-pill border bg-light",
+    staticStyle: {
+      width: "2rem",
+      height: "2rem"
+    }
+  }, [_c("div", [_vm._v(_vm._s(_vm.time))])])])])]), _vm._v(" "), _vm.r_redirect ? _c("div", {
+    staticClass: "position-fixed bottom-0 end-0 p-3 pb-4 w-100"
+  }, [_c("div", {
+    staticClass: "col-12 col-md-6 mx-auto"
+  }, [_c("a", {
+    staticClass: "btn btn-light border fs- w-100",
+    attrs: {
+      href: _vm.r_redirect,
+      target: "_blank"
+    }
+  }, [_vm._v(_vm._s(_vm.redirect_text))])])]) : _vm._e(), _vm._v(" "), _c("confirm-modal-component", {
     attrs: {
       body: "音声が出ます。よろしいですか？",
       icon: ""
@@ -15091,16 +15137,11 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("button", {
-    staticClass: "btn btn-light btn-sm flort-right py-0",
-    attrs: {
-      type: "submit"
-    }
-  }, [_c("div", {
+  return _c("div", {
     staticClass: "d-flex justify-content-center align-items-center"
   }, [_c("span", [_vm._v("演出をスキップ")]), _vm._v(" "), _c("i", {
     staticClass: "bi bi-skip-end-fill fs-3"
-  })])]);
+  })]);
 }];
 render._withStripped = true;
 

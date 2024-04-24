@@ -16,6 +16,37 @@ use App\Models\UserAddress;
 class AdminSponsorController extends Controller
 {
     /**
+     * 一覧
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        # 販売用ポイント情報取得
+        $sponsors = Sponsor::orderByDesc('id')->get();
+
+        return view('admin.sponsor.index',compact('sponsors'));
+    }
+
+
+
+
+    /**
+     * 表示
+     *
+     * @param  Sponsor $sponsor
+     * @return \Illuminate\Http\Response
+     */
+    public function show( Sponsor $sponsor )
+    {
+        return view('admin.sponsor.show', compact('sponsor'));
+    }
+
+
+
+
+
+    /**
      * 新規作成
      *
      * @return \Illuminate\Http\Response
@@ -60,10 +91,75 @@ class AdminSponsorController extends Controller
 
 
         # 返信メッセージ
-        return redirect()->route('admin.sponsor_ad')
+        return redirect()->route('admin.sponsor')
         ->with(['alert-dark'=>'スポンサー情報を新規登録しました。']);
     }
 
+
+
+    /**
+     * 編集
+     *
+     * @param  Sponsor $sponsor
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Sponsor $sponsor)
+    {
+        $user = $sponsor->user;
+        $user_address = $sponsor->address;
+
+
+        return view('admin.sponsor.edit', compact('user','user_address','sponsor'));
+    }
+
+
+
+
+    /**
+     * 更新
+     *
+     * @param AdminSpnsorRequest  $request
+     * @param Sponsor $sponsor
+     * @return \Illuminate\Http\Response
+     */
+    public function update(AdminSpnsorRequest  $request, Sponsor $sponsor)
+    {
+        # 入力データの加工
+        list($user_inputs,$user_address_inputs) = self::processingInputs( $request, $sponsor );
+
+
+        # Userテーブルの更新
+        $user = $sponsor->user;
+        $user->update($user_inputs);
+
+        # UserAddressテーブルの更新
+        $user_address = $sponsor->address;
+        $user_address->update( $user_address_inputs);
+
+
+        # リダイレクト
+        return redirect()->route('admin.sponsor')
+        ->with(['alert-warning'=>'スポンサー情報を更新しました。']);
+    }
+
+
+
+
+    /**
+     * 削除
+     *
+     * @param Sponsor $sponsor
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy( Sponsor $sponsor )
+    {
+        $sponsor->user->delete();
+        $sponsor->delete();
+
+        # リダイレクト
+        return redirect()->route('admin.sponsor')
+        ->with(['alert-danger'=>'スポンサー情報を削除しました。']);
+    }
 
 
 

@@ -6,7 +6,7 @@
 <div class="row g-2 mt-1">
     @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
 
-    <div class="col-6">
+    <div class="col">
         <form action="{{ route('gacha.play', $params) }}" method="post">
             @csrf
 
@@ -46,7 +46,7 @@
     </div>
 
 
-    <div class="col-6">
+    {{-- <div class="col-6">
         <button type="submit" name="play_count" disabled
         class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger
         rounded-pill border-secondary border-3"
@@ -54,5 +54,5 @@
             <div class="">終了</div>
             <div class="text-white invisible">{{number_format($gacha->one_play_point*10).'pt'}}</div>
         </button>
-    </div>
+    </div> --}}
 </div>

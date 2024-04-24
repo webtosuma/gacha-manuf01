@@ -53,7 +53,7 @@
 
             <div class="rounded shadow p-3 text-center my-3 bg-light">
                 <h5 class="text-danger">メンテナンス予定時間</h5>
-                2024年4月18日(木) 11:00~11:30
+                2024年4月24日 11:00~11:30
             </div>
 
             <p>

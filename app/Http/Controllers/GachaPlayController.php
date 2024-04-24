@@ -39,6 +39,8 @@ class GachaPlayController extends Controller
         # 変数
         $user = Auth::user(); //ログインユーザー取得
         $play_count = (int) $request->play_count;   //プレイ回数
+        $play_count = $gacha->sponsor_ad ? 1 : (int) $play_count;//(広告ガチャのとき）プレイ回数=>1
+
         $play_point = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
         $total_play_point = $play_count*$play_point;//合計使用ポイント
         $remaining_count  = (int) $gacha->remaining_count; //残りのプレイできる回数
@@ -119,6 +121,13 @@ class GachaPlayController extends Controller
 
         // 二重送信防止
         $request->session()->regenerateToken();
+
+
+
+        # スポンサー広告ガチャのとき
+        if( $gacha->sponsor_ad ){
+            return redirect()->route('gacha.sponsor_ad.movie',compact('user_gacha_history', 'rank_up' ));
+        }
 
 
         # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
@@ -204,6 +213,12 @@ class GachaPlayController extends Controller
         {
             return '只今このガチャは公開時間外です。';
         }
+        # [スポンサー広告ガチャ]1日の上限を超える
+        else if($gacha->played_ad_limit)
+        {
+            return '一日の利用上限を超えました。';
+        }
+
         else{
             return null;
         }

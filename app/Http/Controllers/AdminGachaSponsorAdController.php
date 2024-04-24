@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\GachaPlayCreateUserPrizeMethod
-as CreateUserPrize;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -21,10 +18,10 @@ use App\Models\Sponsor;
 use App\Models\SponsorAd;
 /*
 | =============================================
-|  ガチャ 広告ガチャPLAY コントローラー
+|  Admin ガチャ 広告ガチャPLAY コントローラー
 | =============================================
 */
-class GachaSponsorAdController extends Controller
+class AdminGachaSponsorAdController extends Controller
 {
     /**
      * PLAYガチャで遊ぶ
@@ -48,22 +45,6 @@ class GachaSponsorAdController extends Controller
 
 
         // dd($sponsor_ad->movie_path);
-        return view('gacha.pay_sponser_ad', compact('user_gacha_history', 'sponsor_ad', 'rank_up' ));
-    }
-
-
-    /**
-     * スポンサーサイトへリダイレクト
-     *
-     * @param SponsorAd $sponsor_ad
-     * @return \Illuminate\Http\Response
-     */
-    public function redirect(SponsorAd $sponsor_ad)
-    {
-        # スポンサーサイトへのアクセスカウント加算
-        $sponsor_ad->access_count ++;
-        $sponsor_ad->save();
-
-        return redirect( $sponsor_ad->url );
+        return view('admin.gacha.pay_sponser_ad', compact('user_gacha_history', 'sponsor_ad', 'rank_up' ));
     }
 }
