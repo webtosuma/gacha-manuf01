@@ -30,9 +30,6 @@ class StripSubscriptionController extends Controller
 {
     private function Subscriptions()
     {
-                // $price_id = 'price_1P1fYnKoJdkajOL0nIegnltI';//月時テスト
-                $price_id = 'price_1P3AfaKoJdkajOL0gGm7CMDU';//日時テスト
-
         return [
             // 月時テスト
             'price_1P1fYnKoJdkajOL0nIegnltI' => [
@@ -67,8 +64,37 @@ class StripSubscriptionController extends Controller
     */
     public function index()
     {
+        # 顧客情報
+        $user = Auth::user();
+
+        # サブスクプラン
         $subscriptions = self::Subscriptions();
-        // dd($subscriptions);
+        foreach($subscriptions as $subscription_id => $subscription)
+        {
+            // 解約予約中か否か($subscription['destory'])
+            $query = PointHistory::query();
+
+                $query->where('user_id', $user->id);
+
+                $query->where('reason_id',$subscription['delete_history_id'] );
+
+                //一ヶ月以内のデータ
+                $check_day  = now()->copy()->subMonth();
+                $query->where('created_at','>',$check_day);
+
+
+            $point_history = $query->orderByDesc('created_at')->first();
+
+            $subscriptions[$subscription_id]['destory']    = isset($point_history);
+            $subscriptions[$subscription_id]['destory_at'] = $point_history? $point_history->created_at->addMonth() :null;//解約予定日
+        }
+        // $session_id = "sub_1P8ahoKoJdkajOL0zzmYxEW1";
+        // $column     = 'stripe_checkout_session_id';
+        // $check_day  = now()->copy()->subHour(23);
+        // // dd($check_day->format('Ymd His'));
+        // $previous_point_history =
+        // PointHistory::where($column,$session_id)->where('created_at','>',$check_day)->first();
+        // dd($previous_point_history);
 
 
         return view('point_sail.subscription.index',compact('subscriptions'));
@@ -77,7 +103,7 @@ class StripSubscriptionController extends Controller
 
 
     /**
-     * 購入　手続き
+     * サブスクプラン契約　手続き
      * @param $subscription_id//商品ID
      * @return \Illuminate\Http\Response
     */
@@ -92,30 +118,134 @@ class StripSubscriptionController extends Controller
 
         # 商品情報
         $price_id = $subscription_id;
-        // $price_id = 'price_1P1fYnKoJdkajOL0nIegnltI';//月時テスト
-        // $price_id = 'price_1P3AfaKoJdkajOL0gGm7CMDU';//日時テスト
+
+
+        // タイムスタンプを取得(日付サイクル:毎月1日)
+        $nextMonthFirstDay = now()->copy()->addMonths(1)->startOfMonth();
+        $timestamp = $nextMonthFirstDay->timestamp;
+
 
         $checkout_session = Session::create([
 
             'customer' => $customer->id, //顧客ID
             'customer_update'=>['address'=> 'auto'],
             'payment_method_types' => [ 'card',],
-            // 'billing_cycle_anchor_config' => ['day_of_month' => 1],//請求サイクルの起点
+            // 'subscription_data' => [ 'billing_cycle_anchor' =>  $timestamp],//日割り計算処理
 
             'line_items' => [[
                 'price' => $price_id,
                 'quantity' => 1,
             ]],
 
+
             'mode' => 'subscription',
-            'success_url' => route('point_sail.subscription'),//成功リダイレクトパス
+            'success_url' => route('point_sail.subscription.comp',$subscription_id),//成功リダイレクトパス
             'cancel_url'  => route('point_sail.subscription'),//失敗リダイレクトパス
-            // 'subscription_data' => [ 'billing_cycle_anchor' =>  15],
         ]);
 
 
         return redirect()->to($checkout_session->url);
     }
+
+
+
+    /**
+     * 契約　完了
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param String $stripe_id
+     * @return \Illuminate\View\View
+    */
+    public function comp(Request $request, $stripe_id)
+    {
+        $user = Auth::user();
+
+        # サズスクプランの取得($subscription)
+        $subscriptions = self::Subscriptions();
+        if( !array_key_exists($stripe_id, $subscriptions) ){ return \App::abort(404); }
+        $subscription = $subscriptions[$stripe_id];
+        // dd($subscription['label']);
+
+        # 表示するガチャ情報
+        $before_gacha_id = $request->session()->get('before_gacha_id') ;
+        $before_gacha = Gacha::find($before_gacha_id);
+
+        # カテゴリーコード
+        $category_code = $before_gacha ? $before_gacha->category->code_name : 'all';
+
+        # おすすめガチャ
+        $gachas = GachaController::getPublishedGachas( $category_code, null );
+
+
+        return  view('point_sail.subscription.comp', compact(
+            'subscription', 'before_gacha', 'gachas','category_code'
+        ));
+    }
+
+
+
+
+    /**
+     * サブスクプラン解約
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param String $stripe_id
+     * @return \Illuminate\View\View
+    */
+    public function destroy(Request $request, $stripe_id)
+    {
+        # 顧客情報
+        $user = Auth::user();
+
+        # サズスクプランの取得($subscription)
+        $subscriptions = self::Subscriptions();
+        if( !array_key_exists($stripe_id, $subscriptions) ){ return \App::abort(404); }
+        $subscription = $subscriptions[$stripe_id];
+
+
+        # ポイント履歴よりセッションIDの取得
+        $query = PointHistory::query();
+
+            $query->where('user_id', $user->id);
+
+            $query->whereIn('reason_id', [
+                $subscription['create_history_id'], $subscription['update_history_id']
+            ]);
+
+            //一ヶ月以内のデータ
+            $check_day  = now()->copy()->subMonth();
+            $query->where('created_at','>',$check_day);
+
+
+        $point_history = $query->orderByDesc('created_at')->first();
+
+        $session_id = $point_history->stripe_checkout_session_id;
+
+
+        # 解約処理
+        $stripe = new \Stripe\StripeClient(config('stripe.secret_key'));
+        $stripe->subscriptions->update($session_id, ['cancel_at_period_end' => true]);
+
+
+        # ポイント履歴の登録
+        $reason_id = $subscription['delete_history_id'];// 入出理由ID
+        $point_history = new PointHistory([
+            'user_id'   => $user->id,
+            'value'     => 0,
+            'price'     => 0, //販売価格(税込み)
+            'reason_id' => $reason_id, //入出理由ID
+
+            'stripe_checkout_session_id' => $session_id,//CheckoutSessionID
+        ]);
+        $point_history->save();
+
+
+
+        $message = $subscription['label'].'を解約しました。';
+        return redirect()->route('point_sail.subscription')
+        ->with(['alert-danger'=>$message]);
+    }
+
 
 
 
@@ -202,8 +332,15 @@ class StripSubscriptionController extends Controller
     {
         # CheckoutSessionが処理済みの時は、スキップ
         $session_id = $session['id'];
-        $column = 'stripe_checkout_session_id';
-        $previous_point_history = PointHistory::where($column,$session_id)->first();
+        $column     = 'stripe_checkout_session_id';
+        $check_day  = now()->copy()->subHour(23);
+
+        $previous_point_history =
+        PointHistory::where($column,$session_id)->where('created_at','>',$check_day)->first();
+
+        // $session_id = $session['id'];
+        // $column     = 'stripe_checkout_session_id';
+        // $previous_point_history = PointHistory::where($column,$session_id)->first();
         if( $previous_point_history ){
             return response(['message' => '契約内容は処理済みです。'], 200);
         }
@@ -295,28 +432,29 @@ class StripSubscriptionController extends Controller
         }
 
 
-        # 新規契約のとき=>UserにサブスクIDを保存
+        # UserkaraサブスクIDを削除
         $is_update = isset( $user->subscription_id );
         if(!$user->subscription_id){
             return response(['message' => 'ユーザーのサブスク契約情報が登録されていません。'], 403);
         }
+        $user->update(['subscription_id'=>null]);//削除
 
 
-        # 入出理由ID
-        $reason_id = $subscription['delete_history_id'];
+        // # 入出理由ID
+        // $reason_id = $subscription['delete_history_id'];
 
 
 
-        # ポイント履歴の登録
-        $point_history = new PointHistory([
-            'user_id'   => $user->id,
-            'value'     => 0,
-            'price'     => 0, //販売価格(税込み)
-            'reason_id' => $reason_id, //入出理由ID
+        // # ポイント履歴の登録
+        // $point_history = new PointHistory([
+        //     'user_id'   => $user->id,
+        //     'value'     => 0,
+        //     'price'     => 0, //販売価格(税込み)
+        //     'reason_id' => $reason_id, //入出理由ID
 
-            'stripe_checkout_session_id' => $session_id,//CheckoutSessionID
-        ]);
-        $point_history->save();
+        //     'stripe_checkout_session_id' => $session_id,//CheckoutSessionID
+        // ]);
+        // $point_history->save();
 
 
 
@@ -326,76 +464,4 @@ class StripSubscriptionController extends Controller
     }
 
 
-    /**
-     * サブスクのフルフィルメントを実行するためのコード
-     *
-     * @param  Object $session //Stripe Checkout Session オブジェクト
-     * @return Void
-     */
-    private function handlePaymentIntentSucceeded($request, $session)
-    {
-        # Stripe側で決済が完了済(paid)でなければ、スキップ
-        $paid = isset($session->payment_status) && $session->payment_status === 'paid';
-        if( !$paid ){ return null; }
-
-
-        # CheckoutSessionが処理済みの時は、スキップ
-        $session_id = $session['id'];
-        $column = 'stripe_checkout_session_id';
-        $previous_point_history = PointHistory::where($column,$session_id)->first();
-        if( $previous_point_history ){ return null; }
-
-
-        return ['message'=>'OK'];
-
-
-        # 客の情報
-        $user = User::where('stripe_id', $session['customer'])->first();
-
-        # 購入アイテムの情報
-        $amounSubtotal = $session['amount_subtotal'];
-        $point_sail    = PointSail::where('price', $amounSubtotal)->first();
-
-        # ランクごとのポイント還元率
-        $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
-        ? $user->now_rank->point_sail_ratio : 1 ;
-
-
-        # ポイント履歴の登録
-        $point_history = new PointHistory([
-            'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => $point_sail->value * $rank_ratio,//ポイント数
-            'price'     => $point_sail->price, //販売価格(税込み)
-            'reason_id' => 11, //入出理由ID
-
-            'stripe_checkout_session_id' => $session_id,//CheckoutSession
-        ]);
-        $point_history->save();
-
-
-        #チケットの付与
-        if( $point_sail->ticket > 0 )
-        {
-            $ticket_history = new TicketHistory([
-                'user_id'   => $user->id,
-                'value'     => $point_sail->ticket,
-                'reason_id' => 16, //ポイント購入時プレゼント
-            ]);
-            $ticket_history->save();
-        }
-
-
-        # ポイント購入完了メールの送信
-        $request->user       = $user;
-        $request->point_sail = $point_sail;
-        $request->email      = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : 't.sakai@tosuma.ltd';//ローカルではメール送信しない
-        SendMailController::PaymentComp( $request );
-
-
-
-        return $point_history;
-    }
-
-
-    // private function handleCustomerSubscriptionCreated
 }

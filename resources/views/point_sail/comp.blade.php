@@ -105,7 +105,7 @@
 
             </a>
         </div>
-        <div class="mx-auto mb-5" style="max-width:400px;">
+        {{-- <div class="mx-auto mb-5" style="max-width:400px;">
             <a href="{{ route('gacha_category') }}" class="btn btn-lg btn-primary text-white rounded-pill shadow w-100"
             >他のガチャを見る</a>
         </div>
@@ -113,10 +113,19 @@
         <div class="mx-auto mb-5" style="max-width:400px;">
             <a href="{{ route('gacha_category') }}" class="btn btn-lg btn-primary text-white rounded-pill shadow w-100"
             >ガチャを見る</a>
-        </div>
+        </div> --}}
     @endif
 
+
+    <!--おすすめガチャ-->
     <div class="mb- py-5 mx-auto" style="max-width:400px;">
+
+        @include('gacha.common.result_gachas')
+
+    </div>
+
+
+    {{-- <div class="mb- py-5 mx-auto" style="max-width:400px;">
 
         <h5 class="fw-bold text-center mb-5">おすすめガチャ</h5>
 
@@ -141,7 +150,7 @@
             @endif
         @endforeach
 
-    </div>
+    </div> --}}
 
 
 </div>

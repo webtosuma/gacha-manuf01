@@ -28,19 +28,20 @@ use App\Http\Controllers;
         [Controllers\StripSubscriptionController::class, 'payment'])
         ->name('point_sail.subscription.payment');
 
+
         # サブスクプラン支払い完了
         Route::get('point_sail/subscription/comp/{stripe_id}',
-        [Controllers\StripeController::class, 'comp'])
+        [Controllers\StripSubscriptionController::class, 'comp'])
         ->name('point_sail.subscription.comp');
 
-        # サブスクプランキャンセル
-        Route::get('point_sail/subscription/cancel/{stripe_id}',
-        [Controllers\StripeController::class, 'cancel'])
-        ->name('point_sail.subscription.cancel');
+        # サブスクプラン解約
+        Route::get('point_sail/subscription/destroy/{stripe_id}',
+        [Controllers\StripSubscriptionController::class, 'destroy'])
+        ->name('point_sail.subscription.destroy');
 
-        # サブスクプランキャンセルの取り消し
-        Route::get('point_sail/subscription/not_cancel/{stripe_id}',
-        [Controllers\StripeController::class, 'not_cancel'])
-        ->name('point_sail.subscription.not_cancel');
+        // # サブスクプランキャンセルの取り消し
+        // Route::get('point_sail/subscription/not_cancel/{stripe_id}',
+        // [Controllers\StripSubscriptionController::class, 'not_cancel'])
+        // ->name('point_sail.subscription.not_cancel');
 
     });

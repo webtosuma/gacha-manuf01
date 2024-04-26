@@ -140,6 +140,7 @@ class StripeController extends Controller
 
 
         $point_sail = PointSail::where('stripe_id',$stripe_id)->first();
+        // dd($point_sail);
 
         # ランクごとのポイント還元率
         $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
@@ -151,11 +152,18 @@ class StripeController extends Controller
         $before_gacha = Gacha::find($before_gacha_id);
 
 
-        $gachas = GachaController::getPublishedGachas( $category_code='all', null );
+        # カテゴリーコード
+        $category_code = $before_gacha ? $before_gacha->category->code_name : 'all';
+
+        # おすすめガチャ
+        $gachas = GachaController::getPublishedGachas( $category_code, null );
+        // return  view('point_sail.subscription.comp', compact('subscription', 'before_gacha', 'gachas','category_code'));
 
         return $point_sail
-        ? view('point_sail.comp', compact('point_sail', 'rank_ratio', 'before_gacha', 'gachas'))
-        : \App::abort(404);
+        ? view('point_sail.comp', compact(
+            // 'point_sail', 'rank_ratio', 'before_gacha', 'gachas'
+            'point_sail', 'rank_ratio', 'before_gacha', 'gachas','category_code'
+        )) : \App::abort(404);
     }
 
 

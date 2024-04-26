@@ -1,4 +1,4 @@
-<h5 class="fw-bold text-center mb-3">関連ガチャ</h5>
+<h5 class="fw-bold text-center mb-3">おすすめガチャ</h5>
 
 <div class="row mb-3 gy-3">
     <!--nomal gacha card-->

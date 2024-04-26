@@ -109,13 +109,29 @@
                             @endif
 
 
-                            @if ( Auth::check() && Auth::user()->subscription_id == $subscription_id )
+                            @if(
+                                Auth::check() && Auth::user()->subscription_id == $subscription_id
+                                && ! $subscription['destory']
+                            )
                                 <div class="mt-5 text-center">
                                     <div class="text-success mb-2 fw-bold">プラン契約中</div>
-                                    <a href=""
+                                    <a href="{{route('point_sail.subscription.destroy',$subscription_id)}}"
                                     class="btn btn- rounded-pill text-white mx-auto btn-danger shadow"
                                     >このプランを解約する</a>
-                                    <div class="mt-2">*プランを解約すると、翌月からさサービスの提供と支払いが停止されます。</div>
+                                    <div class="mt-2">*プランを解約すると、次回からさサービスの提供と支払いが停止されます。</div>
+                                </div>
+                            @endif
+
+
+                            @if(
+                                Auth::check() && Auth::user()->subscription_id == $subscription_id
+                                && $subscription['destory']
+                            )
+                                <div class="mt-5 text-center">
+
+                                    <div class="text-danger mb-2 fw-bold">プラン解約申請済み</div>
+                                    <div class="form-text">{{$subscription['destory_at']->format('Y年m月d日まで再契約できません。')}}</div>
+
                                 </div>
                             @endif
 
