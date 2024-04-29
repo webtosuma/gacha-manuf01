@@ -98,6 +98,6 @@ class SponsorAd extends Model
         */
         public function getMoviePlayCountAttribute()
         {
-            return $this->gacha->played_count;
+            return $this->gacha ? $this->gacha->played_count : 0;
         }
 }

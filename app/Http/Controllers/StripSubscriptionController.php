@@ -408,10 +408,21 @@ class StripSubscriptionController extends Controller
      */
     private function handleCoustomerSubscriptionDeleted($request, $session)
     {
+        # サブスクプランの情報
+        $subscription_id = $session->items->data[0]->plan['id'];
+        $subscription    = self::Subscriptions()[$subscription_id];
+        if( !$subscription ){
+            return response(['message' => 'サブスク情報がアプリケーション側で登録されていません。'], 403);
+        }
+
         # CheckoutSessionが処理済みの時は、スキップ
         $session_id = $session['id'];
         $column = 'stripe_checkout_session_id';
-        $previous_point_history = PointHistory::where($column,$session_id)->first();
+        $reason_id = $subscription['delete_history_id'];//入出理由ID
+        $previous_point_history =
+        PointHistory::where($column,$session_id)
+        ->where('reason_id', $reason_id)
+        ->first();
         if( $previous_point_history ){
             return response(['message' => '契約内容は処理済みです。'], 200);
         }
@@ -421,14 +432,6 @@ class StripSubscriptionController extends Controller
         $user = User::where('stripe_id', $session['customer'])->first();
         if( !$user ){
             return response(['message' => '一致するユーザー情報がありません。'], 403);
-        }
-
-
-        # サブスクプランの情報
-        $subscription_id = $session->items->data[0]->plan['id'];
-        $subscription    = self::Subscriptions()[$subscription_id];
-        if( !$subscription ){
-            return response(['message' => 'サブスク情報がアプリケーション側で登録されていません。'], 403);
         }
 
 

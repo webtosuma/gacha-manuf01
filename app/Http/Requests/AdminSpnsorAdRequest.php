@@ -31,7 +31,7 @@ class AdminSpnsorAdRequest extends FormRequest
 
         return [
             'title'   => ['required','max:140',],
-            'movie'   => ['file',],
+            'movie'   => ['required','file',],
             'gacha_id'=> ['required',],
             'sponsor_id'=>['required',],
         ];

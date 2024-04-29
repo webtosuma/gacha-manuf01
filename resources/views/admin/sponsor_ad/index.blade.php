@@ -72,31 +72,46 @@ $active_key = 'sponsor_ad';
 
                             <td>{{$sponsor_ad->sponsor->name}}</td>
 
-                            <td><a href="{{route('admin.gacha.show',$sponsor_ad->gacha)}}"
-                            >{{$sponsor_ad->gacha->name}}</a></td>
 
                             <td>
-                                @if ($sponsor_ad->gacha->is_published)
-                                    <span class="fw-bold text-success">公開中</span>
+                                @if($sponsor_ad->gacha)
+                                    <a href="{{route('admin.gacha.show',$sponsor_ad->gacha)}}"
+                                    >{{$sponsor_ad->gacha->name}}</a>
                                 @else
-                                    <span class="fw-bold text-danger">非公開</span>
+                                    <div class="">{{'未登録'}}</div>
                                 @endif
                             </td>
 
-                            <td>{{number_format($sponsor_ad->movie_play_count)}}</td>
+                            <td>
+                                @if($sponsor_ad->gacha)
 
-                            <td>{{number_format($sponsor_ad->access_count)}}</td>
+                                    @if ($sponsor_ad->gacha->is_published)
+                                        <span class="fw-bold text-success">公開中</span>
+                                    @else
+                                        <span class="fw-bold text-danger">非公開</span>
+                                    @endif
+
+                                @endif
+                            </td>
+
+                            <td>{{number_format( $sponsor_ad->movie_play_count )}}</td>
+
+                            <td>{{number_format( $sponsor_ad->access_count )}}</td>
 
 
                             <td>
                                 <!--動画再生-->
-                                <movie-modal-component
-                                id   ="{{$sponsor_ad->id.'-movie'}}"
-                                title="{{ $sponsor_ad->title }}"
-                                src  ="{{ $sponsor_ad->movie_path }}"
-                                btn_label="広告動画再生"
-                                max_width="400px"
-                                ></movie-modal-component>
+                                @if($sponsor_ad->movie_path)
+                                    <movie-modal-component
+                                    id   ="{{$sponsor_ad->id.'-movie'}}"
+                                    title="{{ $sponsor_ad->title }}"
+                                    src  ="{{ $sponsor_ad->movie_path }}"
+                                    btn_label="広告動画再生"
+                                    max_width="400px"
+                                    ></movie-modal-component>
+                                @else
+                                    <div class="">未登録</div>
+                                @endif
                             </td>
 
                             <td style="width:8rem;"><div class="row justify-content-end g-2">

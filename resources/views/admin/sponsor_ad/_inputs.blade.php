@@ -63,6 +63,7 @@
                 <span class="text-danger">＊</span>
             </div>
 
+
             <div class="input-group mb-3">
                 <select class="form-select" name="gacha_id">
                     <option value="">選択してください</option>
@@ -72,10 +73,16 @@
 
 
                             @foreach ($category->gachas as $gacha)
-                                <option value="{{ $gacha->id }}"
-                                @if($sponsor_ad->gacha_id == $gacha->id) selected @endif
-                                @if(old('gacha_id')  == $gacha->id) selected @endif
-                                >{{ $gacha->name }}</option>
+                                @if( ! ($gacha->sponsor_ad && $gacha->id!=$sponsor_ad->gacha_id ) )
+
+                                    <!-- 他で使われているガチャの利用不可 -->
+                                    <option value="{{ $gacha->id }}"
+                                    @if($sponsor_ad->gacha_id == $gacha->id) selected @endif
+                                    @if(old('gacha_id')  == $gacha->id) selected @endif
+                                    >{{ $gacha->name }}</option>
+
+
+                                @endif
                             @endforeach
 
 
