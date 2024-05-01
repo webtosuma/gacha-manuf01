@@ -34,7 +34,10 @@
         <div class="d-flex flex-wrap gap-1">
             <!--広告-->
             @if($gacha->sponsor_ad)
-                <div class="border px-3 rounded-pill">広告</div>
+                <div class="border px-3 rounded-pill">
+                    広告
+                    <span>{{'×'.$gacha->sponsor_ads->count()}}</span>
+                </div>
             @endif
             <!--ガチャの種類-->
             <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>

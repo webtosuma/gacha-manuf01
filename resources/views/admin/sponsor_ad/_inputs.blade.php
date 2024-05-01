@@ -60,7 +60,7 @@
         <label class="d-block mb-4">
             <div class="form-label">
                 ガチャの選択
-                <span class="text-danger">＊</span>
+                {{-- <span class="text-danger">＊</span> --}}
             </div>
 
 
@@ -73,7 +73,7 @@
 
 
                             @foreach ($category->gachas as $gacha)
-                                @if( ! ($gacha->sponsor_ad && $gacha->id!=$sponsor_ad->gacha_id ) )
+                                {{-- @if( ! ($gacha->sponsor_ad && $gacha->id!=$sponsor_ad->gacha_id ) ) --}}
 
                                     <!-- 他で使われているガチャの利用不可 -->
                                     <option value="{{ $gacha->id }}"
@@ -82,7 +82,7 @@
                                     >{{ $gacha->name }}</option>
 
 
-                                @endif
+                                {{-- @endif --}}
                             @endforeach
 
 
@@ -135,6 +135,8 @@
             name="movie"
             video_path="{{ $sponsor_ad->movie_path }}"
             ></read-movie-file-component>
+
+            <input type="hidden" name="old_movie" value="{{$sponsor_ad->movie}}">
 
             <!--error message-->
             @if ( $errors->has('movie') )

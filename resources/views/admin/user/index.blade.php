@@ -194,7 +194,11 @@ $active_key = 'user';
                             </a></td>
 
                             <td class="text-center"><a href="{{route('admin.user.point_history',$user->id)}}" class="btn btn-link">
+                                @if($user->id!=1)
                                 <number-comma-component number="{{ $user->point }}"></number-comma-component>
+                                @else
+                                <span class="">＊表示できません</span>
+                                @endif
                             </a></td>
                             <td class="text-center"><a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->ticket }}"></number-comma-component>

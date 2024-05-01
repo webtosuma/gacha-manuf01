@@ -200,7 +200,9 @@ class AdminSponsorAdController extends Controller
 
         #ガチャの1回PLAYポイント数の変更=>0
         $gacha = Gacha::find($inputs['gacha_id']);
-        $gacha->update(['one_play_point'=>0]);
+        if($gacha){
+            $gacha->update(['one_play_point'=>0]);
+        }
 
         return $inputs;
     }

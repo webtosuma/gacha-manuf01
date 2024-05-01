@@ -27,14 +27,19 @@ class AdminSpnsorAdRequest extends FormRequest
      */
     public function rules()
     {
-        // dd( $this->all() );
-
-        return [
+       $rules =  [
             'title'   => ['required','max:140',],
             'movie'   => ['required','file',],
-            'gacha_id'=> ['required',],
+            // 'gacha_id'=> ['required',],
             'sponsor_id'=>['required',],
         ];
+
+        if($this->old_movie){//動画がすでに保存済みの時
+            $rules['movie'] = ['file',];
+        }
+
+
+        return $rules;
     }
 
 

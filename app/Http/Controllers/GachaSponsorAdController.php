@@ -35,19 +35,23 @@ class GachaSponsorAdController extends Controller
      */
     public function movie(Request $request, UserGachaHistory $user_gacha_history)
     {
-        // ガチャ情報
+        # ガチャ情報
         $gacha = $user_gacha_history->gacha;
 
-        //　広告情報
-        $sponsor_ad = $gacha->sponsor_ad;
+        #　広告情報
+        $sponsor_ads = $gacha->sponsor_ads;
+        $sponsor_ad  = $sponsor_ads[rand( 0, $sponsor_ads->count()-1 )];
 
-        // 取得商品
+        # 広告動画再生カウント加算
+        $sponsor_ad->movie_play_count ++;
+        $sponsor_ad->save();
+
+        # 取得商品
         $user_prizes = $user_gacha_history->user_prizes;
-        // ランクアップの有無
+
+        # ランクアップの有無
         $rank_up = $request->rank_up;
 
-
-        // dd($sponsor_ad->movie_path);
         return view('gacha.pay_sponser_ad', compact('user_gacha_history', 'sponsor_ad', 'rank_up' ));
     }
 

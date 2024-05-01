@@ -27,6 +27,7 @@ class SponsorAd extends Model
         'plan_id' , //プランID
         'gacha_id', //ガチャID
         'access_count', //アクセスカウント
+        'movie_play_count',//動画再生数
         'sponsor_id'
     ];
 
@@ -92,12 +93,12 @@ class SponsorAd extends Model
 
 
 
-        /**
-         * 動画再生数 movie_play_count
-         * @return Integer
-        */
-        public function getMoviePlayCountAttribute()
-        {
-            return $this->gacha ? $this->gacha->played_count : 0;
-        }
+        // /**
+        //  * 動画再生数 movie_play_count
+        //  * @return Integer
+        // */
+        // public function getMoviePlayCountAttribute()
+        // {
+        //     return $this->gacha ? $this->gacha->played_count : 0;
+        // }
 }
