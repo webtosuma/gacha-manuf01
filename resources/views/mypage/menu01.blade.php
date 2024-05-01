@@ -73,6 +73,25 @@
         @endif
 
 
+        <!-- 月額プラン -->
+        @if(Auth::user()->subscription)
+        <a href="{{ route('point_sail.subscription') }}" class="d-block text-white mt-3 border-top pt-2">
+            <div  style="font-size:14px;">契約中：{{Auth::user()->subscription}}</div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="col-6 pe-2">
+
+                    <img src="{{asset('storage/site/image/pass.png')}}"
+                    alt="{{ 'カドフェPASS' }}" class="w-100 rounded-3">
+
+                </div>
+                <div class="col-auto">
+                    <span class="">プランを見る<i class="bi bi-chevron-right"></i></span>
+                </div>
+            </div>
+        </a>
+        @endif
+
+
         <!-- 所持ポイント -->
         <div class=" mt-3 border-top pt-2">
             <div  style="font-size:14px;">所持ポイント：</div>
@@ -95,6 +114,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- 所持チケット -->
         <div class="mt-3 border-top pt-2">

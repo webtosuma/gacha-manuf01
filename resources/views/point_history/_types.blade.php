@@ -97,11 +97,13 @@
             </div></li>
             @break
 
+
         @default
             {{-- その他 --}}
             <li class="list-group-item bg-white py-3"><div class="d-flex align-items-center justify-content-between">
                 @php
-                $text_color = $point_history->value >= 0 ? 'text-warning' : 'text-danger';
+                $text_color = in_array( $point_history->reason_id, [13,14, 31,32,33] ) ? 'text-warning' : 'text-primary' ;
+                $text_color = $point_history->value >= 0 ? $text_color : 'text-danger';
                 $sine = $point_history->value > 0 ? '+' : ( $point_history->value < 0 ? '-' : '' );
                 @endphp
                 <div class="">

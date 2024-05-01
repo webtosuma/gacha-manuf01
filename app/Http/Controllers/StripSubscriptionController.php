@@ -28,9 +28,20 @@ use App\Http\Controllers\CanpaingFirstPointSailController;//初回ポイント�
 */
 class StripSubscriptionController extends Controller
 {
-    private function Subscriptions()
+    public static function Subscriptions()
     {
-        return [
+        $publics = [
+            'price_1PBXCPKoJdkajOL0svpXSIeQ' => [
+                'price'        => 3000,
+                'label'        => '月額 3,000円(税込)プラン',
+                'point_value'  => 3500,
+                'ticket_value' => 40,
+                'create_history_id'=> 101,
+                'update_history_id'=> 102,
+                'delete_history_id'=> 103,
+            ],
+        ];
+        $tests = [
             // 月時テスト
             'price_1P1fYnKoJdkajOL0nIegnltI' => [
                 'price'        => 3000,
@@ -54,6 +65,8 @@ class StripSubscriptionController extends Controller
             ],
 
         ];
+
+        return !config('app.debug') ? $publics : $tests;
     }
 
 

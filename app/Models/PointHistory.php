@@ -43,7 +43,7 @@ class PointHistory extends Model
      */
     public static function reasons()
     {
-        return [
+        $publics =  [
             //ポイント加算
             11 => 'ポイント購入',
             12 => '商品のポイント交換',
@@ -61,6 +61,15 @@ class PointHistory extends Model
             33 => '初回ポイント購入キャンペーン',
 
 
+            // サブスクプラン
+            101 => '月額 3,000円(税込)プラン 契約申請',
+            102 => '月額 3,000円(税込)プラン 契約更新',
+            103 => '月額 3,000円(税込)プラン 契約解除申請',
+        ];
+
+        $tests = [
+            ...$publics,
+
             // サブスクプラン(テスト)
             201 => 'テスト月額 3,000円(税込)プラン 契約申請',
             202 => 'テスト月額 3,000円(税込)プラン 契約更新',
@@ -71,6 +80,8 @@ class PointHistory extends Model
             213 => 'テスト日額 100円(税込)プラン 契約解除申請',
 
         ];
+
+        return !config('app.debug') ? $publics : $tests;
     }
 
 

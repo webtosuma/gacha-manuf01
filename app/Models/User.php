@@ -359,4 +359,16 @@ class User extends Authenticatable
         }
 
 
+        /**
+         * サブスク　subscription
+         * ・・・データがないときは、nullを返す
+         * @return String
+        */
+        public function getSubscriptionAttribute()
+        {
+            $subscriptions = \App\Http\Controllers\StripSubscriptionController::Subscriptions();
+            return array_key_exists($this->subscription_id, $subscriptions )
+            ? $subscriptions[$this->subscription_id]['label'] : null;
+        }
+
 }
