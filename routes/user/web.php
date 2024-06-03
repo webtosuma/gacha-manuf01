@@ -28,7 +28,7 @@ Route::get('test', function(\Illuminate\Http\Request $request){
     // Auth::login($user);
 
     // return redirect()->route('home');
-
+    return view('test');
 } );
 
 
@@ -72,11 +72,14 @@ include('web/gacha.php');
     ## (Stripe・React)
     // include('web/stripe_react.php');
 
+    ## (fincode)
+    // include('web/fincode.php');
 
-    ##(webhook)
+    ##(Stripe・webhook)
     include('web/stripe.php');
 
-    ##(サブスクプラン)
+
+    ##(Stripe　サブスクプラン)
     include('web/stripe_subscription.php');
 
     # Stripe 証明URL

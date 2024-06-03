@@ -77,7 +77,7 @@
 
             <div class="row gy-3 my-3 mx-auto mt-4 align-items-end" style="max-width:400px;">
                 <div class="col-6">現在の所有ポイント</div>
-                <div class="col-6 border-bottom fw-bold text-center fs-5 text-warning">{{ number_format(Auth::user()->point).'pt' }}</div>
+                <div class="col-6 border-bottom fw-bold text-center fs-5 text-warning">{{number_format( Auth::user()->point ).'pt'}}</div>
             </div>
         </li>
     </ul>

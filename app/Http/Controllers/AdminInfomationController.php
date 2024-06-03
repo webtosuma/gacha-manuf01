@@ -269,7 +269,7 @@ class AdminInfomationController extends Controller
             $inputs['title'] = urldecode($inputs['title']);
             $inputs['body']  = urldecode($inputs['body']) ;
 
-            # ストレージ更新の処理（商品説明）body
+        # ストレージ更新の処理（商品説明）body
             $old_text = $infomation? $infomation->body: null;  //更新前のファイルパステキスト
             $new_text = $inputs['body'];             //新しい入力テキスト
             $dir = 'upload/infomation/body/';      //保存先ディレクトリ

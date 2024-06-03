@@ -23,13 +23,6 @@ class UserPrizeController extends Controller
      */
     public function index()
     {
-        // $prizeIdArray = Prize::where('category_id',1)->get()->pluck('id')->toArray();
-        // dd($prizeIdArray );
-        // $user_prizes = UserPrize::whereIn('prize_id',[1])->get();
-        // dd($user_prizes);
-
-
-
         return view('user_prize.index');
     }
 
@@ -48,11 +41,20 @@ class UserPrizeController extends Controller
         $user_prizes   = $data['user_prizes'];
 
         # メッセージ
-        $point = number_format( $point_history->value );
-        $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。";
+        if( $user_prizes->count()>0 ){
 
-        return redirect('user_prize')
-        ->with('alert-warning',$message);
+            $point = number_format( $point_history->value );
+            $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。";
+
+            return redirect('user_prize')
+            ->with('alert-warning',$message);
+        }
+        else{
+            $message = '不正な処理を検知しました。';
+
+            return redirect('user_prize')
+            ->with(['alert-danger'=>$message, 'icon'=>'bi-exclamation-circle' ]);
+        }
     }
 
 
@@ -69,7 +71,10 @@ class UserPrizeController extends Controller
 
         # ポイント交換するユーザー商品を取得
         $user_prizes = UserPrize::where('user_id',$user->id)
+        ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
+        ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
         ->find( $id_array );
+
 
         # 交換ポイントの合計($total_point)
         $total_point = 0;
@@ -78,12 +83,17 @@ class UserPrizeController extends Controller
         }
 
         # ポイント履歴の登録
-        $point_history = new PointHistory([
-            'user_id'   => $user->id,    //ユーザー　リレーション
-            'value'     => $total_point, //ポイント数
-            'reason_id' => 12 // '商品のポイント交換',
-        ]);
-        $point_history->save();
+        if( $user_prizes->count()>0 ){
+            $point_history = new PointHistory([
+                'user_id'   => $user->id,    //ユーザー　リレーション
+                'value'     => $total_point, //ポイント数
+                'reason_id' => 12, // '商品のポイント交換',
+            ]);
+            $point_history->save();
+
+        }else{
+            $point_history = null;
+        }
 
 
         # ユーザー取得商品情報の更新

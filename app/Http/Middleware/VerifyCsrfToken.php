@@ -19,6 +19,8 @@ class VerifyCsrfToken extends Middleware
         # サブスク決済完了ウェブホック //https://cardfesta.jp/stripe/subscription/webhook
         'stripe/subscription/webhook',
 
+        # ポイント購入完了(fincode用)
+        'point_sail/comp_post/*',
 
     ];
 }

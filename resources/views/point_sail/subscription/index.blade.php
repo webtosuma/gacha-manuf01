@@ -99,14 +99,14 @@
                             </div>
 
 
-                            @if ( !Auth::check() || (Auth::check() && !Auth::user()->subscription_id) )
+                            {{-- @if ( !Auth::check() || (Auth::check() && !Auth::user()->subscription_id) ) --}}
                                 <div class="mt-5 mx-auto col-md-8">
                                     <a href="{{route('point_sail.subscription.payment',$subscription_id)}}"
                                     class="btn btn-lg rounded-pill text-white w-100 shadow"
                                     style="background-image: linear-gradient(to right bottom, #ed5565, #ff934c) !important;"
                                     >このプランを申し込む</a>
                                 </div>
-                            @endif
+                            {{-- @endif --}}
 
 
                             @if(

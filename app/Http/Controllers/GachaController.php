@@ -563,10 +563,20 @@ class GachaController extends Controller
 
 
         # メッセージ
-        $point = number_format( $point_history->value );
-        $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。\n選択されなかった商品は、\n「取得した商品一覧」に移動します。";
+        if( $user_prizes->count()>0 ){
 
-        return redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
-        ->with('alert-warning',$message);
+            $point = number_format( $point_history->value );
+            $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。\n選択されなかった商品は、\n「取得した商品一覧」に移動します。";
+
+            return redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
+            ->with('alert-warning',$message);
+
+        }
+        else{
+            $message = '不正な処理を検知しました。';
+
+            return  redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
+            ->with(['alert-danger'=>$message, 'icon'=>'bi-exclamation-circle' ]);
+        }
     }
 }

@@ -73,4 +73,25 @@ class AdminUserShowControlle extends Controller
 
     }
 
+
+
+    /**
+     * 登録ユーザーの退会解除処理
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function revival(Request $request, $user_id)
+    {
+        $user = User::withTrashed()->find($user_id);//退会者を含む
+        $user->deleted_at = null;
+        $user->save();
+
+        # リダイレクト
+        $user_text = '(id:'.$user->id.')'.$user->name;
+        return redirect()->route('admin.user.show', $user)
+        ->with(['alert-success'=>$user_text."さんの\nアカウント削除を解除しました。"]);
+    }
+
 }

@@ -95,7 +95,7 @@ class AdminUserController extends Controller
     /**
      * CSVファイルのダウンロード
      *
-     * @param Request $request
+     * @param Request $request　
      * @return \Illuminate\Http\Response
      */
     public function download_csv(Request $request)

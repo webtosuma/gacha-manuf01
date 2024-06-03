@@ -20,6 +20,14 @@
     <div class="container py-md-4 mb-5">
         <h3 class="d-none d-md-block">ポイント購入</h3>
 
+        <p class="border border-danger bg-danger-subtle border-3 p-3">
+            現在、決済システムにエラーが発生しており、ポイントをご購入いただくことができません。<br>
+            お客様にはご迷惑をおかけしておりますことを深くお詫び申し上げます。<br>
+            当サイトでは現在、早急にエラーの修正作業を進め、サービスの正常化を図るため、全力で修正対応を行っております。<br>
+            お客様には、これに伴い一時的にポイント購入が制限され、また復旧までしばらくお時間
+            をいただくかもしれませんが、お客様のご理解とご協力を賜りますようお願い申し上げま
+            す。
+        </p>
 
         <!--サブスクPR-->
         @if ( env('SUBSCRIPTION',false) )
@@ -118,14 +126,15 @@
             @foreach ($point_sails as $point_sail)
                 <li class="list-group-item bg-white py-3">
                     {{-- 会員ランク還元 --}}
-                    @if( $rank_ratio > 1 )
+                    @php $reduction_point =  floor( $point_sail->value*($rank_ratio-1) ); /* 還元ポイント */ @endphp
+                    @if( $rank_ratio > 1  &&  $reduction_point >=1 )
                         <div class="d-flex align-items-center gap-2 flex-wrap">
 
                             <div class="badge border border-dangerr rounded-pill text-danger fw-bold px-">
                                 <span class="text-dark fs-6">{{ number_format($point_sail->value) }}</span>
                                 <span class="text-dark">pt</span>
                                 <i class="bi bi-plus-lg"></i>
-                                <span class=" fs-6">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                                <span class=" fs-6">{{ $reduction_point }}</span>
                                 <span class="">pt 還元！</span>
                             </div>
                         </div>
@@ -140,7 +149,7 @@
 
                             <div class="d-flex align-items-center gap-2 flex-wrap">
                                 <h3 class="m-0 fw-bold fs-">
-                                    <number-comma-component number="{{ $point_sail->value * $rank_ratio }}"></number-comma-component>
+                                    <number-comma-component number="{{ $point_sail->value + $reduction_point }}"></number-comma-component>
                                 </h3>
                                 <span>pt</span>
                             </div>
@@ -193,7 +202,7 @@
                                     <number-comma-component number="{{ $point_sail->ticket }}"></number-comma-component>
                                 </span>
                                 <span>枚</span>
-                                <span class="form-text text-success fw-bold">チケットプレゼント！</span>
+                                <span class="form-text text- fw-bold">チケットプレゼント！</span>
                             </div>
                         </div>
                     </div>

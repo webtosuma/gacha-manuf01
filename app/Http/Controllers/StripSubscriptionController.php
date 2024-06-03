@@ -8,6 +8,7 @@ use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\Event;
 use Stripe\Checkout\Session;
+use Stripe\StripeClient;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -150,6 +151,11 @@ class StripSubscriptionController extends Controller
                 'quantity' => 1,
             ]],
 
+            'payment_method_options' => [
+                'card' => [ //3Dセキュア
+                    'request_three_d_secure' => 'any' ,
+                ],
+            ],
 
             'mode' => 'subscription',
             'success_url' => route('point_sail.subscription.comp',$subscription_id),//成功リダイレクトパス
@@ -207,8 +213,31 @@ class StripSubscriptionController extends Controller
     */
     public function destroy(Request $request, $stripe_id)
     {
+        Stripe::setApiKey( config('stripe.secret_key') );
+
         # 顧客情報
         $user = Auth::user();
+        $customer = $user->createOrGetStripeCustomer();
+
+        /** カスタマーポータルの表示 **********************************************/
+
+        # Stripeクライアントを初期化
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+
+        # カスタマーポータルセッションを作成
+        $session = $stripe->billingPortal->sessions->create([
+            'customer' => $customer->id,
+            'return_url' => route('home'), // ポータルを終了した後にリダイレクトするURL
+        ]);
+
+        # カスタマーポータルへのリダイレクト
+        return redirect($session->url);
+
+        /************************************************/
+
+        # 顧客情報
+        $user = Auth::user();
+
 
         # サズスクプランの取得($subscription)
         $subscriptions = self::Subscriptions();
@@ -428,18 +457,6 @@ class StripSubscriptionController extends Controller
             return response(['message' => 'サブスク情報がアプリケーション側で登録されていません。'], 403);
         }
 
-        # CheckoutSessionが処理済みの時は、スキップ
-        $session_id = $session['id'];
-        $column = 'stripe_checkout_session_id';
-        $reason_id = $subscription['delete_history_id'];//入出理由ID
-        $previous_point_history =
-        PointHistory::where($column,$session_id)
-        ->where('reason_id', $reason_id)
-        ->first();
-        if( $previous_point_history ){
-            return response(['message' => '契約内容は処理済みです。'], 200);
-        }
-
 
         # 客の情報
         $user = User::where('stripe_id', $session['customer'])->first();
@@ -456,27 +473,8 @@ class StripSubscriptionController extends Controller
         $user->update(['subscription_id'=>null]);//削除
 
 
-        // # 入出理由ID
-        // $reason_id = $subscription['delete_history_id'];
-
-
-
-        // # ポイント履歴の登録
-        // $point_history = new PointHistory([
-        //     'user_id'   => $user->id,
-        //     'value'     => 0,
-        //     'price'     => 0, //販売価格(税込み)
-        //     'reason_id' => $reason_id, //入出理由ID
-
-        //     'stripe_checkout_session_id' => $session_id,//CheckoutSessionID
-        // ]);
-        // $point_history->save();
-
-
-
-
         # 200レスポンスを返す
-        return response( compact('user','subscription','point_history',), 200);
+        return response( compact('user','subscription'), 200);
     }
 
 

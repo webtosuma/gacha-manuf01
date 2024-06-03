@@ -22,5 +22,11 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.user.destroy');
 
 
+    # 退会解除
+    Route::patch('/admin/user/revival/{user_id}',
+    [Controllers\AdminUserShowControlle::class, 'revival'])
+    ->name('admin.user.revival');
+
+
 
 });//end middleware

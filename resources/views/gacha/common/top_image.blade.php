@@ -25,7 +25,7 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     <div class="position-absolute top-0 start-0 w-100 h-100"
     style="z-index:0;">
         <ratio-image-component
-        url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
+        url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3 bg-body"
         ></ratio-image-component>
     </div>
 

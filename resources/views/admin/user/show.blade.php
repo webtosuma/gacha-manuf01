@@ -150,6 +150,39 @@ $active_key = 'user';
                     </ul>
                 </div>
             </section>
+        @else
+        <section class="card card-body mb-5">
+            <div class="d-flex justify-content-between">
+                <h5 class="m-0 fw-bold">退会解除処理</h5>
+                <div class="">
+                    <button type="button" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal{{'revival'.$user->id}}"
+                    class="btn btn-success text-white"
+                    >退会解除</button>
+
+
+
+                    <form action="{{ route('admin.user.revival', $user) }}" method="post">
+                        @csrf
+                        @method('PATCH')
+
+                        <delete-modal-component
+                        index_key="{{'revival'.$user->id}}"
+                        icon="bi-person"
+                        color="success"
+                        func_btn_type="submit"
+                        button_class="invisible">
+                            <div>
+                                <span class="fw-bold">『{{$user->name}}』</span>さんの
+                                <br />アカウントを退会解除処理します。
+                                <br />よろしいですか？
+                            </div>
+                        </delete-modal-component>
+                    </form>
+                </div>
+            </div>
+        </section>
+
         @endif
     </div>
 @endsection
