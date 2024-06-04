@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use GuzzleHttp\Client;
 
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\Gacha;
 use App\Models\PointSail;
 use App\Models\PointHistory;
@@ -78,38 +80,48 @@ class FincodeController extends Controller
     */
     public function payment(Request $request, PointSail $point_sail)
     {
-
         $API_KEY  = 'Bearer '.config('fincode.secret_key','');
         $BASE_URL = config('fincode.base_url','');
         $endpoint = "/v1/sessions";
 
+        $user = Auth::user();
+
 
         $DATA = [
             //成功リダイレクトパス
-            'success_url' => route('point_sail.comp_post', $point_sail->stripe_id ),
+            // 'success_url' => route('point_sail.comp_post', $point_sail->stripe_id ),
+            'success_url' => route('point_sail.comp_post', [
+                'stripe_id' => $point_sail->stripe_id,
+                'client_field_1'=>(String) $user->id,
+                'client_field_2'=>(String) $point_sail->id,
+                'client_field_3'=>(String) config('app.key'),
+            ] ),
+
             //失敗リダイレクトパス
-            'cancel_url'  => route('point_sail'),
+            'cancel_url'  => route('point_sail.post'),
 
 
             'transaction' => [
 
-                "pay_type"  => "Card",
-                // "pay_type" => "Applepay",
-                // "job_code" => "CAPTURE",//不要
+                # 支払いの種類
+                "pay_type" => ["Card"],
+                // "pay_type" => ["Card","Paypay"],
+                // "pay_type"  => [ "Card", "Applepay", "Konbini", "Paypay", ],
+                // "pay_type"  => [ "Card", "Applepay", "Paypay", ],
+
+                # 支払い金額
+                'amount'    => (String) $point_sail->price,
+
+                # 任意の文字列
+                'client_field_1'=>(String) $user->id,
+                'client_field_2'=>(String) $point_sail->id
+            ],
+
+
+            "card" => [
+                "job_code" => "CAPTURE",//売上確定
                 "tds_type"  => "2",//3Dセキュア利用種別 2-3Dセキュア2.0を利用
                 "tds2_type" => "2",//3Dセキュア2.0非対応時の挙動設定 2-3エラー
-                'amount'    => (String) $point_sail->price,
-                'client_field_1'=>'hogehoge',
-
-                // "card"     => [
-                //     "job_code" => "CAPTURE",
-                // ]
-
-                // 'signature' => [
-                //     'user_id'       => Auth::user()->id,
-                //     'point_sail_id' => $point_sail->id,
-                // ],
-
             ],
         ];
 
@@ -197,7 +209,11 @@ class FincodeController extends Controller
         /* 決済完了後のPOST受け取り */
         public function comp_post(Request $request, $stripe_id)
         {
-            return redirect()->route('point_sail.comp', $stripe_id );
+            $bool = $this->handleCheckoutSessionCompleted($request);
+
+            return $bool
+            ? redirect()->route('point_sail.comp', $stripe_id )
+            : \App::abort(404);
         }
 
 
@@ -208,7 +224,16 @@ class FincodeController extends Controller
     */
     public function webhook(Request $request)
     {
-        return response(['message'=>'test'], 400);
+        # サイト管理者へ送信
+        $email   = 't.sakai@tosuma.ltd';
+        Mail::to( $email ) //宛先
+        ->send(new \App\Mail\SendHtmlMailMailable([
+            'inputs'  => ['json'=>json_encode($request->all())], //入力変数
+            'view'    => 'emails.payment.webhook' , //テンプレート
+            'subject' => 'ポイント購入webhookの送信' , //件名
+        ]) );
+
+        return response(['message'=>'test'], 200);
 
 
 
@@ -272,26 +297,24 @@ class FincodeController extends Controller
      * @param  Object $session //Stripe Checkout Session オブジェクト
      * @return Void
      */
-    private function handleCheckoutSessionCompleted($request, $session)
+    private function handleCheckoutSessionCompleted($request)
     {
-        # Stripe側で決済が完了済(paid)でなければ、スキップ
-        $paid = isset($session->payment_status) && $session->payment_status === 'paid';
-        if( !$paid ){ return null; }
-
-
-        # CheckoutSessionが処理済みの時は、スキップ
-        $session_id = $session['id'];
-        $column = 'stripe_checkout_session_id';
-        $previous_point_history = PointHistory::where($column,$session_id)->first();
-        if( $previous_point_history ){ return null; }
+        // dd($request->all());
+        // dd($request->client_field_3 == config('app.key'));
 
 
         # 客の情報
-        $user = User::where('stripe_id', $session['customer'])->first();
+        $user = User::find($request->client_field_1);
 
         # 購入アイテムの情報
-        $amounSubtotal = $session['amount_subtotal'];
-        $point_sail    = PointSail::where('price', $amounSubtotal)->first();
+        $point_sail = PointSail::find($request->client_field_2);
+
+        # APPキーチェック
+        $app_key_bool = $request->client_field_3 == config('app.key');
+
+
+        if( !( $user && $point_sail && $app_key_bool ) ){ return false; }
+
 
         # ランクごとのポイント還元率
         $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
@@ -305,7 +328,7 @@ class FincodeController extends Controller
             'price'     => $point_sail->price, //販売価格(税込み)
             'reason_id' => 11, //入出理由ID
 
-            'stripe_checkout_session_id' => $session_id,//CheckoutSession
+            'stripe_checkout_session_id' => 'fincode',//CheckoutSession
         ]);
         $point_history->save();
 
@@ -337,7 +360,7 @@ class FincodeController extends Controller
 
 
 
-        return $point_history;
+        return true;
     }
 
 }

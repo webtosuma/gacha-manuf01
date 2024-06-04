@@ -10,14 +10,23 @@ use App\Http\Controllers;
 // Route::middleware(['user_rank'])->group(function () {
 
     # ポイント一覧
-    Route::get('point_sail/finecode',
+    Route::get('point_sail/fc',
     [Controllers\FincodeController::class, 'index'])
     ->name('point_sail');
+
+    Route::post('point_sail/fc/post', function(){
+        return redirect()->route('point_sail');
+    })
+    ->name('point_sail.post');
 
 
     # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook
     Route::post('fincode/webhook',
-    [Controllers\FincodeController::class, 'webhook']);
+    [Controllers\FincodeController::class, 'webhook'])
+    ->name('fincode.webhook');
+    # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook
+    // Route::get('fincode/webhook',
+    // [Controllers\FincodeController::class, 'webhook']);
 
 
     # ポイント購入完了受け取り

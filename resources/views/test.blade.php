@@ -7,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="{{route('fincode.webhook')}}" method="POST">
+    <button>submit</button>
+    </form>
+
     <!-- bodyタグ内に追加-->
     <form id="fincode-form" onsubmit="return payment(e)">
         <div id="fincode"></div>

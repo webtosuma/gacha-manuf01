@@ -20,14 +20,14 @@
     <div class="container py-md-4 mb-5">
         <h3 class="d-none d-md-block">ポイント購入</h3>
 
-        <p class="border border-danger bg-danger-subtle border-3 p-3">
+        {{-- <p class="border border-danger bg-danger-subtle border-3 p-3">
             現在、決済システムにエラーが発生しており、ポイントをご購入いただくことができません。<br>
             お客様にはご迷惑をおかけしておりますことを深くお詫び申し上げます。<br>
             当サイトでは現在、早急にエラーの修正作業を進め、サービスの正常化を図るため、全力で修正対応を行っております。<br>
             お客様には、これに伴い一時的にポイント購入が制限され、また復旧までしばらくお時間
             をいただくかもしれませんが、お客様のご理解とご協力を賜りますようお願い申し上げま
             す。
-        </p>
+        </p> --}}
 
         <!--サブスクPR-->
         @if ( env('SUBSCRIPTION',false) )

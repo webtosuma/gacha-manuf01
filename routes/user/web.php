@@ -73,10 +73,10 @@ include('web/gacha.php');
     // include('web/stripe_react.php');
 
     ## (fincode)
-    // include('web/fincode.php');
+    include('web/fincode.php');
 
     ##(Stripe・webhook)
-    include('web/stripe.php');
+    // include('web/stripe.php');
 
 
     ##(Stripe　サブスクプラン)

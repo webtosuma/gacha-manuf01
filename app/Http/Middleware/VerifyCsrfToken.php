@@ -20,6 +20,8 @@ class VerifyCsrfToken extends Middleware
         'stripe/subscription/webhook',
 
         # ポイント購入完了(fincode用)
+        'fincode/webhook',
+        'point_sail/fc/post',
         'point_sail/comp_post/*',
 
     ];

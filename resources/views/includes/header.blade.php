@@ -3,7 +3,7 @@
     @php $now = now()->format('Ymd-Hi'); @endphp
     @if( $now > '20240424-1000' && $now < '20250424-1130' )
         {{-- <div class="bg-danger text-center text-white">本日AM11:00より、メンテナンスを行います。</div> --}}
-        <div class="bg-danger text-center text-white">決済システムのエラーのため、只今ポイントをご購入いただくことができません。</div>
+        {{-- <div class="bg-danger text-center text-white">決済システムのエラーのため、只今ポイントをご購入いただくことができません。</div> --}}
 
     @endif
 
