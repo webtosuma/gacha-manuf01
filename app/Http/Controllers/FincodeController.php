@@ -71,6 +71,8 @@ class FincodeController extends Controller
 
 
 
+
+
     /**
      * 購入　手続き
      *
@@ -83,13 +85,25 @@ class FincodeController extends Controller
         $API_KEY  = 'Bearer '.config('fincode.secret_key','');
         $BASE_URL = config('fincode.base_url','');
         $endpoint = "/v1/sessions";
-
         $user = Auth::user();
+
+
+        // # 顧客情報の処理
+        // if( ! self::getCustomer() )
+        // {
+        //     /* 顧客情報の登録 */
+        //     self::createCustomer();
+
+        // }else
+        // {
+        //     /* 顧客情報の更新 */
+        //     self::updateCustomer();
+        // }
+
 
 
         $DATA = [
             //成功リダイレクトパス
-            // 'success_url' => route('point_sail.comp_post', $point_sail->stripe_id ),
             'success_url' => route('point_sail.comp_post', [
                 'stripe_id' => $point_sail->stripe_id,
                 'client_field_1'=>(String) $user->id,
@@ -104,10 +118,7 @@ class FincodeController extends Controller
             'transaction' => [
 
                 # 支払いの種類
-                "pay_type" => ["Card"],
-                // "pay_type" => ["Card","Paypay"],
-                // "pay_type"  => [ "Card", "Applepay", "Konbini", "Paypay", ],
-                // "pay_type"  => [ "Card", "Applepay", "Paypay", ],
+                "pay_type" => ["Card"],// "Card", "Applepay", "Konbini", "Paypay",
 
                 # 支払い金額
                 'amount'    => (String) $point_sail->price,
@@ -119,9 +130,10 @@ class FincodeController extends Controller
 
 
             "card" => [
-                "job_code" => "CAPTURE",//売上確定
-                "tds_type"  => "2",//3Dセキュア利用種別 2-3Dセキュア2.0を利用
-                "tds2_type" => "2",//3Dセキュア2.0非対応時の挙動設定 2-3エラー
+                "job_code"   => "CAPTURE",//売上確定
+                "tds_type"   => "2",//3Dセキュア利用種別 2-3Dセキュア2.0を利用
+                "tds2_type"  => "2",//3Dセキュア2.0非対応時の挙動設定 2-3エラー
+                "tds2_email" => $user->email,
             ],
         ];
 

@@ -63,6 +63,11 @@ require('./components/ExampleComponent.vue').default);
 
     /* お問い合わせフォーム */
     Vue.component('contact-form-component', require('./components/contact/FormComponent.vue').default);
+
+    /* fincode支払いフォーム */
+    Vue.component('u-fincode-payment-form',
+    require('./components/fincode/PaymentFormComponent.vue').default);
+
 /*
 |=============================================
 | サイト管理者ページ　コンポーネント
@@ -108,6 +113,8 @@ require('./components/ExampleComponent.vue').default);
     /* お問い合わせ一覧 */
     Vue.component('contact-list-component',
     require('./components/admin/contact/ListComponent.vue').default);
+
+
 
 /*
 |=============================================

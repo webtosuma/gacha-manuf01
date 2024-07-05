@@ -7,7 +7,6 @@ use App\Http\Controllers;
 | fincode FincodeController
 |--------------------------------------------------------------------------
 */
-// Route::middleware(['user_rank'])->group(function () {
 
     # ポイント一覧
     Route::get('point_sail/fc',
@@ -16,8 +15,7 @@ use App\Http\Controllers;
 
     Route::post('point_sail/fc/post', function(){
         return redirect()->route('point_sail');
-    })
-    ->name('point_sail.post');
+    })->name('point_sail.post');
 
 
     # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook
