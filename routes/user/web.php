@@ -14,7 +14,7 @@ use App\Models\User;
 # メンテナンス中
 // $now = now()->format('Ymd-Hi');
 // if(
-//     $now >= '20240424-1100' && $now < '20240424-1130'
+//     $now >= '20240711-1100' && $now < '20240711-1200'
 // ){
 //     Route::get('/{any?}', function()  { return view('maintenance'); })->where('any', '.*')
 //     ->name('maintenance');
@@ -73,14 +73,11 @@ include('web/gacha.php');
     // include('web/stripe_react.php');
 
     ## (fincode)
-    // if( !env('SUBSCRIPTION',false) )
-    // {
-        // include('web/fincode.php');
-    // }
-    // else
-    // {
-        include('web/fincode_js.php');
-    // }
+    // include('web/fincode.php');
+    // include('web/fincode_js.php');
+
+    include('web/fincode_card.php');
+
 
     ##(Stripe・webhook)
     // include('web/stripe.php');

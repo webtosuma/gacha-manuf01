@@ -28,11 +28,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'payjp_customer_id',
         'image',
         'twitter_id',//X(旧twitter)ID
         'get_email',
-        'subscription_id'//サブスクIDカラム　2024/04/18追加
+
+        'payjp_customer_id',
+        'subscription_id',//サブスクIDカラム　2024/04/18追加
+        'fincode_id',     //fincode顧客ID
     ];
 
 
