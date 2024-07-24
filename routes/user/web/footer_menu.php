@@ -51,7 +51,8 @@ use App\Http\Controllers;
 
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {
-        return redirect('https://fobees.jp/');
+        // return redirect('https://fobees.jp/');
+        return redirect( config('app.company_url') );
     })->name('operating_company');
 
 //

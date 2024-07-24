@@ -176,7 +176,7 @@
 
 
             <!--card-->
-            <div class="row overflow-hidden g-2 {{ $card_size=='sm'? 'gy-4':'gy-5'}}">
+            <div class="row overflow-hidden g-0 g-md-5 mx-0 {{ $card_size=='sm'? 'gy-4':'gy-5'}}">
 
 
                 <!-- countdown gacha card -->

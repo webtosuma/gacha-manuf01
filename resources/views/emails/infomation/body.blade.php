@@ -42,6 +42,6 @@
             </a>
         </div>
 
-        <div class="mail-copy">&copy; fobees</div>
+        <div class="mail-copy">&copy; {{config('app.company_name')}}</div>
     </div>
 </section>

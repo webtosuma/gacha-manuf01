@@ -13,10 +13,16 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'card Festa'),
-    // 'name' => 'card Festa',
+    'name' => env('APP_NAME', 'cardFesta'),
 
-    'copy' => "",
+
+    'owner_code'   => env('APP_OWNER_CODE', 'cardFesta'), //オーナーコード
+
+    'company_name' => env('APP_COMPANY_NAME',   'Fobees'), //オーナー企業名
+
+    'company_url'  => env('APP_COMPANY_URL',    'cardFesta'), //オーナー企業サイトURL
+
+
 
     /*
     |--------------------------------------------------------------------------

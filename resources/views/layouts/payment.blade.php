@@ -30,6 +30,7 @@
 
 </head>
 <body >
+    <main>
         <div id="app" class="container">
 
             @yield('content')

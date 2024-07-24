@@ -132,16 +132,16 @@ class FincodeCardController extends Controller
 
         /* 決済の実行 */
         $bool = self::executionPayment( $order_id, $access_id, $card_id, $customer_id, $holder_name );
-        if( !$bool ){  $request->session()->regenerateToken(); return '決済に失敗しました。'; }
+        if( !$bool ){  $request->session()->regenerateToken(); return '決済に失敗しました。err:ep'; }
 
         /* 3Dセキュア　承認実行 */
         $bool = self::secure2($access_id);
-        if( !$bool ){  $request->session()->regenerateToken(); return '決済に失敗しました。'; }
+        if( !$bool ){  $request->session()->regenerateToken(); return '決済に失敗しました。err:s2'; }
         // dd($bool);
 
         /* 承認後決済の実行 */
         $bool = self::securePayment($order_id, $access_id);
-        if( !$bool ){  $request->session()->regenerateToken(); return '決済に失敗しました。'; }
+        if( !$bool ){  $request->session()->regenerateToken(); return '決済に失敗しました。err:sp'; }
 
         # 客の情報
         $user = Auth::user();
@@ -616,25 +616,19 @@ class FincodeCardController extends Controller
 
                 // APIからのデータを処理
                 $json = response()->json($responseBody);
+                // dd($json);
                 return $json->original;
 
             } catch (\Exception $e) {
                 // エラー処理
                 return null;
 
-                // return response()->json([
-                //     'error' => 'API request failed',
-                //     'message' => $e->getMessage(),
-                // ], 500);
-
-
-                // dd(
-                //     response()->json([
-                //         'error' => 'API request failed',
-                //         'message' => $e->getMessage(),
-                //     ], 500)
-                // );
-
+                dd(
+                    response()->json([
+                        'error' => 'API request failed',
+                        'message' => $e->getMessage(),
+                    ], 500)
+                );
             }
         }
 
@@ -661,7 +655,8 @@ class FincodeCardController extends Controller
             ]);
 
             $data = [
-                "param" => "<Value you received in tds2_ret_url>"
+                "param" => "200",
+                // "access_id" => $access_id, // 7/17追加
             ];
 
 

@@ -1,7 +1,7 @@
 <section class="bg- py-3">
 
     <!--カテゴリー-->
-    <div class="container px-0 col-md-12 mx-auto overflow-auto">
+    <div class="containerr px-md-3 mx-auto overflow-auto">
         <nav class="nav gap-1 flex-nowrap" style="min-width:{{$categories->count()*6 + 10}}rem;">
             @php
             // $sc = "col col-lg fs- py-2 fw-bold btn btn-dark border-0";
@@ -29,7 +29,7 @@
 
 
     <!--絞り込みキー-->
-    <div class="container col-md-12 mx-auto overflow-auto mt-2 px-0">
+    <div class="containerr px-md-3 mx-auto overflow-auto mt-2">
         @php
         $sc = "col- fs- py-2 fw-bold btn btn-sm btn-light border px-3 rounded-pill";
         $search_key = $search_key ? $search_key : 'desc_crated';

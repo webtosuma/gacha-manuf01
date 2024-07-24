@@ -19,7 +19,7 @@ use App\Http\Controllers;
 
     # 決済失敗(post)
     Route::post('point_sail/failuret', function(){
-        return '決済に失敗しました。';
+        return '決済に失敗しました。 err:failuret';
     })->name('point_sail.failure');
 
 

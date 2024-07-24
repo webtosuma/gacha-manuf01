@@ -62,7 +62,7 @@
 
                 <!-- Footer -->
                 <footer class="p-3 bg-white text-center">
-                    <small class="d-block mb-3 text-muteddd">&copy;fobees</small>
+                    <small class="d-block mb-3 text-muteddd">&copy;{{config('app.company_name')}}</small>
                 </footer>
                 {{-- @include('includes.footer') --}}
             </div>

@@ -27,9 +27,6 @@ class GachaController extends Controller
      */
     public function index(Request $request, $category_code='all' )
     {
-        // dd(Auth::user()->now_rank->point_sail_ratio);
-
-
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
         if( $category_code!='all' && !$category ){ return \App::abort(404); }

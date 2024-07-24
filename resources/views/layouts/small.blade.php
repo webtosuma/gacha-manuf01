@@ -74,7 +74,7 @@
 
     </main>
     <footer cclass="bg-dark py-3">
-        <p class="m-0 text-secondary text-center">&copy;fobees</p>
+        <p class="m-0 text-secondary text-center">&copy;{{config('app.company_name')}}</p>
     </footer>
 
     <!-- フェードインアラート -->

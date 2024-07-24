@@ -9,7 +9,7 @@
                     <img src="{{asset('storage/site/image/logo.png')}}"
                     alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">
                 </a>
-                <small class="d-block text-muteddd">&copy;fobees</small>
+                <small class="d-block text-muteddd">&copy;{{config('app.company_name')}}</small>
 
 
                 <div class="my- d-flex">

@@ -73,10 +73,10 @@ include('web/gacha.php');
     // include('web/stripe_react.php');
 
     ## (fincode)
-    // include('web/fincode.php');
+    include('web/fincode.php');
     // include('web/fincode_js.php');
 
-    include('web/fincode_card.php');
+    // include('web/fincode_card.php');
 
 
     ##(Stripe・webhook)

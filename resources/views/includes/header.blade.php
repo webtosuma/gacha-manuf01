@@ -1,11 +1,10 @@
 <header class="position-fixed w-100" style="z-index:100;">
-
     @php $now = now()->format('Ymd-Hi'); @endphp
     {{-- @if( $now > '20240711-1000' && $now < '20250711-1130' )
         <div class="bg-danger text-center text-white">本日AM11:00より、メンテナンスを行います。</div>
     @endif --}}
 
-    <div class="container py-2 px-0">
+    <div class="containerr py-2 px-0">
 
         <nav class="d-flex justify-content-between align-items-center p- border border-primary border-3
         rounded-pill ps-3 mx-1 shadow" style="background:rgb(255, 255, 255, .9);">
