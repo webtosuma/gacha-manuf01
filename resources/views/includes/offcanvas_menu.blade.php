@@ -70,47 +70,47 @@ style="max-width:90vw; min-width:30vw;">
 
         <div class="list-group list-group-flush">
 
-            {{-- <a href="" class="list-group-item list-group-item-action py-3"
-            >最近取得した商品</a> --}}
 
-
-
+            <!-- 取得した商品 -->
             <a href="{{ route('user_prize') }}"
-            class="list-group-item list-group-item-action py-3 px-0
-            position-relative">
-                {{-- <div class="position-absolute top-0 start-0 p-3 pt-2 mt-1"
-                ><i class="bi bi-stars fs-5"></i></div>
-
-                <div class="position-absolute top-0 end-0 p-3 pt-2 mt-1"
-                ><i class="bi bi-chevron-right"></i></div> --}}
-
-                <div class="position-relative px-5">
-
-                    <span>取得した商品</span>
-
-                    <div class="position-absolute top-50 start-0 translate-middle-y p-3"
-                    ><i class="bi bi-stars fs-5"></i></div>
-
-                    <div class="position-absolute top-50 end-0 translate-middle-y p-3"
-                    ><i class="bi bi-chevron-right"></i></div>
-
+            class="list-group-item list-group-item-action
+            d-block text-dark mt-3 border- pt-2">
+                <div  style="font-size:14px;">取得した商品：</div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="col-auto fs-3 pe-2">
+                        <i class="bi bi-files"></i>
+                    </div>
+                    <div class="col">
+                        <div class="">
+                            <span class="fs-5 fw-bold">
+                                <number-comma-component number="{{ Auth::user()->u_prizes_count }}"></number-comma-component>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <span class="">一覧を見る<i class="bi bi-chevron-right"></i></span>
+                    </div>
                 </div>
-
-                <div class="row g-2 mt-2 px-3 mx-1">
+                <div class="row g-2 mt-2 px- mx-1 pb-2">
                     @foreach (Auth::user()->best_u_prizes as $u_prize)
-                        <div class="col-4 text-center">
+                        <div class="col-3 text-center">
                             <ratio-image-component
                             style_class="ratio ratio-3x4 rounded-3"
                             url="{{$u_prize->prize->image_path}}"
                             ></ratio-image-component>
 
-                            <div class="mt-1 w-100 border rounded-pill d-inline-block">
+                            <div class="mt-1 w-100 border rounded-pill d-inline-block" style="font-size:11px;">
                                 {{number_format($u_prize->prize->point).'pt'}}
                             </div>
                         </div>
                     @endforeach
                 </div>
             </a>
+
+
+
+
+
             <a href="{{ route('gacha_history') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >ガチャ履歴
 
@@ -124,8 +124,6 @@ style="max-width:90vw; min-width:30vw;">
             <a href="{{ route('point_history') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >ポイント履歴
 
-                {{-- <div class="position-absolute top-50 start-0 translate-middle-y p-3"
-                ><i class="bi bi-clock-history fs-5"></i></div> --}}
 
                 <div class="position-absolute top-50 start-0 translate-middle-y p-3">
                     <div class="rounded-circle border border-secondary fw-bold fs-6 bg-gradient text-secondary
@@ -185,7 +183,7 @@ style="max-width:90vw; min-width:30vw;">
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{route('timeline')}}"  target="_blank"
+            {{-- <a href="{{route('timeline')}}"  target="_blank"
             class="list-group-item list-group-item-action py-3 px-5 position-relative">
 
 
@@ -198,7 +196,7 @@ style="max-width:90vw; min-width:30vw;">
 
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a>
+            </a> --}}
 
             @if ( Auth::check() )
                 <form action="{{ route('logout') }}" method="POST">
@@ -249,8 +247,22 @@ style="max-width:90vw; min-width:30vw;">
                     <pwa-install-btn></pwa-install-btn>
                 </div>
 
-                <div class="fw-bold text-center mb-2">{{ config('app.name') }}をシェアする</div>
-                @include('includes.sns_btn')
+                {{-- <div class="fw-bold text-center mb-2">{{ config('app.name') }}をシェアする</div>
+                @include('includes.sns_btn') --}}
+
+
+                <!--ロゴ-->
+                <div class="text-center mb-3">
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="{{asset('storage/site/image/logo.png')}}"
+                        alt="{{ config('app.name') }}" class="d-brock mx-auto" style="height:4rem;">
+                    </a>
+                    <small class="d-block text-muteddd">&copy;{{config('app.company_name')}}</small>
+                </div>
+
+
+                <!--SNS Links-->
+                @include('includes.sns_links')
 
             </div>
 

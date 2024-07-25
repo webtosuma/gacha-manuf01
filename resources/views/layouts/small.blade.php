@@ -33,7 +33,7 @@
         /* サイトデフォルト背景 */
         #bgWindow{
             background: no-repeat center center / cover;
-            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+            background-image: url({{asset('storage/site/image/bg00.jpg')}});
         }
     </style>
 

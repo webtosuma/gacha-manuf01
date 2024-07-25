@@ -1,6 +1,6 @@
 <!--トップー-->
 <section class="p- pb-md-5">
-    <div class="container mx-auto px-3" style="max-widthh:1200px;">
+    <div class="container mx-auto px-3" style="max-width:900px;">
 
         <div class="overflow-hidden rounded-4">
 
@@ -22,7 +22,7 @@
     </div>
 </section>
 <!--各賞-->
-<div class="row justify-content-center mx-auto" style="max-width:900px;">
+<div class="row justify-content-center mx-auto" style="max-width:600px;">
 
     @foreach ($gacha->discriptions as $discription)
 

@@ -16,6 +16,9 @@ return [
     'name' => env('APP_NAME', 'cardFesta'),
 
 
+    'manifest' => env('APP_MANIFEST', false), //PWAマニフェスト
+
+
     'owner_code'   => env('APP_OWNER_CODE', 'cardFesta'), //オーナーコード
 
     'company_name' => env('APP_COMPANY_NAME',   'Fobees'), //オーナー企業名

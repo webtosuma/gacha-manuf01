@@ -17,7 +17,7 @@
 
 
     <!-- wbマニフェスト -->
-    @if ( !config('app.debug') )
+    @if ( config('app.manifest') )
         <link rel="manifest" href="/manifest.json">
     @endif
 
@@ -40,7 +40,7 @@
         /* サイトデフォルト背景 */
         #bgWindow{
             background: no-repeat center center / cover;
-            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+            background-image: url({{asset('storage/site/image/bg00.jpg')}});
         }
         /* body{
             background: no-repeat center center / cover fixed;
@@ -73,10 +73,15 @@
 
         @include('includes.header')
 
+
         @if(Auth::check())
 
 
-            @include('includes.offcanvas_menu02')
+            @if ( env('NEW_TICKET_SISTEM',false) )
+                @include('includes.offcanvas_menu02')
+            @else
+                @include('includes.offcanvas_menu')
+            @endif
 
 
         @endif

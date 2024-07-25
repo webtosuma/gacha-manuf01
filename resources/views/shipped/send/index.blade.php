@@ -24,7 +24,7 @@
         <h3 class="d-none d-md-block mb-5">発送</h3>
 
         <section>
-            <div class="card p-3 bg- border-0">
+            <div class="">
                 <ul class="nav text-center bg-white rounded border">
                     <li class="col">
                         <div class="nav-link text-dark">

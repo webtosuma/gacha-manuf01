@@ -195,24 +195,10 @@
 
 
     <div class="list-group-item border-0 p-2 px-3 w-100 text-start mb-5">
-        <div class="my- d-flex">
-            <a href="https://twitter.com/CardFesta7627" rel="nofollow" target="_blank">
-                <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
-                alt="xロゴ" class="d-block p-2" style=" width:2rem; height:2rem;">
-            </a>
-            <a href="https://note.com/cardfesta" rel="nofollow" target="_blank">
-                <img src="{{asset('storage/site/image/note-logo/main/icon.png')}}"
-                alt="noteロゴ" class="d-block p-" style=" width:2rem; height:2rem;">
-            </a>
-            <a href="https://www.instagram.com/cardfesta/" rel="nofollow" target="_blank">
-                <img src="{{asset('storage/site/image/instagram-logo/01/gradient.png')}}"
-                alt="インスタグラムロゴ" class="d-block p-1"  style=" width:2rem; height:2rem;">
-            </a>
-            <a href="https://www.tiktok.com/@cardfesta" rel="nofollow" target="_blank">
-                <img src="{{asset('storage/site/image/tiktok-icons/black_circle.png')}}"
-                alt="tiktokロゴ" class="d-block p-1"  style=" width:2rem; height:2rem;">
-            </a>
-        </div>
+
+        <!--SNS Links-->
+        @include('includes.sns_links')
+
     </div>
 
 

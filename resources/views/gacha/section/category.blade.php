@@ -1,11 +1,10 @@
 <section class="bg- py-3">
 
     <!--カテゴリー-->
-    <div class="containerr px-md-3 mx-auto overflow-auto">
+    <div class="container px-md-3 mx-auto overflow-auto">
         <nav class="nav gap-1 flex-nowrap" style="min-width:{{$categories->count()*6 + 10}}rem;">
             @php
-            // $sc = "col col-lg fs- py-2 fw-bold btn btn-dark border-0";
-            $sc = "col-auto col-lg fs- py-2 fw-bold btn btn-dark border-0 rounded-pill";
+            $sc = "col-auto col-lg fs- py-2 fw-bold btn btn-sm btn-light border-0 rounded-pill";
 
             $style_class = $category_code=='all' ? $sc.' disabled bg-primary' : $sc;
             $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
@@ -29,18 +28,19 @@
 
 
     <!--絞り込みキー-->
-    <div class="containerr px-md-3 mx-auto overflow-auto mt-2">
+    <div class="container px-md-3 mx-auto overflow-auto mt-2">
         @php
-        $sc = "col- fs- py-2 fw-bold btn btn-sm btn-light border px-3 rounded-pill";
+        $sc = "col- fs- py-1 fw-bold btn btn-sm btn-light border-0 px-3 rounded-pill";
         $search_key = $search_key ? $search_key : 'desc_crated';
         @endphp
-        <nav class="nav gap-1 flex-nowrap" style="min-width:{{count($searchs)*6 + 12}}rem;">
+        <nav class="nav gap-1 flex-nowrap" style="min-width:{{count($searchs)*6 + 12}}rem;" style="font-size:11px;">
 
             <!-- カードサイズ変更 -->
             @php
             $params = ['category_code'=>$category_code, 'search_key'=>$search_key, 'card_size'=>$card_size=='sm' ?'':'sm' ];
             @endphp
             <a href="{{route('gacha_category',$params)}}"
+            style="font-size:11px;"
             class="{{ $sc }}">{{ $card_size=='sm' ?'大きく表示':'小さく表示'}}</a>
 
 
@@ -54,6 +54,7 @@
 
 
                 <a id="{{$search['key']}}"  href="{{route('gacha_category',$params)}}"
+                style="font-size:11px;"
                 class="{{ $style_class }}">{{ $search['label'] }}</a>
             @endforeach
         </nav>

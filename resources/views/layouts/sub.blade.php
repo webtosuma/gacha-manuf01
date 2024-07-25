@@ -40,7 +40,7 @@
         /* サイトデフォルト背景 */
         #bgWindow{
             background: no-repeat center center / cover;
-            background-image: url({{asset('storage/site/image/bg01.jpg')}});
+            background-image: url({{asset('storage/site/image/bg00.jpg')}});
         }
         main{
             padding-top: 4.2rem;
@@ -112,7 +112,7 @@
                     </div>
                     <!--menu-->
                     <div class="col-auto">
-                        <button class="btn p-0 px-2 borderr rounded-pill bg-primary text-white
+                        <button class="btn p-0 px-2 borderr rounded-0 bg- text-
                         @if(!Auth::check()) invisible @endif" type="button"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasHumberge"
                         aria-controls="offcanvasHumberge">
