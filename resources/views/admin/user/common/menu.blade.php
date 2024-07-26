@@ -1,6 +1,6 @@
 <section class="mb-5 border-bottom pb-5">
     <div class="row g-2">
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md">
             <a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-light border py-3 w-100">
                 <h6>商品</h6>
                 <div class="mt-3">
@@ -8,7 +8,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md">
             <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
                 class="btn btn-light border py-3 w-100">
                 <h6>ガチャ履歴</h6>
@@ -17,7 +17,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md">
             <a href="{{route('admin.user.point_history',$user->id)}}" class="btn btn-light border py-3 w-100">
                 <h6>ポイント履歴</h6>
                 <div class="mt-3">
@@ -25,7 +25,9 @@
                 </div>
             </a>
         </div>
-        <div class="col-6 col-md-3">
+
+        @if( env('NEW_TICKET_SISTEM',false) )
+        <div class="col-6 col-md">
             <a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-light border py-3 w-100">
                 <h6>チケット履歴</h6>
                 <div class="mt-3">
@@ -33,21 +35,19 @@
                 </div>
             </a>
         </div>
-        <div class="col-6 col-md-3">
-            {{-- @if( $user->now_rank ) --}}
-                <a href="{{route('admin.user.user_rank_history',$user)}}"
-                    class="btn btn-light border py-3 w-100">
-                    <h6>会員ランク履歴</h6>
-                    <div class="mt-3">{{$user->now_rank ? $user->now_rank->label : '*未更新'}}</div>
-                </a>
-            {{-- @else
-                <button class="btn btn-light border py-3 w-100 h-100" type="button">
-                    <h6>会員ランク履歴</h6>
-                    <div class="mt-3 text-danger">*未更新</div>
-                </button>
-            @endif --}}
+        @endif
+
+        @if( env('NEW_TICKET_SISTEM',false) )
+        <div class="col-6 col-md">
+            <a href="{{route('admin.user.user_rank_history',$user)}}"
+                class="btn btn-light border py-3 w-100">
+                <h6>会員ランク履歴</h6>
+                <div class="mt-3">{{$user->now_rank ? $user->now_rank->label : '*未更新'}}</div>
+            </a>
         </div>
-        <div class="col-6 col-md-3">
+        @endif
+
+        <div class="col-6 col-md">
             <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>11,])}}"
             class="btn btn-light border py-3 w-100">
                 @php
@@ -61,7 +61,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md">
             <a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>22,])}}" class="btn btn-light border py-3 w-100">
                 @php
                 $shipped_count = \App\Models\PointHistory::where('user_id',$user->id)

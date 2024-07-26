@@ -20,7 +20,7 @@
             </div>
         </div>
         <!-- 会員ランク -->
-        @if( $user->now_rank )
+        @if( env('NEW_TICKET_SISTEM',false) && $user->now_rank )
             @php $now_rank = $user->now_rank; @endphp
 
             <div class="d-flex justify-content-between gap-3 mt-3">
@@ -56,7 +56,7 @@
             </div>
         @endif
         <div class="my-3">
-            <div class="d-flex gap-2 justify-content-center">
+            <div class="d-flex gap-2 justify-content-">
                 <!--ポイント付与モーダル-->
                 <form action="{{ route('admin.user.add_point', $user) }}" method="post">
                     @csrf
@@ -82,7 +82,7 @@
                     </delete-modal-component>
                 </form>
 
-
+                @if( env('NEW_TICKET_SISTEM',false) )
                 <!--チケット付与モーダル-->
                 <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
                     @csrf
@@ -124,6 +124,7 @@
                         </div>
                     </delete-modal-component>
                 </form>
+                @endif
             </div>
         </div>
 

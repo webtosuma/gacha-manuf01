@@ -216,10 +216,7 @@ style="max-width:90vw; min-width:30vw;">
 
 
             <!--お友達紹介キャンペーン-->
-            @php
-            $canpaing_introductory_active = \App\Http\Controllers\CanpaingIntroductoryController::active();
-            @endphp
-            @if( $canpaing_introductory_active )
+            @if( env('CANPAING_INTRODUCTORY',false) )
                 @php
                 # キャンペーン画像
                 $canpaing = new \App\Http\Controllers\CanpaingIntroductoryController;
@@ -240,7 +237,7 @@ style="max-width:90vw; min-width:30vw;">
                     </div>
                 </div>
             @endif
-            <div class="list-group-item ">
+            <div class="list-group-item bg-white">
 
                 <!-- PWAインストールボタン -->
                 <div class="">
@@ -252,7 +249,7 @@ style="max-width:90vw; min-width:30vw;">
 
 
                 <!--ロゴ-->
-                <div class="text-center mb-3">
+                <div class="text-center my-3">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <img src="{{asset('storage/site/image/logo.png')}}"
                         alt="{{ config('app.name') }}" class="d-brock mx-auto" style="height:4rem;">
@@ -263,6 +260,11 @@ style="max-width:90vw; min-width:30vw;">
 
                 <!--SNS Links-->
                 @include('includes.sns_links')
+
+
+                <!-- フッターメニュー -->
+                @include('includes.footer_menu')
+
 
             </div>
 

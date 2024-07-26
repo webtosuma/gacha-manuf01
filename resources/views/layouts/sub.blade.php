@@ -17,7 +17,7 @@
 
 
     <!-- wbマニフェスト -->
-    @if ( !config('app.debug') )
+    @if ( config('app.manifest') )
         <link rel="manifest" href="/manifest.json">
     @endif
 
@@ -84,7 +84,7 @@
 
         <div class="d-md-none">
             <header class="position-fixed w-100" style="z-index:100;">
-                <div class="row align-items-center p-3 py-2 bg-white border-bottom border-primary mx-0 px-0">
+                <div class="row align-items-center p-3 py-2 bg-white border-bottom border- mx-0 px-0">
                     <!--戻る-->
                     <div class="col-auto">
                         @if( isset( $header_back_btn ) )

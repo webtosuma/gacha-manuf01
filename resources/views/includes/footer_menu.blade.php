@@ -1,5 +1,5 @@
 <div class="col">
-    <h3>{{ __('カテゴリー') }}</h3>
+    <h5>{{ __('カテゴリー') }}</h5>
     @php
     $gacha_categories = \App\Models\GachaCategory::where('is_published',1)
     ->orderBy('created_at')->get();
@@ -35,4 +35,12 @@
         <li class="mb-2"><a class="link-secondary text-decoration-none"
         href="{{ route('operating_company') }}">運営会社</a></li>
     </ul>
+</div>
+<div class="col">
+    <div class="form-text mb-3">
+        古物商営業許可<br>
+        第 000010000000 号<br>
+        ○○県公安委員会<br>
+        (株)会社名<br>
+    </div>
 </div>

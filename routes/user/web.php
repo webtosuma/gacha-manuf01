@@ -72,16 +72,8 @@ include('web/gacha.php');
     ## (Stripe・React)
     // include('web/stripe_react.php');
 
-    ## (fincode)
-    include('web/fincode.php');
-    // include('web/fincode_js.php');
-
-    // include('web/fincode_card.php');
-
-
     ##(Stripe・webhook)
-    // include('web/stripe.php');
-
+    include('web/stripe.php');
 
     ##(Stripe　サブスクプラン)
     include('web/stripe_subscription.php');
@@ -93,6 +85,14 @@ include('web/gacha.php');
         #online
         // return view('point_sail.stripe.apple-developer-merchantid-domain-association.online');
     });
+
+
+    ## (fincode)
+    // include('web/fincode.php');
+
+    // include('web/fincode_js.php');
+
+    // include('web/fincode_card.php');
 
 //
 

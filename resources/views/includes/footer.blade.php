@@ -4,7 +4,7 @@
 
 
 
-            <div class="col-12 mb-5">
+            <div class="col-12">
                 <div class="text-center mb-3">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <img src="{{asset('storage/site/image/logo.png')}}"
@@ -19,19 +19,8 @@
             </div>
 
 
-
+            <!-- フッターメニュー -->
             @include('includes.footer_menu')
-
-
-
-            <div class="col">
-                <div class="form-text mb-3">
-                    古物商営業許可<br>
-                    第 000010000000 号<br>
-                    ○○県公安委員会<br>
-                    (株)会社名<br>
-                </div>
-            </div>
 
 
         </div>

@@ -10,7 +10,7 @@
     <title>@yield('title') - {{env('APP_NAME')}}</title>
 
     <!-- wbマニフェスト -->
-    @if ( !config('app.debug') )
+    @if ( config('app.manifest') )
         <link rel="manifest" href="/manifest.json">
     @endif
 

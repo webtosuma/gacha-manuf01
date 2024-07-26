@@ -10,12 +10,12 @@
             'icon'  => 'bi-gift',
             'label' => 'ガチャ管理',
         ],
-        [
-            'route' => route('admin.sponsor_ad'),
-            'key'   => 'sponsor_ad',
-            'icon'  => 'bi-badge-ad',
-            'label' => '広告管理',
-        ],
+        // [
+        //     'route' => route('admin.sponsor_ad'),
+        //     'key'   => 'sponsor_ad',
+        //     'icon'  => 'bi-badge-ad',
+        //     'label' => '広告管理',
+        // ],
         [
             'route' => route('admin.shipped'),
             'key'   => 'shipped',
@@ -65,11 +65,11 @@
             'key'   => 'point',
             'label' => '販売ポイント',
         ],
-        [
-            'route' => route('admin.ticket_store'),
-            'key'   => 'ticket_store',
-            'label' => 'チケット用商品',
-        ],
+        // [
+        //     'route' => route('admin.ticket_store'),
+        //     'key'   => 'ticket_store',
+        //     'label' => 'チケット用商品',
+        // ],
         [
             'route' => route('admin.infomation'),
             'key'   => 'infomation',
@@ -85,16 +85,16 @@
             'key'   => 'point_history',
             'label' => 'ポイント売上',
         ],
-        [
-            'route' => '#',
-            'key'   => 'gacha_history',
-            'label' => 'ガチャレポート(*製作中)',
-        ],
-        [
-            'route' => '#',
-            'key'   => 'shipped_history',
-            'label' => '発送申請レポート(*製作中)',
-        ],
+        // [
+        //     'route' => '#',
+        //     'key'   => 'gacha_history',
+        //     'label' => 'ガチャレポート(*製作中)',
+        // ],
+        // [
+        //     'route' => '#',
+        //     'key'   => 'shipped_history',
+        //     'label' => '発送申請レポート(*製作中)',
+        // ],
     ];
 
 @endphp

@@ -22,8 +22,7 @@ class CanpaingFirstPointSailController extends Controller
 
     /** キャンペーンが実施されてるか */
     public static function active(){
-        return true;
-        // return false;
+        return env('CANPAING_FIRST_POINT_SAIL',false);
     }
 
 

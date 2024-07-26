@@ -23,24 +23,27 @@
 
     <div class="list-group list-group-flush">
 
-        @if( Auth::user()->now_rank )
-        @php $now_rank = Auth::user()->now_rank; @endphp
-        <div class="list-group-item bg-white py-">
-            <div class="d-flex justify-content-between gap-3">
-                <div class="col-6 col-md-4">
-                    <div style="font-size:14px;" class="mb-2">会員ランク：</div>
 
-                    <ratio-image-component
-                    style_class="ratio ratio-16x9 overflow-hidden
-                    position-relative shiny"
-                    url="{{ $now_rank->image_path }}"
-                    ></ratio-image-component>
-                </div>
-                <div class="col">
-                    @include('mypage.user_rank')
+        @if( env('NEW_TICKET_SISTEM',false) && Auth::user()->now_rank )
+
+            @php $now_rank = Auth::user()->now_rank; @endphp
+            <div class="list-group-item bg-white py-">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col-6 col-md-4">
+                        <div style="font-size:14px;" class="mb-2">会員ランク：</div>
+
+                        <ratio-image-component
+                        style_class="ratio ratio-16x9 overflow-hidden
+                        position-relative shiny"
+                        url="{{ $now_rank->image_path }}"
+                        ></ratio-image-component>
+                    </div>
+                    <div class="col">
+                        @include('mypage.user_rank')
+                    </div>
                 </div>
             </div>
-        </div>
+
         @endif
 
 

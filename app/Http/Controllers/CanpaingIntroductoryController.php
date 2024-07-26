@@ -41,10 +41,10 @@ class CanpaingIntroductoryController extends Controller
         return asset( 'storage/'.'site/image/campaign_introductory/index.png' );
     }
 
+
     /** キャンペーンが実施されてるか */
     public static function active(){
-        return true;
-        // return false;
+        return env('CANPAING_INTRODUCTORY',false);
     }
 
 

@@ -108,33 +108,37 @@
 
 
         <!--会員ランクの指定(user_rank_id)-->
-        <div class="d-block mb-4">
-            <div class="form-label">会員ランクの指定</div>
+        @if( env('NEW_TICKET_SISTEM',false) )
+            <div class="d-block mb-4">
+                <div class="form-label">会員ランクの指定</div>
 
 
-            <div class="px-2">
-                <select class="form-select" name="user_rank_id">
+                <div class="px-2">
+                    <select class="form-select" name="user_rank_id">
 
-                    <option value=""
-                    @if( $gacha->user_rank_id === null ) selected @endif
-                    >{{ '全ての会員' }}</option>
+                        <option value=""
+                        @if( $gacha->user_rank_id === null ) selected @endif
+                        >{{ '全ての会員' }}</option>
 
 
-                    @foreach ($user_ranks as $id => $user_rank)
-                        <option value="{{$id}}"
-                        @if( $gacha->user_rank_id !=='' && $gacha->user_rank_id === $id  ) selected @endif
-                        >{{ $user_rank['label'] }}</option>
-                    @endforeach
+                        @foreach ($user_ranks as $id => $user_rank)
+                            <option value="{{$id}}"
+                            @if( $gacha->user_rank_id !=='' && $gacha->user_rank_id === $id  ) selected @endif
+                            >{{ $user_rank['label'] }}</option>
+                        @endforeach
 
-                </select>
+                    </select>
+                </div>
+
+
+                <!--error message-->
+                @if ( $errors->has('user_rank_id') )
+                    <div class="text-danger"> {{$errors->first('user_rank_id')}} </div>
+                @endif
             </div>
-
-
-            <!--error message-->
-            @if ( $errors->has('user_rank_id') )
-                <div class="text-danger"> {{$errors->first('user_rank_id')}} </div>
-            @endif
-        </div>
+        @else<!-- ランク制度なし -->
+            <input type="hidden" name="user_rank_id" value="">
+        @endif
 
 
 

@@ -1,4 +1,4 @@
-<div class="my- d-flex justify-content-center">
+<div class="my- d-flex justify-content-center mb-5">
     @if( config('sns.twitter') )
         <a href="https://twitter.com/{{config('sns.twitter')}}"
         rel="nofollow" target="_blank" class="col-auto">

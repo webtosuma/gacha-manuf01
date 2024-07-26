@@ -104,9 +104,16 @@ $active_key = 'user';
                         <th></th>
                         <th scope="col">アカウント名</th>
                         <th scope="col">メールアドレス</th>
-                        <th scope="col">X(旧Twitter)ID</th>
-                        <th scope="col" class="text-center">メール</th>
-                        <th scope="col" class="text-center">会員ランク</th>
+                        <th scope="col">
+                            <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
+                            alt="xロゴ" class="d-block p-1 mb-1" style=" width:1.6rem; height:1.6rem;">
+                        </th>
+                        <th scope="col" class="text-center">
+                            <i class="bi bi-envelope fs-5"></i>
+                        </th>
+                        @if( env('NEW_TICKET_SISTEM',false) )
+                            <th scope="col" class="text-center">会員ランク</th>
+                        @endif
 
 
                         <th class="text-center" scope="col">
@@ -119,9 +126,12 @@ $active_key = 'user';
                         <th class="text-center" scope="col">
                             <a href="{{route('admin.user.point_history',0)}}">ポイント</a>
                         </th>
-                        <th class="text-center" scope="col">
-                            <a href="{{route('admin.user.ticket_history',0)}}">チケット</a>
-                        </th>
+
+                        @if( env('NEW_TICKET_SISTEM',false) )
+                            <th class="text-center" scope="col">
+                                <a href="{{route('admin.user.ticket_history',0)}}">チケット</a>
+                            </th>
+                        @endif
 
                         <th scope="col">会員登/最終アクセス</th>
                     </tr>
@@ -171,28 +181,32 @@ $active_key = 'user';
                                     <div class="text-secondary">--</div>
                                 @endif
                             </td>
-
-                            <td class="text-center"><a href="{{route('admin.user.user_rank_history',$user)}}" class="btn btn-link text-decoration-none">
-                                @if( $user->now_rank )
-                                    <div style="width:50px;">
-                                        <ratio-image-component
-                                        style_class="ratio ratio-16x9 overflow-hidden position-relative shiny"
-                                        url="{{ $user->now_rank->image_path }}"
-                                        ></ratio-image-component>
-                                    </div>
-                                    <div class="form-text" style="font-size:8px;">{{ $user->now_rank->label }}</div>
-                                @else
-                                    <span class="text-danger">*未更新</span>
-                                @endif
-                            </a></td>
+                            <!--会員ランク-->
+                            @if( env('NEW_TICKET_SISTEM',false) )
+                                <td class="text-center"><a href="{{route('admin.user.user_rank_history',$user)}}" class="btn btn-link text-decoration-none">
+                                    @if( $user->now_rank )
+                                        <div style="width:50px;">
+                                            <ratio-image-component
+                                            style_class="ratio ratio-16x9 overflow-hidden position-relative shiny"
+                                            url="{{ $user->now_rank->image_path }}"
+                                            ></ratio-image-component>
+                                        </div>
+                                        <div class="form-text" style="font-size:8px;">{{ $user->now_rank->label }}</div>
+                                    @else
+                                        <span class="text-danger">*未更新</span>
+                                    @endif
+                                </a></td>
+                            @endif
+                            <!--商品-->
                             <td class="text-center"><a href="{{route('admin.user.user_prize',$user->id)}}" class="btn btn-link">
                                 <number-comma-component number="{{ $user->u_prizes_count }}"></number-comma-component>
                             </a></td>
+                            <!--ガチャ-->
                             <td class="text-center"><a href="{{route('admin.user.point_history',['user_id'=>$user->id,'reason_id'=>21,])}}"
                             class="btn btn-link">
                                 <number-comma-component number="{{ $user->gacha_play_count }}"></number-comma-component>
                             </a></td>
-
+                            <!--ポイント-->
                             <td class="text-center"><a href="{{route('admin.user.point_history',$user->id)}}" class="btn btn-link">
                                 @if($user->id!=1)
                                 <number-comma-component number="{{ $user->point }}"></number-comma-component>
@@ -200,9 +214,12 @@ $active_key = 'user';
                                 <span class="">＊表示できません</span>
                                 @endif
                             </a></td>
-                            <td class="text-center"><a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-link">
-                                <number-comma-component number="{{ $user->ticket }}"></number-comma-component>
-                            </a></td>
+                            <!--チケット-->
+                            @if( env('NEW_TICKET_SISTEM',false) )
+                                <td class="text-center"><a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-link">
+                                    <number-comma-component number="{{ $user->ticket }}"></number-comma-component>
+                                </a></td>
+                            @endif
                             <td>
                                 <div class="text-">{{ $user->created_at->format('Y年m月d日 H:i') }}</div>
                                 <div class="text-success">{{ $user->last_access_at->format('Y年m月d日 H:i') }}</div>

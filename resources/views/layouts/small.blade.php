@@ -16,7 +16,7 @@
 
 
     <!-- wbマニフェスト -->
-    @if ( !config('app.debug') )
+    @if ( config('app.manifest') )
         <link rel="manifest" href="/manifest.json">
     @endif
 
