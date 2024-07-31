@@ -72,8 +72,8 @@
         /* ガチャのホバーアニメーション */
         .hover_anime:hover{
             position: relative;
-            transform: scale(1.05) translateY(-1rem);
-
+            /* transform: scale(1.05) translateY(-1rem); */
+            transform: rotate3d(0, 1, 0, 360deg);
             transition: all .2s;
         }
 

@@ -44,9 +44,9 @@
             </form>
 
 
-            <section class="alert p-2 border-0 shadow text-secondary mb-5 w-100" style="margin-top:3rem;">
+            <section class="alert p-2 border-0 text-secondary mb-5 w-100" style="margin-top:3rem;">
 
-                <a href="https://note.com/cardfesta/n/ne1fe05bfbe31" target="_blank">メールが届かない場合</a>はこちら
+                <a href="{{route('not_receiving_email')}}" target="_blank">メールが届かない場合</a>はこちら
 
             </section>
 

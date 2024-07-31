@@ -60,14 +60,14 @@
                 <h5 class="border-bottom border-secondary mb-3">お問い合わせフォームのメールが届かない場合</h5>
                 <p>
                     以下のメールが届かない場合は、
-                    <a href="https://note.com/cardfesta/n/ne1fe05bfbe31" target="_blank">こちら</a>をご確認ください。
+                    <a href="{{route('not_receiving_email')}}" target="_blank">こちら</a>をご確認ください。
                     <ul>
                         <li>お問い合わせフォーム送信確認メールが届かない</li>
                         <li>お問い合わせの返信メールが届かない</li>
                     </ul>
                 </p>
 
-                <a href="https://note.com/cardfesta/n/ne1fe05bfbe31" target="_blank">メールが届かない場合</a>はこちら
+                <a href="{{route('not_receiving_email')}}" target="_blank">メールが届かない場合</a>はこちら
             </div>
         </section>
     </div>

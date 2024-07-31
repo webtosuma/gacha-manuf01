@@ -44,10 +44,25 @@ use App\Http\Controllers;
     ->name('contact');
 
 
+
+
     # タイムライン(timeline)
     Route::get('/timeline', function () {
         return view('footer_menu.timeline.index');
     })->name('timeline');
+
+    # メールが届かないとき(not_receiving_email)
+    Route::get('/not_receiving_email/{revision_date?}',
+    function ($revision_date='2024-08-01') {
+        return view('footer_menu.not_receiving_email.index', compact('revision_date'));
+    })->name('not_receiving_email');
+
+    # PWAとは(about_pwa)
+    Route::get('/about_pwa/{revision_date?}',
+    function ($revision_date='2024-08-01') {
+        return view('footer_menu.about_pwa.index', compact('revision_date'));
+    })->name('about_pwa');
+
 
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {

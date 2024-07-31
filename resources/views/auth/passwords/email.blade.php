@@ -32,27 +32,12 @@
         login_route   = "{{ route('login') }}"
         ></u-reset-password-form >
 
-        {{-- <form action="{{route('register.post')}}" method="POST"
-        novalidate class="w-100"
-        enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
-            @csrf
 
-            <u-register-form
-            token           ="{{ csrf_token() }}"
-            r_api_step01    ="{{ route('api.register.step01') }}"
-            r_register_post ="{{ route('register.post') }}"
-            r_trems         ="{{ route('trems') }}"
-            r_privacy_policy="{{ route('privacy_policy') }}"
 
-            login_route          = "{{ route('login') }}"
-            gacha_route          = "{{ route('home') }}"
-            point_sail_route     = "{{ route('point_sail') }}"
-            ></u-register-form >
+        <section class="alert p-2 border-0 text-secondary mb-5 w-100" style="margin-top:3rem;">
 
-        </form> --}}
+            <a href="{{route('not_receiving_email')}}" target="_blank">メールが届かない場合</a>はこちら
 
-        <section class="alert  p-2 border-0 shadow text-secondary mb-5 w-100" style="margin-top:3rem;">
-            <a href="https://note.com/cardfesta/n/ne1fe05bfbe31" target="_blank">メールが届かない場合</a>はこちら
         </section>
 
     </div>
