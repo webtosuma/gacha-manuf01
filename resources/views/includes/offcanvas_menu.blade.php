@@ -241,7 +241,9 @@ style="max-width:90vw; min-width:30vw;">
 
                 <!-- PWAインストールボタン -->
                 <div class="">
-                    <pwa-install-btn></pwa-install-btn>
+                    <pwa-install-btn
+                    r_about_pwa="{{route('about_pwa')}}"
+                    ></pwa-install-btn>
                 </div>
 
                 {{-- <div class="fw-bold text-center mb-2">{{ config('app.name') }}をシェアする</div>
