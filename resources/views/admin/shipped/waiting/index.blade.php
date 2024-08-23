@@ -13,9 +13,6 @@ $active_key = 'shipped';
     <div class="container mb-4">
 
 
-
-
-
         {{-- パンくずリスト --}}
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -43,8 +40,8 @@ $active_key = 'shipped';
             </ul>
 
 
-            <div class="row text-warning my-3">
-                <div class="col">
+            <div class="row my-3">
+                <div class="col-auto text-warning">
                     <div class="d-flex gap-2 align-items-end">
                         <div class="">発送待ち</div>
                         <h3 class="fw-bold m-0">
@@ -53,6 +50,11 @@ $active_key = 'shipped';
                         </h3>
                         <span>件</span>
                     </div>
+                </div>
+                <div class="col-auto">
+                    <a href="{{ route('admin.shipped.waiting.dl_csv', compact('page') ) }}"
+                    class="btn border w-100 py-0"
+                    ><i class="bi bi-filetype-csv fs-4"></i>ダウンロード</a>
                 </div>
             </div>
 

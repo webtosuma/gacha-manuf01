@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\UserShipped;
 use App\Models\Prize;
 use Illuminate\Support\Facades\Mail;
@@ -18,13 +19,17 @@ class AdminShippedWaitingController extends Controller
         return 11 ;// '発送待ち',
     }
 
+    /** ページネーション数 */
+    public function pagenate_count(){ return 20 ;}
+
 
     /**
      * 一覧
      *
+     * @param Request $request　
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         # 発送状況ID
         $state_id = self::StateId();
@@ -33,10 +38,15 @@ class AdminShippedWaitingController extends Controller
         $shippeds = UserShipped::where('state_id', $state_id)->get();
 
         $paginate_shippeds = UserShipped::where('state_id', $state_id)
-        ->paginate(100);//ページネーション
+        ->paginate( $this->pagenate_count() );//ページネーション
+
+        # ページ
+        $page = $request->page;
 
 
-        return view('admin.shipped.waiting.index', compact('shippeds','paginate_shippeds') );
+        return view('admin.shipped.waiting.index', compact(
+            'shippeds','paginate_shippeds','page'
+        ) );
     }
 
 
@@ -124,4 +134,77 @@ class AdminShippedWaitingController extends Controller
             'subject' => 'ご注文の商品が発送されました', //件名
         ]) );
     }
+
+
+
+    /**
+     * CSVファイルのダウンロード
+     *
+     * @param Request $request　
+     * @return \Illuminate\Http\Response
+     */
+    public function dl_csv(Request $request)
+    {
+        # 発送状況ID
+        $state_id = self::StateId();
+
+        # 発送申請：発送待ち
+        $paginate_shippeds = UserShipped::where('state_id', $state_id)
+        ->paginate( $this->pagenate_count() );//ページネーション
+
+
+        # CSVデータ作成
+        $data_array = [];
+        $header = [
+            'お届け先郵便番号','お届け先氏名','お届け先敬称',
+            'お届け先住所1行目','お届け先住所2行目','お届け先住所3行目','お届け先住所4行目',
+            '内容品'];
+        $header = self::convertArrayToSJIS($header);
+        $data_array[] = implode(',',$header);
+
+        foreach ($paginate_shippeds as $user_shipped) {
+
+            # お届け先アドレス
+            $user_address = $user_shipped->user_address;
+
+            $data = [
+                $user_address->postal_code, //お届け先郵便番号
+                $user_address->name.'　様',  //お届け先氏名
+                $user_address->name.'　様',  //お届け先敬称
+                $user_address->todohuken,   //お届け先住所1行目
+                $user_address->shikuchoson, //お届け先住所2行目
+                $user_address->number,      //お届け先住所3行目
+                '', //お届け先住所4行目
+                'ホビー・カード', //内容品
+            ];
+
+            #UTF-8にエンコード
+            $data = self::convertArrayToSJIS($data);
+
+            # カンマに変換
+            $data_array[] = implode(',',$data);
+        }
+        // dd($data_array);
+
+
+        # 一覧テキストの保存
+        $contents = implode("\n",$data_array);     //改行文章に変換し、変数に保存
+        $path = 'upload/shippe/Waiting/csv/data.csv';//ファイルパス
+        Storage::put($path,$contents);
+
+        # 一覧テキストのダウンロード
+        return Storage::download($path,'発送受付一覧.csv');
+
+    }
+
+        /** UTF-8からSJISにフォーマット */
+        public static function convertArrayToSJIS($data)
+        {
+            array_walk_recursive($data, function (&$value) {
+                $value = mb_convert_encoding($value, 'SJIS', 'UTF-8');
+            });
+
+            return $data;
+        }
+
 }

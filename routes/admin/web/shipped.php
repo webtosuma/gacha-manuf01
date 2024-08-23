@@ -35,6 +35,7 @@ Route::middleware(['admin_auth'])->group(function () {
         [Controllers\AdminShippedWaitingController::class, 'dl_csv'])
         ->name('admin.shipped.waiting.dl_csv');
 
+
     # 発送済み
     Route::get('/admin/shipped/send',
     [Controllers\AdminShippedSendController ::class, 'index'])

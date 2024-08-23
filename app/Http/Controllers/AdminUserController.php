@@ -80,7 +80,7 @@ class AdminUserController extends Controller
         Storage::put($path,$contents);
 
         # 一覧テキストのダウンロード
-        return Storage::download($path,'cardFesta登録ユーザー一覧.csv');
+        return Storage::download($path,'登録ユーザー一覧.csv');
     }
 
 
