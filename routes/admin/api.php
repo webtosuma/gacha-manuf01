@@ -23,6 +23,8 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.api.gacha.ranks_gacha_prizes');
 
 
+});
+Route::middleware(['admin_auth'])->group(function () {
 
     # 商品一覧情報の取得
     Route::post('admin/api/prize',
@@ -45,7 +47,8 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.api.prize.destroy');
 
 
-
+});
+Route::middleware(['admin_auth'])->group(function () {
 
     # チケット交換商品の取得
     Route::post('admin/api/ticket_store',
@@ -68,15 +71,16 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.api.ticket_store.destroy');
 
 
-
+});
+Route::middleware(['admin_auth'])->group(function () {
 
     # メール・送信
     Route::post('admin/api/infomation/{infomation}',
     [Controllers\AdminInfomationController::class, 'api_email_post'])
     ->name('admin.api.infomation.email_post');
 
-});
 
+});
 Route::middleware(['admin_auth'])->group(function () {
 
     # お問い合わせ[一覧情報の発行]API(admin_list)
@@ -94,5 +98,15 @@ Route::middleware(['admin_auth'])->group(function () {
     Route::delete('/admmin/api/contact/destroy/{contact?}',
     [Controllers\ContactController::class, 'admin_destroy'])
     ->name('api.admin.contact.destroy');
+
+
+});
+Route::middleware(['admin_auth'])->group(function () {
+
+    # 登録ユーザー[一覧]API
+    Route::post('/admmin/api/user',
+    [Controllers\AdminApiUserController::class, 'index'])
+    ->name('api.admin.user');
+
 
 });

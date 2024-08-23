@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','ユーザー取得商品一覧')
+@section('title','取得商品一覧')
 
 
 @section('meta') @php
@@ -27,7 +27,7 @@ $active_key = 'user';
                     >{{ $user->name }}</a></li>
                 @endif
 
-                <li class="breadcrumb-item active" aria-current="page">ユーザー取得商品一覧</li>
+                <li class="breadcrumb-item active" aria-current="page">取得商品一覧</li>
             </ol>
         </nav>
 
@@ -50,7 +50,7 @@ $active_key = 'user';
                     {{ $user->name }}様
                 @endif
 
-                ユーザー取得商品一覧
+                取得商品一覧
             </h2>
 
             {{-- @if($user)

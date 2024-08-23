@@ -24,73 +24,12 @@ class AdminUserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,
-        $search_id='', $search_name='', $search_email='', $search_twitter_id=''
-    )
+    public function index(Request $request)
     {
-
-        # 検索キー
-        // $search_id         = $search_id ? $search_id : '';
-        // $search_name       = $search_name ? $search_name : '';
-        // $search_email      = $search_email ? $search_email : '';
-        // $search_twitter_id = $search_twitter_id ? $search_twitter_id : '';
-
-        $search_id         = $request->search_id ? $request->search_id : '';
-        $search_name       = $request->search_name ? $request->search_name : '';
-        $search_email      = $request->search_email ? $request->search_email : '';
-        $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : '';
-
-        // dd(User::doesntHave('sponsor')->get() );
-
-        # 絞り込み
-        $query = User::query();
-
-
-            if($search_id){
-                $query->where('id','like','%'.$search_id.'%');
-            }
-            if($search_name){
-                $query->where('name','like','%'.$search_name.'%');
-            }
-            if($search_email){
-                $query->where('email','like','%'.$search_email.'%');
-            }
-            if($search_twitter_id){
-                $query->where('twitter_id','like','%'.$search_twitter_id.'%');
-            }
-            if($request->sort){ //退職者のみ
-                $query->where('deleted_at','<>',null);
-            }
-
-
-            $query->doesntHave('sponsor'); //スポンサーアカウントを含まない
-
-        $users = $query->withTrashed()//退会者を含む
-        ->orderByDesc('created_at')->orderByDesc('id')
-        ->paginate(100);//ページネーション
-
-
-        return view('admin.user.index', compact('users','search_id','search_name','search_email', 'search_twitter_id') );
+        return view('admin.user.index');
     }
 
 
-
-    /**
-     * ユーザー絞り込み
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-    */
-    // public function search(Request $request)
-    // {
-    //     # 検索キー
-    //     $search_id         = $request->search_id ? $request->search_id : 0;
-    //     $search_name       = $request->search_name ? $request->search_name : 0;
-    //     $search_email      = $request->search_email ? $request->search_email : 0;
-    //     $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : 0;
-
-    //     return redirect()->route('admin.user', compact('search_id', 'search_name', 'search_email', 'search_twitter_id'));
-    // }
 
     /**
      * CSVファイルのダウンロード
@@ -100,34 +39,19 @@ class AdminUserController extends Controller
      */
     public function download_csv(Request $request)
     {
-        # 商品情報の取得 (AdminApiPrizeControllerメソッド)
-        # 検索キー
-        $search_id         = $request->search_id ? $request->search_id : '';
-        $search_name       = $request->search_name ? $request->search_name : '';
-        $search_email      = $request->search_email ? $request->search_email : '';
-        $search_twitter_id = $request->search_twitter_id ? $request->search_twitter_id : '';
-
-
-        # 絞り込み
         $query = User::query();
 
-            if($search_id){
-                $query->where('id','like','%'.$search_id.'%');
-            }
-            if($search_name){
-                $query->where('name','like','%'.$search_name.'%');
-            }
-            if($search_email){
-                $query->where('email','like','%'.$search_email.'%');
-            }
-            if($search_twitter_id){
-                $query->where('twitter_id','like','%'.$search_twitter_id.'%');
-            }
+            /* IDで絞り込み */
+            $query->whereIn('id', explode(",", $request->user_ids) );
 
-        $users = $query->orderByDesc('created_at')->orderByDesc('id')
-        ->get();
+            $query->withTrashed();//退会者を含む
+
+            $query->orderByDesc('created_at')->orderByDesc('id');
+
+        $users = $query->get();
 
 
+        # CSVデータ作成
         $data_array = [];
         $header = ['アカウント名','メールアドレス','X(旧Twitter)ID','登録日時'];
         $header = self::convertArrayToSJIS($header);

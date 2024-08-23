@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','ユーザー取得商品一覧')
+@section('title','取得商品一覧')
 
 
 @section('meta') @php
@@ -23,7 +23,7 @@ $active_key = 'user';
                     >{{ '登録ユーザー' }}</a></li>
 
                 <li class="breadcrumb-item"><a href="{{ route('admin.user.user_prize',$user->id) }}"
-                    >{{ 'ユーザー取得商品一覧' }}</a></li>
+                    >{{ '取得商品一覧' }}</a></li>
 
                 <li class="breadcrumb-item active" aria-current="page">ユーザー取得商品削除</li>
             </ol>

@@ -36,7 +36,7 @@ class AdminAuthController extends Controller
             # ログインページの表示
             else{
 
-                $email    = config('app.debug') ? 't.sakai@tosuma.ltd' : '';
+                $email    = config('app.debug') ? 'contact@fobees.jp' : '';
                 $password = config('app.debug') ? 'password' : '';
 
                 return view('admin_auth.login_form',compact('email','password'));

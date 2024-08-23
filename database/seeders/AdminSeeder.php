@@ -93,38 +93,38 @@ class AdminSeeder extends Seeder
         return   [
             [
                 'user' => [
-                    'email' => 't.sakai@tosuma.ltd',
+                    'email' => 'contact@fobees.jp',
                     'password' => Hash::make('password'),
-                    'name' => '酒井　貴弘',
+                    'name' => 'Fobees',
                 ],
                 'admin' => [
                     'master' => 1,
                 ],
             ],
-            [
-                'user' => [
-                    'email' => 'pay@cardfesta.jp',
-                    'password' => Hash::make('password'),
-                    'name' => 'pay',
-                    'twitter_id'=>'@TosuCare'
-                ],
-                'admin' => [
-                    'master' => 0,
-                    'get_mail'=>0,
-                ],
-            ],
-            [
-                'user' => [
-                    'email' => 'aek1214@yahoo.co.jp',
-                    'password' => Hash::make('password'),
-                    'name' => 'たかひろ',
-                    'twitter_id'=>''
-                ],
-                'admin' => [
-                    'master' => 0,
-                    'get_mail'=>0,
-                ],
-            ],
+            // [
+            //     'user' => [
+            //         'email' => 'pay@cardfesta.jp',
+            //         'password' => Hash::make('password'),
+            //         'name' => 'pay',
+            //         'twitter_id'=>'@TosuCare'
+            //     ],
+            //     'admin' => [
+            //         'master' => 0,
+            //         'get_mail'=>0,
+            //     ],
+            // ],
+            // [
+            //     'user' => [
+            //         'email' => 'aek1214@yahoo.co.jp',
+            //         'password' => Hash::make('password'),
+            //         'name' => 'たかひろ',
+            //         'twitter_id'=>''
+            //     ],
+            //     'admin' => [
+            //         'master' => 0,
+            //         'get_mail'=>0,
+            //     ],
+            // ],
 
             // [
             //     'user' => [

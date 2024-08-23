@@ -30,6 +30,11 @@ Route::middleware(['admin_auth'])->group(function () {
         [Controllers\AdminShippedWaitingController ::class, 'update'])
         ->name('admin.shipped.waiting.update');
 
+        # 発送待ち　CSVファイルのダウンロード
+        Route::get('/admin/shipped/waiting/dl/csv',
+        [Controllers\AdminShippedWaitingController::class, 'dl_csv'])
+        ->name('admin.shipped.waiting.dl_csv');
+
     # 発送済み
     Route::get('/admin/shipped/send',
     [Controllers\AdminShippedSendController ::class, 'index'])

@@ -7,7 +7,6 @@ Vue.component('example-component',
 require('./components/ExampleComponent.vue').default);
 
 
-
 /*
 |=============================================
 | ユーザーページ　コンポーネント
@@ -98,16 +97,20 @@ require('./components/ExampleComponent.vue').default);
 
     /* ポイント売上 */
 
-    // 年月選択
-    Vue.component('a-pointhistory-selectmonth',
-    require('./components/admin/point_history/SelectMonth.vue').default);
-    // グラフ
-    Vue.component('a-pointhistory-chart',
-    require('./components/admin/point_history/Chart.vue').default);
+        // 年月選択
+        Vue.component('a-pointhistory-selectmonth',
+        require('./components/admin/point_history/SelectMonth.vue').default);
+        // グラフ
+        Vue.component('a-pointhistory-chart',
+        require('./components/admin/point_history/Chart.vue').default);
 
     /* お知らせ */
     Vue.component('a-infomation-sendemail',
     require('./components/admin/infomation/Sendemail.vue').default);
+
+    /* 登録ユーザー一覧 */
+    Vue.component('a-user-list',
+    require('./components/admin/user/ListComponent.vue').default);
 
 
     /* お問い合わせ一覧 */
@@ -165,6 +168,10 @@ require('./components/ExampleComponent.vue').default);
     /* ローディング表示コンテナ */
     Vue.component('loading-container-component',
     require('./components/Items/LoadingContainerComponent.vue').default);
+
+    /* ローディングカバー */
+    Vue.component('loading-cover-component',
+    require('./components/Items/LoadingCoverComponent.vue').default);
 
     /* アラートモーダル */
     Vue.component('alert-modal-comp-component',

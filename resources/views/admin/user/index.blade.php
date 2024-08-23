@@ -26,8 +26,19 @@ $active_key = 'user';
 
         <h2 class="my-5 py-3 border-bottom">登録ユーザー</h2>
 
-        <div class="col-12 col-md-6">
-            {{-- <form action="{{route('admin.user.search')}}" method="post"> --}}
+
+        <a-user-list
+        token="{{csrf_token()}}"
+        r_api_list ="{{route('api.admin.user')}}"
+        src_x_image="{{asset('storage/site/image/x-logo/logo-black.png')}}"
+        ></a-user-list>
+
+
+
+
+
+
+        {{-- <div class="col-12 col-md-6">
             <form action="{{route('admin.user')}}">
 
                 <div class="input-group mb-3">
@@ -87,15 +98,15 @@ $active_key = 'user';
                 <a href="{{route('admin.user',$params)}}" class="btn border"
                 >退会済</a>
             </div>
-        </div>
+        </div> --}}
 
 
-        <!-- ページネーション -->
+        {{-- <!-- ページネーション -->
         <div class="d-flex justify-content-start  mt-3">
             {{ $users->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
-        </div>
+        </div> --}}
 
-        <section class="card card-body bg-white mb-3 overflow-auto">
+        {{-- <section class="card card-body bg-white mb-3 overflow-auto">
             <table class="table bg-white my-3">
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>
@@ -117,7 +128,6 @@ $active_key = 'user';
 
 
                         <th class="text-center" scope="col">
-                            {{-- {{ '商品' }} --}}
                             <a href="{{route('admin.user.user_prize',0)}}">商品</a>
                         </th>
                         <th class="text-center" scope="col">
@@ -234,12 +244,12 @@ $active_key = 'user';
                     @endforelse
                 </tbody>
             </table>
-        </section>
+        </section> --}}
 
 
-        <!-- ページネーション -->
+        {{-- <!-- ページネーション -->
         <div class="d-flex justify-content-start mt-3">
             {{ $users->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
-        </div>
+        </div> --}}
     </div>
 @endsection
