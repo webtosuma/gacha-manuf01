@@ -40,4 +40,19 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.prize.download_csv');
 
 
+    # CSVインポート
+    Route::get('/admin/prize/import/csv',
+    [Controllers\AdminPrizeController ::class, 'import_csv'])
+    ->name('admin.prize.import_csv');
+
+        # CSVインポート処理
+        Route::post('/admin/prize/import/csv/post',
+        [Controllers\AdminPrizeController ::class, 'import_csv_post'])
+        ->name('admin.prize.import_csv_post');
+
+        # インポート用CSVファイルダウンロード
+        Route::get('/admin/prize/import/csv/download',
+        [Controllers\AdminPrizeController ::class, 'import_csv_download'])
+        ->name('admin.prize.import_csv_download');
+
 });//end middleware

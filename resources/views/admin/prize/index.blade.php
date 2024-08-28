@@ -26,6 +26,7 @@ $active_submenu = true;
 
         <h2 class="mb-5 py-3 border-bottom">商品管理</h2>
 
+
         <a-prize-list
         token="{{ csrf_token() }}"
         r_api_prize   ="{{ route('admin.api.prize') }}"
@@ -36,6 +37,7 @@ $active_submenu = true;
         r_create      ="{{ route('admin.prize.create') }}"
         r_edit        ="{{ route('admin.prize.edit') }}"
         r_download_csv="{{ route('admin.prize.download_csv') }}"
+        r_import_csv  ="{{ route('admin.prize.import_csv') }}"
         category_id   ="{{$category_id}}"
         ></a-prize-list>
 

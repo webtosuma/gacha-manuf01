@@ -112,7 +112,6 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('a-user-list',
     require('./components/admin/user/ListComponent.vue').default);
 
-
     /* お問い合わせ一覧 */
     Vue.component('contact-list-component',
     require('./components/admin/contact/ListComponent.vue').default);

@@ -43,14 +43,39 @@
 
 
             <!--操作ボタン-->
-            <section class="mb-2">
+            <section class="mb-">
                 <div class="row g-2 ">
                     <div class="col-auto">
                         <a :href="r_create+'?gacha_category_id='+inputs.category_id"
                         class="btn btn- btn-primary text-white px-4 shadow"
                         >+ 商品の新規登録</a>
                     </div>
-                    <div class="col-4">
+                    <div class="col-auto">
+                        <button @click="toggleEdit()"
+                        class="btn btn- btn-light border" type="button"
+                        ><i class="bi bi-pencil-fill fs-"></i>一括編集</button>
+                    </div>
+                    <div class="col-auto">
+                        <form :action="r_download_csv" method="post">
+                            <input type="hidden" name="_token" :value="token">
+                            <input v-for="(value, name) in inputs" :key="name"
+                            type="hidden" :name="name" :value="value">
+
+                            <button class="btn btn- btn-light border  py-0" type="submit"
+                            ><i class="bi bi-filetype-csv fs-4"></i>ダウンロード</button>
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <a :href="r_import_csv"
+                        class="btn btn-light border py-0 mb-3">
+                            <i data-v-3e26587a="" class="bi bi-filetype-csv fs-4"></i>
+                            インポート
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row g-2 ">
+                    <div class="col-12 col-md">
                         <input @change="changeKeyWord()" v-model="keyWords"
                         type="text" class="form-control form-control-lgg" placeholder="検索：商品名・商品コード名"
                         aria-label="Username" aria-describedby="basic-addon1" />
@@ -68,26 +93,11 @@
                             placeholder="最低pt" style="width:6rem;">
                         </div>
                     </div>
-                    <div class="col-auto">
-                        <button @click="toggleEdit()"
-                        class="btn btn- btn-light border" type="button"
-                        ><i class="bi bi-pencil-fill fs-"></i>一括編集</button>
-                    </div>
-                    <div class="col-auto">
-                        <form :action="r_download_csv" method="post">
-                            <input type="hidden" name="_token" :value="token">
-                            <input v-for="(value, name) in inputs" :key="name"
-                            type="hidden" :name="name" :value="value">
-
-                            <button class="btn btn- btn-light border  py-0" type="submit"
-                            ><i class="bi bi-filetype-csv fs-4"></i>ダウンロード</button>
-                        </form>
-                    </div>
                 </div>
             </section>
 
             <!--テーブル-->
-            <section class="card card-body bg-white my-3 overflow-auto" style="height: 90vh;">
+            <section class="card card-body bg-white my- overflow-auto" style="height: 90vh;">
                 <table class="table bg-white " style="min-width: 600px; font-size: 16px;">
                     <!--ヘッド（並べ替えボタン）-->
                     <thead>
@@ -246,14 +256,15 @@
 
         props: {
             token:{ type: String,  default: '', },
-            r_api_prize:{ type: String,  default: '', },   //商品
+            r_api_prize:   { type: String,  default: '', },//商品
             r_api_category:{ type: String,  default: '', },//ガチャ カテゴリー
-            r_api_update: { type: String,  default: '', },//更新
-            r_api_copy: { type: String,  default: '', },//コピー
+            r_api_update:  { type: String,  default: '', },//更新
+            r_api_copy:    { type: String,  default: '', },//コピー
             r_api_destroy: { type: String,  default: '', },//削除
-            r_create:{ type: String,  default: '', },
-            r_edit:{ type: String,  default: '', },
+            r_create:      { type: String,  default: '', },
+            r_edit:        { type: String,  default: '', },
             r_download_csv:{ type: String,  default: '', },//csvファイルダウンロードパス
+            r_import_csv:  { type: String,  default: '', },//csvファイルインポートパス
             category_id:{ type: String,  default: '', },
         },
         data() { return {
