@@ -24,7 +24,7 @@ class AdminPrizeCsvRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'csv_file' => ['required','file','mimes:csv'], //イメージ画像
+            'csv_file' => ['required','file','mimes:csv,txt'], //CSVファイル
         ];
 
         return $rules;
