@@ -23,15 +23,30 @@ class PointHistoryController extends Controller
      */
     public function index( $month='' )
     {
+        // $user = Auth::user();
+        // $point_histories = PointHistory::where('user_id',$user->id)
+        // ->orderByDesc('id')
+        // ->get();
+
+
+
+        // $totalPoints = $user->point_histories->sum('value');
+
+
         $user = Auth::user();
-        $point_histories = PointHistory::where('user_id',$user->id)
-        ->orderByDesc('id')
-        ->get();
+
+        # ポイント履歴の取得
+        $query = PointHistory::query();
+
+            $query->where('user_id', $user->id);
+
+            $query->orderByDesc('created_at')->orderByDesc('id');
+
+        $point_histories = $query->paginate(20);//ページネーション
 
 
-
+        # 合計カウント
         $totalPoints = $user->point_histories->sum('value');
-        // dd($totalPoints);
 
 
 

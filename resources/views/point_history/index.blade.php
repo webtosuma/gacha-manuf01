@@ -44,5 +44,11 @@
 
 
     </ul>
+    <div class="">
+        <!-- ページネーション -->
+        <div class="d-flex justify-content-start  mt-3">
+            {{ $point_histories->links('vendor.pagination.bootstrap-4',['elements' => 8]) }}
+        </div>
+    </div>
 </div>
 @endsection

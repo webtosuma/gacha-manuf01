@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\UserPrize;
 use App\Models\UserShipped;
@@ -30,6 +31,8 @@ class AdminUserPointHistoryController extends Controller
 
         # ポイントの入出理由　絞り込み
         $reason_id = $request->reason_id ?? 0;
+        $reason_id = !$request->page ? $reason_id : Session::get('user.point_history.reason_id');//ページネーション対応
+        Session::put('user.point_history.reason_id', $reason_id);//セッションに保存
 
 
         # ポイント履歴の取得
