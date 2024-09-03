@@ -230,43 +230,42 @@
                     </div>
                 </div>
 
-                {{-- <div class="col-12 col-md">
+                <div class="col-12 col-md">
                     <div class="card card-body px- bg-body h-100">
                         <div class="">銀行振込</div>
 
                         <div class=""><i class="bi bi-bank2 fs-4"></i></div>
                     </div>
-                </div> --}}
+                </div>
 
-                {{-- <div class="col-12 col-md">
+                <div class="col-12 col-md">
                     <div class="card card-body px- bg-body h-100">
                         <div class="">Apple Pay</div>
 
                         <div class=""><i class="bi bi-apple fs-4"></i></div>
                     </div>
-                </div> --}}
+                </div>
 
-                {{-- <div class="col-12 col-md">
+                <div class="col-12 col-md">
                     <div class="card card-body px- bg-body h-100">
                         <div class="">Google Pay</div>
 
                         <div class=""><i class="bi bi-google fs-4"></i></div>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
 
 
-        <section class="bg-whit p-4 border-0 shadow my-5 mx-auto" style="color:red;">
+        {{-- <section class="bg-whit p-4 border-0 shadow my-5 mx-auto" style="color:red;">
             <div class="mb-">
-                {{-- <h5 class="border-bottom border-secondary mb-3">お問い合わせのご返信について</h5> --}}
                 <p>
                     ＊ごく短時間での複数決済及び、複数の手段にてポイントチャージを行った場合、一時的な決済停止になることがございます。<br>
                     ＊不明瞭なポイントチャージについては、決済停止及び登録本人確認を行う場合がございますのでご了承ください。<br>
                     本人確認についてのご連絡はアカウント登録時のメールアドレスへ行います。
                 </p>
             </div>
-        </section>
+        </section> --}}
 
 
     </div>

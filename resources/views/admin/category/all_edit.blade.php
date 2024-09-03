@@ -59,7 +59,7 @@ $active_submenu = true;
                             <label class="d-block mb-4">
                                 <div class="form-label">背景画像</div>
 
-                                {{$gacha_category->bg_image_path}}
+                                {{-- {{$gacha_category->bg_image_path}} --}}
                                 <read-image-file-component
                                 img_path="{{$gacha_category->bg_image_path}}"
                                 noimg_path="{{$gacha_category->noImage()}}"
