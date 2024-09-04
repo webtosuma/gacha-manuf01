@@ -81,39 +81,16 @@
         </div>
     </section>
     <section class="mb-5">
-        {{-- <div class="container px- py-"  style="max-width:500px;">
-
-
-            <h5 class="fw-bold text-center mb-">ガチャ情報</h5>
-
-            @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
-            <a href="{{route('gacha',$params)}}"
-            class="card border-secondary border-0 shadow bg-white
-            text-dark text-center overflow-hidden text-decoration-none
-            hover_anime" style="border-radius:1rem;">
-
-
-                <!--image-->
-                @include('gacha.common.top_image')
-
-                <!--metter-->
-                @include('gacha.common.metter')
-
-            </a>
-
-        </div> --}}
-        <div class="mb-5 py-">
-
-
-            <h5 class="text-center fs-5 fw-bold mb-3">ガチャ結果を送る</h5>
-            @php
-            $sns_url  = route('gacha.result_history',$user_gacha_history->key);
-            $sns_text = $page_title
-            @endphp
-            @include('includes.sns_btn')
-
-
-        </div>
+        @if( env('SHARE_BTNS') )
+            <div class="mb-5 py-">
+                <h5 class="text-center fs-5 fw-bold mb-3">ガチャ結果を送る</h5>
+                @php
+                $sns_url  = route('gacha.result_history',$user_gacha_history->key);
+                $sns_text = $page_title
+                @endphp
+                @include('includes.sns_btn')
+            </div>
+        @endif
         <!-- その他のガチャ情報 -->
         <div class="container px- pb-5"  style="max-width:500px;">
 

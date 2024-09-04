@@ -6,7 +6,7 @@
             @php
             $sc = "col-auto col-lg fs- py-2 fw-bold btn btn-sm btn-light border-0 rounded-pill";
 
-            $style_class = $category_code=='all' ? $sc.' disabled bg-primary' : $sc;
+            $style_class = $category_code=='all' ? $sc.' disabled bg-primary text-white' : $sc;
             $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
             @endphp
             <a  href="{{ route('gacha_category',$params) }}"

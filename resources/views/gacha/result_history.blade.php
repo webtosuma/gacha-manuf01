@@ -180,14 +180,16 @@
             </div>
 
 
-            <div class="py- my-5">
-                <h5 class="text-center fs-5 fw-bold mb-3">ガチャ結果を送る</h5>
-                @php
-                $sns_url  = route('gacha.result_history',$user_gacha_history->key);
-                $sns_text = $page_title
-                @endphp
-                @include('includes.sns_btn')
-            </div>
+            @if( env('SHARE_BTNS') )
+                <div class="py- my-5">
+                    <h5 class="text-center fs-5 fw-bold mb-3">ガチャ結果を送る</h5>
+                    @php
+                    $sns_url  = route('gacha.result_history',$user_gacha_history->key);
+                    $sns_text = $page_title
+                    @endphp
+                    @include('includes.sns_btn')
+                </div>
+            @endif
 
 
             <!-- その他のガチャ情報 -->

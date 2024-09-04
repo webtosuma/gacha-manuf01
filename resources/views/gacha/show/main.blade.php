@@ -8,16 +8,16 @@
 
         </div>
 
-
-        <div class="d-flex justify-content-end mt-3">
-            {{-- <div class="fw-bold text-center mb-2">このガチャをシェアする</div> --}}
-            @php
-            $sns_url  = request()->url();
-            $sns_text = $gacha->name;
-            $sns_size = '2rem';
-            @endphp
-            @include('includes.sns_btn')
-        </div>
+        @if( env('SHARE_BTNS') )
+            <div class="d-flex justify-content-end mt-3">
+                @php
+                $sns_url  = request()->url();
+                $sns_text = $gacha->name;
+                $sns_size = '2rem';
+                @endphp
+                @include('includes.sns_btn')
+            </div>
+        @endif
 
     </div>
 </section>
