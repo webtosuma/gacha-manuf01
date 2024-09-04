@@ -61,6 +61,16 @@ $active_key = 'gacha';
 
                 </div>
                 <aside class="col-12 col-md-3 ">
+
+                    @if( env('LIMIT_GACHA_COUNT') )
+                    <!--公開・公開予約数制限あり-->
+                    <div class="alert alert-success border-0 mx-3" role="alert">
+                        <h6 class="fw-bold text-success">公開ガチャ数の制限あり</h6>
+                        同じカテゴリー内で<span class="fw-bold">公開・公開予約</span>できるガチャ数は、合わせて<span class="fw-bold">3件</span>以内です。
+                    </div>
+                    @endif
+
+
                     <div class="position-sticky p-3" style="top: 2rem; ">
                         <disabled-button style_class="btn btn-warning text-white w-100 shadow"
                         btn_text="更新する"></bdisabled-button>

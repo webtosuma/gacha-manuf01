@@ -197,8 +197,24 @@ class AdminGachaController extends Controller
      */
     public function published(Gacha $gacha)
     {
-        // dd($gacha->published_at->format('Ymd H:i:s'));
-        return view('admin.gacha.published.edit', compact('gacha'));
+        # カテゴリー内での公開中ガチャ数
+        $published_count = Gacha::where('category_id',$gacha->category_id)
+        ->where('published_at','<>',null)
+        ->get()->count();
+
+
+        // $published_count=2;
+
+
+        #ガチャの公開制限
+        $limit = 3;
+        $gacha_restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;
+        $gacha_restriction = $gacha->published_at ? false : $gacha_restriction;//公開中のガチャは、公開ボタン制限なし
+
+
+        return view('admin.gacha.published.edit', compact(
+            'gacha', 'gacha_restriction',
+        ) );
     }
 
 

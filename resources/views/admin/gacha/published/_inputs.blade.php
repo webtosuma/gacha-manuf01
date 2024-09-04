@@ -1,9 +1,12 @@
 <div class="px-3 mb-5">
 
     <!-- 公開 -->
-    <label class="card card-body mb-3">
+    <label class="card card-body mb-3 disabled"
+    @if ( $gacha_restriction ) style="opacity: .5;" @endif
+    >
         <div class="form-check w-100">
             <input name="is_published" value="1" type="radio" class="form-check-input"
+            @if ( $gacha_restriction ) disabled @endif
             {{ $gacha->is_published ? 'checked' : ''}}
             >
             <h5 class="mb-0">公開</h5>
@@ -20,9 +23,12 @@
 
 
     <!-- 公開予約 -->
-    <label class="card card-body mb-3">
+    <label class="card card-body mb-3"
+    @if ( $gacha_restriction ) style="opacity: .5;" @endif
+    >
         <div class="form-check w-100">
             <input name="is_published" value="2" type="radio" class="form-check-input"
+            @if ( $gacha_restriction ) disabled @endif
             {{ !$gacha->is_published && $gacha->published_at ? 'checked' : ''}}
             >
             <h5 class="mb-0">公開予約</h5>
