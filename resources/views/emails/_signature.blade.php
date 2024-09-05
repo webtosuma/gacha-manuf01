@@ -1,17 +1,17 @@
 @php
+$app_name     =  env('APP_NAME');
+$company_name = config('app.company_name');
+$r_contact    = route('contact');
+
+
 $body =  <<<__
-公式X（旧Twitter）にてキャンペーン実施中！！
-Xアカウント:@CardFesta7627
-https://twitter.com/CardFesta7627
-
-配信停止はコチラから↓↓↓↓↓↓↓↓↓
-https://cardfesta.jp/settings/email_reception
-
-※このメールは送信専用メールアドレスから配信されています。
-このままご返信いただいてもお答えできませんのでご了承ください。
+このメールは≪{$app_name}≫の会員登録お手続きをされた方に自動送信しています。
+このメールに心当たりのない場合や、ご不明な点がある場合は、下記お問い合わせ先へご連絡ください。
+{$r_contact}
+（このメールへの返信はできません）
 
 発行・配信元
-合同会社Fobees
+{$company_name}
 __;
 @endphp
 

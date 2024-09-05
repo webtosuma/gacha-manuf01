@@ -202,10 +202,6 @@ class AdminGachaController extends Controller
         ->where('published_at','<>',null)
         ->get()->count();
 
-
-        // $published_count=2;
-
-
         #ガチャの公開制限
         $limit = 3;
         $gacha_restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;

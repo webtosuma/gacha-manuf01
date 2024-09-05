@@ -7,6 +7,7 @@ use App\Http\Requests\ShippedAppliRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\UserPrize;
 use App\Models\UserAddress;
@@ -20,6 +21,12 @@ use App\Models\Prize;
 */
 class ShippedAppliController extends Controller
 {
+    /** 発送ポイント */
+    public function shippedPoint(){ return 100; }
+
+
+
+
     /**
      * 発送申請　入力
      *
@@ -30,6 +37,15 @@ class ShippedAppliController extends Controller
     {
         $user = Auth::user();
         $id_array = $request->user_prize_ids;//発送するユーザー商品ID
+
+        # 発送ポイント
+        $shipped_point = self::shippedPoint();
+        // 発送ポイントが足りていないとき
+        if( $user->point < $shipped_point ){
+            $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
+            return redirect()->route('user_prize')
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+        }
 
         # 発送するユーザー商品を取得/データチェック
         $user_prizes = self::FindUserPrizes( $id_array );
@@ -42,7 +58,9 @@ class ShippedAppliController extends Controller
             $shipped_prize->count = array_count_values( $sp_id_array )[ $shipped_prize->id ] ?? 0;
         }
 
-        return view('shipped.appli.index',compact('id_array','user_prizes','shipped_prizes'));
+        return view('shipped.appli.index',compact(
+            'id_array','shipped_point','user_prizes','shipped_prizes'
+        ));
     }
 
 
@@ -62,6 +80,14 @@ class ShippedAppliController extends Controller
         $default_address = (bool) $request->default_address;//選択のアドレスをデフォルトにする
         // dd($request->all());
 
+        # 発送ポイント
+        $shipped_point = self::shippedPoint();
+        // 発送ポイントが足りていないとき
+        if( $user->point < $shipped_point ){
+            $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
+            return redirect()->route('user_prize')
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+        }
 
         # 選択のアドレスをデフォルトにする
         if( $default_address ){
@@ -84,7 +110,10 @@ class ShippedAppliController extends Controller
             $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
         }
 
-        return view('shipped.appli.confirm',compact('user_address','user_prizes', 'shipped_prizes' ) );
+
+        return view('shipped.appli.confirm',compact(
+            'shipped_point', 'user_address','user_prizes', 'shipped_prizes'
+        ) );
     }
 
 
@@ -102,6 +131,16 @@ class ShippedAppliController extends Controller
         $user_address_id = $request->user_address_id;//ユーザーアドレスID
         $default_address = (bool) $request->default_address;//選択のアドレスをデフォルトにする
 
+
+        # 発送ポイント
+        $shipped_point = self::shippedPoint();
+        // 発送ポイントが足りていないとき
+        if( $user->point < $shipped_point ){
+            $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
+            return redirect()->route('user_prize')
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+        }
+
         # 発送するユーザー商品を取得/データチェック
         $user_prizes = self::FindUserPrizes( $id_array );
         if( !$user_prizes->count() ){ return \App::abort(404); }//データがないとき
@@ -114,7 +153,7 @@ class ShippedAppliController extends Controller
             # ポイント記録の新規登録
             $point_history = new PointHistory([
                 'user_id'   => $user->id, //ユーザー　リレーション
-                'value'     => 0,  //ポイント数
+                'value'     =>  - (int) $shipped_point,  //ポイント数
                 'reason_id' => 22, //商品発送
             ]);
             $point_history->save();
@@ -148,6 +187,10 @@ class ShippedAppliController extends Controller
         }
 
 
+        # ユーザーへのメール送信
+        self::SendEmail($user_shipped);
+
+
         # Viewの表示
         return redirect()->route('shipped.appli.comp.get');
     }
@@ -166,5 +209,36 @@ class ShippedAppliController extends Controller
         ->find( $id_array );
 
         return $user_prizes;
+    }
+
+
+
+
+
+
+    /** ユーザーへのメール送信 */
+    public function SendEmail($user_shipped)
+    {
+        # ユーザー情報
+        $user = $user_shipped->user;
+
+        # 発送する商品:種類別($shipped_prizes)
+        $user_prizes = $user_shipped->user_prizes;
+        $id_array = $user_prizes->pluck('prize_id')->toArray();
+        $shipped_prizes = Prize::find( $id_array );//カードの重複除去
+        foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
+            $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
+        }
+
+        # 変数の保存
+        $inputs = compact('user','user_shipped','shipped_prizes');
+
+        // return view('emails.user_shipped_send',$inputs);
+        Mail::to( $user->email ) //宛先
+        ->send(new \App\Mail\SendHtmlMailMailable([
+            'inputs'  => $inputs, //入力変数
+            'view'    => 'emails.user_shipped_appli' , //テンプレート
+            'subject' => '商品の発送申請を受け付けました', //件名
+        ]) );
     }
 }

@@ -53,6 +53,9 @@ class AdminShippedSendController extends Controller
         $state_id = self::StateId();
         if( $user_shipped->state_id != $state_id ){ return \App::abort(404); }
 
+        # 発送ポイント
+        $shipped_point = - (int) $user_shipped->point_history->value;
+
         # お届け先アドレス
         $user_address = $user_shipped->user_address;
 
@@ -67,7 +70,7 @@ class AdminShippedSendController extends Controller
         }
 
         return view('admin.shipped.send.show', compact(
-            'user_shipped','user_address','user_prizes','shipped_prizes'
+            'user_shipped','shipped_point','user_address','user_prizes','shipped_prizes'
         ) );
     }
 }

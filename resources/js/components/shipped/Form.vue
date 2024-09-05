@@ -19,11 +19,11 @@
                 <li class="list-group-item p-3">
                     <div class="d-flex justify-content-between">
                         <span class="form-text">配送料・手数料：</span>
-                        <span>0pt</span>
+                        <span>{{ shipped_point }}pt</span>
                     </div>
                     <div class="d-flex justify-content-between fs-5 fw-bold">
                         <span class="">合計利用ポイント：</span>
-                        <span class="text-danger">0pt</span>
+                        <span class="text-danger">{{ shipped_point }}pt</span>
                     </div>
                 </li>
             </ul>
@@ -68,6 +68,7 @@
             /* 発送商品リスト */
             u_prize_ids:  { type: [String], default: '' },
             r_find:  { type: [String,Number], default: null },
+            shipped_point:{ type: [String,Number], default: 0 },/* 発送ポイント */
         },
         data() { return {
 

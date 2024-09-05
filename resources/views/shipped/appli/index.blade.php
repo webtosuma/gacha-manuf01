@@ -34,6 +34,7 @@
             r_destroy="{{ route('api.use_address.destroy') }}"
 
             u_prize_ids="{{ implode(',',$id_array) }}"
+            shipped_point="{{$shipped_point}}"
             r_find="{{ route('api.user_prize.find') }}"
             ></u-shipped-form>
 

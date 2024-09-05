@@ -55,6 +55,8 @@ class ShippedWaitingController extends Controller
         $user = Auth::user();
         if( $user_shipped->user_id != $user->id ){ return \App::abort(404); }
 
+        # 発送ポイント
+        $shipped_point = - (int) $user_shipped->point_history->value;
 
         # お届け先アドレス
         $user_address = $user_shipped->user_address;
@@ -70,7 +72,7 @@ class ShippedWaitingController extends Controller
         }
 
         return view('shipped.waiting.show', compact(
-            'user_shipped','user_address','user_prizes','shipped_prizes'
+            'user_shipped','shipped_point','user_address','user_prizes','shipped_prizes'
         ) );
     }
 }

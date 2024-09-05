@@ -39,6 +39,14 @@ $active_key = 'gacha';
         <h2 class="mb-5 py-3 border-bottom">ガチャ管理</h2>
 
 
+        @if( env('LIMIT_GACHA_COUNT') )
+        <!--公開・公開予約数制限あり-->
+        <div class="alert alert-success border-0" role="alert">
+            <h6 class="fw-bold text-success">公開ガチャ数の制限あり</h6>
+            同じカテゴリー内で<span class="fw-bold">公開・公開予約</span>できるガチャ数は、合わせて<span class="fw-bold">3件</span>以内です。
+        </div>
+        @endif
+
 
         <section class="mb-3">
             <ul class="nav nav-tabs">

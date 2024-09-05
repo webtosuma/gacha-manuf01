@@ -9340,7 +9340,11 @@ __webpack_require__.r(__webpack_exports__);
     r_find: {
       type: [String, Number],
       "default": null
-    }
+    },
+    shipped_point: {
+      type: [String, Number],
+      "default": 0
+    } /* 発送ポイント */
   },
   data: function data() {
     return {
@@ -16512,7 +16516,21 @@ var render = function render() {
     on: {
       "update-address": _vm.updateSelectedAddressId
     }
-  })], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("section", {
+  })], 1), _vm._v(" "), _c("section", {
+    staticClass: "my-5"
+  }, [_c("h5", [_vm._v("利用ポイント")]), _vm._v(" "), _c("ul", {
+    staticClass: "list-group bg-white"
+  }, [_c("li", {
+    staticClass: "list-group-item p-3"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-between"
+  }, [_c("span", {
+    staticClass: "form-text"
+  }, [_vm._v("配送料・手数料：")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.shipped_point) + "pt")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex justify-content-between fs-5 fw-bold"
+  }, [_c("span", {}, [_vm._v("合計利用ポイント：")]), _vm._v(" "), _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.shipped_point) + "pt")])])])])]), _vm._v(" "), _c("section", {
     staticClass: "my-5"
   }, [_c("u-userprize-list", {
     attrs: {
@@ -16547,25 +16565,7 @@ var render = function render() {
     }
   }, [_vm._v("発送する商品を変更する")])])])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("section", {
-    staticClass: "my-5"
-  }, [_c("h5", [_vm._v("利用ポイント")]), _vm._v(" "), _c("ul", {
-    staticClass: "list-group bg-white"
-  }, [_c("li", {
-    staticClass: "list-group-item p-3"
-  }, [_c("div", {
-    staticClass: "d-flex justify-content-between"
-  }, [_c("span", {
-    staticClass: "form-text"
-  }, [_vm._v("配送料・手数料：")]), _vm._v(" "), _c("span", [_vm._v("0pt")])]), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-between fs-5 fw-bold"
-  }, [_c("span", {}, [_vm._v("合計利用ポイント：")]), _vm._v(" "), _c("span", {
-    staticClass: "text-danger"
-  }, [_vm._v("0pt")])])])])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

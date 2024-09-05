@@ -65,6 +65,9 @@ class AdminShippedWaitingController extends Controller
             return redirect()->route('admin.shipped.send.show',$user_shipped);
         }
 
+        # 発送ポイント
+        $shipped_point = - (int) $user_shipped->point_history->value;
+
         # お届け先アドレス
         $user_address = $user_shipped->user_address;
 
@@ -79,7 +82,7 @@ class AdminShippedWaitingController extends Controller
         }
 
         return view('admin.shipped.waiting.show', compact(
-            'user_shipped','user_address','user_prizes','shipped_prizes'
+            'user_shipped','shipped_point','user_address','user_prizes','shipped_prizes'
         ) );
     }
 
