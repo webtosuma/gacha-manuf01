@@ -62,7 +62,7 @@
         ],
         [
             'route' => route('admin.point_sail'),
-            'key'   => 'point',
+            'key'   => 'point_sail',
             'label' => '販売ポイント',
         ],
         // [

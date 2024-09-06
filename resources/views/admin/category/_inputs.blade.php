@@ -70,11 +70,23 @@
                 <span class="text-danger">＊</span>
             </div>
 
-            <div class="px-4">
+            <div class="px-">
+                @if( env('LIMIT_GACHA_COUNT') )
+                    <!--カテゴリー数制限あり-->
+                    <div class="alert alert-success border-0" role="alert">
+                        <h6 class="fw-bold text-success">カテゴリー数数の制限あり</h6>
+                        <span class="fw-bold">公開</span>できるカテゴリー数は、合わせて<span class="fw-bold">2件</span>以内です。(「すべて」は含まれません。)
+                    </div>
+                @endif
+
+
                 <!-- 公開 -->
-                <label class="card p-2 mb-3">
+                <label class="card p-2 mb-3"
+                @if ( $restriction ) style="opacity: .5;" @endif
+                >
                     <div class="form-check">
                         <input name="is_published" value="1" type="radio" class="form-check-input"
+                        @if ( $restriction ) disabled @endif
                         {{ $gacha_category->is_published ? 'checked' : ''}}
                         >
                         <h6 class="mb-0 mt-1">公開</h6>

@@ -26,14 +26,14 @@
 
     <meta property="og:title" content="{{ $meta_title }}" />
     <meta property="og:description" content="{{ $meta_description }}" />
-    <meta property="og:url"         content="https://cardfesta.jp/" />
-    <meta property="og:site_name"   content="cardFesta" />
+    <meta property="og:url"         content="{{ config('app.url') }}" />
+    <meta property="og:site_name"   content="{{ config('app.name') }}" />
     <meta property="og:image"       content="{{ $meta_image }}" />
     <meta property="og:locale"      content="ja_JP"  />
     <meta property="og:type"        content="website">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@CardFesta7627" />
+    {{-- <meta name="twitter:site" content="@CardFesta7627" /> --}}
     <meta name="twitter:title" content="{{ $meta_title }}" />
     <meta name="twitter:description" content="{{ $meta_description }}" />
     <meta name="twitter:image" content="{{ $meta_image }}" />

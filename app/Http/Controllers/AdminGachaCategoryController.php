@@ -36,12 +36,23 @@ class AdminGachaCategoryController extends Controller
      */
     public function create()
     {
+        # 新規作成ガチャデータ
         $gacha_category = new GachaCategory([
             'is_published' => 0,
         ]);
 
-        // dd($gacha_category->noImage());
-        return view('admin.category.create', compact('gacha_category'));
+
+        # カテゴリー内での公開中ガチャ数[カテゴリー制限]
+        $published_count = GachaCategory::where('is_published',true)
+        ->get()->count();
+
+        #公開制限[カテゴリー制限]
+        $limit = 2;
+        $restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;
+        $restriction = $gacha_category->is_published ? false : $restriction;//公開中のカテゴリは、公開ボタン制限なし
+
+
+        return view('admin.category.create', compact('gacha_category','restriction'));
     }
 
 
@@ -77,7 +88,18 @@ class AdminGachaCategoryController extends Controller
      */
     public function edit(GachaCategory $gacha_category)
     {
-        return view('admin.category.edit', compact('gacha_category'));
+        # カテゴリー内での公開中ガチャ数[カテゴリー制限]
+        $published_count = GachaCategory::where('is_published',true)
+        ->get()->count();
+        // $published_count = 1;
+
+        #公開制限[カテゴリー制限]
+        $limit = 2;
+        $restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;
+        $restriction = $gacha_category->is_published ? false : $restriction;//公開中のカテゴリは、公開ボタン制限なし
+
+
+        return view('admin.category.edit', compact('gacha_category','restriction'));
     }
 
 

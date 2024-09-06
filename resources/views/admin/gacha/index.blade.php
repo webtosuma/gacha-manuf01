@@ -48,6 +48,7 @@ $active_key = 'gacha';
         @endif
 
 
+
         <section class="mb-3">
             <ul class="nav nav-tabs">
                 @php
