@@ -4,7 +4,7 @@
             <div class="card-body">
 
 
-                <div class="row mb-3">
+                <div class="mb-3">
                     <label for="name" class=" col-form-label text-start">{{ 'アカウント名' }}</label>
 
                     <input v-model="inputs.name" name="name"
@@ -14,7 +14,7 @@
 
                     <div class="text-danger" v-if="errors.name">※{{ errors.name[0] }}</div>
                 </div>
-                <div class="row mb-3">
+                <div class="mb-3">
                     <label for="email" class=" col-form-label text-start">{{ 'メールアドレス' }}</label>
 
                     <input v-model="inputs.email" name="email"

@@ -3,7 +3,7 @@
         <div class="card shadow border-0 w-100 p-3 mb-3 bg-white">
             <div class="card-body">
 
-                <div class="card border-light bg-white  mb-5">
+                <div class="card border-0 bg-white  mb-5">
                     <div class="card-body">
                         <h5 class="card-title fw-bold  text-center mb-3">入力内容の確認</h5>
                         <p class="bg-light p-3">

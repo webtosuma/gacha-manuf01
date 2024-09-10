@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\UserPrize;
 use App\Models\UserAddress;
 use App\Models\PointHistory;
@@ -22,8 +23,7 @@ use App\Models\Prize;
 class ShippedAppliController extends Controller
 {
     /** 発送ポイント */
-    public function shippedPoint(){ return 100; }
-
+    public function shippedPoint(){ return 300; }
 
 
 
@@ -35,6 +35,8 @@ class ShippedAppliController extends Controller
      */
     public function index(Request $request)
     {
+
+
         $user = Auth::user();
         $id_array = $request->user_prize_ids;//発送するユーザー商品ID
 
@@ -46,6 +48,9 @@ class ShippedAppliController extends Controller
             return redirect()->route('user_prize')
             ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
         }
+
+
+
 
         # 発送するユーザー商品を取得/データチェック
         $user_prizes = self::FindUserPrizes( $id_array );
@@ -78,7 +83,7 @@ class ShippedAppliController extends Controller
         $id_array = $request->user_prize_ids;//発送するユーザー商品ID
         $default_address_id = $request->user_address_id;//ユーザーアドレスID
         $default_address = (bool) $request->default_address;//選択のアドレスをデフォルトにする
-        // dd($request->all());
+
 
         # 発送ポイント
         $shipped_point = self::shippedPoint();
@@ -110,7 +115,6 @@ class ShippedAppliController extends Controller
             $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
         }
 
-
         return view('shipped.appli.confirm',compact(
             'shipped_point', 'user_address','user_prizes', 'shipped_prizes'
         ) );
@@ -141,10 +145,10 @@ class ShippedAppliController extends Controller
             ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
         }
 
+
         # 発送するユーザー商品を取得/データチェック
         $user_prizes = self::FindUserPrizes( $id_array );
         if( !$user_prizes->count() ){ return \App::abort(404); }//データがないとき
-
 
         // dd($user_prizes);
         DB::beginTransaction();
@@ -186,7 +190,6 @@ class ShippedAppliController extends Controller
 
         }
 
-
         # ユーザーへのメール送信
         self::SendEmail($user_shipped);
 
@@ -213,9 +216,6 @@ class ShippedAppliController extends Controller
 
 
 
-
-
-
     /** ユーザーへのメール送信 */
     public function SendEmail($user_shipped)
     {
@@ -233,12 +233,28 @@ class ShippedAppliController extends Controller
         # 変数の保存
         $inputs = compact('user','user_shipped','shipped_prizes');
 
-        // return view('emails.user_shipped_send',$inputs);
+        # ユーザー宛
         Mail::to( $user->email ) //宛先
         ->send(new \App\Mail\SendHtmlMailMailable([
             'inputs'  => $inputs, //入力変数
-            'view'    => 'emails.user_shipped_appli' , //テンプレート
+            'view'    => 'emails.user_shipped.appli' , //テンプレート
             'subject' => '商品の発送申請を受け付けました', //件名
         ]) );
+
+
+        # サイト管理者へメール送信
+        $admins = Admin::where('get_mail',1)->get();// メール受取り設定の管理者ユーザーの取得
+        foreach ($admins as $admin) {
+
+            Mail::to( $admin->email ) //宛先
+            ->send(new \App\Mail\SendHtmlMailMailable([
+                'inputs'  => $inputs, //入力変数
+                'view'    => 'emails.user_shipped.admin_appli' , //テンプレート
+                'subject' => '商品の発送申請を受け付けました', //件名
+            ]) );
+        }
+
+
+
     }
 }

@@ -37,7 +37,7 @@ class SendMailController extends Controller
             //     Mail::to( $user->email ) //宛先
             //     ->send(new \App\Mail\SendHtmlMailMailable([
             //         'inputs'  => $inputs, //入力変数
-            //         'view'    => 'emails.payment_comp' , //テンプレート
+            //         'view'    => 'emails.payment_comp.user' , //テンプレート
             //         'subject' => $point_sail->value.'ptのご購入、ありがとうございます。', //件名
             //     ]) );
 
@@ -49,7 +49,7 @@ class SendMailController extends Controller
             Mail::to( $request->email ) //宛先
             ->send(new \App\Mail\SendHtmlMailMailable([
                 'inputs'  => $inputs, //入力変数
-                'view'    => 'emails.admin_payment_comp' , //テンプレート
+                'view'    => 'emails.payment_comp.admin' , //テンプレート
                 'subject' => $subject , //件名
             ]) );
         }
@@ -72,7 +72,7 @@ class SendMailController extends Controller
                 Mail::to( $request->email ) //宛先
                 ->send(new \App\Mail\SendHtmlMailMailable([
                     'inputs' => $request->all() , //入力変数
-                    'view' => 'emails.contact' , //テンプレート
+                    'view' => 'emails.contact.user' , //テンプレート
                     'subject' => 'お問い合わせを受け付けました' , //件名
                 ]) );
 
@@ -88,7 +88,7 @@ class SendMailController extends Controller
                     Mail::to( $admin->email ) //宛先
                     ->send(new \App\Mail\SendAdminMailable([
                         'inputs' => $request->all() , //入力変数
-                        'view'   => 'emails.admin_contact' , //テンプレート
+                        'view'   => 'emails.contact.admin' , //テンプレート
                         'subject'=> 'お客様よりお問い合わせを受け付けました' , //件名
                     ]) );
                 }
@@ -162,7 +162,7 @@ class SendMailController extends Controller
             Mail::to( $request->email ) //宛先
             ->send(new \App\Mail\SendHtmlMailMailable([
                 'inputs' => compact('verification_code') , //入力変数
-                'view' => 'emails.user_register01_verification' , //テンプレート
+                'view' => 'emails.user_register.01_verification' , //テンプレート
                 'subject' => '会員登録認証コード'.$verification_code , //件名
             ]) );
 
@@ -187,7 +187,7 @@ class SendMailController extends Controller
                 Mail::to( $user->email ) //宛先
                 ->send(new \App\Mail\SendHtmlMailMailable([
                     'inputs' => null , //入力変数
-                    'view' => 'emails.worker_register02_completion' , //テンプレート
+                    'view' => 'emails.user_register.02_completion' , //テンプレート
                     'subject' => '会員登録が完了いたしました。' , //件名
                 ]) );
 
@@ -201,66 +201,18 @@ class SendMailController extends Controller
                 $inputs = ['user'=>$user];
 
                 # メールの送信
-                // foreach ($admins as $admin) {
-
-                //     Mail::to( $admin->email ) //宛先
-                //     ->send(new \App\Mail\SendHtmlMailMailable([
-                //         'inputs' => $inputs , //入力変数
-                //         'view'   => 'emails.admin_user_auth_register' , //テンプレート
-                //         'subject'=> '会員登録を受け付けました。' , //件名
-                //     ]) );
-                // }
+                foreach ($admins as $admin) {
+                    Mail::to( $admin->email ) //宛先
+                    ->send(new \App\Mail\SendHtmlMailMailable([
+                        'inputs' => $inputs , //入力変数
+                        'view'   => 'emails.user_register.admin_comp' , //テンプレート
+                        'subject'=> '会員登録を受け付けました。' , //件名
+                    ]) );
+                }
 
             //
             # テンプレートの表示
             // return view('emails.admin_worker_auth_register', $inputs );
-        }
-
-
-
-
-        /**
-         * メール認証
-         *
-         * @param \Illuminate\Http\Request $request
-         * @return String $verification_code
-        */
-        public static function SendVerifEmail( $request )
-        {
-            # 認証番号が生成済みであれば、処理を終了
-            if( $request->created_verification_code ){ return $request->created_verification_code; }
-
-            # 認証番号の生成
-            $verification_code = sprintf('%06d', mt_rand(0, 999999) );
-
-            # 認証番号メールの送信
-            Mail::to( $request->email ) //宛先
-            ->send(new \App\Mail\SendHtmlMailMailable([
-                'inputs' => compact('verification_code') , //入力変数
-                'view' => 'emails.worker_register01_verification' , //テンプレート
-                'subject' => '会員登録認証コード'.$verification_code , //件名
-            ]) );
-
-            # 認証コードを返す
-            return $verification_code;
-        }
-
-
-
-        /**
-         * メールアドレス変更
-         *
-         * @param \Illuminate\Http\Request $request
-         * @return Void
-        */
-        public static function UserUpdateEmail( $request )
-        {
-            Mail::to( $request->email ) //宛先
-            ->send(new \App\Mail\SendMailMailable([
-                'inputs' => $request , //入力変数
-                'view' => 'emails.reset_email02_verification' , //テンプレート
-                'subject' => '【'.env('APP_NAME').'】メールアドレス変更が完了いたしました' , //件名
-            ]) );
         }
 
 
@@ -283,7 +235,7 @@ class SendMailController extends Controller
             Mail::to( $request->email ) //宛先
             ->send(new \App\Mail\SendMailMailable([
                 'inputs' => compact('verification_code') , //入力変数
-                'view' => 'emails.reset_pass01_verification' , //テンプレート
+                'view' => 'emails.reset_pass.01_verification' , //テンプレート
                 'subject' => 'パスワード変更'.$verification_code , //件名
             ]) );
 
@@ -303,7 +255,7 @@ class SendMailController extends Controller
             Mail::to( $request->email ) //宛先
             ->send(new \App\Mail\SendMailMailable([
                 'inputs' => $request , //入力変数
-                'view' => 'emails.reset_pass02_completion' , //テンプレート
+                'view' => 'emails.reset_pass.02_completion' , //テンプレート
                 'subject' => '【'.env('APP_NAME').'】パスワード変更が完了いたしました' , //件名
             ]) );
         }
@@ -324,7 +276,7 @@ class SendMailController extends Controller
                 Mail::to( $inputs['email'] ) //宛先
                 ->send(new \App\Mail\SendHtmlMailMailable([
                     'inputs' => $inputs , //入力変数
-                    'view' => 'emails.user_destroy' , //テンプレート
+                    'view' => 'emails.user_destroy.user' , //テンプレート
                     'subject' => '退会処理が完了しました。' , //件名
                 ]) );
 
@@ -340,7 +292,7 @@ class SendMailController extends Controller
                     Mail::to( $admin->email ) //宛先
                     ->send(new \App\Mail\SendHtmlMailMailable([
                         'inputs' => $inputs , //入力変数
-                        'view'   => 'emails.admin_user_destroy' , //テンプレート
+                        'view'   => 'emails.user_destroy.admin' , //テンプレート
                         'subject'=> '退会を受け付けました。' , //件名
                     ]) );
                 }

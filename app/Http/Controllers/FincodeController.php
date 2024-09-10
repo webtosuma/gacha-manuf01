@@ -223,6 +223,9 @@ class FincodeController extends Controller
         {
             $bool = $this->handleCheckoutSessionCompleted($request);
 
+            // 二重送信防止
+            $request->session()->regenerateToken();
+
             return $bool
             ? redirect()->route('point_sail.comp', $stripe_id )
             : \App::abort(404);

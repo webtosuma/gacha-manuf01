@@ -133,7 +133,7 @@ class AdminShippedWaitingController extends Controller
         Mail::to( $user->email ) //宛先
         ->send(new \App\Mail\SendHtmlMailMailable([
             'inputs'  => $inputs, //入力変数
-            'view'    => 'emails.user_shipped_send' , //テンプレート
+            'view'    => 'emails.user_shipped.send' , //テンプレート
             'subject' => 'ご注文の商品が発送されました', //件名
         ]) );
     }
