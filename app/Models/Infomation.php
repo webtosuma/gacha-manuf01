@@ -26,9 +26,9 @@ class Infomation extends Model
     ];
 
     /** Carbonオブジェクトとして利用 */
-    protected $dates = [
-        'published_at',//公開設定(利用しない->非公開*消さない)
-        'send_email_at',//メール送信日時
+    protected $casts = [
+        'published_at'  => 'datetime',//公開設定(利用しない->非公開*消さない)
+        'send_email_at' => 'datetime',//メール送信日時
     ];
 
 

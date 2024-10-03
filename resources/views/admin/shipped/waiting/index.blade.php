@@ -71,7 +71,7 @@ $active_key = 'shipped';
                 @if ($paginate_shippeds->count())
                 <thead>
                     <tr class="bg-white">
-                        <th scope="col">商品コード</th>
+                        <th scope="col">発送コード</th>
                         <th scope="col">宛名</th>
                         <th scope="col">都道府県</th>
                         <th scope="col">商品数</th>

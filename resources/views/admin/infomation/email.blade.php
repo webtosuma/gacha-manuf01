@@ -42,13 +42,13 @@ $active_submenu = true;
 
         <div class="row mx-0 mt-3 g-3 gy-5">
             <!--flex-c2-->
-            <div class="col bg-white bg_gacha rounded-3">
+            <div class="col rounded-3">
 
                 <!--プレビュー-->
                 <div class="mx-auto">
                     <h5 class="text-center">プレビュー</h5>
 
-                    <div class="card p-3">
+                    <div class="card p-3 bg-white">
                         @include('emails.infomation.body')
                     </div>
                 </div>
