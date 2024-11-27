@@ -92,7 +92,7 @@
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            {{-- <a href="{{ route('settings.withdraw') }}"
+            <a href="{{ route('settings.withdraw') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >
 
@@ -105,7 +105,7 @@
 
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a> --}}
+            </a>
 
         </div>
     </div>

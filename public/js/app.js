@@ -13444,7 +13444,7 @@ var render = function render() {
     staticClass: "bi bi-caret-up-fill"
   }) : _vm._e(), _vm._v(" "), _vm.inputs["order_count"] != "desc" ? _c("i", {
     staticClass: "bi bi-caret-down-fill"
-  }) : _vm._e()])]), _vm._v(" "), _vm.edit ? _c("th", [_vm._v(_vm._s( /*削除*/))]) : _vm._e()])]), _vm._v(" "), _c("tbody", _vm._l(_vm.stores, function (store, key) {
+  }) : _vm._e()])]), _vm._v(" "), _vm.edit ? _c("th") : _vm._e()])]), _vm._v(" "), _c("tbody", _vm._l(_vm.stores, function (store, key) {
     return _c("tr", {
       key: key
     }, [_c("td", {
@@ -14487,7 +14487,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card-body"
   }, [_c("div", {
-    staticClass: "row mb-3"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "col-form-label text-start",
     attrs: {
@@ -14523,7 +14523,7 @@ var render = function render() {
   }), _vm._v(" "), _vm.errors.name ? _c("div", {
     staticClass: "text-danger"
   }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "row mb-3"
+    staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "col-form-label text-start",
     attrs: {
@@ -14944,7 +14944,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card-body"
   }, [_c("div", {
-    staticClass: "card border-light bg-white mb-5"
+    staticClass: "card border-0 bg-white mb-5"
   }, [_c("div", {
     staticClass: "card-body"
   }, [_c("h5", {

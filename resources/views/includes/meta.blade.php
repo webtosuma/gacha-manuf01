@@ -35,7 +35,6 @@
     <meta property="og:type"        content="website">
 
     <meta name="twitter:card" content="summary" />
-    {{-- <meta name="twitter:site" content="@CardFesta7627" /> --}}
     <meta name="twitter:title" content="{{ $meta_title }}" />
     <meta name="twitter:description" content="{{ $meta_description }}" />
     <meta name="twitter:image" content="{{ $meta_image }}" />

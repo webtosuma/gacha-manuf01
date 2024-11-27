@@ -255,6 +255,15 @@
                 </div>
             </div>
         </div>
+        <p class="d-block">
+            <h6 class="fw-bold ">クレジットカード決済のセキュリティ対策について</h6>
+            当サービスでは、お客様の安全な取引のために <strong class="text-info">3Dセキュア2.0認証</strong> を導入しております。<br>
+            3Dセキュア認証が設定されていないカードをご利用の場合、<strong class="text-info"> 決済が完了しない</strong>ことがございます。<br>
+            お手持ちのクレジットカードの3Dセキュア設定が有効であることをご確認ください。<br>
+            <br>
+            <h6 class="fw-bold ">3Dセキュア認証が設定されていない場合</h6>
+            詳細についてはお使いのカード会社のサポート窓口にお問い合わせいただき、設定を行ってから再度ご利用いただけますようお願い申し上げます。
+        </p>
 
 
         {{-- <section class="bg-whit p-4 border-0 shadow my-5 mx-auto" style="color:red;">

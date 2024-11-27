@@ -34,24 +34,27 @@
             <!-- PLAY情報 -->
             <h2 class="p- mb-3 fs-6">
                 <div class="rounded-3 p-3 text-light" style="background: rgb(0, 0, 0, .7);">
+                    <div  data-aos="fade-in">
 
-                    <div class="mb-2" style="font-size:10px;">
-                        <div class="">{{$user_gacha_history->created_at->format('Y/m/d H:i')}}</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="row align-items-center g-2">
-
-                            <div class="col">
-                                <div class="fs-">{{ $user->name }} さん</div>
-                            </div>
-
-
+                        <div class="mb-2" style="font-size:10px;">
+                            <div class="">{{$user_gacha_history->created_at->format('Y/m/d H:i')}}</div>
                         </div>
-                    </div>
 
-                    <div class="mb-3" style="font-size:.8rem;">
-                        <div class="fs-5">{{$page_title}}</div>
+                        <div class="mb-3">
+                            <div class="row align-items-center g-2">
+
+                                <div class="col">
+                                    <div class="fs-">{{ $user->name }} さん</div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3" style="font-size:.8rem;">
+                            <div class="fs-5">{{$page_title}}</div>
+                        </div>
+
                     </div>
                 </div>
             </h2>
@@ -59,12 +62,15 @@
             <!--商品一覧-->
 
             <ul class="row justify-content-center align-items-center ps-0 g-2 gy-4 mb-4"
-            style="list-style:none;">
+            style="list-style:none; min-height:50vh;">
 
                 @forelse ($user_prizes as $user_prize)
                 <li  class="{{ $user_prizes->count()==1? 'col-6' : 'col-3' }}">
                     <div class="d-flex align-items-center justify-content-center h-100">
-                        <div class="w-100">
+                        <div class="w-100"
+                        data-aos="zoom-in"
+                        >
+
 
 
                             <div class="position-relative">

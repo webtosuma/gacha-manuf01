@@ -28,7 +28,7 @@ class AdminInfomationRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'        => ['required','max:140',],
+            'title'        => ['required',],
             'body'         => ['required',],
             'image'        => ['file','max:10000','mimes:jpeg,png,jpg'],
             'is_slide'     => ['required',],
@@ -52,4 +52,23 @@ class AdminInfomationRequest extends FormRequest
             'published_at' => '公開日時',
         ];
     }
+
+
+
+    /**
+     * カスタムバリデーションの追加
+    */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            # フォームから受け取ったエンコードされた 'title' をデコード
+            $decode = urldecode( $this->input('title') );
+
+            # デコード後の 'title' が140文字を超える場合はエラーを追加
+            if (mb_strlen($decode) > 140) {
+                $validator->errors()->add('title', '題名は140文字以内でなければなりません。');
+            }
+        });
+    }
+
 }

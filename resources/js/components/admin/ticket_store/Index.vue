@@ -114,7 +114,7 @@
                             <i v-if="inputs['order_count']!='desc'"  class="bi bi-caret-down-fill"></i>
                         </a></th>
 
-                        <th v-if="edit">{{/*削除*/}}</th>
+                        <th v-if="edit"><!--*削除*--></th>
                     </tr>
                 </thead>
                 <tbody>
