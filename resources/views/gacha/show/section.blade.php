@@ -1,6 +1,9 @@
 {{-- 表示：登録カード数が0いじょうのとき --}}
 @if ( $discription->g_prizes->count() || $discription->image )
-    <section class="py-5 col-12">
+    <section class="py-5 col-12"
+    style="margin-bottom:20rem;"
+    data-aos="fade-up"
+    >
         <div class="container overflow-auto">
 
 

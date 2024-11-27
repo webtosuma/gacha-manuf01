@@ -19,7 +19,9 @@
                 <div class="d-flex align-items-center justify-content-center h-100">
 
 
-                    <label class="w-100">
+                    <label class="w-100"
+                    data-aos="zoom-in"
+                    >
 
                         <!--商品ランク表示-->
                         <!-- <div class="text-center">
@@ -60,34 +62,40 @@
 
 
         <div class="rounded-3 p-3" style="background: rgb(0, 0, 0, .7);">
-            <div class="d-flex justify-content-between align-items-start text-white">
-                <div class="form-check mb-">
-                    <input v-model="allCheck" @change="changeAll()"
-                    class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        全て選択
-                    </label>
+            <div data-aos="fade-in">
+
+
+                <div class="d-flex justify-content-between align-items-start text-white">
+                    <div class="form-check mb-">
+                        <input v-model="allCheck" @change="changeAll()"
+                        class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            全て選択
+                        </label>
+                    </div>
+
+                    <div class="form-check mb-">
+                        <span class="fs-1 fw-bold">
+                            <number-comma-component :number="totalPoint" />
+                        </span>pt
+                    </div>
+                </div>
+                <p class="text-white form-text m-0 mb-3">
+                    *選択されなかった商品は、「取得した商品一覧」に移動します。
+                </p>
+                <div class="col-md-8 mx-auto">
+                    <button type="button"
+                    data-bs-toggle="modal" data-bs-target="#exchangeModal"
+                    class="btn btn-warning rounded-pill w-100" :disabled="disabled"
+                    >選択した商品をポイント交換する</button>
+                </div>
+                <div class="col-md-8 mx-auto mt-2">
+                    <a :href="r_gacha_category"
+                    class="btn text-danger rounded-pill w-100" :disabled="disabled"
+                    >SKIP</a>
                 </div>
 
-                <div class="form-check mb-">
-                    <span class="fs-1 fw-bold">
-                        <number-comma-component :number="totalPoint" />
-                    </span>pt
-                </div>
-            </div>
-            <p class="text-white form-text m-0 mb-3">
-                *選択されなかった商品は、「取得した商品一覧」に移動します。
-            </p>
-            <div class="col-md-8 mx-auto">
-                <button type="button"
-                data-bs-toggle="modal" data-bs-target="#exchangeModal"
-                class="btn btn-warning rounded-pill w-100" :disabled="disabled"
-                >選択した商品をポイント交換する</button>
-            </div>
-            <div class="col-md-8 mx-auto mt-2">
-                <a :href="r_gacha_category"
-                class="btn text-danger rounded-pill w-100" :disabled="disabled"
-                >SKIP</a>
+
             </div>
         </div>
 

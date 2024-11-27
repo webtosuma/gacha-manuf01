@@ -109,6 +109,7 @@
 
 @section('content')
 
+
     <section class="bg-info" style="height:4.2rem;"></section>
 
 
@@ -144,7 +145,6 @@
         </div>
     </section> --}}
 
-
     <section class="overflow-hidden bg-info" style="background:rgb(0, 0, 0,.0);">
 
         <!-- PC -->
@@ -156,8 +156,8 @@
             @include('gacha.section.common.splide')
         </div>
 
-
     </section>
+
 
 
     <!--カルーセル-->
@@ -174,7 +174,9 @@
 
 
             <!--card-->
-            <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 {{ $card_size=='sm'? 'gy-4':'gy-5'}}">
+            <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 {{ $card_size=='sm'? 'gy-4':'gy-5'}}"
+            data-aos="fade-up"
+            >
 
 
                 <!-- countdown gacha card -->

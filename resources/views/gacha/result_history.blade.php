@@ -59,8 +59,8 @@
                 </div>
             </h2>
 
-            <!--商品一覧-->
 
+            <!--商品一覧-->
             <ul class="row justify-content-center align-items-center ps-0 g-2 gy-4 mb-4"
             style="list-style:none; min-height:50vh;">
 
@@ -128,7 +128,10 @@
             </ul>
 
 
-            <div class="row mb-3 align-items-center">
+            <!--操作ボタン-->
+            <div class="row mb-3 align-items-center"
+            data-aos="fade-in"
+            >
                 <div class="col">
                     @if($prev_gacha_history)
                         <a href="{{route('gacha.result_history',$prev_gacha_history->key)}}"

@@ -34,6 +34,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
 
+    <!----- animation ----->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
     <style>
         a{ text-decoration: none; }
         th,td{ background-color: #fff !important; }
@@ -106,8 +109,18 @@
 
 
     <!-- Scripts -->
-
     @include('includes.appjs')
+
+    <!----- animation ----->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            delay: 100,/*発火までの秒数 (ms)*/
+            duration: 1200,/*アニメーション時間 (ms)*/
+            once: false,/*発火を1回のみにする*/
+            placement:"top-top"/*発火位置:画面中央*/
+        });
+    </script>
 
     <script src="{{ asset('js/animation.js') }}"></script>
 

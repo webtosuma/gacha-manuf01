@@ -15867,7 +15867,10 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "d-flex align-items-center justify-content-center h-100"
     }, [_c("label", {
-      staticClass: "w-100"
+      staticClass: "w-100",
+      attrs: {
+        "data-aos": "zoom-in"
+      }
     }, [_c("div", {
       staticClass: "position-relative"
     }, [_c("div", {
@@ -15933,6 +15936,10 @@ var render = function render() {
       background: "rgb(0, 0, 0, .7)"
     }
   }, [_c("div", {
+    attrs: {
+      "data-aos": "fade-in"
+    }
+  }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-start text-white"
   }, [_c("div", {
     staticClass: "form-check mb-"
@@ -15977,7 +15984,7 @@ var render = function render() {
     attrs: {
       "for": "flexCheckDefault"
     }
-  }, [_vm._v("\n                    全て選択\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                        全て選択\n                    ")])]), _vm._v(" "), _c("div", {
     staticClass: "form-check mb-"
   }, [_c("span", {
     staticClass: "fs-1 fw-bold"
@@ -15985,9 +15992,9 @@ var render = function render() {
     attrs: {
       number: _vm.totalPoint
     }
-  })], 1), _vm._v("pt\n            ")])]), _vm._v(" "), _c("p", {
+  })], 1), _vm._v("pt\n                ")])]), _vm._v(" "), _c("p", {
     staticClass: "text-white form-text m-0 mb-3"
-  }, [_vm._v("\n            *選択されなかった商品は、「取得した商品一覧」に移動します。\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                *選択されなかった商品は、「取得した商品一覧」に移動します。\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 mx-auto"
   }, [_c("button", {
     staticClass: "btn btn-warning rounded-pill w-100",
@@ -16005,7 +16012,7 @@ var render = function render() {
       href: _vm.r_gacha_category,
       disabled: _vm.disabled
     }
-  }, [_vm._v("SKIP")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("SKIP")])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "exchangeModal",
