@@ -93,7 +93,7 @@ class StripeController extends Controller
             'payment_method_types' => [
                 'card',
                 // 'konbini',
-                'customer_balance'
+                // 'customer_balance'
             ],
 
             'payment_method_options' => [

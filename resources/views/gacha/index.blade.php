@@ -110,7 +110,9 @@
 @section('content')
 
 
-    <section class="bg-info" style="height:4.2rem;"></section>
+    <section class="bg-info" style="height:4.2rem;"
+    data-aos="fade-in"
+    ></section>
 
 
     <!--TOP 3連メニュー-->
@@ -145,7 +147,9 @@
         </div>
     </section> --}}
 
-    <section class="overflow-hidden bg-info" style="background:rgb(0, 0, 0,.0);">
+    <section class="overflow-hidden bg-info" style="background:rgb(0, 0, 0,.0);"
+    data-aos="fade-in"
+    >
 
         <!-- PC -->
         <div id="splide_pc" class="splide d-none d-md-block" aria-label="Splideの基本的なHTML">
@@ -175,7 +179,7 @@
 
             <!--card-->
             <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 {{ $card_size=='sm'? 'gy-4':'gy-5'}}"
-            data-aos="fade-up"
+            data-aos="zoom-out"
             >
 
 

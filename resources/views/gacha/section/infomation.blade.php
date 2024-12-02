@@ -1,4 +1,6 @@
-<section class="bg-info mb-"  style="background:rgb(0, 0, 0, .5;">
+<section class="bg-info mb-"  style="background:rgb(0, 0, 0, .5;"
+data-aos="zoom-out"
+>
     <div class="container py-5">
         <div class="col-md-8 mx-auto">
             <div class="list-group list-group-flush shadow- rounded-0">

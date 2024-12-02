@@ -2,7 +2,7 @@
 @if ( $discription->g_prizes->count() || $discription->image )
     <section class="py-5 col-12"
     style="margin-bottom:20rem;"
-    data-aos="fade-up"
+    data-aos="zoom-out"
     >
         <div class="container overflow-auto">
 

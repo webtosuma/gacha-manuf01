@@ -1,6 +1,6 @@
 <!--トップー-->
 <section class="pt-3 pb-md-5"
-data-aos="fade-up"
+data-aos="zoom-out"
 >
     <div class="container mx-auto px-3" style="max-width:900px;">
 

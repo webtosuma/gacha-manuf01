@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
 /*
 |--------------------------------------------------------------------------
 | 管理者(Administartor) - 認証
@@ -33,15 +34,15 @@ class AdminAuthController extends Controller
                 return redirect()->route('admin.home');
 
             }
+
+
             # ログインページの表示
-            else{
+            $admin    = Admin::first();
+            $email    = config('app.debug') ? $admin->email : '';
+            $password = config('app.debug') ? 'password' : '';
 
-                $email    = config('app.debug') ? 'contact@fobees.jp' : '';
-                $password = config('app.debug') ? 'password' : '';
 
-                return view('admin_auth.login_form',compact('email','password'));
-
-            }
+            return view('admin_auth.login_form',compact('email','password'));
         }
 
         /**

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
 
 class LoginController extends Controller
 {
@@ -47,7 +48,14 @@ class LoginController extends Controller
             return redirect()->route('home');
         }
 
-        return view('auth.login');
+
+        # ログインページの表示
+        $admin    = Admin::first();
+        $email    = config('app.debug') ? $admin->email : '';
+        $password = config('app.debug') ? 'password' : '';
+
+
+        return view('auth.login',compact('email','password'));
     }
 
 

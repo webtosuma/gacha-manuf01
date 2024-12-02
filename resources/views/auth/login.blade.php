@@ -5,12 +5,7 @@
 @section('title','ログイン')
 
 <!----- meta ----->
-@section('meta')
-@php
-$email    = config('app.debug') ? 'contact@fobees.jp' : '';
-$password = config('app.debug') ? 'password' : '';
-@endphp
-@endsection
+@section('meta') @endsection
 
 <!----- style ----->
 @section('style') @endsection

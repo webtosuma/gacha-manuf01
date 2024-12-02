@@ -1,4 +1,6 @@
-<section class="bg- py-3">
+<section class="bg- py-3 mb-4"
+data-aos="fade-in"
+>
 
     <!--カテゴリー-->
     <div class="container px-md-3 mx-auto overflow-auto">
