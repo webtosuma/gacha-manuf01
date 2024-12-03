@@ -75,7 +75,7 @@ class LoginController extends Controller
         Auth::attempt( $request->only('email','password'), $remember );
 
         # ログイン前に訪れたページ
-        $before_admin_url = $request->session()->get( 'before_admin_url') ;
+        $before_url = $request->session()->get( 'before_url') ;
 
         # ログイン処理
         if( Auth::check() ){
@@ -85,9 +85,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             # ログイン前に訪れたページがある場合、前のページに戻る
-            if($before_admin_url)
+            if($before_url)
             {
-                return redirect( $before_admin_url )
+                return redirect( $before_url )
                 ->with('alert-primary','ログインしました。');
             }
 

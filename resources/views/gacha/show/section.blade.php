@@ -2,9 +2,10 @@
 @if ( $discription->g_prizes->count() || $discription->image )
     <section class="py-5 col-12"
     style="margin-bottom:20rem;"
-    data-aos="zoom-out"
     >
-        <div class="container overflow-auto">
+        <div class="container overflow-auto"
+        data-aos="zoom-out"
+        >
 
 
             <!-- Rankラベル(広告がある時は非表示) -->

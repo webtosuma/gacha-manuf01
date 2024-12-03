@@ -174,12 +174,12 @@
 
     <!--ガチャ-->
     <section class="py-3 pb-5">
-        <div class="container" style="min-height:50vh;">
+        <div class="container overflow-hidden" style="min-height:50vh;">
 
 
             <!--card-->
             <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 {{ $card_size=='sm'? 'gy-4':'gy-5'}}"
-            data-aos="zoom-out"
+            data-aos="zoom-in"
             >
 
 

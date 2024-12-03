@@ -1,5 +1,5 @@
 <section class="bg-info mb-"  style="background:rgb(0, 0, 0, .5;"
-data-aos="zoom-out"
+data-aos="fade-in"
 >
     <div class="container py-5">
         <div class="col-md-8 mx-auto">

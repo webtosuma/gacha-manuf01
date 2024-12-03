@@ -1,10 +1,12 @@
 <!--トップー-->
-<section class="pt-3 pb-md-5"
-data-aos="zoom-out"
->
+<section class="pt-3 pb-md-5
+overflow-hidden
+">
     <div class="container mx-auto px-3" style="max-width:900px;">
 
-        <div class="overflow-hidden rounded-4">
+        <div class="overflow-hidden rounded-4"
+        data-aos="zoom-out"
+        >
 
             @include('gacha.common.top_image')
 
@@ -24,13 +26,15 @@ data-aos="zoom-out"
     </div>
 </section>
 <!--各賞-->
-<div class="row justify-content-center mx-auto" style="max-width:600px; margin-top:50vh;">
+<section class="overflow-hidden">
+    <div class="row justify-content-center mx-auto" style="max-width:600px; margin-top:50vh;">
 
-    @foreach ($gacha->discriptions as $discription)
-
-
-        @include('gacha.show.section')
+        @foreach ($gacha->discriptions as $discription)
 
 
-    @endforeach
-</div>
+            @include('gacha.show.section')
+
+
+        @endforeach
+    </div>
+</section>
