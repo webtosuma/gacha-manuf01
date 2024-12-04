@@ -7,8 +7,12 @@ $bool = $new_start_at < $published_at;
 @endphp
 
 @if($bool)
-    <div class="d-inline-block bg-warning border border-warning border-
+    {{-- <div class="d-inline-block bg-warning border border-warning border-
      p-0 px-2 text-white fw-bold"
     style="transform: skew(-15deg); font-size:.8rem;"
-    >NEW</div>
+    >NEW</div> --}}
+
+    <div class="d-inline-block"  style="height:1.6rem;">
+        <img src="{{  asset( 'storage/site/image/new_icon/5.png' ) }}" class="h-100" alt="">
+    </div>
 @endif

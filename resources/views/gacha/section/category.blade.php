@@ -17,7 +17,7 @@ data-aos="fade-in"
 
             @foreach ($categories as $category)
                 @php
-                $style_class = $category_code == $category->code_name ? $sc.' disabled bg-primary' : $sc;
+                $style_class = $category_code == $category->code_name ? $sc.' disabled bg-primary text-white' : $sc;
                 $params = ['category_code'=>$category->code_name, 'search_key'=>$search_key, 'card_size'=>$card_size];
                 @endphp
 

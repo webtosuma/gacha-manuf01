@@ -524,7 +524,7 @@ class GachaController extends Controller
 
 
         ## 表示できるガチャ一覧
-        $category_code = $gacha->category->code_name;
+        $category_code =  $gacha->category->code_name ;
         $gachas = self::getPublishedGachas( $category_code, null );
 
 

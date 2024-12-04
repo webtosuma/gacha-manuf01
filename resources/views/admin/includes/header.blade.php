@@ -1,4 +1,7 @@
-<header class="bg-white border-bottom border-dark border-3">
+<header class="bg-white border-bottom border-info border-bottom border-3">
+    @if ( config('app.debug') )
+        <h6 class="text-danger text-center m-0 bg-light">TEST MODE</h6>
+    @endif
 
     <nav class="navbar navbar-expand-lg p-0">
         <div class="container-fluid">
@@ -11,11 +14,6 @@
                     <span class="fw-bold text-dark" style="font-size:.8rem;">ダッシュボード</span>
                 </h1>
             </a>
-
-            @if ( config('app.debug') )
-                <h3 class="text-danger m-0 mt-2">TEST MODE</h3>
-            @endif
-
 
             <div class="" id="navbarNav">
                 <ul class="d-flex align-items-center ms-auto p-2 m-0" style="list-style:none;">

@@ -1,4 +1,8 @@
 <header class="position-fixed bg-white w-100" style="z-index:100;">
+    @if ( config('app.debug') )
+        <h6 class="text-danger text-center m-0 bg-light">TEST MODE</h6>
+    @endif
+
     <div class="container py- px-0">
 
         <nav class="d-flex justify-content-between align-items-center">
@@ -9,11 +13,6 @@
                     alt="{{ config('app.name') }}" class="d-brock" style="height:3.4rem;">
                 </a>
             </h1>
-
-
-            @if ( config('app.debug') )
-                <h6 class="text-danger m-0 mt-2">TEST MODE</h6>
-            @endif
 
 
             <div class="d-flex align-items-center ">

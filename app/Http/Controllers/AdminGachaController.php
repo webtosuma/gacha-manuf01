@@ -37,6 +37,7 @@ class AdminGachaController extends Controller
             ->orderByDesc('published_at')->get()
 
             : Gacha::orderBy('is_sold_out')//売り切れは下
+            ->has('category')//カテゴリーが存在するもののみ
             ->orderByDesc('published_at')->get()
         ;
 

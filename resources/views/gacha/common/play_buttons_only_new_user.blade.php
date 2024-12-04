@@ -16,13 +16,13 @@
                 label="1回ガチャる"
                 point="{{number_format($gacha->one_play_point).'pt'}}"
                 style_class="btn btn-light bg-gradient fw-bold w-100 pb-0
-                rounded-pill border-secondary border-3
+                rounded-pill shadow-sm
                 position-relative shiny overflow-hidden
                 "></u-gacha-btn>
             @else
                 <button type="submit" name="play_count" disabled
                 class="btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger
-                rounded-pill border-secondary border-3"
+                rounded-pill shadow-sm"
                 >
                     <div class="">終了</div>
                     <div class="invisible">{{number_format($gacha->one_play_point).'pt'}}</div>
@@ -36,7 +36,7 @@
     {{-- <div class="col-6">
         <button type="submit" name="play_count" disabled
         class="btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger
-        rounded-pill border-secondary border-3"
+        rounded-pill shadow-sm"
         >
             <div class="">終了</div>
             <div class="text-white invisible">{{number_format($gacha->one_play_point*10).'pt'}}</div>
