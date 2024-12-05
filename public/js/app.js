@@ -16662,7 +16662,7 @@ var render = function render() {
     return _c("button", {
       key: key,
       staticClass: "btn btn- border rounded-pill col-auto",
-      "class": _vm.inputs.category_id == category.id ? "disabled btn-primary" : "",
+      "class": _vm.inputs.category_id == category.id ? "disabled btn-primary text-white" : "",
       staticStyle: {
         opacity: "1"
       },
@@ -16714,7 +16714,7 @@ var render = function render() {
     return _c("button", {
       key: key,
       staticClass: "btn btn-sm border rounded-pill",
-      "class": _vm.inputs.order == select_order.value ? "disabled btn-primary" : "",
+      "class": _vm.inputs.order == select_order.value ? "disabled btn-primary text-white" : "",
       staticStyle: {
         opacity: "1"
       },

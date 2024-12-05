@@ -1,4 +1,4 @@
-<section class="bg-dark bg-gradient text-white p-3">
+<section class="bg-info bg-gradient text-white p-3">
     <!-- プロフィール -->
     <div class="row align-items-center mb-3">
         <div class="col">
@@ -117,36 +117,37 @@
 
 
         <!-- 所持チケット -->
-        <div class="mt-3 border-top pt-2">
-            <div  style="font-size:14px;">所持チケット：</div>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="col-auto fs-5 pe-2">
-                    <img src="{{asset('storage/site/image/ticket/success.png')}}"
-                    alt="チケット" class="d-block mx-auto"  style=" width:2rem; height:2rem; margin:.2rem 0;">
-                </div>
-                <div class="col">
-                    <div class="">
-                        <span class="fs-5 fw-bold">
-                            <number-comma-component number="{{ Auth::user()->ticket }}"></number-comma-component>
-                        </span>
-                        <span>枚</span>
+        @if( !env('NEW_TICKET_SISTEM_NOTICKET') )
+            <div class="mt-3 border-top pt-2">
+                <div  style="font-size:14px;">所持チケット：</div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="col-auto fs-5 pe-2">
+                        <img src="{{asset('storage/site/image/ticket/success.png')}}"
+                        alt="チケット" class="d-block mx-auto"  style=" width:2rem; height:2rem; margin:.2rem 0;">
+                    </div>
+                    <div class="col">
+                        <div class="">
+                            <span class="fs-5 fw-bold">
+                                <number-comma-component number="{{ Auth::user()->ticket }}"></number-comma-component>
+                            </span>
+                            <span>枚</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('ticket_store') }}"
+                        class="d-block btn py-1 btn-success text-white rounded-pill shadow w-100">
+                            <div class="d-flex gap-2 align-items-center">
+
+                                <div class="">チケット交換</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('ticket_store') }}"
-                    class="d-block btn py-1 btn-success text-white rounded-pill shadow w-100">
-                        <div class="d-flex gap-2 align-items-center">
-
-                            <div class="">チケット交換</div>
-                        </div>
-                    </a>
-                </div>
+                {{-- <a href="https://note.com/cardfesta/n/ne78f9144184a"
+                style="font-size:11px;" target="_blank"
+                ><i class="bi bi-question-circle me-2"></i>チケットについて</a> --}}
             </div>
-            <a href="https://note.com/cardfesta/n/ne78f9144184a"
-            style="font-size:11px;" target="_blank"
-            ><i class="bi bi-question-circle me-2"></i>チケットについて</a>
-        </div>
-
+        @endif
         <!-- 取得した商品 -->
         <a href="{{ route('user_prize') }}" class="d-block text-white mt-3 border-top pt-2">
             <div  style="font-size:14px;">取得した商品：</div>

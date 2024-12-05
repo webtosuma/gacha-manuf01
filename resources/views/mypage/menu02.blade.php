@@ -2,22 +2,6 @@
 <div class="bg-white border- p-3">
     <h6 class="fw-bole pb-0">メニュー</h6>
     <div class="row g-2">
-        {{-- <div class="col-3">
-            <a href="{{ route('mypage') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
-                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z"/>
-                </svg>
-                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">マイページ</div>
-            </a>
-        </div> --}}
-        {{-- <div class="col-3">
-            <a href="{{ route('ticket_store') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" >
-                <img src="{{asset('storage/site/image/ticket/dark.png')}}"
-                alt="チケット" class="d-block mx-auto"  style=" width:24px; height:24px;">
-
-                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">商品と交換</div>
-            </a>
-        </div> --}}
         <div class="col-4">
             <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-megaphone" viewBox="0 0 16 16">
@@ -59,22 +43,6 @@
             </a>
         </div>
         <div class="col-4">
-            <a href="{{ route('gacha_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stars" viewBox="0 0 16 16">
-                    <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
-                </svg>
-                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">ガチャ履歴</div>
-            </a>
-        </div>
-        <div class="col-4">
-            <a href="{{ route('point_history') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
-                <img src="{{asset('storage/site/image/icon/point.png')}}"
-                alt="ポイント" class="d-block mx-auto" style=" width:24px; height:24px;">
-                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">ポイント履歴</div>
-            </a>
-        </div>
-
-        <div class="col-4">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;" type="submit">
@@ -91,76 +59,46 @@
 </div>
 
 <!-- 履歴 -->
-{{-- <div class="bg-white border- p-3">
+<div class="bg-white border- p-3">
     <h6 class="fw-bole pb-0">履歴</h6>
-    <div class="row g-2"> --}}
-        {{-- <div class="col-3">
+    <div class="row g-2">
+        <div class="col">
             <a href="{{ route('gacha_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stars" viewBox="0 0 16 16">
                     <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
                 </svg>
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">ガチャ</div>
             </a>
-        </div> --}}
-        {{-- <div class="col-3">
+        </div>
+        <div class="col">
             <a href="{{ route('point_history') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                 <img src="{{asset('storage/site/image/icon/point.png')}}"
                 alt="ポイント" class="d-block mx-auto" style=" width:24px; height:24px;">
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">ポイント</div>
             </a>
-        </div> --}}
-        {{-- <div class="col-3">
-            <a href="{{route('ticket_history')}}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
-                <img src="{{asset('storage/site/image/ticket/dark.png')}}"
-                alt="チケット" class="d-block mx-auto" style=" width:24px; height:24px;">
+        </div>
+        @if( !env('NEW_TICKET_SISTEM_NOTICKET') )
+            <div class="col">
+                <a href="{{route('ticket_history')}}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
+                    <img src="{{asset('storage/site/image/ticket/dark.png')}}"
+                    alt="チケット" class="d-block mx-auto" style=" width:24px; height:24px;">
 
-                <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">チケット</div>
-            </a>
-        </div> --}}
-        {{-- <div class="col-3">
+                    <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">チケット</div>
+                </a>
+            </div>
+        @endif
+        <div class="col">
             <a href="{{ route('user_rank_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
                 <img src="{{asset('storage/site/image/icon/user_rank.png')}}"
                 alt="会員ランク" class="d-block mx-auto" style=" width:24px; height:24px;">
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">会員ランク</div>
             </a>
-        </div> --}}
+        </div>
 
-    {{-- </div>
-</div> --}}
-
-
-<!-- SNS -->
-<div class="bg-white border- p-3">
-    <h6 class="fw-bole pb-0">公式SNS</h6>
-    <div class="row g-2">
-        <div class="col-3">
-            <a href="https://twitter.com/CardFesta7627" class="btn rounded-3 text-dark shadow- fw-bold p-2 px-1 w-100" style="font-size:8px;" target="_blank">
-                <img src="{{asset('storage/site/image/x-logo/logo-black.png')}}"
-                alt="xロゴ" class="d-block mx-auto"  style=" width:1rem; height:1rem; margin:.4rem 0;">
-                {{-- <div class="text-secondary">タイムライン</div> --}}
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="https://note.com/cardfesta" class="btn rounded-3 text-dark shadow- fw-bold p-2 px-1 w-100" style="font-size:8px;" target="_blank">
-                <img src="{{asset('storage/site/image/note-logo/main/icon.png')}}"
-                alt="noteロゴ" class="d-block mx-auto"  style=" width:1.8rem; height:1.8rem; margin:.0rem 0;">
-                {{-- <div class="text-secondary">ブログ</div> --}}
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="https://www.instagram.com/cardfesta/" class="btn rounded-3 text-dark shadow- fw-bold p-2 px-1 w-100" style="font-size:8px;" target="_blank">
-                <i class="bi bi-instagram fs-5 "></i>
-                {{-- <div class="text-secondary">インスタグラム</div> --}}
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="https://www.tiktok.com/@cardfesta" class="btn rounded-3 text-dark shadow- fw-bold p-2 px-1 w-100" style="font-size:8px;" target="_blank">
-                <i class="bi bi-tiktok fs-5 "></i>
-                {{-- <div class="text-secondary">TikTok</div> --}}
-            </a>
-        </div>
     </div>
 </div>
+
+
 
 <!-- PWAインストールボタン -->
 <div class="px-3">

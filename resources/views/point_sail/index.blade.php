@@ -188,7 +188,7 @@
 
                     </div>
                     {{-- チケット還元 --}}
-                    @if( $point_sail->ticket > 0 )
+                    @if( !env('NEW_TICKET_SISTEM_NOTICKET') && $point_sail->ticket > 0 )
                     <div class="">
                         <div class="d-flex align-items-center gap-2">
                             <div class="col-auto">

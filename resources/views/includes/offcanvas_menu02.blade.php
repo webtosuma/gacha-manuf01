@@ -43,14 +43,17 @@ style="max-width:90vw; min-width:30vw;">
                     </div>
                 </div>
             @endif
-            <div class="list-group-item border-0 py-3">
+            {{-- <div class="list-group-item border-0 py-3">
 
                 <div class="fw-bold text-center mb-2">{{ config('app.name') }}をシェアする</div>
                 @include('includes.sns_btn')
 
-            </div>
+            </div> --}}
             <!-- フッターメニュー -->
             <div class="list-group-item py-3 border-0 d-flex flex-column gap-3">
+
+                <!--SNS Links-->
+                @include('includes.sns_links')
 
 
                 @include('includes.footer_menu')

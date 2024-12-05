@@ -7,7 +7,7 @@
                 <div class="d-flex gap-1 flex-wrap">
                     <button v-for="(category,key) in categories" :key="key"
                     @click="setActiveCategory( category.id )"
-                    :class=" inputs.category_id==category.id ? 'disabled btn-primary' : '' "
+                    :class=" inputs.category_id==category.id ? 'disabled btn-primary text-white' : '' "
                     class="btn btn- border rounded-pill col-auto" style="opacity:1;"
                     >{{ category.name }}</button>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="d-flex gap-1">
                     <button v-for="(select_order,key) in select_orders" :key="key"
                     @click="changeOrder( select_order.value )"
-                    :class=" inputs.order==select_order.value ? 'disabled btn-primary' : '' "
+                    :class=" inputs.order==select_order.value ? 'disabled btn-primary text-white' : '' "
                     class="btn btn-sm border rounded-pill"
                     style="opacity:1;"
                     >{{ select_order.lable }}</button>

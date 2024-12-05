@@ -58,7 +58,7 @@
 
 
                     {{-- チケット還元 --}}
-                    @if( $point_sail->ticket > 0 )
+                    @if( !env('NEW_TICKET_SISTEM_NOTICKET') && $point_sail->ticket > 0 )
                     <div class="badge border border-success rounded-pill fw-bold px-3 my-1">
                         <span class="text-success fw-bold">チケット</span>
                         <span class="text-success fw-bold fs-">{{ $point_sail->ticket }}</span>
