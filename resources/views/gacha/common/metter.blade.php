@@ -1,7 +1,7 @@
 <!--metter-->
 @php
 $bg_color = '';
-$bg_color = $gacha->type=='only_new_user' ? 'bg-success text-white' : $bg_color;//新機械委員限定
+$bg_color = $gacha->type=='only_new_user' ? 'bg-success-subtle' : $bg_color;//新機械委員限定
 $bg_color = isset($metter_bg_color) ? $metter_bg_color : $bg_color;
 @endphp
 <div class="card-body py-0 {{$bg_color}}">

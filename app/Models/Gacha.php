@@ -61,14 +61,20 @@ class Gacha extends Model
     public static function types()
     {
         return [
-            'nomal'        => '通常',
-            'no_custom'    => '通常（カスタムボタンなし）',
+            'nomal'        => 'カスタムボタンあり',
+            'max_custom'   => 'カスタムボタンあり(上限付き)',
+            'no_custom'    => 'カスタムボタンなし',
 
             'one_time'     => '一回限定',
             'only_oneday'  => '１日１回',
             'only_new_user'=> '新規会員限定',
         ];
     }
+
+    /** カスタムボタンの上限 */
+    public static function max_custom_count(){ return 99; }
+
+
 
     /** ガチャの表示可能時間　一覧 */
     public static function times()

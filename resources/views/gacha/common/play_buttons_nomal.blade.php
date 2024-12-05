@@ -59,7 +59,8 @@
         </form>
     </div>
 
-    @if($gacha->type=='nomal')
+
+    @if($gacha->type=='nomal'|| $gacha->type=='max_custom')
     <div class="col-12">
 
         <a href="{{ route('gacha.custom_count',$params) }}"
