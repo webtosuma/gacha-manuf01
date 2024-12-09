@@ -135,9 +135,9 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('disabled-button',
     require('./components/Items/DisabledButton.vue').default);
 
-    /* disabled ボタン ボタン内にslot */
-    // Vue.component('disabled-button-slot',
-    // require('./components/Items/DisabledButtonSlot.vue').default);
+    /* disabled(ノーマルform用)カバー ボタン */
+    Vue.component('disabled-cover-button',
+    require('./components/Items/DisabledCoverButton.vue').default);
 
 
 

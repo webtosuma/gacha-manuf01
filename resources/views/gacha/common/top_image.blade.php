@@ -39,6 +39,12 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     >SOLD OUT</div></div>
     @endif
 
+    <!-- ワンチャンス限定 -->
+    @if ($gacha->type=='one_chance')
+    <div class="position-absolute p-2 top-0 end-0 text-end w-100">
+        <img src="{{  asset( 'storage/site/image/gacha_type/one_chance.png' ) }}" style="width:30%;" alt="">
+    </div>
+    @endif
 
     <!-- 1回限定 -->
     @if ($gacha->type=='one_time')

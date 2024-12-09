@@ -154,9 +154,14 @@
             <!-- 送信ボタン -->
             <div class="form_group mb-5">
                 <div class="col-sm-8 mb-3 mx-auto">
-                    <button class="btn btn-primary btn-arrow btn-lg text-white fs-5 w-100 " type="button"
+                    <!-- <button class="btn btn-primary btn-arrow btn-lg text-white fs-5 w-100 " type="button"
                     @click="step02()"
-                    >確定</button>
+                    >確定</button> -->
+
+                    <disabled-button-component
+                    style_class="btn btn-primary btn-arrow btn-lg text-white fs-5 w-100"
+                    @btn-click="step02()"
+                    :disabled="loading" btn_text="確定" />
                 </div>
                 <div class="col-sm-8 mb-3 mx-auto">
                     <button class="btn btn-outline-secondary btn-arrow btn-lg fs-5 w-100" type="button"

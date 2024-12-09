@@ -188,13 +188,18 @@ class GachaPlayController extends Controller
         ){
             return 'この会員ランクガチャを利用することはできません。';
         }
+        # [限定ガチャ]1回or10回限定
+        else if(
+            $gacha->type=='one_chance' && $gacha->played_one_time
+        ){
+            return '現在、このガチャを利用することはできません。';
+        }
         # [限定ガチャ]１回限定ガチャ
         else if(
             $gacha->type=='one_time' && $gacha->played_one_time
         ){
             return '現在、このガチャを利用することはできません。';
         }
-
         # [限定ガチャ]一日一回限定限定ガチャ
         else if(
             $gacha->type=='only_oneday' && $gacha->played_only_oneday

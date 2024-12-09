@@ -62,9 +62,10 @@ class Gacha extends Model
     {
         return [
             'nomal'        => 'カスタムボタンあり',
-            'max_custom'   => 'カスタムボタンあり(上限付き)',
+            // 'max_custom'   => 'カスタムボタンあり(上限付き)',
             'no_custom'    => 'カスタムボタンなし',
 
+            // 'one_chance'   => '1回or10回限定',
             'one_time'     => '一回限定',
             'only_oneday'  => '１日１回',
             'only_new_user'=> '新規会員限定',

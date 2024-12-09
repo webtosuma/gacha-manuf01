@@ -14,7 +14,6 @@
 import { valueToNode } from '@babel/types';
 
     export default {
-        data() { return{ } },
         props: {
             //最初に表示する画像のパス
             // disabled: { type: Boolean, default: false, },

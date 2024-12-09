@@ -1,5 +1,11 @@
 @if($gacha->is_show_timezone)<!-- (時間帯限定)表示可能か否か -->
     @switch( $gacha->type )
+        @case('one_chance')
+            <!-- ワンチャンス限定 -->
+            @include('gacha.common.play_buttons_one_chance')
+            @break
+
+
         @case('one_time')
             <!-- 1回限定 -->
             @include('gacha.common.play_buttons_one_time')
@@ -10,6 +16,7 @@
             <!-- 一日一回限定 -->
             @include('gacha.common.play_buttons_only_oneday')
             @break
+
 
         @case('only_new_user')
             <!-- 新規会員限定 -->

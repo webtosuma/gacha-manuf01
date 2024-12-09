@@ -216,6 +216,12 @@ class GachaController extends Controller
                         $query->orderByDesc('published_at');
                         break;
 
+                    //* 1回or10回限定 */
+                    case 'one_chance':
+                        $query->where('type','one_chance');
+                        $query->orderByDesc('published_at');
+                        break;
+
                     //* 一回限定 */
                     case 'one_time':
                         $query->where('type','one_time');
@@ -315,6 +321,7 @@ class GachaController extends Controller
                 ['label'=>'高額ポイント順', 'key'=>'desc_point'],
                 ['label'=>'低額ポイント順', 'key'=>'asc_point'],
                 // ['label'=>'会員ランク限定', 'key'=>'user_rank'],
+                // ['label'=>'1回or10回限定', 'key'=>'one_chance'],
                 ['label'=>'一回限定',      'key'=>'one_time'],
                 ['label'=>'１日１回',      'key'=>'only_oneday'],
                 ['label'=>'全ての限定',    'key'=>'other_types'],

@@ -37,9 +37,14 @@
                             >キャンセル</button>
                         </div>
                         <div class="col-6">
-                            <button type="submit"
+                            {{-- <button type="submit"
                             class="btn btn-info text-white rounded-pill w-100"
-                            >ガチャる</button>
+                            >ガチャる</button> --}}
+
+                            <disabled-cover-button
+                            btn_text="ガチャる"
+                            style_class="btn btn-info text-white rounded-pill w-100"
+                            ></disabled-cover-button>
                         </div>
                     </div>
                 </form>
