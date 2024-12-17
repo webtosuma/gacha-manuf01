@@ -32,4 +32,29 @@ document.addEventListener( 'DOMContentLoaded', function() {
     splideMobile.mount();
 
 
+
+    /* gacha */
+    // 共通のクラス名で全スライダーを取得
+    const sliders = document.querySelectorAll('.splide_gacha');
+
+    // 各スライダーに対してSplideインスタンスを作成
+    sliders.forEach((slider) => {
+        console.log(slider.id);
+
+
+        new Splide( '#'+slider.id , {
+
+            type     : 'slide',
+            padding: '10vw',
+            focus  : 'center',
+            perPage : 1,
+            autoplay: true,
+
+
+        }).mount();
+
+
+    });
+
+
 } );

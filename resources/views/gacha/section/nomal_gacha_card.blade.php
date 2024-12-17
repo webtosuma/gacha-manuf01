@@ -1,25 +1,44 @@
 <!--nomal gacha card-->
 @forelse ($gachas as $gacha)
     <div class="col-12 col-md-6 col-lg-4  ">
-
-
-        <a href="{{$gacha->route}}"
-        class="card border-secondary border-0 shadow bg-white
+        <div
+        class="card border-secondary border-0 shadow bg-transparent
         text-dark text-center overflow-hidden text-decoration-none
         position-relative shiny
-        hover_anime" style="border-radius:1rem;">
+        hover_animeee" style="border-radius:1rem;">
 
             <!--image-->
-            @include('gacha.common.top_image')
+            <a href="{{$gacha->route}}" class="d-block">
+                @include('gacha.common.top_image')
+            </a>
+
+            <!-- スライダー -->
+            @if ( env('GACHA_CARD_PRIZE_SLIDE',false) )
+                <div id="{{'splide_gacha'.$gacha->id}}" class="splide_gacha splide bg-white">
+                    @include('gacha.common.splide')
+                </div>
+            @endif
 
             <!--metter-->
-            @include('gacha.common.metter')
+            <a href="{{$gacha->route}}" class="d-block text-dark bg-white">
+                @include('gacha.common.metter')
+            </a>
 
-        </a>
+            <!--play_buttons-->
+            @if ( env('GACHA_CARD_PRIZE_SLIDE',false) )
+                <div class="p-2 pt-0 bg- " style="background: rgb(0, 0, 0, .3)">
+                    @include('gacha.common.play_buttons')
+                </div>
+            @endif
+
+        </div>
 
 
-        <!--play_buttons-->
-        @include('gacha.common.play_buttons')
+        @if ( !env('GACHA_CARD_PRIZE_SLIDE',false) )
+            <!--play_buttons-->
+            @include('gacha.common.play_buttons')
+        @endif
+
 
 
     </div>
