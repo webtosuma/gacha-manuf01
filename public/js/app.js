@@ -8521,10 +8521,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&setup=true&lang=js":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8534,8 +8534,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  __name: 'FormComponent',
   props: {
     token: {
       type: String,
@@ -8558,57 +8561,50 @@ __webpack_require__.r(__webpack_exports__);
       "default": ''
     }
   },
-  data: function data() {
-    return {
-      loading: false,
-      /* 通信中 */
+  setup: function setup(__props) {
+    var props = __props;
+    var loading = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false); /* 通信中 */
+    var step_num = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(1); /* 表示中ステップ番号 */
+    var errors = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({}); /* エラー内容 length */
 
-      /* 表示中ステップ番号 */
-      step_num: 1,
-      /* 入力内容 */
-      inputs: {
-        _token: '',
-        name: '',
-        email: '',
-        tell: '',
-        body: '',
-        agree: false // プライバシーポリシー同意
+    /* 入力内容 */
+    var inputs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
+      _token: '',
+      name: '',
+      email: '',
+      tell: '',
+      body: '',
+      agree: false // プライバシーポリシー同意
 
-        // name : 'ホゲ', //氏名
-        // email: 't.sakai@tosuma.ltd', //メールアドレス(半角英数)
-        // tell : '09011112222', //電話番号(半角数字)
-        // body : 'hoge', //お問い合わせ内容
-        // agree: true, // プライバシーポリシー同意
-      },
+      // name : 'ホゲ', //氏名
+      // email: 't.sakai@tosuma.ltd', //メールアドレス(半角英数)
+      // tell : '09011112222', //電話番号(半角数字)
+      // body : 'hoge', //お問い合わせ内容
+      // agree: true, // プライバシーポリシー同意
+    });
 
-      /* エラー内容 length */
-      errors: {}
-    };
-  },
-  mounted: function mounted() {
-    //tokenのセット
-    this.inputs._token = this.token;
-  },
-  methods: {
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      inputs.value._token = props.token; //tokenのセット
+    });
+
     /* ステップ01完了 */
-    step01: function step01() {
-      var _this = this;
-      this.loading = true; // 通信中
+    var step01 = function step01() {
+      loading.value = true; // 通信中
+      inputs.value.agree = inputs.value.agree ? 'on' : ''; //同意チェック
 
-      this.inputs.agree = this.inputs.agree ? 'on' : ''; //同意チェック
-
-      var route = this.r_api_validation;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
+      var route = props.r_api_validation;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value).then(function (json) {
         // console.log(json.data);
 
-        _this.loading = false; // 通信中
-        _this.addStepNum();
+        loading.value = false; // 通信中
+        errors.value = {};
+        addStepNum();
       })["catch"](function (error) {
         //バリデーション結果の受け取り
         if (error.response.status == 422) {
           // console.log( error.response.data.errors );
-          _this.errors = error.response.data.errors;
-          _this.loading = false; // 通信中
+          errors.value = error.response.data.errors;
+          loading.value = false; // 通信中
         }
         //その他のエラー
         else {
@@ -8616,44 +8612,59 @@ __webpack_require__.r(__webpack_exports__);
         }
         // console.log( error.response.data );
       });
-    },
+    };
 
     /* ステップ02完了 */
-    step02: function step02() {
-      var _this2 = this;
-      this.loading = true; // 通信中
+    var step02 = function step02() {
+      loading.value = true; // 通信中
 
-      var route = this.r_api_completion;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, this.inputs).then(function (json) {
+      var route = props.r_api_completion;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value).then(function (json) {
         // console.log(json.data);
 
-        _this2.loading = false; // 通信中
-        _this2.addStepNum();
+        loading.value = false; // 通信中
+        addStepNum();
       })["catch"](function (error) {
         alert('データ送信エラーが発生しました。');
         // console.log( error.response.data );
       });
-    },
+    };
 
     /* 次へメソッド */
-    addStepNum: function addStepNum() {
-      this.step_num++;
+    var addStepNum = function addStepNum() {
+      step_num.value++;
       window.scroll({
         top: 0,
         behavior: 'smooth'
       });
-    },
+    };
+
     /* 前へメソッド */
-    subStepNum: function subStepNum() {
-      this.step_num--;
+    var subStepNum = function subStepNum() {
+      step_num.value--;
       window.scroll({
         top: 0,
         behavior: 'smooth'
       });
-    },
-    windowOpen: function windowOpen() {
-      window.open(this.privacy_policy);
-    }
+    };
+
+    /* 別タブで開く */
+    var windowOpen = function windowOpen(route) {
+      window.open(route);
+    };
+    return {
+      __sfc: true,
+      props: props,
+      loading: loading,
+      step_num: step_num,
+      errors: errors,
+      inputs: inputs,
+      step01: step01,
+      step02: step02,
+      addStepNum: addStepNum,
+      subStepNum: subStepNum,
+      windowOpen: windowOpen
+    };
   }
 });
 
@@ -15289,7 +15300,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var render = function render() {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("div", [_c("div", {
     staticClass: "card-body my-5"
   }, [_c("div", {
@@ -15310,38 +15322,38 @@ var render = function render() {
   }, [_vm._v("1")]), _vm._v("入　力\n            ")]), _vm._v(" "), _c("i", {
     staticClass: "bi bi-dash mb-3",
     "class": {
-      "text-primary": _vm.step_num > 1
+      "text-primary": _setup.step_num > 1
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "step-box",
     "class": {
-      "text-primary": _vm.step_num > 1
+      "text-primary": _setup.step_num > 1
     }
   }, [_c("div", {
     staticClass: "step_num",
     "class": {
-      "bg-primary": _vm.step_num > 1
+      "bg-primary": _setup.step_num > 1
     }
   }, [_vm._v("2")]), _vm._v("確　認\n            ")]), _vm._v(" "), _c("i", {
     staticClass: "bi bi-dash mb-3",
     "class": {
-      "text-primary": _vm.step_num > 2
+      "text-primary": _setup.step_num > 2
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "step-box",
     "class": {
-      "text-primary": _vm.step_num > 2
+      "text-primary": _setup.step_num > 2
     }
   }, [_c("div", {
     staticClass: "step_num",
     "class": {
-      "bg-primary": _vm.step_num > 2
+      "bg-primary": _setup.step_num > 2
     }
   }, [_vm._v("3")]), _vm._v("完　了\n            ")])])]), _vm._v(" "), _c("section", {
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: _vm.step_num === 1,
+      value: _setup.step_num === 1,
       expression: "step_num===1"
     }],
     staticClass: "fs-5"
@@ -15358,12 +15370,12 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.inputs.name,
+      value: _setup.inputs.name,
       expression: "inputs.name"
     }],
     staticClass: "form-control",
     "class": {
-      "border-danger": _vm.errors.name
+      "border-danger": _setup.errors.name
     },
     attrs: {
       type: "text",
@@ -15372,17 +15384,17 @@ var render = function render() {
       placeholder: "例) 山田　太郎"
     },
     domProps: {
-      value: _vm.inputs.name
+      value: _setup.inputs.name
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "name", $event.target.value);
+        _vm.$set(_setup.inputs, "name", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.name ? _c("div", {
+  }), _vm._v(" "), _setup.errors.name ? _c("div", {
     staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("※" + _vm._s(_setup.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
@@ -15395,12 +15407,12 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.inputs.email,
+      value: _setup.inputs.email,
       expression: "inputs.email"
     }],
     staticClass: "form-control",
     "class": {
-      "border-danger": _vm.errors.email
+      "border-danger": _setup.errors.email
     },
     attrs: {
       type: "email",
@@ -15409,17 +15421,17 @@ var render = function render() {
       placeholder: "例) yamada@mail.co.jp"
     },
     domProps: {
-      value: _vm.inputs.email
+      value: _setup.inputs.email
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "email", $event.target.value);
+        _vm.$set(_setup.inputs, "email", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.email ? _c("div", {
+  }), _vm._v(" "), _setup.errors.email ? _c("div", {
     staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("※" + _vm._s(_setup.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
@@ -15432,12 +15444,12 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.inputs.tell,
+      value: _setup.inputs.tell,
       expression: "inputs.tell"
     }],
     staticClass: "form-control",
     "class": {
-      "border-danger": _vm.errors.tell
+      "border-danger": _setup.errors.tell
     },
     attrs: {
       type: "tel",
@@ -15446,17 +15458,17 @@ var render = function render() {
       pattern: "\\d{10,11}"
     },
     domProps: {
-      value: _vm.inputs.tell
+      value: _setup.inputs.tell
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "tell", $event.target.value);
+        _vm.$set(_setup.inputs, "tell", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.tell ? _c("div", {
+  }), _vm._v(" "), _setup.errors.tell ? _c("div", {
     staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.tell[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("※" + _vm._s(_setup.errors.tell[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label fw-bold",
@@ -15469,12 +15481,12 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.inputs.body,
+      value: _setup.inputs.body,
       expression: "inputs.body"
     }],
     staticClass: "form-control",
     "class": {
-      "border-danger": _vm.errors.body
+      "border-danger": _setup.errors.body
     },
     staticStyle: {
       height: "10rem"
@@ -15485,17 +15497,17 @@ var render = function render() {
       id: "input_body"
     },
     domProps: {
-      value: _vm.inputs.body
+      value: _setup.inputs.body
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.inputs, "body", $event.target.value);
+        _vm.$set(_setup.inputs, "body", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.body ? _c("div", {
+  }), _vm._v(" "), _setup.errors.body ? _c("div", {
     staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.body[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("※" + _vm._s(_setup.errors.body[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "card border-light mt-5"
   }, [_c("div", {
     staticClass: "card-body text-md-center"
@@ -15513,7 +15525,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.windowOpen.apply(null, arguments);
+        return _setup.windowOpen(_setup.props.r_privacy_policy);
       }
     }
   }, [_vm._v("プライバシーポリシー")]), _vm._v("をご確認ください。"), _c("br"), _vm._v("\n                    同意いただけた場合のみ「同意する」にチェックを入れ、"), _c("br"), _vm._v("\n                    確認画面へお進みください。\n                ")]), _vm._v(" "), _c("div", {
@@ -15524,7 +15536,7 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.inputs.agree,
+      value: _setup.inputs.agree,
       expression: "inputs.agree"
     }],
     staticClass: "form-check-input",
@@ -15533,23 +15545,23 @@ var render = function render() {
       id: "input_agree"
     },
     domProps: {
-      checked: Array.isArray(_vm.inputs.agree) ? _vm._i(_vm.inputs.agree, null) > -1 : _vm.inputs.agree
+      checked: Array.isArray(_setup.inputs.agree) ? _vm._i(_setup.inputs.agree, null) > -1 : _setup.inputs.agree
     },
     on: {
       change: function change($event) {
-        var $$a = _vm.inputs.agree,
+        var $$a = _setup.inputs.agree,
           $$el = $event.target,
           $$c = $$el.checked ? true : false;
         if (Array.isArray($$a)) {
           var $$v = null,
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.inputs, "agree", $$a.concat([$$v]));
+            $$i < 0 && _vm.$set(_setup.inputs, "agree", $$a.concat([$$v]));
           } else {
-            $$i > -1 && _vm.$set(_vm.inputs, "agree", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+            $$i > -1 && _vm.$set(_setup.inputs, "agree", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
           }
         } else {
-          _vm.$set(_vm.inputs, "agree", $$c);
+          _vm.$set(_setup.inputs, "agree", $$c);
         }
       }
     }
@@ -15560,28 +15572,28 @@ var render = function render() {
     }
   }, [_vm._v("同意する")]), _vm._v(" "), _c("span", {
     staticClass: "badge bg-danger ms-1"
-  }, [_vm._v("必須")])])]), _vm._v(" "), _vm.errors.agree ? _c("div", {
+  }, [_vm._v("必須")])])]), _vm._v(" "), _setup.errors.agree ? _c("div", {
     staticClass: "text-danger"
-  }, [_vm._v("※" + _vm._s(_vm.errors.agree[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("※" + _vm._s(_setup.errors.agree[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
     staticClass: "form_group my-5"
   }, [_c("div", {
     staticClass: "col-sm-8 mb-3 mx-auto"
   }, [_c("disabled-button-component", {
     attrs: {
       style_class: "btn btn-lg btn-primary text-white w-100",
-      disabled: _vm.loading,
+      disabled: _setup.loading,
       btn_text: "入力内容の確認"
     },
     on: {
       "btn-click": function btnClick($event) {
-        return _vm.step01();
+        return _setup.step01();
       }
     }
   })], 1)])]), _vm._v(" "), _c("section", {
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: _vm.step_num === 2,
+      value: _setup.step_num === 2,
       expression: "step_num===2"
     }],
     staticClass: "fs-5"
@@ -15594,21 +15606,21 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row mb-3"
   }, [_vm._m(1), _vm._v(" "), _c("p", {
-    staticClass: "col-sm-9"
-  }, [_vm._v(_vm._s(_vm.inputs["name"]))])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_vm._v(_vm._s(_setup.inputs["name"]))])]), _vm._v(" "), _c("div", {
     staticClass: "row mb-3"
   }, [_vm._m(2), _vm._v(" "), _c("p", {
-    staticClass: "col-sm-9"
-  }, [_vm._v(_vm._s(_vm.inputs["email"]))])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_vm._v(_vm._s(_setup.inputs["email"]))])]), _vm._v(" "), _c("div", {
     staticClass: "row mb-3"
   }, [_vm._m(3), _vm._v(" "), _c("p", {
-    staticClass: "col-sm-9"
-  }, [_vm._v(_vm._s(_vm.inputs["tell"]))])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_vm._v(_vm._s(_setup.inputs["tell"]))])]), _vm._v(" "), _c("div", {
     staticClass: "row mb-3"
   }, [_vm._m(4), _vm._v(" "), _c("p", {
-    staticClass: "col-sm-9",
+    staticClass: "col-12",
     domProps: {
-      innerHTML: _vm._s(_vm.inputs.body.replace(/\r?\n/g, "<br>"))
+      innerHTML: _vm._s(_setup.inputs.body.replace(/\r?\n/g, "<br>"))
     }
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form_group mb-5"
@@ -15617,12 +15629,12 @@ var render = function render() {
   }, [_c("disabled-button-component", {
     attrs: {
       style_class: "btn btn-primary btn-arrow btn-lg text-white fs-5 w-100",
-      disabled: _vm.loading,
+      disabled: _setup.loading,
       btn_text: "確定"
     },
     on: {
       "btn-click": function btnClick($event) {
-        return _vm.step02();
+        return _setup.step02();
       }
     }
   })], 1), _vm._v(" "), _c("div", {
@@ -15634,16 +15646,17 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.subStepNum();
+        return _setup.subStepNum();
       }
     }
   }, [_vm._v("戻る")])])])]), _vm._v(" "), _c("section", {
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: _vm.step_num === 3,
+      value: _setup.step_num === 3,
       expression: "step_num===3"
-    }]
+    }],
+    staticClass: "text-center"
   }, [_c("h5", {
     staticClass: "mb-3"
   }, [_vm._v("お問い合わせ内容を送信しました。")]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c("div", {
@@ -15660,7 +15673,8 @@ var render = function render() {
 };
 var staticRenderFns = [function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("p", {
     staticClass: "text-secondary text-center mb-4",
     staticStyle: {
@@ -15669,35 +15683,40 @@ var staticRenderFns = [function () {
   }, [_vm._v("\n            ご不明な点は、下記フォームよりお問い合わせください。"), _c("br"), _vm._v("\n            お問合せ内容の確認後、担当者よりご連絡致します。\n        ")]);
 }, function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("p", {
-    staticClass: "col-sm-3"
+    staticClass: "col-12"
   }, [_c("strong", [_vm._v("氏名：")])]);
 }, function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("p", {
-    staticClass: "col-sm-3"
+    staticClass: "col-12"
   }, [_c("strong", [_vm._v("メールアドレス：")])]);
 }, function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("p", {
-    staticClass: "col-sm-3"
+    staticClass: "col-12"
   }, [_c("strong", [_vm._v("電話番号：")])]);
 }, function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("p", {
-    staticClass: "col-sm-3"
+    staticClass: "col-12"
   }, [_c("strong", [_vm._v("お問い合わせ内容：")])]);
 }, function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("div", {
-    staticClass: "card w-100 mb-5"
+    staticClass: "cardd w-100 mb-5"
   }, [_c("div", {
-    staticClass: "card-body"
+    staticClass: "p-3"
   }, [_vm._v("お問い合わせ頂き、ありがとうございまいた。")])]);
 }];
 render._withStripped = true;
@@ -41952,7 +41971,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=template&id=beaa52e2 */ "./resources/js/components/contact/FormComponent.vue?vue&type=template&id=beaa52e2");
-/* harmony import */ var _FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=script&lang=js */ "./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/contact/FormComponent.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -41962,7 +41981,7 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
   _FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__.render,
   _FormComponent_vue_vue_type_template_id_beaa52e2__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -43050,10 +43069,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js ***!
-  \***********************************************************************************/
+/***/ "./resources/js/components/contact/FormComponent.vue?vue&type=script&setup=true&lang=js":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/contact/FormComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \**********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -43061,8 +43080,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&lang=js");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormComponent.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/contact/FormComponent.vue?vue&type=script&setup=true&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

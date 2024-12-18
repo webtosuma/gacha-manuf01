@@ -86,7 +86,7 @@
                 <div class="card-body text-md-center">
                     <h5 class="card-title fw-bold  text-center">個人情報の取り扱いについて</h5>
                     <p class="card-text text-center" style="font-size:11px;">
-                        <a href="#" @click.prevent="windowOpen"
+                        <a href="#" @click.prevent="windowOpen(props.r_privacy_policy)"
                         >プライバシーポリシー</a>をご確認ください。<br>
                         同意いただけた場合のみ「同意する」にチェックを入れ、<br>
                         確認画面へお進みください。
@@ -127,23 +127,23 @@
                 <div class="card-body">
 
                     <div class="row mb-3">
-                        <p class="col-sm-3"><strong>氏名：</strong></p>
-                        <p class="col-sm-9">{{ inputs['name'] }}</p>
+                        <p class="col-12"><strong>氏名：</strong></p>
+                        <p class="col-12">{{ inputs['name'] }}</p>
                     </div>
 
                     <div class="row mb-3">
-                        <p class="col-sm-3"><strong>メールアドレス：</strong></p>
-                        <p class="col-sm-9">{{ inputs['email'] }}</p>
+                        <p class="col-12"><strong>メールアドレス：</strong></p>
+                        <p class="col-12">{{ inputs['email'] }}</p>
                     </div>
 
                     <div class="row mb-3">
-                        <p class="col-sm-3"><strong>電話番号：</strong></p>
-                        <p class="col-sm-9">{{ inputs['tell'] }}</p>
+                        <p class="col-12"><strong>電話番号：</strong></p>
+                        <p class="col-12">{{ inputs['tell'] }}</p>
                     </div>
 
                     <div class="row mb-3">
-                        <p class="col-sm-3"><strong>お問い合わせ内容：</strong></p>
-                        <p class="col-sm-9" v-html="inputs.body.replace(/\r?\n/g, '<br>')"></p>
+                        <p class="col-12"><strong>お問い合わせ内容：</strong></p>
+                        <p class="col-12" v-html="inputs.body.replace(/\r?\n/g, '<br>')"></p>
                     </div>
 
                 </div>
@@ -154,10 +154,6 @@
             <!-- 送信ボタン -->
             <div class="form_group mb-5">
                 <div class="col-sm-8 mb-3 mx-auto">
-                    <!-- <button class="btn btn-primary btn-arrow btn-lg text-white fs-5 w-100 " type="button"
-                    @click="step02()"
-                    >確定</button> -->
-
                     <disabled-button-component
                     style_class="btn btn-primary btn-arrow btn-lg text-white fs-5 w-100"
                     @btn-click="step02()"
@@ -175,12 +171,12 @@
 
         <!-- step03[ 完了 ] -->
         <section v-show="step_num===3"
-         class="">
+         class="text-center">
 
             <h5 class="mb-3">お問い合わせ内容を送信しました。</h5>
 
-            <div class="card w-100 mb-5">
-                <div class="card-body">お問い合わせ頂き、ありがとうございまいた。</div>
+            <div class="cardd w-100 mb-5">
+                <div class="p-3">お問い合わせ頂き、ありがとうございまいた。</div>
             </div>
             <div class="form_group my-5">
                 <div class="col-sm-6 mb-3 mx-auto">
@@ -196,122 +192,113 @@
     </div>
 </template>
 
-<script>
-    import axios from 'axios'
+<script setup>
+    import axios from 'axios';
+    import { ref, onMounted, defineProps, defineEmits } from "vue";
 
-    export default {
-        props: {
-            token: { type: String, default: '', },
-            r_api_validation: { type: String, default: '', },
-            r_api_completion: { type: String, default: '', },
-            r_privacy_policy:{ type: String, default: '', },
-            r_top:{ type: String, default: '', },
-        },
-
-        data() {return{
+    const props = defineProps({
+        token: { type: String, default: '', },
+        r_api_validation: { type: String, default: '', },
+        r_api_completion: { type: String, default: '', },
+        r_privacy_policy:{ type: String, default: '', },
+        r_top:{ type: String, default: '', },
+    });
 
 
-            loading: false,/* 通信中 */
+    const loading  = ref(false);/* 通信中 */
+    const step_num = ref(1);    /* 表示中ステップ番号 */
+    const errors   = ref({});   /* エラー内容 length */
 
-            /* 表示中ステップ番号 */
-            step_num : 1,
+    /* 入力内容 */
+    const inputs= ref({
+        _token : '',
+        name : '', email: '',  tell : '', body : '',
+        agree: false, // プライバシーポリシー同意
 
-            /* 入力内容 */
-            inputs: {
-                _token : '',
-                name : '', email: '',  tell : '', body : '',
-                agree: false, // プライバシーポリシー同意
-
-                // name : 'ホゲ', //氏名
-                // email: 't.sakai@tosuma.ltd', //メールアドレス(半角英数)
-                // tell : '09011112222', //電話番号(半角数字)
-                // body : 'hoge', //お問い合わせ内容
-                // agree: true, // プライバシーポリシー同意
-            },
-
-
-            /* エラー内容 length */
-            errors : {},
-
-        } },
-        mounted() {
-
-            //tokenのセット
-            this.inputs._token = this.token;
-
-        },
-        methods:{
-
-            /* ステップ01完了 */
-            step01 :function(){
-
-                this.loading = true;// 通信中
-
-                this.inputs.agree = this.inputs.agree ? 'on' : '';//同意チェック
-
-                const route = this.r_api_validation;
-                axios.post( route, this.inputs )
-                .then(json => {
-                    // console.log(json.data);
-
-                    this.loading = false;// 通信中
-                    this.addStepNum()
-                })
-                .catch(error => {
-
-                    //バリデーション結果の受け取り
-                    if( error.response.status == 422 ){
-                        // console.log( error.response.data.errors );
-                        this.errors = error.response.data.errors;
-                        this.loading = false;// 通信中
-                    }
-                    //その他のエラー
-                    else{ alert('データ送信エラーが発生しました。'); }
-                    // console.log( error.response.data );
-
-                });
-            },
+        // name : 'ホゲ', //氏名
+        // email: 't.sakai@tosuma.ltd', //メールアドレス(半角英数)
+        // tell : '09011112222', //電話番号(半角数字)
+        // body : 'hoge', //お問い合わせ内容
+        // agree: true, // プライバシーポリシー同意
+    });
 
 
-            /* ステップ02完了 */
-            step02 :function(){
-
-                this.loading = true;// 通信中
-
-                const route = this.r_api_completion;
-                axios.post( route, this.inputs )
-                .then(json => {
-                    // console.log(json.data);
-
-                    this.loading = false;// 通信中
-                    this.addStepNum()
-                })
-                .catch(error => {
-
-                    alert('データ送信エラーが発生しました。');
-                    // console.log( error.response.data );
-
-                });
-            },
+    onMounted(()=>{
+        inputs.value._token = props.token;//tokenのセット
+    });
 
 
-            /* 次へメソッド */
-            addStepNum : function(){
-                this.step_num ++;
-                window.scroll({top: 0, behavior: 'smooth'});
-            },
 
 
-            /* 前へメソッド */
-            subStepNum : function(){
-                this.step_num --;
-                window.scroll({top: 0, behavior: 'smooth'});
-            },
+    /* ステップ01完了 */
+    const step01 = ()=>{
 
-            windowOpen : function(){
-                window.open( this.privacy_policy );
-            },
+        loading.value = true;// 通信中
+        inputs.value.agree = inputs.value.agree ? 'on' : '';//同意チェック
 
-        }
-    }
+        const route = props.r_api_validation;
+        axios.post( route, inputs.value )
+        .then(json => {
+            // console.log(json.data);
+
+            loading.value = false;// 通信中
+            errors.value  = {};
+            addStepNum()
+        })
+        .catch(error => {
+
+            //バリデーション結果の受け取り
+            if( error.response.status == 422 ){
+                // console.log( error.response.data.errors );
+                errors.value = error.response.data.errors;
+                loading.value = false;// 通信中
+            }
+            //その他のエラー
+            else{ alert('データ送信エラーが発生しました。'); }
+            // console.log( error.response.data );
+
+        });
+    };
+
+
+    /* ステップ02完了 */
+    const step02 = ()=>{
+
+        loading.value = true;// 通信中
+
+        const route = props.r_api_completion;
+        axios.post( route, inputs.value )
+        .then(json => {
+            // console.log(json.data);
+
+            loading.value = false;// 通信中
+            addStepNum();
+        })
+        .catch(error => {
+
+            alert('データ送信エラーが発生しました。');
+            // console.log( error.response.data );
+
+        });
+    };
+
+
+    /* 次へメソッド */
+    const addStepNum = ()=>{
+        step_num.value ++;
+        window.scroll({top: 0, behavior: 'smooth'});
+    };
+
+
+    /* 前へメソッド */
+    const subStepNum = ()=>{
+        step_num.value --;
+        window.scroll({top: 0, behavior: 'smooth'});
+    };
+
+
+    /* 別タブで開く */
+    const windowOpen = (route)=>{ window.open( route ); }
+
+
 </script>

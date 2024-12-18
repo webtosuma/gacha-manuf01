@@ -39,20 +39,17 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
     // 各スライダーに対してSplideインスタンスを作成
     sliders.forEach((slider) => {
-        console.log(slider.id);
-
 
         new Splide( '#'+slider.id , {
 
             type     : 'slide',
-            padding: '10vw',
             focus  : 'center',
-            perPage : 1,
+            perPage : 6,
             autoplay: true,
+            pagination: false,
 
 
         }).mount();
-
 
     });
 
