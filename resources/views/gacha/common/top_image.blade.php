@@ -2,7 +2,7 @@
 data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
 
     <!--loading-->
-    <div class="ratio ratio-4x3">
+    <div class="ratio {{config('app.gacha_card_ratio')}} ">
         <div class="bg-dark d-flex align-items-center justify-content-center"
         style="z-index:0;">
             <div class="spinner-border text-primary" role="status">
@@ -25,7 +25,7 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
     <div class="position-absolute top-0 start-0 w-100 h-100"
     style="z-index:0;">
         <ratio-image-component
-        url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3 bg-body"
+        url="{{ $gacha->image_path }}" style_class="ratio {{config('app.gacha_card_ratio')}}  bg-body"
         ></ratio-image-component>
     </div>
 

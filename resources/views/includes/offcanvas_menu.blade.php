@@ -1,10 +1,10 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasHumberge" aria-labelledby="offcanvasHumbergeLabel"
 style="max-width:90vw; min-width:30vw;">
 
-    <div class="offcanvas-header align-items-center pb-0">
+    {{-- <div class="offcanvas-header align-items-center pb-0">
         <!--閉じる-->
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+    </div> --}}
     <div class="offcanvas-header align-items-center border-bottom">
         <h5 id="offcanvasHumbergeLabel" class="m-0">
             <a href="{{ route('settings.acount') }}" class="d-block text-dark">
@@ -37,6 +37,9 @@ style="max-width:90vw; min-width:30vw;">
                 </div>
             </a>
         </h5>
+
+        <!--閉じる-->
+        <button type="button" class="btn-close text-reset border" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
 

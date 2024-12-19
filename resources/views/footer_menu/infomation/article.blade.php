@@ -19,7 +19,7 @@
             <div class="mx-auto overflow-auto my-3" style="max-width:4000px;">
                 <div class="overflow-hidden rounded-4 border">
                     <ratio-image-component
-                    url="{{ $infomation->image_path }}" style_class="ratio ratio-4x3 w-100"
+                    url="{{ $infomation->image_path }}" style_class="ratio {{config('app.gacha_card_ratio')}}  w-100"
                     ></ratio-image-component>
                 </div>
             </div>

@@ -12,7 +12,7 @@
                 <read-image-file-component
                 img_path="{{ $gacha->image_path }}"
                 noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
-                style_class="ratio ratio-4x3 rounded-3"
+                style_class="ratio {{config('app.gacha_card_ratio')}} rounded-3"
                 name="image"
                 ></read-image-file-component>
 

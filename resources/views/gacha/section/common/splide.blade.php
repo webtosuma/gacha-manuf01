@@ -13,10 +13,10 @@
                         @include('gacha.common.top_image')
 
                     @else
-                        <div class="ratio ratio-4x3 position-relative">
+                        <div class="ratio {{config('app.gacha_card_ratio')}}  position-relative">
                             <div style="z-index:1;">
                                 <ratio-image-component
-                                style_class="ratio ratio-4x3"
+                                style_class="ratio {{config('app.gacha_card_ratio')}} "
                                 url="{{ $slide['image'] }}"
                                 ></ratio-image-component>
                             </div>

@@ -11,7 +11,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
     var splidePc = new Splide( '#splide_pc', {
 
         type     : 'loop',
-        padding: '10vw',
+        padding: '5vw',
         focus  : 'center',
         perPage : 3,
         autoplay: true,

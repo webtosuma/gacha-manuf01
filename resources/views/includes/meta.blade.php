@@ -1,6 +1,10 @@
-<meta name="robots" content="noindex" />
-
 @if ( true )
+
+    <!--検索結果に非表示-->
+    <meta name="robots" content="noindex" />
+
+@endif
+@if ( false )
 
 
     @php

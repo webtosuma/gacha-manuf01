@@ -5,7 +5,7 @@
         class="card border-secondary border-0 shadow bg-transparent
         text-dark text-center overflow-hidden text-decoration-none
         position-relative shiny
-        hover_animeee" style="border-radius:1rem;">
+        hover_anime" style="border-radius:1rem;">
 
             <!--image-->
             <a href="{{$gacha->route}}" class="d-block">

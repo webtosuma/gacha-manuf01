@@ -26,6 +26,9 @@ return [
     'company_url'  => env('APP_COMPANY_URL',    'cardFesta'), //オーナー企業サイトURL
 
 
+    # ガチャ画像比率
+    'gacha_card_ratio'  => 'ratio-16x9',
+
 
     /*
     |--------------------------------------------------------------------------
