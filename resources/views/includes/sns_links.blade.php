@@ -54,7 +54,7 @@
     @if( config('sns.tiktok') )
         <a href="https://www.tiktok.com"
         rel="nofollow" target="_blank" class="col-auto">
-        <img src="{{asset('storage/site/image/tiktok-icons/black_circle.png')}}"
+        <img src="{{asset('storage/site/image/tiktok-icons/black_square.png')}}"
         alt="tiktokロゴ" class="d-block p-1"  style=" width:2rem; height:2rem;">
         </a>
     @endif

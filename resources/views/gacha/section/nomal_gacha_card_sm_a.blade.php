@@ -16,8 +16,11 @@
             @endphp
             <div class="card-body pt-0 pb-0 {{$bg_color}}">
                 <div class="d-flex align-items-center justify-content-center gap-2">
-                    <span class="badge rounded-pill bg-warning text-white">P</span>
-                    <span class="fw-bold fs-6">
+                    <div class="p-1">
+                        @include('includes.point_icon')
+                    </div>
+
+                    <span class="fw-bold fs-5">
                         <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>pt
                     </span>
                 </div>

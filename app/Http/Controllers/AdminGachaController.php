@@ -231,7 +231,7 @@ class AdminGachaController extends Controller
 
             // 公開[1](前回が「公開」でないとき)
             if( $request->is_published==1 && !$gacha->is_published ){
-                $published_at = now()->format('Y-m-d H:i:00');
+                $published_at = now()->format('Y-m-d H:i:s');
             }
             // 公開予約[2]
             else if( $request->is_published==2 ){
