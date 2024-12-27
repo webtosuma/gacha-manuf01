@@ -353,14 +353,12 @@ class GachaController extends Controller
 
                 $query->where('published_at','<',now()->copy()->addMinutes(30));//30分前
 
+                $query->whereHas('g_prizes', function ($q) { //残数が0のガチャを除く
+                    $q->where('remaining_count', '>', 0);
+                });
 
             $countdown_gachas = $query->orderByDesc('created_at')->get();
 
-
-            # データの追加(カウントダウンの時間)
-            // foreach ($countdown_gachas as $countdown_gacha) {
-            //     $countdown_gacha->initial_time = now()->diff($countdown_gacha->published_at)->format('%H:%I:%S');
-            // }
 
             return $countdown_gachas;
         }

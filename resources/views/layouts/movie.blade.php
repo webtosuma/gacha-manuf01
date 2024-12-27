@@ -32,6 +32,7 @@
 
 </head>
 <body style="background: black;">
+    <main>
         <div id="app" >
 
             @yield('content')

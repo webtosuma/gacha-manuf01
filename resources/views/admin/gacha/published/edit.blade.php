@@ -62,13 +62,18 @@ $active_key = 'gacha';
                 </div>
                 <aside class="col-12 col-md-3 ">
 
-                    @if( env('LIMIT_GACHA_COUNT') )
+                    @php
+                    /* ガチャ制限数 */
+                    $limig_gacha_count = env('LIMIT_GACHA_COUNT');
+                    @endphp
+                    @if( $limig_gacha_count )
                     <!--公開・公開予約数制限あり-->
-                    <div class="alert alert-success border-0 mx-3" role="alert">
+                    <div class="alert alert-success border-0" role="alert">
                         <h6 class="fw-bold text-success">公開ガチャ数の制限あり</h6>
-                        同じカテゴリー内で<span class="fw-bold">公開・公開予約</span>できるガチャ数は、合わせて<span class="fw-bold">3件</span>以内です。
+                        同じカテゴリー内で<span class="fw-bold">公開・公開予約</span>できるガチャ数は、合わせて<span class="fw-bold">{{$limig_gacha_count}}件</span>以内です。
                     </div>
                     @endif
+
 
 
                     <div class="position-sticky p-3" style="top: 2rem; ">

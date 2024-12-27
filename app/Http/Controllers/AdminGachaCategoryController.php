@@ -94,8 +94,8 @@ class AdminGachaCategoryController extends Controller
         // $published_count = 1;
 
         #公開制限[カテゴリー制限]
-        $limit = 2;
-        $restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;
+        $limit = env('LIMIT_CATEGORY_COUNT');
+        $restriction = $limit ? $published_count>=$limit : false;
         $restriction = $gacha_category->is_published ? false : $restriction;//公開中のカテゴリは、公開ボタン制限なし
 
 

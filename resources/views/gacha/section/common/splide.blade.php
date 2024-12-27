@@ -22,12 +22,12 @@
                             </div>
 
 
-                            <div class="absolute h-100 w-100 bg-dark d-flex align-items-center justify-content-center"
+                            {{-- <div class="absolute h-100 w-100 bg-dark d-flex align-items-center justify-content-center"
                             style="z-index:0;">
                                 <div class="spinner-border text-primary" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     @endif
 

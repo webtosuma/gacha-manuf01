@@ -3,7 +3,7 @@
 <!--title-->
 @section('title')
     @php
-    $title = config('app.name')."|オンラインオリパ・ネットオリパを24時間365日楽しめる！国内送料は無料！ ";
+    $title = config('app.name')."|オンラインガチャを24時間365日楽しめる！ ";
     $title = $category_code=='all' ? $title : $category_name.'のガチャ一覧';
     @endphp
 
@@ -134,7 +134,7 @@
 @section('content')
 
 
-    <section class="bg-info" style="height:4.2rem;"
+    <section class="bg-dark" style="height:5.2rem;"
     data-aos="fade-in"
     ></section>
 
@@ -171,7 +171,7 @@
         </div>
     </section> --}}
 
-    <section class="overflow-hidden bg-info" style="background:rgb(0, 0, 0,.0);"
+    <section class="overflow-hidden bg-dark" style="background:rgb(0, 0, 0,.0);"
     data-aos="fade-in"
     >
 
@@ -193,8 +193,9 @@
 
 
     <!--カテゴリー-->
-    @include('gacha.section.category')
-
+    <div class="bg-secondary-subtle">
+        @include('gacha.section.category')
+    </div>
 
     <!--ガチャ-->
     <section class="py-3 pb-5">

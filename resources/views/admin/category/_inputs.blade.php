@@ -51,6 +51,9 @@
                 コード
                 <span class="text-danger">＊</span>
             </div>
+            <div class="form-text">
+                半角小文字英字・数字・記号「-」「_」のみ入力可
+            </div>
 
             <input value="{{old('code_name', $gacha_category->code_name )}}"
             name="code_name"

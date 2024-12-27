@@ -32,13 +32,18 @@ class AdminGachaController extends Controller
 
         # 表示できるガチャ一覧
         $gachas = $gacha_category
+
             ? Gacha::where('category_id',$gacha_category->id)
             ->orderBy('is_sold_out')//売り切れは下
-            ->orderByDesc('published_at')->get()
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->get()
 
             : Gacha::orderBy('is_sold_out')//売り切れは下
             ->has('category')//カテゴリーが存在するもののみ
-            ->orderByDesc('published_at')->get()
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->get()
         ;
 
         # カテゴリーデータ(select要素用)
@@ -204,7 +209,7 @@ class AdminGachaController extends Controller
         ->get()->count();
 
         #ガチャの公開制限
-        $limit = 3;
+        $limit = env('LIMIT_GACHA_COUNT');
         $gacha_restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;
         $gacha_restriction = $gacha->published_at ? false : $gacha_restriction;//公開中のガチャは、公開ボタン制限なし
 

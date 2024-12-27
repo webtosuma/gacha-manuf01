@@ -29,7 +29,7 @@ class AdminGachaCategoryRequest extends FormRequest
     {
         $rules = [
             'name'     => ['required','max:140',],
-            'code_name'=> ['required','max:140',],
+            'code_name'=> ['required','max:140','regex:/^[a-z0-9-_]+$/','unique:gacha_categories'],
             // 'image'    => ['file','max:10000','mimes:jpeg,png,jpg'], //イメージ画像
             'image'        => ['file',], //イメージ画像
             'is_published' => ['required','in:0,1'],

@@ -42,22 +42,12 @@
             <!--ガチャの種類-->
             <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
             <!--ランクの指定-->
-            <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
+            @if( env('NEW_TICKET_SISTEM',false) )
+                <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
+            @endif
             <!--時間帯-->
             <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
         </div>
-        {{-- <div class="mb-3">
-            表示時間：
-            <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
-        </div>
-        <div class="mb-3">
-            ランクの指定：
-            <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
-        </div>
-        <div class="mb-3">
-            ガチャの種類：
-            <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
-        </div> --}}
     </div>
 </div>
 

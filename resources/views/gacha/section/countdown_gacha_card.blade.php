@@ -21,12 +21,12 @@
                         </div>
 
                         <!--gacha image-->
-                        {{-- <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden"
+                        <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden"
                         style="z-index:0; -ms-filter: blur(6px); filter: blur(6px); ">
                             <ratio-image-component
                             url="{{ $gacha->image_path }}" style_class="ratio ratio-4x3"
                             ></ratio-image-component>
-                        </div> --}}
+                        </div>
                     </div>
 
 

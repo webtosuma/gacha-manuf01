@@ -39,11 +39,15 @@ $active_key = 'gacha';
         <h2 class="mb-5 py-3 border-bottom">ガチャ管理</h2>
 
 
-        @if( env('LIMIT_GACHA_COUNT') )
+        @php
+        /* ガチャ制限数 */
+        $limig_gacha_count = env('LIMIT_GACHA_COUNT');
+        @endphp
+        @if( $limig_gacha_count )
         <!--公開・公開予約数制限あり-->
         <div class="alert alert-success border-0" role="alert">
             <h6 class="fw-bold text-success">公開ガチャ数の制限あり</h6>
-            同じカテゴリー内で<span class="fw-bold">公開・公開予約</span>できるガチャ数は、合わせて<span class="fw-bold">3件</span>以内です。
+            同じカテゴリー内で<span class="fw-bold">公開・公開予約</span>できるガチャ数は、合わせて<span class="fw-bold">{{$limig_gacha_count}}件</span>以内です。
         </div>
         @endif
 
@@ -108,7 +112,9 @@ $active_key = 'gacha';
                                 <!--ガチャの種類-->
                                 <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
                                 <!--ランクの指定-->
-                                <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
+                                @if( env('NEW_TICKET_SISTEM',false) )
+                                    <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>
+                                @endif
                                 <!--時間帯-->
                                 <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
                             </div>
