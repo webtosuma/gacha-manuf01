@@ -319,13 +319,15 @@ class AdminGachaController extends Controller
 
 
         # ストレージ画像ファイルの更新（イメージ画像）
-            $dir = 'upload/gacha/image/';             //保存先ディレクトリ
-            $request_file    = $request->file('image');     //画像のリクエスト
+            $param = 'image';
+            $dir = 'upload/gacha/'.$param;             //保存先ディレクトリ
+            $request_file    = $request->file($param);     //画像のリクエスト
             $old_image_path  = $gacha? $gacha->image: null; //更新前の画像パス
-            $image_dalete    = $request->image_dalete;      //画像を削除するか否か
+            // $image_dalete    = $request[$param.'_dalete'];      //画像を削除するか否か
+            $image_dalete    = null;      //画像を削除するか否か
             $copy_image_puth = $request->copy_image_puth;       //コピー用画像パス
 
-            $inputs['image'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
+            $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
         //
 
         return $inputs;

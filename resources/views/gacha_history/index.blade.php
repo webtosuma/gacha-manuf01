@@ -77,7 +77,7 @@
 
 
                 <!--loading-->
-                <div class="ratio ratio-4x3">
+                <div class="ratio {{config('app.gacha_card_ratio')}}">
                     <div class="bg- d-flex align-items-center justify-content-center rounded"
                     style="z-index:0;">
                         <div class="spinner-border text-primary" role="status">
@@ -93,7 +93,7 @@
                 style="z-index:0;">
                     <ratio-image-component
                     url="{{ $gacha_history->gacha->image_path }}"
-                    style_class="ratio ratio-4x3 rounded"
+                    style_class="ratio {{config('app.gacha_card_ratio')}} rounded"
                     ></ratio-image-component>
                 </div>
 

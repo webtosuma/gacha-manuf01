@@ -54,4 +54,14 @@ class GachaPrize extends Model
             return $this->belongsTo(Prize::class);
         }
 
+
+        /**
+         * Gachaモデル リレーション
+         * @return \App\Models\Gacha
+        */
+        public function gacha()
+        {
+            return $this->belongsTo(Gacha::class,'gacha_id');
+        }
+
 }

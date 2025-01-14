@@ -1,3 +1,6 @@
+{{-- コード重複許可用 --}}
+<input type="hidden" name="gacha_category_id" value="{{$gacha_category->id}}">
+
 <div class="form-text mb-3">
     <span class="text-danger">＊</span>入力必須
 </div>

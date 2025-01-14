@@ -178,13 +178,13 @@
 
 
                         {{-- お得 --}}
-                        {{-- @if( $point_sail->service )
+                        @if( $point_sail->service )
                         <div class="badge border border-warning rounded-pill text-warning fw-bold px-">
                             <span class=" fs-6">{{ number_format($point_sail->value*$rank_ratio - $point_sail->price) }}</span>
                             <span class="">pt</span>
                             <span class=" fs-6">お得！</span>
                         </div>
-                        @endif --}}
+                        @endif
 
                     </div>
                     {{-- チケット還元 --}}

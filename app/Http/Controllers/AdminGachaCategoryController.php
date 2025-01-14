@@ -113,6 +113,8 @@ class AdminGachaCategoryController extends Controller
      */
     public function update(AdminGachaCategoryRequest $request, GachaCategory $gacha_category)
     {
+        // dd($request->all());
+
         # 入力データの加工
         $inputs = self::processingInputs( $request, $gacha_category );
 
@@ -206,13 +208,13 @@ class AdminGachaCategoryController extends Controller
 
 
         # ストレージ画像ファイルの更新（イメージ画像）
-            $dir = 'upload/gacha_category/bg_image';             //保存先ディレクトリ
-            $request_file    = $request->file('bg_image');     //画像のリクエスト
+            $param = 'bg_image';
+            $dir = 'upload/gacha_category/'.$param;             //保存先ディレクトリ
+            $request_file    = $request->file($param);     //画像のリクエスト
             $old_image_path  = $gacha_category? $gacha_category->bg_image: null; //更新前の画像パス
-            $image_dalete    = $request->image_dalete;      //画像を削除するか否か
+            $image_dalete    = $request[$param.'_dalete'];      //画像を削除するか否か
             $copy_image_puth = $request->copy_image_puth;       //コピー用画像パス
-
-            $inputs['bg_image'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth) ?? '';
+            $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth) ?? '';
 
 
         return $inputs;

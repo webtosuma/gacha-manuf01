@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\GachaCategory;
+
 /*
 | =============================================
 |  サイト管理者　ガチャのカテゴリー　リクエスト
@@ -34,6 +36,17 @@ class AdminGachaCategoryRequest extends FormRequest
             'image'        => ['file',], //イメージ画像
             'is_published' => ['required','in:0,1'],
         ];
+
+        # フォームの入力値をすべて取得
+        $request = $this->all();
+
+        # 重複ルールの条件解除
+        $gacha_category = GachaCategory::find($request['gacha_category_id']);
+        if( $gacha_category->code_name === $request['code_name'] )
+        {
+            $rules['code_name'] = ['required','max:140',];
+        }
+
 
 
         return $rules;

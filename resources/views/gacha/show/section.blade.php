@@ -33,7 +33,7 @@
             @else
 
                 @php
-                $col = $discription->gacha_rank_id < 400 ? 'col-6' : 'col-3' ;
+                $col = $discription->g_prizes->count()==1 ? 'col-12' : ($discription->gacha_rank_id < 400 ? 'col-6' : 'col-3') ;
                 $fs = $discription->gacha_rank_id < 400 ? 'fs-1' : '' ;
                 @endphp
                 <div class="row g-2 mb-3 justify-content-center">

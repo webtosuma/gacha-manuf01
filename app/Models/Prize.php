@@ -71,7 +71,7 @@ class Prize extends Model
         */
         public function g_prizes()
         {
-            return $this->hasMany(GachaPrize::class,'prize_id'); //ランク順
+            return $this->hasMany(GachaPrize::class,'prize_id')->whereHas('gacha');
         }
 
 
@@ -106,7 +106,7 @@ class Prize extends Model
 
 
         /**
-         * 利用中か否か image_path
+         * 利用中か否か is_used
          * @return String
         */
         public function getIsUsedAttribute()
