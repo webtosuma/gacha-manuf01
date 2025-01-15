@@ -39,6 +39,22 @@ $active_key = 'gacha';
         <h2 class="mb-5 py-3 border-bottom">ガチャ管理</h2>
 
 
+
+        <!--新規作成-->
+        <div class="position-fixed bottom-0 end-0 " style="z-index:200;">
+            <a href="{{ route('admin.gacha.create',$category_code) }}"
+            class="d-flex align-items-center justify-content-center text-center
+            text-white m-3 bg-primary rounded-pill shadow"
+            style="height:8rem; width:8rem;">
+                <div class="text-center" style="line-height:1.6rem;">
+                    <div class="fs-1">+</div>
+                    <div class="">新規作成</div>
+                </div>
+            </a>
+        </div>
+
+
+
         @php
         /* ガチャ制限数 */
         $limig_gacha_count = env('LIMIT_GACHA_COUNT');
@@ -79,15 +95,6 @@ $active_key = 'gacha';
 
         <!--card-->
         <section class="row gy-5 my-3 overflow-hidden g-2">
-            <div class="col-12 col-md-4 col-lg-3 ">
-                <a href="{{ route('admin.gacha.create',$category_code) }}"
-                class="btn btn-primary shadow text-white
-                hover_anime w-100 h-100" style="border-radius:1rem;"
-                ><div class="d-flex align-items-center justify-content-center h-100 fs-3"
-                >新規登録</div></a>
-
-
-            </div>
             @foreach ($gachas as $gacha)
                 <div class="col-12 col-md-4 col-lg-3 ">
                     <div class="position-relative">
@@ -188,11 +195,18 @@ $active_key = 'gacha';
             @endforeach
         </section>
 
+
+        <!-- ページネーション -->
+        @if( $gachas->count() )
+            <div class="d-flex justify-content-start mt-3">
+                {{ $gachas->links('vendor.pagination.bootstrap-4') }}
+            </div>
+        @endif
     </div>
 
 
     <!--削除モーダル-->
-    <div class="" style="height: 0;">
+    <div class="overflow-hidden" style="height: 0;">
         @foreach ($gachas as $gacha)
             <!-- Modal -->
             <form action="{{ route('admin.gacha.destroy', $gacha) }}" method="post">

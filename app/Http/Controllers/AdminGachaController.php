@@ -18,13 +18,17 @@ use App\Models\UserRankHistory;
 */
 class AdminGachaController extends Controller
 {
+    /** ページネーション数 */
+    public function pagenate_count(){ return 50 ;}
+
     /**
      * 一覧
      *
+     * @param Request $request　
      * @param String $category_code
      * @return \Illuminate\Http\Response
      */
-    public function index($category_code=null)
+    public function index( Request $request, $category_code=null )
     {
         # カテゴリーコードの確認
         $gacha_category = GachaCategory::where('code_name',$category_code)->first();
@@ -37,13 +41,13 @@ class AdminGachaController extends Controller
             ->orderBy('is_sold_out')//売り切れは下
             ->orderByDesc('published_at')
             ->orderByDesc('created_at')
-            ->get()
+            ->paginate( $this->pagenate_count() )//ページネーション
 
             : Gacha::orderBy('is_sold_out')//売り切れは下
             ->has('category')//カテゴリーが存在するもののみ
             ->orderByDesc('published_at')
             ->orderByDesc('created_at')
-            ->get()
+            ->paginate( $this->pagenate_count() )//ページネーション
         ;
 
         # カテゴリーデータ(select要素用)
