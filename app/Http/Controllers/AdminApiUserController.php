@@ -19,8 +19,6 @@ class AdminApiUserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::orderBy('created_at')->get();
-
 
         # 絞り込み
         $query = User::query();

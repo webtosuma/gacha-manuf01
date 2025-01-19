@@ -42,7 +42,7 @@ class AdminGachaCategoryRequest extends FormRequest
 
         # 重複ルールの条件解除
         $gacha_category = GachaCategory::find($request['gacha_category_id']);
-        if( $gacha_category->code_name === $request['code_name'] )
+        if( isset($gacha_category) && $gacha_category->code_name === $request['code_name'] )
         {
             $rules['code_name'] = ['required','max:140',];
         }

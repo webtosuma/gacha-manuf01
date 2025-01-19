@@ -3,7 +3,7 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
 
     <!--loading-->
     <div class="ratio {{config('app.gacha_card_ratio')}} ">
-        <div class="bg-dark d-flex align-items-center justify-content-center"
+        <div class="bg- d-flex align-items-center justify-content-center"
         style="z-index:0;">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -29,9 +29,26 @@ data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $gacha->name }}">
         ></ratio-image-component>
     </div>
 
+    <!--アド確定予告-->
+    {{-- <div class="position-absolute top-0 start-0 w-100 h-100 gacha_chance"
+    style="z-index:10;">
+        <div class="position-relative">
 
+            <ratio-image-component
+            url="{{asset('storage/site/image/gacha/chance/10.png')}}"
+            style_class="ratio {{config('app.gacha_card_ratio')}}  bg-body"
+            ></ratio-image-component>
 
+            <div class="position-absolute bottom-0 start-0 w-100 p-3 px-5">
+                <div class="progress bg-danger-subtle">
+                    <div class="progress-bar bg-danger fw-bold" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80"
+                    >あとｎ回</div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 
+    <!--売り切れ-->
     @if ($gacha->remaining_count==0)
     <div class="position-absolute top-0 start-0 w-100 h-100"
     style="z-index:3; background: rgba(0, 0, 0, .7);"

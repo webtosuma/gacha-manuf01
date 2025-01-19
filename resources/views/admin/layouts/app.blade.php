@@ -24,6 +24,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
+
     @yield('style')
     <style>
         a{ text-decoration: none; }
