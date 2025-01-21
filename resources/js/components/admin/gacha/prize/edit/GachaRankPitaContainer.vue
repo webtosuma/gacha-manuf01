@@ -6,8 +6,15 @@
             <div class="card bg-white overflow-auto" style="height: 90vh">
 
                 <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
-                    *特殊な商品の数量は、更新時に自動算出されます。<br>
-                    *特殊な商品の登録は1種類までです。
+                    <span v-if="gacha_rank_id>=360 && gacha_rank_id<370"
+                    >*当選は、個人の利用数に対して判定されます。</span>
+                    <span v-else>*当選は、ガチャの総口数に対して判定されます。</span>
+                    <br>
+
+                    *{{rank_label}}の商品が当選する「当選するプレイ数」を入力してください。<br>
+                    *{{rank_label}}目商品の当選予定数は、全体の商品数量に含まれません。<br>
+                    *{{rank_label}}目当選時には、ランダムで他の登録商品の当選数が１削除されます。<br>
+                    *「当選プレイ数」が重複した場合、{{rank_label}}目当選時にはランダムで{{rank_label}}目商品が付与されます。
                 </div>
 
                 <div v-if="test"
@@ -17,7 +24,8 @@
                 <table class="table">
                     <thead><tr>
                         <th colspan="5">{{ rank_label }}</th>
-                        <td class="text-center" style="width:6rem;">口数</td>
+                        <th colspan="2">当選プレイ数</th>
+
                         <td></td>
                     </tr></thead>
 
@@ -35,19 +43,18 @@
                             <td>{{ g_prize.prize.name }}</td>
                             <td>{{ g_prize.prize.rank.name }}</td>
                             <td>{{ g_prize.prize.point }} pt</td>
-                            <td>
-                                <input v-model="g_prize.max_count"
-                                :name="'gri'+gacha_rank_id+'-gacha_prize_counts[]'"
-                                :disabled="is_special_rank"
-                                type="number"
-                                class="form-control form-control-sm text-end">
+                            <td style="width:6rem;">
 
-                                <input v-if="is_special_rank"
-                                v-model="g_prize.max_count"
-                                :name="'gri'+gacha_rank_id+'-gacha_prize_counts[]'"
-                                type="hidden" value="1"
-                                >
+                                <!--special_counts(キリ番が当選する間隔[更新])-->
+                                <input
+                                type="number"
+                                v-model="g_prize.special_count"
+                                :name="'gri'+gacha_rank_id+'-special_counts[]'"
+                                :disabled="false"
+                                class="form-control form-control-sm text-end" min="1">
+
                             </td>
+
                             <td class=""  style="width:2rem;">
 
                                 <!-- 削除 -->
@@ -95,16 +102,13 @@
 
                             <td class="bg-success-subtle"  style="width:6rem;">
 
-                                <!--disabledのときのprize count-->
-                                <input v-if="is_special_rank"
-                                type="hidden" value="1"
-                                :name="'gri'+gacha_rank_id+'-new_prize_counts[]'"
-                                >
-                                <!--prize count-->
-                                <input type="number" value="1"
-                                :name="'gri'+gacha_rank_id+'-new_prize_counts[]'"
-                                :disabled="is_special_rank"
-                                class="form-control form-control-sm text-end" min="0">
+                                <!--new_special_counts(キリ番が当選する間隔[新規])-->
+                                <input
+                                type="number"
+                                value="1"
+                                :name="'gri'+gacha_rank_id+'-new_special_counts[]'"
+                                :disabled="false"
+                                class="form-control form-control-sm text-end" min="1">
 
                                 <!--prize ID-->
                                 <input type="hidden" :value="prize.id"
@@ -149,9 +153,10 @@
             :category_id="category_id"
             :r_api_prize="r_api_prize"
 
-            :is_special_rank="is_special_rank"
             :test="test"
             />
+
+            <!-- :is_special_rank="is_special_rank" -->
 
         </div>
 
@@ -166,14 +171,11 @@
             token:{ type: String,  default: '', },
             category_id:              { type: [String,Number],  default: '', },
             r_api_prize:              { type: String,  default: '', },   //商品
-
             rank_label:               { type: String,  default: '', },
             r_api_ranks_gacha_prizes: { type: String,  default: '', },//ガチャ商品
-
             gacha_rank_id:            { type: [String,Number],  default: '', },
             delete_gacha_prize_ids:   { type: [Array,Object],  default: [], },
-
-            is_special_rank:          { type: Boolean,  default: false, },
+            is_special_rank:          { type: Boolean,  default: true, },
         },
         data() { return {
 

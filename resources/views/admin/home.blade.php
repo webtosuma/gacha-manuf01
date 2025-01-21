@@ -115,6 +115,13 @@
                     @endforelse
                 </tbody>
             </table>
+
+            <!-- ページネーション -->
+            @if( $gachas->count() )
+                <div class="d-flex justify-content-start mt-3">
+                    {{ $gachas->links('vendor.pagination.bootstrap-4') }}
+                </div>
+            @endif
         </section>
 
 

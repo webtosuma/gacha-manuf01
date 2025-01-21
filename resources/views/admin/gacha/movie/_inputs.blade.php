@@ -9,7 +9,7 @@
 
                 <div class="col-auto">登録動画数：{{ $discription->movies->count() }}</div>
                 <div class="col-auto">
-                    @if ( $discription->g_prizes->sum('max_count') > 0 )
+                    @if ( $discription->total_count_format )
                         <span class="badge rounded-pill bg-success">商品登録あり</span>
                     @else
                         <span class="badge rounded-pill bg-secondary">商品登録なし</span>
@@ -19,7 +19,7 @@
             </div>
         </button>
         <div class="collapse mb-3
-        @if($discription->g_prizes->sum('max_count') > 0) show @endif "
+        @if($discription->total_count_format) show @endif "
         id="collapse{{$discription->id}}">
             <div class="card card-body overflow-auto bg-body" style="">
                 <div class="form-text">動画選択</div>

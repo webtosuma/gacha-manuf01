@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\GachaPlayCreateUserPrizeMethod;//
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,11 @@ class AdminGachaPrizeController extends Controller
     {
         // dd( $request->all() );
 
+        // self::updateFunc( $request, $gacha);
+
+
+
+        # ランク別詳細情報
         DB::beginTransaction();
         try {
 
@@ -50,14 +56,13 @@ class AdminGachaPrizeController extends Controller
             DB::commit();
         } catch (\Exception $e) {
 
-            Log::error($e);
-            DB::rollback();
-            $message = 'エラーが発生しました。';
+            // Log::error($e);
+            DB::rollback();            $message = 'エラーが発生しました。';
             return redirect()->back()
             ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
 
         }
-        // 二重送信防止
+        # 二重送信防止
         $request->session()->regenerateToken();
 
 
@@ -79,32 +84,54 @@ class AdminGachaPrizeController extends Controller
         $discriptions = $gacha->discriptions;
         foreach ($discriptions as $discription) {
 
-            $gacha_rank_id = $discription->gacha_rank_id;
-            $key = 'gri'.$gacha_rank_id; //識別キー gri100
-            // dd($key);
+            /* 変数の定義 */
 
-            $new_prize_ids          = $request[$key.'-new_prize_ids'];          //新規商品：商品ID
-            $new_prize_counts       = $request[$key.'-new_prize_counts'];       //新規商品：商品数
-            $gacha_prizes           = $discription->g_prizes;                   //登録ずみガチャ商品
-            $gacha_prize_counts     = $request[$key.'-gacha_prize_counts'];     //登録ずみガチャ商品：商品数
-            $delete_gacha_prize_ids = $request[$key.'-delete_gacha_prize_ids']; //削除ガチャ商品ID
+                $gacha_rank_id = $discription->gacha_rank_id;
+                $key = 'gri'.$gacha_rank_id; //識別キー gri100
+
+                $new_prize_ids           = $request[$key.'-new_prize_ids'];           //新規商品：商品ID
+                $new_prize_counts        = $request[$key.'-new_prize_counts'];        //新規商品：商品数
+                $new_special_counts      = $request[$key.'-new_special_counts'];      //新規特別な商品：商品数
+
+                $gacha_prizes            = $discription->g_prizes;                    //登録ずみガチャ商品
+                $gacha_prize_counts      = $request[$key.'-gacha_prize_counts'];      //登録ずみガチャ商品：商品数
+                $special_counts          = $request[$key.'-special_counts'];          //登録ずみ特別な商品：商品数
+
+                $delete_gacha_prize_ids  = $request[$key.'-delete_gacha_prize_ids'];  //削除ガチャ商品ID
+
+                // 口数が0でも可な特別なランク
+                $is_special_rank = in_array( $gacha_rank_id, [
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdKiri(),//キリ番ID
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdZoro(),//ゾロ目ID
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdPita(),//ピタリ賞ID
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdUserKiri(),//個人キリ番ID
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdUserZoro(),//個人ゾロ目ID
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdUserPita(),//個人ピタリ賞ID
+                ] );
+
+
+            /* ~ */
+
 
             ## 新規商品の登録
             if ($new_prize_ids)
             {
                 foreach ($new_prize_ids as $num => $prize_id)
                 {
-                    $count = $new_prize_counts[$num];//商品数
+                    $count = $new_prize_counts[$num] ?? 0;//商品数
                     $count = self::SpecialRankCount( $count,$gacha_rank_id, $gacha );//特殊なカウントの自動計算
+                    $special_count = $new_special_counts[$num] ?? null;//特別な商品数
 
-                    if( $count==0 ){ continue; }//処理スキップ
+
+                    if( !$is_special_rank && $count==0 ){ continue; }//処理スキップ
 
                     $gacha_prize = new GachaPrize([
-                        'gacha_id'       => $gacha->id, //ガチャリレーション
-                        'prize_id'       => $prize_id,  //商品リレーション
-                        'gacha_rank_id'  => $gacha_rank_id, //ランクID
-                        'max_count'      => $count, //景品総数
-                        'remaining_count'=> $count, //景品残数
+                        'gacha_id'       => $gacha->id,      //ガチャリレーション
+                        'prize_id'       => $prize_id,       //商品リレーション
+                        'gacha_rank_id'  => $gacha_rank_id,  //ランクID
+                        'max_count'      => $count,          //景品総数
+                        'remaining_count'=> $count,          //景品残数
+                        'special_count'  => $special_count,  //特別な商品数
                     ]);
                     $gacha_prize->save();
                 }
@@ -116,17 +143,20 @@ class AdminGachaPrizeController extends Controller
             {
                 foreach ($gacha_prizes as $num => $gacha_prize)
                 {
-                    $count = $gacha_prize_counts[$num];//更新商品数
+                    $count = $gacha_prize_counts[$num] ?? 0;//商品数
                     $count = self::SpecialRankCount( $count,$gacha_rank_id, $gacha );//特殊なカウントの自動計算
+                    $special_count = $special_counts[$num] ?? null;//特別な商品数
+
 
                     /* 更新 */
-                    if( $count > 0 ){
-                        if( $count == $gacha_prize->max_count ){ continue; }//処理スキップ
+                    if( ! (!$is_special_rank && $count==0) ){
 
                         $gacha_prize->update([
                             'max_count'       => $count, //景品総数
                             'remaining_count' => $count, //景品残数
+                            'special_count'   => $special_count, //特別な商品数
                         ]);
+
                     }
                     /* 削除 */
                     else{ $gacha_prize->delete(); }
@@ -143,6 +173,10 @@ class AdminGachaPrizeController extends Controller
                 }
             }
         }
+
+        # 売り切れの解除
+        if($gacha->max_count){ $gacha->update(['is_sold_out'=>0]); }
+
     }
 
 
@@ -156,28 +190,28 @@ class AdminGachaPrizeController extends Controller
         switch ($gacha_rank_id)
         {
             # ラストワン
-            case 10:
-                $count = 1;
-                // dd('lastone'.$count);
-                break;
+            case 10:  $count = 1; break;
             //
             # キリ番
-            case 310:
-                $array = GachaPlayCreateUserPrizeMethod::KiriHitsCalc( $gacha );
-                $count = count( $array );
-                // dd('kiri'.$count);
-                break;
+            case 310: $count = 0; break;
             //
             # ゾロ目
-            case 320:
-                $array = GachaPlayCreateUserPrizeMethod::ZoroHitsCalc( $gacha );
-                $count = count( $array );
-                // dd('zoro'.$count);
-                break;
+            case 320: $count = 0; break;
             //
-            default:
-                $count = $count;//更新なし
-                break;
+            # ピタリ賞
+            case 330: $count = 0; break;
+            //
+            # 個人キリ番
+            case 361: $count = 0; break;
+            //
+            # 個人ゾロ目
+            case 362: $count = 0; break;
+            //
+            # 個人ピタリ賞
+            case 363: $count = 0; break;
+            //
+            # その他　更新なし
+            default: $count = $count; break;
             //
         }
         return $count;

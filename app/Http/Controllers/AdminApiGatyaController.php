@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
 use App\Models\GachaDiscription;
-
+use App\Models\GachaPrize;
 /*
 | =============================================
 |  ガチャ サイト管理者API コントローラー
@@ -49,10 +49,15 @@ class AdminApiGatyaController extends Controller
         $discriptions = $gacha->discriptions;
         foreach ($discriptions as $discription) {
             $discription->rank_label = $discription->rank_label; //ランクラベル
-            // $g_prizes   = $discription->g_prizes;   //ガチャ商品
-            $discription->g_prizes_max_count = $discription->g_prizes->sum('max_count');     //口数(g_prizes_max_count)
-            $discription->total_point        = $discription->total_point;                    //合計ポイント(total_point)
-            $discription->remaining_count    = $discription->g_prizes->sum('remaining_count');//残数 (remaining_count)
+
+            $discription->total_count_format     = $discription->total_count_format;     //口数(g_prizes_max_count)
+            $discription->average_point_format   = $discription->average_point_format;
+            $discription->winning_ratio_format   = $discription->winning_ratio_format;
+
+            $discription->hit_nums = $discription->hit_nums;//商品の合当選ガチャPLAY数
+
+            $discription->gacha_prizes_count = GachaPrize::where('gacha_id',$gacha->id)->where('gacha_rank_id',$discription->gacha_rank_id)
+            ->get()->count();//登録が茶用品の種類数
 
             $ratio = $gacha->max_count
             ? $discription->g_prizes->sum('max_count')/$gacha->max_count*100 :0;

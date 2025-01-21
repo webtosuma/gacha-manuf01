@@ -52,7 +52,7 @@
 </div>
 
 
-<div class="p-3 bg-light rounded-3 mb-3">
+{{-- <div class="p-3 bg-light rounded-3 mb-3">
     @if ( $gacha->is_published )
         <div class="text-success border-bottom">公開中</div>
     @else
@@ -67,7 +67,7 @@
         <a href="{{ route('admin.gacha.published', $gacha) }}"
         class="btn btn-sm btn-light border">公開設定</a>
     </div>
-</div>
+</div> --}}
 
 
 <div class="p-3 bg-light rounded-3 mb-3">
@@ -86,7 +86,7 @@
             <span>pt</span>
         </div>
     </div>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col">{{ '交換予定ポイント：' }}</div>
         <div class="col text-end">
             <span class="fs-">
@@ -110,7 +110,7 @@
         <div class="col text-end">
             <span>{{ round( $ratio, 1) .'%' }}</span>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 

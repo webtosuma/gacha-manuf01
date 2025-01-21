@@ -90,6 +90,18 @@ require('./components/ExampleComponent.vue').default);
             Vue.component('a-gachaprize-gacharank-container',
             require('./components/admin/gacha/prize/edit/GachaRankContainer.vue').default);
 
+            // ランク キリ番
+            Vue.component('a-gachaprize-gacharank-kiri-container',
+            require('./components/admin/gacha/prize/edit/GachaRankKiriContainer.vue').default);
+
+            // ランク ゾロ目
+            Vue.component('a-gachaprize-gacharank-zoro-container',
+            require('./components/admin/gacha/prize/edit/GachaRankZoroContainer.vue').default);
+
+            // ランク ピタリ賞
+            Vue.component('a-gachaprize-gacharank-pita-container',
+            require('./components/admin/gacha/prize/edit/GachaRankPitaContainer.vue').default);
+
             // 商品リスト
             Vue.component('a-gachaprize-prize-list',
             require('./components/admin/gacha/prize/edit/PrizeList.vue').default);

@@ -354,7 +354,6 @@ class AdminPrizeController extends Controller
                 // $image_dalete    = $request[$param.'_dalete'];      //画像を削除するか否か
                 $image_dalete    = null;                        //画像を削除するか否か
                 $copy_image_puth = $request->copy_image_puth;   //コピー用画像パス
-
                 $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
             //
 

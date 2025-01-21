@@ -6,7 +6,8 @@
     <div class="col">残数</div>
 </div>
 @foreach ($gacha->discriptions as $num => $discription)
-    @if ( $discription->g_prizes->sum('max_count') > 0 )
+    {{-- @if ( $discription->g_prizes->sum('max_count') > 0 ) --}}
+    @if (  $discription->g_prizes->count() > 0 )
         <div class="mx-3 py-2 border-bottom">
 
             <!-- ランク情報 -->
@@ -15,40 +16,43 @@
                 <div class="row align-items-center text-end">
 
                     <div class="col-3 dropdown-toggle text-start">
+                        <!--ランク表示-->
                         <span class="fs-5">{{ $discription->rank_label }}</span>
                     </div>
 
 
                     <div class="col">
-                        <number-comma-component
-                        number="{{ $discription->g_prizes->sum('max_count') }}"></number-comma-component>
+                        <!--口数-->
+                        {{ $discription->total_count_format }}
                     </div>
                     <div class="col">
-                        @php
-                        $ratio = $gacha->max_count
-                        ? $discription->g_prizes->sum('max_count')/$gacha->max_count*100 :0;
-                        @endphp
-                        <span>{{ round( $ratio, 2) .'%' }}</span>
+                        <!--当選率-->
+                        {{  $discription->winning_ratio_format }}
                     </div>
                     <div class="col">
-                        @php
-                        $average = $discription->g_prizes->sum('max_count') ?
-                        $discription->total_point / $discription->g_prizes->sum('max_count') : 0;
-                        @endphp
-                        <number-comma-component
-                        number="{{ round( $average ).' pt' }}"></number-comma-component>
+                        <!--平均PT-->
+                        {{ $discription->average_point_format }}
                     </div>
                     <div class="col">
-                        <number-comma-component
-                        number="{{ $discription->g_prizes->sum('remaining_count') }}"></number-comma-component>
+                        <!--残数-->
+                        {{ $discription->remaining_count_format }}
                     </div>
 
                 </div>
             </button>
 
             <!-- 登録商品 -->
-            <div class="collapse my-3 showww"
+            <div class="collapse my-3
+            @if($discription->gacha_rank_id>300 && $discription->gacha_rank_id<400 && $discription->g_prizes->count()>0 ) showww @endif
+            "
             id="collapse{{$discription->id}}">
+
+            @if( $discription->gacha_rank_id>300 && $discription->gacha_rank_id<400 && $discription->g_prizes->count()>0 )
+                <div class="rounded bg-light p-2 mb-2">
+                    当選番号：{{ $discription->hit_nums }}
+                </div>
+            @endif
+
                 <div class="card card-body overflow-auto bg-body border-0" style="">
                     @foreach ($discription->g_prizes as $g_prize)
                         <div class="row mb-2 text-end">
@@ -56,7 +60,7 @@
                                 <div class="row g-2">
                                     <div class="col-4">
                                         <ratio-image-component
-                                        style_class="ratio ratio-3x4 rounded-3 bg-"
+                                        style_class="ratio ratio-3x4 rounded-3 bg-danger"
                                         url="{{ $g_prize->prize->image_path }}"
                                         ></ratio-image-component>
                                     </div>
@@ -68,23 +72,21 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <number-comma-component
-                                number="{{ $g_prize->max_count }}"></number-comma-component>
+                                <!--口数-->
+                                {{ $g_prize->total_count_format }}
                             </div>
                             <div class="col">
-                                @php
-                                $ratio = $gacha->max_count
-                                ? $g_prize->max_count/$gacha->max_count*100 :0;
-                                @endphp
-                                <span>{{ round( $ratio, 2) .'%' }}</span>
+                                <!--当選率-->
+                                {{  $g_prize->winning_ratio_format }}
                             </div>
                             <div class="col">
+                                <!--平均PT-->
                                 <number-comma-component
                                 number="{{ $g_prize->prize->point.'pt' }}"></number-comma-component>
                             </div>
                             <div class="col">
-                                <number-comma-component
-                                number="{{ $g_prize->remaining_count }}"></number-comma-component>
+                                <!--残数-->
+                                {{ $g_prize->remaining_count_format }}
                             </div>
 
                         </div>

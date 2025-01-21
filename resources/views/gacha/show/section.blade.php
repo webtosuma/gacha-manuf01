@@ -11,14 +11,14 @@
             <!-- Rankラベル(広告がある時は非表示) -->
             @if ( !$gacha->sponsor_ad )
                 @if ($discription->rank_label_image)
-                    <div class="col-12 mx-auto p-5 my-3">
+                    <div class="col-12 mx-auto py-5 my-3">
                         <img class="d-block w-100"
                         src="{{ $discription->rank_label_image }}"
                         alt="{{ $discription->rank_label }}">
                     </div>
                 @else
 
-                    <div class="text-center  p-5 my-3 text-white" style="font-size:6rem;">{{$discription->rank_label }}</div>
+                    <div class="text-center py-5 my-3 text-white" style="font-size:3rem;">{{$discription->rank_label }}</div>
 
                 @endif
             @endif
@@ -47,7 +47,7 @@
                                 url="{{$gacha_prize->prize->image_path}}"
                                 ></ratio-image-component>
 
-                                @if( $discription->gacha_rank_id < 400 )
+                                @if( $discription->gacha_rank_id <= 300 && $discription->gacha_rank_id!=10 )
                                     <!--登録枚数-->
                                     <div class="position-absolute bottom-0 end-0 p-1">
                                         <div class="bg-dark text-white px-2 rounded {{$fs}}"

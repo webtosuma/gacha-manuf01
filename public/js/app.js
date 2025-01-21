@@ -6378,6 +6378,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     delete_gacha_prize_ids: {
       type: [Array, Object],
       "default": []
+    },
+    is_special_rank: {
+      type: Boolean,
+      "default": false
     }
   },
   data: function data() {
@@ -6393,7 +6397,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       new_prizes_ids: [],
       /* 新規登録　商品ID */
 
-      is_special_rank: false,
+      // is_special_rank: false,
       loading: false,
       test: false
     };
@@ -6419,10 +6423,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           g_prize['show'] = true; // ガチャ商品の表示カラム
         });
 
-        _this.isSpecialGachaRank(); /** 特殊商品が否かの保存 */
+        // this.isSpecialGachaRank();/** 特殊商品が否かの保存 */
 
         _this.loading = false; //読み込み中
-        console.log(_this.g_prizes);
+        // console.log(this.g_prizes)
       })["catch"](function (error) {
         // alert('通信エラーが発生しました。')
         // console.log( error.response.data );
@@ -6466,7 +6470,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       // ガチャ商品の非表示
       g_prize.show = false;
-      console.log(this.g_prizes);
+      // console.log( this.g_prizes );
     },
     /** 新規商品データ取得 */getPrizeData: function getPrizeData() {
       var _this2 = this;
@@ -6506,11 +6510,596 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         alert('通信エラーが発生しました。');
         // console.log( error.response.data );
       });
-    },
-    /** 特殊商品が否かの保存 */isSpecialGachaRank: function isSpecialGachaRank() {
-      var array = ['10', '310', '320'];
-      this.is_special_rank = array.includes(this.gacha_rank_id);
     }
+    /** 特殊商品が否かの保存 */
+    // isSpecialGachaRank() {
+    //     const array = ['10','310','320'];
+    //     this.is_special_rank = array.includes(this.gacha_rank_id);
+    // },
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    category_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    r_api_prize: {
+      type: String,
+      "default": ''
+    },
+    //商品
+    rank_label: {
+      type: String,
+      "default": ''
+    },
+    r_api_ranks_gacha_prizes: {
+      type: String,
+      "default": ''
+    },
+    //ガチャ商品
+    gacha_rank_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    delete_gacha_prize_ids: {
+      type: [Array, Object],
+      "default": []
+    },
+    is_special_rank: {
+      type: Boolean,
+      "default": true
+    }
+  },
+  data: function data() {
+    return {
+      g_prizes: [],
+      /* 登録ずみガチャ商品 */
+
+      prize_ids: [],
+      //右を非表示にするID
+
+      new_prizes: [],
+      /* 新規登録　商品 */
+      new_prizes_ids: [],
+      /* 新規登録　商品ID */
+
+      kiri_bet_count: 10,
+      /* キリ番の当選数 管理 */
+
+      // is_special_rank: false,
+      loading: false,
+      test: false
+    };
+  },
+  mounted: function mounted() {
+    this.getData();
+  },
+  methods: {
+    /** ガチャ商品 */getData: function getData() {
+      var _this = this;
+      this.loading = true; //読み込み中　
+
+      // パラメーター
+      var route = this.r_api_ranks_gacha_prizes;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
+        _token: this.token
+      }).then(function (json) {
+        // console.log(json.data);
+
+        _this.g_prizes = json.data;
+        _this.kiri_bet_count = _this.g_prizes.length ? _this.g_prizes[0].special_count : _this.kiri_bet_count;
+        _this.g_prizes.forEach(function (g_prize) {
+          _this.prize_ids.push(g_prize.prize.id);
+          g_prize['show'] = true; // ガチャ商品の表示カラム
+        });
+
+        _this.loading = false; //読み込み中
+        // console.log(this.g_prizes)
+      })["catch"](function (error) {
+        // alert('通信エラーが発生しました。')
+        // console.log( error.response.data );
+      });
+    },
+    /** 新しいガチャ商品の種類を追加 */addGachaPrize: function addGachaPrize(prize_ids) {
+      // 右を非表示にするID
+      this.prize_ids = [].concat(_toConsumableArray(this.prize_ids), _toConsumableArray(prize_ids));
+
+      //  新規登録　商品ID
+      this.new_prizes_ids = [].concat(_toConsumableArray(this.new_prizes_ids), _toConsumableArray(prize_ids));
+      this.getPrizeData(); /* 新規商品データ取得 */
+    },
+    /** 新しいガチャ商品の種類を削除 */removeGachaPrize: function removeGachaPrize(id) {
+      // 右を非表示にするIDから該当IDを削除
+      this.prize_ids = this.prize_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+
+      //  新規登録-商品IDから該当IDを削除
+      this.new_prizes_ids = this.new_prizes_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+      if (this.new_prizes_ids.length > 0) {
+        this.getPrizeData();
+      } else {
+        this.new_prizes = [];
+      }
+    },
+    /** 登録ずみ商品を削除 */removeGachaPrizeIds: function removeGachaPrizeIds(g_prize) {
+      // g_prize.delete = true;
+      // console.log(g_prize);
+      // this.$emit('send-delete-gp-id',g_prize.id);//削除対象のガチャ商品IDを送信
+      // return
+
+      // 商品ID配列の更新
+      var new_prize_ids = this.prize_ids.filter(function (prize_id) {
+        return prize_id != g_prize.prize.id;
+      });
+      this.prize_ids = new_prize_ids;
+
+      // ガチャ商品の非表示
+      g_prize.show = false;
+      // console.log( this.g_prizes );
+    },
+    /** 新規商品データ取得 */getPrizeData: function getPrizeData() {
+      var _this2 = this;
+      var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.r_api_prize;
+      this.loading = true; //読み込み中
+
+      // パラメーター
+      var inputs = {
+        _token: this.token,
+        ids: this.new_prizes_ids
+      };
+
+      // const route = this.r_api_prize;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs).then(function (json) {
+        // console.log(json.data);
+
+        //ページネーションデータ
+        var paginate = json.data.prizes;
+
+        // console.log(paginate.data);
+        // return
+
+        // 商品情報の登録（新規登録・ページネーション追加）
+        _this2.new_prizes = route == _this2.r_api_prize ? paginate.data : [].concat(_toConsumableArray(_this2.new_prizes), _toConsumableArray(paginate.data));
+        // return
+
+        _this2.loading = false; //読み込み中
+
+        /* 次のデータの読み込み */
+        var current_page = paginate.current_page; //表示中ページ
+        var last_page = paginate.last_page; //最終ページ
+        if (current_page != last_page) {
+          var nextPageUrl = paginate.next_page_url; //URLの更新
+          _this2.getPrizeData(nextPageUrl);
+        }
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        // console.log( error.response.data );
+      });
+    }
+    /** 特殊商品が否かの保存 */
+    // isSpecialGachaRank() {
+    //     const array = ['10','310','320'];
+    //     this.is_special_rank = array.includes(this.gacha_rank_id);
+    // },
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    category_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    r_api_prize: {
+      type: String,
+      "default": ''
+    },
+    //商品
+    rank_label: {
+      type: String,
+      "default": ''
+    },
+    r_api_ranks_gacha_prizes: {
+      type: String,
+      "default": ''
+    },
+    //ガチャ商品
+    gacha_rank_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    delete_gacha_prize_ids: {
+      type: [Array, Object],
+      "default": []
+    },
+    is_special_rank: {
+      type: Boolean,
+      "default": true
+    }
+  },
+  data: function data() {
+    return {
+      g_prizes: [],
+      /* 登録ずみガチャ商品 */
+
+      prize_ids: [],
+      //右を非表示にするID
+
+      new_prizes: [],
+      /* 新規登録　商品 */
+      new_prizes_ids: [],
+      /* 新規登録　商品ID */
+
+      // is_special_rank: false,
+      loading: false,
+      test: false
+    };
+  },
+  mounted: function mounted() {
+    this.getData();
+  },
+  methods: {
+    /** ガチャ商品 */getData: function getData() {
+      var _this = this;
+      this.loading = true; //読み込み中　
+
+      // パラメーター
+      var route = this.r_api_ranks_gacha_prizes;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
+        _token: this.token
+      }).then(function (json) {
+        // console.log(json.data);
+
+        _this.g_prizes = json.data;
+        _this.g_prizes.forEach(function (g_prize) {
+          _this.prize_ids.push(g_prize.prize.id);
+          g_prize['show'] = true; // ガチャ商品の表示カラム
+        });
+
+        // this.isSpecialGachaRank();/** 特殊商品が否かの保存 */
+
+        _this.loading = false; //読み込み中
+        // console.log(this.g_prizes)
+      })["catch"](function (error) {
+        // alert('通信エラーが発生しました。')
+        // console.log( error.response.data );
+      });
+    },
+    /** 新しいガチャ商品の種類を追加 */addGachaPrize: function addGachaPrize(prize_ids) {
+      // 右を非表示にするID
+      this.prize_ids = [].concat(_toConsumableArray(this.prize_ids), _toConsumableArray(prize_ids));
+
+      //  新規登録　商品ID
+      this.new_prizes_ids = [].concat(_toConsumableArray(this.new_prizes_ids), _toConsumableArray(prize_ids));
+      this.getPrizeData(); /* 新規商品データ取得 */
+    },
+    /** 新しいガチャ商品の種類を削除 */removeGachaPrize: function removeGachaPrize(id) {
+      // 右を非表示にするIDから該当IDを削除
+      this.prize_ids = this.prize_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+
+      //  新規登録-商品IDから該当IDを削除
+      this.new_prizes_ids = this.new_prizes_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+      if (this.new_prizes_ids.length > 0) {
+        this.getPrizeData();
+      } else {
+        this.new_prizes = [];
+      }
+    },
+    /** 登録ずみ商品を削除 */removeGachaPrizeIds: function removeGachaPrizeIds(g_prize) {
+      // g_prize.delete = true;
+      // console.log(g_prize);
+      // this.$emit('send-delete-gp-id',g_prize.id);//削除対象のガチャ商品IDを送信
+      // return
+
+      // 商品ID配列の更新
+      var new_prize_ids = this.prize_ids.filter(function (prize_id) {
+        return prize_id != g_prize.prize.id;
+      });
+      this.prize_ids = new_prize_ids;
+
+      // ガチャ商品の非表示
+      g_prize.show = false;
+      // console.log( this.g_prizes );
+    },
+    /** 新規商品データ取得 */getPrizeData: function getPrizeData() {
+      var _this2 = this;
+      var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.r_api_prize;
+      this.loading = true; //読み込み中
+
+      // パラメーター
+      var inputs = {
+        _token: this.token,
+        ids: this.new_prizes_ids
+      };
+
+      // const route = this.r_api_prize;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs).then(function (json) {
+        // console.log(json.data);
+
+        //ページネーションデータ
+        var paginate = json.data.prizes;
+
+        // console.log(paginate.data);
+        // return
+
+        // 商品情報の登録（新規登録・ページネーション追加）
+        _this2.new_prizes = route == _this2.r_api_prize ? paginate.data : [].concat(_toConsumableArray(_this2.new_prizes), _toConsumableArray(paginate.data));
+        // return
+
+        _this2.loading = false; //読み込み中
+
+        /* 次のデータの読み込み */
+        var current_page = paginate.current_page; //表示中ページ
+        var last_page = paginate.last_page; //最終ページ
+        if (current_page != last_page) {
+          var nextPageUrl = paginate.next_page_url; //URLの更新
+          _this2.getPrizeData(nextPageUrl);
+        }
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        // console.log( error.response.data );
+      });
+    }
+    /** 特殊商品が否かの保存 */
+    // isSpecialGachaRank() {
+    //     const array = ['10','310','320'];
+    //     this.is_special_rank = array.includes(this.gacha_rank_id);
+    // },
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    category_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    r_api_prize: {
+      type: String,
+      "default": ''
+    },
+    //商品
+    rank_label: {
+      type: String,
+      "default": ''
+    },
+    r_api_ranks_gacha_prizes: {
+      type: String,
+      "default": ''
+    },
+    //ガチャ商品
+    gacha_rank_id: {
+      type: [String, Number],
+      "default": ''
+    },
+    delete_gacha_prize_ids: {
+      type: [Array, Object],
+      "default": []
+    },
+    is_special_rank: {
+      type: Boolean,
+      "default": true
+    }
+  },
+  data: function data() {
+    return {
+      g_prizes: [],
+      /* 登録ずみガチャ商品 */
+
+      prize_ids: [],
+      //右を非表示にするID
+
+      new_prizes: [],
+      /* 新規登録　商品 */
+      new_prizes_ids: [],
+      /* 新規登録　商品ID */
+
+      // is_special_rank: false,
+      loading: false,
+      test: false
+    };
+  },
+  mounted: function mounted() {
+    this.getData();
+  },
+  methods: {
+    /** ガチャ商品 */getData: function getData() {
+      var _this = this;
+      this.loading = true; //読み込み中　
+
+      // パラメーター
+      var route = this.r_api_ranks_gacha_prizes;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
+        _token: this.token
+      }).then(function (json) {
+        // console.log(json.data);
+
+        _this.g_prizes = json.data;
+        _this.g_prizes.forEach(function (g_prize) {
+          _this.prize_ids.push(g_prize.prize.id);
+          g_prize['show'] = true; // ガチャ商品の表示カラム
+        });
+
+        // this.isSpecialGachaRank();/** 特殊商品が否かの保存 */
+
+        _this.loading = false; //読み込み中
+        // console.log(this.g_prizes)
+      })["catch"](function (error) {
+        // alert('通信エラーが発生しました。')
+        // console.log( error.response.data );
+      });
+    },
+    /** 新しいガチャ商品の種類を追加 */addGachaPrize: function addGachaPrize(prize_ids) {
+      // 右を非表示にするID
+      this.prize_ids = [].concat(_toConsumableArray(this.prize_ids), _toConsumableArray(prize_ids));
+
+      //  新規登録　商品ID
+      this.new_prizes_ids = [].concat(_toConsumableArray(this.new_prizes_ids), _toConsumableArray(prize_ids));
+      this.getPrizeData(); /* 新規商品データ取得 */
+    },
+    /** 新しいガチャ商品の種類を削除 */removeGachaPrize: function removeGachaPrize(id) {
+      // 右を非表示にするIDから該当IDを削除
+      this.prize_ids = this.prize_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+
+      //  新規登録-商品IDから該当IDを削除
+      this.new_prizes_ids = this.new_prizes_ids.filter(function (p_id) {
+        return id != p_id;
+      });
+      if (this.new_prizes_ids.length > 0) {
+        this.getPrizeData();
+      } else {
+        this.new_prizes = [];
+      }
+    },
+    /** 登録ずみ商品を削除 */removeGachaPrizeIds: function removeGachaPrizeIds(g_prize) {
+      // g_prize.delete = true;
+      // console.log(g_prize);
+      // this.$emit('send-delete-gp-id',g_prize.id);//削除対象のガチャ商品IDを送信
+      // return
+
+      // 商品ID配列の更新
+      var new_prize_ids = this.prize_ids.filter(function (prize_id) {
+        return prize_id != g_prize.prize.id;
+      });
+      this.prize_ids = new_prize_ids;
+
+      // ガチャ商品の非表示
+      g_prize.show = false;
+      // console.log( this.g_prizes );
+    },
+    /** 新規商品データ取得 */getPrizeData: function getPrizeData() {
+      var _this2 = this;
+      var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.r_api_prize;
+      this.loading = true; //読み込み中
+
+      // パラメーター
+      var inputs = {
+        _token: this.token,
+        ids: this.new_prizes_ids
+      };
+
+      // const route = this.r_api_prize;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs).then(function (json) {
+        // console.log(json.data);
+
+        //ページネーションデータ
+        var paginate = json.data.prizes;
+
+        // console.log(paginate.data);
+        // return
+
+        // 商品情報の登録（新規登録・ページネーション追加）
+        _this2.new_prizes = route == _this2.r_api_prize ? paginate.data : [].concat(_toConsumableArray(_this2.new_prizes), _toConsumableArray(paginate.data));
+        // return
+
+        _this2.loading = false; //読み込み中
+
+        /* 次のデータの読み込み */
+        var current_page = paginate.current_page; //表示中ページ
+        var last_page = paginate.last_page; //最終ページ
+        if (current_page != last_page) {
+          var nextPageUrl = paginate.next_page_url; //URLの更新
+          _this2.getPrizeData(nextPageUrl);
+        }
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        // console.log( error.response.data );
+      });
+    }
+    /** 特殊商品が否かの保存 */
+    // isSpecialGachaRank() {
+    //     const array = ['10','310','320'];
+    //     this.is_special_rank = array.includes(this.gacha_rank_id);
+    // },
   }
 });
 
@@ -11409,7 +11998,7 @@ var render = function render() {
         style_class: "ratio ratio-3x4 rounded-3",
         url: g_prize.prize.image_path
       }
-    }), _vm._v("\n\n                            " + _vm._s(g_prize.id) + "\n                        ")], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td", [_c("input", {
+    })], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td", [_c("input", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -11600,6 +12189,690 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=template&id=07ee723e":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=template&id=07ee723e ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row g-1"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "card bg-white overflow-auto",
+    staticStyle: {
+      height: "90vh"
+    }
+  }, [_vm.is_special_rank ? _c("div", {
+    staticClass: "bg-danger-subtle p-2 form-text m-0"
+  }, [_vm.gacha_rank_id >= 360 && _vm.gacha_rank_id < 370 ? _c("span", [_vm._v("*当選は、個人の利用数に対して判定されます。")]) : _c("span", [_vm._v("*当選は、ガチャの総口数に対して判定されます。")]), _vm._v(" "), _c("br"), _vm._v("\n\n                *" + _vm._s(_vm.rank_label) + "商品の当選間隔（○回に1回当選）を入力してください。"), _c("br"), _vm._v("\n                *" + _vm._s(_vm.rank_label) + "商品の当選予定数は、全体の商品数量に含まれません。"), _c("br"), _vm._v("\n                *" + _vm._s(_vm.rank_label) + "当選時には、ランダムで他の登録商品の当選数が１削除されます。"), _c("br"), _vm._v("\n                *商品の種類を複数登録した場合、" + _vm._s(_vm.rank_label) + "当選時にはランダムで" + _vm._s(_vm.rank_label) + "商品が付与されます。\n            ")]) : _vm._e(), _vm._v(" "), _vm.test ? _c("div", {
+    staticClass: "p-2"
+  }, [_vm._v("prize ids:" + _vm._s(_vm.prize_ids))]) : _vm._e(), _vm._v(" "), _c("table", {
+    staticClass: "table"
+  }, [_c("thead", [_c("tr", [_c("th", {
+    attrs: {
+      colspan: "2"
+    }
+  }, [_vm._v(_vm._s(_vm.rank_label))]), _vm._v(" "), _c("td", {
+    attrs: {
+      colspan: "4"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex gap-3 justify-content-end align-items-center"
+  }, [_vm._v("\n                            ○回に1回当選\n                            "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.kiri_bet_count,
+      expression: "kiri_bet_count"
+    }],
+    staticClass: "form-control form-control-sm text-end",
+    staticStyle: {
+      width: "6rem"
+    },
+    attrs: {
+      type: "number",
+      min: "1"
+    },
+    domProps: {
+      value: _vm.kiri_bet_count
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.kiri_bet_count = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("td")])]), _vm._v(" "), _vm._l(_vm.g_prizes, function (g_prize, key) {
+    return _c("tbody", {
+      key: key
+    }, [_c("tr", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: g_prize.show,
+        expression: " g_prize.show "
+      }]
+    }, [_c("td", {
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: g_prize.prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "6rem"
+      }
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.kiri_bet_count,
+        expression: "kiri_bet_count"
+      }],
+      staticClass: "form-control form-control-sm text-end",
+      attrs: {
+        type: "hidden",
+        name: "gri" + _vm.gacha_rank_id + "-special_counts[]",
+        disabled: false,
+        min: "0"
+      },
+      domProps: {
+        value: _vm.kiri_bet_count
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.kiri_bet_count = $event.target.value;
+        }
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "2rem"
+      }
+    }, [_c("input", {
+      staticClass: "btn-check",
+      attrs: {
+        name: "gri" + _vm.gacha_rank_id + "-delete_gacha_prize_ids[]",
+        type: "checkbox",
+        id: "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id,
+        autocomplete: "off"
+      },
+      domProps: {
+        value: g_prize.id
+      }
+    }), _vm._v(" "),  true ? _c("label", {
+      staticClass: "btn btn-sm border text-danger",
+      attrs: {
+        "for": "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeGachaPrizeIds(g_prize);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-trash3"
+    })]) : 0])])]);
+  }), _vm._v(" "), !_vm.loading && _vm.prize_ids.length == 0 && _vm.new_prizes.length == 0 ? _c("tbody", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _c("tbody", _vm._l(_vm.new_prizes, function (prize, p_key) {
+    return _c("tr", {
+      key: p_key
+    }, [_c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "6rem"
+      }
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.kiri_bet_count,
+        expression: "kiri_bet_count"
+      }],
+      staticClass: "form-control form-control-sm text-end",
+      attrs: {
+        type: "hidden",
+        name: "gri" + _vm.gacha_rank_id + "-new_special_counts[]",
+        disabled: false,
+        min: "0"
+      },
+      domProps: {
+        value: _vm.kiri_bet_count
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.kiri_bet_count = $event.target.value;
+        }
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "gri" + _vm.gacha_rank_id + "-new_prize_ids[]"
+      },
+      domProps: {
+        value: prize.id
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "2rem"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-sm border text-danger",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeGachaPrize(prize.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-trash3"
+    })])])]);
+  }), 0), _vm._v(" "), _vm.loading ? _c("tr", [_vm._m(1)]) : _vm._e()], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "col"
+  }, [_c("a-gachaprize-prize-list", {
+    attrs: {
+      parent_prize_ids: _vm.prize_ids,
+      gacha_rank_id: _vm.gacha_rank_id,
+      token: _vm.token,
+      category_id: _vm.category_id,
+      r_api_prize: _vm.r_api_prize,
+      test: _vm.test
+    },
+    on: {
+      "send-prize-id": _vm.addGachaPrize
+    }
+  })], 1)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("tr", [_c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=template&id=40084fcd":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=template&id=40084fcd ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row g-1"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "card bg-white overflow-auto",
+    staticStyle: {
+      height: "90vh"
+    }
+  }, [_vm.is_special_rank ? _c("div", {
+    staticClass: "bg-danger-subtle p-2 form-text m-0"
+  }, [_vm.gacha_rank_id >= 360 && _vm.gacha_rank_id < 370 ? _c("span", [_vm._v("*当選は、個人の利用数に対して判定されます。")]) : _c("span", [_vm._v("*当選は、ガチャの総口数に対して判定されます。")]), _vm._v(" "), _c("br"), _vm._v("\n\n                *" + _vm._s(_vm.rank_label) + "の商品が当選する「当選するプレイ数」を入力してください。"), _c("br"), _vm._v("\n                *" + _vm._s(_vm.rank_label) + "目商品の当選予定数は、全体の商品数量に含まれません。"), _c("br"), _vm._v("\n                *" + _vm._s(_vm.rank_label) + "目当選時には、ランダムで他の登録商品の当選数が１削除されます。"), _c("br"), _vm._v("\n                *「当選プレイ数」が重複した場合、" + _vm._s(_vm.rank_label) + "目当選時にはランダムで" + _vm._s(_vm.rank_label) + "目商品が付与されます。\n            ")]) : _vm._e(), _vm._v(" "), _vm.test ? _c("div", {
+    staticClass: "p-2"
+  }, [_vm._v("prize ids:" + _vm._s(_vm.prize_ids))]) : _vm._e(), _vm._v(" "), _c("table", {
+    staticClass: "table"
+  }, [_c("thead", [_c("tr", [_c("th", {
+    attrs: {
+      colspan: "5"
+    }
+  }, [_vm._v(_vm._s(_vm.rank_label))]), _vm._v(" "), _c("th", {
+    attrs: {
+      colspan: "2"
+    }
+  }, [_vm._v("当選プレイ数")]), _vm._v(" "), _c("td")])]), _vm._v(" "), _vm._l(_vm.g_prizes, function (g_prize, key) {
+    return _c("tbody", {
+      key: key
+    }, [_c("tr", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: g_prize.show,
+        expression: " g_prize.show "
+      }]
+    }, [_c("td", {
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: g_prize.prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "6rem"
+      }
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: g_prize.special_count,
+        expression: "g_prize.special_count"
+      }],
+      staticClass: "form-control form-control-sm text-end",
+      attrs: {
+        type: "number",
+        name: "gri" + _vm.gacha_rank_id + "-special_counts[]",
+        disabled: false,
+        min: "1"
+      },
+      domProps: {
+        value: g_prize.special_count
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(g_prize, "special_count", $event.target.value);
+        }
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "2rem"
+      }
+    }, [_c("input", {
+      staticClass: "btn-check",
+      attrs: {
+        name: "gri" + _vm.gacha_rank_id + "-delete_gacha_prize_ids[]",
+        type: "checkbox",
+        id: "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id,
+        autocomplete: "off"
+      },
+      domProps: {
+        value: g_prize.id
+      }
+    }), _vm._v(" "),  true ? _c("label", {
+      staticClass: "btn btn-sm border text-danger",
+      attrs: {
+        "for": "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeGachaPrizeIds(g_prize);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-trash3"
+    })]) : 0])])]);
+  }), _vm._v(" "), !_vm.loading && _vm.prize_ids.length == 0 && _vm.new_prizes.length == 0 ? _c("tbody", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _c("tbody", _vm._l(_vm.new_prizes, function (prize, p_key) {
+    return _c("tr", {
+      key: p_key
+    }, [_c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "6rem"
+      }
+    }, [_c("input", {
+      staticClass: "form-control form-control-sm text-end",
+      attrs: {
+        type: "number",
+        value: "1",
+        name: "gri" + _vm.gacha_rank_id + "-new_special_counts[]",
+        disabled: false,
+        min: "1"
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "gri" + _vm.gacha_rank_id + "-new_prize_ids[]"
+      },
+      domProps: {
+        value: prize.id
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "2rem"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-sm border text-danger",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeGachaPrize(prize.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-trash3"
+    })])])]);
+  }), 0), _vm._v(" "), _vm.loading ? _c("tr", [_vm._m(1)]) : _vm._e()], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "col"
+  }, [_c("a-gachaprize-prize-list", {
+    attrs: {
+      parent_prize_ids: _vm.prize_ids,
+      gacha_rank_id: _vm.gacha_rank_id,
+      token: _vm.token,
+      category_id: _vm.category_id,
+      r_api_prize: _vm.r_api_prize,
+      test: _vm.test
+    },
+    on: {
+      "send-prize-id": _vm.addGachaPrize
+    }
+  })], 1)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("tr", [_c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=template&id=56806141":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=template&id=56806141 ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row g-1"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "card bg-white overflow-auto",
+    staticStyle: {
+      height: "90vh"
+    }
+  }, [_vm.is_special_rank ? _c("div", {
+    staticClass: "bg-danger-subtle p-2 form-text m-0"
+  }, [_vm.gacha_rank_id >= 360 && _vm.gacha_rank_id < 370 ? _c("span", [_vm._v("*当選は、個人の利用数に対して判定されます。")]) : _c("span", [_vm._v("*当選は、ガチャの総口数に対して判定されます。")]), _vm._v(" "), _c("br"), _vm._v("\n\n                *" + _vm._s(_vm.rank_label) + "商品の当選予定数は、全体の商品数量に含まれません。"), _c("br"), _vm._v("\n                *" + _vm._s(_vm.rank_label) + "当選時には、ランダムで他の登録商品の当選数が１削除されます。"), _c("br"), _vm._v("\n                *商品の種類を複数登録した場合、" + _vm._s(_vm.rank_label) + "当選時にはランダムで" + _vm._s(_vm.rank_label) + "商品が付与されます。\n            ")]) : _vm._e(), _vm._v(" "), _vm.test ? _c("div", {
+    staticClass: "p-2"
+  }, [_vm._v("prize ids:" + _vm._s(_vm.prize_ids))]) : _vm._e(), _vm._v(" "), _c("table", {
+    staticClass: "table"
+  }, [_c("thead", [_c("tr", [_c("th", {
+    attrs: {
+      colspan: "5"
+    }
+  }, [_vm._v(_vm._s(_vm.rank_label))]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td")])]), _vm._v(" "), _vm._l(_vm.g_prizes, function (g_prize, key) {
+    return _c("tbody", {
+      key: key
+    }, [_c("tr", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: g_prize.show,
+        expression: " g_prize.show "
+      }]
+    }, [_c("td", {
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: g_prize.prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(g_prize.prize.point) + " pt")]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "2rem"
+      }
+    }, [_c("input", {
+      staticClass: "btn-check",
+      attrs: {
+        name: "gri" + _vm.gacha_rank_id + "-delete_gacha_prize_ids[]",
+        type: "checkbox",
+        id: "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id,
+        autocomplete: "off"
+      },
+      domProps: {
+        value: g_prize.id
+      }
+    }), _vm._v(" "),  true ? _c("label", {
+      staticClass: "btn btn-sm border text-danger",
+      attrs: {
+        "for": "delete_gasha_prizes" + _vm.gacha_rank_id + "-" + g_prize.id
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeGachaPrizeIds(g_prize);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-trash3"
+    })]) : 0])])]);
+  }), _vm._v(" "), !_vm.loading && _vm.prize_ids.length == 0 && _vm.new_prizes.length == 0 ? _c("tbody", [_vm._m(0)]) : _vm._e(), _vm._v(" "), _c("tbody", _vm._l(_vm.new_prizes, function (prize, p_key) {
+    return _c("tr", {
+      key: p_key
+    }, [_c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "3rem"
+      },
+      attrs: {
+        scope: "row"
+      }
+    }, [_c("ratio-image-component", {
+      attrs: {
+        style_class: "ratio ratio-3x4 rounded-3",
+        url: prize.image_path
+      }
+    })], 1), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle"
+    }, [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "6rem"
+      }
+    }, [_c("input", {
+      attrs: {
+        type: "hidden",
+        name: "gri" + _vm.gacha_rank_id + "-new_prize_ids[]"
+      },
+      domProps: {
+        value: prize.id
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticClass: "bg-success-subtle",
+      staticStyle: {
+        width: "2rem"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-sm border text-danger",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeGachaPrize(prize.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-trash3"
+    })])])]);
+  }), 0), _vm._v(" "), _vm.loading ? _c("tr", [_vm._m(1)]) : _vm._e()], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "col"
+  }, [_c("a-gachaprize-prize-list", {
+    attrs: {
+      parent_prize_ids: _vm.prize_ids,
+      gacha_rank_id: _vm.gacha_rank_id,
+      token: _vm.token,
+      category_id: _vm.category_id,
+      r_api_prize: _vm.r_api_prize,
+      test: _vm.test
+    },
+    on: {
+      "send-prize-id": _vm.addGachaPrize
+    }
+  })], 1)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("tr", [_c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center text-secondary border-0 py-5",
+    attrs: {
+      colspan: "8"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Loading...")])])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=template&id=ac081efc ***!
@@ -11653,30 +12926,76 @@ var render = function render() {
       staticClass: "fs-5"
     }, [_vm._v(_vm._s(discription.rank_label))])]), _vm._v(" "), _c("div", {
       staticClass: "col"
-    }, [_c("number-comma-component", {
-      attrs: {
-        number: discription.g_prizes_max_count
-      }
-    })], 1), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                " + _vm._s(discription.total_count_format) + "\n                            ")]), _vm._v(" "), _c("div", {
       staticClass: "col"
-    }, [_c("number-comma-component", {
-      attrs: {
-        number: discription.g_prizes_ratio
-      }
-    }), _vm._v(" "), _c("span", [_vm._v("%")])], 1), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                " + _vm._s(discription.winning_ratio_format) + "\n                            ")]), _vm._v(" "), _c("div", {
       staticClass: "col"
-    }, [_c("number-comma-component", {
-      attrs: {
-        number: discription.total_point
-      }
-    }), _vm._v(" "), _c("span", [_vm._v("pt")])], 1)])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                " + _vm._s(discription.average_point_format) + "\n                            ")])])]), _vm._v(" "), _c("div", {
       staticClass: "collapse my-3 showww",
+      "class": {
+        showww: discription.gacha_rank_id > 300 && discription.gacha_rank_id < 400 && discription.gacha_prizes_count > 0
+      },
       attrs: {
         id: "collapse" + discription.id
       }
     }, [_c("div", {
       staticClass: "px-3"
-    }, [_c("a-gachaprize-gacharank-container", {
+    }, [discription.gacha_rank_id > 300 && discription.gacha_rank_id < 400 && discription.gacha_prizes_count > 0 ? _c("div", {
+      staticClass: "rounded bg-light p-2 mb-2"
+    }, [_vm._v("\n                                当選番号：" + _vm._s(discription.hit_nums) + "\n                            ")]) : _vm._e(), _vm._v(" "), ["10"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-container", {
+      attrs: {
+        token: _vm.token,
+        category_id: _vm.category_id,
+        r_api_prize: _vm.r_api_prize,
+        rank_label: discription.rank_label,
+        r_api_ranks_gacha_prizes: _vm.r_api_ranks_gacha_prizes + "/" + discription.id,
+        gacha_rank_id: discription.gacha_rank_id,
+        delete_gacha_prize_ids: _vm.delete_gacha_prize_ids,
+        is_special_rank: true
+      },
+      on: {
+        "send-delete-gp-id": _vm.addDeleteGachaPrizeId
+      }
+    }) : ["310", "361"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-kiri-container", {
+      attrs: {
+        token: _vm.token,
+        category_id: _vm.category_id,
+        r_api_prize: _vm.r_api_prize,
+        rank_label: discription.rank_label,
+        r_api_ranks_gacha_prizes: _vm.r_api_ranks_gacha_prizes + "/" + discription.id,
+        gacha_rank_id: discription.gacha_rank_id,
+        delete_gacha_prize_ids: _vm.delete_gacha_prize_ids
+      },
+      on: {
+        "send-delete-gp-id": _vm.addDeleteGachaPrizeId
+      }
+    }) : ["320", "362"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-zoro-container", {
+      attrs: {
+        token: _vm.token,
+        category_id: _vm.category_id,
+        r_api_prize: _vm.r_api_prize,
+        rank_label: discription.rank_label,
+        r_api_ranks_gacha_prizes: _vm.r_api_ranks_gacha_prizes + "/" + discription.id,
+        gacha_rank_id: discription.gacha_rank_id,
+        delete_gacha_prize_ids: _vm.delete_gacha_prize_ids
+      },
+      on: {
+        "send-delete-gp-id": _vm.addDeleteGachaPrizeId
+      }
+    }) : ["330", "363"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-pita-container", {
+      attrs: {
+        token: _vm.token,
+        category_id: _vm.category_id,
+        r_api_prize: _vm.r_api_prize,
+        rank_label: discription.rank_label,
+        r_api_ranks_gacha_prizes: _vm.r_api_ranks_gacha_prizes + "/" + discription.id,
+        gacha_rank_id: discription.gacha_rank_id,
+        delete_gacha_prize_ids: _vm.delete_gacha_prize_ids
+      },
+      on: {
+        "send-delete-gp-id": _vm.addDeleteGachaPrizeId
+      }
+    }) : _c("a-gachaprize-gacharank-container", {
       attrs: {
         token: _vm.token,
         category_id: _vm.category_id,
@@ -17428,6 +18747,15 @@ Vue.component('a-gachaprize-edit', (__webpack_require__(/*! ./components/admin/g
 
 // ランク
 Vue.component('a-gachaprize-gacharank-container', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/GachaRankContainer.vue */ "./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue")["default"]));
+
+// ランク キリ番
+Vue.component('a-gachaprize-gacharank-kiri-container', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/GachaRankKiriContainer.vue */ "./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue")["default"]));
+
+// ランク ゾロ目
+Vue.component('a-gachaprize-gacharank-zoro-container', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/GachaRankZoroContainer.vue */ "./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue")["default"]));
+
+// ランク ピタリ賞
+Vue.component('a-gachaprize-gacharank-pita-container', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/GachaRankPitaContainer.vue */ "./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue")["default"]));
 
 // 商品リスト
 Vue.component('a-gachaprize-prize-list', (__webpack_require__(/*! ./components/admin/gacha/prize/edit/PrizeList.vue */ "./resources/js/components/admin/gacha/prize/edit/PrizeList.vue")["default"]));
@@ -41290,6 +42618,123 @@ component.options.__file = "resources/js/components/admin/gacha/prize/edit/Gacha
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _GachaRankKiriContainer_vue_vue_type_template_id_07ee723e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GachaRankKiriContainer.vue?vue&type=template&id=07ee723e */ "./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=template&id=07ee723e");
+/* harmony import */ var _GachaRankKiriContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GachaRankKiriContainer.vue?vue&type=script&lang=js */ "./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GachaRankKiriContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GachaRankKiriContainer_vue_vue_type_template_id_07ee723e__WEBPACK_IMPORTED_MODULE_0__.render,
+  _GachaRankKiriContainer_vue_vue_type_template_id_07ee723e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _GachaRankPitaContainer_vue_vue_type_template_id_40084fcd__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GachaRankPitaContainer.vue?vue&type=template&id=40084fcd */ "./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=template&id=40084fcd");
+/* harmony import */ var _GachaRankPitaContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GachaRankPitaContainer.vue?vue&type=script&lang=js */ "./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GachaRankPitaContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GachaRankPitaContainer_vue_vue_type_template_id_40084fcd__WEBPACK_IMPORTED_MODULE_0__.render,
+  _GachaRankPitaContainer_vue_vue_type_template_id_40084fcd__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _GachaRankZoroContainer_vue_vue_type_template_id_56806141__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GachaRankZoroContainer.vue?vue&type=template&id=56806141 */ "./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=template&id=56806141");
+/* harmony import */ var _GachaRankZoroContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GachaRankZoroContainer.vue?vue&type=script&lang=js */ "./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GachaRankZoroContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GachaRankZoroContainer_vue_vue_type_template_id_56806141__WEBPACK_IMPORTED_MODULE_0__.render,
+  _GachaRankZoroContainer_vue_vue_type_template_id_56806141__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/gacha/prize/edit/Index.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/admin/gacha/prize/edit/Index.vue ***!
@@ -42797,6 +44242,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankKiriContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankKiriContainer.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankKiriContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankPitaContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankPitaContainer.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankPitaContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankZoroContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankZoroContainer.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankZoroContainer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/admin/gacha/prize/edit/Index.vue?vue&type=script&lang=js ***!
@@ -43648,6 +45141,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankContainer_vue_vue_type_template_id_82333d5a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankContainer.vue?vue&type=template&id=82333d5a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankContainer.vue?vue&type=template&id=82333d5a");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=template&id=07ee723e":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=template&id=07ee723e ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankKiriContainer_vue_vue_type_template_id_07ee723e__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankKiriContainer_vue_vue_type_template_id_07ee723e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankKiriContainer_vue_vue_type_template_id_07ee723e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankKiriContainer.vue?vue&type=template&id=07ee723e */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankKiriContainer.vue?vue&type=template&id=07ee723e");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=template&id=40084fcd":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=template&id=40084fcd ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankPitaContainer_vue_vue_type_template_id_40084fcd__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankPitaContainer_vue_vue_type_template_id_40084fcd__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankPitaContainer_vue_vue_type_template_id_40084fcd__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankPitaContainer.vue?vue&type=template&id=40084fcd */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankPitaContainer.vue?vue&type=template&id=40084fcd");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=template&id=56806141":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=template&id=56806141 ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankZoroContainer_vue_vue_type_template_id_56806141__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankZoroContainer_vue_vue_type_template_id_56806141__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GachaRankZoroContainer_vue_vue_type_template_id_56806141__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GachaRankZoroContainer.vue?vue&type=template&id=56806141 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/gacha/prize/edit/GachaRankZoroContainer.vue?vue&type=template&id=56806141");
 
 
 /***/ }),

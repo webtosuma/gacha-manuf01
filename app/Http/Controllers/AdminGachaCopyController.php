@@ -131,11 +131,12 @@ class AdminGachaCopyController extends Controller
         foreach ($g_prizes as $g_prize)
         {
             $copy_g_prize = new GachaPrize([
-                'gacha_id'       => $copy_gacha->id,      //ガチャリレーション
-                'prize_id'       => $g_prize['prize_id'], //商品リレーション
+                'gacha_id'       => $copy_gacha->id,           //ガチャリレーション
+                'prize_id'       => $g_prize['prize_id'],      //商品リレーション
                 'gacha_rank_id'  => $g_prize['gacha_rank_id'], //ランクID
-                'max_count'      => $g_prize['max_count'], //景品総数
-                'remaining_count'=> $g_prize['max_count'], //景品残数(初期値にリセット)
+                'max_count'      => $g_prize['max_count'],     //景品総数
+                'remaining_count'=> $g_prize['max_count'],     //景品残数(初期値にリセット)
+                'special_count'  => $g_prize['special_count'], //特別なランク専用数 2024/12/23追加　//default(NULL)
             ]);
             $copy_g_prize->save();
         }

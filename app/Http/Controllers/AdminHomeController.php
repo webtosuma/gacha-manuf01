@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Gacha;
 use App\Http\Controllers\AdminPointHistoryMonthly as Monthly;
 
 /*
@@ -30,7 +31,14 @@ class AdminHomeController extends Controller
         $unresponsed_contacts_count = Auth()->user()->admin->unresponsed_contacts->count();
 
         # 公開中ガチャ
-        $gachas = GachaController::getPublishedGachas( $category_code='all' );
+        // $gachas = GachaController::getPublishedGachas( $category_code='all' );
+        $gachas = Gacha::orderBy('is_sold_out')//売り切れは下
+        ->where('published_at', '<=', now())//公開中のみ
+        ->has('category')//カテゴリーが存在するもののみ
+        ->orderByDesc('published_at')
+        ->orderByDesc('created_at')
+        ->paginate( 20 );//ページネーション
+
 
         return view('admin.home',compact(
             'users','sales','waiting_shippeds_count','unresponsed_contacts_count','gachas'

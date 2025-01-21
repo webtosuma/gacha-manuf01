@@ -30,6 +30,8 @@
                                 <ratio-image-component
                                 style_class="ratio ratio-3x4 rounded-3"
                                 :url=" g_prize.prize.image_path " />
+
+                                {{ g_prize.id }}
                             </td>
                             <td>{{ g_prize.prize.code }}</td>
                             <td>{{ g_prize.prize.name }}</td>
@@ -164,16 +166,14 @@
     export default {
         props: {
             token:{ type: String,  default: '', },
-            category_id:              { type: [String,Number],  default: '', },
-            r_api_prize:              { type: String,  default: '', },   //商品
+            category_id:{ type: [String,Number],  default: '', },
+            r_api_prize:{ type: String,  default: '', },   //商品
 
-            rank_label:               { type: String,  default: '', },
-            r_api_ranks_gacha_prizes: { type: String,  default: '', },//ガチャ商品
+            rank_label:{ type: String,  default: '', },
+            r_api_ranks_gacha_prizes:{ type: String,  default: '', },//ガチャ商品
 
-            gacha_rank_id:            { type: [String,Number],  default: '', },
-            delete_gacha_prize_ids:   { type: [Array,Object],  default: [], },
-
-            is_special_rank:          { type: Boolean,  default: false, },
+            gacha_rank_id:{ type: [String,Number],  default: '', },
+            delete_gacha_prize_ids:{ type: [Array,Object],  default: [], },
         },
         data() { return {
 
@@ -184,7 +184,7 @@
             new_prizes:    [],  /* 新規登録　商品 */
             new_prizes_ids:[],  /* 新規登録　商品ID */
 
-            // is_special_rank: false,
+            is_special_rank: false,
             loading: false,
             test: false,
 
@@ -213,10 +213,10 @@
                         g_prize['show'] = true; // ガチャ商品の表示カラム
                     });
 
-                    // this.isSpecialGachaRank();/** 特殊商品が否かの保存 */
+                    this.isSpecialGachaRank();/** 特殊商品が否かの保存 */
 
                     this.loading = false;//読み込み中
-                    // console.log(this.g_prizes)
+                    console.log(this.g_prizes)
                 })
                 .catch(error => {
                     // alert('通信エラーが発生しました。')
@@ -277,7 +277,7 @@
 
                 // ガチャ商品の非表示
                 g_prize.show = false;
-                // console.log( this.g_prizes );
+                console.log( this.g_prizes );
             },
 
 
@@ -330,11 +330,10 @@
             },
 
             /** 特殊商品が否かの保存 */
-            // isSpecialGachaRank() {
-            //     const array = ['10','310','320'];
-            //     this.is_special_rank = array.includes(this.gacha_rank_id);
-            // },
-
+            isSpecialGachaRank() {
+                const array = ['10','310','320'];
+                this.is_special_rank = array.includes(this.gacha_rank_id);
+            },
         }
     }
 </script>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use \App\Http\Controllers\GachaPlayCreateUserPrizeMethod as GPCUPMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
@@ -108,12 +108,25 @@ class Gacha extends Model
 
 
         /**
-         * GachaDiscriptionモデル リレーション
+         * GachaDiscriptionモデル リレーション discriptions
          * @return \App\Models\GachaDiscription
         */
-        public function discriptions()
+        public function getDiscriptionsAttribute()
         {
-            return $this->hasMany(GachaDiscription::class,'gacha_id');
+            # ガチャランク配列の取得
+            $discriptions_ranks = GachaDiscription::gacha_ranks();
+
+            $array = [];
+            foreach ($discriptions_ranks as $gacha_rank_id => $discriptions_rank)
+            {
+                $gacha_discription = GachaDiscription::where('gacha_id',$this->id)
+                ->where('gacha_rank_id',$gacha_rank_id)
+                ->first();
+
+                if( $gacha_discription ){ $array[] = $gacha_discription; }
+            }
+
+            return $array;
         }
 
 
@@ -243,6 +256,23 @@ class Gacha extends Model
             $max       = $this->max_count;
             $remaining = $this->remaining_count;
             return $max - $remaining;
+        }
+
+
+
+
+        /**
+         * ガチャ　ログインユーザーのプレイ数 user_played_count
+         * @return String
+        */
+        public function getUserPlayedCountAttribute()
+        {
+            $user = Auth::user(); //ログインユーザー取得
+            return $user
+            ? UserGachaHistory::where('gacha_id',$this->id)
+            ->where('user_id',$user->id)
+            ->get()->sum('play_count')
+            : 0 ;
         }
 
 
@@ -383,4 +413,136 @@ class Gacha extends Model
             return 'is show';
         }
 
+
+
+        /**
+         * 天井系ガチャのアド確定までの回転数　add_chance_count
+         *
+         * @return String $path //表示画像パス
+        */
+        public function getAddChanceCountAttribute()
+        {
+            # 変数
+            $remaining_count  = $this->remaining_count; //残り口数
+            $played_count     = $this->played_count;    //済み口数
+            $user_played_count = $this->user_played_count;//ユーザー済み口数
+
+            #　『ユーザーのPLAY数に応じて』当選するガチャランクID
+            $gacha_u_ranks = [
+                GPCUPMethod::GachaRankIdUserPita(),
+                GPCUPMethod::GachaRankIdUserKiri(),
+                GPCUPMethod::GachaRankIdUserZoro(),
+            ];
+
+            # 当選口数配列
+            // GPCUPMethod
+            $array   = [];//ガチャの口数に応じて当選する当選口数配列
+            $u_array = [];//ユーザーのPLAY数に応じて当選する当選口数配列
+            $n = 10;
+
+
+            foreach ($this->discriptions as $discription)
+            {
+                $gacha_rank_id = $discription->gacha_rank_id;
+
+                # ガチャの口数に応じて当選する当選
+                if( !in_array( $gacha_rank_id, $gacha_u_ranks) ){
+
+                    ## 次のplay回数
+                    $next_coount = $played_count +1 ;
+
+                    ## 当選の口数で、($next_coount~$next_coount+n)に該当する値のみ抽出
+                    $filteredArray = array_filter($discription->hit_nums_array, function ($value) use ($next_coount,$n) {
+                        return $value >= $next_coount && $value <= ($next_coount + $n);
+                    });
+
+                    $array = [ ...$array, ...$filteredArray ];
+
+                }
+                # ユーザーのPLAY数に応じて当選する当選
+                else{
+
+                    ## 次のplay回数
+                    $next_coount = $user_played_count +1 ;
+
+                    ## 当選の口数で、($next_coount~$next_coount+n)に該当する値のみ抽出
+                    $filteredArray = array_filter($discription->hit_nums_array, function ($value) use ($next_coount,$n) {
+                        return $value >= $next_coount && $value <= ($next_coount + $n);
+                    });
+                    // dd($discription->hit_nums_array);
+
+                    $u_array = [ ...$u_array, ...$filteredArray ];
+
+                }
+
+            }
+
+            # ガチャの口数に応じて当選する当選の、最も近い値
+            $array = array_unique($array);// 重複を除く
+            sort($array);// 昇順にソート
+            $diff = count($array) ?  $array[0] - ($played_count+1): $n+1;
+            // dd($array);
+
+            # ユーザーのPLAY数に応じて当選する当選の、最も近い値
+            $u_array = array_unique($u_array);// 重複を除く
+            sort($u_array);// 昇順にソート
+            $u_diff = count($u_array) ? $u_array[0] - ($user_played_count+1) : $n+1;
+            // $u_diff =  $n+10;
+
+
+            # ユーザーのPLAY数に応じて当選する当選の、最も近い値
+            $num = $diff<$u_diff ? $diff : $u_diff;
+
+
+            return $num;
+        }
+
+
+
+        /**
+         * 天井系ガチャのアド確定画像パス　add_chance_image_path
+         *
+         * @return String $path //表示画像パス
+        */
+        public function getAddChanceImagePathAttribute()
+        {
+            # 売り切れのとき
+            if($this->is_sold_out){ return null; }
+            # 非公開のとき
+            // if(!$this->published_at){ return null; }
+
+
+            $n = 10;
+            $num = $this->add_chance_count;
+
+            # 演出画像のパスを返す
+            if($num==0){
+                $image_path = 'site/image/gacha/chance/1.png';
+                if( Storage::exists($image_path) ){ return asset('storage/'.$image_path); }
+            }
+            else if($num>0 && $num<$n){
+                $image_path = 'site/image/gacha/chance/10.png';
+                if( Storage::exists($image_path) ){ return asset('storage/'.$image_path); }
+            }
+
+            return null;
+        }
+
+
+
+        /**
+         * ユーザーランクの商品登録があるか have_user_rank
+         * @return String
+        */
+        public function getHaveUserRankAttribute()
+        {
+            $gacha_prizes = GachaPrize::where('gacha_id',$this->id)
+            ->whereIn('gacha_rank_id', [
+                GPCUPMethod::GachaRankIdUserPita(),//ガチャランクID 個人ピタリ賞
+                GPCUPMethod::GachaRankIdUserKiri(),//ガチャランクID キリ番
+                GPCUPMethod::GachaRankIdUserZoro(),//ガチャランクID ゾロ目
+            ])->get();
+
+            return Auth::check() ? $gacha_prizes->count() > 0 : false;
+        }
 }

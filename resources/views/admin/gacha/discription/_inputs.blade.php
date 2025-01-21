@@ -8,7 +8,7 @@
 
 
                 <div class="col-auto">
-                    @if ( $discription->g_prizes->sum('max_count') > 0 )
+                    @if ( $discription->total_count_format )
                         <span class="badge rounded-pill bg-success">商品登録あり</span>
                     @else
                         <span class="badge rounded-pill bg-secondary">商品登録なし</span>

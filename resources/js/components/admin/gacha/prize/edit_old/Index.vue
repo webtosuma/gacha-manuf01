@@ -35,96 +35,33 @@
                                 </div>
 
                                 <div class="col">
-                                    <!--口数-->
-                                    {{ discription.total_count_format }}
+                                    <number-comma-component :number="discription.g_prizes_max_count" />
                                 </div>
                                 <div class="col">
-                                    <!--当選率-->
-                                    {{  discription.winning_ratio_format }}
+                                    <number-comma-component :number="discription.g_prizes_ratio" />
+                                    <span>%</span>
                                 </div>
                                 <div class="col">
-                                    <!--平均PT-->
-                                    {{ discription.average_point_format }}
+                                    <number-comma-component :number="discription.total_point" />
+                                    <span>pt</span>
                                 </div>
 
                             </div>
                         </button>
 
                         <!-- collapse -->
-                        <div class="collapse my-3 showww"
-                        :id="'collapse'+discription.id"
-                        :class="{'showww':discription.gacha_rank_id>300 && discription.gacha_rank_id<400 && discription.gacha_prizes_count>0 }"
-                        >
+                        <div class="collapse my-3 showww" :id="'collapse'+discription.id">
                             <div class="px-3">
 
-                                <div
-                                v-if="discription.gacha_rank_id>300 && discription.gacha_rank_id<400 && discription.gacha_prizes_count>0"
-                                class="rounded bg-light p-2 mb-2">
-                                    当選番号：{{ discription.hit_nums }}
-                                </div>
-
-                                <!--スペシャルランク-->
                                 <a-gachaprize-gacharank-container
-                                v-if="['10'].includes(discription.gacha_rank_id)"
                                 @send-delete-gp-id="addDeleteGachaPrizeId"
                                 :token="token"
                                 :category_id="category_id"
                                 :r_api_prize="r_api_prize"
-                                :rank_label="discription.rank_label"
-                                :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
-                                :gacha_rank_id="discription.gacha_rank_id"
-                                :delete_gacha_prize_ids="delete_gacha_prize_ids"
-                                :is_special_rank="true"
-                                />
 
-                                <!--キリ番-->
-                                <a-gachaprize-gacharank-kiri-container
-                                v-else-if="['310','361'].includes(discription.gacha_rank_id)"
-                                @send-delete-gp-id="addDeleteGachaPrizeId"
-                                :token="token"
-                                :category_id="category_id"
-                                :r_api_prize="r_api_prize"
                                 :rank_label="discription.rank_label"
                                 :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
-                                :gacha_rank_id="discription.gacha_rank_id"
-                                :delete_gacha_prize_ids="delete_gacha_prize_ids"
-                                />
 
-                                <!--ゾロ目-->
-                                <a-gachaprize-gacharank-zoro-container
-                                v-else-if="['320','362'].includes(discription.gacha_rank_id)"
-                                @send-delete-gp-id="addDeleteGachaPrizeId"
-                                :token="token"
-                                :category_id="category_id"
-                                :r_api_prize="r_api_prize"
-                                :rank_label="discription.rank_label"
-                                :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
-                                :gacha_rank_id="discription.gacha_rank_id"
-                                :delete_gacha_prize_ids="delete_gacha_prize_ids"
-                                />
-
-                                <!--ピタリ賞-->
-                                <a-gachaprize-gacharank-pita-container
-                                v-else-if="['330','363'].includes(discription.gacha_rank_id)"
-                                @send-delete-gp-id="addDeleteGachaPrizeId"
-                                :token="token"
-                                :category_id="category_id"
-                                :r_api_prize="r_api_prize"
-                                :rank_label="discription.rank_label"
-                                :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
-                                :gacha_rank_id="discription.gacha_rank_id"
-                                :delete_gacha_prize_ids="delete_gacha_prize_ids"
-                                />
-
-                                <!--通常ランク-->
-                                <a-gachaprize-gacharank-container
-                                v-else
-                                @send-delete-gp-id="addDeleteGachaPrizeId"
-                                :token="token"
-                                :category_id="category_id"
-                                :r_api_prize="r_api_prize"
-                                :rank_label="discription.rank_label"
-                                :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
                                 :gacha_rank_id="discription.gacha_rank_id"
                                 :delete_gacha_prize_ids="delete_gacha_prize_ids"
                                 />
