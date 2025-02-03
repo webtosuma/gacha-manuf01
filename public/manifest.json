@@ -1,6 +1,6 @@
 {
-    "name": "ガチャシステムSAMPLE",
-    "short_name": "ガチャシステムSAMPLE",
+    "name": "",
+    "short_name": "",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
@@ -19,7 +19,7 @@
         },
         {
             "purpose": "any maskable",
-            "src": "storage/site/image/manifest/logo512.png",
+            "src": "storage/site/image/manifest/logo192.png",
             "type": "image/png",
             "sizes": "192x192"
         },

@@ -54,7 +54,6 @@ $active_key = 'gacha';
         </div>
 
 
-
         @php
         /* ガチャ制限数 */
         $limig_gacha_count = env('LIMIT_GACHA_COUNT');
@@ -128,6 +127,7 @@ $active_key = 'gacha';
 
                             <!--image-->
                             @include('gacha.common.top_image')
+
 
                             <!--metter-->
                             @if ( $gacha->is_published )

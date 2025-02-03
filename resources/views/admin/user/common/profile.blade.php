@@ -152,6 +152,13 @@
             <div class="border p-2 rounded  text-success">{{ $user->last_access_at->format('Y年m月d日 H:i') }}</div>
         </div>
 
+        @if($user->point_deadline_at)
+        <div class="my-2">
+            <h6>ポイント有効期限</h6>
+            <div class="border p-2 rounded  text-danger">{{ $user->point_deadline_at->format('Y年m月d日 H:i') }}</div>
+        </div>
+        @endif
+
         @if($user->recruiter)
         <div class="my-2">
             <h6>紹介元ユーザー</h6>
@@ -161,6 +168,7 @@
             </div>
         </div>
         @endif
+
         @if($user->deleted_at)
             <div class="my-2">
                 <h6>退会</h6>

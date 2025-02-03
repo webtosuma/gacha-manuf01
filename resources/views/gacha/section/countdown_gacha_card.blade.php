@@ -6,6 +6,8 @@
                 text-dark text-center overflow-hidden text-decoration-none
                 hover_anime position-relative" style="border-radius:1rem;">
 
+                {{-- {{$gacha->published_at->format('H:i:s');}} --}}
+
                     <u-countdown-gacha
                     initial_time="{{$gacha->initial_time}}"
                     ></u-countdown-gacha>

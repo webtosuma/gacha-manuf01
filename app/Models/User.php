@@ -246,9 +246,8 @@ class User extends Authenticatable
 
 
 
-
         /**
-         * ユーザー保有商品数(Admin) $user->u_prizes_count
+         * ユーザー保有商品数 $user->u_prizes_count
          * @return String
         */
         public function getUPrizesCountAttribute()
@@ -324,7 +323,10 @@ class User extends Authenticatable
         */
         public function getLastAccessAtAttribute()
         {
-            $ug_history = UserGachaHistory::where('user_id',$this->id)
+
+            $ug_history = PointHistory::where('user_id',$this->id)
+            // ->where('reason_id','<>', 16) //商品の取得期限切れによるポイント交換
+            // ->where('reason_id','<>', 23) //ポイント期限切れを除く
             ->orderByDesc('created_at')->first();
 
             return $ug_history ? $ug_history->created_at : $this->created_at;
@@ -373,4 +375,73 @@ class User extends Authenticatable
             ? $subscriptions[$this->subscription_id]['label'] : null;
         }
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー　ポイント有効期限関係
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 有効期限切れ日 point_deadline_at
+         * @return \Carbon\Carbon
+        */
+        public function getPointDeadlineAtAttribute()
+        {
+            # 制度開始時期
+            $start_at = \Carbon\Carbon::parse('2025/01/01');
+
+            # 期限・期限なしのとき
+            $deadline_date = config('app.user_point_deadline_date');//利用可能期間
+            if( ! $deadline_date ){ return null; }
+
+            # ユーザー最終アクセス日
+            $last_access_at = $start_at < $this->created_at ? $this->last_access_at : $start_at ;//制度開始以前の所得商品は、制度開始日からカウントスタート
+            $last_access_at = \Carbon\Carbon::parse($last_access_at->format('Y/m/d 00:00:00'));
+
+            return $last_access_at->addDay($deadline_date);
+        }
+
+
+
+        /**
+         * 有効期限切れか否か is_point_deadline
+         * @return Boorean
+        */
+        public function getIsPointDeadlineAttribute()
+        {
+            # 期限・期限なしのとき
+            $deadline_date = config('app.user_point_deadline_date');//利用可能期間
+            if( ! $deadline_date ){ return null; }
+
+            # ポイントの有効期限日(point_deadline_at)が今より過去か否か
+            return $this->point_deadline_at->lt( now() );
+        }
+
+
+
+        /**
+         * 有効期限テキスト point_deadline_text
+         * @return Boorean
+        */
+        public function getPointDeadlineTextAttribute()
+        {
+            # 期限・期限なしのとき
+            $deadline_date = config('app.user_point_deadline_date');//利用可能期間
+            if( ! $deadline_date ){ return null; }
+
+            # ポイントが0のとき
+            if( ! $this->point ){ return null; }
+
+            return ! $this->is_point_deadline
+            ? $this->point_deadline_at->format('有効期限：Y/m/d H:i')
+            : $this->point_deadline_at->format('期限切れ：Y/m/d H:i')
+            ;
+        }
+
+
+
+    /* ~ */
 }

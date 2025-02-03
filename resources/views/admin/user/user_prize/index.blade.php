@@ -53,27 +53,8 @@ $active_key = 'user';
                 取得商品一覧
             </h2>
 
-            {{-- @if($user)
-                @include('admin.user.common.profile')
-            @endif --}}
         </section>
 
-
-
-        <!-- 削除 -->
-        {{-- @if( $user )
-        <form action="{{route('admin.user.user_prize.destroy_confirm',$user)}}" class="col-md-4" method="post">
-            @csrf
-
-            <div class="input-group mb-3">
-                <span class="input-group-text">取得日時</span>
-                <input type="datetime-local" class="form-control" name="created_at"
-                value="{{ now()->format('Y-m-d\T00:00') }}"
-                >
-                <button class="btn btn-outline-secondary" type="submit">以降を削除</button>
-            </div>
-        </form>
-        @endif --}}
 
         <!-- 表示切り替え・ページネーション -->
         @if( $user_prizes->count() )
@@ -105,7 +86,7 @@ $active_key = 'user';
                         <th scope="col">商品名</th>
                         <th scope="col">ポイント</th>
                         <th scope="col">ガチャ</th>
-                        <th scope="col">取得日時</th>
+                        <th scope="col">取得・発送申請期限</th>
                         <th scope="col">履歴ID</th>
                     </tr>
                 </thead>
@@ -139,7 +120,12 @@ $active_key = 'user';
                             <td>{{$user_prize->point}}pt</td>
                             <td>{{$gacha_name}}</td>
 
-                            <td>{{ $user_prize->created_at->format('Y年m月d日 H:i:s') }}</td>
+                            <td>
+                                <!-- 取得日・発送期限 -->
+                                <div class="">取得日時：{{ $user_prize->created_at->format('Y/m/d H:i') }}</div>
+                                <div class="text-danger">{{ $user_prize->deadline_text }}</div>
+
+                            </td>
                             <td>{{$user_prize->id}}</td>
                         </tr>
                     @empty

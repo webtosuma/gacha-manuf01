@@ -23,7 +23,7 @@ use App\Models\Prize;
 class ShippedAppliController extends Controller
 {
     /** 発送ポイント */
-    public function shippedPoint(){ return 300; }
+    public function shippedPoint(){ return 0; }
 
 
 
@@ -39,6 +39,15 @@ class ShippedAppliController extends Controller
 
         $user = Auth::user();
         $id_array = $request->user_prize_ids;//発送するユーザー商品ID
+
+
+        # ユーザー商品に期限切れがないか、チェック
+        $expired_id_array = self::checkShippedDeadline( $id_array );
+        if( count( $expired_id_array ) > 0 ){
+            $message = "期限切れの商品が含まれています。\n期限切れの商品を発送することはできません。";
+            return back()->with('alert-warning',$message);
+        }
+
 
         # 発送ポイント
         $shipped_point = self::shippedPoint();
@@ -67,6 +76,35 @@ class ShippedAppliController extends Controller
             'id_array','shipped_point','user_prizes','shipped_prizes'
         ));
     }
+
+
+        /**
+         * ユーザー商品に期限切れがないか、チェック
+         *
+         * @param  Array $id_array
+         * @return Array expired_id_array//期限切れ
+        */
+        public static function checkShippedDeadline( $id_array )
+        {
+            $user =Auth::user();
+
+            # ポイント交換するユーザー商品を取得
+            $user_prizes = UserPrize::where('user_id',$user->id)
+            ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
+            ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
+            ->find( $id_array );
+
+            # 期限切れIDのみを取得
+            $expired_id_array = [];
+            foreach ($user_prizes as $user_prize)
+            {
+                if( $user_prize->is_deadline ){
+                    $expired_id_array[] = $user_prize->id;
+                }
+            }
+
+            return $expired_id_array;
+        }
 
 
 

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- no disabled -->
-        <button v-show="disabled_data==0"
+        <button v-show=" !(disabled_data || disabled!=0) "
         @click="click()"
         :class="style_class"
         :type="type" :name="name" :value="value"
@@ -11,13 +11,13 @@
         </button>
 
         <!-- disabled -->
-        <button v-show="disabled_data!=0"
+        <button v-show=" (disabled_data || disabled!=0) "
         disabled
         :class="style_class"
         :type="type" :name="name" :value="value"
         >
             <div class="">{{ label }}</div>
-            <div class="text-warning">{{ point }}</div>
+            <div class="text-warning" :class="{'invisible': disabled!=0}">{{ point }}</div>
 
         </button>
     </div>
@@ -41,7 +41,7 @@
         },
         mounted() {
 
-            this.disabled_data = this.disabled;
+            // this.disabled_data = this.disabled;
 
         },
         methods:{

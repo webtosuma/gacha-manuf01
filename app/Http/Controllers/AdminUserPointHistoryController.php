@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Http\Middleware\UserPointDeadlineMiddleware;//ユーザーポイント期限切れ対応　ミドルウェア―
 use App\Models\User;
 use App\Models\UserPrize;
 use App\Models\UserShipped;
@@ -61,89 +62,105 @@ class AdminUserPointHistoryController extends Controller
 
 
 
-        /**
-         * ポイント履歴削除確認（ユーザー指定）
-         *
-         * @param \Illuminate\Http\Request $request
-         * @param Integer $user_id(0:全て n:個人)
-         * @return \Illuminate\Http\Response
-        */
-        public function destroy_confirm(Request $request, $user_id)
-        {
+    /**
+     * ポイント履歴削除確認（ユーザー指定）
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Integer $user_id(0:全て n:個人)
+     * @return \Illuminate\Http\Response
+    */
+    public function destroy_confirm(Request $request, $user_id)
+    {
 
 
-            # ユーザー情報
-            $user = $user_id ? User::find($user_id) : null;
+        # ユーザー情報
+        $user = $user_id ? User::find($user_id) : null;
 
-            # 削除するポイント履歴ID
-            $point_history_ids = $request->point_history_ids;
+        # 削除するポイント履歴ID
+        $point_history_ids = $request->point_history_ids;
 
-            if( !isset($point_history_ids) ){
-                return back()->with(['alert-danger'=>'削除するポイント履歴が選択されていません。','icon'=>'bi-question-lg']);
+        if( !isset($point_history_ids) ){
+            return back()->with(['alert-danger'=>'削除するポイント履歴が選択されていません。','icon'=>'bi-question-lg']);
+        }
+
+        $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
+        ->whereIn('id',$point_history_ids)//「ポイント購入」を除く
+        ->get();
+
+        // dd($point_histories->toArray());
+
+        return view('admin.user.point_history.destroy_confirm', compact('point_histories','user') );
+    }
+
+
+
+
+    /**
+     * ポイント履歴削除（ユーザー指定）
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Integer $user_id(0:全て n:個人)
+     * @return \Illuminate\Http\Response
+    */
+    public function destroy(Request $request,$user_id)
+    {
+
+        # 削除するポイント履歴データの取得
+        // $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
+        // ->find($request->point_history_ids);
+        $point_histories = PointHistory::find($request->point_history_ids);
+
+        foreach ($point_histories as $point_history) {
+
+
+            switch ( $point_history->reason_id ) {
+
+                case 12://商品のポイント交換
+
+                    # 商品のポイント交換履歴の処理
+                    self::DeleteExchangePointHistory($point_history);
+                    break;
+
+
+                case 16://商品の取得期限切れによるポイント交換
+
+                    # 商品のポイント交換履歴の処理
+                    self::DeleteExchangePointHistory($point_history);
+                    break;
+
+
+                case 22://商品発送
+
+                    # 発送履歴の処理
+                    self::DeletePrizeShippedHistory($point_history);
+                    break;
+
+
+                case 21://ガチャPLAY
+
+                    # ガチャ履歴の処理
+                    self::DeleteGachaHistory($point_history);
+                    break;
+
+
+                default:
+
+                    # ポイント履歴の削除
+                    $point_history->delete();
+                    break;
+
+
+                //
+
             }
 
-            $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
-            ->whereIn('id',$point_history_ids)//「ポイント購入」を除く
-            ->get();
 
-            // dd($point_histories->toArray());
-
-            return view('admin.user.point_history.destroy_confirm', compact('point_histories','user') );
         }
 
 
-
-
-        /**
-         * ポイント履歴削除（ユーザー指定）
-         *
-         * @param \Illuminate\Http\Request $request
-         * @param Integer $user_id(0:全て n:個人)
-         * @return \Illuminate\Http\Response
-        */
-        public function destroy(Request $request,$user_id)
-       {
-
-            # 削除するポイント履歴データの取得
-            // $point_histories = PointHistory::orderByDesc('created_at')->orderByDesc('id')
-            // ->find($request->point_history_ids);
-            $point_histories = PointHistory::find($request->point_history_ids);
-
-            foreach ($point_histories as $point_history) {
-
-
-                switch ( $point_history->reason_id ) {
-
-                    case 12:
-                        # 12. 商品のポイント交換履歴の処理
-                        self::DeleteExchangePointHistory($point_history);
-                        break;
-
-                    case 22:
-                        # 22. 発送履歴の処理
-                        self::DeletePrizeShippedHistory($point_history);
-                        break;
-
-                    case 21:
-                        # 21. ガチャ履歴の処理
-                        self::DeleteGachaHistory($point_history);
-                        break;
-
-                    default:
-                        # ポイント履歴の削除
-                        $point_history->delete();
-                        break;
-                    //
-
-                }
-
-
-            }
-
-
-           return redirect()->route('admin.user.point_history',$user_id)
-           ->with(['alert-danger'=>'ポイント履歴を削除しました。']);
-        }
+        return redirect()->route('admin.user.point_history',$user_id)
+        ->with(['alert-danger'=>'ポイント履歴を削除しました。']);
+    }
 
 
 
@@ -151,7 +168,7 @@ class AdminUserPointHistoryController extends Controller
         public function DeleteExchangePointHistory($point_history)
         {
 
-            if( $point_history->reason_id==12 && $point_history->user_prizes )
+            if( $point_history->user_prizes )
             {
                 # ユーザー商品から、ポイント履歴を削除
                 $user_prizes = $point_history->user_prizes;
@@ -259,4 +276,52 @@ class AdminUserPointHistoryController extends Controller
         }
 
 
+
+    /*
+    | ------------------------------------
+    |  ユーザーポイントの期限切れ
+    | ------------------------------------
+    */
+
+        /**
+         * (API)期限切れユーザーポイントのリセット
+         *
+         * @param \Illuminate\Http\Request $request
+         * @return \Illuminate\Http\Response
+        */
+        public function api_point_reset()
+        {
+            # 期限・期限なしのとき
+            $deadline_date = config('app.user_point_deadline_date');
+            if( ! $deadline_date ){ return response()->json( [] ); }
+
+            # ユーザー情報
+            $users = User::paginate(20);
+
+
+            # ポイントのリセットメソッド
+            foreach ($users as $user) {
+                UserPointDeadlineMiddleware::resetPointMethod( $user );
+            }
+
+            return response()->json( $users );
+        }
+
+
+
+        /**
+         * リセット完了
+         *
+         * @param \Illuminate\Http\Request $request
+         * @return \Illuminate\Http\Response
+         */
+        public function comp_point_reset( Request $request )
+        {
+            return redirect()->route('admin.user.other_menu')
+            ->with(['alert-success'=>'ユーザーの期限切れポイントを、すべてリセットしました。']);
+        }
+
+
+
+    /* */
 }

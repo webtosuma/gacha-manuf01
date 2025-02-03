@@ -49,8 +49,9 @@ class AdminApiUserController extends Controller
             $user->sail   = \App\Models\PointHistory::where('user_id',$user->id)
             ->where('reason_id',11)->get()->sum('price');
 
-            $user->created_at_format     = $user->created_at->format('Y年m月d日 H:i');
-            $user->last_access_at_format = $user->last_access_at->format('Y年m月d日 H:i');
+            $user->created_at_format        = $user->created_at->format('Y/m/d H:i');        //登録日
+            $user->last_access_at_format    = $user->last_access_at->format('Y/m/d H:i');    //最終アクセス
+            $user->point_deadline_at_format = $user->point_deadline_at ? $user->point_deadline_text : null ; //ポイント期限
 
             $user->r_show = route('admin.user.show',$user);
 
@@ -69,13 +70,18 @@ class AdminApiUserController extends Controller
 
         # ルーティング
         $routes = [
-            'dl_csv'        => route('admin.user.download_csv'),
-
-            'prize' => route('admin.user.user_prize',0),
-            'gacha' => route('admin.user.point_history',['user_id'=>0,'reason_id'=>21,]),
-            'sail'  => route('admin.user.point_history',['user_id'=>0,'reason_id'=>11,]),
-            'point' => route('admin.user.point_history',0),
+            'dl_csv'    => route('admin.user.download_csv'),
+            'prize'     => route('admin.user.user_prize',0),
+            'gacha'     => route('admin.user.point_history',['user_id'=>0,'reason_id'=>21,]),
+            'sail'      => route('admin.user.point_history',['user_id'=>0,'reason_id'=>11,]),
+            'point'     => route('admin.user.point_history',0),
         ];
+        if(
+            config('app.user_prize_deadline_date')   //ユーザー商品期限
+            or config('app.user_point_deadline_date')//ポイント機嫌
+        ){
+            $routes['other_menu'] = route('admin.user.other_menu');
+        }
 
 
         return response()->json( compact('users','column_names', 'routes') );

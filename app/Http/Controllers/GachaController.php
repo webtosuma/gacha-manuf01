@@ -31,6 +31,7 @@ class GachaController extends Controller
         $category = GachaCategory::where('code_name', $category_code)->first();
         if( $category_code!='all' && !$category ){ return \App::abort(404); }
 
+
         # 変数
 
             ## カテゴリー名（ページタイトル）
@@ -56,11 +57,6 @@ class GachaController extends Controller
 
             ## 表示できるガチャ一覧
             $gachas = self::getPublishedGachas( $category_code, $search_key );
-            // dd($gachas[0]->user_rank->image_path);
-            // dd($gachas[1]->user_rank->id);
-
-
-
 
             ## カウントダウンガチャ
             $countdown_gachas = self::getCountdownGachas($category_code);
@@ -274,7 +270,7 @@ class GachaController extends Controller
         /**
          * スライド情報
         */
-        public function getSlides($gachas)
+        public static function getSlides($gachas)
         {
             $slides = [];
 
@@ -312,7 +308,7 @@ class GachaController extends Controller
         /**
          * 検索キーワード
         */
-        public function getsearchs()
+        public static function getsearchs()
         {
             $array = [
                 // ['label'=>'新規会員限定', 'key'=>'only_new_user'],

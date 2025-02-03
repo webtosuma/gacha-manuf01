@@ -4,6 +4,6 @@ d-flex align-items-center justify-content-center
 
 
 <div class="d-flex align-items-center justify-content-center"  style="height:1.6rem;">
-    <img src="{{  asset( 'storage/site/image/point_icon/2.png' ) }}" class="h-100" alt="">
+    <img src="{{  asset( 'storage/site/image/point_icon/index.png' ) }}" class="h-100" alt="">
 </div>
 

@@ -61,6 +61,7 @@ use \App\Http\Controllers;
     include('web/user/ticket_history.php');//チケット履歴
 
 
+
     # お問い合わせ一覧
     Route::get('/admin/contact', function () { return view('admin.contact.index'); })
     ->middleware('admin_auth')

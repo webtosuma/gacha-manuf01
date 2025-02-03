@@ -185,4 +185,14 @@ class AdminUserController extends Controller
     }
 
 
+
+    /**
+     * その他メニュー
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function other_menu()
+    {
+        return view('admin.user.other_menu.index');
+    }
 }

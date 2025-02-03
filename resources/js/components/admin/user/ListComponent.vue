@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="col-12 col-md">
-                <div class="row align-items-center">
+                <div class="row align-items-center gx-2">
                     <div class="col-auto">
                         <label class="form-check">
                             <input @change="getData()"
@@ -34,17 +34,15 @@
 
                     <div class="col-auto">
                         <form :action="routes.dl_csv">
-
-                            <!-- <input v-for="(value, name) in inputs" :key="name"
-                            type="hidden" :name="name" :value="value"> -->
-
                             <input type="hidden" name="user_ids" :value="users.map(user => user.id).join(',')">
-                            <!-- <input type="text" name="user_ids" value="1,2,3"> -->
-                             <!-- {{ users.map(user => user.id).join(',') }} -->
-
-
-                            <button class="btn borderrr py-0" type="submit"><i class="bi bi-filetype-csv fs-5"></i>ダウンロード</button>
+                            <button class="btn border py-0" type="submit"
+                            ><i class="bi bi-filetype-csv fs-5"></i>ダウンロード</button>
                         </form>
+                    </div>
+
+                    <div v-if="routes.other_menu" class="col-auto h-100">
+                        <a :href="routes.other_menu" class="btn border py-1 h-100"
+                        >その他メニュー</a>
                     </div>
                 </div>
 
@@ -83,7 +81,7 @@
                         <th scope="col">
                             <a :href="routes.point">ポイント</a>
                         </th>
-                        <th scope="col" class="d-none d-lg-table-cell">登録/最終アクセス</th>
+                        <th scope="col" class="d-none d-lg-table-cell">登録/最終アクセス/ポイント期限</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -130,10 +128,11 @@
                         <td>
                             <a :href="user.r_point">{{ user.point.toLocaleString() }}</a>
                         </td>
-                        <!--登録/更新-->
+                        <!--登録/最終アクセス/ポイント期限-->
                         <td class="d-none d-lg-table-cell">
                             <div class="text-">{{ user.created_at_format }}</div>
                             <div class="text-success">{{ user.last_access_at_format }}</div>
+                            <div class="text-danger">{{ user.point_deadline_at_format }}</div>
                         </td>
 
                     </tr>

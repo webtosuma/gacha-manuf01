@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
-|  ガチャの詳細説明情報　モデル
+|  ガチャの詳細説明情報　モデル hit
 | =============================================
 */
 class GachaDiscription extends Model
@@ -264,6 +264,7 @@ class GachaDiscription extends Model
                 else {
                     $array = [];
                 }
+
 
                 return $array;
             }

@@ -20,9 +20,35 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-reset-password-form',
     require('./components/auth/ResetPasswordFormConpornent.vue').default);
 
+
+    /* ガチャ一覧 */
+    Vue.component('u-gacha-list',
+    require('./components/gacha/list/IndexComponent.vue').default);
+
+        /* ガチャ カード */
+        Vue.component('u-gacha-card',
+        require('./components/gacha/list/CardComponent.vue').default);
+
+        /* ガチャ 画像 */
+        Vue.component('u-gacha-image',
+        require('./components/gacha/list/ImageComponent.vue').default);
+
+        /* ガチャ メーター */
+        Vue.component('u-gacha-metter',
+        require('./components/gacha/list/MetterComponent.vue').default);
+
+        /* ガチャボタン */
+        Vue.component('u-gacha-play-buttons',
+        require('./components/gacha/list/PlayButtonsComponent.vue').default);
+
+
     /* カウントダウンガチャコンポーネント */
     Vue.component('u-countdown-gacha',
     require('./components/gacha/CountdownGachaComponent.vue').default);
+
+    /* カウントダウン(日時)ガチャコンポーネント */
+    Vue.component('u-countdown-datetime-gacha',
+    require('./components/gacha/CountdownDatetimeGachaComponent.vue').default);
 
     /* 動画自動再生コンポーネント */
     Vue.component('u-movie-play',
@@ -123,6 +149,15 @@ require('./components/ExampleComponent.vue').default);
     /* 登録ユーザー一覧 */
     Vue.component('a-user-list',
     require('./components/admin/user/ListComponent.vue').default);
+
+        // 期限切れポイントのリセット
+        Vue.component('a-user-deadlin-point-reset',
+        require('./components/admin/user/point/DeadlinePointResetComponent.vue').default);
+
+        // 期限切れ商品のリセット
+        Vue.component('a-user-deadlin-prize-change',
+        require('./components/admin/user/user_prize/DeadlinePrizeChangeComponent.vue').default);
+
 
     /* お問い合わせ一覧 */
     Vue.component('contact-list-component',

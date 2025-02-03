@@ -13,21 +13,30 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'cardFesta'),
+        # サイト名
+        'name' => env('APP_NAME', 'サイト名'),
+
+        # PWAマニフェスト
+        'manifest' => env('APP_MANIFEST', false),
+
+        # オーナーコード
+        'owner_code'   => env('APP_OWNER_CODE', 'oner_code'),
+
+        # オーナー企業名
+        'company_name' => env('APP_COMPANY_NAME', 'オーナー企業名'),
+
+        # オーナー企業サイトURL
+        'company_url'  => env('APP_COMPANY_URL', 'https://www.google.co.jp/'),
 
 
-    'manifest' => env('APP_MANIFEST', false), //PWAマニフェスト
+        # ガチャ画像比率
+        'gacha_card_ratio'      => env('GACHA_CARD_RATIO', 'ratio-4x3'),
 
+        # ユーザー商品の発送期限(日,数値)
+        'user_prize_deadline_date' => (int) env('USER_PRIZE_DEADLINE_DATE', 0),
 
-    'owner_code'   => env('APP_OWNER_CODE', 'cardFesta'), //オーナーコード
-
-    'company_name' => env('APP_COMPANY_NAME',   'Fobees'), //オーナー企業名
-
-    'company_url'  => env('APP_COMPANY_URL',    'cardFesta'), //オーナー企業サイトURL
-
-
-    # ガチャ画像比率
-    'gacha_card_ratio'  => 'ratio-16x9',
+        # ユーザーポイントの利用可能期限(日,数値)
+        'user_point_deadline_date'   => (int) env('USER_POINT_DEADLINE_DATE', 0),
 
 
     /*

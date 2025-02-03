@@ -184,7 +184,7 @@ class Gacha extends Model
         */
         public function getIsPublishedAttribute()
         {
-            return $this->published_at && $this->published_at <= now()->format('Y-m-d H:i:s') ;
+            return $this->published_at && $this->published_at <= now()->copy()->format('Y-m-d H:i:s') ;
         }
 
 
@@ -373,7 +373,20 @@ class Gacha extends Model
         public function getInitialTimeAttribute()
         {
             if( $this->published_at > now()){
-                return now()->diff($this->published_at)->format('%H:%I:%S');
+                return now()->copy()->diff($this->published_at)->format('%H:%I:%S');
+            }
+            return null;
+        }
+
+
+        /**
+         * (新作ガチャ)カウントダウン日時 new_release_initial_datetime
+         * @return String
+        */
+        public function getNewReleaseInitialDatetimeAttribute()
+        {
+            if( $this->published_at > now()){
+                return now()->copy()->diff($this->published_at)->format('%Y/%M/%D %H:%I:%S');
             }
             return null;
         }
@@ -385,10 +398,11 @@ class Gacha extends Model
         */
         public function getInitialTimezoneAttribute()
         {
-            $befor = now()->copy()->subMinutes(30);//表示開始
-            $start   = \Carbon\Carbon::parse($this->min_time);//表示終了
+            $start = \Carbon\Carbon::parse($this->min_time);//表示終了
+            // $befor = $start->copy()->subMinutes(30);//表示開始
+            $befor = null;//表示開始(Admin表示用で、指定なし)
 
-            if( $befor <= now()  &&  now() < $start ){
+            if( $befor <= now()  &&  now() < $start && $this->is_published){
                 return now()->diff( $start )->format('%H:%I:%S');
             }
             return null;
@@ -401,7 +415,7 @@ class Gacha extends Model
         */
         public function getIsShowTimezoneAttribute()
         {
-            $now_time = now()->format('H:i');//現在時刻
+            $now_time = now()->copy()->format('H:i');//現在時刻
 
             if( ! $this->is_over_date ){ //日中間の時間帯
                 return $this->min_time <= $now_time  &&  $now_time < $this->max_time;
@@ -422,6 +436,9 @@ class Gacha extends Model
         */
         public function getAddChanceCountAttribute()
         {
+            #アド予告の利用設定確認
+            if( !env('ADD_CHANCE_NOTICE',false) ){ return null; }
+
             # 変数
             $remaining_count  = $this->remaining_count; //残り口数
             $played_count     = $this->played_count;    //済み口数
@@ -462,6 +479,7 @@ class Gacha extends Model
                 # ユーザーのPLAY数に応じて当選する当選
                 else{
 
+
                     ## 次のplay回数
                     $next_coount = $user_played_count +1 ;
 
@@ -469,7 +487,6 @@ class Gacha extends Model
                     $filteredArray = array_filter($discription->hit_nums_array, function ($value) use ($next_coount,$n) {
                         return $value >= $next_coount && $value <= ($next_coount + $n);
                     });
-                    // dd($discription->hit_nums_array);
 
                     $u_array = [ ...$u_array, ...$filteredArray ];
 
@@ -477,21 +494,24 @@ class Gacha extends Model
 
             }
 
+
             # ガチャの口数に応じて当選する当選の、最も近い値
             $array = array_unique($array);// 重複を除く
             sort($array);// 昇順にソート
-            $diff = count($array) ?  $array[0] - ($played_count+1): $n+1;
-            // dd($array);
+            $diff = count($array) ?  $array[0] - ($played_count+1): null;
 
             # ユーザーのPLAY数に応じて当選する当選の、最も近い値
             $u_array = array_unique($u_array);// 重複を除く
             sort($u_array);// 昇順にソート
-            $u_diff = count($u_array) ? $u_array[0] - ($user_played_count+1) : $n+1;
-            // $u_diff =  $n+10;
+            $u_diff = count($u_array) ? $u_array[0] - ($user_played_count+1) : null;
 
+
+            // dd($u_diff);
 
             # ユーザーのPLAY数に応じて当選する当選の、最も近い値
-            $num = $diff<$u_diff ? $diff : $u_diff;
+            if(    $diff  ===null){ $num = $u_diff; }
+            elseif($u_diff===null){ $num = $diff;   }
+            else{ $num = $diff<$u_diff ? $diff : $u_diff; }
 
 
             return $num;
@@ -506,6 +526,7 @@ class Gacha extends Model
         */
         public function getAddChanceImagePathAttribute()
         {
+
             # 売り切れのとき
             if($this->is_sold_out){ return null; }
             # 非公開のとき
@@ -515,8 +536,11 @@ class Gacha extends Model
             $n = 10;
             $num = $this->add_chance_count;
 
+            # 該当なし
+            if($num===null){ return null; }
+
             # 演出画像のパスを返す
-            if($num==0){
+            if($num===0){
                 $image_path = 'site/image/gacha/chance/1.png';
                 if( Storage::exists($image_path) ){ return asset('storage/'.$image_path); }
             }
@@ -543,6 +567,202 @@ class Gacha extends Model
                 GPCUPMethod::GachaRankIdUserZoro(),//ガチャランクID ゾロ目
             ])->get();
 
-            return Auth::check() ? $gacha_prizes->count() > 0 : false;
+            return Auth::check() && $this->is_published ? $gacha_prizes->count() > 0 : false;
         }
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー(画像パス)
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * Newラベル(新規公開のみ) new_lavel_path
+         * @return String
+        */
+        public function getNewLabelPathAttribute()
+        {
+            $image_path = 'storage/site/image/new_icon/index.png';
+
+            $published_at = $this->published_at ? $this->published_at->toDateTimeString() : '';
+            $new_start_at = now()->subday(7)->toDateTimeString();//減算
+            $bool = $new_start_at < $published_at;
+            return $bool ? asset( $image_path ) : '';
+        }
+
+
+        /**
+         * 画像パス　ポイントアイコン img_path_point
+         * @return String
+        */
+        public function getImgPathPointAttribute()
+        {
+            return asset( 'storage/site/image/point_icon/index.png' );
+        }
+
+
+        /**
+         * 画像パス　1回or10回限定 img_path_one_chance
+         * @return String
+        */
+        public function getImgPathOneChanceAttribute()
+        {
+            return $this->type=='one_chance' && $this->is_published
+            ? asset( 'storage/site/image/gacha_type/one_chance.png' ) : null;
+        }
+
+        /**
+         * 画像パス　一回限定 img_path_one_time
+         * @return String
+        */
+        public function getImgPathOneTimeAttribute()
+        {
+            return $this->type=='one_time' && $this->is_published
+            ? asset( 'storage/site/image/gacha_type/one_time.png' ) : null;
+        }
+
+        /**
+         * 画像パス　1日一回限定 img_path_only_oneday
+         * @return String
+        */
+        public function getImgPathOnlyOnedayAttribute()
+        {
+            return $this->type=='only_oneday' && $this->is_published
+            ? asset( 'storage/site/image/gacha_type/only_oneday.png' ) : null;
+        }
+
+        /**
+         * 画像パス　新規会委員限定 img_path_only_new_user
+         * @return String
+        */
+        public function getImgPathOnlyNewUserAttribute()
+        {
+            return $this->type=='only_new_user' && $this->is_published
+            ? asset( 'storage/site/image/gacha_type/only_new_user.png' ) : null;
+        }
+
+        /**
+         * 会員ランク限定　新規会委員限定 img_path_user_rank
+         * @return String
+        */
+        public function getImgPathUserRankAttribute()
+        {
+            return $this->user_rank_id!='' && $this->is_published ? $this->user_rank->image_path : null;
+        }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー(PLAYボタン)
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * 1回ガチャるボタンのdisabled is_disabled_oneplay_btn
+         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+         * @return Integer
+        */
+        public function getIsDisabledOneplayBtnAttribute()
+        {
+            return $this->isDisabledBtnMethod($this,1);
+        }
+
+
+        /**
+         * 10連ガチャるボタンのdisabled is_disabled_tenplay_btn
+         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+         * @return Integer
+        */
+        public function getIsDisabledTenplayBtnAttribute()
+        {
+            return $this->isDisabledBtnMethod($this,10);
+        }
+
+        /**
+         * カスタムボタンのdisabled　is_disabled_custom_btn
+         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+         * @return Integer
+        */
+        public function getIsDisabledCustomBtnAttribute()
+        {
+            # 終了
+            if( $this->remaining_count == 0 ){ return 1; }
+            # 利用可
+            if( in_array( $this->type, ['nomal','max_custom'] ) ){ return 0; }
+            # 非表示
+            return -1;
+        }
+
+
+            /**
+             * プレイボタンのdisabled条件　
+             *
+             * @param Gacha  $gacha
+             * @param Integer $$n //プレイ数
+             * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+             * @return Integer
+            */
+            public function isDisabledBtnMethod( $gacha, $n )
+            {
+                # 残口数
+                $remaining_count = $gacha->remaining_count;
+
+                switch ($gacha->type)
+                {
+                    /* 1回or10回 */
+                    case 'one_chance':
+                        return ($remaining_count >= $n) && !($gacha->played_one_time) ? 0 : 1 ;
+                        break;
+
+                    /* 1回限定 */
+                    case 'one_time':
+                        if( $n!=1 ){ return -1; }//1回ボタン以外非表示
+                        return ($remaining_count >= $n) && !($gacha->played_one_time) ? 0 : 1 ;
+                        break;
+
+                    /* 一日一回限定 */
+                    case 'only_oneday':
+                        if( $n!=1 ){ return -1; }//1回ボタン以外非表示
+                        if( $remaining_count < $n      ){ return 1; }//終了
+                        if( $gacha->played_only_oneday ){ return 2; }//本日は終了
+                        return 0;//利用可能
+                        break;
+
+                    /* 新規会員限定 */
+                    case 'only_new_user':
+                        if( $n!=1 ){ return -1; }//1回ボタン以外非表示
+                        return ( Auth::check() && !Auth::user()->sevendays_affter_registar )//1週間以内
+                        && ($remaining_count >= $n)
+                        && !($gacha->played_one_time) //1回のみ
+                        ? 0 : 1 ;
+                        break;
+
+                    /* */
+                }
+
+                /* 広告ボタン */
+                if( $gacha->sponsor_ad ){
+                    if( $n!=1 ){ return -1; }//1回ボタン以外非表示
+                    if( $remaining_count < $n    ){ return 1; }//終了
+                    if( $gacha->played_ad_limit ){ return 2; }//本日は終了
+                    return 0;//利用可能
+                }
+
+                /* 通常 */
+                return $remaining_count >= $n ? 0 : 1 ;
+            }
+
+
+        /* */
+
+
+    /* end */
+
 }

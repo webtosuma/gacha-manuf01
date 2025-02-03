@@ -10,16 +10,9 @@ Route::middleware(['admin_auth'])->group(function () {
 
 
     # 登録ユーザー一覧
-    // Route::get('/admin/user/l/{search_id?}/{search_name?}/{search_email?}/{search_twitter_id?}',
     Route::get('/admin/user/l',
     [Controllers\AdminUserController ::class, 'index'])
     ->name('admin.user');
-
-
-    # ユーザー絞り込み
-    // Route::post('/admin/user/search',
-    // [Controllers\AdminUserController ::class, 'search'])
-    // ->name('admin.user.search');
 
 
     # CSVファイルのダウンロード
@@ -43,5 +36,9 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.user.canpaing_introductory');
 
 
+    # その他メニュー
+    Route::get('/admin/user/other_menu/',
+    [Controllers\AdminUserController ::class, 'other_menu'])
+    ->name('admin.user.other_menu');
 
 });//end middleware

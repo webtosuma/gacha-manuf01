@@ -63,6 +63,7 @@ style="max-width:90vw; min-width:30vw;">
                         </span>
                         <span>pt</span>
                     </div>
+                    <div class="form-text">{{Auth::user()->point_deadline_text}}</div>
                 </div>
                 <div class="col-auto">
                     <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>

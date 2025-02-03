@@ -66,5 +66,8 @@ class Kernel extends HttpKernel
 
         'admin_auth' => \App\Http\Middleware\AdminAuthenticate::class,//サイト管理者ログイン認証
         'user_rank'  => \App\Http\Middleware\UserRankMiddleware::class,//会員ランク更新
+        'user_plize_deadline' => \App\Http\Middleware\UserPrizeDeadLineMiddleware::class,//ユーザー商品期限切れ対応
+        'user_point_deadline' => \App\Http\Middleware\UserPointDeadlineMiddleware::class,//ユーザーポイント期限切れ対応
+
     ];
 }

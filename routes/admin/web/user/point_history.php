@@ -26,4 +26,19 @@ Route::middleware(['admin_auth'])->group(function () {
 
 
 
+    /* ユーザーポイントの期限切れ */
+
+    # (API)期限切れユーザーポイントのリセット
+    Route::post('/admin/api/user/point_history/deadline/point_reset',
+    [Controllers\AdminUserPointHistoryController::class, 'api_point_reset'])
+    ->name('admin.api.user.point_history.deadline.point_reset');
+
+    # リセット完了
+    Route::get('/admin/api/user/point_history/deadline/comp_point_reset',
+    [Controllers\AdminUserPointHistoryController::class, 'comp_point_reset'])
+    ->name('admin.api.user.point_history.deadline.comp_point_reset');
+
+
+
+
 });//end middleware

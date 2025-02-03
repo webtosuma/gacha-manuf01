@@ -93,13 +93,6 @@
             </div>
         </div>
 
-        <!-- <div class="text-end">
-            取得商品数：
-            <span class="fs-1 fw-bold">
-                <number-comma-component :number="userPrizes.length" />
-            </span>
-        </div> -->
-
 
         <!--商品一覧-->
         <ul class="row px-3 bg-white rounded-3 mx-2 gy-3 mt-0" style="list-style:none;">
@@ -136,14 +129,13 @@
 
                     </div>
                     <div class="col-8 p-0">
-                        <div class="form-text">{{ formatDate(userPrize.created_at) }}</div>
+                        <div class="form-text">取得日：{{ formatDate(userPrize.created_at) }}</div>
                         <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
-                        <!-- <div class="">{{ userPrize.prize.rank.name }}</div> -->
 
                         <div class="mt- px-3 text-center border rounded-pill d-inline-block">
                             <number-comma-component :number=" userPrize.point " />{{ 'pt' }}
                         </div>
-
+                        <div class="form-text text-danger">{{ userPrize.deadline_text }}</div>
                     </div>
                 </div>
                 <div v-else class="py-5">

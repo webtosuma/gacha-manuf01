@@ -10,11 +10,18 @@ use App\Http\Controllers;
 | GachaSponsorAdController
 |--------------------------------------------------------------------------
 */
+
     Route::middleware(['user_rank'])->group(function () {
 
-        # ガチャカのテゴリー選択
+        # API ガチャ一覧取得
+        Route::post('/gacha/api/list',
+        [App\Http\Controllers\GachaApiController::class, 'list'])
+        ->name('gacha.api.list');
+
+        # ガチャのカテゴリー選択
         Route::get('/g/{category_code?}',
-        [App\Http\Controllers\GachaController::class, 'index'])
+        // [App\Http\Controllers\GachaController::class, 'index'])
+        [App\Http\Controllers\GachaApiController::class, 'index'])//(非同期)
         ->name('gacha_category');
 
         # ガチャカの詳細表示
