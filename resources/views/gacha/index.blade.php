@@ -123,8 +123,6 @@
     "></script>
     <script src="{{ asset('js/splide.js') }}"></script>
 
-    <script>
-    </script>
 
 @endsection
 

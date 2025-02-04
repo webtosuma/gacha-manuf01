@@ -136,6 +136,8 @@ class GachaPlayCreateUserPrizeMethod extends Controller
     /** ガチャランクID 個人ピタリ賞 */
     public static function  GachaRankIdUserPita(){ return 363; }
 
+    /** ガチャランクID スライド表示 */
+    public static function  GachaRankIdSlide(){   return 1001; }
 
 
     /**

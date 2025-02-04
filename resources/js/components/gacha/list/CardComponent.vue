@@ -31,6 +31,23 @@
             </a>
 
 
+            <!-- スライダー   -->
+            <div v-if="gacha.slide_imgs"
+            :id="'splide_gacha'+gacha.id" class="splide_gacha splide bg-white">
+                <div class="splide__track">
+                    <ul class="splide__list">
+
+                        <li v-for="( img_path, key ) in gacha.slide_imgs" :key="key"
+                        class="splide__slide p-1">
+
+                            <div class="ratio ratio-1x1 rounded-2 slide-img-bg" :style="'background-image: url('+ img_path +');'"></div>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
 
             <!--metter & price-->
             <a :href="gacha.route"  :class="href_class">
@@ -149,6 +166,51 @@
             }
 
 
+
+            /* Splideインスタンスを作成 */
+            this.splide();
+
+
+
+        },
+        methods:{
+
+
+            /* Splideインスタンスを作成 */
+            splide: function(){
+                const sliders = document.querySelectorAll('.splide_gacha');
+
+                // 各スライダーに対してSplideインスタンスを作成
+                sliders.forEach((slider) => {
+
+                    new Splide( '#'+slider.id , {
+
+                        type      : 'loop',
+                        focus     : 'center',
+                        perPage   : 6,
+                        autoplay  : true,
+                        pagination: false,
+
+
+                    }).mount();
+
+                });
+             },
         }
+
     }
 </script>
+<style  scoped>
+    /* .ratio-image-parent-component
+    {
+        overflow: hidden;
+    } */
+    .slide-img-bg
+    {
+        background-repeat  : no-repeat;
+        background-size    : cover;
+        background-position: center center;
+        width: 100%;
+    }
+</style>
+

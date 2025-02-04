@@ -41,6 +41,14 @@
         }
 
         /* ガチャのホバーアニメーション */
+        .hover_anime:hover{
+            position: relative;
+            transform: scale(1.05) translateY(-1rem);
+
+            transition: all .2s;
+        }
+
+        /* ガチャのホバーアニメーション */
         /* .hover_anime:hover{
             position: relative;
             transform: rotate3d(0, 1, 0, 360deg);
@@ -48,10 +56,10 @@
         } */
 
         /* ガチャのホバーアニメーション */
-        .hover_anime:hover{
+        /* .hover_anime:hover{
             position: relative;
             animation: shake 1s infinite ease-in-out;
-        }
+        } */
         /* 揺れる動きのキーフレーム */
         @keyframes shake {
             0%, 100% {

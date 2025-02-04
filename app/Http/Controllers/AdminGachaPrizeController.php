@@ -107,6 +107,7 @@ class AdminGachaPrizeController extends Controller
                     GachaPlayCreateUserPrizeMethod::GachaRankIdUserKiri(),//個人キリ番ID
                     GachaPlayCreateUserPrizeMethod::GachaRankIdUserZoro(),//個人ゾロ目ID
                     GachaPlayCreateUserPrizeMethod::GachaRankIdUserPita(),//個人ピタリ賞ID
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdSlide(),//スライド表示ID
                 ] );
 
 
@@ -176,6 +177,9 @@ class AdminGachaPrizeController extends Controller
 
         # 売り切れの解除
         if($gacha->max_count){ $gacha->update(['is_sold_out'=>0]); }
+
+        # 商品登録更新日の更新
+        $gacha->update(['updated_prizes_at'=>now()]);
 
     }
 

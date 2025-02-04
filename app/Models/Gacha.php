@@ -35,7 +35,8 @@ class Gacha extends Model
 
         'min_time',// 表示時間下限　2024/04/17追加
         'max_time',// 表示時間上限　2024/04/17追加
-        'is_over_date',// 日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
+        'is_over_date',   // 日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
+        'updated_prizes_at',// 登録商品更新日時 2025/02/04追加
     ];
 
 
@@ -54,6 +55,7 @@ class Gacha extends Model
     protected $dates = [
         'published_at',//公開設定(利用しない->非公開*消さない)
         'sold_out_at', //売り切れ日時
+        'updated_prizes_at',// 登録商品更新日時 2025/02/04追加
     ];
 
 
@@ -268,8 +270,10 @@ class Gacha extends Model
         public function getUserPlayedCountAttribute()
         {
             $user = Auth::user(); //ログインユーザー取得
+
             return $user
             ? UserGachaHistory::where('gacha_id',$this->id)
+            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('user_id',$user->id)
             ->get()->sum('play_count')
             : 0 ;
@@ -301,6 +305,7 @@ class Gacha extends Model
             $user_id = Auth::check() ? Auth::user()->id : 0;
 
             $bool = UserGachaHistory::where('user_id',$user_id)
+            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('gacha_id',$this->id)
             ->first();
 
@@ -323,6 +328,7 @@ class Gacha extends Model
             $user_id = Auth::check() ? Auth::user()->id : 0;
 
             $count = UserGachaHistory::where('user_id',$user_id)
+            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('gacha_id',$this->id)
             ->whereDate('created_at', now() )
             ->get()->count();
@@ -345,6 +351,7 @@ class Gacha extends Model
             $today = \Carbon\Carbon::today();
 
             $bool = UserGachaHistory::where('user_id',$user_id)
+            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('gacha_id',$this->id)
             ->whereDate('created_at', $today)
             ->first();
@@ -488,6 +495,7 @@ class Gacha extends Model
                         return $value >= $next_coount && $value <= ($next_coount + $n);
                     });
 
+
                     $u_array = [ ...$u_array, ...$filteredArray ];
 
                 }
@@ -500,18 +508,18 @@ class Gacha extends Model
             sort($array);// 昇順にソート
             $diff = count($array) ?  $array[0] - ($played_count+1): null;
 
+
             # ユーザーのPLAY数に応じて当選する当選の、最も近い値
             $u_array = array_unique($u_array);// 重複を除く
             sort($u_array);// 昇順にソート
             $u_diff = count($u_array) ? $u_array[0] - ($user_played_count+1) : null;
 
 
-            // dd($u_diff);
-
             # ユーザーのPLAY数に応じて当選する当選の、最も近い値
             if(    $diff  ===null){ $num = $u_diff; }
             elseif($u_diff===null){ $num = $diff;   }
             else{ $num = $diff<$u_diff ? $diff : $u_diff; }
+
 
 
             return $num;
@@ -655,6 +663,25 @@ class Gacha extends Model
         }
 
 
+        /**
+         * スライド画像　slide_imgs
+         * @return String
+        */
+        public function getSlideImgsAttribute()
+        {
+            # スライド表示用商品の取得
+            $g_prizes = GachaPrize::where('gacha_id',$this->id)
+            ->where('gacha_rank_id',1001)
+            ->get();
+
+            # 登録商品がなければ,nullを返す
+            if( $g_prizes->count()==0 ){ return null; }
+
+            # 商品の画像パス配列を返す
+            $array = [];
+            foreach ($g_prizes as $g_prize) { $array[] = $g_prize->prize->image_path; }
+            return $array;
+        }
 
     /*
     |--------------------------------------------------------------------------

@@ -57,6 +57,8 @@ class GachaDiscription extends Model
 
             10  => 'ラストワン',
 
+            1001  => 'スライド表示',
+
         ];
     }
 

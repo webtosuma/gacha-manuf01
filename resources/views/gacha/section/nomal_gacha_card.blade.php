@@ -13,7 +13,7 @@
             </a>
 
             <!-- スライダー -->
-            @if ( env('GACHA_CARD_PRIZE_SLIDE',false) )
+            @if ( $gacha->slide_imgs )
                 <div id="{{'splide_gacha'.$gacha->id}}" class="splide_gacha splide bg-white">
                     @include('gacha.common.splide')
                 </div>

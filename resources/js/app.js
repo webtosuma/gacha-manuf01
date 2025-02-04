@@ -128,6 +128,10 @@ require('./components/ExampleComponent.vue').default);
             Vue.component('a-gachaprize-gacharank-pita-container',
             require('./components/admin/gacha/prize/edit/GachaRankPitaContainer.vue').default);
 
+            // ランク スライド表示商品
+            Vue.component('a-gachaprize-gacharank-slide-container',
+            require('./components/admin/gacha/prize/edit/GachaRankSlideContainer.vue').default);
+
             // 商品リスト
             Vue.component('a-gachaprize-prize-list',
             require('./components/admin/gacha/prize/edit/PrizeList.vue').default);

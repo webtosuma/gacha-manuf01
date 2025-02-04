@@ -64,6 +64,9 @@ class UserPrizeDeadLineMiddleware
             # ポイント交換済みはスキップ
             if( $user_prize->point_history_id ){ continue; }
 
+            #期限前はスキップ
+            if( $user_prize->deadline_at>now() ){ continue; }
+
             # ポイント履歴の登録
             $point_history = new PointHistory([
                 'user_id'   => $user_prize->user->id, //ユーザー　リレーション

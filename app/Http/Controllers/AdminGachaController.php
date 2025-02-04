@@ -30,6 +30,15 @@ class AdminGachaController extends Controller
      */
     public function index( Request $request, $category_code=null )
     {
+        // $gachas = Gacha::where('updated_prizes_at',null)->get();
+        // foreach ($gachas as $gacha) {
+        //     $gacha->updated_prizes_at = $gacha->created_at;
+        //     $gacha->save();
+        // }
+        // dd(
+        //     $gachas
+        // );
+
         # カテゴリーコードの確認
         $gacha_category = GachaCategory::where('code_name',$category_code)->first();
         if(!$gacha_category&&$category_code){ return \App::abort(404); }//該当なし

@@ -36,8 +36,8 @@ Route::middleware([ /* ミドルウェアー */
 
     # トップページ
     Route::get('/',
-    // [App\Http\Controllers\GachaController::class, 'index']
-    [App\Http\Controllers\GachaApiController::class, 'index']//非同期
+    [App\Http\Controllers\GachaController::class, 'index']
+    // [App\Http\Controllers\GachaApiController::class, 'index']//非同期
     )->middleware(['user_rank'])
     ->name('home');
 
@@ -46,6 +46,10 @@ Route::middleware([ /* ミドルウェアー */
         return view('mypage.index');
     })->middleware(['auth','user_rank'])
     ->name('mypage');
+
+
+    # 取得した商品
+    include('web/user_prize.php');
 
 
     # WPAローディングページ
@@ -103,9 +107,6 @@ Route::middleware([ /* ミドルウェアー */
     # チケット ストアー
     include('web/ticket_store.php');
 
-    # 取得した商品
-    include('web/user_prize.php');
-
     # 発送申請
     include('web/shipped.php');
 
@@ -133,6 +134,8 @@ Route::middleware([ /* ミドルウェアー */
 
     # フッターメニュー
     include('web/footer_menu.php');
+
+
 
 
 });//end middleware

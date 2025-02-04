@@ -42,7 +42,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
         new Splide( '#'+slider.id , {
 
-            type     : 'slide',
+            type   : 'loop',
             focus  : 'center',
             perPage : 6,
             autoplay: true,

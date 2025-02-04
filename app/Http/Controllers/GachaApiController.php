@@ -27,8 +27,9 @@ class GachaApiController extends Controller
      */
     public function index(Request $request, $category_code='all' )
     {
-        // $gacha = Gacha::first();
-        // dd($gacha->add_chance_image_path);
+        $gacha = Gacha::first();
+        // dd($gacha->user_played_count);
+
 
 
         # 表示できないページの処理
@@ -297,6 +298,7 @@ class GachaApiController extends Controller
 
                 $gacha->add_chance_image_path  = $gacha->add_chance_image_path;//アド確定予告画像パス
                 $gacha->add_chance_count       = $gacha->add_chance_count;     //天井系ガチャのアド確定までの回転数
+
                 $gacha->have_user_rank         = $gacha->have_user_rank;       //個人のプレイ数の商品登録
                 $gacha->user_played_count      = $gacha->user_played_count;    //ログインユーザー個人のプレイ数
 
@@ -306,9 +308,11 @@ class GachaApiController extends Controller
                 $gacha->img_path_only_new_user = $gacha->img_path_only_new_user;//新規会委員限定
                 $gacha->img_path_user_rank     = $gacha->img_path_user_rank;    //会員ランク限定
 
+                /* スライド */
+                $gacha->slide_imgs      = $gacha->slide_imgs;      //スライド画像
 
                 /* メーター */
-                $gacha->user_rank_id    = $gacha->user_rank_id;           //
+                $gacha->user_rank_id    = $gacha->user_rank_id;    //
                 $gacha->remaining_ratio = $gacha->remaining_ratio; //残数比率
                 $gacha->remaining_count = $gacha->remaining_count; //残数
                 $gacha->max_count       = $gacha->max_count;       //総口数

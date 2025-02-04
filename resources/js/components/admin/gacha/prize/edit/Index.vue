@@ -116,6 +116,21 @@
                                 :delete_gacha_prize_ids="delete_gacha_prize_ids"
                                 />
 
+                                <!--スライダー登録-->
+                                <a-gachaprize-gacharank-slide-container
+                                v-else-if="['1001'].includes(discription.gacha_rank_id)"
+                                @send-delete-gp-id="addDeleteGachaPrizeId"
+                                :token="token"
+                                :category_id="category_id"
+                                :r_api_prize="r_api_prize"
+                                :rank_label="discription.rank_label"
+                                :r_api_ranks_gacha_prizes="r_api_ranks_gacha_prizes+'/'+discription.id"
+                                :gacha_rank_id="discription.gacha_rank_id"
+                                :delete_gacha_prize_ids="delete_gacha_prize_ids"
+                                />
+
+
+
                                 <!--通常ランク-->
                                 <a-gachaprize-gacharank-container
                                 v-else
