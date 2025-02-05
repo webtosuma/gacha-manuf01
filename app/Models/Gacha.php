@@ -261,8 +261,6 @@ class Gacha extends Model
         }
 
 
-
-
         /**
          * ガチャ　ログインユーザーのプレイ数 user_played_count
          * @return String
@@ -534,6 +532,9 @@ class Gacha extends Model
         */
         public function getAddChanceImagePathAttribute()
         {
+            // $image_path = 'site/image/gacha/chance/1.png';
+            // return Storage::exists($image_path) ? $image_path : false ;
+
 
             # 売り切れのとき
             if($this->is_sold_out){ return null; }

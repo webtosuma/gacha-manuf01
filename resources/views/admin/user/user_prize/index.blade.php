@@ -120,11 +120,10 @@ $active_key = 'user';
                             <td>{{$user_prize->point}}pt</td>
                             <td>{{$gacha_name}}</td>
 
+                            <!-- 取得日・発送期限 -->
                             <td>
-                                <!-- 取得日・発送期限 -->
                                 <div class="">取得日時：{{ $user_prize->created_at->format('Y/m/d H:i') }}</div>
                                 <div class="text-danger">{{ $user_prize->deadline_text }}</div>
-
                             </td>
                             <td>{{$user_prize->id}}</td>
                         </tr>

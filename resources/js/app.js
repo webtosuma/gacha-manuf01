@@ -112,29 +112,29 @@ require('./components/ExampleComponent.vue').default);
         Vue.component('a-gachaprize-edit',
         require('./components/admin/gacha/prize/edit/Index.vue').default);
 
-            // ランク
-            Vue.component('a-gachaprize-gacharank-container',
-            require('./components/admin/gacha/prize/edit/GachaRankContainer.vue').default);
+        // ランク
+        Vue.component('a-gachaprize-gacharank-container',
+        require('./components/admin/gacha/prize/edit/GachaRankContainer.vue').default);
 
-            // ランク キリ番
-            Vue.component('a-gachaprize-gacharank-kiri-container',
-            require('./components/admin/gacha/prize/edit/GachaRankKiriContainer.vue').default);
+        // ランク キリ番
+        Vue.component('a-gachaprize-gacharank-kiri-container',
+        require('./components/admin/gacha/prize/edit/GachaRankKiriContainer.vue').default);
 
-            // ランク ゾロ目
-            Vue.component('a-gachaprize-gacharank-zoro-container',
-            require('./components/admin/gacha/prize/edit/GachaRankZoroContainer.vue').default);
+        // ランク ゾロ目
+        Vue.component('a-gachaprize-gacharank-zoro-container',
+        require('./components/admin/gacha/prize/edit/GachaRankZoroContainer.vue').default);
 
-            // ランク ピタリ賞
-            Vue.component('a-gachaprize-gacharank-pita-container',
-            require('./components/admin/gacha/prize/edit/GachaRankPitaContainer.vue').default);
+        // ランク ピタリ賞
+        Vue.component('a-gachaprize-gacharank-pita-container',
+        require('./components/admin/gacha/prize/edit/GachaRankPitaContainer.vue').default);
 
-            // ランク スライド表示商品
-            Vue.component('a-gachaprize-gacharank-slide-container',
-            require('./components/admin/gacha/prize/edit/GachaRankSlideContainer.vue').default);
+        // ランク スライド表示商品
+        Vue.component('a-gachaprize-gacharank-slide-container',
+        require('./components/admin/gacha/prize/edit/GachaRankSlideContainer.vue').default);
 
-            // 商品リスト
-            Vue.component('a-gachaprize-prize-list',
-            require('./components/admin/gacha/prize/edit/PrizeList.vue').default);
+        // 商品リスト
+        Vue.component('a-gachaprize-prize-list',
+        require('./components/admin/gacha/prize/edit/PrizeList.vue').default);
 
 
     /* ポイント売上 */

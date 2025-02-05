@@ -6,7 +6,6 @@
     <div class="col">残数</div>
 </div>
 @foreach ($gacha->discriptions as $num => $discription)
-    {{-- @if ( $discription->g_prizes->sum('max_count') > 0 ) --}}
     @if (  $discription->g_prizes->count() > 0 )
         <div class="mx-3 py-2 border-bottom">
 

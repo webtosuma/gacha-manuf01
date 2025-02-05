@@ -107,8 +107,8 @@ class UserPrizeApiController extends Controller
 
         # 追加データ
         foreach ($user_prizes as $user_prize) {
-            $user_prize->prize->image_path = $user_prize->prize->image_path;     //画像パスの登録
-            $user_prize->deadline_text     = $user_prize->deadline_text; //有効期限テキスト
+            $user_prize->prize->image_path = $user_prize->prize->image_path; //画像パスの登録
+            $user_prize->deadline_text     = $user_prize->deadline_text;     //有効期限テキスト
         }
 
         // return response()->json( $user_prizes );

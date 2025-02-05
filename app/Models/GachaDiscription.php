@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
-|  ガチャの詳細説明情報　モデル hit
+|  ガチャの詳細説明情報　モデル
 | =============================================
 */
 class GachaDiscription extends Model
