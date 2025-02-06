@@ -32,12 +32,12 @@
                 </div>
             </div> --}}
 
-            <div class="mt-5">
+            {{-- <div class="mt-5">
                 <a href="{{route('trems','2023-12-01')}}"
                 >2023年012月1日制定</a><br>
                 <a href="{{route('trems','2024-02-16')}}"
                 >2024年02月16日改訂</a><br>
-            </div>
+            </div> --}}
         </section>
 
 

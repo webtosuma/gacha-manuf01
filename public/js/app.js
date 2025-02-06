@@ -10643,7 +10643,7 @@ __webpack_require__.r(__webpack_exports__);
       /* 10連ガチャる　 ラベル */
       ten_play_label: '10連ガチャる',
       /* カスタムボタン　ラベル */
-      custom_label: 'カスタムボタン',
+      custom_label: '回数をカスタム',
       /* 売り切れ　ラベル */
       soldout_label: '終了',
       /*本日終了　ラベル */

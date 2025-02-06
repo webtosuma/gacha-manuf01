@@ -144,3 +144,23 @@
         opacity: 0; /* 完全に非表示 */
     }
 }
+
+
+/* レインボーアニメーション背景 */
+@keyframes rainbow {
+    100% { background-position: 200%; }
+}
+
+.bg-rainbow {
+    background: linear-gradient(to right,
+        #e60000,
+        #f39800,
+        #fff100,
+        #009944,
+        #0068b7,
+        #1d2088,
+        #920783,
+        #e60000
+    ) 0 / 200%;
+    animation: rainbow 2s linear infinite;
+}

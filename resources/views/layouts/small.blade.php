@@ -20,15 +20,9 @@
         <link rel="manifest" href="/manifest.json">
     @endif
 
-    <!-- ファビコン画像の読み込み -->
-    <link rel="shortcut icon" href="{{asset('storage/site/image/favicon.png')}}">
+    <!--共通CSS-->
+    @include('includes.css')
 
-    <!-- bootstrap アイコン の読み込み-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-
-    <!-- bootstrap CSS の読み込み-->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
     <style>
         /* サイトデフォルト背景 */
         #bgWindow{
@@ -59,7 +53,8 @@
     <header class="mx-auto p-2" style="max-width:600px;">
         <h1 class="m-0 fs-6">
             <a href="{{route('home')}}" class="navbar-brand  fs-2 fw-bold">
-                <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" class="d-brock" style="height:2.4rem;">
+                <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}"
+                class="d-brock" style="height:4rem;">
             </a>
         </h1>
     </header>

@@ -272,6 +272,10 @@ class GachaApiController extends Controller
                 // $query->where('published_at','<',now()->copy()->addDays(3));//3日前　新規カウントダウン
                 $query->where('published_at', '<>', null);
 
+                ## 公開中のカテゴリーのみ
+                $category_ids = GachaCategory::where('is_published',1) //公開中
+                ->get()->pluck('id')->toArray();
+                $query->whereIn('category_id',$category_ids);
 
 
             return $query->orderByDesc('created_at');
