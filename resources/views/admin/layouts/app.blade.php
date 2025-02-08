@@ -73,6 +73,18 @@
     <!-- Scripts -->
     @include('includes.appjs')
 
+    <!----- animation ----->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            delay: 100,/*発火までの秒数 (ms)*/
+            duration: 1200,/*アニメーション時間 (ms)*/
+            once: false,/*発火を1回のみにする*/
+            placement:"top-top"/*発火位置:画面中央*/
+        });
+    </script>
+
+
     @yield('script')
 
 </body>

@@ -173,6 +173,19 @@ class Gacha extends Model
             return $this->hasMany(SponsorAd::class,'gacha_id');
         }
 
+
+        /**
+         * UserGachaHistoryモデル リレーション
+         * @return \App\Models\UserGachaHistory
+        */
+        public function user_gacha_histories()
+        {
+            return $this->hasMany(UserGachaHistory::class);
+        }
+
+
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

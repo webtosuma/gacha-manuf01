@@ -27,10 +27,11 @@ class GachaApiController extends Controller
      */
     public function index(Request $request, $category_code='all' )
     {
-        $gacha = Gacha::first();
-        // dd($gacha->user_played_count);
+        // $gachas = Gacha::withSum('user_gacha_histories', 'play_count')
+        // ->orderByDesc('user_gacha_histories_sum_play_count')
+        // ->get();
 
-
+        // dd($gachas[1]);
 
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
@@ -188,9 +189,14 @@ class GachaApiController extends Controller
 
 
 
-
                 ## 並び替え・絞り込み
                 switch ($search_key) {
+
+                    //* 人気順 */
+                    case 'desc_popularity':
+                        $query->withSum('user_gacha_histories', 'play_count')
+                        ->orderByDesc('user_gacha_histories_sum_play_count');
+                        break;
 
                     //* 高ポイント順 */
                     case 'desc_point':

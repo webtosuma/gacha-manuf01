@@ -1,6 +1,8 @@
 <template>
     <div class="container overflow-hidden" style="min-height:50vh;">
 
+
+
         <!--読み込み中-->
         <div v-if="loading"
         class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
@@ -41,6 +43,17 @@
             <div v-for="(gacha, key) in gachas" :key="key"
             :class="list_col_class" >
 
+
+                <!--人気順位-->
+                <div v-if="is_desc_popularity==1"
+                :class="{'invisible': gacha.is_sold_out}"
+                class="text-center text-info  mb-1">
+                    <div class="bg-dark d-inline-block px-2">
+                        第<span class="fs-3 px-1">{{ key+1 }}</span>位
+                    </div>
+                </div>
+
+
                 <u-gacha-card
                 :gacha="gacha"
                 :sm_card="sm_card"
@@ -62,12 +75,15 @@
     import axios from 'axios';
     export default {
         props: {
+
             token:         { type: String,  default: '', },
             category_code: { type: String,  default: '', },//カテゴリーcode
             search_key:    { type: String,  default: '', },//検索キーワード
             order:         { type: String,  default: '', },//並び順
             sm_card:       { type: [String,Number,Boolean],  default: 0, },//カードの表示サイズ
             r_api_gacha_list:{ type: String,  default: '', },
+            is_desc_popularity:{ type: [String,Number,Boolean],  default: 0, },//人気順か否か
+
         },
         data() { return {
 

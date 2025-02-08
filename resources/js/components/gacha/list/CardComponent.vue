@@ -33,7 +33,9 @@
 
             <!-- スライダー   -->
             <div v-if="gacha.slide_imgs"
-            :id="'splide_gacha'+gacha.id" class="splide_gacha splide bg-white">
+            :id="'splide_gacha'+gacha.id" class="splide_gacha splide"
+            :class="gacha.type=='only_new_user' ? 'bg-success-subtle' : 'bg-white'"
+            >
                 <div class="splide__track">
                     <ul class="splide__list">
 

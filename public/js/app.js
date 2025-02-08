@@ -10398,7 +10398,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     r_api_gacha_list: {
       type: String,
       "default": ''
-    }
+    },
+    is_desc_popularity: {
+      type: [String, Number, Boolean],
+      "default": 0
+    } //人気順か否か
   },
   data: function data() {
     return {
@@ -19095,7 +19099,8 @@ var render = function render() {
       img_path_user_rank: _vm.gacha.img_path_user_rank
     }
   })], 1), _vm._v(" "), _vm.gacha.slide_imgs ? _c("div", {
-    staticClass: "splide_gacha splide bg-white",
+    staticClass: "splide_gacha splide",
+    "class": _vm.gacha.type == "only_new_user" ? "bg-success-subtle" : "bg-white",
     attrs: {
       id: "splide_gacha" + _vm.gacha.id
     }
@@ -19349,7 +19354,16 @@ var render = function render() {
     return _c("div", {
       key: key,
       "class": _vm.list_col_class
-    }, [_c("u-gacha-card", {
+    }, [_vm.is_desc_popularity == 1 ? _c("div", {
+      staticClass: "text-center text-info mb-1",
+      "class": {
+        invisible: gacha.is_sold_out
+      }
+    }, [_c("div", {
+      staticClass: "bg-dark d-inline-block px-2"
+    }, [_vm._v("\n                    第"), _c("span", {
+      staticClass: "fs-3 px-1"
+    }, [_vm._v(_vm._s(key + 1))]), _vm._v("位\n                ")])]) : _vm._e(), _vm._v(" "), _c("u-gacha-card", {
       attrs: {
         gacha: gacha,
         sm_card: _vm.sm_card

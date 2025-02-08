@@ -146,6 +146,7 @@
         search_key   ="{{ $search_key }}"
         r_api_gacha_list="{{ route('gacha.api.list') }}"
         sm_card="{{$card_size=='sm'?1:0}}"
+        is_desc_popularity="{{$search_key=='desc_popularity'?1:0}}"
         ></u-gacha-list>
 
     </section>

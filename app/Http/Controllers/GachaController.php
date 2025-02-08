@@ -314,6 +314,7 @@ class GachaController extends Controller
                 // ['label'=>'新規会員限定', 'key'=>'only_new_user'],
 
                 ['label'=>'新着順',        'key'=>'desc_crated'],
+                ['label'=>'人気順',        'key'=>'desc_popularity'],
                 ['label'=>'高額ポイント順', 'key'=>'desc_point'],
                 ['label'=>'低額ポイント順', 'key'=>'asc_point'],
                 // ['label'=>'会員ランク限定', 'key'=>'user_rank'],
