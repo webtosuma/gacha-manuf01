@@ -108,6 +108,10 @@ require('./components/ExampleComponent.vue').default);
 
     /* ガチャ管理 */
 
+        // ガチャ一覧
+        Vue.component('a-gacha-list',
+        require('./components/admin/gacha/Index.vue').default);
+
         // 商品登録
         Vue.component('a-gachaprize-edit',
         require('./components/admin/gacha/prize/edit/Index.vue').default);

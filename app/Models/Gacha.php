@@ -390,7 +390,11 @@ class Gacha extends Model
         */
         public function getInitialTimeAttribute()
         {
-            if( $this->published_at > now()){
+            $max = now()->copy()->addMinutes(30);//30分前 新規カウントダウン
+            $max = now()->copy()->addDays(3);//3日前　新規カウントダウン
+
+            if( $this->published_at>now() && $this->published_at<$max  )
+            {
                 return now()->copy()->diff($this->published_at)->format('%H:%I:%S');
             }
             return null;

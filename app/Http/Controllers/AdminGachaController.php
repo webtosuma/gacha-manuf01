@@ -44,20 +44,21 @@ class AdminGachaController extends Controller
         if(!$gacha_category&&$category_code){ return \App::abort(404); }//該当なし
 
         # 表示できるガチャ一覧
-        $gachas = $gacha_category
+        $query = Gacha::query();
 
-            ? Gacha::where('category_id',$gacha_category->id)
-            ->orderBy('is_sold_out')//売り切れは下
-            ->orderByDesc('published_at')
-            ->orderByDesc('created_at')
-            ->paginate( $this->pagenate_count() )//ページネーション
+            #カテゴリーの絞り込み
+            if( $gacha_category ){
+                $query->where('category_id',$gacha_category->id);
+            }
 
-            : Gacha::orderBy('is_sold_out')//売り切れは下
-            ->has('category')//カテゴリーが存在するもののみ
+            $query->has('category')//カテゴリーが存在するもののみ
             ->orderByDesc('published_at')
-            ->orderByDesc('created_at')
-            ->paginate( $this->pagenate_count() )//ページネーション
-        ;
+            ->orderByDesc('created_at');
+
+        $gachas = $query->paginate( $this->pagenate_count() );//ページネーション
+
+
+
 
         # カテゴリーデータ(select要素用)
         $categories = GachaCategory::orderBy('created_at')->get();

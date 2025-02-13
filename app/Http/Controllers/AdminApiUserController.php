@@ -108,12 +108,26 @@ class AdminApiUserController extends Controller
             $search_keys_array = explode(' ',$string);//配列に変換
 
             // # 処理
-            foreach( $search_keys_array as $search_key )
-            {
-                $query->where( function($q) use($search_key,$column_name)
-                {
-                    $q->where( $column_name, 'like', '%'.$search_key.'%');
-                } );
+            switch ($column_name) {
+                /* ID指定のとき */
+                case 'id':
+                    $query->whereIn('id', $search_keys_array);
+                    break;
+
+                /* その他のとき */
+                default:
+                    foreach( $search_keys_array as $num =>  $search_key )
+                    {
+                        if($num==0){
+                            $query->where(   $column_name, 'like', '%'.$search_key.'%');
+                        }else{
+                            $query->orWhere( $column_name, 'like', '%'.$search_key.'%');
+                        }
+
+                    }
+                    break;
+
+                //
             }
         }
 
