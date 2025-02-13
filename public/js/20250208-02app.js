@@ -10557,7 +10557,7 @@ __webpack_require__.r(__webpack_exports__);
     /* メーターの表示クラスを指定 */
     setprogressStyleClass: function setprogressStyleClass() {
       var bg_color = this.remaining_ratio > 70 ? 'bg-success' : this.remaining_ratio > 40 ? 'bg-warning' : 'bg-danger';
-      this.progress_style_class = 'progress-bar progress-bar-striped rounded-2 ' + bg_color;
+      this.progress_style_class = 'progress-bar progress-bar-striped ' + bg_color;
     }
   }
 });
@@ -10671,7 +10671,7 @@ __webpack_require__.r(__webpack_exports__);
       /* カスタムボタン　スタイル */
       coustom_style_class: "\n            btn btn-info bg-gradient text-white fw-bold w-100 pb-\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            ",
       /* カスタムボタン　スタイル(売り切れ) */
-      soldout_coustom_style_class: "\n            btn btn-info bg-gradient text-danger fw-bold w-100 pb-\n            rounded-pill border-secondary border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            disabled\n            "
+      soldout_coustom_style_class: "\n            btn btn-info bg-gradient text-danger fw-bold w-100 pb-\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            disabled\n            "
     };
   }
 });
@@ -11127,7 +11127,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       inputs: {},
       reset_inputs: {
         key_words: '',
-        category_id: 0,
+        category_id: null,
         order: 'desc_published_at' //並び順
       },
 
@@ -11163,7 +11163,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
         // カテゴリー
         _this.categories = json.data.categories;
-        _this.categories[0].id = 0; //すべて　id:p0
 
         //ページネーションデータ
         var paginate = json.data.stores;
@@ -11283,7 +11282,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       /*チェック中のユーザー商品の合計ポイント*/
 
       disabled: true,
-      category_id: 0,
+      category_id: null,
       //カテゴリーID
       search_key: '',
       //検索キーワード
@@ -11328,7 +11327,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
         // // カテゴリー
         _this.categories = json.data.categories;
-        _this.categories[0].id = 0; //すべて　id:p0
 
         //ページネーションデータ
         var paginate = json.data.user_prizes;
@@ -11402,16 +11400,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
 
       return "".concat(year, "/").concat(month, "/").concat(day);
+    },
+    /** アクティブなカテゴリーのセット */setActiveCategory: function setActiveCategory(category_id) {
+      this.search_key = ''; //キーワードのリセット
+
+      this.category_id = category_id; //アクティブなカテゴリーIDのセット
+      this.getData(); /* データ取得 */
     }
-
-    /** アクティブなカテゴリーのセット */
-    // setActiveCategory( category_id ) {
-
-    //     this.search_key=''; //キーワードのリセット
-
-    //     this.category_id = category_id;//アクティブなカテゴリーIDのセット
-    //     this.getData(); /* データ取得 */
-    // },
   }
 });
 
@@ -20175,7 +20170,25 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row align-items-center gy-1 mb-3"
   }, [_c("div", {
-    staticClass: "col-12 position-relative"
+    staticClass: "col-12"
+  }, [_c("div", {
+    staticClass: "d-flex gap-1 flex-wrap"
+  }, _vm._l(_vm.categories, function (category, key) {
+    return _c("button", {
+      key: key,
+      staticClass: "btn btn- border rounded-pill col-auto",
+      "class": _vm.inputs.category_id == category.id ? "disabled btn-primary text-white" : "",
+      staticStyle: {
+        opacity: "1"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.setActiveCategory(category.id);
+        }
+      }
+    }, [_vm._v(_vm._s(category.name))]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg position-relative"
   }, [_c("input", {
     directives: [{
       name: "model",
@@ -20209,36 +20222,6 @@ var render = function render() {
       click: _vm.resetSearchKey
     }
   }, [_vm._v("×")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg"
-  }, [_c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.inputs.category_id,
-      expression: "inputs.category_id"
-    }],
-    staticClass: "form-select form-select-sm",
-    on: {
-      change: [function ($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.inputs, "category_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }, function ($event) {
-        return _vm.getData();
-      }]
-    }
-  }, _vm._l(_vm.categories, function (category, key) {
-    return _c("option", {
-      key: key,
-      domProps: {
-        value: category.id
-      }
-    }, [_vm._v(_vm._s(category.name))]);
-  }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-md"
   }, [_c("div", {
     staticClass: "d-flex gap-1"
@@ -20463,7 +20446,25 @@ var render = function render() {
   }, [_vm._v("ポイント交換")])])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row align-items-center gy-2"
   }, [_c("div", {
-    staticClass: "col-12 position-relative"
+    staticClass: "col-12"
+  }, [_c("div", {
+    staticClass: "d-flex gap-1 flex-wrap"
+  }, _vm._l(_vm.categories, function (category, key) {
+    return _c("button", {
+      key: key,
+      staticClass: "btn btn- border rounded-pill col-auto",
+      "class": _vm.category_id == category.id ? "disabled btn-primary text-white" : "",
+      staticStyle: {
+        opacity: "1"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.setActiveCategory(category.id);
+        }
+      }
+    }, [_vm._v(_vm._s(category.name))]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg position-relative"
   }, [_c("input", {
     directives: [{
       name: "model",
@@ -20497,36 +20498,6 @@ var render = function render() {
       click: _vm.resetSearchKey
     }
   }, [_vm._v("×")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg"
-  }, [_c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.category_id,
-      expression: "category_id"
-    }],
-    staticClass: "form-select form-select-sm",
-    on: {
-      change: [function ($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.category_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }, function ($event) {
-        return _vm.getData();
-      }]
-    }
-  }, _vm._l(_vm.categories, function (category, key) {
-    return _c("option", {
-      key: key,
-      domProps: {
-        value: category.id
-      }
-    }, [_vm._v(_vm._s(category.name))]);
-  }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-md"
   }, [_c("div", {
     staticClass: "d-flex gap-1"

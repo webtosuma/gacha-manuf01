@@ -147,7 +147,7 @@
             /* カスタムボタン　スタイル(売り切れ) */
             soldout_coustom_style_class: `
             btn btn-info bg-gradient text-danger fw-bold w-100 pb-
-            rounded-pill border-danger border-0 shadow-sm
+            rounded-pill border-secondary border-0 shadow-sm
             position-relative shiny overflow-hidden
             disabled
             `,

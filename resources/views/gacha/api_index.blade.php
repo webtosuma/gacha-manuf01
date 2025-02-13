@@ -138,7 +138,7 @@
     </div>
 
     <!--ガチャ-->
-    <section class="py-3 pb-5">
+    <section class="py-3 pb-5" style="min-height:80vh;">
 
         <u-gacha-list
         token=        "{{ csrf_token() }}"

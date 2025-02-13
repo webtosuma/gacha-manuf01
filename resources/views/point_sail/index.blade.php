@@ -31,14 +31,7 @@
 
         <!--サブスクPR-->
         @if ( env('SUBSCRIPTION',false) )
-        <a href="{{route('point_sail.subscription')}}"
-        class="d-block col-md- mx-auto my-3 "
-        >
-            {{-- <img src="{{asset('storage/site/image/pass.png')}}"
-            alt="{{ 'カドフェPASS' }}" class="w-100 rounded-3 shadowww ">
-
-            <div class="text-end mt-2 px-3">お申し込みはこちら＞</div> --}}
-
+        <a href="{{route('point_sail.subscription')}}" class="d-block col-md- mx-auto my-3 "  >
             <div class=" p-3 text-white "
             style="background: linear-gradient(to right bottom, #406aff, #14cfa0) !important;"
             >
@@ -71,6 +64,11 @@
 
                 <div class="">購入するポイントを選択してください</div>
 
+                @if( true )
+                    <div class="border border-danger bg-danger-subtle border-3 p-3 rounded-4 text-danger text-center fs-3">
+                        只今、準備中です。
+                    </div>
+                @endif
 
 
                 @if( Auth::check() && $rank_ratio > 1 )

@@ -192,10 +192,14 @@ class GachaApiController extends Controller
                 ## 並び替え・絞り込み
                 switch ($search_key) {
 
-                    //* 人気順 */
+                    //* 人気順(過去1週間) */
                     case 'desc_popularity':
-                        $query->withSum('user_gacha_histories', 'play_count')
-                        ->orderByDesc('user_gacha_histories_sum_play_count');
+                        $oneWeekAgo = now()->subWeek(); // 過去1週間
+                        $query->withSum(['user_gacha_histories' => function ($query) use ($oneWeekAgo) {
+                            $query->where('created_at', '>=', $oneWeekAgo);
+                        }], 'play_count')
+                        ->orderByDesc('user_gacha_histories_sum_play_count')
+                        ->get();
                         break;
 
                     //* 高ポイント順 */

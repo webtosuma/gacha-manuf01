@@ -1,25 +1,24 @@
 <template>
-    <div class="card-body py-0" :class="bg_color">
+    <div class="card-body py-0 px-2 px-md-3" :class="bg_color">
 
 
-        <div class="row align-items-center justify-content-between">
+        <div class="row align-items-center justify-content-between g-1">
 
             <div class="col text-start">
                 <!--左-->
                 <div v-if="new_label_path"
-                class="d-inline-block"  style="height:1.6rem;">
+                class="d-inline-block"  :style="icon_height">
                     <img :src=" new_label_path " class="h-100" alt="NEW">
                 </div>
             </div>
 
             <div class="col-auto">
                 <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
-                    <div class="d-flex align-items-center justify-content-center"  style="height:1.6rem;">
+                    <div class="d-flex align-items-center justify-content-center"  :style="icon_height">
                         <img :src=" img_path_point " class="h-100">
                     </div>
 
                     <div class="">
-                        <!-- 1回× -->
                         <span :class="point_fs">
                             <number-comma-component :number="gacha_play_point"></number-comma-component>
                         </span>pt
@@ -28,7 +27,7 @@
             </div>
 
             <div class="col text-end">
-                <!--右-->
+                <!-- 右 -->
                 <div  v-if="sponsor_ad">
                     <span class="px-1 border form-text fw-bold d-inline-block"
                     style="background: rgb(255 255 255 / 70%);">広告</span>
@@ -48,7 +47,9 @@
         <div v-else-if="is_meter">
             <div class="progress" :style="merter_height">
                 <div :class=" progress_style_class " role="progressbar"
-                :style="'width:'+remaining_ratio+'%'" :aria-valuenow="remaining_ratio" aria-valuemin="0" :aria-valuemax="remaining_ratio"
+                :style="'width:'+remaining_ratio+'%'"
+                :aria-valuenow="remaining_ratio" aria-valuemin="0"
+                :aria-valuemax="remaining_ratio"
                 ></div>
             </div>
 
@@ -98,7 +99,8 @@
             point_fs:    'fs-3',
             point_sm_fs: 'fs-6',
 
-
+            /*アイコンの高さ*/
+            icon_height: 'height:.8rem;',
 
         } },
         mounted() {
@@ -106,6 +108,10 @@
             /* カードの表示サイズ対応 */
             this.merter_height = this.sm_card!=0 ? this.merter_sm_height : this.merter_height;
             this.point_fs      = this.sm_card!=0 ? this.point_sm_fs      : this.point_fs;
+
+            /*アイコンの高さ*/
+            this.icon_height = this.sm_card!=0 ?  'height:.8rem;' : 'height: 1.6rem;'  ,
+
 
             //メーターの表示クラスを指定
             this.setprogressStyleClass();
@@ -118,7 +124,7 @@
             /* メーターの表示クラスを指定 */
             setprogressStyleClass :function(){
                 const bg_color = this.remaining_ratio>70 ? 'bg-success' : ( this.remaining_ratio>40 ? 'bg-warning' : 'bg-danger' );
-                this.progress_style_class = 'progress-bar progress-bar-striped '+bg_color;
+                this.progress_style_class = 'progress-bar progress-bar-striped rounded-2 '+bg_color;
             },
 
 

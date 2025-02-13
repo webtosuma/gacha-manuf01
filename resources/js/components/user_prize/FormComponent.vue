@@ -56,16 +56,7 @@
 
         <!--Headー-->
         <div class="row align-items-center gy-2">
-            <div class="col-12">
-                <div class="d-flex gap-1 flex-wrap">
-                    <button v-for="(category,key) in categories" :key="key"
-                    @click="setActiveCategory( category.id )"
-                    :class="category_id==category.id ? 'disabled btn-primary text-white' : '' "
-                    class="btn btn- border rounded-pill col-auto" style="opacity:1;"
-                    >{{ category.name }}</button>
-                </div>
-            </div>
-            <div class="col-12 col-lg position-relative">
+            <div class="col-12 position-relative">
                 <input v-model="search_key"
                 @change="getData()"
                 type="text" class="form-control rounded-pill" placeholder="商品名検索">
@@ -73,6 +64,16 @@
                 <button @click="resetSearchKey"
                 class="btn position-absolute top-50 translate-middle-y"
                 style="right:1rem;">×</button>
+            </div>
+            <div class="col-12 col-lg">
+
+                <select v-model="category_id"
+                @change="getData()"
+                class="form-select form-select-sm" >
+                    <option v-for="(category,key) in categories" :key="key" :value="category.id">{{ category.name }}</option>
+                </select>
+
+
             </div>
             <div class="col-12 col-md">
                 <div class="d-flex gap-1">
@@ -221,7 +222,7 @@
 
             disabled: true,
 
-            category_id: null,//カテゴリーID
+            category_id: 0,//カテゴリーID
             search_key: '',//検索キーワード
             order: 'desc_created',//並び順
 
@@ -259,6 +260,7 @@
 
                     // // カテゴリー
                     this.categories = json.data.categories;
+                    this.categories[0].id = 0;//すべて　id:p0
 
                     //ページネーションデータ
                     const paginate = json.data.user_prizes;
@@ -348,13 +350,13 @@
 
 
             /** アクティブなカテゴリーのセット */
-            setActiveCategory( category_id ) {
+            // setActiveCategory( category_id ) {
 
-                this.search_key=''; //キーワードのリセット
+            //     this.search_key=''; //キーワードのリセット
 
-                this.category_id = category_id;//アクティブなカテゴリーIDのセット
-                this.getData(); /* データ取得 */
-            },
+            //     this.category_id = category_id;//アクティブなカテゴリーIDのセット
+            //     this.getData(); /* データ取得 */
+            // },
 
 
 

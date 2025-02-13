@@ -9,7 +9,20 @@
             @include('gacha.common.top_image')
 
             <!--metter-->
-            @php
+            <u-gacha-metter
+            sm_card         ="1"
+            new_label_path  ="{{$gacha->new_label_path}}"
+            bg_color        =""
+            gacha_type      ="{{$gacha->type}}"
+            sponsor_ad      ="{{$gacha->sponsor_ad}}"
+            gacha_play_point="{{$gacha->one_play_point}}"
+            is_meter        ="{{$gacha->is_meter}}"
+            remaining_ratio ="{{$gacha->remaining_ratio}}"
+            remaining_count ="{{$gacha->remaining_count}}"
+            max_count       ="{{$gacha->max_count}}"
+            ></u-gacha-metter>
+
+            {{-- @php
             $bg_color = '';
             $bg_color = $gacha->type=='only_new_user' ? 'bg-success text-white' : $bg_color;//新機械委員限定
             $bg_color = isset($metter_bg_color) ? $metter_bg_color : $bg_color;
@@ -44,6 +57,6 @@
                         <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
                     </p>
                 @endif
-            </div>
+            </div> --}}
 
         </a>

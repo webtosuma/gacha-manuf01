@@ -113,6 +113,7 @@
                     <a href="{{ route('point_sail') }}" class="btn btn- btn-warning text-white rounded-pill shadow">ポイント購入</a>
                 </div>
             </div>
+            <div class="form-text">{{Auth::user()->point_deadline_text}}</div>
         </div>
 
 

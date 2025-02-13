@@ -87,7 +87,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <button type="submit"
-                                                    class="btn btn-danger text-white rounded-pill w-100"
+                                                    class="btn btn-primary text-white rounded-pill w-100"
                                                     >交換する</button>
                                                 </div>
                                             </div>
@@ -97,7 +97,7 @@
                             </div>
 
 
-                            <button class="btn btn-lg btn-danger text-white rounded-pill shadow w-100"
+                            <button class="btn btn-lg btn-primary text-white rounded-pill shadow w-100"
                             type="button"
                             data-bs-toggle="modal" data-bs-target="#exchangeModal"
                             >チケットと交換する</button>

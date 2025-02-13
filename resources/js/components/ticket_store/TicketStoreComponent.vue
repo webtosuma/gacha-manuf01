@@ -3,16 +3,7 @@
 
         <!--Headー-->
         <div class="row align-items-center gy-1 mb-3">
-            <div class="col-12">
-                <div class="d-flex gap-1 flex-wrap">
-                    <button v-for="(category,key) in categories" :key="key"
-                    @click="setActiveCategory( category.id )"
-                    :class=" inputs.category_id==category.id ? 'disabled btn-primary text-white' : '' "
-                    class="btn btn- border rounded-pill col-auto" style="opacity:1;"
-                    >{{ category.name }}</button>
-                </div>
-            </div>
-            <div class="col-12 col-lg position-relative">
+            <div class="col-12 position-relative">
                 <input v-model="inputs.key_words"
                 @change="getData()"
                 type="text" class="form-control rounded-pill" placeholder="商品名検索">
@@ -20,6 +11,16 @@
                 <button @click="resetSearchKey"
                 class="btn position-absolute top-50 translate-middle-y"
                 style="right:1rem;">×</button>
+            </div>
+            <div class="col-12 col-lg">
+
+                <select v-model="inputs.category_id"
+                @change="getData()"
+                class="form-select form-select-sm" >
+                    <option v-for="(category,key) in categories" :key="key" :value="category.id">{{ category.name }}</option>
+                </select>
+
+
             </div>
             <div class="col-12 col-md">
                 <div class="d-flex gap-1">
@@ -128,7 +129,7 @@
 
             reset_inputs: {
                 key_words: '',
-                category_id: null,
+                category_id: 0,
                 order:'desc_published_at',//並び順
             },
 
@@ -160,6 +161,7 @@
 
                     // カテゴリー
                     this.categories = json.data.categories;
+                    this.categories[0].id = 0;//すべて　id:p0
 
                     //ページネーションデータ
                     const paginate = json.data.stores;

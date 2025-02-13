@@ -1,11 +1,11 @@
-@if ( env('APP_DEBUG') )
+{{-- @if ( env('APP_DEBUG') ) --}}
 
     <script src="{{ asset('js/app.js') }}" defer></script>
 
 
-@else
+{{-- @else
 
-    <script src="{{ asset('js/20250204-01app.js') }}" defer></script>
+    <script src="{{ asset('js/20250208-02app.js') }}" defer></script>
 
-@endif
+@endif --}}
 
