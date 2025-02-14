@@ -5,7 +5,7 @@
 
 
             <!--image-->
-            <a :href="gacha.route"  :class="href_class">
+            <a :href="gacha.route"  :class="href_class"  style="opacity:1 !important;">
 
                 <u-gacha-image
                 :gacha_name            ="gacha.name"
@@ -32,7 +32,7 @@
 
 
             <!-- スライダー   -->
-            <div v-if="gacha.slide_imgs"
+            <div v-if="gacha.slide_imgs && !gacha.i_time "
             :id="'splide_gacha'+gacha.id" class="splide_gacha splide"
             :class="gacha.type=='only_new_user' ? 'bg-success-subtle' : 'bg-white'"
             >
@@ -138,9 +138,15 @@
         } },
         mounted() {
 
-            /* 詳細ページリンクの停止(カウントダウンがあるとき) */
+
+            /* 公開予告カウントダウンがあるとき*/
             if( this.gacha.i_time ){
+
+                //詳細ページリンクの停止(
                 this.href_class = this.href_disabled_class;
+
+                //ホバーアニメーションを除く
+                this.card_style_class = this.card_style_class.replace( 'hover_anime', '');
             }
 
 

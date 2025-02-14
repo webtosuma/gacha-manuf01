@@ -29,6 +29,8 @@ class AdminApiGatyaController extends Controller
     }
 
 
+
+    
     /**
      * 一覧取得
      *
@@ -93,7 +95,7 @@ class AdminApiGatyaController extends Controller
 
             $query->has('category');//カテゴリーが存在するもののみ
 
-        $gachas = $query->paginate( 20 );//ページネーション
+        $gachas = $query->paginate( 12 );//ページネーション
 
 
         # 追加情報
@@ -188,6 +190,8 @@ class AdminApiGatyaController extends Controller
         $gacha->max_count = $gacha->max_count;
         $gacha->total_play_point = $gacha->one_play_point * $gacha->max_count;//合計ポイント
         $gacha->total_point = $gacha->total_point;
+        $gacha->is_published = $gacha->is_published;//公開中
+        $gacha->published_at = $gacha->published_at;//公開中
 
         # ランク情報
         $discriptions = $gacha->discriptions;

@@ -6429,9 +6429,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               route = _args.length > 0 && _args[0] !== undefined ? _args[0] : props.r_api_list;
               _context.prev = 1;
-              _context.next = 4;
+              /*通信開始*/
+              loading.value = true;
+              _context.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value);
-            case 4:
+            case 5:
               response = _context.sent;
               /*ページネーションの保存*/
               paginate = response.data['gachas'];
@@ -6449,20 +6451,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               current_page = paginate.current_page, last_page = paginate.last_page, next_page_url = paginate.next_page_url;
               nextPageUrl.value = current_page !== last_page ? next_page_url : null;
               loading.value = false;
-              _context.next = 19;
+              _context.next = 20;
               break;
-            case 15:
-              _context.prev = 15;
+            case 16:
+              _context.prev = 16;
               _context.t0 = _context["catch"](1);
               console.error((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data);
               if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
               }
-            case 19:
+            case 20:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[1, 15]]);
+        }, _callee, null, [[1, 16]]);
       }));
       return function getData() {
         return _ref.apply(this, arguments);
@@ -7519,7 +7521,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       delete_gacha_prize_ids: [],
       // 削除対象のガチャ商品ID
 
-      loading: false
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -10353,9 +10355,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    /* 詳細ページリンクの停止(カウントダウンがあるとき) */
+    /* 公開予告カウントダウンがあるとき*/
     if (this.gacha.i_time) {
+      //詳細ページリンクの停止(
       this.href_class = this.href_disabled_class;
+
+      //ホバーアニメーションを除く
+      this.card_style_class = this.card_style_class.replace('hover_anime', '');
     }
 
     /*
@@ -13329,7 +13335,7 @@ var render = function render() {
         max_count: gacha.max_count
       }
     }) : gacha.published_at ? _c("div", {
-      staticClass: "card-body bg-success text-center text-white"
+      staticClass: "card-body bg-warning text-center text-white"
     }, [_c("h5", {
       staticClass: "m-0"
     }, [_vm._v("公開予約中")]), _vm._v(" "), _c("div", [_vm._v(_vm._s(gacha.published_at_format + "公開予定"))])]) : _c("div", {
@@ -14671,7 +14677,35 @@ var render = function render() {
         value: delete_gacha_prize_id
       }
     });
-  }), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("loading-cover-component", {
+    attrs: {
+      loading: _vm.loading
+    }
+  }), _vm._v(" "), _c("delete-modal-component", {
+    attrs: {
+      index_key: "update",
+      icon: "bi-exclamation-triangle",
+      color: "warning",
+      func_btn_type: "submit",
+      button_text: "更新する",
+      button_class: "d-none"
+    },
+    on: {
+      "parent-func": function parentFunc($event) {
+        _vm.loading = true;
+      }
+    }
+  }, [_c("div", {
+    staticClass: "text-danger fs-6"
+  }, [_c("div", {
+    staticClass: "fs-5 mb-4"
+  }, [_vm._v("ご注意ください！")]), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_vm._v("\n                更新後は、ガチャ商品の残数が満タンの状態になります。\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "mt-3"
+  }, [_vm._v("\n                ガチャ公開中や、ガチャ商品の残量が減っている状態で登録商品を更新すると、排出商品数がズレる可能性があります。\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 mt-3 text-dark"
+  }, [_vm._v("更新してもよろしいですか？")])])]), _vm._v(" "), _c("div", {
     staticClass: "row g-0"
   }, [_c("div", {
     staticClass: "col mb-5"
@@ -14801,7 +14835,15 @@ var render = function render() {
     staticStyle: {
       top: "2rem"
     }
-  }, [_c("div", {}, [_c("span", [_vm._v("合計口数：")]), _c("br"), _vm._v(" "), _c("span", {
+  }, [_c("div", {
+    staticClass: "mb-3"
+  }, [_vm.gacha.is_published ? _c("div", {
+    staticClass: "d-inline-blockk px-3 bg-success text-white text-center rounded-pill"
+  }, [_vm._v("公開中")]) : _vm.gacha.published_at ? _c("div", {
+    staticClass: "d-inline-blockk px-3 bg-warning text-white text-center rounded-pill"
+  }, [_vm._v("公開予約中")]) : _c("div", {
+    staticClass: "d-inline-blockk px-3 bg-secondary text-white text-center rounded-pill"
+  }, [_vm._v("非公開")])]), _vm._v(" "), _c("div", {}, [_c("span", [_vm._v("合計口数：")]), _c("br"), _vm._v(" "), _c("span", {
     staticClass: "fs-3"
   }, [_c("number-comma-component", {
     attrs: {
@@ -14821,12 +14863,14 @@ var render = function render() {
     }
   })], 1), _vm._v(" "), _c("span", [_vm._v("pt")])]), _vm._v(" "), _c("div", {
     staticClass: "my-3"
-  }, [_c("disabled-button", {
+  }, [_c("button", {
+    staticClass: "btn btn-warning text-white px-5 text-white shadow",
     attrs: {
-      style_class: "btn btn-warning px-5 text-white w-100 shadow",
-      btn_text: "更新する"
+      type: "button",
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#deleteModal" + "update"
     }
-  })], 1)])])])], 2);
+  }, [_vm._v("更新する")])])])])])], 2);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -19612,6 +19656,9 @@ var render = function render() {
     "class": _vm.card_style_class
   }, [_c("a", {
     "class": _vm.href_class,
+    staticStyle: {
+      opacity: "1 !important"
+    },
     attrs: {
       href: _vm.gacha.route
     }
@@ -19634,7 +19681,7 @@ var render = function render() {
       img_path_only_new_user: _vm.gacha.img_path_only_new_user,
       img_path_user_rank: _vm.gacha.img_path_user_rank
     }
-  })], 1), _vm._v(" "), _vm.gacha.slide_imgs ? _c("div", {
+  })], 1), _vm._v(" "), _vm.gacha.slide_imgs && !_vm.gacha.i_time ? _c("div", {
     staticClass: "splide_gacha splide",
     "class": _vm.gacha.type == "only_new_user" ? "bg-success-subtle" : "bg-white",
     attrs: {

@@ -132,7 +132,7 @@
                             />
 
                             <div v-else-if="gacha.published_at"
-                            class="card-body bg-success text-center text-white">
+                            class="card-body bg-warning text-center text-white">
                                 <h5 class="m-0">公開予約中</h5>
                                 <div >{{gacha.published_at_format+'公開予定'}}</div>
                             </div>
@@ -281,6 +281,7 @@
         try {
 
             /*通信開始*/
+            loading.value = true;
             const response = await axios.post(route, inputs.value);
 
             /*ページネーションの保存*/

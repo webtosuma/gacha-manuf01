@@ -251,6 +251,7 @@ class GachaApiController extends Controller
                         {
                             $query->where('type','<>','nomal');//通常ガチャを除く
                             $query->where('type','<>','no_custom');//カスタムボタンなしガチャを除く
+                            $query->where('type','<>','max_custom');//カスタムボタン上限あり
 
                             if( $user_rank_id!=null ){
                                 $query->orWhere('user_rank_id', $user_rank_id ); //ログインユーザーの会員ランク

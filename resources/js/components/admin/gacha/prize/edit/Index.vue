@@ -7,6 +7,38 @@
         name="delete_gacha_prize_ids[]"
         type="text" >
 
+
+        <loading-cover-component :loading="loading" />
+
+        <!--modal-->
+        <delete-modal-component
+        @parent-func="loading = true"
+        index_key="update"
+        icon="bi-exclamation-triangle"
+        color="warning"
+        func_btn_type="submit"
+        button_text="更新する"
+        button_class="d-none">
+            <div class="text-danger fs-6">
+
+                <div class="fs-5 mb-4">ご注意ください！</div>
+                <br>
+
+                <div class="mb-3">
+                    更新後は、ガチャ商品の残数が満タンの状態になります。
+                </div>
+                <div class="mt-3">
+                    ガチャ公開中や、ガチャ商品の残量が減っている状態で登録商品を更新すると、排出商品数がズレる可能性があります。
+                </div>
+
+
+                <div class="fs-5 mt-3 text-dark">更新してもよろしいですか？</div>
+            </div>
+        </delete-modal-component>
+
+
+
+
         <div class="row g-0">
             <!--flex-c2-->
             <div class="col mb-5">
@@ -152,6 +184,16 @@
             <!--flex-c1-->
             <aside class="col-auto ">
                 <div class="position-sticky p-3" style="top: 2rem; ">
+                    <div class="mb-3">
+                        <div v-if="gacha.is_published"
+                        class="d-inline-blockk px-3 bg-success text-white text-center rounded-pill">公開中</div>
+
+                        <div v-else-if="gacha.published_at"
+                        class="d-inline-blockk px-3 bg-warning text-white text-center rounded-pill">公開予約中</div>
+
+                        <div v-else
+                        class="d-inline-blockk px-3 bg-secondary text-white text-center rounded-pill">非公開</div>
+                    </div>
                     <div class="">
                         <span>合計口数：</span><br>
                         <span class="fs-3">
@@ -174,8 +216,14 @@
                     </div>
 
                     <div class="my-3">
-                        <disabled-button style_class="btn btn-warning px-5 text-white w-100 shadow"
-                        btn_text="更新する" />
+                        <!-- <disabled-button style_class="btn btn-warning px-5 text-white w-100 shadow"
+                        btn_text="更新する" /> -->
+
+                        <button type="button" data-bs-toggle="modal"
+                        :data-bs-target="'#deleteModal'+'update'"
+                        class="btn btn-warning text-white px-5 text-white shadow "
+                        >更新する</button>
+
                     </div>
                 </div>
             </aside>
@@ -203,7 +251,7 @@
 
             delete_gacha_prize_ids:[],// 削除対象のガチャ商品ID
 
-            loading:  false,
+            loading:  true,
 
         } },
         mounted() {

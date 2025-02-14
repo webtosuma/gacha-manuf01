@@ -56,7 +56,6 @@ $active_key = 'gacha';
             ＊更新後は、商品の残数が満タンの状態になります。ガチャ公開中はご注意ください。
         </div>
 
-        {{-- {{ $gacha->max_count }} --}}
         <form action="{{ route('admin.gacha.prize.update', $gacha) }}" method="POST"
         enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
             @csrf

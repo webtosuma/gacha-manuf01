@@ -18,9 +18,6 @@ use App\Models\UserRankHistory;
 */
 class AdminGachaController extends Controller
 {
-    /** ページネーション数 */
-    public function pagenate_count(){ return 50 ;}
-
     /**
      * 一覧
      *
@@ -30,40 +27,11 @@ class AdminGachaController extends Controller
      */
     public function index( Request $request, $category_code=null )
     {
-        // $gachas = Gacha::where('updated_prizes_at',null)->get();
-        // foreach ($gachas as $gacha) {
-        //     $gacha->updated_prizes_at = $gacha->created_at;
-        //     $gacha->save();
-        // }
-        // dd(
-        //     $gachas
-        // );
-
         # カテゴリーコードの確認
         $gacha_category = GachaCategory::where('code_name',$category_code)->first();
         if(!$gacha_category&&$category_code){ return \App::abort(404); }//該当なし
 
-        # 表示できるガチャ一覧
-        $query = Gacha::query();
-
-            #カテゴリーの絞り込み
-            if( $gacha_category ){
-                $query->where('category_id',$gacha_category->id);
-            }
-
-            $query->has('category')//カテゴリーが存在するもののみ
-            ->orderByDesc('published_at')
-            ->orderByDesc('created_at');
-
-        $gachas = $query->paginate( $this->pagenate_count() );//ページネーション
-
-
-
-
-        # カテゴリーデータ(select要素用)
-        $categories = GachaCategory::orderBy('created_at')->get();
-
-        return view('admin.gacha.index', compact('gachas','gacha_category','categories','category_code'));
+        return view('admin.gacha.index', compact('gacha_category','category_code'));
     }
 
 
