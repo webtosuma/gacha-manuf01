@@ -35,9 +35,16 @@ use App\Http\Controllers;
     [App\Http\Controllers\InfomationController::class,'index'])
     ->name('infomation');
 
+        // 詳細
         Route::get('infomation/{infomation}',
         [App\Http\Controllers\InfomationController::class,'show'])
         ->name('infomation.show');
+
+        //API・一覧
+        Route::post('infomation/api/list',
+        [App\Http\Controllers\InfomationController::class,'api_list'])
+        ->name('infomation.api.list');
+
 
     # お問い合わせ(contact)
     Route::get('/contact', function(){ return view('footer_menu.contact.index'); })

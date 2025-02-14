@@ -24,25 +24,10 @@ class AdminInfomationController extends Controller
      */
     public function index(Request $request)
     {
-        # 非公開か否か
-        $anpublished = $request->anpublished ? 1 : 0;
+        # 表示の公開状態
+        $is_published = session('edit_infomation.is_published') ?? 1;
 
-        // dd($request->all());
-
-        $query = Infomation::query();
-
-            if($anpublished){
-                $query->where('published_at',null);
-            }else{
-                $query->where('published_at','<>',null);
-            }
-
-        $infomations = $query->orderByDesc('published_at')
-        ->orderByDesc('created_at')
-        ->paginate(20);
-
-
-        return view('admin.infomation.index', compact('infomations','anpublished'));
+        return view('admin.infomation.index', compact('is_published'));
     }
 
 
@@ -94,7 +79,10 @@ class AdminInfomationController extends Controller
 
         # 返信メッセージ
         return redirect()->route('admin.infomation')
-        ->with(['alert-primary'=>'お知らせ情報を新規登録しました。']);
+        ->with([
+            'alert-primary'=>'お知らせ情報を新規登録しました。',
+            'edit_infomation.is_published' => $infomation->published_status_id
+        ]);
     }
 
 
@@ -121,18 +109,19 @@ class AdminInfomationController extends Controller
      */
     public function update(AdminInfomationRequest  $request, Infomation $infomation)
     {
-        // dd($request->all());
         # 入力データの加工
         $inputs = self::processingInputs( $request, $infomation );
 
-        // dd($inputs);
         # DBデータの更新
         $infomation->update( $inputs );
 
 
         # リダイレクト
         return redirect()->route('admin.infomation')
-        ->with(['alert-warning'=>'お知らせ情報を更新しました。']);
+        ->with([
+            'alert-warning'=>'お知らせ情報を更新しました。',
+            'edit_infomation.is_published' => $infomation->published_status_id
+        ]);
     }
 
 
@@ -183,8 +172,11 @@ class AdminInfomationController extends Controller
      */
     public function api_email_post( Request $request, Infomation $infomation )
     {
-        # ユーザー情報の取得
-        $users = User::where('get_email',1)->paginate(100);
+        # ユーザー情報の取得（最近アクセスしたユーザー順）
+        $users = User::with('point_histories')
+        ->withMax('point_histories', 'created_at')
+        ->orderByDesc('point_histories_max_created_at')
+        ->paginate(100);
 
 
         # メール送信
@@ -198,13 +190,13 @@ class AdminInfomationController extends Controller
             if( !$sent_email )
             {
                 ## メールの送信
-                Mail::to( $user->email ) //宛先
-                ->send(new \App\Mail\SendHtmlMailMailable([
-                    'inputs'  => compact('infomation'), //入力変数
-                    'view'    => 'emails.infomation.index' , //テンプレート
-                    'subject' => $infomation->title, //件名
-                ]) );
-
+                Mail::mailer('info_smtp')
+                ->to($user->email) // 宛先
+                ->send(new \App\Mail\InfoMailable([
+                    'inputs'  => compact('infomation'), // 入力変数
+                    'view'    => 'emails.infomation.index', // メールテンプレート
+                    'subject' => $infomation->title, // 件名
+                ]));
 
                 ##　送信済みモデルの保存
                 $post_email = new InfomationSentEmail([
@@ -292,7 +284,7 @@ class AdminInfomationController extends Controller
 
             // 公開[1](前回が「公開」でないとき)
             if( $request->is_published==1 && !$is_published ){
-                $published_at = now()->format('Y-m-d H:i:00');
+                $published_at = now()->format('Y-m-d H:i:s');
             }
             // 公開予約[2]
             else if( $request->is_published==2 ){

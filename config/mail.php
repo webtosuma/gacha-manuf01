@@ -45,6 +45,20 @@ return [
             'auth_mode' => null,
         ],
 
+        # お知らせ一括メール送信用メールアドレス
+        'info_smtp' => [
+            'transport' => 'smtp',
+            'host'         => env('MAIL_INFO_HOST', 'smtp.mailgun.org'),
+            'port'         => env('MAIL_INFO_PORT', 587),
+            'encryption'   => env('MAIL_INFO_ENCRYPTION', 'tls'),
+            'username'     => env('MAIL_INFO_USERNAME'),
+            'password'     => env('MAIL_INFO_PASSWORD'),
+            'timeout'      => null,
+            'auth_mode'    => null,
+            'from_address' => env('MAIL_INFO_FROM_ADDRESS', 'hello@example.com'),
+            'from_name'    => env('MAIL_INFO_FROM_NAME', 'from_name'),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

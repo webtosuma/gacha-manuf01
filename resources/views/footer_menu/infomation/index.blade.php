@@ -32,7 +32,17 @@
         </h2>
 
 
-        <div class="mx-auto my-5" style="max-width:900px;">
+        <div class="my-5">
+
+            <u-infomation-list
+            token="{{ csrf_token() }}"
+            r_api_list="{{route('infomation.api.list')}}"
+            ></u-infomation-list>
+
+        </div>
+
+
+        {{-- <div class="mx-auto my-5" style="max-width:900px;">
 
             <div class="list-group rounded-4"
             style="background:rgb(255, 255, 255, .7);">
@@ -80,6 +90,6 @@
                 {{ $infomations->links('vendor.pagination.bootstrap-4') }}
             </div>
 
-        </div>
+        </div> --}}
     </div>
 @endsection

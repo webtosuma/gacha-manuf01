@@ -75,6 +75,19 @@ class Infomation extends Model
         }
 
 
-    //
 
+        /**
+         * 公開状態ID published_status_id //2:予約中 1:公開中 0:未公開
+         * @return String
+        */
+        public function getPublishedStatusIdAttribute()
+        {
+            if( $this->published_at > now()->format('Y-m-d H:i:s') )
+            { return 2; }
+            else if( $this->published_at )
+            { return 1; }
+            else
+            { return 0; }
+        }
+    //
 }

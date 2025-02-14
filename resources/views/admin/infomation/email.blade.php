@@ -42,7 +42,7 @@ $active_submenu = true;
 
         <div class="row mx-0 mt-3 g-3 gy-5">
             <!--flex-c2-->
-            <div class="col rounded-3">
+            <div class="col bg-white bg_gacha rounded-3">
 
                 <!--プレビュー-->
                 <div class="mx-auto">
@@ -58,19 +58,30 @@ $active_submenu = true;
             <aside class="col-12 col-lg-6 ">
                 <div class="position-sticky" style="top: 2rem; ">
 
-                    <div class="mb-3">
-                        <!--メール送信日-->
-                        <i class="bi bi-envelope"></i>
-                        {{ $infomation->send_email_at? $infomation->send_email_at->format('Y.m.d') : '----.--.--' }}
-                        {{ $infomation->send_email_at? '送信完了' : '未完了' }}
-
-                    </div>
-
-
                     <div class="mb-5">
-                        <h3>この内容で一括送信します。</h3>
-                        <h3>よろしいですか？</h3>
+                        <!--メール送信日-->
+                        @if($infomation->send_email_at)
+                            <div class="d-fles gap-2 align-items-center fs-5 text-success">
+                                <i class="bi bi-envelope-check"></i>
+                                {{$infomation->send_email_at->format('Y.m.d')}}
+                                送信完了
+                            </div>
+                        @else
+                            <div class="d-fles gap-2 align-items-center fs-5 text-secondary">
+                                <i class="bi bi-envelope"></i>
+                                ----.--.--
+                                未完了
+                            </div>
+
+                            <div class="mt-3">
+                                <h3>この内容で一括送信します。</h3>
+                                <h3>よろしいですか？</h3>
+                            </div>
+                        @endif
+
                     </div>
+
+
 
 
 
@@ -101,7 +112,12 @@ $active_submenu = true;
                                 <div class="d-md-none">
                                     {{ mb_strlen($sent_email->user->name) <= 10 ? $sent_email->user->name : mb_substr($sent_email->user->name,0,10).'...' }}
                                 </div>
+
                             </div>
+                            @if($sent_email->user->deleted_at)
+                                <span class="col-auto text-danger ms-3">*退会済</span>
+                            @endif
+
                         </div>
                         @endforeach
                     </div>

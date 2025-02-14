@@ -89,6 +89,10 @@ require('./components/ExampleComponent.vue').default);
     /* お問い合わせフォーム */
     Vue.component('contact-form-component', require('./components/contact/FormComponent.vue').default);
 
+    /* お知らせ 一覧 */
+    Vue.component('u-infomation-list',
+    require('./components/infomation/Index.vue').default);
+
     /* fincode支払いフォーム */
     Vue.component('u-fincode-payment-form',
     require('./components/fincode/PaymentFormComponent.vue').default);
@@ -151,9 +155,16 @@ require('./components/ExampleComponent.vue').default);
         require('./components/admin/point_history/Chart.vue').default);
 
     /* お知らせ */
-    Vue.component('a-infomation-sendemail',
-    require('./components/admin/infomation/Sendemail.vue').default);
 
+        // 一覧
+        Vue.component('a-infomation-list',
+        require('./components/admin/infomation/Index.vue').default);
+
+        // メール一括送信
+        Vue.component('a-infomation-sendemail',
+        require('./components/admin/infomation/Sendemail.vue').default);
+
+        
     /* 登録ユーザー一覧 */
     Vue.component('a-user-list',
     require('./components/admin/user/ListComponent.vue').default);

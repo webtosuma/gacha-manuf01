@@ -1,4 +1,4 @@
-@if($infomation->image)
+@if($infomation->image_path)
 <section>
     <div class="mail-container mail-bg-white">
 
