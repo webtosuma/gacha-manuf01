@@ -174,8 +174,7 @@ class AdminInfomationController extends Controller
     {
         # ユーザー情報の取得（最近アクセスしたユーザー順）
         $users = User::with('point_histories')
-        ->withMax('point_histories', 'created_at')
-        ->orderByDesc('point_histories_max_created_at')
+        ->orderByDesc('updated_at')
         ->paginate(100);
 
 

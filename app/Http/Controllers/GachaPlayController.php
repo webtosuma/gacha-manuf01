@@ -239,6 +239,9 @@ class GachaPlayController extends Controller
     public static function CreatePointHistory( $total_play_point )
     {
         $user = Auth::user(); //ログインユーザー取得
+        $user->updated_at = now();
+        $user->save();//ユーザー情報更新(メール一括送信用)
+
         $point_history = new PointHistory([
             'user_id'   => $user->id,
             'value'     => - $total_play_point, //使用ポイント数
