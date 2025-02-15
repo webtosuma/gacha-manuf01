@@ -24,6 +24,11 @@
     <!--共通CSS-->
     @include('includes.css')
 
+
+    @php
+        /* 背景パス */
+        $bg_image_path = \App\Http\Controllers\AdminBackGroundController::getBgSub();
+    @endphp
     <style>
         a{ text-decoration: none; }
         th,td{ background-color: #fff !important; }
@@ -31,7 +36,7 @@
         /* サイトデフォルト背景 */
         #bgWindow{
             background: no-repeat center center / cover;
-            background-image: url({{asset('storage/site/image/bg00.jpg')}});
+            background-image: url({{$bg_image_path}});
         }
         main{
             padding-top: 4.2rem;

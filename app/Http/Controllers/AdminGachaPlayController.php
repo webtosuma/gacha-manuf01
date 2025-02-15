@@ -200,7 +200,8 @@ class AdminGachaPlayController extends Controller
         $page_title = '「'.$gacha->name.'」の結果';
 
         # 背景画像
-        $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
+        // $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
+        $bg_image = AdminBackGroundController::getBgResult();
 
         # ユーザーランク:昇格の評価結果受け取り
         $rank_up = $request->rank_up;

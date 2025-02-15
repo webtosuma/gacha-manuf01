@@ -65,8 +65,19 @@
                         <div class="container px-3 py-4"  style="max-width:500px;">
 
 
-                            <h3 class="text-secondaryy fw-bold rounded-3 p-2 text-center w-100 mb-4"
-                            >ガチャ結果</h3>
+                            <h3 class="p- mb-3 fs-6">
+                                <div class="rounded-3 p-3 text-light" style="background: rgb(0, 0, 0, .7);">
+
+                                    <div class="mb-2" style="font-size:10px;">
+                                        <div class="">{{$user_gacha_history->created_at->format('Y/m/d H:i')}}</div>
+                                    </div>
+
+
+                                    <div class="mb-3" style="font-size:.8rem;">
+                                        <div class="fs-5 text-center">{{$page_title}}</div>
+                                    </div>
+                                </div>
+                            </h3>
 
                             <!--ポイント交換フォーム-->
                             @php $params = [

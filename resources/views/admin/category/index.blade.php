@@ -72,12 +72,12 @@ $active_submenu = true;
                         <td></td>
 
                         <td style="width:8rem;"><div class="row justify-content-start g-2">
-                            <div class="col-auto">
+                            {{-- <div class="col-auto">
                                 <!--編集ボタン-->
                                 <a href="{{ route('admin.category.all_edit') }}"
                                 class="btn btn-sm btn-light border "
                                 ><i class="bi bi-pencil-fill"></i></a>
-                            </div>
+                            </div> --}}
                         </div></td>
 
                     </tr>
@@ -139,5 +139,7 @@ $active_submenu = true;
             </table>
 
         </section>
+
+        <a href="{{route('admin.back_ground')}}" class="btn border">トップページ背景の変更</a>
     </div>
 @endsection

@@ -41,16 +41,6 @@
                         <div class="">{{$user_gacha_history->created_at->format('Y/m/d H:i')}}</div>
                     </div>
 
-                    {{-- <div class="mb-3">
-                        <div class="row align-items-center g-2">
-
-                            <div class="col">
-                                <div class="fs-">{{ $user->name }} さん</div>
-                            </div>
-
-
-                        </div>
-                    </div> --}}
 
                     <div class="mb-3" style="font-size:.8rem;">
                         <div class="fs-5 text-center">{{$page_title}}</div>

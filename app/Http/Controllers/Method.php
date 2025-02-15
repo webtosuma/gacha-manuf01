@@ -181,5 +181,44 @@ class Method
 
     }
 
+
+    /**
+     * 連想配列データ(Object)をストレージ保存
+     *
+     * @param  String $path   //コピー元のファイルパス
+     * @param  String $data   //オブジェクトデータ
+     * @return Boolean $bool  //データ保存成功の有無
+    */
+    public static function putStorageObjData( $path, $data )
+    {
+        # データがオブジェクト型式であることを確認
+        // if( array_keys($data) === range(0, count($data) - 1) ){ return false; }
+
+        Storage::put($path, json_encode($data, JSON_PRETTY_PRINT));
+        return true;
+    }
+
+
+
+    /**
+     * 連想配列データ(Object)をストレージより取得
+     *
+     *
+    */
+    public static function getStorageObjData( $path )
+    {
+        # ファイルの存在を確認
+        if( ! Storage::exists($path) ){ return null; }
+
+        # JSONデータを取得
+        $jsonContent = Storage::get($path);
+
+        # 配列形式にデコード
+        $retrievedData = json_decode($jsonContent, true);
+
+        return $retrievedData;
+    }
+
+
 }
 

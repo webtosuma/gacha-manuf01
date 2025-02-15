@@ -75,6 +75,11 @@
             'key'   => 'infomation',
             'label' => 'お知らせ',
         ],
+        [
+            'route' => route('admin.back_ground'),
+            'key'   => 'back_ground',
+            'label' => 'サイト背景',
+        ],
     ];
 
 

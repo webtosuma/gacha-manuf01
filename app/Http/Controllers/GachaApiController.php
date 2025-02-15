@@ -44,7 +44,8 @@ class GachaApiController extends Controller
             $category_name = $category ? $category->name : 'すべて';
 
             ## 背景画像
-            $bg_image = $category ? $category->bg_image_path : GachaCategory::noImage();
+            // $bg_image = $category ? $category->bg_image_path : GachaCategory::noImage();
+            $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
             ## ガチャのカテゴリーグループ一覧
             $categories = GachaCategory::where('is_published',1) //公開中
