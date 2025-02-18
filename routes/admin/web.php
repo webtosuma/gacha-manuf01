@@ -39,6 +39,8 @@ use \App\Http\Controllers;
     # サイト背景の管理
     include('web/back_ground.php');
 
+    # メンテナンス表示
+    include('web/maintenance.php');
 
     # ポイント売上
     include('web/point_history.php');

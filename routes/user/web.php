@@ -27,8 +27,14 @@ Route::get('test', function(\Illuminate\Http\Request $request){
 } );
 
 
+# メンテナンス中
+Route::get('maintenance',
+[App\Http\Controllers\MaintenanceController::class, 'index']
+)->name('maintenance');
+
 
 Route::middleware([ /* ミドルウェアー */
+    'maintenance',        //メンテナンス
     'user_plize_deadline',//ユーザー商品期限切れ対応
     'user_point_deadline',//ユーザーポイント期限切れ対応
 ])->group(function () {

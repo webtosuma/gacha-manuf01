@@ -68,6 +68,6 @@ class Kernel extends HttpKernel
         'user_rank'  => \App\Http\Middleware\UserRankMiddleware::class,//会員ランク更新
         'user_plize_deadline' => \App\Http\Middleware\UserPrizeDeadLineMiddleware::class,//ユーザー商品期限切れ対応
         'user_point_deadline' => \App\Http\Middleware\UserPointDeadlineMiddleware::class,//ユーザーポイント期限切れ対応
-
+        'maintenance' => \App\Http\Middleware\MaintenanceMiddleware::class,//メンテナンス
     ];
 }

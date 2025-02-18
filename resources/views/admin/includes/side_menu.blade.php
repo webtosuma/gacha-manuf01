@@ -80,6 +80,11 @@
             'key'   => 'back_ground',
             'label' => 'サイト背景',
         ],
+        [
+            'route' => route('admin.maintenance'),
+            'key'   => 'maintenance',
+            'label' => 'メンテナンス設定',
+        ],
     ];
 
 

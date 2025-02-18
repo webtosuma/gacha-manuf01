@@ -77,7 +77,7 @@
     </div>
 
 
-    <div class="col-12 col-md-8  my-5">
+    <div class="col-12 col-md-6  my-5">
         <disabled-button style_class="btn btn-warning text-white w-100 shadow" btn_text="更新する"></bdisabled-button>
     </div>
 

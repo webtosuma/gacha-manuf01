@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','編集')
+@section('title','サイト背景編集')
 
 
 @section('meta') @php
