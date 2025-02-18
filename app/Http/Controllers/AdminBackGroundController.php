@@ -17,7 +17,7 @@ class AdminBackGroundController extends Controller
     public static function  defaultData(){
         return [
             'bg_top'    => 'upload/gacha_category/bg_image/all.jpg' ,
-            'bg_sub'    => 'site/image/bg00.jpg' ,
+            'bg_sub'    => 'site/image/bg01.jpg' ,
             'bg_result' => 'site/image/gacha/bg_result.jpg',
         ];
 

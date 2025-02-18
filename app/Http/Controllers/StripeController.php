@@ -113,7 +113,10 @@ class StripeController extends Controller
                 'price' => $point_sail->stripe_id,
                 'quantity' => 1,
             ]],
-            'automatic_tax' => [ 'enabled' => true, ],
+            'shipping_address_collection' => [
+                'allowed_countries' => ['JP'], // 配送可能な国を指定
+            ],
+            'automatic_tax' => [ 'enabled' => false, ],
 
             'success_url' => route('point_sail.comp',$point_sail->stripe_id),//成功リダイレクトパス
             'cancel_url'  => route('point_sail'),//失敗リダイレクトパス

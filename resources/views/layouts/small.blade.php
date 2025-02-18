@@ -24,8 +24,8 @@
     @include('includes.css')
 
     @php
-        /* 背景パス */
-        $bg_image_path = \App\Http\Controllers\AdminBackGroundController::getBgSub();
+    /* 背景パス */
+    $bg_image_path = \App\Http\Controllers\AdminBackGroundController::getBgSub();
     @endphp
     <style>
         /* サイトデフォルト背景 */
