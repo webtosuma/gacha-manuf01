@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Gacha;
-use App\Http\Controllers\AdminPointHistoryMonthly as Monthly;
+use App\Models\PointHistory;
+use App\Models\Admin;
 
+use App\Http\Controllers\AdminPointHistoryMonthly as Monthly;
 /*
 | =============================================
 |  サイト管理者 ページトップ(Home) コントローラー
@@ -30,6 +32,11 @@ class AdminHomeController extends Controller
         # お問い合わせ未対応
         $unresponsed_contacts_count = Auth()->user()->admin->unresponsed_contacts->count();
 
+        # ユーザーの合計所持ポイント
+        $admin_user_ids = Admin::all()->pluck('user_id')->toArray();
+        $total_user_point = PointHistory::whereNotIn('user_id', $admin_user_ids)->get()->sum('value');
+
+
         # 公開中ガチャ
         // $gachas = GachaController::getPublishedGachas( $category_code='all' );
         $gachas = Gacha::orderBy('is_sold_out')//売り切れは下
@@ -41,7 +48,7 @@ class AdminHomeController extends Controller
 
 
         return view('admin.home',compact(
-            'users','sales','waiting_shippeds_count','unresponsed_contacts_count','gachas'
+            'users','sales','waiting_shippeds_count','unresponsed_contacts_count','gachas','total_user_point'
         ));
     }
 }

@@ -284,7 +284,7 @@ class Gacha extends Model
 
             return $user
             ? UserGachaHistory::where('gacha_id',$this->id)
-            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
+            // ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('user_id',$user->id)
             ->get()->sum('play_count')
             : 0 ;
@@ -316,7 +316,7 @@ class Gacha extends Model
             $user_id = Auth::check() ? Auth::user()->id : 0;
 
             $bool = UserGachaHistory::where('user_id',$user_id)
-            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
+            // ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('gacha_id',$this->id)
             ->first();
 
@@ -339,12 +339,11 @@ class Gacha extends Model
             $user_id = Auth::check() ? Auth::user()->id : 0;
 
             $count = UserGachaHistory::where('user_id',$user_id)
-            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
+            // ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('gacha_id',$this->id)
             ->whereDate('created_at', now() )
             ->get()->count();
 
-            // return $count;
             return $count >= $max_count  ;
         }
 
@@ -362,7 +361,7 @@ class Gacha extends Model
             $today = \Carbon\Carbon::today();
 
             $bool = UserGachaHistory::where('user_id',$user_id)
-            ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
+            // ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('gacha_id',$this->id)
             ->whereDate('created_at', $today)
             ->first();
@@ -637,7 +636,8 @@ class Gacha extends Model
         */
         public function getImgPathOneChanceAttribute()
         {
-            return $this->type=='one_chance' && $this->is_published
+            return $this->type=='one_chance'
+            // && $this->is_published
             ? asset( 'storage/site/image/gacha_type/one_chance.png' ) : null;
         }
 
@@ -647,7 +647,8 @@ class Gacha extends Model
         */
         public function getImgPathOneTimeAttribute()
         {
-            return $this->type=='one_time' && $this->is_published
+            return $this->type=='one_time'
+            // && $this->is_published
             ? asset( 'storage/site/image/gacha_type/one_time.png' ) : null;
         }
 
@@ -657,7 +658,8 @@ class Gacha extends Model
         */
         public function getImgPathOnlyOnedayAttribute()
         {
-            return $this->type=='only_oneday' && $this->is_published
+            return $this->type=='only_oneday'
+            // && $this->is_published
             ? asset( 'storage/site/image/gacha_type/only_oneday.png' ) : null;
         }
 
@@ -667,7 +669,8 @@ class Gacha extends Model
         */
         public function getImgPathOnlyNewUserAttribute()
         {
-            return $this->type=='only_new_user' && $this->is_published
+            return $this->type=='only_new_user'
+            // && $this->is_published
             ? asset( 'storage/site/image/gacha_type/only_new_user.png' ) : null;
         }
 
@@ -677,7 +680,9 @@ class Gacha extends Model
         */
         public function getImgPathUserRankAttribute()
         {
-            return $this->user_rank_id!='' && $this->is_published ? $this->user_rank->image_path : null;
+            return $this->user_rank_id!=''
+            // && $this->is_published
+            ? $this->user_rank->image_path : null;
         }
 
 
@@ -768,6 +773,7 @@ class Gacha extends Model
 
                     /* 1回限定 */
                     case 'one_time':
+                        // return 1;
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
                         return ($remaining_count >= $n) && !($gacha->played_one_time) ? 0 : 1 ;
                         break;

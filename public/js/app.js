@@ -20688,7 +20688,7 @@ var render = function render() {
     staticStyle: {
       "line-height": "2rem"
     }
-  }, [_vm._v("\n        ＊一週間限定・一回限定で利用できます\n    ")]) : _vm.is_meter ? _c("div", [_c("div", {
+  }, [_vm._v("\n        ＊一週間限定・一回限定で利用できます\n    ")]) : _vm.is_meter != 0 ? _c("div", [_c("div", {
     staticClass: "progress",
     style: _vm.merter_height
   }, [_c("div", {

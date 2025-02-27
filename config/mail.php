@@ -55,8 +55,8 @@ return [
             'password'     => env('MAIL_INFO_PASSWORD'),
             'timeout'      => null,
             'auth_mode'    => null,
-            'from_address' => env('MAIL_INFO_FROM_ADDRESS', 'hello@example.com'),
-            'from_name'    => env('MAIL_INFO_FROM_NAME', 'from_name'),
+            'from_address' => env('MAIL_INFO_FROM_ADDRESS'),
+            'from_name'    => env('MAIL_INFO_FROM_NAME'),
         ],
 
         'ses' => [

@@ -10,3 +10,5 @@ is_disabled_tenplay_btn="{{$gacha->is_disabled_tenplay_btn}}"
 is_disabled_custom_btn ="{{$gacha->is_disabled_custom_btn }}"
 ></u-gacha-play-buttons>
 
+{{$gacha->played_one_time}}
+

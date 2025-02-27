@@ -173,9 +173,8 @@ class AdminInfomationController extends Controller
     public function api_email_post( Request $request, Infomation $infomation )
     {
         # ユーザー情報の取得（最近アクセスしたユーザー順）
-        $users = User::with('point_histories')
-        ->orderByDesc('updated_at')
-        ->paginate(100);
+        $users = User::orderByDesc('updated_at')
+        ->paginate(20);
 
 
         # メール送信

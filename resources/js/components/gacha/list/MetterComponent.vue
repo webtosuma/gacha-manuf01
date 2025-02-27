@@ -44,7 +44,7 @@
         </div>
 
         <!-- 通常メーター -->
-        <div v-else-if="is_meter">
+        <div v-else-if="is_meter!=0">
             <div class="progress" :style="merter_height">
                 <div :class=" progress_style_class " role="progressbar"
                 :style="'width:'+remaining_ratio+'%'"
