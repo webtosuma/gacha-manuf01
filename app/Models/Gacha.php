@@ -184,8 +184,6 @@ class Gacha extends Model
         }
 
 
-
-
     /*
     |--------------------------------------------------------------------------
     | アクセサー
@@ -246,7 +244,10 @@ class Gacha extends Model
         */
         public function getRemainingCountAttribute()
         {
-            return $this->g_prizes->sum('remaining_count');
+            $remaining_count = $this->max_count - $this->played_count;
+            return $remaining_count>=0 ? $remaining_count : 0 ;
+
+            // return $this->g_prizes->sum('remaining_count');
         }
 
 
@@ -268,9 +269,12 @@ class Gacha extends Model
         */
         public function getPlayedCountAttribute()
         {
-            $max       = $this->max_count;
-            $remaining = $this->remaining_count;
-            return $max - $remaining;
+            return $this->user_gacha_histories
+            ? $this->user_gacha_histories->sum('play_count') : 0 ;
+
+            // $max       = $this->max_count;
+            // $remaining = $this->remaining_count;
+            // return $max - $remaining;
         }
 
 
