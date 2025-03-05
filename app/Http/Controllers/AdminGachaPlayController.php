@@ -191,7 +191,7 @@ class AdminGachaPlayController extends Controller
     {
         # ユーザの結果のみを表示
         $user = Auth::user();
-        if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
+        // if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
 
         # ガチャ
         $gacha = $user_gacha_history->gacha;

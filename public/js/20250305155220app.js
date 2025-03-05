@@ -20323,10 +20323,9 @@ var staticRenderFns = [function () {
     _c = _vm._self._c,
     _setup = _vm._self._setupProxy;
   return _c("div", {
-    staticClass: "d-flex justify-content-center gap-3 fw-bold",
+    staticClass: "d-flex justify-content-center gap-3",
     staticStyle: {
-      "font-size": "14px",
-      "text-shadow": "#fff 0px 0 5px"
+      "font-size": "10px"
     }
   }, [_c("div", {}, [_c("span", {
     staticClass: "text-warning"

@@ -15,7 +15,7 @@
 @section('style')
     <style>
         #result{
-            background: no-repeat center center / cover fixed;
+            background: no-repeat center center / cover ;
             background-image: url({{ $bg_image }});
         }
     </style>
@@ -65,6 +65,7 @@
                         <div class="container px-3 py-4"  style="max-width:500px;">
 
 
+
                             <h3 class="p- mb-3 fs-6">
                                 <div class="rounded-3 p-3 text-light" style="background: rgb(0, 0, 0, .7);">
 
@@ -80,21 +81,26 @@
                             </h3>
 
                             <!--ポイント交換フォーム-->
-                            @php $params = [
+                            @php
+                            $params = [
                                 'category_code'=>$gacha->category->code_name,
-                                'user_gacha_history'=>$user_gacha_history
-                            ]; @endphp
+                                'user_gacha_history'=>$user_gacha_history->id
+                            ];
+                            @endphp
+
                             <form action="{{ route( 'admin.gacha.exchange_points', $params) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
+
 
                                 <!--カード一覧-->
                                 <u-gacha-result-form
                                 token="{{ csrf_token() }}"
                                 r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
                                 r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
-
+                                show_change_btn="0"
                                 ></u-gacha-result-form>
+
 
                             </form>
 

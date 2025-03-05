@@ -20,28 +20,31 @@ class UserGachaHistoryApiContloller extends Controller
 {
     /**
      * ユーザーのガチャ履歴詳細
+     *
+     * @param \Illuminate\Http\Request $request
      * @param App\Models\UserGachaHistory $user_gacha_history
      * @return \Illuminate\Http\Response
      */
-    public function show(UserGachaHistory $user_gacha_history)
+    public function show( Request $request, UserGachaHistory $user_gacha_history )
     {
-        # ユーザー以外の履歴は非表示
-        $user = Auth::user();
-        if( $user->id == $user_gacha_history->id ){ return response()->json( [], 401 ); }
-
 
         # ユーザーの取得商品情報
         $query = UserPrize::query();
 
-            # ログインユーザーのデータに絞る
-            $user = Auth::user();
-            $query->where('user_id',$user->id);
+            # ポイント交換を伴うとき
+            if($request->show_change_btn){
 
-            # ポイント交換ずみのデータを除く
-            $query->where('point_history_id',NULL);
+                # ログインユーザーのデータに絞る
+                $user = Auth::user();
+                $query->where('user_id',$user->id);
 
-            # 発送済みデータを除く
-            $query->where('shipped_id',Null);
+                # ポイント交換ずみのデータを除く
+                $query->where('point_history_id',NULL);
+
+                # 発送済みデータを除く
+                $query->where('shipped_id',Null);
+
+            }
 
             # 商品テーブル(prize)とのリレーション
             $query->with(['prize.rank' => function ($query) {

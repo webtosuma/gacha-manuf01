@@ -44,8 +44,24 @@
                         </div>
 
                         <!--ポイント表示-->
-                        <div class="bg-white text-center mt-1 px-1 rounded-pill">
+                        <div class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
+
                             <number-comma-component :number="userPrize.point" />pt
+
+                            <!-- @if($user_prize->point_history_id) -->
+                            <!--ポイント交換済み-->
+                            <div v-if="userPrize.point_history_id"
+                            class="position-absolute top-50 start-0 translate-middle-y ps-1">
+                                <span class="text-warning">●</span>
+                            </div>
+
+                            <!-- @if($user_prize->shipped_id) -->
+                            <!--ポイント交換済み-->
+                            <div v-if="userPrize.shipped_id"
+                            class="position-absolute top-50 start-0 translate-middle-y ps-1">
+                                <span class="text-primary">●</span>
+                            </div>
+
                         </div>
 
                     </label>
@@ -95,6 +111,18 @@
                 </div>
 
 
+            </div>
+        </div>
+        <div v-else>
+            <div class="d-flex justify-content-center gap-3 fw-bold" style="font-size:14px; text-shadow: #fff 0px 0 5px;">
+                <div class="">
+                    <span class="text-warning">●</span>
+                    <span>ポイント交換済み</span>
+                </div>
+                <div class="">
+                    <span class="text-primary">●</span>
+                    <span>発送申請済み</span>
+                </div>
             </div>
         </div>
 
@@ -155,6 +183,11 @@
     const totalPoint  = ref(0);    /*チェック中のユーザー商品の合計ポイント*/
     const disabled    = ref(true); //
 
+    /* 入力値 */
+    const inputs      = ref({
+        _token:          props.token,
+        show_change_btn: props.show_change_btn,
+    });
 
 
     /* 初回データ取得 */
@@ -172,7 +205,7 @@
     /* データ取得 */
     const getData = async (route = props.r_api_use_gacha_history_show) => {
         try {
-            const response = await axios.post(route);
+            const response = await axios.post(route, inputs.value);
 
             /*ページネーションの保存*/
             const paginate = response.data['userPrizes'];

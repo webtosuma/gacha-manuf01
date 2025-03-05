@@ -186,7 +186,6 @@ class AdminGachaPrizeController extends Controller
             ]);
         }
 
-
         # 商品登録更新日の更新
         $gacha->update(['updated_prizes_at'=>now()]);
 

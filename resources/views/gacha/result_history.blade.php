@@ -61,7 +61,15 @@
 
 
             <!--商品一覧-->
-            <ul class="row justify-content-center align-items-center ps-0 g-2 gy-4 mb-4"
+            <u-gacha-result-form
+            token="{{ csrf_token() }}"
+            r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
+            r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
+            show_change_btn="0"
+            ></u-gacha-result-form>
+
+
+            {{-- <ul class="row justify-content-center align-items-center ps-0 g-2 gy-4 mb-4"
             style="list-style:none; min-height:50vh;">
 
                 @forelse ($user_prizes as $user_prize)
@@ -125,7 +133,7 @@
                     </li>
                 @endforelse
 
-            </ul>
+            </ul> --}}
 
 
             <!--操作ボタン-->
@@ -140,7 +148,7 @@
                     @endif
                 </div>
                 <div class="col">
-                    <div class="text-center" style="font-size:10px;">
+                    {{-- <div class="text-center" style="font-size:10px;">
                         <div class="">
                             <span class="text-warning">●</span>
                             <span>ポイント交換済み</span>
@@ -149,7 +157,7 @@
                             <span class="text-primary">●</span>
                             <span>発送申請済み</span>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col">
                     @if($next_gacha_history)
@@ -161,6 +169,11 @@
             </div>
 
 
+
+        </div>
+    </section>
+    <section class="mb-5">
+        <div class="container px-3 py-4"  style="max-width:500px;">
 
 
             <!-- ガチャ情報 -->
