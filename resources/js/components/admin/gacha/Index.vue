@@ -280,7 +280,7 @@
     const getData = async (route = props.r_api_list) => {
         try {
 
-            /*通信開始*/
+            /*通信開始*/ 
             loading.value = true;
             const response = await axios.post(route, inputs.value);
 

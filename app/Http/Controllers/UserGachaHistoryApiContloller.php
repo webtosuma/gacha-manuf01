@@ -56,31 +56,14 @@ class UserGachaHistoryApiContloller extends Controller
             # 指定した『ガチャ履歴』に該当する商品のみ
             $query->where('gacha_history_id', $user_gacha_history->id);
 
-        $user_prizes = $query->get();
+        $userPrizes = $query->paginate( 12 );
 
 
         # 画像パスの登録
-        foreach ($user_prizes as $user_prize) {
+        foreach ($userPrizes as $user_prize) {
             $user_prize->prize->image_path = $user_prize->prize->image_path;
         }
 
-        return response()->json( $user_prizes );
-
-
-
-
-
-        //
-
-        $user_gacha_history = UserGachaHistory::with('user_prizes.prize')->find($user_gacha_history->id);
-
-        $count = $user_gacha_history->user_prizes->count();
-        for ($i=0; $i < $count; $i++) {
-            $image_path = $user_gacha_history->user_prizes[$i]->prize->image_path;
-            $user_gacha_history->user_prizes[$i]->prize->image_path = $image_path;
-        }
-
-
-        return response()->json( $user_gacha_history );
+        return response()->json( compact('userPrizes') );
     }
 }

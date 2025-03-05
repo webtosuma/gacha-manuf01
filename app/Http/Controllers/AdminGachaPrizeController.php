@@ -178,6 +178,15 @@ class AdminGachaPrizeController extends Controller
         # 売り切れの解除
         if($gacha->max_count){ $gacha->update(['is_sold_out'=>0]); }
 
+        # 売り切れ登録(残数が口数以下のとき)
+        if( $gacha->remaining_count < 1 ){
+            $gacha->update([
+                'sold_out_at' => now(),
+                'is_sold_out' => 1,
+            ]);
+        }
+
+
         # 商品登録更新日の更新
         $gacha->update(['updated_prizes_at'=>now()]);
 

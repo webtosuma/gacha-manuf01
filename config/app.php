@@ -38,6 +38,8 @@ return [
         # ユーザーポイントの利用可能期限(日,数値)
         'user_point_deadline_date'   => (int) env('USER_POINT_DEADLINE_DATE', 0),
 
+        # Fobeesアカウントemail
+        'fobees_emails'   =>  explode( ',', env('APP_FOBEES_EMAILS', '') ),
 
     /*
     |--------------------------------------------------------------------------

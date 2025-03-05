@@ -28,11 +28,21 @@ class AdminController extends Controller
             return redirect()->route('admin.register.edit',$admin);
         }
 
-        //全管理者情報の取得
-        $admins = Admin::all();
+        # 全管理者情報の取得(fobeesを除く)
+        $query = Admin::query();
+
+            $fobees_emails = config('app.fobees_emails') ;//fobeesアカウント
+            $fobees_user_ids = User::whereIn('email',$fobees_emails)->get()->pluck('id')->toArray();
+            $query->WhereNotIn('user_id',$fobees_user_ids);
+
+        $admins = $query->get();
 
 
-        return view('admin.register.index', compact( 'admins' ) );
+        # Fobeeアカウント
+        $fobeeses = $admin->fobees ? Admin::WhereIn('user_id',$fobees_user_ids)->get() : null;
+
+
+        return view('admin.register.index', compact( 'admins', 'fobeeses' ) );
     }
 
 
@@ -79,6 +89,12 @@ class AdminController extends Controller
     public function edit(Admin $admin)
     {
         $edit_admin = $admin;
+        $login_admin = Auth::user()->admin;
+
+        # fobeesアカウントをfobeesアカウント以外のユーザーが開くとき
+        if( $edit_admin->fobees && !$login_admin->fobees ){ return \App::abort(404); }
+
+
         return view( 'admin.register.edit',compact('edit_admin') );
     }
 

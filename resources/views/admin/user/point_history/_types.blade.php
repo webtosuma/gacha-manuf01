@@ -73,7 +73,14 @@
                                     <span class="text-danger">●</span>ガチャ
                                 </div>
                                 <div class="">
-                                    <a href="{{route('gacha.result_history',$point_history->user_gacha_history->key)}}"  target="_blank">
+                                    {{-- <a href="{{route('gacha.result_history',$point_history->user_gacha_history->key)}}"  target="_blank"> --}}
+                                    @php
+                                    $params=[
+                                        'category_code'     => $point_history->user_gacha_history->gacha->category->code_name ,
+                                        'user_gacha_history'=> $point_history->user_gacha_history->id
+                                    ];
+                                    @endphp
+                                    <a href="{{route('admin.gacha.result', $params)}}">
 
                                         <span>{{ '['.$point_history->user_gacha_history->gacha->name.']' }}</span>
                                         <span>{{ '（'.$point_history->user_gacha_history->play_count.'回）' }}</span>

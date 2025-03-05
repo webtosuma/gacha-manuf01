@@ -120,4 +120,15 @@ class Admin extends Model
         {
             return Contact::where('responsed',0)->get();
         }
+
+        /**
+         * Fobeesか否か $admin->fobees
+         * @return String
+        */
+        public function getFobeesAttribute()
+        {
+            $fobees_emails = config('app.fobees_emails') ;//fobeesアカウント
+
+            return in_array($this->email,$fobees_emails);
+        }
 }

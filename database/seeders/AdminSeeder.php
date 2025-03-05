@@ -101,16 +101,26 @@ class AdminSeeder extends Seeder
                     'master' => 1,
                 ],
             ],
-            // [
-            //     'user' => [
-            //         'email' => 'gacha_sample@fobees.jp',
-            //         'password' => Hash::make('jBWl4QMiTJid1RPL'),
-            //         'name' => 'テスト用アカウント',
-            //     ],
-            //     'admin' => [
-            //         'master' => 1,
-            //     ],
-            // ],
+            [
+                'user' => [
+                    'email' => 'gacha_sample@fobees.jp',
+                    'password' => Hash::make('jBWl4QMiTJid1RPL'),
+                    'name' => 'テスト用アカウント',
+                ],
+                'admin' => [
+                    'master' => 1,
+                ],
+            ],
+            [
+                'user' => [
+                    'email' => 't.sakai@tosuma.ltd',
+                    'password' => Hash::make('password'),
+                    'name' => '酒井',
+                ],
+                'admin' => [
+                    'master' => 1,
+                ],
+            ],
 
             // [
             //     'user' => [

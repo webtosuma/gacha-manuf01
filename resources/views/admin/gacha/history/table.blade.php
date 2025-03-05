@@ -41,7 +41,13 @@
 
                         <tr>
                             <td>
-                                <a href="{{route('gacha.result_history',$user_gacha_history->key)}}"  target="_blank">
+                                @php
+                                  $params=[
+                                    'category_code'=>$user_gacha_history->gacha->category->code_name ,
+                                    'user_gacha_history'=>$user_gacha_history->id
+                                ];
+                                @endphp
+                                <a href="{{route('admin.gacha.result', $params)}}">
 
                                     <span>{{ '['.$user_gacha_history->gacha->name.']' }}</span>
                                     <span>{{ '（'.$user_gacha_history->play_count.'回）' }}</span>

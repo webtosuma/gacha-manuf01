@@ -1,9 +1,6 @@
 <template>
     <div>
 
-        <loading-cover-component :loading="loading" />
-
-
         <!--カード一覧-->
         <div class="row justify-content-center align-items-center g-3 gy-4 mb-4"
         style="min-height: 50vh;" >
@@ -15,9 +12,8 @@
                 </div>
             </div>
 
-            <div v-if="userPrizes.length==0 && !loading"
+            <div v-if="userPrizes.length==0"
             class="text-center fs-5">*表示できる商品はありません</div>
-
             <div v-for="(userPrize, key) in userPrizes" :key="key"
             :class="userPrizes.length==1 ? 'col-6' : 'col-3'">
                 <div class="d-flex align-items-center justify-content-center h-100">
@@ -58,9 +54,8 @@
 
         </div>
 
-        <!-- ポイント交換ボタン -->
-        <div v-if="show_change_btn!=0"
-        class="rounded-3 p-3" style="background: rgb(0, 0, 0, .7);">
+
+        <div class="rounded-3 p-3" style="background: rgb(0, 0, 0, .7);">
             <div data-aos="fade-in">
 
 
@@ -134,91 +129,87 @@
 
     </div>
 </template>
-<script setup>
-    import { ref, onMounted } from 'vue';
-    import axios from 'axios';
+<script>
+    import axios from 'axios'
 
-    const props = defineProps({
+    export default {
+        props: {
+            token:{ type: String,  default: '', },
+            r_api_use_gacha_history_show:{ type: String,  default: '', },
+            r_gacha_category:{ type: String,  default: '', },
+        },
+        data() { return {
 
-        token: { type: String, default: '' },
-        r_api_use_gacha_history_show: { type: String, default: '' },
-        r_gacha_category: { type: String, default: '' },
-        show_change_btn:  { type: String, default: '1' },
-    });
+            loading: true,
 
-    const loading     = ref(true); //
-    const userPrizes  = ref([]);   /* ユーザー取得商品 */
-    const ids         = ref([]);   /*チェックボックスのID*/
+            userPrizes: [],/* ユーザー取得商品 */
 
-    const nextPageUrl = ref('');   /* 次のデータの読み込みURL */
-    const allCheck    = ref(false);/*全てチェック*/
-    const totalPoint  = ref(0);    /*チェック中のユーザー商品の合計ポイント*/
-    const disabled    = ref(true); //
+            ids: [],/*チェックボックスのID*/
 
+            allCheck: false,/*全てチェック*/
 
+            totalPoint: 0,/*チェック中のユーザー商品の合計ポイント*/
 
-    /* 初回データ取得 */
-    onMounted(() => {
+            disabled: true,
+        } },
+        mounted() {
 
-        /* データ取得 */
-        getData();
+            /* データ取得 */
+            this.getData();
 
+        },
+        methods:{
 
-    });
+            /* データ取得 */
+            getData :function(){
 
+                const route = this.r_api_use_gacha_history_show;
+                axios.post( route )
+                .then(json => {
 
+                    // console.log(json.data);
+                    this.userPrizes = json.data;
+                    this.loading = false;//読み込み中
+                })
+                .catch(error => {
+                    alert('通信エラーが発生しました。')
+                    // console.log( error.response.data );
 
+                });
 
-    /* データ取得 */
-    const getData = async (route = props.r_api_use_gacha_history_show) => {
-        try {
-            const response = await axios.post(route);
-
-            /*ページネーションの保存*/
-            const paginate = response.data['userPrizes'];
-
-            /*ガチャ商品データの保存*/
-            userPrizes.value =
-            route === props.r_api_list ? paginate.data : [...userPrizes.value, ...paginate.data];
-
-            /*次のページネーションURLの保存*/
-            const { current_page, last_page, next_page_url } = paginate;
-            nextPageUrl.value = current_page !== last_page ? next_page_url : null;
-
-            loading.value = false;
-
-            /* 次のデータの読み込み */
-            if( current_page != last_page ){
-                const nextPageUrl = paginate.next_page_url;     //URLの更新
-                getData( nextPageUrl );
-            }
+            },
 
 
-        } catch (error) {
-            alert('通信エラーが発生しました。');
-        }
+            /** 全て選択をクリック */
+            changeAll: function(){
+                const ids = this.userPrizes.map( value => { return value.id; } );
+                this.ids  = this.allCheck ? ids : [];
+
+                this.calcTotalPoint(); //ポイント合計値の計算
+            },
+
+            /** 子チェックをクリック */
+            changeChildren: function(){
+                const ids = this.userPrizes.map( value => { return value.id; } );
+                this.allCheck = this.ids.length == ids.length;
+
+                this.calcTotalPoint(); //ポイント合計値の計算
+            },
+
+            /** ポイント合計値の計算 */
+            calcTotalPoint: function(){
+                this.totalPoint = 0;
+
+                this.userPrizes.forEach( userPrize => {
+                    if( this.ids.some( id => id === userPrize.id) ){
+                        this.totalPoint += userPrize.point;
+                    }
+                } );
+
+                this.disabled = this.totalPoint==0;
+            },
+
+        },
+
     };
-
-    /** 全て選択をクリック */
-    const changeAll = () => {
-        const idsList = userPrizes.value.map(value => value.id);
-        ids.value = allCheck.value ? idsList : [];
-        calcTotalPoint();
-    };
-
-    /** 子チェックをクリック */
-    const changeChildren = () => {
-        const idsList = userPrizes.value.map(value => value.id);
-        allCheck.value = ids.value.length === idsList.length;
-        calcTotalPoint();
-    };
-
-    /** ポイント合計値の計算 */
-    const calcTotalPoint = () => {
-        totalPoint.value = userPrizes.value.reduce((sum, userPrize) => {
-            return ids.value.includes(userPrize.id) ? sum + userPrize.point : sum;
-        }, 0);
-        disabled.value = totalPoint.value === 0;
-    };
-
 </script>
