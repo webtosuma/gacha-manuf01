@@ -104,6 +104,12 @@ class AdminBackGroundController extends Controller
         # 連想配列データ(Object)をストレージ保存
         $put = Method::putStorageObjData( $this->storagePath(), $bg_paths );
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'back_ground.edit' );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
 
         # リダイレクト
         return redirect()->route('admin.back_ground.edit')

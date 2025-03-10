@@ -115,6 +115,13 @@ class AdminUserController extends Controller
         ]);
         $point_history->save();
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'user.add_point', $user->id );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
+
         # リダイレクト
         return redirect()->back()
         ->with(['alert-warning'=>$user->name.'さんにポイントを'.$request->value.'pt付与しました。']);
@@ -137,6 +144,13 @@ class AdminUserController extends Controller
             'reason_id' => 14, // '特別付与'
         ]);
         $ticket_history->save();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'user.add_ticket', $user->id );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
 
         # リダイレクト
         return redirect()->back()

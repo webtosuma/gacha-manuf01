@@ -164,7 +164,11 @@ require('./components/ExampleComponent.vue').default);
         Vue.component('a-infomation-sendemail',
         require('./components/admin/infomation/Sendemail.vue').default);
 
-        
+    /* 操作履歴 */
+    Vue.component('a-log-list',
+    require('./components/admin/log/Index.vue').default);
+
+
     /* 登録ユーザー一覧 */
     Vue.component('a-user-list',
     require('./components/admin/user/ListComponent.vue').default);

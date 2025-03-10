@@ -72,6 +72,11 @@ class AdminGachaCategoryController extends Controller
         $gacha_category = new GachaCategory( $inputs );
         $gacha_category->save();
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'category.create', $gacha_category->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
+
 
         # 返信メッセージ
         return redirect()->route('admin.category')
@@ -113,13 +118,16 @@ class AdminGachaCategoryController extends Controller
      */
     public function update(AdminGachaCategoryRequest $request, GachaCategory $gacha_category)
     {
-        // dd($request->all());
-
         # 入力データの加工
         $inputs = self::processingInputs( $request, $gacha_category );
 
         # DBデータの更新
         $gacha_category->update( $inputs );
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'category.edit', $gacha_category->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
 
 
         # リダイレクト
@@ -138,6 +146,9 @@ class AdminGachaCategoryController extends Controller
     public function destroy(GachaCategory $gacha_category)
     {
         $gacha_category->delete();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'category.delete', $gacha_category->id );
 
 
         # リダイレクト

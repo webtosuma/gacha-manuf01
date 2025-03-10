@@ -111,10 +111,19 @@ class Prize extends Model
         */
         public function getIsUsedAttribute()
         {
-            $user_prizes_count  = $this->u_prizes->count();
-            $gacha_prizes_count = $this->g_prizes->count();
 
-            return $user_prizes_count + $gacha_prizes_count > 0 ;
+            $user_prizes_count  = $this->u_prize_first;
+            $gacha_prizes_count = $this->g_prize_first;
+
+            return $user_prizes_count or $gacha_prizes_count ;
+        }
+        /** GachaPrizeモデル リレーション (1ケ)*/
+        public function g_prize_first(){
+            return $this->hasOne(GachaPrize::class,'prize_id')->orderByDesc('created_at');
+        }
+        /** UserPrizeモデル リレーション (1ケ)*/
+        public function u_prize_first(){
+            return $this->hasOne(UserPrize::class,'prize_id')->orderByDesc('created_at');
         }
 
 }

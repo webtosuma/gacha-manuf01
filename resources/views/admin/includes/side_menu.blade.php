@@ -85,7 +85,16 @@
             'key'   => 'maintenance',
             'label' => 'メンテナンス設定',
         ],
+
     ];
+
+    if( \App\Http\Controllers\AdminLogController::logStartupSetting() && Auth::user()->admin->master ){
+        $ragistation_array[] = [
+            'route' => route('admin.log'),
+            'key'   => 'log',
+            'label' => '操作履歴',
+        ];
+    }
 
 
     /* レポートメニュー */

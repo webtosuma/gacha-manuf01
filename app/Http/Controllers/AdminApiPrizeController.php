@@ -165,6 +165,10 @@ class AdminApiPrizeController extends Controller
         # DBデータの更新
         $prize->update($inputs);
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'prize.edit', $prize->id );
+
+
         return response()->json(['prize'=>$prize,'requests'=>$inputs]);
     }
 
@@ -200,6 +204,10 @@ class AdminApiPrizeController extends Controller
             ]);
         $copy_prize->save();
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'prize.copy', $copy_prize->id );
+
+
         return response()->json(['prize'=>$prize,'copy_prize'=>$copy_prize]);
     }
 
@@ -216,6 +224,10 @@ class AdminApiPrizeController extends Controller
     {
         # DBデータの理論削除
         $prize->delete();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'prize.delete', $prize->id );
+
         return response()->json(['message'=>'delete OK!']);
     }
 

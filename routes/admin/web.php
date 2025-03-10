@@ -42,6 +42,9 @@ use \App\Http\Controllers;
     # メンテナンス表示
     include('web/maintenance.php');
 
+    # 操作履歴
+    include('web/log.php');
+
     # ポイント売上
     include('web/point_history.php');
 

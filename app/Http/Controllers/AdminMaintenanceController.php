@@ -56,13 +56,15 @@ class AdminMaintenanceController extends Controller
         $mainteData = Method::getStorageObjData( MaintenanceController::storagePath() );
         $mainteData = $mainteData ?? MaintenanceController::defaultData();
 
-        # 連想配列データ(Object)をストレージ保存
-        // dd($request->show_date);
-
-
         $array =  $request->only(['start_at','end_at','message','show_date']);
         $array['show_date'] = $request->show_date ? 1 : 0;
         Method::putStorageObjData( MaintenanceController::storagePath(),$array);
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'maintenance.edit' );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
 
 
         # リダイレクト

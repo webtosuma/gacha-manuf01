@@ -16462,7 +16462,7 @@ var render = function render() {
         attrs: {
           href: log.type_route
         }
-      }, [_vm._v(_vm._s(log[type].name || log[type].title))]) : _c("div", {}, [_vm._v(_vm._s(log[type].name) + " "), _c("span", {
+      }, [_vm._v(_vm._s(log[type].name))]) : _c("div", {}, [_vm._v(_vm._s(log[type].name) + " "), _c("span", {
         staticClass: "text-danger"
       }, [_vm._v("削除済み")])])]) : _vm._e()]);
     })], 2), _vm._v(" "), _c("td", {

@@ -77,6 +77,10 @@ class AdminPrizeController extends Controller
         # DBデータの新規登録
         $prize = new \App\Models\Prize( $inputs, $prize=null );
         $prize->save();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'prize.create', $prize->id );
+
         $request->session()->regenerateToken();// 二重送信防止
 
 
@@ -125,6 +129,10 @@ class AdminPrizeController extends Controller
 
         # DBデータの更新
         $prize->update($inputs);
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'prize.edit', $prize->id );
+
         $request->session()->regenerateToken();// 二重送信防止
 
 
@@ -179,6 +187,10 @@ class AdminPrizeController extends Controller
         $contents = implode("\n",$data_array);     //改行文章に変換し、変数に保存
         $path = 'upload/prize/csv/data.csv';//ファイルパス
         Storage::put($path,$contents);
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'prize.download');
+
 
         # パスワード一覧テキストのダウンロード
         return Storage::download($path,'cardFesta登録商品一覧.csv');

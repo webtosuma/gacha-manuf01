@@ -43,6 +43,8 @@ class AdminGachaCopyController extends Controller
         # 登録演出動画のコピー
         self::CopyGRankMovies( $gacha, $copy_gacha );
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.copy', $copy_gacha->id );
 
         # リダイレクト
         return redirect()->route('admin.gacha',$gacha->category->code_name)

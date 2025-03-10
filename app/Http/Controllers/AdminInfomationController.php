@@ -56,6 +56,7 @@ class AdminInfomationController extends Controller
             'is_slide' => 0,
         ]);
 
+
         return view('admin.infomation.create', compact('infomation'));
     }
 
@@ -76,6 +77,11 @@ class AdminInfomationController extends Controller
         $infomation = new Infomation( $inputs );
         $infomation->save();
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'infomation.create', $infomation->id );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
 
         # 返信メッセージ
         return redirect()->route('admin.infomation')
@@ -110,10 +116,16 @@ class AdminInfomationController extends Controller
     public function update(AdminInfomationRequest  $request, Infomation $infomation)
     {
         # 入力データの加工
-        $inputs = self::processingInputs( $request, $infomation );
+        $inputs = self::processingInputs( $request, $infomation->id );
 
         # DBデータの更新
         $infomation->update( $inputs );
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'infomation.edit', $infomation );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
 
 
         # リダイレクト
@@ -135,6 +147,9 @@ class AdminInfomationController extends Controller
     public function destroy(Infomation $infomation)
     {
         $infomation->delete();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'infomation.delete', $infomation->id );
 
 
         # リダイレクト
@@ -172,6 +187,11 @@ class AdminInfomationController extends Controller
      */
     public function api_email_post( Request $request, Infomation $infomation )
     {
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'infomation.email', $infomation->id );
+
+
         # ユーザー情報の取得（最近アクセスしたユーザー順）
         $users = User::orderByDesc('updated_at')
         ->paginate(20);

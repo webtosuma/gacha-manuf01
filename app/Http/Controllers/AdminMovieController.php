@@ -63,6 +63,11 @@ class AdminMovieController extends Controller
         $movie = new Movie( $inputs );
         $movie->save();
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'movie.create', $movie->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
+
 
         # 返信メッセージ
         return redirect()->route('admin.movie.edit',$movie)
@@ -136,6 +141,11 @@ class AdminMovieController extends Controller
         # DBデータの更新
         $movie->update( $inputs );
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'movie.edit', $movie->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
+
 
         # リダイレクト
         return redirect()->route('admin.movie.edit', $movie)
@@ -157,6 +167,10 @@ class AdminMovieController extends Controller
         Method::deleteStorageFile($movie->mobile_storage);
 
         $movie->delete();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'movie.delete', $movie->id );
+
 
         # リダイレクト
         return redirect()->route('admin.movie')

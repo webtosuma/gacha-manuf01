@@ -85,6 +85,10 @@ class AdminGachaMovieController extends Controller
             }
         }
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.movie', $gacha->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
 
         # リダイレクト
         return redirect()->route('admin.gacha.movie.edit',$gacha)

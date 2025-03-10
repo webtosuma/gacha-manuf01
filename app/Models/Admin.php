@@ -32,6 +32,12 @@ class Admin extends Model
     }
 
 
+    /**
+     * アクセサーをJSONに含める
+     */
+    protected $appends = [
+        'name', //種類ラベル
+    ];
 
 
     /*

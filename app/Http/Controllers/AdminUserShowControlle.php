@@ -64,7 +64,12 @@ class AdminUserShowControlle extends Controller
 
         # アカウントの削除
         $user->delete();
-        $request->session()->regenerateToken(); // 二重投稿防止
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'user.delete', $user->id );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
 
 
         # ログアウト完了ページへリダイレクト
@@ -87,6 +92,13 @@ class AdminUserShowControlle extends Controller
         $user = User::withTrashed()->find($user_id);//退会者を含む
         $user->deleted_at = null;
         $user->save();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'user.revival', $user->id );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
 
         # リダイレクト
         $user_text = '(id:'.$user->id.')'.$user->name;

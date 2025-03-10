@@ -40,11 +40,6 @@ class AdminGachaPrizeController extends Controller
      */
     public function update(Request $request, Gacha $gacha)
     {
-        // dd( $request->all() );
-
-        // self::updateFunc( $request, $gacha);
-
-
 
         # ランク別詳細情報
         DB::beginTransaction();
@@ -53,7 +48,12 @@ class AdminGachaPrizeController extends Controller
             # ランク別詳細情報
             self::updateFunc( $request, $gacha);
 
+            # 操作ログの更新
+            AdminLogController::createLog( 'gacha.prize', $gacha->id );
+
             DB::commit();
+
+
         } catch (\Exception $e) {
 
             // Log::error($e);

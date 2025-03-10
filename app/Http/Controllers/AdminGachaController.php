@@ -115,6 +115,8 @@ class AdminGachaController extends Controller
             $gacha_discription->save();
         }
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.create', $gacha->id );
 
         $request->session()->regenerateToken();// 二重送信防止
 
@@ -167,8 +169,11 @@ class AdminGachaController extends Controller
 
         # DBデータの更新
         $gacha->update($inputs);
-        $request->session()->regenerateToken();// 二重送信防止
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.edit', $gacha->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
 
         // return redirect()->route('admin.gacha.show',$gacha)
         return redirect()->route('admin.gacha.edit',$gacha)
@@ -233,6 +238,10 @@ class AdminGachaController extends Controller
         # 更新情報の保存
         $gacha->update( compact('published_at') );
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.published', $gacha->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
 
         # リダイレクト
         return redirect()->route('admin.gacha.published',$gacha)
@@ -256,6 +265,10 @@ class AdminGachaController extends Controller
         $gacha->published_at=null;//非公開
         $gacha->save();
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.delete', $gacha->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
 
         # DBデータの論理削除
         $gacha->delete();

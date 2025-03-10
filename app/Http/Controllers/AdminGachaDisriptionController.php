@@ -71,6 +71,11 @@ class AdminGachaDisriptionController extends Controller
             // dd($inputs);
         }
 
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.discription', $gacha->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
+
 
         # リダイレクト
         return redirect()->route('admin.gacha.discription.edit',$gacha)
