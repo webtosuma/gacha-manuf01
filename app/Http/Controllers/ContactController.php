@@ -81,14 +81,77 @@ class ContactController extends Controller
     */
     public function admin_list(Request $request)
     {
+        # 一括処理
+        self::apiBulkDelete($request);          //一括削除処理
+        self::apiBulkUpdateResponsed($request); //一括お問い合わせの種類変更
+        self::apiBulkUpdateTypetext($request);  //一括お問い合わせの種類変更
+
+
         # データリスト
-        $contacts = Contact::dataList();
+        $contacts = Contact::paginateDataList($request);
+
+        # 月別データ
+        $months  = Contact::getMonthList();
+
+        # フォルダの種類(type_texts)をストレージより取得
+        $type_texts= Method::getStorageObjData( self::storagePath() );
+        $type_texts = $type_texts ?? self::defaultData();
+
 
         # JSONを返す(報告一覧データ)
-        return response()->json( $contacts);
+        return response()->json( compact(
+            'contacts','months','type_texts'
+        ));
     }
 
 
+        /* ストレージ保存パス */
+        public static function storagePath(){ return 'upload/contact/type_texts.json'; }
+
+        /* フォルダの種類(type_texts)デフォルトデータ */
+        public static function  defaultData(){
+            return [ '重要','保留中' ];
+        }
+
+        /** 一括お問い合わせの種類変更 */
+        public function apiBulkUpdateResponsed($request)
+        {
+            if( ! $request->bulk_update_responsed ){ return ; }
+
+            $responsed = $request->bulk_update_responsed_value=='未対応'?0:1;
+            $contacts = Contact::whereIn('id',$request->contact_ids)->get();
+            foreach ($contacts as $contact) {
+                $contact->update(['responsed' => $responsed ]);
+            }
+        }
+
+        /** 一括お問い合わせの種類変更 */
+        public function apiBulkUpdateTypetext($request)
+        {
+            if( ! $request->bulk_update_typetext ){ return ; }
+
+            $type_text = $request->bulk_update_typetext_value;
+            $contacts = Contact::whereIn('id',$request->contact_ids)->get();
+            foreach ($contacts as $contact) {
+                $contact->update(['type_text' => $type_text ]);
+            }
+        }
+
+
+        /** 一括削除処理 */
+        public function apiBulkDelete($request)
+        {
+            if( ! $request->bulk_delete ){ return ; }
+            $contacts = Contact::whereIn('id',$request->contact_ids)->get();
+            foreach ($contacts as $contact) { $contact->delete(); }
+        }
+
+
+
+
+
+
+    /* end admin_list */
 
 
     /**

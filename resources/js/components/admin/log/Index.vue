@@ -219,7 +219,7 @@
         } catch (error) {
             console.error(error.response?.data);
             if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
-            location.reload();
+                location.reload();
             }
         }
 

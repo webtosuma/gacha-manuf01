@@ -104,6 +104,15 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\ContactController::class, 'admin_destroy'])
     ->name('api.admin.contact.destroy');
 
+    # お問い合わせ[フォルダの作成]API(admin_list)
+    Route::post('/admmin/api/contact/list',
+    [Controllers\ContactController::class, 'admin_list'])
+    ->name('api.admin.contact.list');
+
+    # お問い合わせ[フォルダの削除]API(admin_list)
+    Route::post('/admmin/api/contact/list',
+    [Controllers\ContactController::class, 'admin_list'])
+    ->name('api.admin.contact.list');
 
 });
 Route::middleware(['admin_auth'])->group(function () {

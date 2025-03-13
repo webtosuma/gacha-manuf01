@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <ul class="list-group mb-2">
+            <div class="list-group mb-2">
 
                 <a @click.prevent="changePublished(1)" href="#"
                 class="list-group-item"
@@ -54,16 +54,7 @@
                 :class="{'bg-primary-subtle disabled':published==0}"
                 ><i class="bi bi-folder-fill me-1"></i>未公開を表示</a>
 
-
-
-
-
-                <!-- <a v-for="( month, key ) in months" :key="key"
-                @click.prevent="changePublished( 4, month.date_stanp)" href="#"
-                class="list-group-item"
-                :class="{'bg-primary-subtle disabled': month_stamp==month.date_stanp}"
-                >{{month.format}}</a> -->
-            </ul>
+            </div>
 
 
 
