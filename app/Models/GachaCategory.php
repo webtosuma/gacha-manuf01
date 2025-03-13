@@ -70,6 +70,19 @@ class GachaCategory extends Model
             ->get();
         }
 
+
+        /**
+         * Prizeモデル リレーション
+         * @return \App\Models\Prize
+        */
+        public function prizes()
+        {
+            return $this->hasMany(Prize::class,'category_id')
+            ->orderByDesc('created_at');
+        }
+
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

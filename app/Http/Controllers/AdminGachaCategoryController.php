@@ -145,6 +145,14 @@ class AdminGachaCategoryController extends Controller
      */
     public function destroy(GachaCategory $gacha_category)
     {
+
+        #　ガチャの削除
+        foreach ($gacha_category->gachas as $gacha) { $gacha->delete(); }
+
+        # 商品の削除
+        foreach ($gacha_category->prizes as $prize) { $prize->delete(); }
+
+        # カテゴリーの削除
         $gacha_category->delete();
 
         # 操作ログの更新
