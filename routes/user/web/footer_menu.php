@@ -47,11 +47,9 @@ use App\Http\Controllers;
 
 
     # お問い合わせ(contact)
-    Route::get('/contact', function(){ return view('footer_menu.contact.index'); })
+    Route::get('/contact',
+    [App\Http\Controllers\ContactController::class,'index'])
     ->name('contact');
-
-
-
 
     # タイムライン(timeline)
     Route::get('/timeline', function () {

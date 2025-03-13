@@ -6254,7 +6254,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     r_api_destroy: {
       type: String,
       "default": ''
-    }
+    },
+    r_api_type_create: {
+      type: String,
+      "default": ''
+    } //フォルダの作成
   },
   setup: function setup(__props) {
     var props = __props;
@@ -6277,9 +6281,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       bulk_update_responsed: false,
       //一括対応切り替え
       bulk_update_responsed_value: '対応済',
-      bulk_delete: false //一括削除
-    });
+      bulk_delete: false,
+      //一括削除
 
+      new_type_text: '',
+      delete_type_text: ''
+    });
     var months = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); /* 年月選択肢 */
     var type_texts = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); /* フォルダの種類 */
     var responseds = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(['絞り込み', '対応済', '未対応']); /* フォルダの種類 */
@@ -6303,6 +6310,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           inputs.value.contact_ids = [];
         }
       }
+    });
+
+    /* [コンピューティッド]新規フォルダ作成入力監視 */
+    var isNewTypeTextValid = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return !(inputs.value.new_type_text.length > 0 && !type_texts.value.includes(inputs.value.new_type_text));
     });
 
     /* 監視 */
@@ -6381,6 +6393,27 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
     };
 
+    /* フォルダ新規作成 */
+    var typeCreate = function typeCreate() {
+      loading.value = true; /* 読み込み */
+      var route = props.r_api_type_create;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value).then(function (response) {
+        /* フォルダの種類 */
+        type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), ['ゴミ箱']);
+        loading.value = false; /* 読み込み */
+        resetBulc(); /* 一括処理パラメーターのリセット */
+      })["catch"](function (error) {
+        alert('通信エラーが発生しました。');
+        console.error(error.response.data);
+      });
+    };
+
+    /* フォルダの削除 */
+    var typeDelete = function typeDelete(delete_type_text) {
+      inputs.value.delete_type_text = delete_type_text;
+      getData();
+    };
+
     /* キーワードの削除 */
     var deleteKeyword = function deleteKeyword() {
       inputs.value.keyword = '';
@@ -6424,12 +6457,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       if (inputs.value.bulk_delete) {
         messages.value.push('お問い合わせを一括削除しました。');
       }
+      if (inputs.value.new_type_text) {
+        messages.value.push('フォルダを新規作成しました。');
+      }
+      if (inputs.value.delete_type_text) {
+        messages.value.push('フォルダを削除しました。');
+      }
       inputs.value.contact_ids = []; //選択中お問い合わせID
       inputs.value.bulk_update_typetext = false,
       //一括フォルダの変更
       inputs.value.bulk_update_typetext_value = '', inputs.value.bulk_update_responsed = false; //一括対応切り替え
       inputs.value.bulk_update_responsed_value = '対応済';
       inputs.value.bulk_delete = false; //一括削除
+      inputs.value.new_type_text = '';
+      inputs.value.delete_type_text = '';
     };
 
     /* すべてチェック */
@@ -6465,9 +6506,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       nextPageUrl: nextPageUrl,
       messages: messages,
       allChecked: allChecked,
+      isNewTypeTextValid: isNewTypeTextValid,
       getData: getData,
       responsed: responsed,
       destroy: destroy,
+      typeCreate: typeCreate,
+      typeDelete: typeDelete,
       deleteKeyword: deleteKeyword,
       changeTypeText: changeTypeText,
       bulkUpdateResponsed: bulkUpdateResponsed,
@@ -14208,7 +14252,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "bi bi-folder-fill me-1"
-    }), _vm._v(_vm._s(type_text) + "\n\n                        "), _vm._v(" "), _c("button", {
+    }), _vm._v(_vm._s(type_text) + "\n\n                        "), _vm._v(" "), type_text != "ゴミ箱" ? _c("button", {
       staticClass: "btn btn-sm text-secondary position-absolute top-50 end-0 translate-middle-y",
       attrs: {
         "data-bs-toggle": "modal",
@@ -14216,8 +14260,67 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "bi bi-trash"
-    })])]);
-  })], 2)])])]), _vm._v(" "), _c("div", {}, [_vm._m(4), _vm._v(" "), _vm._l(_setup.type_texts, function (type_text, key) {
+    })]) : _vm._e()]);
+  })], 2)])])]), _vm._v(" "), _c("div", {}, [_c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "createFolderModal",
+      tabindex: "-1",
+      "aria-labelledby": "createFolderModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-dialog-centered"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("label", {
+    staticClass: "d-block mb-3"
+  }, [_c("div", {
+    staticClass: "form-label d-flex justify-content-between text-primary"
+  }, [_c("div", {}, [_vm._v("フォルダ名")]), _vm._v(" "), _c("div", {}, [_vm._v("(" + _vm._s(_setup.inputs.new_type_text.length) + "/20)")])]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.new_type_text,
+      expression: "inputs.new_type_text"
+    }],
+    staticClass: "form-control border-primary",
+    attrs: {
+      type: "text",
+      maxlength: "20"
+    },
+    domProps: {
+      value: _setup.inputs.new_type_text
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "new_type_text", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-primary text-white",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal",
+      disabled: _setup.isNewTypeTextValid
+    },
+    on: {
+      click: function click($event) {
+        return _setup.typeCreate();
+      }
+    }
+  }, [_vm._v("新規作成")]), _vm._v(" "), _c("button", {
+    staticClass: "btn border",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal"
+    }
+  }, [_vm._v("キャンセル")])])])])]), _vm._v(" "), _vm._l(_setup.type_texts, function (type_text, key) {
     return _c("div", {
       key: key,
       staticClass: "modal fade",
@@ -14240,7 +14343,26 @@ var render = function render() {
       }
     }, [_vm._v("『" + _vm._s(type_text) + "』フォルダ削除")])]), _vm._v(" "), _c("div", {
       staticClass: "modal-body"
-    }, [_vm._v("\n                        『" + _vm._s(type_text) + "』フォルダを削除します。"), _c("br"), _vm._v("\n                        フォルダ内に保存されて入るお問い合わせ情報も全て削除されます。"), _c("br"), _vm._v("\n                        よろしいですか？\n                    ")]), _vm._v(" "), _vm._m(5, true)])])]);
+    }, [_vm._v("\n                        『" + _vm._s(type_text) + "』フォルダを削除します。"), _c("br"), _vm._v("\n                        フォルダ内に保存されて入るお問い合わせ情報も全て削除されます。"), _c("br"), _vm._v("\n                        よろしいですか？\n                    ")]), _vm._v(" "), _c("div", {
+      staticClass: "modal-footer"
+    }, [_c("button", {
+      staticClass: "btn btn-danger text-white",
+      attrs: {
+        type: "button",
+        "data-bs-dismiss": "modal"
+      },
+      on: {
+        click: function click($event) {
+          return _setup.typeDelete(type_text);
+        }
+      }
+    }, [_vm._v("削除")]), _vm._v(" "), _c("button", {
+      staticClass: "btn border",
+      attrs: {
+        type: "button",
+        "data-bs-dismiss": "modal"
+      }
+    }, [_vm._v("キャンセル")])])])])]);
   }), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
@@ -14260,7 +14382,7 @@ var render = function render() {
     attrs: {
       id: "deleteContactsModal" + "Label"
     }
-  }, [_vm._v("お問い合わせ削除")])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c("div", {
+  }, [_vm._v("お問い合わせ削除")])]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
     staticClass: "btn btn-danger text-white",
@@ -14330,69 +14452,13 @@ var staticRenderFns = [function () {
     _c = _vm._self._c,
     _setup = _vm._self._setupProxy;
   return _c("div", {
-    staticClass: "modal fade",
-    attrs: {
-      id: "createFolderModal",
-      tabindex: "-1",
-      "aria-labelledby": "createFolderModalLabel",
-      "aria-hidden": "true"
-    }
-  }, [_c("div", {
-    staticClass: "modal-dialog modal-dialog-centered"
-  }, [_c("div", {
-    staticClass: "modal-content"
-  }, [_c("div", {
     staticClass: "modal-header"
   }, [_c("h5", {
     staticClass: "modal-title fs-6",
     attrs: {
       id: "createFolderModalLabel"
     }
-  }, [_vm._v("フォルダ作成")])]), _vm._v(" "), _c("div", {
-    staticClass: "modal-body"
-  }, [_c("label", {
-    staticClass: "d-block mb-3"
-  }, [_c("div", {
-    staticClass: "form-label text-primary"
-  }, [_vm._v("フォルダ名")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control border-primary",
-    attrs: {
-      type: "text"
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "modal-footer"
-  }, [_c("button", {
-    staticClass: "btn btn-primary text-white",
-    attrs: {
-      type: "button",
-      "data-bs-dismiss": "modal"
-    }
-  }, [_vm._v("新規作成")]), _vm._v(" "), _c("button", {
-    staticClass: "btn border",
-    attrs: {
-      type: "button",
-      "data-bs-dismiss": "modal"
-    }
-  }, [_vm._v("キャンセル")])])])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c,
-    _setup = _vm._self._setupProxy;
-  return _c("div", {
-    staticClass: "modal-footer"
-  }, [_c("button", {
-    staticClass: "btn btn-danger text-white",
-    attrs: {
-      type: "button",
-      "data-bs-dismiss": "modal"
-    }
-  }, [_vm._v("削除")]), _vm._v(" "), _c("button", {
-    staticClass: "btn border",
-    attrs: {
-      type: "button",
-      "data-bs-dismiss": "modal"
-    }
-  }, [_vm._v("キャンセル")])]);
+  }, [_vm._v("フォルダ作成")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c,
@@ -20525,7 +20591,11 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c,
     _setup = _vm._self._setupProxy;
-  return _c("div", [_c("div", {
+  return _c("div", [_c("loading-cover-component", {
+    attrs: {
+      loading: _setup.loading
+    }
+  }), _vm._v(" "), _c("div", {
     staticClass: "card-body my-5"
   }, [_c("div", {
     staticClass: "form-steps-pill mx-auto",
@@ -20892,7 +20962,7 @@ var render = function render() {
       href: _vm.r_top,
       onclick: "stopOnbeforeunload()"
     }
-  }, [_vm._v(_vm._s("Topに戻る"))])])])])]);
+  }, [_vm._v(_vm._s("Topに戻る"))])])])])], 1);
 };
 var staticRenderFns = [function () {
   var _vm = this,

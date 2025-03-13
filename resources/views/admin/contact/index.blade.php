@@ -34,6 +34,7 @@ $active_key = 'contact';
             r_api_list   ="{{route('api.admin.contact.list')}}"
             r_api_update ="{{route('api.admin.contact.responsed')}}"
             r_api_destroy="{{route('api.admin.contact.destroy')}}"
+            r_api_type_create="{{route('api.admin.contact.type_create')}}"
             ></contact-list-component>
         </section>
 

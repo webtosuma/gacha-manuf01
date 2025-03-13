@@ -2,7 +2,6 @@
     <div>
         <loading-cover-component :loading="loading" />
 
-
         <!-- トーストポップアップ -->
         <div id="toast_container" class="position-fixed bottom-0 end-0 p-2">
             <div v-for="(message, key) in messages" :key="key"
@@ -287,7 +286,7 @@
                             <i class="bi bi-folder-fill me-1"></i>{{ type_text }}
 
                             <!--削除-->
-                            <button
+                            <button v-if="type_text!='ゴミ箱'"
                             data-bs-toggle="modal" :data-bs-target="'#deleteFolderModal'+key"
                             class="btn btn-sm text-secondary position-absolute top-50 end-0 translate-middle-y"
                             ><i class="bi bi-trash"></i></button>
@@ -316,12 +315,20 @@
                         </div>
                         <div class="modal-body">
                             <label class="d-block mb-3">
-                                <div class="form-label text-primary">フォルダ名</div>
-                                <input type="text" class="form-control border-primary">
+                                <div class="form-label d-flex justify-content-between text-primary">
+                                    <div class="">フォルダ名</div>
+                                    <div class="">({{inputs.new_type_text.length}}/20)</div>
+                                </div>
+
+                                <input v-model="inputs.new_type_text"
+                                type="text" class="form-control border-primary" maxlength="20">
                             </label>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">新規作成</button>
+                            <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal"
+                            @click="typeCreate()"
+                            :disabled="isNewTypeTextValid"
+                            >新規作成</button>
                             <button type="button" class="btn border"  data-bs-dismiss="modal">キャンセル</button>
                         </div>
                     </div>
@@ -344,7 +351,9 @@
                             よろしいですか？
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">削除</button>
+                            <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal"
+                            @click="typeDelete(type_text)"
+                            >削除</button>
                             <button type="button" class="btn border"  data-bs-dismiss="modal">キャンセル</button>
                         </div>
                     </div>
@@ -382,7 +391,7 @@
 </template>
 
 <script setup>
-    import { ref, computed, watch, onMounted } from 'vue';
+    import { ref, computed, watch, onMounted, } from 'vue';
     import axios from 'axios';
 
     const props = defineProps({
@@ -390,6 +399,7 @@
         r_api_list: { type: String, default: '' }, // 一覧表示
         r_api_update: { type: String, default: '' },
         r_api_destroy: { type: String, default: '' },
+        r_api_type_create: { type: String, default: '' },//フォルダの作成
     });
 
 
@@ -409,6 +419,9 @@
         bulk_update_responsed: false, //一括対応切り替え
         bulk_update_responsed_value: '対応済',
         bulk_delete:           false, //一括削除
+
+        new_type_text:    '',
+        delete_type_text: '',
     });
 
     const months      = ref([]);  /* 年月選択肢 */
@@ -432,6 +445,12 @@
             }
         }
     });
+
+    /* [コンピューティッド]新規フォルダ作成入力監視 */
+    const isNewTypeTextValid = computed(() => {
+      return ! ( inputs.value.new_type_text.length > 0 && !type_texts.value.includes(inputs.value.new_type_text) );
+    });
+
 
     /* 監視 */
     watch(() => inputs.value.keyword,  () => getData());
@@ -507,6 +526,30 @@
     };
 
 
+    /* フォルダ新規作成 */
+    const typeCreate = () => {
+        loading.value = true;/* 読み込み */
+        const route = props.r_api_type_create;
+
+        axios.post(route, inputs.value )
+        .then(response => {
+            /* フォルダの種類 */
+            type_texts.value = [... response.data.type_texts, 'ゴミ箱'];
+            loading.value = false;/* 読み込み */
+            resetBulc();/* 一括処理パラメーターのリセット */
+        })
+        .catch(error => {
+            alert('通信エラーが発生しました。');
+            console.error(error.response.data);
+        });
+    };
+
+    /* フォルダの削除 */
+    const typeDelete = (delete_type_text) => {
+        inputs.value.delete_type_text = delete_type_text;
+        getData();
+    }
+
     /* キーワードの削除 */
     const deleteKeyword = () => {
         inputs.value.keyword = '';
@@ -552,13 +595,22 @@
         if(inputs.value.bulk_delete){
             messages.value.push('お問い合わせを一括削除しました。');
         }
+        if(inputs.value.new_type_text){
+            messages.value.push('フォルダを新規作成しました。');
+        }
+        if(inputs.value.delete_type_text){
+            messages.value.push('フォルダを削除しました。');
+        }
 
         inputs.value.contact_ids = [];  //選択中お問い合わせID
         inputs.value.bulk_update_typetext        = false, //一括フォルダの変更
         inputs.value.bulk_update_typetext_value  = '',
         inputs.value.bulk_update_responsed       = false; //一括対応切り替え
         inputs.value.bulk_update_responsed_value = '対応済';
-        inputs.value.bulk_delete = false;//一括削除
+        inputs.value.bulk_delete                 = false;//一括削除
+        inputs.value.new_type_text               = '';
+        inputs.value.delete_type_text            = '';
+
 
     };
 

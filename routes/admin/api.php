@@ -88,35 +88,6 @@ Route::middleware(['admin_auth'])->group(function () {
 });
 Route::middleware(['admin_auth'])->group(function () {
 
-    # お問い合わせ[一覧情報の発行]API(admin_list)
-    Route::post('/admmin/api/contact/list',
-    [Controllers\ContactController::class, 'admin_list'])
-    ->name('api.admin.contact.list');
-
-
-    # お問い合わせ[対応済変更]API(admin_responsed)
-    Route::patch('/admmin/api/contact/responsed/{contact?}',
-    [Controllers\ContactController::class, 'admin_responsed'])
-    ->name('api.admin.contact.responsed');
-
-    # お問い合わせ[削除]API(admin_destroy)
-    Route::delete('/admmin/api/contact/destroy/{contact?}',
-    [Controllers\ContactController::class, 'admin_destroy'])
-    ->name('api.admin.contact.destroy');
-
-    # お問い合わせ[フォルダの作成]API(admin_list)
-    Route::post('/admmin/api/contact/list',
-    [Controllers\ContactController::class, 'admin_list'])
-    ->name('api.admin.contact.list');
-
-    # お問い合わせ[フォルダの削除]API(admin_list)
-    Route::post('/admmin/api/contact/list',
-    [Controllers\ContactController::class, 'admin_list'])
-    ->name('api.admin.contact.list');
-
-});
-Route::middleware(['admin_auth'])->group(function () {
-
     # 登録ユーザー[一覧]API
     Route::post('/admmin/api/user',
     [Controllers\AdminApiUserController::class, 'index'])

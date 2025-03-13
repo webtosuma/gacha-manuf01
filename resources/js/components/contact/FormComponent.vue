@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading-cover-component :loading="loading" />
         <!-- <div>
             <input type="text" v-for="(input, key) in inputs" :key="key" :value="input">
         </div> -->

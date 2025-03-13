@@ -71,11 +71,9 @@ use \App\Http\Controllers;
 
 
     # お問い合わせ一覧
-    Route::get('/admin/contact', function () { return view('admin.contact.index'); })
-    ->middleware('admin_auth')
-    ->name('admin.contact');
+    include('web/contact.php');
 
-
+    
     # 管理者設定
     include('web/register.php');
 

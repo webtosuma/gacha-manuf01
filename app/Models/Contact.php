@@ -69,10 +69,6 @@ class Contact extends Model
 
                 # キーワード
                 self::KeyWordSearch( $query, $request);
-                // if( $request->keyword )
-                // {
-                //     $query->where( 'name','like','%'.$request->keyword.'%' );
-                // }
 
                 ## 月の絞り込み
                 if($request->month)
