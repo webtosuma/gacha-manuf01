@@ -47,17 +47,20 @@ class GachaDiscription extends Model
             500 => 'RankC',
             600 => 'RankD',
 
+            901 => 'シークレット・キリ',
+            903 => 'シークレット・ピタリ',
+
             320 => 'ゾロ目',
             310 => 'キリ番',
-            // 330 => 'ピタリ賞',
+            330 => 'ピタリ賞',
 
-            // 362 => '個人ゾロ目',
-            // 361 => '個人キリ番',
-            // 363 => '個人ピタリ賞',
+            362 => '個人ゾロ目',
+            361 => '個人キリ番',
+            363 => '個人ピタリ賞',
 
             10  => 'ラストワン',
 
-            // 1001  => 'スライド表示',
+            1001  => 'スライド表示',
 
         ];
     }
@@ -261,6 +264,16 @@ class GachaDiscription extends Model
                     $array = GPCUPMethod::ZoroHitPlayCountArray( $gacha );
                 }
 
+                ## シークレット・ピタリの当選
+                else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretPita() )
+                {
+                    $array = GPCUPMethod::PitaHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdSecretPita() );
+                }
+                ## シークレット・キリの当選
+                else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretKiri() )
+                {
+                    $array = GPCUPMethod::KiriHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdSecretKiri() );
+                }
 
                 ## 通常の当選
                 else {
@@ -325,6 +338,21 @@ class GachaDiscription extends Model
                 $array = GPCUPMethod::ZoroHitPlayCountArray( $gacha );
                 $value = count( $array );
             }
+
+
+            ## シークレット・ピタリの当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretPita() )
+            {
+                $array = GPCUPMethod::PitaHitPlayCountArray( $gacha,  GPCUPMethod::GachaRankIdSecretPita() );
+                $value = count( $array );
+            }
+            ## シークレット・キリの当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretKiri() )
+            {
+                $array = GPCUPMethod::KiriHitPlayCountArray( $gacha,  GPCUPMethod::GachaRankIdSecretKiri() );
+                $value = count( $array );
+            }
+
 
             ## 通常の当選
             else {
@@ -398,6 +426,23 @@ class GachaDiscription extends Model
                 ? count( GPCUPMethod::ZoroHitPlayCountArray( $gacha ) ) / $gacha->max_count*100 :0;
                 $value = round( $ratio, 2);
             }
+
+
+            ## シークレット・ピタリの当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretPita() )
+            {
+                $array = GPCUPMethod::PitaHitPlayCountArray( $gacha,  GPCUPMethod::GachaRankIdSecretPita() );
+                $ratio = $gacha->max_count ? count( $array ) / $gacha->max_count*100 :0;
+                $value = round( $ratio, 2);
+            }
+            ## シークレット・キリの当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretKiri() )
+            {
+                $array = GPCUPMethod::KiriHitPlayCountArray( $gacha,  GPCUPMethod::GachaRankIdSecretKiri() );
+                $ratio = $gacha->max_count ? count( $array ) / $gacha->max_count*100 :0;
+                $value = round( $ratio, 2);
+            }
+
 
             ## 通常の当選
             else {
@@ -502,6 +547,32 @@ class GachaDiscription extends Model
             }
 
 
+            ## シークレット・ピタリ賞の当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretPita() )
+            {
+                $array = GPCUPMethod::PitaHitPlayCountArray( $gacha,  GPCUPMethod::GachaRankIdSecretPita() );
+                $count = count( $array );
+                $total_point = 0;
+                $g_prizes = $this->g_prizes;
+                foreach ($g_prizes as $g_prize) {
+                    $total_point +=  $g_prize->prize->point/*ポイント数*/ ;
+                }
+                $value = $count ? $total_point / $count : 0;
+            }
+            ## シークレット・キリ番の当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretKiri() )
+            {
+                $array = GPCUPMethod::KiriHitPlayCountArray( $gacha,  GPCUPMethod::GachaRankIdSecretKiri() );
+                $count = $this->g_prizes->count();
+                $total_point = 0;
+                $g_prizes = $this->g_prizes;
+                foreach ($g_prizes as $g_prize) {
+                    $total_point +=  $g_prize->prize->point/*ポイント数*/ ;
+                }
+                $value = $count ? $total_point / $count : 0;
+            }
+
+
             ## 通常の当選
             else {
                 $value = $this->g_prizes->sum('max_count') ?
@@ -574,6 +645,19 @@ class GachaDiscription extends Model
                 });
                 $value = count( $array );
             }
+
+
+            ## シークレットピタリ賞の当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretPita() )
+            {
+                return '---';
+            }
+            ## シークレットキリ番の当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSecretKiri() )
+            {
+                return '---';
+            }
+
 
             ## 通常の当選
             else {

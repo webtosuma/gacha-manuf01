@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル
+|  ガチャ　モデル user_play
 | =============================================
 */
 class Gacha extends Model
@@ -288,7 +288,6 @@ class Gacha extends Model
 
             return $user
             ? UserGachaHistory::where('gacha_id',$this->id)
-            // ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('user_id',$user->id)
             ->get()->sum('play_count')
             : 0 ;

@@ -52,9 +52,7 @@ $active_key = 'gacha';
         <div class="form-text">
             前回更新：{{ $gacha->updated_prizes_at ? $gacha->updated_prizes_at->format('Y/m/d H:i') : '--/--/-- --:--' }}
         </div>
-        <div class="text-danger form-text">
-            ＊更新後は、商品の残数が満タンの状態になります。ガチャ公開中はご注意ください。
-        </div>
+
 
         <form action="{{ route('admin.gacha.prize.update', $gacha) }}" method="POST"
         enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">

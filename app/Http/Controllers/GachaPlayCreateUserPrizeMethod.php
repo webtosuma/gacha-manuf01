@@ -22,28 +22,34 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
     /**
      * index
+     *
      * @param  GUserGachaHistory $user_gacha_history
-     * @param  Integer $play_count //ガチャの実行数
      * @return Array $randReminingGPIdArray　//当選したガチャ商品IDの配列
     */
-    public static function index($user_gacha_history, $play_count)
+    public static function index($user_gacha_history)
     {
         # 変数定義
 
             $gacha = $user_gacha_history->gacha; //ガチャ情報
+            $now_play_count = $user_gacha_history->play_count;//今回のプレイ回数
             $max_count        = $gacha->max_count;          //合計口数
-            $played_count     = $gacha->played_count;       //済み口数(処理中に加算あり)
-            $remaining_count  = $gacha->remaining_count;    //残り口数(処理中に減算あり)
-            $user_playd_count = $gacha->user_played_count-$play_count;//ユーザー済み口数(処理中に加算あり)(ポイント履歴を先に加算してしまうため、-1とする)
 
+            $played_count     = $gacha->played_count-$now_play_count;    //済み口数(処理中に加算あり)
+            $remaining_count  = $gacha->remaining_count+$now_play_count; //残り口数(処理中に減算あり)
+
+
+            // $played_count     = $gacha->played_count;       //済み口数(処理中に加算あり)
+            // $remaining_count  = $gacha->remaining_count;    //残り口数(処理中に減算あり)
+            $user_playd_count = $gacha->user_played_count-$now_play_count;//ユーザー済み口数(処理中に加算あり)(ポイント履歴を先に加算してしまうため、-1とする)
             $randReminingGPIdArray = [];//当選したガチャ商品IDの配列
 
 
         # 当たりの種類による分岐
-        $count = $play_count; //ガチャの実行数
+        $count = $now_play_count; //ガチャの実行数
         for ($i=0; $i < $count; $i++)
         {
             $gacha_prize_id = null;
+
 
 
             ## ラストワンの当選
@@ -52,7 +58,6 @@ class GachaPlayCreateUserPrizeMethod extends Controller
                 $gacha_rank_id  = self::GachaRankIdLastone();
                 $gacha_prize_id = self::WinnerSpecial( $user_gacha_history, $gacha_rank_id );
             }
-
 
 
             ## 個人ピタリ賞の当選
@@ -100,6 +105,19 @@ class GachaPlayCreateUserPrizeMethod extends Controller
             }
 
 
+            ## シークレット・キリの当選
+            else if(
+                in_array( $played_count+1, self::KiriHitPlayCountArray( $gacha, self::GachaRankIdSecretKiri()/*ランクID*/ ) )
+            ){
+                $gacha_prize_id = self::WinnerKiri( $user_gacha_history, self::GachaRankIdSecretKiri()/*ランクID*/ );
+            }
+            ## シークレット・ピタリの当選
+            else if(
+                in_array( $played_count+1, self::PitaHitPlayCountArray( $gacha, self::GachaRankIdSecretPita()/*ランクID*/ ) )
+            ){
+                $gacha_prize_id = self::WinnerPita( $user_gacha_history, $played_count+1, self::GachaRankIdSecretPita()/*ランクID*/ );
+            }
+
             ## 通常の当選
             else {
                 $gacha_prize_id = self::WinnerNomal( $user_gacha_history );
@@ -120,24 +138,29 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
 
     /** ガチャランクID ラストワン */
-    public static function GachaRankIdLastone()  { return 10; }
+    public static function GachaRankIdLastone()  {   return 10; }
 
     /** ガチャランクID キリ番 */
-    public static function GachaRankIdKiri()     { return 310; }
+    public static function GachaRankIdKiri()     {   return 310; }
     /** ガチャランクID ゾロ目 */
-    public static function GachaRankIdZoro()     { return 320; }
+    public static function GachaRankIdZoro()     {   return 320; }
     /** ガチャランクID ピタリ賞 */
-    public static function GachaRankIdPita()     { return 330; }
+    public static function GachaRankIdPita()     {   return 330; }
 
     /** ガチャランクID 個人キリ番 */
-    public static function  GachaRankIdUserKiri(){ return 361; }
+    public static function  GachaRankIdUserKiri(){   return 361; }
     /** ガチャランクID 個人ゾロ目 */
-    public static function  GachaRankIdUserZoro(){ return 362; }
+    public static function  GachaRankIdUserZoro(){   return 362; }
     /** ガチャランクID 個人ピタリ賞 */
-    public static function  GachaRankIdUserPita(){ return 363; }
+    public static function  GachaRankIdUserPita(){   return 363; }
+
+    /** ガチャランクID シークレット・キリ */
+    public static function  GachaRankIdSecretKiri(){ return 901; }
+    /** ガチャランクID シークレット・ピタリ */
+    public static function  GachaRankIdSecretPita(){ return 903; }
 
     /** ガチャランクID スライド表示 */
-    public static function  GachaRankIdSlide(){   return 1001; }
+    public static function  GachaRankIdSlide(){      return 1001; }
 
 
     /**

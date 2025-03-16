@@ -1,5 +1,5 @@
 {{-- 表示：登録カード数が0いじょうのとき --}}
-@if ( ($discription->g_prizes->count() || $discription->image) && $discription->gacha_rank_id<1000)
+@if ( ($discription->g_prizes->count() || $discription->image) && $discription->gacha_rank_id<900)
     <section class="py-5 col-12"
     style="margin-bottom:20rem;"
     >

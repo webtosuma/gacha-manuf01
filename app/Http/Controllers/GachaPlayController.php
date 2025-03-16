@@ -26,7 +26,7 @@ class GachaPlayController extends Controller
 {
 
     /**
-     * スポンサーガチャカで遊ぶ
+     * ガチャカで遊ぶ
      * @param \Illuminate\Http\Request $request
      * @param String $category_code      //カテゴリーコード名
      * @param  \App\Models\Gacha  $gacha //ガチャモデル
@@ -38,14 +38,13 @@ class GachaPlayController extends Controller
 
         # 変数
         $user = Auth::user(); //ログインユーザー取得
-        $play_count = (int) $request->play_count;   //プレイ回数
-        $play_count = $gacha->sponsor_ad ? 1 : (int) $play_count;//(広告ガチャのとき）プレイ回数=>1
-
+        $now_play_count = (int) $request->play_count;   //プレイ回数
+        $now_play_count = $gacha->sponsor_ad ? 1 : (int) $now_play_count;//(広告ガチャのとき）プレイ回数=>1
+        // $played_count     = $gacha->played_count;       //済み口数(処理中に加算あり)
         $play_point = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
-        $total_play_point = $play_count*$play_point;//合計使用ポイント
-        $remaining_count  = (int) $gacha->remaining_count; //残りのプレイできる回数
+        $total_play_point = $now_play_count*$play_point;//合計使用ポイント
+        // $remaining_count  = (int) $gacha->remaining_count; //残りのプレイできる回数
         $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
-
 
         # キー認証
         if( $gacha->key!=$key ){ return \App::abort(404); }
@@ -53,7 +52,7 @@ class GachaPlayController extends Controller
 
         # ポイントが不足しているとき
         if( $total_play_point > $user->point ){
-            $params = ['gacha_id'=>$gacha->id,'play_count'=>$play_count];
+            $params = ['gacha_id'=>$gacha->id,'play_count'=>$now_play_count];
             return redirect()->route('point_sail.shortage',$params);
         }
 
@@ -73,10 +72,10 @@ class GachaPlayController extends Controller
             $point_history = self::CreatePointHistory( $total_play_point );
 
             # ガチャ履歴の登録
-            $user_gacha_history = self::CreateGachaHistory( $gacha, $point_history ,$play_count );
+            $user_gacha_history = self::CreateGachaHistory( $gacha, $point_history ,$now_play_count );
 
             # 当たりの選出・ユーザー取得商品の登録・残り商品の減算
-            $randReminingGPIdArray = CreateUserPrize::index( $user_gacha_history, $play_count );
+            $randReminingGPIdArray = CreateUserPrize::index( $user_gacha_history );
 
 
             # ランダムで選出した、ガチャ商品の最大ランク
@@ -146,9 +145,9 @@ class GachaPlayController extends Controller
     {
         # 変数
         $user = Auth::user(); //ログインユーザー取得
-        $play_count = (int) $request->play_count;   //プレイ回数
+        $now_play_count = (int) $request->play_count;   //プレイ回数
         $play_point = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
-        $total_play_point = $play_count*$play_point;//合計使用ポイント
+        $total_play_point = $now_play_count*$play_point;//合計使用ポイント
         $remaining_count  = (int) $gacha->remaining_count; //残りのプレイできる回数
         $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
 
@@ -171,7 +170,7 @@ class GachaPlayController extends Controller
         }
 
         # 商品数が、プレイ回数より少ないとき
-        else if( $play_count > $remaining_count ){
+        else if( $now_play_count > $remaining_count ){
             return '残りの商品数が少ないため、複数回ガチャをすることができません';
         }
 
@@ -257,17 +256,17 @@ class GachaPlayController extends Controller
      * ガチャ履歴の登録
      * @param  Gacha $gacha
      * @param  PointHistory $point_history
-     * @param  Integer $play_count
+     * @param  Integer $now_play_count
      * @return UserGachaHistory
     */
-    public static function CreateGachaHistory( $gacha, $point_history ,$play_count )
+    public static function CreateGachaHistory( $gacha, $point_history ,$now_play_count )
     {
         $user = Auth::user(); //ログインユーザー取得
         $user_gacha_history = new UserGachaHistory([
             'user_id'   => $user->id,  //ユーザー　リレーション
             'gacha_id'  => $gacha->id, //ガチャリレーション
             'point_history_id' => $point_history->id,//ポイント収支履歴リレーション
-            'play_count'=> $play_count,//ガチャプレイ回数
+            'play_count'=> $now_play_count,//ガチャプレイ回数
         ]);
         $user_gacha_history->save();
 

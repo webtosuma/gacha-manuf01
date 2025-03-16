@@ -90,7 +90,11 @@
                             <div class="px-3">
 
                                 <div
-                                v-if="discription.gacha_rank_id>300 && discription.gacha_rank_id<400 && discription.gacha_prizes_count>0"
+                                v-if="
+                                (discription.gacha_rank_id>300 && discription.gacha_rank_id<400 && discription.gacha_prizes_count>0)
+                                ||
+                                (discription.gacha_rank_id>900 && discription.gacha_rank_id<910)
+                                "
                                 class="rounded bg-light p-2 mb-2">
                                     当選番号：{{ discription.hit_nums }}
                                 </div>
@@ -111,7 +115,7 @@
 
                                 <!--キリ番-->
                                 <a-gachaprize-gacharank-kiri-container
-                                v-else-if="['310','361'].includes(discription.gacha_rank_id)"
+                                v-else-if="['310','361','901'].includes(discription.gacha_rank_id)"
                                 @send-delete-gp-id="addDeleteGachaPrizeId"
                                 :token="token"
                                 :category_id="category_id"
@@ -137,7 +141,7 @@
 
                                 <!--ピタリ賞-->
                                 <a-gachaprize-gacharank-pita-container
-                                v-else-if="['330','363'].includes(discription.gacha_rank_id)"
+                                v-else-if="['330','363','903'].includes(discription.gacha_rank_id)"
                                 @send-delete-gp-id="addDeleteGachaPrizeId"
                                 :token="token"
                                 :category_id="category_id"

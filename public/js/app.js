@@ -6289,6 +6289,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     });
     var months = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); /* 年月選択肢 */
     var type_texts = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); /* フォルダの種類 */
+    var type_texts_defaults = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(['退会', 'ゴミ箱']); /* フォルダの種類(デフォルト値) */
+
     var responseds = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(['絞り込み', '対応済', '未対応']); /* フォルダの種類 */
     var nextPageUrl = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(''); /* 次のデータの読み込みURL */
 
@@ -6352,7 +6354,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         /* 年月絞り込み */
         months.value = response.data.months;
         /* フォルダの種類 */
-        type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), ['ゴミ箱']);
+        type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), _toConsumableArray(type_texts_defaults.value));
         loading.value = false; /* 読み込み */
 
         var current_page = paginate.current_page,
@@ -6399,7 +6401,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var route = props.r_api_type_create;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value).then(function (response) {
         /* フォルダの種類 */
-        type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), ['ゴミ箱']);
+        type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), _toConsumableArray(type_texts_defaults.value));
         loading.value = false; /* 読み込み */
         resetBulc(); /* 一括処理パラメーターのリセット */
       })["catch"](function (error) {
@@ -6502,6 +6504,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       inputs: inputs,
       months: months,
       type_texts: type_texts,
+      type_texts_defaults: type_texts_defaults,
       responseds: responseds,
       nextPageUrl: nextPageUrl,
       messages: messages,
@@ -13874,7 +13877,7 @@ var render = function render() {
     }
   }, [_vm._v("フォルダに移動")])])]) : _vm._e(), _vm._v(" "), _setup.inputs.contact_ids.length ? _c("div", {
     staticClass: "col-auto"
-  }, [_setup.inputs.type_text == "ゴミ箱" ? _c("button", {
+  }, [_setup.type_texts_defaults.includes(_setup.inputs.type_text) ? _c("button", {
     staticClass: "btn btn-sm border btn-light text-danger",
     attrs: {
       "data-bs-toggle": "modal",
@@ -14252,7 +14255,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "bi bi-folder-fill me-1"
-    }), _vm._v(_vm._s(type_text) + "\n\n                        "), _vm._v(" "), type_text != "ゴミ箱" ? _c("button", {
+    }), _vm._v(_vm._s(type_text) + "\n\n\n\n                        "), _vm._v(" "), !_setup.type_texts_defaults.includes(type_text) ? _c("button", {
       staticClass: "btn btn-sm text-secondary position-absolute top-50 end-0 translate-middle-y",
       attrs: {
         "data-bs-toggle": "modal",
@@ -16109,7 +16112,7 @@ var render = function render() {
       }
     }, [_c("div", {
       staticClass: "px-3"
-    }, [discription.gacha_rank_id > 300 && discription.gacha_rank_id < 400 && discription.gacha_prizes_count > 0 ? _c("div", {
+    }, [discription.gacha_rank_id > 300 && discription.gacha_rank_id < 400 && discription.gacha_prizes_count > 0 || discription.gacha_rank_id > 900 && discription.gacha_rank_id < 910 ? _c("div", {
       staticClass: "rounded bg-light p-2 mb-2"
     }, [_vm._v("\n                                当選番号：" + _vm._s(discription.hit_nums) + "\n                            ")]) : _vm._e(), _vm._v(" "), ["10"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-container", {
       attrs: {
@@ -16125,7 +16128,7 @@ var render = function render() {
       on: {
         "send-delete-gp-id": _vm.addDeleteGachaPrizeId
       }
-    }) : ["310", "361"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-kiri-container", {
+    }) : ["310", "361", "901"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-kiri-container", {
       attrs: {
         token: _vm.token,
         category_id: _vm.category_id,
@@ -16151,7 +16154,7 @@ var render = function render() {
       on: {
         "send-delete-gp-id": _vm.addDeleteGachaPrizeId
       }
-    }) : ["330", "363"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-pita-container", {
+    }) : ["330", "363", "903"].includes(discription.gacha_rank_id) ? _c("a-gachaprize-gacharank-pita-container", {
       attrs: {
         token: _vm.token,
         category_id: _vm.category_id,

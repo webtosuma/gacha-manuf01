@@ -124,6 +124,7 @@ class UserController extends Controller
                 'email'     => $user->email, //メール
                 'tell'      => '*未入力', //電話番号
                 'body'      => "【退会アンケート】\n".$request->body, //本文
+                'type_text' => '退会',
             ];
 
             # text入力値が150文字以上の時、ストレージへファイル保存する

@@ -53,7 +53,8 @@ class Admin extends Model
          * @return \App\Models\User
         */
         public function user(){
-            return $this->belongsTo(User::class);
+            return $this->belongsTo(User::class)
+            ->withTrashed(); // withTrashed() メソッドを追加
         }
 
 
@@ -95,7 +96,7 @@ class Admin extends Model
         */
         public function getNameAttribute()
         {
-            return \App\Models\User::find($this->user_id)->name;
+            return $this->user->name;
         }
 
         /**
@@ -104,7 +105,7 @@ class Admin extends Model
         */
         public function getEmailAttribute()
         {
-            return \App\Models\User::find($this->user_id)->email;
+            return $this->user->email;
         }
 
 
