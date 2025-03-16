@@ -134,8 +134,9 @@
 
     <!--カテゴリー-->
     <div class="bg-secondary-subtle">
-        @include('gacha.section.category')
+        @include('gacha.section.category.index')
     </div>
+
 
     <!--ガチャ-->
     <section class="py-3 pb-5" style="min-height:80vh;">
@@ -146,8 +147,12 @@
         search_key   ="{{ $search_key }}"
         r_api_gacha_list="{{ route('gacha.api.list') }}"
         sm_card="{{$card_size=='sm'?1:0}}"
-        is_desc_popularity="{{$search_key=='desc_popularity'?1:0}}"
+
+        card_size ="{{$card_size}}"
+        search_key="{{$search_key}}"
+
         ></u-gacha-list>
+        {{-- is_desc_popularity="{{$search_key=='desc_popularity'?1:0}}" --}}
 
     </section>
 

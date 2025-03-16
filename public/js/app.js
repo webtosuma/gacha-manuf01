@@ -11184,12 +11184,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -11204,9 +11207,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     //カテゴリーcode
     search_key: {
       type: String,
-      "default": ''
+      "default": 'desc_crated'
     },
     //検索キーワード
+    card_size: {
+      type: String,
+      "default": ''
+    },
     order: {
       type: String,
       "default": ''
@@ -11235,15 +11242,29 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       countdown_gachas: [],
       //カウントダウンガチャ
 
+      searchs: [],
+      //検索キーワード
+
+      inputs: {
+        _token: this.token,
+        category_code: this.category_code,
+        search_key: this.search_key,
+        //検索キーワード
+        card_size: this.card_size
+      },
+      // search_key: 'desc_crated',//選択中検索キーワード
+      search_style_class: " btn btn-sm btn-light px-2 border",
       /*列の指定*/
-      list_col_class: 'col-12 col-md-6 col-lg-4',
-      //大きく表示 class
-      list_sm_col_class: 'col-6  col-md-4 col-lg-3' //小さく表示 class
+      list_col_class: '',
+      //表示 class
+      list_sm_col_class: 'col-6  col-md-4 col-lg-3',
+      //小さく表示 class
+      list_md_col_class: 'col-12 col-md-6 col-lg-4' //大きく表示 class
     };
   },
   mounted: function mounted() {
-    /* カードの表示サイズ対応 */
-    this.list_col_class = this.sm_card != 0 ? this.list_sm_col_class : this.list_col_class;
+    /* カードサイズの変更 */
+    this.list_col_class = this.card_size == 'sm' ? this.list_sm_col_class : this.list_md_col_class;
 
     /* データ取得 */
     this.getData();
@@ -11253,18 +11274,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     getData: function getData() {
       var _this = this;
       var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.r_api_gacha_list;
-      var params = {
-        _token: this.token,
-        category_code: this.category_code,
-        search_key: this.search_key //検索キーワード
-      };
-
+      if (route == this.r_api_gacha_list) {
+        this.loading = true;
+      }
+      var params = this.inputs;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, params).then(function (json) {
         //ページネーションデータ
         var paginate = json.data.gachas;
 
         // 商品情報の登録（新規登録・ページネーション追加）
         _this.gachas = route == _this.r_api_gacha_list ? paginate.data : [].concat(_toConsumableArray(_this.gachas), _toConsumableArray(paginate.data));
+
+        //
+        _this.searchs = json.data.searchs;
 
         /* 読み込み完了 */
         _this.loading = false;
@@ -11283,6 +11305,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
         // alert('通信エラーが発生しました。')
       });
+    },
+
+    /* カードサイズの変更 */
+    changeCardSize: function changeCardSize() {
+      this.inputs.card_size = this.inputs.card_size.length ? '' : 'sm';
+      this.list_col_class = this.inputs.card_size == 'sm' ? this.list_sm_col_class : this.list_md_col_class;
+      // this.getData();
     }
   }
 });
@@ -21885,7 +21914,54 @@ var render = function render() {
     staticStyle: {
       "min-height": "50vh"
     }
-  }, [_vm.loading ? _c("div", {
+  }, [_c("div", {
+    staticClass: "row g-2 align-items-center justify-content-end mb-3"
+  }, [_c("div", {
+    staticClass: "col col-lg-auto"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.search_key,
+      expression: "inputs.search_key"
+    }],
+    staticClass: "form-select form-select-sm rounded-pill border border-2",
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.inputs, "search_key", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, function ($event) {
+        return _vm.getData();
+      }]
+    }
+  }, _vm._l(_vm.searchs, function (search, key) {
+    return _c("option", {
+      key: key,
+      domProps: {
+        value: search.key
+      }
+    }, [_vm._v(_vm._s(search.label))]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_c("button", {
+    "class": _vm.search_style_class,
+    staticStyle: {
+      "font-size": "11px"
+    },
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.changeCardSize();
+      }
+    }
+  }, [_vm._v("\n                " + _vm._s(_vm.inputs.card_size == "sm" ? "大きく表示" : "小さく表示") + "\n            ")])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4",
     attrs: {
       "data-aos": "fade-in"
@@ -21895,33 +21971,31 @@ var render = function render() {
       key: key,
       staticClass: "col-12 col-md-6 col-lg-4"
     }, [_vm._m(0, true), _vm._v(" "), _vm._m(1, true)]);
-  }), 0) : _c("div", {
-    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4",
-    attrs: {
-      "data-aos": "zoom-in"
-    }
+  }), 0) : _c("div", [_c("div", {
+    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
   }, [_vm._l(_vm.gachas, function (gacha, key) {
     return _c("div", {
       key: key,
       "class": _vm.list_col_class
-    }, [_vm.is_desc_popularity == 1 ? _c("div", {
-      staticClass: "text-center text-info mb-1",
+    }, [_vm.inputs.search_key == "desc_popularity" ? _c("div", {
+      staticClass: "text-center text-primary mb-1",
       "class": {
         invisible: gacha.is_sold_out
       }
     }, [_c("div", {
       staticClass: "bg-dark d-inline-block px-2"
-    }, [_vm._v("\n                    第"), _c("span", {
+    }, [_vm._v("\n                        第"), _c("span", {
       staticClass: "fs-3 px-1"
-    }, [_vm._v(_vm._s(key + 1))]), _vm._v("位\n                ")])]) : _vm._e(), _vm._v(" "), _c("u-gacha-card", {
+    }, [_vm._v(_vm._s(key + 1))]), _vm._v("位\n                    ")])]) : _vm._e(), _vm._v(" "), _c("u-gacha-card", {
       attrs: {
+        "data-aos": "zoom-in",
         gacha: gacha,
         sm_card: _vm.sm_card
       }
     })], 1);
   }), _vm._v(" "), _vm.gachas.length < 1 ? _c("div", {
     staticClass: "col-12 text-secondary bg-light-subtle p-3 fs-5 rounded-3 shadow"
-  }, [_vm._v("*該当するガチャがありません。")]) : _vm._e()], 2)]);
+  }, [_vm._v("*該当するガチャがありません。")]) : _vm._e()], 2)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

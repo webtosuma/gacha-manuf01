@@ -1,7 +1,32 @@
 <template>
     <div class="container overflow-hidden" style="min-height:50vh;">
 
+        <!--絞り込み-->
+        <!-- <div class="text-white">{{ inputs.search_key }}</div> -->
+        <div class="row g-2 align-items-center justify-content-end mb-3">
+            <div class="col col-lg-auto">
+                <select
+                v-model="inputs.search_key"
+                @change="getData()"
+                class="form-select form-select-sm rounded-pill border border-2">
 
+                    <option v-for="( search, key ) in searchs" :key="key"
+                    :value="search.key"
+                    >{{ search.label }}</option>
+
+                </select>
+            </div>
+            <div class="col-auto">
+                <button
+                @click="changeCardSize()"
+                type="button"
+                style="font-size:11px;"
+                :class="search_style_class" >
+                    {{ inputs.card_size=='sm' ?'大きく表示':'小さく表示'}}
+                </button>
+
+            </div>
+        </div>
 
         <!--読み込み中-->
         <div v-if="loading"
@@ -36,36 +61,42 @@
 
 
         <!--読み込み完了-->
-        <div v-else
-        class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
-        data-aos="zoom-in"
-        >
-            <div v-for="(gacha, key) in gachas" :key="key"
-            :class="list_col_class" >
+        <div v-else>
 
 
-                <!--人気順位-->
-                <div v-if="is_desc_popularity==1"
-                :class="{'invisible': gacha.is_sold_out}"
-                class="text-center text-info  mb-1">
-                    <div class="bg-dark d-inline-block px-2">
-                        第<span class="fs-3 px-1">{{ key+1 }}</span>位
+            <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4">
+                <div v-for="(gacha, key) in gachas" :key="key"
+                :class="list_col_class" >
+
+                    <!--人気順位-->
+                    <div v-if="inputs.search_key=='desc_popularity'"
+                    :class="{'invisible': gacha.is_sold_out}"
+                    class="text-center text-primary  mb-1">
+                        <div class="bg-dark d-inline-block px-2">
+                            第<span class="fs-3 px-1">{{ key+1 }}</span>位
+                        </div>
                     </div>
+
+
+                    <u-gacha-card
+
+                    data-aos="zoom-in"
+                    :gacha="gacha"
+                    :sm_card="sm_card"
+                    />
+
+
+
                 </div>
 
 
-                <u-gacha-card
-                :gacha="gacha"
-                :sm_card="sm_card"
-                />
+                <div v-if="gachas.length<1"
+                class="col-12 text-secondary bg-light-subtle
+                p-3 fs-5 rounded-3 shadow
+                ">*該当するガチャがありません。</div>
 
             </div>
 
-
-            <div v-if="gachas.length<1"
-            class="col-12 text-secondary bg-light-subtle
-            p-3 fs-5 rounded-3 shadow
-            ">*該当するガチャがありません。</div>
 
         </div>
     </div>
@@ -73,17 +104,17 @@
 
 <script>
     import axios from 'axios';
+import { get } from 'lodash';
     export default {
         props: {
-
             token:         { type: String,  default: '', },
             category_code: { type: String,  default: '', },//カテゴリーcode
-            search_key:    { type: String,  default: '', },//検索キーワード
+            search_key:    { type: String,  default: 'desc_crated', },//検索キーワード
+            card_size:     { type: String,  default: '', },
             order:         { type: String,  default: '', },//並び順
             sm_card:       { type: [String,Number,Boolean],  default: 0, },//カードの表示サイズ
             r_api_gacha_list:{ type: String,  default: '', },
             is_desc_popularity:{ type: [String,Number,Boolean],  default: 0, },//人気順か否か
-
         },
         data() { return {
 
@@ -93,16 +124,29 @@
 
             countdown_gachas:[],//カウントダウンガチャ
 
+            searchs:    [],//検索キーワード
+
+            inputs: {
+                _token:        this.token,
+                category_code: this.category_code,
+                search_key:    this.search_key,//検索キーワード
+                card_size:     this.card_size,
+            },
+
+
+            // search_key: 'desc_crated',//選択中検索キーワード
+            search_style_class: " btn btn-sm btn-light px-2 border",
             /*列の指定*/
-            list_col_class:    'col-12 col-md-6 col-lg-4',//大きく表示 class
+            list_col_class:    '',//表示 class
             list_sm_col_class: 'col-6  col-md-4 col-lg-3',//小さく表示 class
+            list_md_col_class: 'col-12 col-md-6 col-lg-4',//大きく表示 class
 
 
         } },
         mounted() {
 
-            /* カードの表示サイズ対応 */
-            this.list_col_class = this.sm_card!=0 ? this.list_sm_col_class : this.list_col_class;
+            /* カードサイズの変更 */
+            this.list_col_class =  this.card_size=='sm' ? this.list_sm_col_class : this.list_md_col_class;
 
             /* データ取得 */
             this.getData();
@@ -114,11 +158,12 @@
             /* データ取得 */
             getData :function(route = this.r_api_gacha_list){
 
-                const params = {
-                    _token:        this.token,
-                    category_code: this.category_code,
-                    search_key:    this.search_key,//検索キーワード
-                };
+                if( route == this.r_api_gacha_list ){
+                    this.loading = true;
+                }
+
+
+                const params = this.inputs;
 
 
                 axios.post( route, params )
@@ -130,6 +175,9 @@
                     // 商品情報の登録（新規登録・ページネーション追加）
                     this.gachas = route == this.r_api_gacha_list ? paginate.data
                     : [ ...this.gachas, ...paginate.data];
+
+                    //
+                    this.searchs = json.data.searchs;
 
                     /* 読み込み完了 */
                     this.loading = false;
@@ -153,6 +201,14 @@
 
                 });
 
+            },
+
+
+            /* カードサイズの変更 */
+            changeCardSize: function(){
+                this.inputs.card_size = this.inputs.card_size.length ? '' : 'sm' ;
+                this.list_col_class = this.inputs.card_size=='sm' ? this.list_sm_col_class : this.list_md_col_class;
+                // this.getData();
             },
         },
 

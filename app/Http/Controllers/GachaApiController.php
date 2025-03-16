@@ -27,15 +27,15 @@ class GachaApiController extends Controller
      */
     public function index(Request $request, $category_code='all' )
     {
-        // $gachas = Gacha::withSum('user_gacha_histories', 'play_count')
-        // ->orderByDesc('user_gacha_histories_sum_play_count')
-        // ->get();
+        $gacha = Gacha::first();
+        // dd($gacha->user_played_count);
 
-        // dd($gachas[1]);
+
 
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
         if( $category_code!='all' && !$category ){ return \App::abort(404); }
+
 
 
         # 変数
@@ -44,11 +44,11 @@ class GachaApiController extends Controller
             $category_name = $category ? $category->name : 'すべて';
 
             ## 背景画像
-            $bg_image = $category ? $category->bg_image_path : GachaCategory::noImage();
+            $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
             ## ガチャのカテゴリーグループ一覧
             $categories = GachaCategory::where('is_published',1) //公開中
-            ->orderBy('created_at')
+            ->orderByRaw("code_name = ? DESC, created_at ASC", [$category_code]) //指定のカテゴリーが先頭
             ->get();
 
 
@@ -56,7 +56,7 @@ class GachaApiController extends Controller
             $card_size = $request->card_size ? $request->card_size : null;
 
             ## 絞り込みキー
-            $search_key = $request->search_key ? $request->search_key : null;
+            $search_key = $request->search_key ? $request->search_key : 'desc_created';
 
             ## 検索キーワード
             $searchs = GachaController::getsearchs();
@@ -73,7 +73,11 @@ class GachaApiController extends Controller
             $gachas = $query->where('is_slide',1)->get();
             $slides = GachaController::getSlides($gachas);
 
+            // ## フィーバー
+            // $is_rainbow = AdminRainbowController::isPublished();
         //
+
+
 
         # viewの表示
         return view('gacha.api_index', compact(
@@ -90,7 +94,6 @@ class GachaApiController extends Controller
     /**
      * API・一覧表示
      *
-     * @param \Illuminate\Http\Request $request
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -107,12 +110,14 @@ class GachaApiController extends Controller
         $gachas = $query->paginate(3);
         self::addApiGachaData($gachas);//API用の追加データ
 
-
         ## カウントダウンガチャ
         $countdown_gachas = GachaController::getCountdownGachas($category_code);
 
+        ## 検索キーワード
+        $searchs = GachaController::getsearchs();
 
-        return response()->json( compact('gachas','countdown_gachas') );
+
+        return response()->json( compact('gachas','countdown_gachas','searchs') );
 
     }
 
@@ -186,6 +191,7 @@ class GachaApiController extends Controller
                 {
                     $query->where('type','<>','only_new_user');
                 }
+
 
 
 
@@ -334,6 +340,8 @@ class GachaApiController extends Controller
                 $gacha->sponsor_ad      = $gacha->sponsor_ad;      //スポンサー
                 $gacha->new_label_path  = $gacha->new_label_path;  //NEW ラベル
                 $gacha->img_path_point  = $gacha->img_path_point;  //ポイントアイコン
+                // $gacha->is_rainbow      = AdminRainbowController::isPublished();
+
 
                 /* Playボタン */
                 $params = [ 'category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key ];
