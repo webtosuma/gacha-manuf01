@@ -116,13 +116,13 @@ class AdminInfomationController extends Controller
     public function update(AdminInfomationRequest  $request, Infomation $infomation)
     {
         # 入力データの加工
-        $inputs = self::processingInputs( $request, $infomation->id );
+        $inputs = self::processingInputs( $request, $infomation );
 
         # DBデータの更新
         $infomation->update( $inputs );
 
         # 操作ログの更新
-        AdminLogController::createLog( 'infomation.edit', $infomation );
+        AdminLogController::createLog( 'infomation.edit', $infomation->id );
 
         # 二重送信防止
         $request->session()->regenerateToken();
@@ -315,7 +315,6 @@ class AdminInfomationController extends Controller
 
             $inputs['published_at'] = $published_at;
         //
-
 
         return $inputs;
     }

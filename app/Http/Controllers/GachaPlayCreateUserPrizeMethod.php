@@ -37,9 +37,6 @@ class GachaPlayCreateUserPrizeMethod extends Controller
             $played_count     = $gacha->played_count-$now_play_count;    //済み口数(処理中に加算あり)
             $remaining_count  = $gacha->remaining_count+$now_play_count; //残り口数(処理中に減算あり)
 
-
-            // $played_count     = $gacha->played_count;       //済み口数(処理中に加算あり)
-            // $remaining_count  = $gacha->remaining_count;    //残り口数(処理中に減算あり)
             $user_playd_count = $gacha->user_played_count-$now_play_count;//ユーザー済み口数(処理中に加算あり)(ポイント履歴を先に加算してしまうため、-1とする)
             $randReminingGPIdArray = [];//当選したガチャ商品IDの配列
 
@@ -105,17 +102,18 @@ class GachaPlayCreateUserPrizeMethod extends Controller
             }
 
 
-            ## シークレット・キリの当選
-            else if(
-                in_array( $played_count+1, self::KiriHitPlayCountArray( $gacha, self::GachaRankIdSecretKiri()/*ランクID*/ ) )
-            ){
-                $gacha_prize_id = self::WinnerKiri( $user_gacha_history, self::GachaRankIdSecretKiri()/*ランクID*/ );
-            }
             ## シークレット・ピタリの当選
             else if(
                 in_array( $played_count+1, self::PitaHitPlayCountArray( $gacha, self::GachaRankIdSecretPita()/*ランクID*/ ) )
             ){
                 $gacha_prize_id = self::WinnerPita( $user_gacha_history, $played_count+1, self::GachaRankIdSecretPita()/*ランクID*/ );
+            }
+
+            ## シークレット・キリの当選
+            else if(
+                in_array( $played_count+1, self::KiriHitPlayCountArray( $gacha, self::GachaRankIdSecretKiri()/*ランクID*/ ) )
+            ){
+                $gacha_prize_id = self::WinnerKiri( $user_gacha_history, self::GachaRankIdSecretKiri()/*ランクID*/ );
             }
 
             ## 通常の当選

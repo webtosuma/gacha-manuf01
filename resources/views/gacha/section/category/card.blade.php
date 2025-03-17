@@ -4,7 +4,8 @@
 
 
         @php
-        $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
+        // $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
+        $params = ['category_code'=>'all'];
         @endphp
         <a  href="{{ route('gacha_category', $params ) }}"
         class="col-md btn btn-light border-0 d-block p-0 position-relative overflow-hidden
@@ -23,6 +24,7 @@
         @foreach ($categories as $category)
             @php
             $params = ['category_code'=>$category->code_name, 'search_key'=>$search_key, 'card_size'=>$card_size];
+            $params = ['category_code'=>$category->code_name,];
             @endphp
 
             <a  href="{{ route('gacha_category', $params ) }}"

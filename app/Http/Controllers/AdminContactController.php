@@ -57,10 +57,22 @@ class AdminContactController extends Controller
         $type_texts = $type_texts ? array_values($type_texts) : null;//配列に変換
         $type_texts = is_array($type_texts) ? $type_texts : self::defaultData();//デフォルト値
 
+        # フォルダの種類(デフォルト値)
+        $type_texts_defaults  = ['退会','ゴミ箱'];
+
+        # 未対応カウント($not_res_conts)
+        $not_res_conts = [
+            '受信箱' => Contact::where('type_text',null)->where('responsed',0)->get()->count(),
+        ];
+        foreach ([ ...$type_texts, ...$type_texts_defaults ] as $type_text) {
+            $not_res_conts[$type_text] =
+            Contact::where('type_text',$type_text)->where('responsed',0)->get()->count();
+        }
+
 
         # JSONを返す(報告一覧データ)
         return response()->json( compact(
-            'contacts','months','type_texts'
+            'contacts','months','type_texts','type_texts_defaults','not_res_conts'
         ));
     }
 

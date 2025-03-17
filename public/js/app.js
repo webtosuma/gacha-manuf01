@@ -6263,7 +6263,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   setup: function setup(__props) {
     var props = __props;
     var loading = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(true);
-    var contacts = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var contacts = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); //お問い合わせ
+    var not_res_conts = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({}); //未対応カウント
+
     var inputs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
       _token: props.token,
       keyword: '',
@@ -6289,7 +6291,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     });
     var months = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); /* 年月選択肢 */
     var type_texts = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); /* フォルダの種類 */
-    var type_texts_defaults = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(['退会', 'ゴミ箱']); /* フォルダの種類(デフォルト値) */
+    var type_texts_defaults = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([/*'退会','ゴミ箱'*/]); /* フォルダの種類(デフォルト値) */
 
     var responseds = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(['絞り込み', '対応済', '未対応']); /* フォルダの種類 */
     var nextPageUrl = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(''); /* 次のデータの読み込みURL */
@@ -6353,8 +6355,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
         /* 年月絞り込み */
         months.value = response.data.months;
+        /* フォルダの種類(デフォルト値) */
+        type_texts_defaults.value = response.data.type_texts_defaults;
         /* フォルダの種類 */
         type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), _toConsumableArray(type_texts_defaults.value));
+        /* 未対応カウント */
+        not_res_conts.value = response.data.not_res_conts;
         loading.value = false; /* 読み込み */
 
         var current_page = paginate.current_page,
@@ -6401,6 +6407,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var route = props.r_api_type_create;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value).then(function (response) {
         /* フォルダの種類 */
+        type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), ['ゴミ箱']);
         type_texts.value = [].concat(_toConsumableArray(response.data.type_texts), _toConsumableArray(type_texts_defaults.value));
         loading.value = false; /* 読み込み */
         resetBulc(); /* 一括処理パラメーターのリセット */
@@ -6501,6 +6508,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       props: props,
       loading: loading,
       contacts: contacts,
+      not_res_conts: not_res_conts,
       inputs: inputs,
       months: months,
       type_texts: type_texts,
@@ -11184,8 +11192,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -11193,7 +11199,7 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
-
+// import { get } from 'lodash';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     token: {
@@ -11238,13 +11244,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       loading: true,
       gachas: [],
       //ガチャ
-
       countdown_gachas: [],
       //カウントダウンガチャ
-
       searchs: [],
       //検索キーワード
 
+      /* 入力値の初期設定 */
       inputs: {
         _token: this.token,
         category_code: this.category_code,
@@ -11252,19 +11257,23 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         //検索キーワード
         card_size: this.card_size
       },
-      // search_key: 'desc_crated',//選択中検索キーワード
-      search_style_class: " btn btn-sm btn-light px-2 border",
+      localStorageKey: 'u.gacha.list.index.inputs',
+      //ローカルストレージキー
+
+      search_style_class: " btn btn-sm btn-light border-0 px-2 py-",
       /*列の指定*/
       list_col_class: '',
       //表示 class
       list_sm_col_class: 'col-6  col-md-4 col-lg-3',
       //小さく表示 class
       list_md_col_class: 'col-12 col-md-6 col-lg-4' //大きく表示 class
+
+      // LSInputs: {},
     };
   },
   mounted: function mounted() {
     /* カードサイズの変更 */
-    this.list_col_class = this.card_size == 'sm' ? this.list_sm_col_class : this.list_md_col_class;
+    this.setInitialData();
 
     /* データ取得 */
     this.getData();
@@ -11274,9 +11283,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     getData: function getData() {
       var _this = this;
       var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.r_api_gacha_list;
+      /* データの初期化 */
       if (route == this.r_api_gacha_list) {
         this.loading = true;
+        this.gachas = [];
       }
+
+      /* ローカルストレージ保存 */
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.inputs));
       var params = this.inputs;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, params).then(function (json) {
         //ページネーションデータ
@@ -11311,7 +11325,26 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     changeCardSize: function changeCardSize() {
       this.inputs.card_size = this.inputs.card_size.length ? '' : 'sm';
       this.list_col_class = this.inputs.card_size == 'sm' ? this.list_sm_col_class : this.list_md_col_class;
-      // this.getData();
+      this.getData();
+    },
+    /* 初期データのセット */
+    setInitialData: function setInitialData() {
+      /* ローカルストレージ取得 */
+      var storedData = localStorage.getItem(this.localStorageKey);
+      var storage_input = storedData ? JSON.parse(storedData) : {};
+
+      /* 入力値の初期設定 */
+      this.inputs = {
+        _token: this.token,
+        category_code: this.category_code,
+        search_key: this.search_key || storage_input.search_key || 'desc_created',
+        //検索キーワード
+        card_size: this.card_size || storage_input.card_size || ''
+      };
+
+      /* カードサイズの変更 */
+      var card_size = this.inputs.card_size;
+      this.list_col_class = card_size == 'sm' ? this.list_sm_col_class : this.list_md_col_class;
     }
   }
 });
@@ -13761,6 +13794,9 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "position-fixed bottom-0 end-0 p-2",
+    staticStyle: {
+      "z-index": "10"
+    },
     attrs: {
       id: "toast_container"
     }
@@ -13906,7 +13942,7 @@ var render = function render() {
     }
   }, [_vm._v("フォルダに移動")])])]) : _vm._e(), _vm._v(" "), _setup.inputs.contact_ids.length ? _c("div", {
     staticClass: "col-auto"
-  }, [_setup.type_texts_defaults.includes(_setup.inputs.type_text) ? _c("button", {
+  }, [_setup.inputs.type_text == "ゴミ箱" ? _c("button", {
     staticClass: "btn btn-sm border btn-light text-danger",
     attrs: {
       "data-bs-toggle": "modal",
@@ -14250,13 +14286,13 @@ var render = function render() {
     }, [_vm._v(_vm._s(month.format))]);
   })], 2)])]), _vm._v(" "), _c("div", {
     staticClass: "list-group mb-2 mt-4"
-  }, [_c("a", {
+  }, [_c("button", {
     staticClass: "list-group-item",
     "class": {
       "bg-primary-subtle disabled": _setup.inputs.type_text == ""
     },
     attrs: {
-      href: "#"
+      type: "button"
     },
     on: {
       click: function click($event) {
@@ -14264,9 +14300,13 @@ var render = function render() {
         return _setup.changeTypeText("");
       }
     }
-  }, [_c("i", {
-    staticClass: "bi bi-inbox-fill me-1"
-  }), _vm._v("受信箱")]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._l(_setup.type_texts, function (type_text, key) {
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_setup.not_res_conts["受信箱"] > 0 ? _c("span", {
+    staticClass: "badge rounded-pill bg-danger"
+  }, [_vm._v(_vm._s(_setup.not_res_conts["受信箱"]))]) : _vm._e()])])]), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._l(_setup.type_texts, function (type_text, key) {
     return _c("a", {
       key: key,
       staticClass: "list-group-item position-relative",
@@ -14282,17 +14322,27 @@ var render = function render() {
           return _setup.changeTypeText(type_text);
         }
       }
+    }, [_c("div", {
+      staticClass: "row g-0"
+    }, [_c("div", {
+      staticClass: "col"
     }, [_c("i", {
       staticClass: "bi bi-folder-fill me-1"
-    }), _vm._v(_vm._s(type_text) + "\n\n\n\n                        "), _vm._v(" "), !_setup.type_texts_defaults.includes(type_text) ? _c("button", {
-      staticClass: "btn btn-sm text-secondary position-absolute top-50 end-0 translate-middle-y",
+    }), _vm._v(_vm._s(type_text) + "\n                            ")]), _vm._v(" "), _c("div", {
+      staticClass: "col-auto"
+    }, [_setup.not_res_conts[type_text] > 0 ? _c("span", {
+      staticClass: "badge rounded-pill bg-danger"
+    }, [_vm._v(_vm._s(_setup.not_res_conts[type_text]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-auto p-0"
+    }, [!_setup.type_texts_defaults.includes(type_text) ? _c("button", {
+      staticClass: "btn btn-sm text-secondary m-0",
       attrs: {
         "data-bs-toggle": "modal",
         "data-bs-target": "#deleteFolderModal" + key
       }
     }, [_c("i", {
       staticClass: "bi bi-trash"
-    })]) : _vm._e()]);
+    })]) : _vm._e()])])]);
   })], 2)])])]), _vm._v(" "), _c("div", {}, [_c("div", {
     staticClass: "modal fade",
     attrs: {
@@ -14305,7 +14355,7 @@ var render = function render() {
     staticClass: "modal-dialog modal-dialog-centered"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(4), _vm._v(" "), _c("div", {
+  }, [_vm._m(5), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("label", {
     staticClass: "d-block mb-3"
@@ -14414,7 +14464,7 @@ var render = function render() {
     attrs: {
       id: "deleteContactsModal" + "Label"
     }
-  }, [_vm._v("お問い合わせ削除")])]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c("div", {
+  }, [_vm._v("お問い合わせ削除")])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
     staticClass: "btn btn-danger text-white",
@@ -14466,6 +14516,15 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "bi bi-search"
   })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "col text-start"
+  }, [_c("i", {
+    staticClass: "bi bi-inbox-fill me-1"
+  }), _vm._v("受信箱\n                            ")]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c,
@@ -21972,13 +22031,13 @@ var render = function render() {
       staticClass: "col-12 col-md-6 col-lg-4"
     }, [_vm._m(0, true), _vm._v(" "), _vm._m(1, true)]);
   }), 0) : _c("div", [_c("div", {
-    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
+    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-y"
   }, [_vm._l(_vm.gachas, function (gacha, key) {
     return _c("div", {
       key: key,
       "class": _vm.list_col_class
     }, [_vm.inputs.search_key == "desc_popularity" ? _c("div", {
-      staticClass: "text-center text-primary mb-1",
+      staticClass: "text-center text-white mb-1",
       "class": {
         invisible: gacha.is_sold_out
       }
@@ -21988,9 +22047,8 @@ var render = function render() {
       staticClass: "fs-3 px-1"
     }, [_vm._v(_vm._s(key + 1))]), _vm._v("位\n                    ")])]) : _vm._e(), _vm._v(" "), _c("u-gacha-card", {
       attrs: {
-        "data-aos": "zoom-in",
         gacha: gacha,
-        sm_card: _vm.sm_card
+        sm_card: _vm.inputs.card_size == "sm" ? 1 : 0
       }
     })], 1);
   }), _vm._v(" "), _vm.gachas.length < 1 ? _c("div", {

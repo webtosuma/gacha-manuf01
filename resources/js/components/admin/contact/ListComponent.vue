@@ -2,8 +2,9 @@
     <div>
         <loading-cover-component :loading="loading" />
 
+
         <!-- トーストポップアップ -->
-        <div id="toast_container" class="position-fixed bottom-0 end-0 p-2">
+        <div id="toast_container" class="position-fixed bottom-0 end-0 p-2" style="z-index:10;">
             <div v-for="(message, key) in messages" :key="key"
             class="toast fade show mb-1 fade-in-message" role="alert" aria-live="assertive" aria-atomic="true" >
                 <div class="toast-header bg-dark text-white">
@@ -64,7 +65,7 @@
                         </div>
                         <!--一括 削除-->
                         <div v-if="inputs.contact_ids.length " class="col-auto">
-                            <button v-if=" type_texts_defaults.includes( inputs.type_text ) "
+                            <button v-if="inputs.type_text=='ゴミ箱'"
                             data-bs-toggle="modal" :data-bs-target="'#deleteContactsModal'"
                             class="btn btn-sm border btn-light text-danger">すべて削除</button>
                         </div>
@@ -218,7 +219,6 @@
                 <div class="position-sticky" style="top: 2rem; ">
 
 
-
                     <div class="row flex-md-column g-2 mb-2">
 
                         <!--キーワード検索-->
@@ -259,11 +259,25 @@
 
                     <div class="list-group mb-2 mt-4">
 
-                        <a href="#"
+
+
+                        <button type="button"
                         @click.prevent="changeTypeText('')"
                         class="list-group-item"
-                        :class="{'bg-primary-subtle disabled':inputs.type_text==''}"
-                        ><i class="bi bi-inbox-fill me-1"></i>受信箱</a>
+                        :class="{'bg-primary-subtle disabled':inputs.type_text==''}">
+                            <div class="row">
+                                <div class="col text-start">
+                                    <i class="bi bi-inbox-fill me-1"></i>受信箱
+                                </div>
+                                <div class="col-auto">
+                                    <!--未対応数-->
+                                    <span  v-if="not_res_conts['受信箱']>0"
+                                    class="badge rounded-pill bg-danger">{{ not_res_conts['受信箱'] }}</span>
+                                </div>
+                            </div>
+                        </button>
+
+
 
                         <!--フォルダ新規作成ボタン-->
                         <button data-bs-toggle="modal" data-bs-target="#createFolderModal"
@@ -276,20 +290,30 @@
                         @click.prevent="changeTypeText(type_text)"
                         class="list-group-item position-relative"
                         :class="{'bg-primary-subtle disableddd':inputs.type_text==type_text}">
-                            <i class="bi bi-folder-fill me-1"></i>{{ type_text }}
 
-
+                            <div class="row g-0">
+                                <div class="col">
+                                    <i class="bi bi-folder-fill me-1"></i>{{ type_text }}
+                                </div>
+                                <div class="col-auto">
+                                    <!--未対応数-->
+                                    <span v-if="not_res_conts[type_text]>0"
+                                    class="badge rounded-pill bg-danger">{{ not_res_conts[type_text] }}</span>
+                                </div>
+                                <div class="col-auto p-0">
+                                    <!--削除-->
+                                    <button v-if=" ! type_texts_defaults.includes( type_text ) "
+                                    data-bs-toggle="modal" :data-bs-target="'#deleteFolderModal'+key"
+                                    class="btn btn-sm text-secondary m-0"
+                                    ><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
 
                             <!--削除-->
                             <!-- <button v-if="type_text!='ゴミ箱'"
                             data-bs-toggle="modal" :data-bs-target="'#deleteFolderModal'+key"
                             class="btn btn-sm text-secondary position-absolute top-50 end-0 translate-middle-y"
                             ><i class="bi bi-trash"></i></button> -->
-                            <button v-if=" ! type_texts_defaults.includes( type_text ) "
-                            data-bs-toggle="modal" :data-bs-target="'#deleteFolderModal'+key"
-                            class="btn btn-sm text-secondary position-absolute top-50 end-0 translate-middle-y"
-                            ><i class="bi bi-trash"></i></button>
-
                         </a>
 
                     </div>
@@ -403,8 +427,10 @@
     });
 
 
-    const loading  = ref(true);
-    const contacts = ref([]);
+    const loading       = ref(true);
+    const contacts      = ref([]);  //お問い合わせ
+    const not_res_conts = ref({});  //未対応カウント
+
     const inputs   = ref({
         _token: props.token,
         keyword:   '',
@@ -426,7 +452,7 @@
 
     const months      = ref([]);  /* 年月選択肢 */
     const type_texts  = ref([]);  /* フォルダの種類 */
-    const type_texts_defaults  = ref(['退会','ゴミ箱']);  /* フォルダの種類(デフォルト値) */
+    const type_texts_defaults  = ref([/*'退会','ゴミ箱'*/]);  /* フォルダの種類(デフォルト値) */
 
     const responseds  = ref(['絞り込み','対応済','未対応']);  /* フォルダの種類 */
     const nextPageUrl = ref('');  /* 次のデータの読み込みURL */
@@ -481,9 +507,14 @@
             route === props.r_api_list ? paginate.data : [...contacts.value, ...paginate.data];
 
             /* 年月絞り込み */
-            months.value     = response.data.months;
+            months.value        = response.data.months;
+            /* フォルダの種類(デフォルト値) */
+            type_texts_defaults.value = response.data.type_texts_defaults;
             /* フォルダの種類 */
-            type_texts.value = [ ...response.data.type_texts, ...type_texts_defaults.value ];
+            type_texts.value    = [ ...response.data.type_texts, ...type_texts_defaults.value ];
+            /* 未対応カウント */
+            not_res_conts.value = response.data.not_res_conts;
+
 
 
             loading.value = false;/* 読み込み */
@@ -536,6 +567,7 @@
         axios.post(route, inputs.value )
         .then(response => {
             /* フォルダの種類 */
+            type_texts.value = [... response.data.type_texts, 'ゴミ箱'];
             type_texts.value = [ ...response.data.type_texts, ...type_texts_defaults.value ];
             loading.value = false;/* 読み込み */
             resetBulc();/* 一括処理パラメーターのリセット */

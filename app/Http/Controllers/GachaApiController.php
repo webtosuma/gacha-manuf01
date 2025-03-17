@@ -48,7 +48,7 @@ class GachaApiController extends Controller
 
             ## ガチャのカテゴリーグループ一覧
             $categories = GachaCategory::where('is_published',1) //公開中
-            ->orderByRaw("code_name = ? DESC, created_at ASC", [$category_code]) //指定のカテゴリーが先頭
+            // ->orderByRaw("code_name = ? DESC, created_at ASC", [$category_code]) //指定のカテゴリーが先頭
             ->get();
 
 
@@ -56,7 +56,9 @@ class GachaApiController extends Controller
             $card_size = $request->card_size ? $request->card_size : null;
 
             ## 絞り込みキー
-            $search_key = $request->search_key ? $request->search_key : 'desc_created';
+            // $search_key = $request->search_key ? $request->search_key : 'desc_created';
+            $search_key = $request->search_key  ? $request->search_key : '';
+            $search_key = $category_code=='all' ? 'desc_created' : $search_key ; //全てのときは、初期化
 
             ## 検索キーワード
             $searchs = GachaController::getsearchs();

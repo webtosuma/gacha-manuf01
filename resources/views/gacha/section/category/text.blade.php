@@ -128,9 +128,9 @@ data-aos="fade-in"
 
     @php
     $sc = "col py-2 fw-bold btn btn-sm btn-light border-0 rounded-pill";
-
     $style_class = $category_code=='all' ? $sc.' disabled bg-primary text-white' : $sc;
-    $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
+    // $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
+    $params = ['category_code'=>'all'];
     @endphp
 
     <a  href="{{ route('gacha_category',$params) }}"
@@ -141,7 +141,7 @@ data-aos="fade-in"
     @foreach ($categories as $category)
         @php
         $style_class = $category_code == $category->code_name ? $sc.' disabled bg-primary text-white' : $sc;
-        $params = ['category_code'=>$category->code_name, 'search_key'=>$search_key, 'card_size'=>$card_size];
+        $params = ['category_code'=>$category->code_name,];
         @endphp
 
         <a  href="{{ route('gacha_category', $params ) }}" class="{{ $style_class }}

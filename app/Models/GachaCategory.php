@@ -106,4 +106,20 @@ class GachaCategory extends Model
             asset( 'storage/'.$this->bg_image ) : self::noImage();
         }
 
+
+
+        /**
+         * 高ポイント商品　画像パス top_prize_image_path
+         * @return String
+        */
+        public function getTopPrizeImagePathAttribute()
+        {
+            $prize = Prize::where('category_id',$this->id)
+            ->where('image','<>',null)
+            ->orderByDesc('point')
+            ->orderByDesc('created_at')
+            ->first();
+
+            return $prize ? $prize->image_path : null;
+        }
 }

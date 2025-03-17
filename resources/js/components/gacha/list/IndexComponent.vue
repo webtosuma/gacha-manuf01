@@ -1,8 +1,13 @@
 <template>
     <div class="container overflow-hidden" style="min-height:50vh;">
 
+        <!-- <div class="bg-white">
+            {{ inputs }}
+        </div> -->
+
+
+
         <!--絞り込み-->
-        <!-- <div class="text-white">{{ inputs.search_key }}</div> -->
         <div class="row g-2 align-items-center justify-content-end mb-3">
             <div class="col col-lg-auto">
                 <select
@@ -64,14 +69,14 @@
         <div v-else>
 
 
-            <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4">
+            <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-y" >
                 <div v-for="(gacha, key) in gachas" :key="key"
                 :class="list_col_class" >
 
                     <!--人気順位-->
                     <div v-if="inputs.search_key=='desc_popularity'"
                     :class="{'invisible': gacha.is_sold_out}"
-                    class="text-center text-primary  mb-1">
+                    class="text-center text-white  mb-1">
                         <div class="bg-dark d-inline-block px-2">
                             第<span class="fs-3 px-1">{{ key+1 }}</span>位
                         </div>
@@ -79,10 +84,8 @@
 
 
                     <u-gacha-card
-
-                    data-aos="zoom-in"
                     :gacha="gacha"
-                    :sm_card="sm_card"
+                    :sm_card="inputs.card_size=='sm'?1:0"
                     />
 
 
@@ -104,7 +107,7 @@
 
 <script>
     import axios from 'axios';
-import { get } from 'lodash';
+    // import { get } from 'lodash';
     export default {
         props: {
             token:         { type: String,  default: '', },
@@ -121,11 +124,10 @@ import { get } from 'lodash';
             loading: true,
 
             gachas:[],//ガチャ
-
             countdown_gachas:[],//カウントダウンガチャ
-
             searchs:    [],//検索キーワード
 
+            /* 入力値の初期設定 */
             inputs: {
                 _token:        this.token,
                 category_code: this.category_code,
@@ -133,20 +135,23 @@ import { get } from 'lodash';
                 card_size:     this.card_size,
             },
 
+            localStorageKey:   'u.gacha.list.index.inputs',//ローカルストレージキー
 
-            // search_key: 'desc_crated',//選択中検索キーワード
-            search_style_class: " btn btn-sm btn-light px-2 border",
+            search_style_class: " btn btn-sm btn-light border-0 px-2 py-",
             /*列の指定*/
             list_col_class:    '',//表示 class
             list_sm_col_class: 'col-6  col-md-4 col-lg-3',//小さく表示 class
             list_md_col_class: 'col-12 col-md-6 col-lg-4',//大きく表示 class
 
 
+            // LSInputs: {},
+
+
         } },
         mounted() {
 
             /* カードサイズの変更 */
-            this.list_col_class =  this.card_size=='sm' ? this.list_sm_col_class : this.list_md_col_class;
+            this.setInitialData();
 
             /* データ取得 */
             this.getData();
@@ -158,14 +163,17 @@ import { get } from 'lodash';
             /* データ取得 */
             getData :function(route = this.r_api_gacha_list){
 
+                /* データの初期化 */
                 if( route == this.r_api_gacha_list ){
                     this.loading = true;
+                    this.gachas = [];
                 }
+
+                /* ローカルストレージ保存 */
+                localStorage.setItem( this.localStorageKey, JSON.stringify(this.inputs) );
 
 
                 const params = this.inputs;
-
-
                 axios.post( route, params )
                 .then(json => {
 
@@ -208,7 +216,28 @@ import { get } from 'lodash';
             changeCardSize: function(){
                 this.inputs.card_size = this.inputs.card_size.length ? '' : 'sm' ;
                 this.list_col_class = this.inputs.card_size=='sm' ? this.list_sm_col_class : this.list_md_col_class;
-                // this.getData();
+                this.getData();
+            },
+
+
+            /* 初期データのセット */
+            setInitialData : function(){
+
+                /* ローカルストレージ取得 */
+                const storedData = localStorage.getItem( this.localStorageKey )
+                const storage_input = storedData ? JSON.parse(storedData) : {};
+
+                /* 入力値の初期設定 */
+                this.inputs = {
+                    _token:        this.token,
+                    category_code: this.category_code,
+                    search_key:    this.search_key  || ( storage_input.search_key  || 'desc_created'),//検索キーワード
+                    card_size:     this.card_size   || ( storage_input.card_size  || ''),
+                };
+
+                /* カードサイズの変更 */
+                const card_size = this.inputs.card_size;
+                this.list_col_class =  card_size=='sm' ? this.list_sm_col_class : this.list_md_col_class;
             },
         },
 

@@ -26,8 +26,8 @@
 </div>
 <!-- ボトムメニュー -->
 <div class="d-lg-none">
-    <div class="position-fixed bottom-0 end-0 w-100 p-1 text-white"
-    style="z-index:50; background:rgb(0, 0, 0, .7;">
+    <div class="position-fixed bottom-0 end-0 w-100 py-2 text-white "
+    style="z-index:50; background:rgb(255, 255, 255, 1;">
 
         @if($category_card)
             <div class="px-0 px-lg-3 overflow-auto">
@@ -39,7 +39,7 @@
             </div>
         @else
             <div class="px-0 px-lg-3 overflow-auto">
-                <nav class="nav gap-1 flex-nowrap mx-auto" style="width:{{($categories->count()+1)*8}}rem;">
+                <nav class="nav gap-1 flex-nowrap mx-auto" style="width:{{($categories->count()+1)*6}}rem;">
 
                     @include('gacha.section.category.text')
 

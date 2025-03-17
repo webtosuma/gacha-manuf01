@@ -11,9 +11,9 @@ document.addEventListener( 'DOMContentLoaded', function() {
     var splidePc = new Splide( '#splide_pc', {
 
         type     : 'loop',
-        padding: '5vw',
+        padding: '1vw',
         focus  : 'center',
-        perPage : 5, //3
+        perPage : 4, //3
         autoplay: true,
 
     } );
@@ -23,7 +23,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
     var splideMobile = new Splide( '#splide_mobile', {
 
         type     : 'loop',
-        padding: '4vw',
+        padding: '1vw',
         focus  : 'center',
         perPage : 2, //1
         autoplay: true,
