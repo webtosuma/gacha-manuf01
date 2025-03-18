@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','退会の手続き')

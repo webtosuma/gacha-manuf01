@@ -1,19 +1,13 @@
 <template>
     <div class="container overflow-hidden" style="min-height:50vh;">
 
-        <!-- <div class="bg-white">
-            {{ inputs }}
-        </div> -->
-
-
-
         <!--絞り込み-->
-        <div class="row g-2 align-items-center justify-content-end mb-3">
+        <div  v-if="!reading_data" class="row g-2 align-items-center justify-content-end mb-3">
             <div class="col col-lg-auto">
                 <select
                 v-model="inputs.search_key"
                 @change="getData()"
-                class="form-select form-select-sm rounded-pill border border-2">
+                class="form-select rounded-pill border border-2">
 
                     <option v-for="( search, key ) in searchs" :key="key"
                     :value="search.key"
@@ -26,17 +20,25 @@
                 @click="changeCardSize()"
                 type="button"
                 style="font-size:11px;"
-                :class="search_style_class" >
+                class="btn btn-light border-0" >
                     {{ inputs.card_size=='sm' ?'大きく表示':'小さく表示'}}
                 </button>
 
+            </div>
+        </div>
+        <div v-else class="row g-2 align-items-center justify-content-end mb-3">
+            <div class=" col col-lg-auto">
+                <div class="px-5 py-2 bg-white rounded-pill">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!--読み込み中-->
         <div v-if="loading"
         class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
-        data-aos="fade-in"
         >
             <div v-for="(num, key) in [1,2,3,4,5,6]" :key="key"
             class="col-12 col-md-6 col-lg-4">
@@ -51,12 +53,12 @@
                 </div>
                 <div class="row align-items-center justify-content-center mt-3">
                     <div class="col text-center">
-                        <div class="rounded-pill p-2 shadow" style="min-height:3rem;">
+                        <div class="bg-body rounded-pill p-2 shadow" style="min-height:3rem;">
                         </div>
                     </div>
 
                     <div class="col text-center">
-                        <div class="rounded-pill p-2 shadow" style="min-height:3rem;">
+                        <div class="bg-body rounded-pill p-2 shadow" style="min-height:3rem;">
                         </div>
                     </div>
                 </div>
@@ -84,6 +86,7 @@
 
 
                     <u-gacha-card
+                    data-aos="zoom-in"
                     :gacha="gacha"
                     :sm_card="inputs.card_size=='sm'?1:0"
                     />
@@ -105,141 +108,121 @@
     </div>
 </template>
 
-<script>
+<script setup>
+    import { ref, reactive, onMounted } from 'vue';
     import axios from 'axios';
-    // import { get } from 'lodash';
-    export default {
-        props: {
-            token:         { type: String,  default: '', },
-            category_code: { type: String,  default: '', },//カテゴリーcode
-            search_key:    { type: String,  default: 'desc_crated', },//検索キーワード
-            card_size:     { type: String,  default: '', },
-            order:         { type: String,  default: '', },//並び順
-            sm_card:       { type: [String,Number,Boolean],  default: 0, },//カードの表示サイズ
-            r_api_gacha_list:{ type: String,  default: '', },
-            is_desc_popularity:{ type: [String,Number,Boolean],  default: 0, },//人気順か否か
-        },
-        data() { return {
 
-            loading: true,
+    const props = defineProps({
+        token:              { type: String, default: '' },
+        category_code:      { type: String, default: '' }, // カテゴリーcode
+        search_key:         { type: String, default: 'desc_crated' }, // 検索キーワード
+        card_size:          { type: String, default: '' },
+        order:              { type: String, default: '' }, // 並び順
+        r_api_gacha_list:   { type: String, default: '' },
+        sm_card:            { type: [String, Number, Boolean], default: 0 }, // カードの表示サイズ
+        is_desc_popularity: { type: [String, Number, Boolean], default: 0 }, // 人気順か否か
+    });
 
-            gachas:[],//ガチャ
-            countdown_gachas:[],//カウントダウンガチャ
-            searchs:    [],//検索キーワード
+    const loading      = ref(true);
+    const reading_data = ref(true);
+    const gachas       = ref([]); // ガチャ
+    const searchs      = ref([]); // 検索キーワード
 
-            /* 入力値の初期設定 */
-            inputs: {
-                _token:        this.token,
-                category_code: this.category_code,
-                search_key:    this.search_key,//検索キーワード
-                card_size:     this.card_size,
-            },
+    /* 入力値 */
+    const inputs = reactive({
+        _token: props.token,
+        category_code: props.category_code,
+        search_key: props.search_key,
+        card_size: props.card_size,
+    });
 
-            localStorageKey:   'u.gacha.list.index.inputs',//ローカルストレージキー
-
-            search_style_class: " btn btn-sm btn-light border-0 px-2 py-",
-            /*列の指定*/
-            list_col_class:    '',//表示 class
-            list_sm_col_class: 'col-6  col-md-4 col-lg-3',//小さく表示 class
-            list_md_col_class: 'col-12 col-md-6 col-lg-4',//大きく表示 class
+    const list_col_class = ref('');
+    const list_sm_col_class = ref('col-6 col-md-4 col-lg-3'); // 小さく表示 class
+    const list_md_col_class = ref('col-12 col-md-6 col-lg-4'); // 大きく表示 class
+    // const localStorageKey = ref('u.gacha.list.index.inputs'); // ローカルストレージキー
 
 
-            // LSInputs: {},
+
+    // 初期データ設定＆データ取得
+    onMounted(() => {
+
+        setInitialData();
+        getData();
+
+    });
 
 
-        } },
-        mounted() {
 
-            /* カードサイズの変更 */
-            this.setInitialData();
+    /* データ取得 */
+    const getData = async (route = props.r_api_gacha_list) => {
+        if (route === props.r_api_gacha_list) {
+            loading.value      = true;
+            reading_data.value = true
+            gachas.value       = [];
+        }
 
-            /* データ取得 */
-            this.getData();
+        /* ローカルストレージ保存 */
+        // localStorage.setItem( localStorageKey.value , JSON.stringify( inputs.value ));
 
-        },
-        methods:{
+        try {
+            const response = await axios.post(route, inputs);
+            const paginate = response.data.gachas;
 
+            gachas.value =
+            route === props.r_api_gacha_list ? paginate.data : [...gachas.value, ...paginate.data];
 
-            /* データ取得 */
-            getData :function(route = this.r_api_gacha_list){
+            searchs.value = response.data.searchs;
+            loading.value = false;
 
-                /* データの初期化 */
-                if( route == this.r_api_gacha_list ){
-                    this.loading = true;
-                    this.gachas = [];
-                }
-
-                /* ローカルストレージ保存 */
-                localStorage.setItem( this.localStorageKey, JSON.stringify(this.inputs) );
-
-
-                const params = this.inputs;
-                axios.post( route, params )
-                .then(json => {
-
-                    //ページネーションデータ
-                    const paginate = json.data.gachas;
-
-                    // 商品情報の登録（新規登録・ページネーション追加）
-                    this.gachas = route == this.r_api_gacha_list ? paginate.data
-                    : [ ...this.gachas, ...paginate.data];
-
-                    //
-                    this.searchs = json.data.searchs;
-
-                    /* 読み込み完了 */
-                    this.loading = false;
-
-                    /* 次のデータの読み込み */
-                    const current_page = paginate.current_page;//表示中ページ
-                    const last_page    = paginate.last_page;   //最終ページ
-                    if( current_page != last_page ){
-                        const nextPageUrl = paginate.next_page_url;     //URLの更新
-                        this.getData( nextPageUrl );
-                    }
-
-                })
-                .catch(error => {
-                    console.log( error.response.data );
-                    if ( confirm("通信エラーが発生しました。再読み込みを行いますか？") ) {
-                        location.reload();
-                    }
-                    // alert('通信エラーが発生しました。')
+            // 次のデータの読み込み
+            const { current_page, last_page, next_page_url } = paginate;
+            if (current_page !== last_page) {
+                getData(next_page_url);
+            }
+            else{
+                reading_data.value = false;
+            }
 
 
-                });
+        } catch (error) {
 
-            },
+            console.error(error.response?.data);
+            if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+            location.reload();
+            }
 
-
-            /* カードサイズの変更 */
-            changeCardSize: function(){
-                this.inputs.card_size = this.inputs.card_size.length ? '' : 'sm' ;
-                this.list_col_class = this.inputs.card_size=='sm' ? this.list_sm_col_class : this.list_md_col_class;
-                this.getData();
-            },
+        }
+    };
 
 
-            /* 初期データのセット */
-            setInitialData : function(){
 
-                /* ローカルストレージ取得 */
-                const storedData = localStorage.getItem( this.localStorageKey )
-                const storage_input = storedData ? JSON.parse(storedData) : {};
+    /* カードサイズの変更 */
+    const changeCardSize = () => {
 
-                /* 入力値の初期設定 */
-                this.inputs = {
-                    _token:        this.token,
-                    category_code: this.category_code,
-                    search_key:    this.search_key  || ( storage_input.search_key  || 'desc_created'),//検索キーワード
-                    card_size:     this.card_size   || ( storage_input.card_size  || ''),
-                };
+        inputs.card_size = inputs.card_size.length ? '' : 'sm';
+        list_col_class.value = inputs.card_size === 'sm' ? list_sm_col_class : list_md_col_class;
+        getData();
 
-                /* カードサイズの変更 */
-                const card_size = this.inputs.card_size;
-                this.list_col_class =  card_size=='sm' ? this.list_sm_col_class : this.list_md_col_class;
-            },
-        },
+    };
 
-    }
+
+
+    /* 初期データのセット */
+    const setInitialData = () => {
+
+        // const storedData = localStorage.getItem( localStorageKey.value ) || null ;
+        // const storageInput = storedData._token ? JSON.parse(storedData) : {};
+
+        // Object.assign( inputs.value , {
+        //     _token: props.token,
+        //     category_code: props.category_code,
+        //     search_key: props.search_key || storageInput.search_key || 'desc_created',
+        //     card_size: props.card_size || storageInput.card_size || '',
+        // });
+
+        list_col_class.value = inputs.card_size === 'sm' ? list_sm_col_class : list_md_col_class;
+    };
+
+
+
 </script>

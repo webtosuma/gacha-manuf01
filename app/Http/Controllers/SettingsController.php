@@ -66,40 +66,7 @@ class SettingsController extends Controller
          */
         public function credit_card()
         {
-            $cardList = PointSailController::UserCardList();//ユーザーが登録したカード一覧の取得
-            return  view('settings.credit_card', compact('cardList'));
-        }
-
-
-        /**
-         * クレジットカード　新規登録
-         * @param \Illuminate\Http\Request $request
-         * @return \Illuminate\View\View
-        */
-        public function credit_card_create( Request $request )
-        {
-            # 新規作成メソッド
-            PointSailController::MethodCreate( $request );
-
-
-            # 設定ページへリダイレクト
-            return redirect()->route('settings.credit_card');
-
-        }
-
-
-        /**
-         * クレジットカード　削除
-         * @param \Illuminate\Http\Request $request
-         * @return \Illuminate\View\View
-        */
-        public function credit_card_destroy( Request $request )
-        {
-            # 削除メソッド
-            PointSailController::MethodDestory( $request );
-
-            # 設定ページへリダイレクト
-            return redirect()->route('settings.credit_card');
+            return redirect()->route('point_sail.customer_portal');
         }
 
 

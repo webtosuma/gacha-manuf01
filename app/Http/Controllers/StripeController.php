@@ -8,6 +8,7 @@ use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\Event;
 use Stripe\Checkout\Session;
+use Stripe\StripeClient;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -45,6 +46,36 @@ class StripeController extends Controller
 
         return view('point_sail.index',compact('point_sails', 'rank_ratio'));
     }
+
+
+
+    /**
+     * カスタマーポータル
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function customer_portal()
+    {
+        Stripe::setApiKey( config('stripe.secret_key') );
+
+        # 顧客情報
+        $user = Auth::user();
+        $customer = $user->createOrGetStripeCustomer();
+
+
+        # Stripeクライアントを初期化
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+
+        # カスタマーポータルセッションを作成
+        $session = $stripe->billingPortal->sessions->create([
+            'customer' => $customer->id,
+            'return_url' => route('settings'), // ポータルを終了した後にリダイレクトするURL
+        ]);
+
+        # カスタマーポータルへのリダイレクト
+        return redirect($session->url);
+    }
+
 
 
     /**

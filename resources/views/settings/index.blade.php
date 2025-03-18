@@ -51,19 +51,19 @@
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            {{-- <a href="{{ route('settings.credit_card') }}"
+            @if( env('STRIPE_KEY') ) <a href="{{ route('settings.credit_card') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >
                 <div class="row align-items-center">
                     <div class="col-auto fs-3 text-warning">
                         <i class="bi bi-credit-card"></i>
                     </div>
-                    <div class="col">{{ 'クレジット情報設定' }}</div>
+                    <div class="col">{{ '決済設定' }}</div>
                 </div>
 
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3 text-"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a> --}}
+            </a> @endif
 
             <a href="{{ route('settings.shipped_address') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
@@ -83,7 +83,7 @@
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >
                 <div class="row align-items-center">
-                    <div class="col-auto fs-3 text-warning">
+                    <div class="col-auto fs-3 text-primary">
                         <i class="bi bi-envelope"></i>
                     </div>
                     <div class="col">{{ 'メール受信設定' }}</div>

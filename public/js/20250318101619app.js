@@ -22044,7 +22044,10 @@ var render = function render() {
   }, [_vm._v("\n                " + _vm._s(_setup.inputs.card_size == "sm" ? "大きく表示" : "小さく表示") + "\n            ")])])]) : _c("div", {
     staticClass: "row g-2 align-items-center justify-content-end mb-3"
   }, [_vm._m(0)]), _vm._v(" "), _setup.loading ? _c("div", {
-    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
+    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4",
+    attrs: {
+      "data-aos": "fade-in"
+    }
   }, _vm._l([1, 2, 3, 4, 5, 6], function (num, key) {
     return _c("div", {
       key: key,
@@ -22067,7 +22070,6 @@ var render = function render() {
       staticClass: "fs-3 px-1"
     }, [_vm._v(_vm._s(key + 1))]), _vm._v("位\n                    ")])]) : _vm._e(), _vm._v(" "), _c("u-gacha-card", {
       attrs: {
-        "data-aos": "zoom-in",
         gacha: gacha,
         sm_card: _setup.inputs.card_size == "sm" ? 1 : 0
       }

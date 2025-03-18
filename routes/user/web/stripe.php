@@ -26,17 +26,15 @@ use App\Http\Controllers;
     });
     Route::middleware(['auth','user_rank'])->group(function () {
 
+        # カスタマーポータル
+        Route::get('point_history/customer_portal',
+        [Controllers\StripeController::class, 'customer_portal'])
+        ->name('point_sail.customer_portal');
+
         # 購入手続き
         Route::get('point_sail/payment/{point_sail}',
         [Controllers\StripeController::class, 'payment'])
         ->name('point_sail.payment');
-
-        # 購入処理
-        // Route::get('point_sail/payment_post/{stripe_id}',
-        // [Controllers\StripeController::class, 'payment_post'])
-        // ->name('point_sail.payment_post');
-
-
 
         # ポイントが不足しています(StripeController)
         Route::get('point_sail/shortage',
