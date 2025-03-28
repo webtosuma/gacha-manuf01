@@ -23,10 +23,10 @@ use App\Http\Controllers;
 
     Route::middleware(['auth','user_rank'])->group(function () {
 
-        # サブスクプラン手続き
-        Route::get('point_sail/subscription/payment/{subscription_id}',
-        [Controllers\StripSubscriptionController::class, 'payment'])
-        ->name('point_sail.subscription.payment');
+        # checkout
+        Route::get('point_sail/subscription/checkout/{subscription_id}',
+        [Controllers\StripSubscriptionController::class, 'checkout'])
+        ->name('point_sail.subscription.checkout');
 
 
         # サブスクプラン支払い完了

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','ポイント購入完了')
@@ -23,15 +23,16 @@
 
 
 <div class="container py-md-4 mb-5">
-    <h3 class="text-center my-3">ポイント購入が完了しました</h3>
-
-    <div class="form-text borderrrr border-danger p-3 mx-auto mb-3" style="max-width:600px;">
-        通信が混み合っている場合、決済サービスとの通信が遅れる場合があり、ポイントの反映が<strong>1分程</strong>、遅れる場合があります。
-    </div>
-
 
 
     <ul class="list-group list-group-flush mb-5 mx-auto" style="max-width:600px;">
+        <li class="list-group-item bg-white py-">
+            <h3 class="text-center my-3">ポイント購入が完了しました</h3>
+
+            <div class="form-text borderrrr border-danger p-3 mx-auto mb-3" style="max-width:600px;">
+                通信が混み合っている場合、決済サービスとの通信が遅れる場合があり、ポイントの反映が<strong>1分程</strong>、遅れる場合があります。
+            </div>
+        </li>
         <li class="list-group-item bg-white py-">
             <div class="row gy-3 my-3 mx-auto" style="max-width:400px;">
                 <div class="col-6">ポイント数</div>

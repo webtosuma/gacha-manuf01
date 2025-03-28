@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','ポイントが不足しています。')

@@ -1,5 +1,6 @@
 <template>
     <div v-if="card_num===3" class="anima-fadein-bottom">
+
         <div class="card shadow border-0 w-100 p-3 mb-3 bg-white">
             <div class="card-body">
 
@@ -12,15 +13,15 @@
                         </p>
                         <div class="row mb-3">
                             <div class="col-md-4 fw-bold">{{ 'アカウント名' }}</div>
-                            <div class="col-md-8 text-secondary">{{inputs.name}}</div>
+                            <div class="col-md-8 text-secondary">{{prop_inputs.name}}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4 fw-bold">{{ 'メールアドレス' }}</div>
-                            <div class="col-md-8 text-secondary">{{inputs.email}}</div>
+                            <div class="col-md-8 text-secondary">{{prop_inputs.email}}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4 fw-bold">{{ 'パスワード' }}</div>
-                            <div class="col-md-8 text-secondary">{{ '*'.repeat(inputs.password.length) }}</div>
+                            <div class="col-md-8 text-secondary">{{ '*'.repeat(prop_inputs.password.length) }}</div>
                         </div>
 
                     </div>
@@ -40,13 +41,13 @@
 
                     <div class="col-sm-8 offset-sm-2 mb-3">
 
-                        <button type="submit" v-show="!loading"
+                        <button type="submit" v-show="!inputs.loading"
                         @click="registerComp"
                         class="btn btn-curve btn-primary text-white w-100">
                             {{ 'この内容で登録' }}
                         </button>
 
-                        <button type="button" v-show="loading"
+                        <button type="button" v-show="inputs.loading"
                         class="btn btn-curve btn-primary text-white w-100" disabled>
                             {{ '登録中・・・' }}
                         </button>
@@ -74,14 +75,18 @@
 
             token:        { type: String,  default: '', },
             r_register_post: { type: String,  default: '', },
-
-            inputs:   { type: Object,  default: {}, },
+            prop_inputs:   { type: Object,  default: {}, },
             card_num: { type: Number,  default: 1, },
             test:     { type: Boolean, default: false, },
 
         },
         data() { return {
-            loading: false,/* 通信中 */
+
+            inputs: {
+                loading: false,/* 通信中(親に送信) */
+                name:'', email:'', password:'', password_confirmation: '', verification_code: '',
+            },
+
         } },
         mounted() {
         },
@@ -90,12 +95,11 @@
 
             /** ローカルストレージに登録完了保存 */
             registerComp(){
-                localStorage.setItem('registerComp', true);
+                this.inputs = this.prop_inputs;
+                this.inputs.loading = true;
+                this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
             },
 
-
-
-            nextToStep03() { this.loading = true; },
 
             /** 子コンポーネントの入力値を親コンポーネントへ保存 */
             insertParentInputs() { this.$emit('insert-parent-inputs', this.inputs ); },

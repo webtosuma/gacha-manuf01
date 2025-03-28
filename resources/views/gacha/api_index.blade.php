@@ -133,9 +133,11 @@
 
 
     <!--カテゴリー-->
-    <div class="bg-secondary-subtle">
-        @include('gacha.section.category.index')
-    </div>
+    @if($categories->count()>1)
+        <div class="bg-">
+            @include('gacha.section.category.index')
+        </div>
+    @endif
 
 
     <!--ガチャ-->

@@ -102,14 +102,6 @@ class StripSubscriptionController extends Controller
             $subscriptions[$subscription_id]['destory']    = isset($point_history);
             $subscriptions[$subscription_id]['destory_at'] = $point_history? $point_history->created_at->addMonth() :null;//解約予定日
         }
-        // $session_id = "sub_1P8ahoKoJdkajOL0zzmYxEW1";
-        // $column     = 'stripe_checkout_session_id';
-        // $check_day  = now()->copy()->subHour(23);
-        // // dd($check_day->format('Ymd His'));
-        // $previous_point_history =
-        // PointHistory::where($column,$session_id)->where('created_at','>',$check_day)->first();
-        // dd($previous_point_history);
-
 
         return view('point_sail.subscription.index',compact('subscriptions'));
     }
@@ -117,11 +109,12 @@ class StripSubscriptionController extends Controller
 
 
     /**
-     * サブスクプラン契約　手続き
+     * checkout
+     *
      * @param $subscription_id//商品ID
      * @return \Illuminate\Http\Response
     */
-    public function payment($subscription_id)
+    public function checkout($subscription_id)
     {
         Stripe::setApiKey( config('stripe.secret_key') );
 
@@ -150,14 +143,20 @@ class StripSubscriptionController extends Controller
                 'price' => $price_id,
                 'quantity' => 1,
             ]],
-
-            'payment_method_options' => [
-                'card' => [ //3Dセキュア
-                    'request_three_d_secure' => 'any' ,
-                ],
+            'shipping_address_collection' => [
+                'allowed_countries' => ['JP'], // 配送可能な国を指定
             ],
+            'automatic_tax' => [ 'enabled' => false, ],
+
 
             'mode' => 'subscription',
+
+
+            'payment_method_options' => [
+                'card' => [
+                    'request_three_d_secure' => 'any' // 3Dセキュアを強制
+                ]
+            ],
             'success_url' => route('point_sail.subscription.comp',$subscription_id),//成功リダイレクトパス
             'cancel_url'  => route('point_sail.subscription'),//失敗リダイレクトパス
         ]);

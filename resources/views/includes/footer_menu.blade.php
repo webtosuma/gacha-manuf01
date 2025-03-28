@@ -1,17 +1,21 @@
-<div class="col">
-    <h5>{{ __('カテゴリー') }}</h5>
-    @php
-    $gacha_categories = \App\Models\GachaCategory::where('is_published',1)
-    ->orderBy('created_at')->get();
-    @endphp
-    <ul class="list-unstyled fs-5">
-        @foreach ($gacha_categories as $gacha_category)
-            <li><a class="link-secondary text-decoration-none"
-            href="{{ route('gacha_category',$gacha_category->code_name) }}"
-            >{{ $gacha_category->name }}</a></li>
-        @endforeach
-    </ul>
-</div>
+@php
+$gacha_categories = \App\Models\GachaCategory::where('is_published',1)
+->orderBy('created_at')->get();
+@endphp
+@if($gacha_categories->count()>1)
+    <div class="col">
+        <h5>{{ __('カテゴリー') }}</h5>
+        <ul class="list-unstyled fs-5">
+            @foreach ($gacha_categories as $gacha_category)
+                <li><a class="link-secondary text-decoration-none"
+                href="{{ route('gacha_category',$gacha_category->code_name) }}"
+                >{{ $gacha_category->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <div class="col">
     <ul class="list-unstyled m-0 gap-3">
         <li class="mb-2"><a class="link-secondary text-decoration-none"

@@ -1,5 +1,6 @@
 <template>
     <div v-if="card_num===1" class="anima-fadein-bottom">
+
         <div class="card shadow border-0 w-100 p-3 mb-3 bg-white">
             <div class="card-body">
 
@@ -69,9 +70,9 @@
                     <div class="col-sm-8 offset-sm-2">
                         <button type="button" @click="nextToStep01"
                         class="btn btn-curve btn-primary text-white w-100"
-                        :class="{'disabled':loading}">
+                        :class="{'disabled':inputs.loading}">
 
-                            <span v-if="!loading">{{ '次のステップへ　進む' }}</span>
+                            <span v-if="!inputs.loading">{{ '次のステップへ　進む' }}</span>
                             <span v-else>{{ '通信中・・・' }}</span>
 
                         </button>
@@ -99,9 +100,9 @@
         },
         data() { return {
 
-            loading: false,/* 通信中 */
             route:'/api/worker/auth/register_step01',
             inputs: {
+                loading: false,/* 通信中(親に送信) */
                 name:'', email:'', password:'', password_confirmation: '', verification_code: '',
             },
             errors: {},
@@ -126,15 +127,16 @@
             /** Step01 */
             nextToStep01 :function(){
 
-                this.loading = true;// 通信中
+                this.inputs.loading = true;// 通信中
+                this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
 
                 axios.post( this.r_api_step01, this.inputs )
                 .then(json => {
                     // console.log(json);
 
                     this.inputs.verification_code = json.data.verification_code;
+                    this.inputs.loading = false;// 通信中
                     this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
-                    this.loading = false;// 通信中
                     this.addCardNum();
                 })
                 .catch(error => {
@@ -143,7 +145,8 @@
                     if( error.response.status == 422 ){
                         // console.log( error.response.data.errors );
                         this.errors = error.response.data.errors;
-                        this.loading = false;// 通信中終了
+                        this.inputs.loading = false;// 通信中
+                        this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
                     }
                     //その他のエラー
                     else{ alert('データ送信エラーが発生しました。'); }
@@ -192,6 +195,7 @@
             /** テスト用入力データの挿入 */
             insertTestData: function(){
                 if( this.test ){ this.inputs = {
+                    loading: false,/* 通信中(親に送信) */
                     name:'test太朗', email:'aek1214@yahoo.co.jp',
                     password:'password', password_confirmation: 'password',
                 }; }

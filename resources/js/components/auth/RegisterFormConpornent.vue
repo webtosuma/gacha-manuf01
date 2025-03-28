@@ -3,6 +3,9 @@
 
         <!-- {{ inputs }} -->
 
+        <!----- [ 読み込み中カバー ] ----->
+        <loading-cover-component :loading="inputs.loading" />
+
         <steps-component :card_num="card_num" />
 
         <!----- [ ステップ0 ] ----->
@@ -11,7 +14,7 @@
         <!----- [ ステップ1 ] ----->
         <step01-component
         @add-card-num="addCardNum()"
-        @insert-parent-inputs="insertParentInputs01"
+        @insert-parent-inputs="insertParentInputs"
         :card_num="card_num"
         :r_api_step01="r_api_step01"
         :r_privacy_policy="r_privacy_policy"
@@ -29,9 +32,11 @@
         <!----- [ ステップ3 ] ----->
         <step03-component
         @add-card-num="addCardNum()" @sub-card-num="subCardNum()"
+        @insert-parent-inputs="insertParentInputs"
         :token="token"
         :r_register_post ="r_register_post"
-        :inputs="inputs" :card_num="card_num" :test="test"/>
+        :prop_inputs="inputs"
+        :card_num="card_num" :test="test"/>
 
 
     </div>
@@ -64,14 +69,14 @@
 
             test : false,
             // test : true,
+            card_num : 1,/* 表示中カード番号 */
 
 
-            loading: false,/* 通信中 */
             inputs: {
+                loading: true,
                 name:'', email:'', password:'', password_confirmation: '', verification_code: '',
             },
             errors: {},
-            card_num : 1,/* 表示中カード番号 */
 
 
             registerComp: false,/* このブラウザで会員登録が行われたか、否か */
@@ -87,7 +92,7 @@
         methods:{
 
             /** 子コンポーネントの入力値を親コンポーネントへ保存 */
-            insertParentInputs01   (inputs){ this.inputs = inputs; },
+            insertParentInputs   (inputs){ this.inputs = inputs; },
 
 
             /* 次へメソッド */

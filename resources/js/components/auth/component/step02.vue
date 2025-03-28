@@ -92,8 +92,6 @@
             },
 
 
-
-
             /* 次へメソッド */
             addCardNum : function(){ this.$emit('add-card-num'); },
 

@@ -49,7 +49,7 @@ class PointSail extends Model
         {
             $ticket = floor( $this->price / 1000 );
 
-            return env('NEW_TICKET_SISTEM',false) ? $ticket: 0 ;
+            return env('NEW_TICKET_SISTEM') && !env('NEW_TICKET_SISTEM_NOTICKET') ? $ticket: 0 ;
         }
 
 }

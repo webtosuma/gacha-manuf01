@@ -5,6 +5,20 @@
 @section('title','ポイント購入')
 
 
+@section('style')
+    @php
+        /* 背景パス */
+        $bg_image = \App\Http\Controllers\AdminBackGroundController::getBgSub();
+    @endphp
+    <style>
+        #bgWindow{
+            background-image: url({{ $bg_image }});
+            opacity: .5;
+        }
+    </style>
+@endsection
+
+
 @section('content')
     <!--breadcrumb-->
     <div class="container mt-md-3">
