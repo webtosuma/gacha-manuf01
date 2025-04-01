@@ -47,41 +47,6 @@
             opacity: .7;
             transition: all .2s;
         }
-
-        /* ガチャのホバーアニメーション */
-        /* .hover_anime:hover{
-            position: relative;
-            transform: rotate3d(0, 1, 0, 360deg);
-            transition: all .2s;
-        } */
-
-        /* ガチャのホバーアニメーション */
-        /* .hover_anime:hover{
-            position: relative;
-            animation: shake 1s infinite ease-in-out;
-        } */
-        /* 揺れる動きのキーフレーム */
-        @keyframes shake {
-            0%, 100% {
-                transform: rotate(0deg);
-            }
-            10% {
-                transform: rotate(-8deg);
-            }
-            20% {
-                transform: rotate(8deg);
-            }
-            30% {
-                transform: rotate(-4deg);
-            }
-            40% {
-                transform: rotate(4deg);
-            }
-            50% {
-                transform: rotate(0deg);
-            }
-        }
-
     </style>
 
     <!-- splide css-->

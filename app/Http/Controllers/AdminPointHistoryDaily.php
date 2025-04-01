@@ -32,11 +32,11 @@ class AdminPointHistoryDaily extends Controller
         # ポイントの入出理由ID (ポイント購入)
         $reason_id = self::ReasonId();
 
-        return PointHIstory::where('reason_id',$reason_id)
-        // ->whereYear('created_at',$date)
-        // ->whereMonth('created_at',$date)
-        ->whereDate('created_at',$date)
-        ->sum('price');
+        $query = PointHIstory::query();
+
+            $query->adominPointHistoryReason();//入出ID絞り込み スコープ
+
+        return $query->whereDate('created_at',$date)->sum('price');
     }
 
 
@@ -54,12 +54,16 @@ class AdminPointHistoryDaily extends Controller
         # ポイントの入出理由ID (ポイント購入)
         $reason_id = self::ReasonId();
 
-        // $date = now();//TEST
 
         # 訪問者ID
-        $id_array = PointHIstory::where('reason_id',$reason_id)
-        ->whereDate('created_at',$date)
-        ->pluck('user_id')->toArray();
+        $query = PointHIstory::query();
+
+            $query->adominPointHistoryReason();//入出ID絞り込み スコープ
+
+            $query->whereDate('created_at',$date);
+
+        $id_array = $query->get()->pluck('user_id')->toArray();
+
 
         # 訪問者データ
         $visiters = User::find( $id_array );
@@ -87,8 +91,11 @@ class AdminPointHistoryDaily extends Controller
         # ポイントの入出理由ID (ポイント購入)
         $reason_id = self::ReasonId();
 
-        return PointHIstory::where('reason_id',$reason_id)
-        ->whereDate('created_at',$date)
+        $query = PointHIstory::query();
+
+            $query->adominPointHistoryReason();//入出ID絞り込み スコープ
+
+        return $query->whereDate('created_at',$date)
         ->where('user_id', $visiter->id)
         ->sum('price');
     }
@@ -110,12 +117,12 @@ class AdminPointHistoryDaily extends Controller
         $count = 0;
         foreach ($visiters as $visiter) {
 
-
             $query = PointHIstory::query();
-            $query->where('created_at','<=',$date->format('Y-m-d 23:59:59'));
-            $query->where('reason_id',$reason_id)
-            ->where('user_id', $visiter->id);
 
+                $query->adominPointHistoryReason();//入出ID絞り込み スコープ
+
+                $query->where('created_at','<=',$date->format('Y-m-d 23:59:59'))
+                ->where('user_id', $visiter->id);
 
             $visiter_count = $query->count();
 
@@ -144,7 +151,8 @@ class AdminPointHistoryDaily extends Controller
         $query = PointHistory::query();
 
             $query->whereDate('created_at',$date);
-            $query->where('reason_id',$reason_id);
+
+            $query->adominPointHistoryReason();//入出ID絞り込み スコープ
 
         return $query->get()->count();
     }

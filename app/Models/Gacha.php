@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル user_play
+|  ガチャ　モデル
 | =============================================
 */
 class Gacha extends Model
@@ -35,8 +35,9 @@ class Gacha extends Model
 
         'min_time',// 表示時間下限　2024/04/17追加
         'max_time',// 表示時間上限　2024/04/17追加
-        'is_over_date',   // 日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
+        'is_over_date',// 日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
         'updated_prizes_at',// 登録商品更新日時 2025/02/04追加
+        'subscription_id',  //サブスクプランID(PointSail) 2025/03/23追加
     ];
 
 
@@ -59,12 +60,21 @@ class Gacha extends Model
     ];
 
 
+    /** アクセサーをJSONに含める */
+    protected $appends = [
+        'sub_auth_user', //ログインユーザーがサブスクガチャを利用できるか
+    ];
+
+
+
     /** ガチャの種類　一覧 */
     public static function types()
     {
-        return [
+        $array =  [
+            'no_custom'    => '通常',
+
             'nomal'        => 'カスタムボタンあり',
-            // 'max_custom'   => 'カスタムボタンあり(上限付き)',
+            'max_custom'   => 'カスタムボタンあり(上限付き)',
             'no_custom'    => 'カスタムボタンなし',
 
             // 'one_chance'   => '1回or10回限定',
@@ -72,6 +82,8 @@ class Gacha extends Model
             'only_oneday'  => '１日１回',
             'only_new_user'=> '新規会員限定',
         ];
+
+        return $array;
     }
 
     /** カスタムボタンの上限 */
@@ -184,6 +196,17 @@ class Gacha extends Model
         }
 
 
+        /**
+         * PointSailモデル (サブスクプラン)リレーション
+         * @return \App\Models\User
+        */
+        public function subscription(){
+            //ガチャ一覧に、サブスク終了時でも表示可能
+            return $this->belongsTo(PointSail::class, 'subscription_id')
+            ->withTrashed();//削除済みも含む
+        }
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー
@@ -197,7 +220,7 @@ class Gacha extends Model
         */
         public function getIsPublishedAttribute()
         {
-            return $this->published_at && $this->published_at <= now()->copy()->format('Y-m-d H:i:s') ;
+            return $this->published_at && $this->published_at <= now()->format('Y-m-d H:i:s') ;
         }
 
 
@@ -288,6 +311,7 @@ class Gacha extends Model
 
             return $user
             ? UserGachaHistory::where('gacha_id',$this->id)
+            // ->where('created_at', '>', \Carbon\Carbon::parse($this->updated_prizes_at) )//ガチャ商品更新より後の履歴
             ->where('user_id',$user->id)
             ->get()->sum('play_count')
             : 0 ;
@@ -347,6 +371,7 @@ class Gacha extends Model
             ->whereDate('created_at', now() )
             ->get()->count();
 
+            // return $count;
             return $count >= $max_count  ;
         }
 
@@ -392,8 +417,8 @@ class Gacha extends Model
         */
         public function getInitialTimeAttribute()
         {
-            $max = now()->copy()->addMinutes(30);//30分前 新規カウントダウン
-            // $max = now()->copy()->addDays(3);//3日前　新規カウントダウン
+            // $max = now()->copy()->addMinutes(30);//30分前 新規カウントダウン
+            $max = now()->copy()->addDays(3);//3日前　新規カウントダウン
 
             if( $this->published_at>now() && $this->published_at<$max  )
             {
@@ -402,18 +427,6 @@ class Gacha extends Model
             return null;
         }
 
-
-        /**
-         * (新作ガチャ)カウントダウン日時 new_release_initial_datetime
-         * @return String
-        */
-        public function getNewReleaseInitialDatetimeAttribute()
-        {
-            if( $this->published_at > now()){
-                return now()->copy()->diff($this->published_at)->format('%Y/%M/%D %H:%I:%S');
-            }
-            return null;
-        }
 
 
         /**
@@ -452,7 +465,6 @@ class Gacha extends Model
         }
 
 
-
         /**
          * 天井系ガチャのアド確定までの回転数　add_chance_count
          *
@@ -462,6 +474,7 @@ class Gacha extends Model
         {
             #アド予告の利用設定確認
             if( !env('ADD_CHANCE_NOTICE',false) ){ return null; }
+
 
             # 変数
             $remaining_count  = $this->remaining_count; //残り口数
@@ -485,6 +498,7 @@ class Gacha extends Model
             foreach ($this->discriptions as $discription)
             {
                 $gacha_rank_id = $discription->gacha_rank_id;
+
 
                 # ガチャの口数に応じて当選する当選
                 if( !in_array( $gacha_rank_id, $gacha_u_ranks) ){
@@ -551,9 +565,6 @@ class Gacha extends Model
         */
         public function getAddChanceImagePathAttribute()
         {
-            // $image_path = 'site/image/gacha/chance/1.png';
-            // return Storage::exists($image_path) ? $image_path : false ;
-
 
             # 売り切れのとき
             if($this->is_sold_out){ return null; }
@@ -597,8 +608,6 @@ class Gacha extends Model
 
             return Auth::check() && $this->is_published ? $gacha_prizes->count() > 0 : false;
         }
-
-
 
 
     /*
@@ -776,7 +785,6 @@ class Gacha extends Model
 
                     /* 1回限定 */
                     case 'one_time':
-                        // return 1;
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
                         return ($remaining_count >= $n) && !($gacha->played_one_time) ? 0 : 1 ;
                         break;
@@ -815,8 +823,37 @@ class Gacha extends Model
 
 
         /* */
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー(サブスク)
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
 
+        /**
+         * ログインユーザーがサブスクガチャを利用できるか sub_auth_user
+         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+         * @return Integer
+        */
+        public function getSubAuthUserAttribute()
+        {
+
+            # サブスクガチャではない
+            if( ! $this->subscription ){ return true; }
+
+            # サブスクが非公開
+            if( ! $this->subscription->is_published ){ return false; }
+
+            # ユーザーがログアウト中のとき
+            if( ! Auth::check() ){ return false; }
+            $user = Auth::user();
+
+
+            # ユーザーの契約中サブスクに該当するか
+            $user_sub_ids = $user->user_subscriptions->pluck('subscription_id')->toArray();
+            return in_array( $this->subscription_id, $user_sub_ids );
+        }
 
     /* end */
-
 }

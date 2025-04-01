@@ -27,6 +27,9 @@ use \App\Http\Controllers;
     # 販売ポイント
     include('web/point_sail.php');
 
+    # サブスク管理
+    include('web/subscription.php');
+
     # 演出動画
     include('web/movie.php');
 
@@ -73,7 +76,7 @@ use \App\Http\Controllers;
     # お問い合わせ一覧
     include('web/contact.php');
 
-    
+
     # 管理者設定
     include('web/register.php');
 

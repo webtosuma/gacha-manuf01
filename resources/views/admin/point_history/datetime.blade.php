@@ -92,7 +92,7 @@ $active_key = 'point_history';
                         <th scope="col">アカウント名</th>
                         <th scope="col">購入ポイント</th>
                         <th scope="col">売上金額</th>
-
+                        <th scope="col"><!--サブスク--></th>
                         <th scope="col">受付日時</th>
                         <th></th>
                     </tr>
@@ -116,6 +116,12 @@ $active_key = 'point_history';
                             </td>
                             <td>
                                 ¥<number-comma-component number="{{ $point_history->price }}"></number-comma-component>
+                            </td>
+                            <td>
+                                <!--サブスク-->
+                                @if( $point_history->reason_id>2000 )
+                                    <div class="badge bg-info">サブスク</div>
+                                @endif
                             </td>
                             <td>{{ $point_history->created_at->format('Y年m月d日 H:i:s') }}</td>
 

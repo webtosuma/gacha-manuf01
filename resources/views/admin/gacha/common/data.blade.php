@@ -41,6 +41,10 @@
             @endif
             <!--ガチャの種類-->
             <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
+            <!--サブスクガチャの種類-->
+            @if( $gacha->subscription_id )
+                <span class="border px-3 rounded-pill">{{ $gacha->subscription->sub_label }}</span>
+            @endif
             <!--ランクの指定-->
             @if( env('NEW_TICKET_SISTEM',false) )
                 <span class="border px-3 rounded-pill">{{ $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' }}会員</span>

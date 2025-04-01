@@ -27,20 +27,43 @@
 
         <div class="card card-body border-danger bg-white">
 
-            一度退会すると、あなたのアカウントに関する情報がすべて失われます。
-            <ul class="my-3">
-                <li>
-                    登録中のメールアドレスの再登録ができなくなります。
-                </li>
-                <li>
-                    これまで取得されたポイントの情報は削除され、利用ができなくなります。
-                </li>
-                <li>
-                    これまで取得された商品の情報は削除されます。
-                </li>
-            </ul>
+            <div class="mb-3">
+                <h6 class="fw-bold">一度退会すると、あなたのアカウントに関する情報がすべて失われます。</h6>
+
+                <ul class="bg-body rounded-4 py-3">
+                    <li>
+                        登録中のメールアドレスの再登録ができなくなります。
+                    </li>
+                    <li>
+                        これまで取得されたポイントの情報は削除され、利用ができなくなります。
+                    </li>
+                    <li>
+                        これまで取得された商品の情報は削除されます。
+                    </li>
+                </ul>
+            </div>
 
 
+            <!--サブスク-->
+            @if ( env('SUBSCRIPTION',false) )
+                <div class="mb-3">
+                    <h6 class="fw-bold  text-danger">サブスクプランのキャンセル申請はお済みですか？</h6>
+
+                    <ul class="bg-danger-subtle rounded-4 py-3">
+                        <li>
+                            サブスクプランのキャンセル申請が行われていない場合、退会後も請求が自動更新されます。
+                        </li>
+                        <li>
+                            必ず、<strong class="text-danger">サブスクプランの解約を行なった後に</strong>退会の手続きを行ってください。
+                        </li>
+                        <li>
+                            <a href="{{ route('point_sail.customer_portal') }}"
+                            class="btn btn-dark text-white rounded-pill btn-sm"
+                            >利用中のサブスクプランの確認と、キャンセル申請はこちら</a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
 
 
             <div class="mb-3">

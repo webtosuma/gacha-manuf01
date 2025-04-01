@@ -443,5 +443,35 @@ class User extends Authenticatable
 
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー サブスク
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * UserSubscriptionモデル リレーション user_subscriptions
+         * @return \App\Models\UserSubscription
+        */
+        public function  user_subscriptions()
+        {
+            return $this->hasMany(UserSubscription::class,'user_id');
+        }
+
+
+        /**
+         * ユーザーの契約中サブスクプラン subscriptions
+         * @return Boorean
+        */
+        public function getSubscriptionsAttribute()
+        {
+            $array = [];
+            foreach ($this->user_subscriptions as $user_subscription) {
+                $array[] = $user_subscription->subscription;
+            }
+            return $array;
+        }
+
     /* ~ */
 }

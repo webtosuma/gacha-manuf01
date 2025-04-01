@@ -93,7 +93,9 @@ class AdminPointHistoryController extends Controller
     {
         # 最も古い月(＊ポイント購入のみ)
         $month = Carbon::parse( now()->format('Y-m-01') );
-        $first_point_history =  PointHistory::where('reason_id',11)->first();
+        $first_point_history =  PointHistory::
+        adominPointHistoryReason()//入出ID絞り込み スコープ
+        ->first();
         $old_month = $first_point_history ? $first_point_history->created_at : $month->copy();
 
         $array = [];
@@ -120,7 +122,8 @@ class AdminPointHistoryController extends Controller
      */
     public function datetime(Request $request)
     {
-        $point_histories =  PointHistory::where('reason_id',11)//購入履歴
+        $point_histories =  PointHistory::
+        adominPointHistoryReason()//入出ID絞り込み スコープ
         ->orderByDesc('created_at')
         ->paginate(100);//ページネーション
 
@@ -158,8 +161,8 @@ class AdminPointHistoryController extends Controller
         # 指定日のオブジェクト
         $date = Carbon::parse($date_text);
 
-        // dd();
-        $point_histories =  PointHistory::where('reason_id',11)//購入履歴
+        $point_histories =  PointHistory::
+        adominPointHistoryReason()//入出ID絞り込み スコープ
         ->whereDate('created_at',$date)
         ->orderByDesc('created_at')
         ->paginate(100);//ページネーション

@@ -14807,9 +14807,7 @@ var render = function render() {
         img_path_only_new_user: gacha.img_path_only_new_user,
         img_path_user_rank: gacha.img_path_user_rank
       }
-    }), _vm._v(" "), gacha.subscription_id ? _c("div", {
-      staticClass: "bg-white fw-bold"
-    }, [_vm._v("『" + _vm._s(gacha.subscription.sub_label) + "』専用")]) : _vm._e(), _vm._v(" "), _c("div", {}, [gacha.is_published ? _c("u-gacha-metter", {
+    }), _vm._v(" "), _c("div", {}, [gacha.is_published ? _c("u-gacha-metter", {
       attrs: {
         new_label_path: gacha.new_label_path,
         img_path_point: gacha.img_path_point,

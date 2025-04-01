@@ -30,7 +30,7 @@ class AdminApiGatyaController extends Controller
 
 
 
-    
+
     /**
      * 一覧取得
      *
@@ -92,8 +92,10 @@ class AdminApiGatyaController extends Controller
 
             // $query->orderByDesc('published_at')
             // ->orderByDesc('created_at');
-
             $query->has('category');//カテゴリーが存在するもののみ
+
+            # サブスクリプション
+            $query->with('subscription');
 
         $gachas = $query->paginate( 12 );//ページネーション
 

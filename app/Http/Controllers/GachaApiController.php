@@ -234,7 +234,13 @@ class GachaApiController extends Controller
                         $query->orderByDesc('published_at');
                         break;
 
-                    //* 1回or10回限定 */
+                    //* サブスク限定 */
+                    case 'subscription':
+                        $query->where('subscription_id','<>',null);
+                        $query->orderByDesc('published_at');
+                        break;
+
+                        //* 1回or10回限定 */
                     case 'one_chance':
                         $query->where('type','one_chance');
                         $query->orderByDesc('published_at');
@@ -296,6 +302,8 @@ class GachaApiController extends Controller
                 ->get()->pluck('id')->toArray();
                 $query->whereIn('category_id',$category_ids);
 
+                ## サブスクリプション
+                $query->with('subscription');
 
             return $query->orderByDesc('created_at');
         }

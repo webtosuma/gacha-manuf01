@@ -51,6 +51,11 @@
             </div>
 
 
+            <!--サブスクプラン-->
+            <div v-if="gacha.subscription"
+            class="bg-white fw-bold">『{{gacha.subscription.sub_label}}』専用</div>
+
+
             <!--metter & price-->
             <a :href="gacha.route"  :class="href_class">
                 <div class="position-relative">
@@ -88,6 +93,7 @@
             :is_disabled_oneplay_btn="gacha.is_disabled_oneplay_btn"
             :is_disabled_tenplay_btn="gacha.is_disabled_tenplay_btn"
             :is_disabled_custom_btn ="gacha.is_disabled_custom_btn"
+            :sub_auth_user="gacha.sub_auth_user?1:0"
             />
         </div>
 

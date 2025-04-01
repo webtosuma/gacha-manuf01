@@ -85,7 +85,7 @@ class AdminPointHistoryMonthly extends Controller
                 $query->whereMonth('created_at',$month);
             }
 
-        return $query->where('reason_id',$reason_id)->sum('price');
+        return $query->adominPointHistoryReason()->sum('price');
     }
 
 
@@ -110,7 +110,7 @@ class AdminPointHistoryMonthly extends Controller
             $query->whereYear('created_at',$month);
             $query->whereMonth('created_at',$month);
         }
-        $id_array = $query->where('reason_id',$reason_id)
+        $id_array = $query->adominPointHistoryReason()
         ->pluck('user_id')->toArray();
 
 
@@ -160,20 +160,17 @@ class AdminPointHistoryMonthly extends Controller
         $reason_id = self::ReasonId();
 
         $query = PointHIstory::query();
-        if( $month )
-        {
-            $query->whereYear('created_at',$month);
-            $query->whereMonth('created_at',$month);
-        }
-        return $query->where('reason_id',$reason_id)
-        ->where('user_id', $visiter->id)
-        ->sum('price');
 
-        // return PointHIstory::where('reason_id',$reason_id)
-        // ->whereYear('created_at',$month)
-        // ->whereMonth('created_at',$month)
-        // ->where('user_id', $visiter->id)
-        // ->sum('price');
+            if( $month )
+            {
+                $query->whereYear('created_at',$month);
+                $query->whereMonth('created_at',$month);
+            }
+
+            $query->adominPointHistoryReason();//入出ID絞り込み スコープ
+
+        return $query->where('user_id', $visiter->id)
+        ->sum('price');
     }
 
 
@@ -191,13 +188,16 @@ class AdminPointHistoryMonthly extends Controller
         $reason_id = self::ReasonId();
 
         $query = PointHIstory::query();
-        if( $month )
-        {
-            $query->whereYear('created_at',$month);
-            $query->whereMonth('created_at',$month);
-        }
-        return $query->where('reason_id',$reason_id)
-        ->where('user_id', $visiter->id)
+
+            if( $month )
+            {
+                $query->whereYear('created_at',$month);
+                $query->whereMonth('created_at',$month);
+            }
+
+            $query->adominPointHistoryReason();//入出ID絞り込み スコープ
+
+        return $query->where('user_id', $visiter->id)
         ->count();
     }
 
@@ -218,18 +218,20 @@ class AdminPointHistoryMonthly extends Controller
         $count = 0;
         foreach ($visiters as $visiter) {
 
-
             $query = PointHIstory::query();
-            if( $month )
-            {
-                $next_month = $month->copy()->addMonth();
-                $query->where('created_at','<',$next_month->format('y-m-01'));
-            }
-            $query->where('reason_id',$reason_id)
-            ->where('user_id', $visiter->id);
 
+                if( $month )
+                {
+                    $next_month = $month->copy()->addMonth();
+                    $query->where('created_at','<',$next_month->format('y-m-01'));
+                }
 
-            $visiter_count = $query->count();
+                $query->adominPointHistoryReason();//入出ID絞り込み スコープ
+
+                $query->where('user_id', $visiter->id);
+
+            $visiter_count = $query->get()->count();
+
 
             if( $visiter_count >1 ){ $count ++; }
         }
@@ -260,7 +262,7 @@ class AdminPointHistoryMonthly extends Controller
                 $query->whereYear('created_at',$month);
                 $query->whereMonth('created_at',$month);
             }
-            $query->where('reason_id',$reason_id);
+            $query->adominPointHistoryReason();//入出ID絞り込み スコープ
 
 
         return $query->get()->count();

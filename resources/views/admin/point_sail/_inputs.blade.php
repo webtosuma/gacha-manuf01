@@ -57,8 +57,12 @@
             </div>
 
             <div class="input-group mb-3">
+                <input type="hidden" value="{{$point_sail->stripe_id }}" name="stripe_id">
+
                 <input  value="{{old('stripe_id', $point_sail->stripe_id  )}}"
                 name="stripe_id"
+                placeholder="price_XXXXXXXXXX"
+                @if($point_sail->id) disabled @endif
                 type="text" class="form-control">
             </div>
 
@@ -66,6 +70,13 @@
             @if ( $errors->has('stripe_id') )
                 <div class="text-danger"> {{$errors->first('stripe_id')}} </div>
             @endif
+
+            <div class="alert alert-warning border-0" role="alert">
+                <h6 class="fw-bold text-warning">Stripeの商品IDをご確認ください。</h6>
+                Stripeの商品IDは新規登録時のみ入力可能であり、後に<strong class="text-warning">変更することができません</strong> 。<br>
+                Stripeの商品IDの異なる商品を登録する場合は、「新規登録」より再度登録をお願いします。
+            </div>
+
         </label>
 
 

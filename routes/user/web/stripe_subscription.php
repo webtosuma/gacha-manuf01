@@ -34,14 +34,4 @@ use App\Http\Controllers;
         [Controllers\StripSubscriptionController::class, 'comp'])
         ->name('point_sail.subscription.comp');
 
-        # サブスクプラン解約
-        Route::get('point_sail/subscription/destroy/{stripe_id}',
-        [Controllers\StripSubscriptionController::class, 'destroy'])
-        ->name('point_sail.subscription.destroy');
-
-        // # サブスクプランキャンセルの取り消し
-        // Route::get('point_sail/subscription/not_cancel/{stripe_id}',
-        // [Controllers\StripSubscriptionController::class, 'not_cancel'])
-        // ->name('point_sail.subscription.not_cancel');
-
     });

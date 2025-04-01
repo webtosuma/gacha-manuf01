@@ -21,7 +21,8 @@ class AdminPointSailController extends Controller
     public function index()
     {
         # 販売用ポイント情報取得
-        $point_sails = PointSail::orderByDesc('is_published')//公開中のみ上
+        $point_sails = PointSail::where('is_subscription',false)//サブスク以外
+        ->orderByDesc('is_published')//公開中のみ上
         ->orderBy('value','asc')//ポイントが低い順
         ->get();
 
@@ -79,6 +80,9 @@ class AdminPointSailController extends Controller
      */
     public function edit(PointSail $point_sail)
     {
+        # サブスク商品の表示不可
+        if( $point_sail->is_subscription){ return \App::abort(404); }
+
         return view('admin.point_sail.edit', compact('point_sail'));
     }
 

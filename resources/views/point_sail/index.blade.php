@@ -43,34 +43,6 @@
             す。
         </p> --}}
 
-        <!--サブスクPR-->
-        @if ( env('SUBSCRIPTION',false) )
-        <a href="{{route('point_sail.subscription')}}" class="d-block col-md- mx-auto my-3 "  >
-            <div class=" p-3 text-white "
-            style="background: linear-gradient(to right bottom, #406aff, #14cfa0) !important;"
-            >
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <div class="">
-
-                        </div>
-                        <img src="{{asset('storage/site/image/pass.png')}}"
-                        alt="{{ 'カドフェPASS' }}" class="w-100 rounded-3 shadowww ">
-                    </div>
-
-                    <div class="col">
-                        <div class="fs-3">
-                            月額プラン
-                            <span class="fs-1">カドフェPASS</span>
-                        </div>
-                        {{-- <div class="fs-5">お得な特典が盛り沢山!!</div> --}}
-                        <div class="text-end mt-2">お申し込みはこちら＞</div>
-                    </div>
-                </div>
-
-            </div>
-        </a>
-        @endif
 
 
         <ul class="list-group list-group-flush">
@@ -78,11 +50,6 @@
 
                 <div class="">購入するポイントを選択してください</div>
 
-                @if( true )
-                    <div class="border border-danger bg-danger-subtle border-3 p-3 rounded-4 text-danger text-center fs-3">
-                        只今、準備中です。
-                    </div>
-                @endif
 
 
                 @if( Auth::check() && $rank_ratio > 1 )
@@ -109,30 +76,8 @@
                         <span class="text-success fw-bold">pt 会員ランク還元！</span>
                     </div> --}}
                 @endif
-
-                {{-- <div class="mt-2" >
-                    ご利用可能な決済方法
-                    <img src="{{asset('storage/site/image/stripe_card.png')}}" alt="ご利用可能な決済方法" style="height:3rem;">
-                </div> --}}
-
-
-
-                {{-- <h3 class="text-danger">只今、ポイント購入を停止しています。</h3>
-                <p class="border border-warning border-3 p-3">
-                    現在、お客様がご購入いただいたポイント購入のに関するエラーが発生しており、重複し
-                    て処理されている状況が確認されました。<br>
-                    お客様にはご迷惑をおかけしておりますことを深くお詫び申し上げます。<br>
-                    なお、このエラーにより発生したポイント購入の重複処理は、クレジットの引き落としに
-                    は影響を及ぼしておりません。<br>
-                    お客様のクレジットカードに重複請求が行われることはございませんので、ご安心くださ
-                    い。<br>
-                    当サイトでは現在、一度の決済サービスを停止しており、早急にエラーの修正作業を進
-                    め、サービスの正常化を図るため、全力で修正対応を行っております。<br>
-                    お客様には、これに伴い一時的にポイント購入が制限され、また復旧までしばらくお時間
-                    をいただくかもしれませんが、お客様のご理解とご協力を賜りますようお願い申し上げま
-                    す。
-                </p> --}}
             </li>
+
 
 
             @foreach ($point_sails as $point_sail)
@@ -169,7 +114,7 @@
 
                         <!--購入ボタン-->
                         <a href="{{ route('point_sail.payment', $point_sail) }}"
-                        class="btn btn-lg btn-warning text-white rounded-pill shadow py-1 " style="width:8rem;">
+                        class="btn btn-lg btn-warning text-white rounded-pill shadow   hover_anime  py-1 " style="width:8rem;">
                             <div class="d-flex align-items-center justify-content-between w-100">
                                 <span>¥</span>
                                 <h5 class="m-0 fw-bold">
@@ -224,70 +169,109 @@
             @endforeach
 
 
-            <li class="list-group-item bg-white py-1 form-text text-end"
-            >*価格は全て税込み価格です。</li>
+            <li class="list-group-item bg-white py-1">
+
+                <div class="form-text text-end mb-3">*価格は全て税込み価格です。</div>
+
+            </li>
         </ul>
 
-
         <div class="mt-5">
-            <h6>ご利用可能な決済方法</h6>
-            <div class="row g-2">
-                <div class="col">
-                    <div class="card card-body px- bg-body">
+            <h6 class="fs-5">ご利用可能な決済方法</h6>
+
+            <div class="row g-3">
+                @if ( env('SUBSCRIPTION',false) )
+                    <!--サブスク-->
+                    <div class="col-12 ">
+                        <a href="{{route('point_sail.subscription')}}"
+                        class="btn btn-lg btn-dark p-3 w-100 h-100 shadow position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="fw-bold">サブスクプランはこちら</div>
+                        </a>
+                    </div>
+                @endif
+
+                <div class="col-12 col-md-4">
+                    <a href="{{route('point_sail')}}"
+                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">クレジットカード</div>
                         <i class="bi bi-credit-card-fill fs-4"></i>
                         <div class="">
-                            <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
-                            {{-- <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;"> --}}
+                            {{-- <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;"> --}}
+                            <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <div class="col-12 col-md">
-                    <div class="card card-body px- bg-body h-100">
-                        <div class="">銀行振込</div>
+                {{-- <div class="col-12 col-md-4">
+                    <a href="{{route('point_sail')}}"
+                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                        <div class="">クレジットカード(JCB)</div>
+                        <i class="bi bi-credit-card-fill fs-4"></i>
+                        <div class="">JCB</div>
+                    </a>
+                </div> --}}
 
-                        <div class=""><i class="bi bi-bank2 fs-4"></i></div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md">
-                    <div class="card card-body px- bg-body h-100">
+                <div class="col-12 col-md-4">
+                    <a href="{{route('point_sail')}}"
+                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">Apple Pay</div>
-
                         <div class=""><i class="bi bi-apple fs-4"></i></div>
-                    </div>
+                    </a>
                 </div>
 
-                <div class="col-12 col-md">
-                    <div class="card card-body px- bg-body h-100">
+                <div class="col-12 col-md-4">
+                    <a href="{{route('point_sail')}}"
+                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">Google Pay</div>
-
                         <div class=""><i class="bi bi-google fs-4"></i></div>
-                    </div>
+                    </a>
                 </div>
+
+                {{-- <div class="col-12 col-md-4">
+                    <a href="{{route('point_sail')}}"
+                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                        <div class="">PayPay</div>
+                        <div class=""><i class="bi bi-phone fs-4"></i></div>
+                    </a>
+                </div> --}}
+
+                <div class="col-12 col-md-4">
+                    <a href="{{route('point_sail')}}"
+                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                        <div class="">銀行振込</div>
+                        <div class=""><i class="bi bi-bank2 fs-4"></i></div>
+                    </a>
+                </div>
+
+                {{-- <div class="col-12 col-md-4">
+                    <a href="{{route('point_sail')}}"
+                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                        <div class="">コンビニ支払い</div>
+
+                        <div class=""><i class="bi bi-shop fs-4"></i></div>
+                    </a>
+                </div> --}}
+
             </div>
         </div>
-        <p class="d-block">
+
+        <p class="d-block mt-5">
             <h6 class="fw-bold ">クレジットカード決済のセキュリティ対策について</h6>
-            当サービスでは、お客様の安全な取引のために <strong class="text-info">3Dセキュア2.0認証</strong> を導入しております。<br>
-            3Dセキュア認証が設定されていないカードをご利用の場合、<strong class="text-info"> 決済が完了しない</strong>ことがございます。<br>
+            当サービスでは、お客様の安全な取引のために <strong class="text-warning">3Dセキュア2.0認証</strong> を導入しております。<br>
+            3Dセキュア認証が設定されていないカードをご利用の場合、<strong class="text-warning"> 決済が完了しない</strong>ことがございます。<br>
             お手持ちのクレジットカードの3Dセキュア設定が有効であることをご確認ください。<br>
             <br>
             <h6 class="fw-bold ">3Dセキュア認証が設定されていない場合</h6>
             詳細についてはお使いのカード会社のサポート窓口にお問い合わせいただき、設定を行ってから再度ご利用いただけますようお願い申し上げます。
         </p>
-
-
-        {{-- <section class="bg-whit p-4 border-0 shadow my-5 mx-auto" style="color:red;">
-            <div class="mb-">
-                <p>
-                    ＊ごく短時間での複数決済及び、複数の手段にてポイントチャージを行った場合、一時的な決済停止になることがございます。<br>
-                    ＊不明瞭なポイントチャージについては、決済停止及び登録本人確認を行う場合がございますのでご了承ください。<br>
-                    本人確認についてのご連絡はアカウント登録時のメールアドレスへ行います。
-                </p>
-            </div>
-        </section> --}}
 
 
     </div>

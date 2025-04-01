@@ -71,6 +71,11 @@
         //     'label' => 'チケット用商品',
         // ],
         [
+            'route' => route('admin.subscription'),
+            'key'   => 'subscription',
+            'label' => 'サブスク管理',
+        ],
+        [
             'route' => route('admin.infomation'),
             'key'   => 'infomation',
             'label' => 'お知らせ',

@@ -1,3 +1,8 @@
+<!--サブスクプラン-->
+@if($gacha->subscription_id)
+    <div class="text-center fw-bold">『{{ $gacha->subscription->sub_label }}』専用</div>
+@endif
+
 <u-gacha-metter
 sm_card         ="{{$gacha->sm_card}}"
 new_label_path  ="{{$gacha->new_label_path}}"

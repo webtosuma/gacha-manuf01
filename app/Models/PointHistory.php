@@ -64,26 +64,9 @@ class PointHistory extends Model
 
 
             // サブスクプラン
-            // 101 => '月額 3,000円(税込)プラン 契約申請',
-            // 102 => '月額 3,000円(税込)プラン 契約更新',
-            // 103 => '月額 3,000円(税込)プラン 契約解除申請',
+            2000 => 'サブスク'
+
         ];
-
-        // $tests = [
-        //     ...$publics,
-
-        //     // サブスクプラン(テスト)
-        //     201 => 'テスト月額 3,000円(税込)プラン 契約申請',
-        //     202 => 'テスト月額 3,000円(税込)プラン 契約更新',
-        //     203 => 'テスト月額 3,000円(税込)プラン 契約解除申請',
-
-        //     211 => 'テスト日額 100円(税込)プラン 契約申請',
-        //     212 => 'テスト日額 100円(税込)プラン 契約更新',
-        //     213 => 'テスト日額 100円(税込)プラン 契約解除申請',
-
-        // ];
-
-        // return !config('app.debug') ? $publics : $tests;
     }
 
 
@@ -139,6 +122,33 @@ class PointHistory extends Model
         }
 
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | スコープ
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 売上用：入出ID絞り込み スコープ
+         *
+         * @return $query
+        */
+        public function scopeAdominPointHistoryReason($query)
+        {
+            return $query->where( function( $q )
+            {
+                $q->where('reason_id','>=',2000)//サブスクを含む
+                ->where('reason_id','<' ,3000)
+                ->orWhere('reason_id',11)
+                ;
+            });
+
+        }
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー
@@ -152,12 +162,34 @@ class PointHistory extends Model
         */
         public function getreasonAttribute()
         {
+            # サブスクの入出理由があるとき
+            if( $this->subscription_reason ){ return $this->subscription_reason; }
+
+            # 通常の入出理由
             $reasons = $this->reasons();
 
             return isset( $reasons[ $this->reason_id ] )
             ? $reasons[ $this->reason_id ]
             : 'その他' ;
         }
+
+
+        /**
+         * サブスクの入手理由 subscription_reason
+        */
+        public function getSubscriptionReasonAttribute()
+        {
+            # サブスクでなければ、nullを返す
+            if($this->reason_id<2000){ return null; }
+
+            # サブスク
+            $id = floor( ($this->reason_id-2000)/10 );
+            $subscription = PointSail::withTrashed()->find($id );
+
+            return $subscription->sub_reason_labels[$this->reason_id];
+        }
+
+
 
 
     //

@@ -1,46 +1,54 @@
 <template>
-    <div class="row g-2 mt-1">
-
-        <!--1回ボタン-->
-        <div class="col">
-            <form :action="r_action" method="post">
-                <input type="hidden" name="_token" :value="token">
-
-                <u-gacha-btn
-                name="play_count"
-                value="1"
-                :label      ="one_play_label"
-                :point      ="one_play_point.toLocaleString()+'pt'"
-                :disabled   ="is_disabled_oneplay_btn==0 ?0:1"
-                :style_class="one_play_style_class"
-                />
-            </form>
-        </div>
-
-        <!--10連ボタン-->
-        <div class="col" v-if="is_disabled_tenplay_btn>-1" >
-            <form :action="r_action" method="post">
-                <input type="hidden" name="_token" :value="token">
-
-                <u-gacha-btn
-                name="play_count"
-                value="10"
-                :label      ="ten_play_label"
-                :point      ="(one_play_point*10).toLocaleString()+'pt'"
-                :disabled   ="is_disabled_tenplay_btn==0 ?0:1"
-                :style_class="ten_play_style_class"
-                />
-            </form>
+    <div class="">
+        <!--サブスク-->
+        <div v-if=" sub_auth_user==0 " class="mt-2">
+            <button class="btn btn-dark disabled  w-100">サブスクプラン申し込みが必要です</button>
         </div>
 
 
-        <!--カスタムボタン-->
-        <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
-            <a :href="r_costom"
-            :class    ="coustom_style_class"
-            >{{ custom_label }}</a>
-        </div>
+        <div v-else class="row g-2 mt-1">
 
+            <!--1回ボタン-->
+            <div class="col">
+                <form :action="r_action" method="post">
+                    <input type="hidden" name="_token" :value="token">
+
+                    <u-gacha-btn
+                    name="play_count"
+                    value="1"
+                    :label      ="one_play_label"
+                    :point      ="one_play_point.toLocaleString()+'pt'"
+                    :disabled   ="is_disabled_oneplay_btn==0 ?0:1"
+                    :style_class="one_play_style_class"
+                    />
+                </form>
+            </div>
+
+            <!--10連ボタン-->
+            <div class="col" v-if="is_disabled_tenplay_btn>-1" >
+                <form :action="r_action" method="post">
+                    <input type="hidden" name="_token" :value="token">
+
+                    <u-gacha-btn
+                    name="play_count"
+                    value="10"
+                    :label      ="ten_play_label"
+                    :point      ="(one_play_point*10).toLocaleString()+'pt'"
+                    :disabled   ="is_disabled_tenplay_btn==0 ?0:1"
+                    :style_class="ten_play_style_class"
+                    />
+                </form>
+            </div>
+
+
+            <!--カスタムボタン-->
+            <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
+                <a :href="r_costom"
+                :class    ="coustom_style_class"
+                >{{ custom_label }}</a>
+            </div>
+
+        </div>
     </div>
 </template>
 
@@ -53,6 +61,7 @@
             is_disabled_oneplay_btn : { type: [String,  Number],  default: 0, }, //1回ガチャるボタンのdisabled
             is_disabled_tenplay_btn : { type: [String,  Number],  default: 0, }, //10連ガチャるボタンのdisabled
             is_disabled_custom_btn  : { type: [String,  Number],  default: 0, }, //カスタムボタンのdisabled
+            sub_auth_user           : { type: [String,  Number],  default: 1, }, //ログインユーザーがサブスクガチャを利用できるか
         },
         mounted() {
 

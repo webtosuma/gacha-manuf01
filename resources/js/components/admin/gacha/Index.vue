@@ -115,6 +115,9 @@
                         :img_path_user_rank    ="gacha.img_path_user_rank"
                         />
 
+                        <!--サブスクプラン-->
+                        <div v-if="gacha.subscription_id"
+                        class="bg-white fw-bold">『{{gacha.subscription.sub_label}}』専用</div>
 
                         <!--metter-->
                         <div class="">
@@ -280,7 +283,7 @@
     const getData = async (route = props.r_api_list) => {
         try {
 
-            /*通信開始*/ 
+            /*通信開始*/
             loading.value = true;
             const response = await axios.post(route, inputs.value);
 

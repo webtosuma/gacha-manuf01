@@ -11,6 +11,7 @@ use App\Models\GachaPrize;
 use App\Models\Prize;
 use App\Models\UserGachaHistory;
 use App\Models\UserRankHistory;
+use App\Models\PointSail;
 /*
 | =============================================
 |  サイト管理者 ガチャ コントローラー
@@ -81,8 +82,14 @@ class AdminGachaController extends Controller
         # ユーザーランク
         $user_ranks = UserRankHistory::UserRanks();
 
+        # サブスクプラン
+        $subscriptions = PointSail::where('is_subscription',true)//サブスクのみ
+        ->orderByDesc('is_published')//公開中のみ上
+        ->orderByDesc('value')//ポイントが低い順
+        ->get();
 
-        return view('admin.gacha.create',compact('gacha','categories', 'user_ranks'));
+
+        return view('admin.gacha.create',compact('gacha','categories', 'user_ranks','subscriptions'));
     }
 
 
@@ -150,7 +157,14 @@ class AdminGachaController extends Controller
         # ユーザーランク
         $user_ranks = UserRankHistory::UserRanks();
 
-        return view('admin.gacha.edit', compact('gacha','categories','user_ranks'));
+        # サブスクプラン
+        $subscriptions = PointSail::where('is_subscription',true)//サブスクのみ
+        ->orderByDesc('is_published')//公開中のみ上
+        ->orderByDesc('value')//ポイントが低い順
+        ->get();
+
+
+        return view('admin.gacha.edit', compact('gacha','categories','user_ranks','subscriptions'));
     }
 
 
@@ -300,6 +314,7 @@ class AdminGachaController extends Controller
             'user_rank_id',   //会員ランクの指定
             'min_time',       // 表示時間下限　2024/04/17追加
             'max_time',       // 表示時間上限　2024/04/17追加
+            'subscription_id',  //サブスクプランID(PointSail) 2025/03/23追加
         );
 
         # 会員ランク空文字''=>nullに変換

@@ -175,6 +175,41 @@
 
 
 
+        <!--サブスクプランの指定(subscription_id)-->
+        @if( env('SUBSCRIPTION',false) )
+            <div class="d-block mb-4">
+                <div class="form-label">サブスクプランの指定</div>
+
+
+                <div class="px-2">
+                    <select class="form-select" name="subscription_id">
+
+                        <option value=""
+                        @if( $gacha->subscription_id === null ) selected @endif
+                        >{{ 'サブスク限定なし' }}</option>
+
+
+                        @foreach ($subscriptions as $id => $subscription)
+                            <option value="{{ $subscription->id }}"
+                            @if( $gacha->subscription_id === $subscription->id ) selected @endif
+                            >{{ $subscription->sub_label.($subscription->is_published?'':'(非公開)') }}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+
+                <!--error message-->
+                @if ( $errors->has('subscription_id') )
+                    <div class="text-danger"> {{$errors->first('subscription_id')}} </div>
+                @endif
+            </div>
+        @else<!-- サブスクプランなし -->
+            <input type="hidden" name="subscription_id" value="">
+        @endif
+
+
+
         <!--残数メーター表示設定(is_meter)-->
         <div class="d-block mb-4">
             <div class="form-label">残数メーター表示設定</div>
