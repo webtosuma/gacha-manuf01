@@ -120,7 +120,7 @@
         order:              { type: String, default: '' }, // 並び順
         r_api_gacha_list:   { type: String, default: '' },
         sm_card:            { type: [String, Number, Boolean], default: 0 }, // カードの表示サイズ
-        is_desc_popularity: { type: [String, Number, Boolean], default: 0 }, // 人気順か否か
+        // is_desc_popularity: { type: [String, Number, Boolean], default: 0 }, // 人気順か否か
     });
 
     const loading      = ref(true);

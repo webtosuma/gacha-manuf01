@@ -9715,10 +9715,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       test: false,
       // test : true,
+      card_num: 1,
+      /* 表示中カード番号 */
 
-      loading: false,
-      /* 通信中 */
       inputs: {
+        loading: true,
         name: '',
         email: '',
         password: '',
@@ -9726,9 +9727,6 @@ __webpack_require__.r(__webpack_exports__);
         verification_code: ''
       },
       errors: {},
-      card_num: 1,
-      /* 表示中カード番号 */
-
       registerComp: false /* このブラウザで会員登録が行われたか、否か */
     };
   },
@@ -9739,7 +9737,7 @@ __webpack_require__.r(__webpack_exports__);
     // if(this.registerComp){ his.card_num = 0; }
   },
   methods: {
-    /** 子コンポーネントの入力値を親コンポーネントへ保存 */insertParentInputs01: function insertParentInputs01(inputs) {
+    /** 子コンポーネントの入力値を親コンポーネントへ保存 */insertParentInputs: function insertParentInputs(inputs) {
       this.inputs = inputs;
     },
     /* 次へメソッド */
@@ -9999,10 +9997,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      loading: false,
-      /* 通信中 */
       route: '/api/worker/auth/register_step01',
       inputs: {
+        loading: false,
+        /* 通信中(親に送信) */
         name: '',
         email: '',
         password: '',
@@ -10031,21 +10029,23 @@ __webpack_require__.r(__webpack_exports__);
     /** Step01 */
     nextToStep01: function nextToStep01() {
       var _this = this;
-      this.loading = true; // 通信中
+      this.inputs.loading = true; // 通信中
+      this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.r_api_step01, this.inputs).then(function (json) {
         // console.log(json);
 
         _this.inputs.verification_code = json.data.verification_code;
+        _this.inputs.loading = false; // 通信中
         _this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
-        _this.loading = false; // 通信中
         _this.addCardNum();
       })["catch"](function (error) {
         //バリデーション結果の受け取り
         if (error.response.status == 422) {
           // console.log( error.response.data.errors );
           _this.errors = error.response.data.errors;
-          _this.loading = false; // 通信中終了
+          _this.inputs.loading = false; // 通信中
+          _this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
         }
         //その他のエラー
         else {
@@ -10086,6 +10086,8 @@ __webpack_require__.r(__webpack_exports__);
     insertTestData: function insertTestData() {
       if (this.test) {
         this.inputs = {
+          loading: false,
+          /* 通信中(親に送信) */
           name: 'test太朗',
           email: 'aek1214@yahoo.co.jp',
           password: 'password',
@@ -10207,7 +10209,7 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       "default": ''
     },
-    inputs: {
+    prop_inputs: {
       type: Object,
       "default": {}
     },
@@ -10222,16 +10224,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      loading: false /* 通信中 */
+      inputs: {
+        loading: false,
+        /* 通信中(親に送信) */
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        verification_code: ''
+      }
     };
   },
   mounted: function mounted() {},
   methods: {
     /** ローカルストレージに登録完了保存 */registerComp: function registerComp() {
-      localStorage.setItem('registerComp', true);
-    },
-    nextToStep03: function nextToStep03() {
-      this.loading = true;
+      this.inputs = this.prop_inputs;
+      this.inputs.loading = true;
+      this.insertParentInputs(); //子コンポーネントの入力値を親コンポーネントへ保存
     },
     /** 子コンポーネントの入力値を親コンポーネントへ保存 */insertParentInputs: function insertParentInputs() {
       this.$emit('insert-parent-inputs', this.inputs);
@@ -11238,12 +11247,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     sm_card: {
       type: [String, Number, Boolean],
       "default": 0
-    },
-    // カードの表示サイズ
-    is_desc_popularity: {
-      type: [String, Number, Boolean],
-      "default": 0
-    } // 人気順か否か
+    } // カードの表示サイズ
+    // is_desc_popularity: { type: [String, Number, Boolean], default: 0 }, // 人気順か否か
   },
   setup: function setup(__props) {
     var props = __props;
@@ -19502,7 +19507,11 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "w-100"
-  }, [_c("steps-component", {
+  }, [_c("loading-cover-component", {
+    attrs: {
+      loading: _vm.inputs.loading
+    }
+  }), _vm._v(" "), _c("steps-component", {
     attrs: {
       card_num: _vm.card_num
     }
@@ -19522,7 +19531,7 @@ var render = function render() {
       "add-card-num": function addCardNum($event) {
         return _vm.addCardNum();
       },
-      "insert-parent-inputs": _vm.insertParentInputs01
+      "insert-parent-inputs": _vm.insertParentInputs
     }
   }), _vm._v(" "), _c("step02-component", {
     attrs: {
@@ -19542,7 +19551,7 @@ var render = function render() {
     attrs: {
       token: _vm.token,
       r_register_post: _vm.r_register_post,
-      inputs: _vm.inputs,
+      prop_inputs: _vm.inputs,
       card_num: _vm.card_num,
       test: _vm.test
     },
@@ -19552,7 +19561,8 @@ var render = function render() {
       },
       "sub-card-num": function subCardNum($event) {
         return _vm.subCardNum();
-      }
+      },
+      "insert-parent-inputs": _vm.insertParentInputs
     }
   })], 1);
 };
@@ -20355,7 +20365,7 @@ var render = function render() {
   }, [_c("button", {
     staticClass: "btn btn-curve btn-primary text-white w-100",
     "class": {
-      disabled: _vm.loading
+      disabled: _vm.inputs.loading
     },
     attrs: {
       type: "button"
@@ -20363,7 +20373,7 @@ var render = function render() {
     on: {
       click: _vm.nextToStep01
     }
-  }, [!_vm.loading ? _c("span", [_vm._v(_vm._s("次のステップへ　進む"))]) : _c("span", [_vm._v(_vm._s("通信中・・・"))])])])])])])]) : _vm._e();
+  }, [!_vm.inputs.loading ? _c("span", [_vm._v(_vm._s("次のステップへ　進む"))]) : _c("span", [_vm._v(_vm._s("通信中・・・"))])])])])])])]) : _vm._e();
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -20503,19 +20513,19 @@ var render = function render() {
     staticClass: "col-md-4 fw-bold"
   }, [_vm._v(_vm._s("アカウント名"))]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 text-secondary"
-  }, [_vm._v(_vm._s(_vm.inputs.name))])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.prop_inputs.name))])]), _vm._v(" "), _c("div", {
     staticClass: "row mb-3"
   }, [_c("div", {
     staticClass: "col-md-4 fw-bold"
   }, [_vm._v(_vm._s("メールアドレス"))]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 text-secondary"
-  }, [_vm._v(_vm._s(_vm.inputs.email))])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.prop_inputs.email))])]), _vm._v(" "), _c("div", {
     staticClass: "row mb-3"
   }, [_c("div", {
     staticClass: "col-md-4 fw-bold"
   }, [_vm._v(_vm._s("パスワード"))]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 text-secondary"
-  }, [_vm._v(_vm._s("*".repeat(_vm.inputs.password.length)))])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s("*".repeat(_vm.prop_inputs.password.length)))])])])]), _vm._v(" "), _c("div", {
     staticClass: "row mb-3"
   }, [_c("input", {
     attrs: {
@@ -20542,8 +20552,8 @@ var render = function render() {
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: !_vm.loading,
-      expression: "!loading"
+      value: !_vm.inputs.loading,
+      expression: "!inputs.loading"
     }],
     staticClass: "btn btn-curve btn-primary text-white w-100",
     attrs: {
@@ -20556,8 +20566,8 @@ var render = function render() {
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: _vm.loading,
-      expression: "loading"
+      value: _vm.inputs.loading,
+      expression: "inputs.loading"
     }],
     staticClass: "btn btn-curve btn-primary text-white w-100",
     attrs: {

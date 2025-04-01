@@ -5,16 +5,19 @@
     <div class="col-md">
 
 
-        <!--ポイント販売価格(price)-->
+        <!--請求金額(price)-->
         <label class="d-block mb-4">
             <div class="form-label">
-                ポイント販売価格
+                請求金額
                 <span class="text-danger">＊</span>
             </div>
 
             <div class="input-group mb-3">
+                <input type="hidden" value="{{ $point_sail->price }}" name="price">
+
                 <input  value="{{old('price', $point_sail->price )}}"
                 name="price"
+                @if($point_sail->id) disabled @endif
                 type="number" min="0" class="form-control text-end">
                 <span class="input-group-text">円</span>
             </div>

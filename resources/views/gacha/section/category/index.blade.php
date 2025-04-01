@@ -2,7 +2,7 @@
 @php $category_card = false ; @endphp
 
 
-<div class="d-none d-lg-block py-1">
+<div class="d-none d-lg-block py-2">
 
 
     @if($category_card)

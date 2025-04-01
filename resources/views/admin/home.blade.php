@@ -28,7 +28,7 @@
             href="{{route('admin.gacha')}}">
                 <div class="fw-bold">公開中</div>
 
-                <div class="fs-3"><number-comma-component number="{{ $gachas->count() }}"></number-comma-component></div>
+                <div class="fs-3"><number-comma-component number="{{ $gachas->total() }}"></number-comma-component></div>
             </a></div>
 
             <div class="col-6 col-md-3"><a class="btn text-start text-secondary w-100"

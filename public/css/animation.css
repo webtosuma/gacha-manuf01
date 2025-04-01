@@ -164,3 +164,21 @@
     ) 0 / 200%;
     animation: rainbow 2s linear infinite;
 }
+
+
+/* キラキラ金色アニメーション背景 */
+@keyframes golden-wave {
+    100% { background-position: 200%; }
+
+}
+
+.bg-golden-wave {
+    background: linear-gradient( to right,
+        #d0a900,
+        #fff6a3 40%,
+        #ffffff 10%,
+        #fff6a3 40%,
+        #d0a900
+    ) 0 / 200%;
+    animation: golden-wave 2s linear infinite;
+}

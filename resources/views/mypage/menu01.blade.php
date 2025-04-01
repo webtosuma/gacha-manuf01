@@ -1,4 +1,4 @@
-<section class="bg-info bg-gradient text-white p-3">
+<section class="bg-dark bg-gradient text-white p-3">
     <!-- プロフィール -->
     <div class="row align-items-center mb-3">
         <div class="col">
@@ -73,24 +73,6 @@
         @endif
 
 
-        <!-- 月額プラン -->
-        @if(Auth::user()->subscription)
-        <a href="{{ route('point_sail.subscription') }}" class="d-block text-white mt-3 border-top pt-2">
-            <div  style="font-size:14px;">契約中：{{Auth::user()->subscription}}</div>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="col-6 pe-2">
-
-                    <img src="{{asset('storage/site/image/pass.png')}}"
-                    alt="{{ 'カドフェPASS' }}" class="w-100 rounded-3">
-
-                </div>
-                <div class="col-auto">
-                    <span class="">プランを見る<i class="bi bi-chevron-right"></i></span>
-                </div>
-            </div>
-        </a>
-        @endif
-
 
         <!-- 所持ポイント -->
         <div class=" mt-3 border-top pt-2">
@@ -113,7 +95,7 @@
                     <a href="{{ route('point_sail') }}" class="btn btn- btn-warning text-white rounded-pill shadow">ポイント購入</a>
                 </div>
             </div>
-            <div class="form-text">{{Auth::user()->point_deadline_text}}</div>
+            <div class="form-text text-white">{{Auth::user()->point_deadline_text}}</div>
         </div>
 
 
