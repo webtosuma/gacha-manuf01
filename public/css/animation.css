@@ -192,3 +192,8 @@
     transition: all .2s;
 }
 
+
+/* 商品比率4x3 */
+.ratio-3x4{
+    --bs-aspect-ratio: 140% !important;
+}

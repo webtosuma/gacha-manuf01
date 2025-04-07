@@ -97,6 +97,8 @@ Route::middleware([ /* ミドルウェアー */
             // return view('point_sail.stripe.apple-developer-merchantid-domain-association.online');
         });
 
+        ## PayPay
+        include('web/paypay.php');
 
         ## (fincode)
         // include('web/fincode.php');

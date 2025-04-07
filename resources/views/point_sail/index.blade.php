@@ -32,7 +32,10 @@
 
 
     <div class="container py-md-4 mb-5">
-        <h3 class="d-none d-md-block">ポイント購入</h3>
+        <h3 class="d-none d-md-block">
+            ポイント購入
+            @if($payment_type){{'（'.$payment_type.'）'}}@endif
+        </h3>
 
         {{-- <p class="border border-danger bg-danger-subtle border-3 p-3">
             現在、決済システムにエラーが発生しており、ポイントをご購入いただくことができません。<br>
@@ -113,7 +116,7 @@
                         </div>
 
                         <!--購入ボタン-->
-                        <a href="{{ route('point_sail.payment', $point_sail) }}"
+                        <a href="{{ $point_sail->r_payment }}"
                         class="btn btn-lg btn-warning text-white rounded-pill shadow   hover_anime  py-1 " style="width:8rem;">
                             <div class="d-flex align-items-center justify-content-between w-100">
                                 <span>¥</span>
@@ -192,7 +195,7 @@
                 @endif
 
                 <div class="col-12 col-md-4">
-                    <a href="{{route('point_sail')}}"
+                    <a href="{{ route( 'point_sail',['payment_type'=>'クレジットカード'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">クレジットカード</div>
@@ -205,7 +208,7 @@
                 </div>
 
                 {{-- <div class="col-12 col-md-4">
-                    <a href="{{route('point_sail')}}"
+                    <a href="{{ route( 'point_sail', ['payment_type'=>'クレジットカード(JCB)'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">クレジットカード(JCB)</div>
@@ -215,7 +218,7 @@
                 </div> --}}
 
                 <div class="col-12 col-md-4">
-                    <a href="{{route('point_sail')}}"
+                    <a href="{{ route( 'point_sail', ['payment_type'=>'Apple Pay'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">Apple Pay</div>
@@ -224,7 +227,7 @@
                 </div>
 
                 <div class="col-12 col-md-4">
-                    <a href="{{route('point_sail')}}"
+                    <a href="{{ route( 'point_sail', ['payment_type'=>'Google Pay'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">Google Pay</div>
@@ -232,17 +235,17 @@
                     </a>
                 </div>
 
-                {{-- <div class="col-12 col-md-4">
-                    <a href="{{route('point_sail')}}"
+                <div class="col-12 col-md-4">
+                    <a href="{{ route( 'point_sail', ['payment_type'=>'PayPay'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">PayPay</div>
                         <div class=""><i class="bi bi-phone fs-4"></i></div>
                     </a>
-                </div> --}}
+                </div>
 
                 <div class="col-12 col-md-4">
-                    <a href="{{route('point_sail')}}"
+                    <a href="{{ route( 'point_sail', ['payment_type'=>'銀行振込'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">銀行振込</div>
@@ -251,7 +254,7 @@
                 </div>
 
                 {{-- <div class="col-12 col-md-4">
-                    <a href="{{route('point_sail')}}"
+                    <a href="{{ route( 'point_sail', ['payment_type'=>'コンビニ支払い'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">コンビニ支払い</div>

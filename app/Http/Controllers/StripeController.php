@@ -31,22 +31,41 @@ class StripeController extends Controller
 {
     /**
      * ポイント　一覧
+     *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
     */
-    public function index()
+    public function index(Request $request)
     {
+        # 支払いタイプテキスト
+        $payment_type = $request->payment_type;
+
         # 販売用ポイント情報取得
-        $point_sails = PointSail::where('is_subscription',false)//サブスク以外
-        ->where('is_published',1)//公開ずみのみ
-        ->orderBy('value','asc')//ポイントが低い順
-        ->get();
+        $point_sails = PointSail::where('is_published',1)//公開ずみのみ
+        ->orderBy('value','asc')->get();//ポイントが低い順
+
+        # 支払いタイプ別支払いページURL
+        switch ($payment_type) {
+            case 'PayPay':
+                foreach ($point_sails as $point_sail) {
+                    $point_sail->r_payment = route('point_sail.paypay.payment', $point_sail);
+                }
+                break;
+
+            default:
+                foreach ($point_sails as $point_sail) {
+                    $point_sail->r_payment = route('point_sail.payment', $point_sail);
+                }
+                break;
+        }
 
         # ランクごとのポイント還元率
         $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
         ? Auth::user()->now_rank->point_sail_ratio : 1 ;
 
 
-        return view('point_sail.index',compact('point_sails', 'rank_ratio'));
+
+        return view('point_sail.index',compact('point_sails', 'rank_ratio','payment_type' ));
     }
 
 
@@ -126,7 +145,7 @@ class StripeController extends Controller
             'payment_method_types' => [
                 'card',
                 // 'konbini',
-                'customer_balance'
+                // 'customer_balance'
             ],
 
             'payment_method_options' => [
@@ -233,7 +252,7 @@ class StripeController extends Controller
                 case 'checkout.session.completed':
                     $session = $event->data->object;
 
-                    $point_history = $this->handleCheckoutSessionCompleted($session);
+                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
 
                     return response(compact('point_history'), 200);
                     break;
@@ -243,10 +262,22 @@ class StripeController extends Controller
                 case 'checkout.session.async_payment_succeeded':
                     $session = $event->data->object;
 
-                    $point_history = $this->handleCheckoutSessionCompleted($session);
+                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
 
                     return response(compact('point_history'), 200);
                     break;
+
+
+                ##
+                // case 'payment_intent.succeeded':
+                //     $session = $event->data->object;
+                //     if (isset($session->payment_status) && $session->payment_status === 'paid') {
+                //         $point_history = $this->handleCheckoutSessionCompleted($session);
+                //     }
+
+                //     return response(compact('point_history'), 200);
+                //     break;
+
 
 
                 default:
@@ -268,23 +299,18 @@ class StripeController extends Controller
     }
 
 
-
     /**
      * 注文のフルフィルメントを実行するためのコード
      *
      * @param  Object $session //Stripe Checkout Session オブジェクト
      * @return Void
      */
-    private function handleCheckoutSessionCompleted($session)
+    private function handleCheckoutSessionCompleted($request, $session)
     {
         # Stripe側で決済が完了済(paid)でなければ、スキップ
         $paid = isset($session->payment_status) && $session->payment_status === 'paid';
         if( !$paid ){ return null; }
 
-        # サブスクの場合は処理をスキップ
-        if ($session->mode === 'subscription') {
-            return response()->json(['message' => 'サブスクの決済です'], 200);
-        }
 
         # CheckoutSessionが処理済みの時は、スキップ
         $session_id = $session['id'];

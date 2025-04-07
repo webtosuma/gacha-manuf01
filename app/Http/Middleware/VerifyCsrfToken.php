@@ -25,9 +25,10 @@ class VerifyCsrfToken extends Middleware
         'point_sail/comp_post/*',
 
         # クレジット登録完了(fincode用)
-        'point_sail/payment/*'
+        'point_sail/payment/*',
 
-
+        # PayPay webhook
+        'paypay/webhook',
 
     ];
 }

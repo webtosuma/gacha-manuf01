@@ -70,13 +70,13 @@
             </section>
             <section class="mt-5 py-3 w-100">
 
-                <div class="mx-auto col-8 col-md-4 mb-3">
+                <div class="mx-auto col-12 col-md-4 mb-3">
                     <a href="{{ route('point_sail.customer_portal') }}"
                     class="btn btn-light border rounded-pill w-100"
                     >利用中のプランの確認はこちら</a>
                 </div>
 
-                <div class="mx-auto col-8 col-md-4">
+                <div class="mx-auto col-12 col-md-4">
                     <a href="{{ route('point_sail') }}"
                     class="btn btn-warning rounded-pill w-100"
                     >ポイント購入に戻る</a>

@@ -46,28 +46,33 @@
                 @endif --}}
 
 
-                <div class="col-6">サービス</div>
-                <div class="col-6 border-bottom fw-bold text-center">
+                @if(
+                    ( $rank_ratio > 1 ) or
+                    ( !env('NEW_TICKET_SISTEM_NOTICKET') && $point_sail->ticket > 0 )
+                )
+                    <div class="col-6">サービス</div>
+                    <div class="col-6 border-bottom fw-bold text-center">
 
-                    {{-- 会員ランク還元 --}}
-                    @if( $rank_ratio > 1 )
-                    <div class="badge border border-danger rounded-pill fw-bold px-3 mb-1">
-                        <span class="text-danger fw-bold fs-">{{ $point_sail->value*($rank_ratio-1) }}</span>
-                        <span class="text-danger fw-bold">pt 還元！</span>
+                        {{-- 会員ランク還元 --}}
+                        @if( $rank_ratio > 1 )
+                        <div class="badge border border-danger rounded-pill fw-bold px-3 mb-1">
+                            <span class="text-danger fw-bold fs-">{{ $point_sail->value*($rank_ratio-1) }}</span>
+                            <span class="text-danger fw-bold">pt 還元！</span>
+                        </div>
+                        @endif
+
+
+                        {{-- チケット還元 --}}
+                        @if( !env('NEW_TICKET_SISTEM_NOTICKET') && $point_sail->ticket > 0 )
+                        <div class="badge border border-success rounded-pill fw-bold px-3 my-1">
+                            <span class="text-success fw-bold">チケット</span>
+                            <span class="text-success fw-bold fs-">{{ $point_sail->ticket }}</span>
+                            <span class="text-success fw-bold">枚 プレゼント！</span>
+                        </div>
+                        @endif
+
                     </div>
-                    @endif
-
-
-                    {{-- チケット還元 --}}
-                    @if( !env('NEW_TICKET_SISTEM_NOTICKET') && $point_sail->ticket > 0 )
-                    <div class="badge border border-success rounded-pill fw-bold px-3 my-1">
-                        <span class="text-success fw-bold">チケット</span>
-                        <span class="text-success fw-bold fs-">{{ $point_sail->ticket }}</span>
-                        <span class="text-success fw-bold">枚 プレゼント！</span>
-                    </div>
-                    @endif
-
-                </div>
+                @endif
 
 
                 <div class="col-6">支払い金額</div>
@@ -106,15 +111,6 @@
 
             </a>
         </div>
-        {{-- <div class="mx-auto mb-5" style="max-width:400px;">
-            <a href="{{ route('gacha_category') }}" class="btn btn-lg btn-primary text-white rounded-pill shadow w-100"
-            >他のガチャを見る</a>
-        </div>
-    @else
-        <div class="mx-auto mb-5" style="max-width:400px;">
-            <a href="{{ route('gacha_category') }}" class="btn btn-lg btn-primary text-white rounded-pill shadow w-100"
-            >ガチャを見る</a>
-        </div> --}}
     @endif
 
 
@@ -124,34 +120,6 @@
         @include('gacha.common.result_gachas')
 
     </div>
-
-
-    {{-- <div class="mb- py-5 mx-auto" style="max-width:400px;">
-
-        <h5 class="fw-bold text-center mb-5">おすすめガチャ</h5>
-
-
-        @foreach ($gachas as $num => $gacha)
-            @if( $num < 3 )
-
-                <a href="{{ $gacha->route }}"
-                class="card border-secondary border-0 shadow bg-white mb-5
-                text-dark text-center overflow-hidden text-decoration-none
-                hover_anime" style="border-radius:1rem;">
-
-
-                    <!--image-->
-                    @include('gacha.common.top_image')
-
-                    <!--metter-->
-                    @include('gacha.common.metter')
-
-                </a>
-
-            @endif
-        @endforeach
-
-    </div> --}}
 
 
 </div>

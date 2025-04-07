@@ -2,7 +2,7 @@
 <section class="pt-3 pb-md-5
 overflow-hidden
 ">
-    <div class="container mx-auto px-3" style="max-width:900px;">
+    <div class="container mx-auto px-3" style="max-width:600px;">
 
         <div class="overflow-hidden rounded-4"
         data-aos="zoom-out"
