@@ -55,4 +55,34 @@ class Movie extends Model
             return $this->mobile_storage && Storage::exists($this->mobile_storage) ?
             asset( 'storage/'.$this->mobile_storage ) :  $no_movie;
         }
+
+
+
+        /**
+         * Youtube動画URL youtube_url
+         * @return String
+        */
+        public function getYoutubeUrlAttribute()
+        {
+
+            if (  strpos( $this->mobile_storage, "https://www.youtube.com/shorts" ) !== 0 ){ return null; }
+
+
+            return $this->mobile_storage ;
+        }
+
+
+        /**
+         * 動画の種類 type
+         * @return String
+        */
+        public function getTypeAttribute()
+        {
+
+            if (  strpos( $this->mobile_storage, "https://www.youtube.com/shorts" ) === 0 ){ return 'youtube'; }
+
+
+            return 'mobile' ;
+        }
+
 }

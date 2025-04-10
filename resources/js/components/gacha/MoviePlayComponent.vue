@@ -1,10 +1,10 @@
 <template>
     <div class="mx-auto bg-" style="height:100vh; max-width:100vw;">
-        <div class="d-flex align-items-center align-items-center h-100 w-100 bg-">
+        <div class="d-flex justify-content-between align-items-center h-100 w-100 overflow-hidden">
 
 
 
-            <div class="section_video mx-auto col-sm-4 col-lg-2">
+            <div class="section_video mx-auto col-md-6 col-lg-3">
                 <!-- 動画mobile -->
                 <div class="video-area">
                     <video class="bg_video"

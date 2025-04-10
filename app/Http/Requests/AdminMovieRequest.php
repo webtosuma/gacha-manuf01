@@ -23,11 +23,25 @@ class AdminMovieRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'          => ['required','max:140',],
             'pc_storage'    => ['file',],
             'mobile_storage'=> ['file',],
         ];
+
+        # フォームの入力値をすべて取得
+        $request = $this->all();
+
+        # ルールの追加
+        if( $request['youtube_url'] )
+        {
+            $rules['youtube_url'] = [ 'url', 'regex:/^https:\/\/www\.youtube\.com\/shorts/' ];
+        }
+
+
+
+        return $rules;
+
     }
 
 
@@ -42,6 +56,7 @@ class AdminMovieRequest extends FormRequest
             'name'          => '演出動画名',
             'pc_storage'    => 'PC用動画・保存先',
             'mobile_storage'=> 'mobile用動画・保存先',
+            'youtube_url'   => 'Youtube動画URL',
         ];
     }
 }

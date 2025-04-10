@@ -22,7 +22,7 @@ use App\Models\User;
 
 
 
-Route::get('test', function(\Illuminate\Http\Request $request){
+Route::get('test', function(){
     return view('test');
 } );
 

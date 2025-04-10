@@ -24,12 +24,12 @@ use App\Http\Controllers;
         [App\Http\Controllers\GachaApiController::class, 'index'])//(非同期)
         ->name('gacha_category');
 
-        # ガチャカの詳細表示
+        # ガチャの詳細表示
         Route::get('/g/{category_code}/{gacha}/{key}',
         [App\Http\Controllers\GachaController::class, 'show'])
         ->name('gacha');
 
-        # ガチャカの結果履歴(SNS等の公開用)
+        # ガチャの結果履歴(SNS等の公開用)
         Route::get('/result_history/{history_key}',
         [App\Http\Controllers\GachaController::class, 'result_history'])
         ->name('gacha.result_history');
@@ -44,12 +44,17 @@ use App\Http\Controllers;
     Route::middleware(['auth','user_rank'])->group(function () {
 
 
-        # ガチャカで遊ぶ
+        # ガチャで遊ぶ
         Route::post('/g/play/{category_code}/{gacha}/{key}',
         [App\Http\Controllers\GachaPlayController::class, 'play'])
         ->name('gacha.play');
 
-        # ガチャカの結果表示
+        # ガチャの演出動画表示
+        Route::get('/movie',
+        [App\Http\Controllers\GachaController::class, 'movie'])
+        ->name('gacha.movie');
+
+        # ガチャの結果表示
         Route::get('/result/{category_code}/{user_gacha_history}',
         [App\Http\Controllers\GachaController::class, 'result'])
         ->name('gacha.result');
@@ -62,9 +67,6 @@ use App\Http\Controllers;
 
 
 
-
-
-
     });
 
 
@@ -72,7 +74,7 @@ use App\Http\Controllers;
     Route::middleware(['auth','user_rank'])->group(function () {
 
 
-        # スポンサーガチャカで遊ぶ
+        # スポンサーガチャで遊ぶ
         Route::get('/gacha/sponsor_ad/movie/{user_gacha_history}',
         [App\Http\Controllers\GachaSponsorAdController::class, 'movie'])
         ->name('gacha.sponsor_ad.movie');

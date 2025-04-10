@@ -82,8 +82,7 @@ class AdminGachaPlayController extends Controller
             $max_rank = GachaPlay::MaxRank($randReminingGPIdArray );
 
             # 動画パスの取得
-            $movie_path = GachaPlay::MoviePath($gacha, $max_rank);
-
+            $movie = GachaPlay::MoviePath($gacha, $max_rank);
 
             DB::commit();
 
@@ -128,7 +127,8 @@ class AdminGachaPlayController extends Controller
 
 
         # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
-        return view('admin.gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
+        // return view('admin.gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
+        return redirect()->route('admin.gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
     }
 
 
@@ -173,6 +173,44 @@ class AdminGachaPlayController extends Controller
 
             return null;
         }
+
+
+
+    /**
+    * 演出動画
+    *
+    * @param Request $request
+    * @return \Illuminate\Http\Response
+    */
+    public function movie(Request $request)
+    {
+        # 変数定義
+        $ugh_id   = $request->input('user_gacha_history');
+        $movie_id = $request->input('movie');
+        $rank_up  = $request->input('rank_up');
+
+        # ユーザーガチャ履歴
+        $user_gacha_history = UserGachaHistory::find($ugh_id );
+
+        # 動画パス
+        $movie = Movie::find($movie_id);
+        $movie_path = [
+            'pc'      => $movie->pc,
+            'mobile'  => $movie->mobile,
+            'youtube' => $movie->youtube_url,
+        ];
+
+
+        # youtube動画
+        if( $movie->youtube_url ){
+            return view('admin.gacha.play_movie.youtube', compact('user_gacha_history', 'movie_path', 'rank_up' ) );
+        }
+
+        // return view('admin.gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
+        return view('admin.gacha.play_movie.index', compact('user_gacha_history', 'movie_path', 'rank_up' ) );
+    }
+
+
 
 
     /**

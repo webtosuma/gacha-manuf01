@@ -5832,14 +5832,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     isYouTube: function isYouTube() {
-      return this.src.includes('youtube.com');
+      return this.src.startsWith('https://www.youtube.com/watch');
     },
     youtubeVideoId: function youtubeVideoId() {
       try {
         var url = new URL(this.src);
-        if (url.pathname.startsWith('/shorts/')) {
-          return url.pathname.split('/shorts/')[1];
-        }
         return url.searchParams.get('v');
       } catch (e) {
         return null;
@@ -5849,43 +5846,33 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     if (this.isYouTube) {
       this.loadYouTubeAPI();
+    } else {
+      this.video = document.getElementById('video' + this.id);
     }
   },
   methods: {
     loadYouTubeAPI: function loadYouTubeAPI() {
       var _this = this;
-      // すでに API が読み込まれている場合
       if (window.YT && window.YT.Player) {
         this.apiLoaded = true;
         return;
       }
-
-      // 初回読み込みの場合のみスクリプトを挿入
-      if (!window.YTReadyCallbacks) {
-        window.YTReadyCallbacks = [];
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // APIが読み込まれたらすべてのコールバックを実行
-        window.onYouTubeIframeAPIReady = function () {
-          window.YTReadyCallbacks.forEach(function (cb) {
-            return cb();
-          });
-          window.YTReadyCallbacks = [];
-        };
-      }
-
-      // このコンポーネント用の初期化処理を登録
-      window.YTReadyCallbacks.push(function () {
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      window.onYouTubeIframeAPIReady = function () {
         _this.apiLoaded = true;
-      });
+      };
     },
     play: function play() {
+      var _this2 = this;
       if (this.isYouTube) {
         if (!this.apiLoaded) {
-          this.loadYouTubeAPI();
+          // 後でリトライ（API読み込み待ち）
+          setTimeout(function () {
+            return _this2.play();
+          }, 300);
           return;
         }
         if (this.player) {
@@ -5896,10 +5883,11 @@ __webpack_require__.r(__webpack_exports__);
             width: '100%',
             videoId: this.youtubeVideoId,
             playerVars: {
-              autoplay: 1,
+              autoplay: 0,
               controls: 1,
-              mute: 0
+              mute: 0 // 音をオンに
             },
+
             events: {
               onReady: function onReady(event) {
                 event.target.unMute();
@@ -5908,11 +5896,8 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         }
-      } else {
-        this.video = document.getElementById('video' + this.id);
-        if (this.video) {
-          this.video.play();
-        }
+      } else if (this.video) {
+        //   this.video.play();
       }
     },
     pause: function pause() {
@@ -10958,13 +10943,6 @@ __webpack_require__.r(__webpack_exports__);
     youtubeVideoId: function youtubeVideoId() {
       try {
         var url = new URL(this.movie_path_mobile);
-
-        // shorts 対応
-        if (url.pathname.startsWith('/shorts/')) {
-          return url.pathname.split('/shorts/')[1];
-        }
-
-        // 通常の watch?v= 対応
         return url.searchParams.get('v');
       } catch (e) {
         return null;
@@ -13640,7 +13618,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("button", {
+  return _c("div", {}, [_c("button", {
     staticClass: "btn btn-light border",
     attrs: {
       type: "button",

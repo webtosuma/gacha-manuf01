@@ -50,14 +50,8 @@ class AdminMovieController extends Controller
      */
     public function store(AdminMovieRequest $request)
     {
-        // dd( $request->all() );
-
         # 入力データの加工
-        $inputs = [
-            'name'=> $request->name,
-            'pc_storage'    => '',
-            'mobile_storage'=> '',
-        ];
+        $inputs = self::processingInputs( $request, $movie=null );
 
         # DBデータの新規登録
         $movie = new Movie( $inputs );
@@ -69,9 +63,9 @@ class AdminMovieController extends Controller
         $request->session()->regenerateToken();// 二重送信防止
 
 
-        # 返信メッセージ
-        return redirect()->route('admin.movie.edit',$movie)
-        ->with(['alert-primary'=>'新規登録する演出動画名を登録しました。']);
+        # リダイレクト
+        return redirect()->route('admin.movie', $movie)
+        ->with(['alert-primary'=>'演出動画を新規登録しました。']);
     }
 
 
@@ -98,45 +92,8 @@ class AdminMovieController extends Controller
      */
     public function update(AdminMovieRequest $request, Movie $movie)
     {
-        // dd($request->all());
-
-        $inputs = [];
-
-        # PC用動画の更新
-        if( $request->pc ){
-
-            # ストレージ画像ファイルの更新（イメージ画像）
-            $dir = 'upload/movie/pc_storage/';             //保存先ディレクトリ
-            $request_file    = $request->file('pc_storage');     //画像のリクエスト
-            $old_image_path  = $movie->pc_storage; //更新前の画像パス
-            $image_dalete    = $request->pc_storage_dalete;      //画像を削除するか否か
-
-            $inputs['pc_storage'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete) ?? '';
-
-            $message = 'PC用動画を更新しました。';
-        }
-
-        # PCモバイル動画の更新
-        elseif( $request->mobile ){
-
-            # ストレージ画像ファイルの更新（イメージ画像）
-            $dir = 'upload/movie/mobile_storage/';             //保存先ディレクトリ
-            $request_file    = $request->file('mobile_storage');     //画像のリクエスト
-            $old_image_path  = $movie->mobile_storage; //更新前の画像パス
-            $image_dalete    = $request->mobile_storage_dalete;      //画像を削除するか否か
-
-            $inputs['mobile_storage'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete) ?? '';
-
-            $message = 'モバイル用動画を更新しました。';
-        }
-
-        # 演出動画名の更新
-        elseif( $request->name ){
-            $inputs['name'] = $request->name;
-            $message = '演出動画名を更新しました。';
-        }
-
-
+        # 入力データの加工
+        $inputs = self::processingInputs( $request, $movie );
 
         # DBデータの更新
         $movie->update( $inputs );
@@ -148,8 +105,8 @@ class AdminMovieController extends Controller
 
 
         # リダイレクト
-        return redirect()->route('admin.movie.edit', $movie)
-        ->with(['alert-warning'=>$message]);
+        return redirect()->route('admin.movie', $movie)
+        ->with(['alert-warning'=>'演出動画を更新しました。']);
     }
 
 
@@ -178,4 +135,39 @@ class AdminMovieController extends Controller
     }
 
 
+
+
+    /**
+     * 入力データの加工 self::processingInputs( $request )
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Movie $movie //新規登録のとき===null
+     * @return Array
+     */
+    public function processingInputs( $request, $movie=null )
+    {
+        $inputs = [
+            'name'       => $request->name ,    //出動画名の更新
+            'pc_storage' => '',
+        ];
+
+        # PCモバイル動画の更新
+        if( $request->youtube_url ){
+
+            $inputs['mobile_storage'] = $request->youtube_url;
+        }
+        elseif( $request->mobile_storage ){
+
+            # ストレージ画像ファイルの更新（イメージ画像）
+            $dir = 'upload/movie/mobile_storage/';             //保存先ディレクトリ
+            $request_file    = $request->file('mobile_storage');     //画像のリクエスト
+            $old_image_path  = $movie->mobile_storage; //更新前の画像パス
+            $image_dalete    = $request->mobile_storage_dalete;      //画像を削除するか否か
+
+            $inputs['mobile_storage'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete) ?? '';
+        }
+
+
+        return $inputs;
+    }
 }

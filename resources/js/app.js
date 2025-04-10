@@ -54,6 +54,10 @@ require('./components/ExampleComponent.vue').default);
     Vue.component('u-movie-play',
     require('./components/gacha/MoviePlayComponent.vue').default);
 
+    /* 動画自動再生コンポーネント(Youtube) */
+    Vue.component('u-movie-play-youtube',
+    require('./components/gacha/MoviePlayYoutubeComponent.vue').default);
+
     /* ガチャボタンコンポーネント */
     Vue.component('u-gacha-btn',
     require('./components/gacha/DisabledButton.vue').default);
@@ -267,7 +271,6 @@ require('./components/ExampleComponent.vue').default);
     /* 動画モーダルコンポーネント */
     Vue.component('movie-modal-component',
     require('./components/Items/MovieModalComponent.vue').default);
-
 
     /* PWAインストールボタン */
     Vue.component('pwa-install-btn',

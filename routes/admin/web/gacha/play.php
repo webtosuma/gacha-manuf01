@@ -13,6 +13,10 @@ Route::middleware(['admin_auth'])->group(function () {
     [App\Http\Controllers\AdminGachaPlayController::class, 'play'])
     ->name('admin.gacha.play');
 
+    # ガチャの演出動画表示
+    Route::get('/admin/gacha/movie',
+    [App\Http\Controllers\AdminGachaPlayController::class, 'movie'])
+    ->name('admin.gacha.movie');
 
     # ガチャカの結果表示
     Route::get('/admin/gacha/result/{category_code}/{user_gacha_history}',

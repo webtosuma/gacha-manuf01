@@ -5847,45 +5847,30 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    if (this.isYouTube) {
-      this.loadYouTubeAPI();
-    }
+    this.loadYouTubeAPI();
   },
   methods: {
     loadYouTubeAPI: function loadYouTubeAPI() {
       var _this = this;
-      // すでに API が読み込まれている場合
       if (window.YT && window.YT.Player) {
         this.apiLoaded = true;
         return;
       }
-
-      // 初回読み込みの場合のみスクリプトを挿入
-      if (!window.YTReadyCallbacks) {
-        window.YTReadyCallbacks = [];
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // APIが読み込まれたらすべてのコールバックを実行
-        window.onYouTubeIframeAPIReady = function () {
-          window.YTReadyCallbacks.forEach(function (cb) {
-            return cb();
-          });
-          window.YTReadyCallbacks = [];
-        };
-      }
-
-      // このコンポーネント用の初期化処理を登録
-      window.YTReadyCallbacks.push(function () {
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      window.onYouTubeIframeAPIReady = function () {
         _this.apiLoaded = true;
-      });
+      };
     },
     play: function play() {
+      var _this2 = this;
       if (this.isYouTube) {
         if (!this.apiLoaded) {
-          this.loadYouTubeAPI();
+          setTimeout(function () {
+            return _this2.play();
+          }, 300);
           return;
         }
         if (this.player) {
@@ -13640,7 +13625,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("button", {
+  return _c("div", {}, [_c("button", {
     staticClass: "btn btn-light border",
     attrs: {
       type: "button",

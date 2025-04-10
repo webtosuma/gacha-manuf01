@@ -288,7 +288,7 @@ class AdminGachaController extends Controller
         $gacha->delete();
 
         return redirect()->route('admin.gacha',$gacha->category->code_name)
-        ->with(['alert-success'=>'ガチャを1件削除しました']);
+        ->with(['alert-danger'=>'ガチャを1件削除しました']);
     }
 
 

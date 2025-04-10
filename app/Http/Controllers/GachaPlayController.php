@@ -82,7 +82,7 @@ class GachaPlayController extends Controller
             $max_rank = self::MaxRank($randReminingGPIdArray );
 
             # 動画パスの取得
-            $movie_path = self::MoviePath($gacha, $max_rank);
+            $movie = self::MoviePath($gacha, $max_rank);
 
 
             DB::commit();
@@ -130,7 +130,8 @@ class GachaPlayController extends Controller
 
 
         # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
-        return view('gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
+        // return view('gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
+        return redirect()->route('gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
     }
 
 
@@ -316,10 +317,7 @@ class GachaPlayController extends Controller
             : Movie::inRandomOrder()->first() //指定の動画が無いとき、ランダムな動画を再生
         ;
 
-        return  [
-            'pc'     => $movie->pc,
-            'mobile' => $movie->mobile,
-        ];
+        return $movie;
     }
 
 

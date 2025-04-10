@@ -7,7 +7,12 @@
 @section('meta') @endsection
 
 
-@section('style') @endsection
+@section('style')
+<style>
+    /* 読み込み中カバー */
+    .modal-backdrop { --bs-backdrop-opacity: 1 !important; }
+</style>
+@endsection
 
 
 
@@ -20,15 +25,11 @@
     ];
     @endphp
 
-
-    <u-movie-play
+    <u-movie-play-youtube
     token="{{ csrf_token() }}"
-    movie_path_mobile="{{ $movie_path['mobile'] }}"
+    movie_path_mobile="{{ $movie_path['youtube'] }}"
     r_action="{{ route('gacha.result', $params )}}"
     rank_up="{{ $rank_up ? 1 : 0}}"
-    ></u-movie-play>
-
-    {{-- rank_up="{{ isset($rank_up)&&$rank_up ? 1 : 0}}" --}}
-
+    ></u-movie-play-youtube>
 
 @endsection

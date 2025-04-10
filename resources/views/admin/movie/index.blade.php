@@ -85,11 +85,11 @@ $active_submenu = true;
                         </td> --}}
                         <td>
                             <!-- モバイル用 -->
-                            @if ($movie->mobile)
+                            @if ($movie->mobile or $movie->type=='youtube')
                                 <movie-modal-component
                                 id   ="{{$movie->id.'-mobile'}}"
-                                title="{{ $movie->name.'（モバイル）' }}"
-                                src  ="{{ $movie->mobile }}"
+                                title="{{ $movie->name.( $movie->mobile ?'（モバイル）':'(Youtube)') }}"
+                                src  ="{{ $movie->mobile ?? $movie->youtube_url }}"
                                 btn_label="モバイル用動画再生"
                                 max_width="400px"
                                 ></movie-modal-component>
