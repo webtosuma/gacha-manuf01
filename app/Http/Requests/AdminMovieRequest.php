@@ -3,7 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+/*
+| =============================================
+|  サイト管理者　演出動画　リクエスト
+| =============================================
+*/
 class AdminMovieRequest extends FormRequest
 {
     /**

@@ -129,8 +129,8 @@ class GachaPlayController extends Controller
         }
 
 
+
         # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
-        // return view('gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
         return redirect()->route('gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
     }
 

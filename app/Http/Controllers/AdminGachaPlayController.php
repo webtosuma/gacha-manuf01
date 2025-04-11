@@ -98,6 +98,7 @@ class AdminGachaPlayController extends Controller
         }
 
 
+        
         # 売り切れ登録
         $new_remaining_count = Gacha::find($gacha->id)->remaining_count;
         if( $new_remaining_count < 1 ){
@@ -127,7 +128,6 @@ class AdminGachaPlayController extends Controller
 
 
         # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
-        // return view('admin.gacha.play', compact('user_gacha_history', 'movie_path', 'rank_up' ));
         return redirect()->route('admin.gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
     }
 

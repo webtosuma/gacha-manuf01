@@ -23,7 +23,6 @@ Route::middleware(['admin_auth'])->group(function () {
     [App\Http\Controllers\AdminGachaPlayController::class, 'result'])
     ->name('admin.gacha.result');
 
-
     # 商品のポイント交換
     Route::patch('/admin/gacha/exchange_points/{category_code}/{user_gacha_history}',
     [App\Http\Controllers\AdminGachaPlayController::class, 'exchange_points'])

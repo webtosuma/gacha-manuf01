@@ -49,10 +49,12 @@ use App\Http\Controllers;
         [App\Http\Controllers\GachaPlayController::class, 'play'])
         ->name('gacha.play');
 
+
         # ガチャの演出動画表示
         Route::get('/movie',
         [App\Http\Controllers\GachaController::class, 'movie'])
         ->name('gacha.movie');
+
 
         # ガチャの結果表示
         Route::get('/result/{category_code}/{user_gacha_history}',
