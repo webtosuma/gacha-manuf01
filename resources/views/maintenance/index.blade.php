@@ -1,4 +1,4 @@
-@extends('layouts.small')
+@extends('layouts.app')
 
 <!----- title ----->
 @section('title','メンテナンス中')

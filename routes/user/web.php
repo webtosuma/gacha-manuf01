@@ -10,18 +10,6 @@ use App\Models\User;
  ユーザールーティング　web
 ==========================================================================
 */
-
-# メンテナンス中
-// $now = now()->format('Ymd-Hi');
-// if(
-//     $now >= '20240711-1100' && $now < '20240711-1200'
-// ){
-//     Route::get('/{any?}', function()  { return view('maintenance'); })->where('any', '.*')
-//     ->name('maintenance');
-// }
-
-
-
 Route::get('test', function(){
     return view('test');
 } );
@@ -145,5 +133,25 @@ Route::middleware([ /* ミドルウェアー */
 
 
 
+
+});//end middleware
+Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
+
+    'user_plize_deadline',//ユーザー商品期限切れ対応
+    'user_point_deadline',//ユーザーポイント期限切れ対応
+
+])->group(function () {
+
+    # 認証
+    include('web/auth.php');
+
+    # (Stripe・webhook)
+    include('web/stripe.php');
+
+    # ユーザー設定
+    include('web/settings.php');
+
+    # フッターメニュー
+    include('web/footer_menu.php');
 
 });//end middleware

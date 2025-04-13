@@ -93,11 +93,22 @@ class RegisterController extends Controller
 
 
         # リダイレクト
-        return redirect()->route('gacha_category')
+        return redirect()->route('register.comp')
         ->with(['alert_register'=>'会員登録が完了しました。']);
-        // ->with(['alert-success'=>'会員登録が完了しました。']);
     }
 
+
+
+    /**
+     * 会員登録完了
+     *
+     * @param \Illuminate\Http\UserRegisterRequest $request
+     * @return JSON
+    */
+    public function comp(Request $request)
+    {
+        return view('auth.register_comp');
+    }
 
 
 

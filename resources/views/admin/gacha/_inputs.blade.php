@@ -142,7 +142,7 @@
 
 
 
-        <!--会員ランクの指定(min_time max_time)-->
+        <!--表示時間帯の指定(min_time max_time)-->
         <div class="d-block mb-4">
             <div class="form-label">表示時間帯の指定（24時間表記）</div>
 

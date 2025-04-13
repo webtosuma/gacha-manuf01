@@ -22150,7 +22150,7 @@ var render = function render() {
       sm_card: _vm.sm_card,
       new_label_path: _vm.gacha.new_label_path,
       img_path_point: _vm.gacha.img_path_point,
-      bg_color: _vm.gacha.type == "only_new_user" ? "bg-success-subtle" : "bg-white",
+      bg_color: _vm.gacha.type == "only_new_user" ? "bg-success-subtle text-dark" : "bg-",
       gacha_type: _vm.gacha.type,
       sponsor_ad: _vm.gacha.sponsor_ad,
       gacha_play_point: _vm.gacha.one_play_point,
@@ -22371,6 +22371,9 @@ var render = function render() {
       expression: "inputs.search_key"
     }],
     staticClass: "form-select rounded-pill border border-2",
+    staticStyle: {
+      "box-shadow": "none"
+    },
     on: {
       change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {

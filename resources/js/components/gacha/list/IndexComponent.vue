@@ -7,6 +7,7 @@
                 <select
                 v-model="inputs.search_key"
                 @change="getData()"
+                style="box-shadow:none;"
                 class="form-select rounded-pill border border-2">
 
                     <option v-for="( search, key ) in searchs" :key="key"

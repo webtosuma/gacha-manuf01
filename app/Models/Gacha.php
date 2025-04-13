@@ -71,7 +71,7 @@ class Gacha extends Model
     public static function types()
     {
         $array =  [
-            'no_custom'    => '通常',
+            // 'no_custom'    => '通常',
 
             'nomal'        => 'カスタムボタンあり',
             'max_custom'   => 'カスタムボタンあり(上限付き)',
@@ -79,7 +79,7 @@ class Gacha extends Model
 
             // 'one_chance'   => '1回or10回限定',
             'one_time'     => '一回限定',
-            'only_oneday'  => '１日１回',
+            'only_oneday'  => '1日1回限定',
             'only_new_user'=> '新規会員限定',
         ];
 
@@ -209,7 +209,7 @@ class Gacha extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | アクセサー
+    | アクセサー　initial_timezone
     |--------------------------------------------------------------------------
     |
     |
@@ -435,15 +435,17 @@ class Gacha extends Model
         */
         public function getInitialTimezoneAttribute()
         {
-            $start = \Carbon\Carbon::parse($this->min_time);//表示終了
-            // $befor = $start->copy()->subMinutes(30);//表示開始
-            $befor = null;//表示開始(Admin表示用で、指定なし)
+            $now_time = now()->format('H:i');//現在時刻
+            $start = \Carbon\Carbon::parse($this->min_time);
+            $start = $now_time < $this->min_time ? $start : $start->addDay();
 
-            if( $befor <= now()  &&  now() < $start && $this->is_published){
-                return now()->diff( $start )->format('%H:%I:%S');
+            if( ($this->min_time!='00:00'or$this->max_time!='24:00') && $this->is_published)
+            {
+                return $start->diff( now() )->format('%H:%I:%S');
             }
             return null;
         }
+
 
 
         /**
@@ -754,6 +756,11 @@ class Gacha extends Model
         */
         public function getIsDisabledCustomBtnAttribute()
         {
+            # ログインユーザーの会員ランク
+            $user = Auth::check() ? Auth::user() : null;
+            $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+            if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return 1; }
+
             # 終了
             if( $this->remaining_count == 0 ){ return 1; }
             # 利用可
@@ -776,6 +783,12 @@ class Gacha extends Model
                 # 残口数
                 $remaining_count = $gacha->remaining_count;
 
+                # ログインユーザーの会員ランク
+                $user = Auth::check() ? Auth::user() : null;
+                $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+                if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return 1; }
+
+                # ガチャの種類
                 switch ($gacha->type)
                 {
                     /* 1回or10回 */

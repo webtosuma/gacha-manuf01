@@ -311,23 +311,36 @@ class GachaController extends Controller
         */
         public static function getsearchs()
         {
+            # 基本ソート
             $array = [
-                // ['label'=>'新規会員限定', 'key'=>'only_new_user'],
-
-                ['label'=>'新着順',        'key'=>'desc_created'],
-                ['label'=>'人気順',        'key'=>'desc_popularity'],
-                ['label'=>'高額ポイント順', 'key'=>'desc_point'],
-                ['label'=>'低額ポイント順', 'key'=>'asc_point'],
-
-                // ['label'=>'サブスク限定',   'key'=>'subscription'],
-                // ['label'=>'会員ランク限定', 'key'=>'user_rank'],
-                // ['label'=>'1回or10回限定', 'key'=>'one_chance'],
-
-                ['label'=>'一回限定',      'key'=>'one_time'],
-                ['label'=>'１日１回',      'key'=>'only_oneday'],
-
-                // ['label'=>'全ての限定',    'key'=>'other_types'],
+                ['key'=>'desc_created',    'label'=>'新着順'],
+                ['key'=>'desc_popularity', 'label'=>'人気順'],
+                ['key'=>'desc_point',      'label'=>'高額ポイント順'],
+                ['key'=>'asc_point',       'label'=>'低額ポイント順'],
             ];
+
+            # ガチャの種類の追加( Gacha::types() )
+            $add_keys=['one_chance','one_time','only_oneday','only_new_user'];
+            $gacha_types = Gacha::types();
+            foreach ($add_keys as $add_key) {
+                if(array_key_exists( $add_key, $gacha_types ))
+                {
+                    $array[] = [ 'key'=>$add_key, 'label'=>$gacha_types[$add_key] ];
+                }
+            }
+
+            # 会員ランクの指定
+            if( env('NEW_TICKET_SISTEM',false) ){
+                $array[] = [ 'key'=>'user_rank',    'label'=>'会員ランク限定', ];
+            }
+
+            # サブスクプランの指定
+            if( env('SUBSCRIPTION',false) ){
+                $array[] = [ 'key'=>'subscription', 'label'=>'サブスク限定',   ];
+            }
+
+            # 全ての限定
+            $array[] = ['label'=>'全ての限定', 'key'=>'other_types'];
 
             return $array;
         }
@@ -384,13 +397,13 @@ class GachaController extends Controller
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 
         # 会員ランク専用ガチャ：ログインユーザーのランクと異なれば非表示
-        $user = Auth::check() ? Auth::user() : null;
-        $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-        if(
-            $gacha->user_rank_id != null
-            && $gacha->user_rank_id != $user_rank_id
+        // $user = Auth::check() ? Auth::user() : null;
+        // $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+        // if(
+        //     $gacha->user_rank_id != null
+        //     && $gacha->user_rank_id != $user_rank_id
 
-        ){ return \App::abort(401); }
+        // ){ return \App::abort(401); }
 
 
         ## 表示できるガチャ一覧

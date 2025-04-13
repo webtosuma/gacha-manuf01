@@ -78,6 +78,9 @@ class AdminApiGatyaController extends Controller
                     break;
             }
 
+            # タイトル検索
+            $title = $request->title;
+            if($title){ $query->where('name','like','%'.$title.'%'); }
 
 
             # 並び替え(新しい順)
@@ -90,8 +93,7 @@ class AdminApiGatyaController extends Controller
                 ->orderBy('created_at');
             }
 
-            // $query->orderByDesc('published_at')
-            // ->orderByDesc('created_at');
+
             $query->has('category');//カテゴリーが存在するもののみ
 
             # サブスクリプション
