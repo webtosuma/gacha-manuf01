@@ -1,8 +1,12 @@
 <template>
     <div class="">
+        <!--サブスク-->
+        <div v-if=" sub_auth_user==0 " class="mt-2">
+            <button class="btn btn-dark disabled  w-100">サブスクプラン申し込みが必要です</button>
+        </div>
 
 
-        <div v-if="show_play_bottons" class="row g-2 mt-1">
+        <div v-else class="row g-2 mt-1">
 
             <!--1回ボタン-->
             <div class="col">
@@ -45,13 +49,6 @@
             </div>
 
         </div>
-
-
-
-        <!-- カウントダウン時のテキスト -->
-        <div v-if="hidden_play_bottons_text!==''"
-        class="text-center text-white mt-3 py-2 rounded bg-dark"
-        >{{ hidden_play_bottons_text }}</div>
     </div>
 </template>
 
@@ -65,12 +62,6 @@
             is_disabled_tenplay_btn : { type: [String,  Number],  default: 0, }, //10連ガチャるボタンのdisabled
             is_disabled_custom_btn  : { type: [String,  Number],  default: 0, }, //カスタムボタンのdisabled
             sub_auth_user           : { type: [String,  Number],  default: 1, }, //ログインユーザーがサブスクガチャを利用できるか
-
-            i_time                  : { type: [String],  default: '',},
-            limitted_i_time         : { type: [String],  default: '',},
-            dont_auth_user_rank     : { type: [String,Number,Boolean],  default: false,},  //会員ランクのユーザーではないとき
-            sub_auth_user           : { type: [String,Number,Boolean],  default: true,},   //サブスクプランに該当
-            sm_card                 : { type: [String,Number,Boolean],  default: 0, },//カードの表示サイズ
         },
         mounted() {
 
@@ -110,57 +101,11 @@
 
                 //
             }
-            /*　プレイボタンの非表示表示　*/
-            {
-                // 時間限定ガチャカウントダウンがあるとき
-                this.show_play_bottons = (this.i_time || this.limitted_i_time)
-                ? false : this.show_play_bottons;
-
-                // 会員ランクのユーザーではないとき
-                this.show_play_bottons = (this.dont_auth_user_rank ? 1 : 0)==1
-                ? false : this.show_play_bottons;
-
-                // サブスクプランに該当しないとき
-                this.show_play_bottons = (this.sub_auth_user ? 1 : 0)==0
-                ? false : this.show_play_bottons;
-
-                // カードサイズ:smのとき(非表示)
-                this.show_play_bottons = this.sm_card!=0
-                ? false : this.show_play_bottons;
-
-            }
-            /*　プレイボタン・テキストの非表示表示　*/
-            {
-                // 時間限定ガチャカウントダウンがあるとき
-                this.hidden_play_bottons_text = (this.i_time || this.limitted_i_time)
-                ? '公開までお待ちください' : this.hidden_play_bottons_text;
-
-                // 会員ランクのユーザーではないとき
-                this.hidden_play_bottons_text = (this.dont_auth_user_rank ? 1 : 0)==1
-                ? '会員ランク専用です' : this.hidden_play_bottons_text;
-
-                // サブスクプランに該当しないとき
-                this.hidden_play_bottons_text = (this.sub_auth_user ? 1 : 0)==0
-                ? 'サブスク申込みが必要です' : this.hidden_play_bottons_text;
-
-                // カードサイズ:smのとき(非表示)
-                this.hidden_play_bottons_text = this.sm_card!=0
-                ? '' : this.hidden_play_bottons_text;
-
-            }
-
-
         },
         data() { return {
 
             /*csrf token*/
             token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-
-            /* プレイボタンの表示 */
-            show_play_bottons: true,
-            /* プレイボタン非表示のときのテキスト */
-            hidden_play_bottons_text: '',
-
 
             /* 1回ガチャる　  ラベル */
             one_play_label:  '1回ガチャる',

@@ -62,7 +62,8 @@ class Gacha extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
-        'sub_auth_user', //ログインユーザーがサブスクガチャを利用できるか
+        'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
+        'dont_auth_user_rank', //利用できるユーザーランクガチャではない
     ];
 
 
@@ -209,7 +210,7 @@ class Gacha extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | アクセサー　initial_timezone
+    | アクセサー
     |--------------------------------------------------------------------------
     |
     |
@@ -437,11 +438,11 @@ class Gacha extends Model
         {
             $now_time = now()->format('H:i');//現在時刻
             $start = \Carbon\Carbon::parse($this->min_time);
-            $start = $now_time < $this->min_time ? $start : $start->addDay();
-
-            if( ($this->min_time!='00:00'or$this->max_time!='24:00') && $this->is_published)
+            $end   = \Carbon\Carbon::parse($this->max_time);
+            if( !($start<=now() && now()<=$end) && $this->is_published )
             {
-                return $start->diff( now() )->format('%H:%I:%S');
+                $next_start = $now_time < $this->min_time ? $start : $start->addDay();
+                return $next_start->diff( now() )->format('%H:%I:%S');
             }
             return null;
         }
@@ -612,6 +613,22 @@ class Gacha extends Model
         }
 
 
+
+        /**
+         * 利用できるユーザーランクガチャではない dont_auth_user_rank
+         * @return String
+        */
+        public function getDontAuthUserRankAttribute()
+        {
+            $user = Auth::check() ? Auth::user() : null;
+            $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+            if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return true; }
+
+            return false;
+        }
+
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー(画像パス)
@@ -757,9 +774,9 @@ class Gacha extends Model
         public function getIsDisabledCustomBtnAttribute()
         {
             # ログインユーザーの会員ランク
-            $user = Auth::check() ? Auth::user() : null;
-            $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-            if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return 1; }
+            // $user = Auth::check() ? Auth::user() : null;
+            // $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+            // if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return 1; }
 
             # 終了
             if( $this->remaining_count == 0 ){ return 1; }
@@ -784,9 +801,9 @@ class Gacha extends Model
                 $remaining_count = $gacha->remaining_count;
 
                 # ログインユーザーの会員ランク
-                $user = Auth::check() ? Auth::user() : null;
-                $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-                if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return 1; }
+                // $user = Auth::check() ? Auth::user() : null;
+                // $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
+                // if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return 1; }
 
                 # ガチャの種類
                 switch ($gacha->type)

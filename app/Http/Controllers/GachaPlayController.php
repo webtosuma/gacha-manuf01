@@ -183,8 +183,9 @@ class GachaPlayController extends Controller
         }
         # [会員ランク限定]
         else if(
-            $gacha->user_rank_id != null
-            && $gacha->user_rank_id != ($user && $user->now_rank ? $user->now_rank->rank_id : null)
+            $gacha->dont_auth_user_rank
+            // $gacha->user_rank_id != null
+            // && $gacha->user_rank_id != ($user && $user->now_rank ? $user->now_rank->rank_id : null)
         ){
             return 'この会員ランクガチャを利用することはできません。';
         }

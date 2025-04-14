@@ -8,6 +8,10 @@ one_play_point         ="{{$gacha->one_play_point   }}"
 is_disabled_oneplay_btn="{{$gacha->is_disabled_oneplay_btn}}"
 is_disabled_tenplay_btn="{{$gacha->is_disabled_tenplay_btn}}"
 is_disabled_custom_btn ="{{$gacha->is_disabled_custom_btn }}"
+
+i_time                 ="{{$gacha->initial_time}}"
+limitted_i_time        ="{{$gacha->initial_timezone}}"
+sub_auth_user          ="{{$gacha->sub_auth_user       ? 1 : null }}"
+dont_auth_user_rank    ="{{$gacha->dont_auth_user_rank ? 1 : null }}"
+
 ></u-gacha-play-buttons>
-
-

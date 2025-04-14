@@ -3,8 +3,8 @@ gacha_name            ="{{$gacha->name}}"
 gacha_ratio           ="{{config('app.gacha_card_ratio')}}"
 gacha_image_path      ="{{$gacha->image_path}}"
 
-initial_time          ="{{$gacha->i_time}}"
-limitted_i_time       ="{{$gacha->limitted_i_time}}"
+initial_time          ="{{$gacha->initial_time}}"
+limitted_i_time       ="{{$gacha->initial_timezone}}"
 published_at_format   ="{{$gacha->published_at > now() ? $gacha->published_at->format('Y/m/d H:i:s') : null}}"
 remaining_count       ="{{$gacha->remaining_count}}"
 add_chance_image_path ="{{$gacha->add_chance_image_path}}"
@@ -17,3 +17,5 @@ img_path_only_oneday  ="{{ $gacha->img_path_only_oneday  }}"
 img_path_only_new_user="{{ $gacha->img_path_only_new_user}}"
 img_path_user_rank    ="{{ $gacha->img_path_user_rank    }}"
 ></u-gacha-image>
+
+

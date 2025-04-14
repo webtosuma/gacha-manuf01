@@ -51,6 +51,11 @@
             </div>
 
 
+            <!--サブスクプラン-->
+            <div v-if="gacha.subscription"
+            class="bg-white fw-bold">『{{gacha.subscription.sub_label}}』専用</div>
+
+
             <!--metter & price-->
             <a :href="gacha.route"  :class="href_class">
                 <div class="position-relative">
@@ -77,35 +82,27 @@
                 </div>
             </a>
 
-
-            <!--サブスクプラン-->
-            <div v-if="gacha.subscription"
-            class="bg-white fw-bold">『{{gacha.subscription.sub_label}}』専用</div>
-
-
         </div>
 
+        <!--play_buttons(非表示：カードサイズSM　または、カウントダウンあり) -->
+        <div v-if="show_play_bottons">
+            <u-gacha-play-buttons
+            :r_action="gacha.r_action"
+            :r_costom="gacha.r_costom"
+            :one_play_point         ="gacha.one_play_point"
+            :is_disabled_oneplay_btn="gacha.is_disabled_oneplay_btn"
+            :is_disabled_tenplay_btn="gacha.is_disabled_tenplay_btn"
+            :is_disabled_custom_btn ="gacha.is_disabled_custom_btn"
+            :sub_auth_user="gacha.sub_auth_user?1:0"
+            />
+        </div>
 
-        <!-- play_buttons(非表示：カードサイズSM　または、カウントダウンあり) -->
-        <u-gacha-play-buttons
-        :r_action="gacha.r_action"
-        :r_costom="gacha.r_costom"
-        :one_play_point         ="gacha.one_play_point"
-        :is_disabled_oneplay_btn="gacha.is_disabled_oneplay_btn"
-        :is_disabled_tenplay_btn="gacha.is_disabled_tenplay_btn"
-        :is_disabled_custom_btn ="gacha.is_disabled_custom_btn"
-
-        :i_time                 ="gacha.i_time"
-        :limitted_i_time        ="gacha.limitted_i_time"
-        :dont_auth_user_rank    ="gacha.dont_auth_user_rank ?true :false"
-        :sub_auth_user          ="gacha.sub_auth_user       ?true :false"
-        :sm_card="sm_card"
-
-        />
+        <!-- カウントダウン時のテキスト -->
+        <div v-if="hidden_play_bottons_text"
+        class="text-center text-white mt-3 py-2 rounded-pill bg-dark"
+        >{{ hidden_play_bottons_text }}</div>
 
 
-        <!-- :show_play_bottons      ="show_play_bottons"
-        :hidden_play_bottons_text="hidden_play_bottons_text" -->
 
 
     </div>
@@ -137,6 +134,13 @@
             href_disabled_class:'d-block btn p-0 border-0 disabled',
 
 
+            /* プレイボタンの表示 */
+            show_play_bottons: true,
+
+            /* プレイボタン非表示のときのテキスト */
+            hidden_play_bottons_text: '',
+
+
         } },
         mounted() {
 
@@ -151,7 +155,31 @@
                 this.card_style_class = this.card_style_class.replace( 'hover_anime', '');
             }
 
-            //show_play_bottons
+
+            /*
+            * プレイボタンの非表示表示
+            *
+            * 新規ガチャカウントダウンがあるとき
+            * 時間限定ガチャカウントダウンがあるとき
+            * カードサイズ:smのとき
+            */
+            if( this.gacha.i_time || this.gacha.limitted_i_time || this.sm_card!=0 ){
+                this.show_play_bottons = false;
+            }
+
+
+
+            /*
+            * プレイボタンの非表示表示
+            *
+            * 時間限定ガチャカウントダウンがあるとき
+            * カードサイズ:smのとき
+            */
+            if( (this.gacha.i_time || this.gacha.limitted_i_time) && this.sm_card==0 ){
+                this.hidden_play_bottons_text = '公開までお待ちください';
+            }
+
+
 
             /* Splideインスタンスを作成 */
             this.splide();

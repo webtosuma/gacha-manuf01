@@ -151,22 +151,22 @@ class AdminMovieController extends Controller
             'pc_storage' => '',
         ];
 
-        # PCモバイル動画の更新
-        if( $request->youtube_url ){
 
+        # PCモバイル動画の更新
+        if( $request->youtube_url )
+        {
             $inputs['mobile_storage'] = $request->youtube_url;
         }
-        elseif( $request->mobile_storage ){
-
+        elseif( $request->mobile_storage || $request->mobile_storage_dalete )
+        {
             # ストレージ画像ファイルの更新（イメージ画像）
             $dir = 'upload/movie/mobile_storage/';             //保存先ディレクトリ
             $request_file    = $request->file('mobile_storage');     //画像のリクエスト
-            $old_image_path  = $movie->mobile_storage; //更新前の画像パス
+            $old_image_path  = $movie ? $movie->mobile_storage : null; //更新前の画像パス
             $image_dalete    = $request->mobile_storage_dalete;      //画像を削除するか否か
 
             $inputs['mobile_storage'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete) ?? '';
         }
-
 
         return $inputs;
     }

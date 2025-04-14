@@ -28,20 +28,42 @@ class FincodeController extends Controller
 {
     /**
      * ポイント　一覧
+     *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
     */
-    public function index()
+    public function index(Request $request)
     {
+        # 支払いタイプテキスト
+        $payment_type = $request->payment_type;
+
         # 販売用ポイント情報取得
         $point_sails = PointSail::where('is_published',1)//公開ずみのみ
         ->orderBy('value','asc')->get();//ポイントが低い順
+
+        # 支払いタイプ別支払いページURL
+        switch ($payment_type) {
+            /* PayPayのとき */
+            case 'PayPay':
+                foreach ($point_sails as $point_sail) {
+                    $point_sail->r_payment = route('point_sail.paypay.payment', $point_sail);
+                }
+                break;
+
+            default:
+                foreach ($point_sails as $point_sail) {
+                    $point_sail->r_payment = route('point_sail.payment', $point_sail);
+                }
+                break;
+        }
 
         # ランクごとのポイント還元率
         $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
         ? Auth::user()->now_rank->point_sail_ratio : 1 ;
 
 
-        return view('point_sail.index',compact('point_sails', 'rank_ratio'));
+
+        return view('point_sail.index',compact('point_sails', 'rank_ratio','payment_type' ));
     }
 
 
