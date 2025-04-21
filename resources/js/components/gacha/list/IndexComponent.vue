@@ -72,7 +72,7 @@
         <div v-else>
 
 
-            <div class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-y" >
+            <div class="row overflow-hidden g-5 mx-0 pb-4 gy-y" >
                 <div v-for="(gacha, key) in gachas" :key="key"
                 :class="list_col_class" >
 

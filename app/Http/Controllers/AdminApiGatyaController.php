@@ -84,14 +84,8 @@ class AdminApiGatyaController extends Controller
 
 
             # 並び替え(新しい順)
-            if( $request->order!='asc.published_at' ){
-                $query->orderByDesc('published_at')
-                ->orderByDesc('created_at');
-
-            }else{
-                $query->orderBy('published_at')
-                ->orderBy('created_at');
-            }
+            $search_key = $request->order;
+            GachaApiController::sortQuery($query,$search_key);
 
 
             $query->has('category');//カテゴリーが存在するもののみ
@@ -169,10 +163,7 @@ class AdminApiGatyaController extends Controller
         ];
 
         # 並び替え選択肢
-        $orders = [
-            ['key'=>'desc.published_at', 'label'=> '新しい順' ],
-            ['key'=>'asc.published_at' , 'label'=> '古い順'  ],
-        ];
+        $orders = GachaController::getsearchs();
 
         return response()->json( compact('gachas','categories','published_statuses','orders'));
     }

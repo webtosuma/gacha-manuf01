@@ -192,107 +192,108 @@ class GachaApiController extends Controller
 
 
                 ## 並び替え・絞り込み
-                switch ($search_key) {
+                GachaApiController::sortQuery($query,$search_key);
+                // switch ($search_key) {
 
-                    //* 人気順(過去1週間) */
-                    case 'desc_popularity':
-                        $oneWeekAgo = now()->subWeek(); // 過去1週間
-                        $query->withSum(['user_gacha_histories' => function ($query) use ($oneWeekAgo) {
-                            $query->where('created_at', '>=', $oneWeekAgo);
-                        }], 'play_count')
-                        ->orderByDesc('user_gacha_histories_sum_play_count')
-                        ->get();
-                        break;
+                //     //* 人気順(過去1週間) */
+                //     case 'desc_popularity':
+                //         $oneWeekAgo = now()->subWeek(); // 過去1週間
+                //         $query->withSum(['user_gacha_histories' => function ($query) use ($oneWeekAgo) {
+                //             $query->where('created_at', '>=', $oneWeekAgo);
+                //         }], 'play_count')
+                //         ->orderByDesc('user_gacha_histories_sum_play_count')
+                //         ->get();
+                //         break;
 
-                    //* 高ポイント順 */
-                    case 'desc_point':
-                        $query->orderByDesc('one_play_point');
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* 高ポイント順 */
+                //     case 'desc_point':
+                //         $query->orderByDesc('one_play_point');
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* 低ポイント順 */
-                    case 'asc_point':
-                        $query->orderBy('one_play_point');
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* 低ポイント順 */
+                //     case 'asc_point':
+                //         $query->orderBy('one_play_point');
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* 会員ランク限定 */
-                    case 'user_rank':
-                        $query->where('user_rank_id','<>',null);//限定ガチャ
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* 会員ランク限定 */
+                //     case 'user_rank':
+                //         $query->where('user_rank_id','<>',null);//限定ガチャ
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* サブスク限定 */
-                    case 'subscription':
-                        $query->where('subscription_id','<>',null);
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* サブスク限定 */
+                //     case 'subscription':
+                //         $query->where('subscription_id','<>',null);
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* 1回or10回限定 */
-                    case 'one_chance':
-                        $query->where('type','one_chance');
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* 1回or10回限定 */
+                //     case 'one_chance':
+                //         $query->where('type','one_chance');
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* 一回限定 */
-                    case 'one_time':
-                        $query->where('type','one_time');
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* 一回限定 */
+                //     case 'one_time':
+                //         $query->where('type','one_time');
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* １日１回 */
-                    case 'only_oneday':
-                        $query->where('type','only_oneday');
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* １日１回 */
+                //     case 'only_oneday':
+                //         $query->where('type','only_oneday');
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* 新規会員限定 */
-                    case 'only_new_user':
-                        $query->where('type','only_new_user');
-                        $query->orderByDesc('published_at');
-                        break;
+                //     //* 新規会員限定 */
+                //     case 'only_new_user':
+                //         $query->where('type','only_new_user');
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* 全ての限定 */
-                    case 'other_types':
+                //     //* 全ての限定 */
+                //     case 'other_types':
 
-                        $query->where( function($query) use($user_rank_id)
-                        {
-                            /*
-                            ＊ 限定ガチャ
-                            ＊ //通常ガチャを除く
-                            ＊ //カスタムボタンなしガチャを除く
-                            ＊ //カスタムボタン上限あり
-                            */
-                            $query->whereNotIn('type', ['nomal', 'no_custom', 'max_custom']);
+                //         $query->where( function($query) use($user_rank_id)
+                //         {
+                //             /*
+                //             ＊ 限定ガチャ
+                //             ＊ //通常ガチャを除く
+                //             ＊ //カスタムボタンなしガチャを除く
+                //             ＊ //カスタムボタン上限あり
+                //             */
+                //             $query->whereNotIn('type', ['nomal', 'no_custom', 'max_custom']);
 
-                            /*会員ランク限定*/
-                            $query->orWhere('user_rank_id','<>',null);
+                //             /*会員ランク限定*/
+                //             $query->orWhere('user_rank_id','<>',null);
 
-                            /*時間帯限定*/
-                            $query->orWhere( function($query) use($user_rank_id){
-                                $query->orWhere('min_time','<>','00:00');
-                                $query->orWhere('max_time','<>','24:00');
-                            });
+                //             /*時間帯限定*/
+                //             $query->orWhere( function($query) use($user_rank_id){
+                //                 $query->orWhere('min_time','<>','00:00');
+                //                 $query->orWhere('max_time','<>','24:00');
+                //             });
 
-                            /*サブスクプラン限定*/
-                            if( env('SUBSCRIPTION',false) ){
-                                $query->orWhere('subscription_id','<>',null);
-                            }
+                //             /*サブスクプラン限定*/
+                //             if( env('SUBSCRIPTION',false) ){
+                //                 $query->orWhere('subscription_id','<>',null);
+                //             }
 
-                        });
-                        $query->orderByDesc('published_at');
-                        break;
+                //         });
+                //         $query->orderByDesc('published_at');
+                //         break;
 
-                    //* 古い順 */
-                    case 'asc_created':
-                        $query->orderBy('published_at');
-                        break;
+                //     //* 古い順 */
+                //     case 'asc_created':
+                //         $query->orderBy('published_at');
+                //         break;
 
-                    //* 新着順 */
-                    default:
-                        $query->orderByDesc('published_at');
-                        break;
-                }
+                //     //* 新着順 */
+                //     default:
+                //         $query->orderByDesc('published_at');
+                //         break;
+                // }
 
 
                 # カテゴリー絞り込み
@@ -375,5 +376,115 @@ class GachaApiController extends Controller
             }
 
             return $gachas;
+        }
+
+
+
+        /**
+         * 並び替えクエリー
+        */
+        public static function sortQuery($query,$search_key)
+        {
+            switch ($search_key) {
+
+                //* 人気順(過去1週間) */
+                case 'desc_popularity':
+                    $oneWeekAgo = now()->subWeek(); // 過去1週間
+                    $query->withSum(['user_gacha_histories' => function ($query) use ($oneWeekAgo) {
+                        $query->where('created_at', '>=', $oneWeekAgo);
+                    }], 'play_count')
+                    ->orderByDesc('user_gacha_histories_sum_play_count')
+                    ->get();
+                    break;
+
+                //* 高ポイント順 */
+                case 'desc_point':
+                    $query->orderByDesc('one_play_point');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 低ポイント順 */
+                case 'asc_point':
+                    $query->orderBy('one_play_point');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 会員ランク限定 */
+                case 'user_rank':
+                    $query->where('user_rank_id','<>',null);//限定ガチャ
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* サブスク限定 */
+                case 'subscription':
+                    $query->where('subscription_id','<>',null);
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 1回or10回限定 */
+                case 'one_chance':
+                    $query->where('type','one_chance');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 一回限定 */
+                case 'one_time':
+                    $query->where('type','one_time');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* １日１回 */
+                case 'only_oneday':
+                    $query->where('type','only_oneday');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 新規会員限定 */
+                case 'only_new_user':
+                    $query->where('type','only_new_user');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 全ての限定 */
+                case 'other_types':
+
+                    $query->where( function($query)
+                    {
+                        /*
+                        ＊ 限定ガチャ
+                        ＊ //通常ガチャを除く
+                        ＊ //カスタムボタンなしガチャを除く
+                        ＊ //カスタムボタン上限あり
+                        */
+                        $query->whereNotIn('type', ['nomal', 'no_custom', 'max_custom']);
+
+                        /*会員ランク限定*/
+                        $query->orWhere('user_rank_id','<>',null);
+
+                        /*時間帯限定*/
+                        $query->orWhere( function($query){
+                            $query->orWhere('min_time','<>','00:00');
+                            $query->orWhere('max_time','<>','24:00');
+                        });
+
+                        /*サブスクプラン限定*/
+                        if( env('SUBSCRIPTION',false) ){
+                            $query->orWhere('subscription_id','<>',null);
+                        }
+
+                    });
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 古い順 */
+                case 'asc_created':
+                    $query->orderBy('published_at');
+                    break;
+
+                //* 新着順 */
+                default:
+                    $query->orderByDesc('published_at');
+                    break;
+            }
         }
 }

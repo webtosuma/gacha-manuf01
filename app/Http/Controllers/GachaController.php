@@ -14,7 +14,7 @@ use App\Models\Infomation;
 use App\Models\Movie;
 /*
 | =============================================
-|  ガチャ コントローラー
+|  ガチャ コントローラー 
 | =============================================
 */
 class GachaController extends Controller

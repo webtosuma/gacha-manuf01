@@ -30,9 +30,9 @@ class AdminApiUserController extends Controller
 
             if($request->deleted){ //退職者のみ
                 $query->where('deleted_at','<>',null);
+                $query->withTrashed();//退会者を含む
             }
 
-            $query->withTrashed();//退会者を含む
 
             $query->orderByDesc('created_at')->orderByDesc('id');
 

@@ -20,7 +20,8 @@ class AdminHomeController extends Controller
     public function index()
     {
         # 登録ユーザー
-        $users = User::orderByDesc('created_at')->get();
+        // $users = User::orderByDesc('created_at')->get();
+        $users_count = User::orderByDesc('id')->first()->id;
 
         # 月間売上
         $month = Carbon::parse( now()->format('Y-m-01') );
@@ -48,7 +49,9 @@ class AdminHomeController extends Controller
 
 
         return view('admin.home',compact(
-            'users','sales','waiting_shippeds_count','unresponsed_contacts_count','gachas','total_user_point'
+            // 'users',
+            'users_count',
+            'sales','waiting_shippeds_count','unresponsed_contacts_count','gachas','total_user_point'
         ));
     }
 }

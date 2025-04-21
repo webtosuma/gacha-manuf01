@@ -72,6 +72,7 @@
         apiLoaded: false,
         id: 'ytPlayer',
         loading: true,
+        redirectCountdownStarted: false,
       };
     },
     computed: {
@@ -140,25 +141,32 @@
                         this.loading = false;
                     }
                     /*動画の再生が終了したとき、読み込み中・リダイレクト*/
-                    if (event.data === window.YT.PlayerState.ENDED) {
-                        this.loading = true;
-                        document.querySelector('form')?.submit();
+                    // if (event.data === window.YT.PlayerState.ENDED) {
+                    //     this.loading = true;
+                    //     document.querySelector('form')?.submit();
+                    // }
+                    /*動画の再生が終了したとき、読み込み中・リダイレクト*/
+                    if (event.data === window.YT.PlayerState.PLAYING && !this.redirectCountdownStarted) {
+
+                        // 動画終了1秒前に自動送信するタイマー
+                        this.redirectCountdownStarted = true;
+                        this.checkRemainingTime();
                     }
                 },
             },
         });
       },
 
-      switchMuted() {
-        this.muted = !this.muted;
-        if (this.player) {
-          if (this.muted) {
-            this.player.mute();
-          } else {
-            this.player.unMute();
-          }
-        }
-      },
+        switchMuted() {
+            this.muted = !this.muted;
+            if (this.player) {
+            if (this.muted) {
+                this.player.mute();
+            } else {
+                this.player.unMute();
+            }
+            }
+        },
 
         startTimer() {
             this.timer = setInterval(() => {
@@ -169,6 +177,28 @@
                 }
             }, 1000);
         },
+
+        /*動画終了1秒前に自動送信するタイマー*/
+        checkRemainingTime() {
+            const check = () => {
+                if (!this.player || typeof this.player.getDuration !== 'function') return;
+
+                const duration = this.player.getDuration();
+                const currentTime = this.player.getCurrentTime();
+                const remaining = duration - currentTime;
+
+                if (remaining <= 0.5) {
+                    this.loading = true;
+                    document.querySelector('form')?.submit();
+                } else {
+                    // 200msごとに再チェック
+                    setTimeout(check, 200);
+                }
+            };
+            check();
+        }
+
+
     },
   };
   </script>

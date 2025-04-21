@@ -40,7 +40,8 @@
             <div class="col-6 col-md-3"><a class="btn text-start text-secondary w-100"
             href="{{route('admin.user')}}">
                 <div class="fw-bold">登録ユーザー</div>
-                <div class="fs-3"><number-comma-component number="{{ $users->count() }}"></number-comma-component></div>
+                {{-- <div class="fs-3"><number-comma-component number="{{ $users->count() }}"></number-comma-component></div> --}}
+                <div class="fs-3"><number-comma-component number="{{ $users_count }}"></number-comma-component></div>
             </a></div>
 
             <div class="col-6 col-md-3"><a class="btn text-start text-secondary w-100"
