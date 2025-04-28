@@ -38,7 +38,7 @@ style="max-width:90vw; min-width:30vw;">
                 </div>
             @endif
             <!-- フッターメニュー -->
-            <div class="list-group-item py-3 border-0 d-flex flex-column gap-3">
+            <div class="list-group-item py-3 border-0 d-flex flex-column gap-0">
 
                 <!--SNS Links-->
                 @include('includes.sns_links')

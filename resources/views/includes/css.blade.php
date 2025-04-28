@@ -14,7 +14,7 @@
 <!-- Google Fontsの読み込み -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
 <style>
-    body {
+    header,main {
         font-family: 'Roboto', sans-serif; /* フォントを適用 */
     }
 </style>

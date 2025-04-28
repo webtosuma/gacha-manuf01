@@ -17,11 +17,22 @@
 
             <div class="d-flex align-items-center ">
 
+                <!--商品ストアー-->
+                <a href="{{route('store')}}"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title="商品ストアー"
+                class="btn fs-2">
+                    <i class="bi bi-shop-window"></i>
+                </a>
+
+                <!--お知らせ-->
+                <a href="{{route('infomation')}}"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title="お知らせ"
+                class="btn fs-2">
+                    <i class="bi bi-bell"></i>
+                </a>
+
                 @guest
                     <!-- ログイン前 -->
-                    {{-- <a class="btn btn-sm btn-dark text-white rounded-pill shadow-sm fw-bold border-warning border-3 me-2"
-                    href="{{ route('register') }}">{{ __('会員登録') }}</a>
-                    --}}
                     <a class="btn btn-sm rounded- border fw-bold me-2"
                     href="{{ route('login') }}">{{ __('会員登録/ログイン') }}</a>
 
@@ -29,7 +40,7 @@
                     <!-- ログイン中 -->
                     <a href="{{route('point_sail')}}"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="ポイントを購入する"
-                    class="d-block text-decoration-none text-dark">
+                    class="d-block text-decoration-none text-dark ms-2">
                         <div class="d-flex align-items-center gap-1">
 
                             @include('includes.point_icon')

@@ -131,7 +131,8 @@ Route::middleware([ /* ミドルウェアー */
     # フッターメニュー
     include('web/footer_menu.php');
 
-
+    # 商品ストアー
+    include('web/store.php');
 
 
 });//end middleware

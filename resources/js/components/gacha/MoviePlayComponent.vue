@@ -1,18 +1,17 @@
 <template>
     <div class="mx-auto bg-" style="height:100vh; max-width:100vw;">
-        <div class="d-flex justify-content-between align-items-center h-100 w-100 overflow-hidden">
+        <div class="d-flex align-items-center justify-content-center h-100 w-100 bg-">
 
 
 
-            <div class="section_video mx-auto col-md-6 col-lg-3">
+            <div class="section_video mx-auto w-100 h-100">
                 <!-- 動画mobile -->
-                <div class="video-area">
-                    <video class="bg_video"
+                <div class="video-area h-100 d-flex justify-content-center">
+                    <video class="bg_video w-10 h-100"
                     playsinline
                     :muted="muted"
                     poster=""
-                    width="100%"
-                    height="100%"
+                    style="object-fit: cover;"
                     ><source :src="movie_path_mobile" />
                     </video>
                 </div>

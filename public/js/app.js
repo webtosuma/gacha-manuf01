@@ -21638,18 +21638,19 @@ var render = function render() {
       "max-width": "100vw"
     }
   }, [_c("div", {
-    staticClass: "d-flex justify-content-between align-items-center h-100 w-100 overflow-hidden"
+    staticClass: "d-flex align-items-center justify-content-center h-100 w-100 bg-"
   }, [_c("div", {
-    staticClass: "section_video mx-auto col-md-6 col-lg-3"
+    staticClass: "section_video mx-auto w-100 h-100"
   }, [_c("div", {
-    staticClass: "video-area"
+    staticClass: "video-area h-100 d-flex justify-content-center"
   }, [_c("video", {
-    staticClass: "bg_video",
+    staticClass: "bg_video w-10 h-100",
+    staticStyle: {
+      "object-fit": "cover"
+    },
     attrs: {
       playsinline: "",
-      poster: "",
-      width: "100%",
-      height: "100%"
+      poster: ""
     },
     domProps: {
       muted: _vm.muted
@@ -22481,7 +22482,7 @@ var render = function render() {
       staticClass: "col-12 col-md-6 col-lg-4"
     }, [_vm._m(1, true), _vm._v(" "), _vm._m(2, true)]);
   }), 0) : _c("div", [_c("div", {
-    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-y"
+    staticClass: "row overflow-hidden g-5 mx-0 pb-4 gy-y"
   }, [_vm._l(_setup.gachas, function (gacha, key) {
     return _c("div", {
       key: key,

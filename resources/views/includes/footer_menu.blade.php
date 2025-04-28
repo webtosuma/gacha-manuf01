@@ -41,7 +41,7 @@ $gacha_categories = \App\Models\GachaCategory::where('is_published',1)
     </ul>
 </div>
 <div class="col">
-    <div class="form-text mb-3">
+    <div class="form-text my-3">
         古物商営業許可<br>
         第 000010000000 号<br>
         ○○県公安委員会<br>
