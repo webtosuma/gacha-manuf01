@@ -35,7 +35,9 @@ class AdminShippedWaitingController extends Controller
         $state_id = self::StateId();
 
         # 発送申請：発送待ち
-        $shippeds = UserShipped::where('state_id', $state_id)->get();
+        // $shippeds = UserShipped::where('state_id', $state_id)->get();
+        $count = UserShipped::where('state_id', $state_id)->count();
+        $count = number_format($count);
 
         $paginate_shippeds = UserShipped::where('state_id', $state_id)
         ->paginate( $this->pagenate_count() );//ページネーション
@@ -45,7 +47,9 @@ class AdminShippedWaitingController extends Controller
 
 
         return view('admin.shipped.waiting.index', compact(
-            'shippeds','paginate_shippeds','page'
+            // 'shippeds',
+            'count',
+            'paginate_shippeds','page'
         ) );
     }
 
@@ -152,7 +156,7 @@ class AdminShippedWaitingController extends Controller
         $state_id = self::StateId();
 
         # 発送申請：発送待ち
-        $paginate_shippeds = UserShipped::where('state_id', $state_id)
+        $user_shippeds = UserShipped::where('state_id', $state_id)
         ->paginate( $this->pagenate_count() );//ページネーション
 
 
@@ -161,11 +165,22 @@ class AdminShippedWaitingController extends Controller
         $header = [
             'お届け先郵便番号','お届け先氏名','お届け先敬称',
             'お届け先住所1行目','お届け先住所2行目','お届け先住所3行目','お届け先住所4行目',
-            '内容品'];
+            '内容品','発送商品',
+        ];
         $header = self::convertArrayToSJIS($header);
         $data_array[] = implode(',',$header);
 
-        foreach ($paginate_shippeds as $user_shipped) {
+        foreach ($user_shippeds as $user_shipped) {
+
+            # 発送商品情報($prizes_string)
+            $prizes_string = '';
+            $user_prizes = $user_shipped->user_prizes;
+            $id_array = $user_prizes->pluck('prize_id')->toArray();
+            $shipped_prizes = Prize::find( $id_array );//カードの重複除去
+            foreach ($shipped_prizes as $shipped_prize) {
+                $count = array_count_values($id_array)[$shipped_prize->id] ?? 0;
+                $prizes_string .= "[{$shipped_prize->code}]{$shipped_prize->name} ×{$count}点　";
+            }
 
             # お届け先アドレス
             $user_address = $user_shipped->user_address;
@@ -177,8 +192,9 @@ class AdminShippedWaitingController extends Controller
                 $user_address->todohuken,   //お届け先住所1行目
                 $user_address->shikuchoson, //お届け先住所2行目
                 $user_address->number,      //お届け先住所3行目
-                '', //お届け先住所4行目
-                'ホビー・カード', //内容品
+                '',                         //お届け先住所4行目
+                'ホビー・カード',             //内容品
+                $prizes_string,             //発送商品
             ];
 
             #UTF-8にエンコード

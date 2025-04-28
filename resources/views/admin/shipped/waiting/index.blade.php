@@ -44,10 +44,7 @@ $active_key = 'shipped';
                 <div class="col-auto text-warning">
                     <div class="d-flex gap-2 align-items-end">
                         <div class="">発送待ち</div>
-                        <h3 class="fw-bold m-0">
-                            <number-comma-component number="{{ $shippeds->count() }}"
-                            ></number-comma-component>
-                        </h3>
+                        <h3 class="fw-bold m-0">{{$count}}</h3>
                         <span>件</span>
                     </div>
                 </div>
