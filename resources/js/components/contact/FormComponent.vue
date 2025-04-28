@@ -219,7 +219,7 @@
         // name : 'ホゲ', //氏名
         // email: 't.sakai@tosuma.ltd', //メールアドレス(半角英数)
         // tell : '09011112222', //電話番号(半角数字)
-        // body : 'hoge', //お問い合わせ内容
+        // body : 'ホゲホゲ', //お問い合わせ内容
         // agree: true, // プライバシーポリシー同意
     });
 
@@ -268,7 +268,15 @@
         loading.value = true;// 通信中
 
         const route = props.r_api_completion;
-        axios.post( route, inputs.value )
+        const post_inputs = Object.assign({}, inputs.value);
+
+        //エンコード処理
+        const encode_list = ['name','body'];
+        encode_list.forEach(encode_param => {
+            post_inputs[encode_param] = uriEncoded(post_inputs[encode_param]);
+        });
+
+        axios.post( route, post_inputs )
         .then(json => {
             // console.log(json.data);
 
@@ -300,6 +308,10 @@
 
     /* 別タブで開く */
     const windowOpen = (route)=>{ window.open( route ); }
+
+
+    /* デフォルト文字列のエンコード処理 */
+    const uriEncoded = (body)=>{ return encodeURIComponent(body); };
 
 
 </script>

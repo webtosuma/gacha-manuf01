@@ -45,8 +45,6 @@ class ContactController extends Controller
     */
     public function completion(Request $request)
     {
-        // return response()->json(['message'=>'OK']);
-
         # 入力内容
         $inputs = $request->only([
             'name',      //氏名
@@ -57,6 +55,10 @@ class ContactController extends Controller
             'type_text', //お問い合わせの種類
         ]);
 
+
+        # エンコード入力情報のデコード処理（絵文字対策）
+        $inputs['name'] = urldecode($inputs['name']);
+        $inputs['body'] = urldecode($inputs['body']) ;
 
 
         # text入力値が150文字以上の時、ストレージへファイル保存する
