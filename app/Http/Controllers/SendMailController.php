@@ -65,14 +65,14 @@ class SendMailController extends Controller
          * @param \Illuminate\Http\Request $request
          * @return String $verification_code
         */
-        public static function ContactCompletion( $request )
+        public static function ContactCompletion( $inputs )
         {
             # お問い合わせ入力者へメール送信
 
-                Mail::to( $request->email ) //宛先
+                Mail::to( $inputs['email'] ) //宛先
                 ->send(new \App\Mail\SendHtmlMailMailable([
-                    'inputs' => $request->all() , //入力変数
-                    'view' => 'emails.contact.user' , //テンプレート
+                    'inputs' => $inputs , //入力変数
+                    'view' => 'emails.contact' , //テンプレート
                     'subject' => 'お問い合わせを受け付けました' , //件名
                 ]) );
 
@@ -87,8 +87,8 @@ class SendMailController extends Controller
 
                     Mail::to( $admin->email ) //宛先
                     ->send(new \App\Mail\SendAdminMailable([
-                        'inputs' => $request->all() , //入力変数
-                        'view'   => 'emails.contact.admin' , //テンプレート
+                        'inputs' => $inputs , //入力変数
+                        'view'   => 'emails.admin_contact' , //テンプレート
                         'subject'=> 'お客様よりお問い合わせを受け付けました' , //件名
                     ]) );
                 }

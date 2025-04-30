@@ -35,7 +35,6 @@ class AdminShippedWaitingController extends Controller
         $state_id = self::StateId();
 
         # 発送申請：発送待ち
-        // $shippeds = UserShipped::where('state_id', $state_id)->get();
         $count = UserShipped::where('state_id', $state_id)->count();
         $count = number_format($count);
 

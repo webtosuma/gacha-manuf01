@@ -75,7 +75,7 @@ class ContactController extends Controller
 
 
         # 顧客へメールの自動送信
-        SendMailController::ContactCompletion( $request );
+        SendMailController::ContactCompletion( $inputs );
 
         # JSONを返す
         return response()->json(['comment'=>'ok']);

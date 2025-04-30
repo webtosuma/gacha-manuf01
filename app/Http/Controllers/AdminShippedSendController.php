@@ -18,6 +18,8 @@ class AdminShippedSendController extends Controller
         return 21 ;// '発送済み'
     }
 
+    /** ページネーション数 */
+    public function pagenate_count(){ return 20 ;}
 
     /**
      * 一覧
@@ -30,14 +32,12 @@ class AdminShippedSendController extends Controller
         $state_id = self::StateId();
 
         # 発送申請
-        // $shippeds = UserShipped::where('state_id', $state_id)
-        // ->orderByDesc('shipment_at')->get();
         $count = UserShipped::where('state_id', $state_id)->count();
         $count = number_format($count);
 
         $paginate_shippeds = UserShipped::where('state_id', $state_id)
         ->orderByDesc('shipment_at')
-        ->paginate(100);//ページネーション
+        ->paginate( $this->pagenate_count() );//ページネーション
 
         return view('admin.shipped.send.index', compact( 'count','paginate_shippeds') );
     }
