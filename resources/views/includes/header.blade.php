@@ -18,11 +18,11 @@
             <div class="d-flex align-items-center ">
 
                 <!--商品ストアー-->
-                <a href="{{route('store')}}"
+                {{-- <a href="{{route('store')}}"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="商品ストアー"
                 class="btn fs-2">
                     <i class="bi bi-shop-window"></i>
-                </a>
+                </a> --}}
 
                 <!--お知らせ-->
                 <a href="{{route('infomation')}}"

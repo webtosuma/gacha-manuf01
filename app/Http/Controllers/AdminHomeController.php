@@ -21,7 +21,8 @@ class AdminHomeController extends Controller
     {
         # 登録ユーザー
         // $users = User::orderByDesc('created_at')->get();
-        $users_count = User::orderByDesc('id')->first()->id;
+        // $users_count = User::orderByDesc('id')->first()->id;
+        $users_count = User::count();
 
         # 月間売上
         $month = Carbon::parse( now()->format('Y-m-01') );
