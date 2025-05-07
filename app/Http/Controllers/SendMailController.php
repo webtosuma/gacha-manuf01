@@ -72,7 +72,7 @@ class SendMailController extends Controller
                 Mail::to( $inputs['email'] ) //宛先
                 ->send(new \App\Mail\SendHtmlMailMailable([
                     'inputs' => $inputs , //入力変数
-                    'view' => 'emails.contact' , //テンプレート
+                    'view' => 'emails.contact.user' , //テンプレート
                     'subject' => 'お問い合わせを受け付けました' , //件名
                 ]) );
 
@@ -88,7 +88,7 @@ class SendMailController extends Controller
                     Mail::to( $admin->email ) //宛先
                     ->send(new \App\Mail\SendAdminMailable([
                         'inputs' => $inputs , //入力変数
-                        'view'   => 'emails.admin_contact' , //テンプレート
+                        'view'   => 'emails.contact.admin' , //テンプレート
                         'subject'=> 'お客様よりお問い合わせを受け付けました' , //件名
                     ]) );
                 }
