@@ -32,7 +32,7 @@
     <!--ボトムメニュー-->
     <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white"
     style="z-index:50; background:rgb(0, 0, 0, .7);">
-        <div class="container mx-auto" style="max-width:900px;">
+        <div class="container mx-auto" style="max-width:600px;">
 
             <!--metter-->
             @php $metter_bg_color = ''; @endphp
@@ -50,7 +50,7 @@
 
     <!--注意事項ー-->
     <section class="py-5">
-        <div class="container px-2 overflow-auto mx-auto" style="max-width:900px;">
+        <div class="container px-2 overflow-auto mx-auto" style="max-width:600px;">
             <div class="p-3" style="border-radius:1rem; background:rgb(255, 255, 255, .9);">
 
                 <h6 class="border border-danger border-2 p-2 text-danger text-center">
@@ -82,7 +82,7 @@
 
 
     <!-- その他のガチャ情報 -->
-    <div class="container my-5 mx-auto" style="max-width:900px;">
+    <div class="container my-5 mx-auto" style="max-width:600px;">
 
         @include('gacha.common.result_gachas')
 

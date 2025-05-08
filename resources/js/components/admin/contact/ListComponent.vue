@@ -117,7 +117,7 @@
 
 
                         <!-- dropdown menu -->
-                        <div class="col-auto">
+                        <!-- <div class="col-auto">
                             <div class="dropdown">
                                 <button class="btn" type="button"
                                 :id="'contactDropdownMenuButton'+dKey" data-bs-toggle="dropdown" aria-expanded="false"
@@ -134,7 +134,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
 
 
 

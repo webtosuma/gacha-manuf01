@@ -5976,11 +5976,17 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       deferredPrompt: null,
-      ready: false
-      // ready: true,
+      ready: false,
+      isSafari: false,
+      showInstructions: false
     };
   },
   mounted: function mounted() {
+    // Safari検出
+    var ua = window.navigator.userAgent;
+    this.isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+
+    // ChromeなどのPWA対応ブラウザ向け
     window.addEventListener("beforeinstallprompt", this.beforeInstallPromptHandler);
   },
   beforeDestroy: function beforeDestroy() {
@@ -5988,14 +5994,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     beforeInstallPromptHandler: function beforeInstallPromptHandler(event) {
+      event.preventDefault(); // Chromeの標準動作をキャンセル
       this.ready = true;
       this.deferredPrompt = event;
     },
     handleClickInstall: function handleClickInstall() {
       if (this.deferredPrompt) {
-        // インストールプロンプトを表示する
         this.deferredPrompt.prompt();
       }
+    },
+    showSafariInstructions: function showSafariInstructions() {
+      this.showInstructions = !this.showInstructions;
     }
   }
 });
@@ -13821,14 +13830,14 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {}, [_vm.ready ? _c("div", {
+  return _c("div", [_vm.ready ? _c("div", {
     staticClass: "py-3"
   }, [_c("button", {
     staticClass: "btn btn-lg btn-light border rounded-pill w-100",
     on: {
       click: _vm.handleClickInstall
     }
-  }, [_vm._v("アプリをインストール"), _c("i", {
+  }, [_vm._v("\n      アプリをインストール "), _c("i", {
     staticClass: "bi bi-box-arrow-in-down ms-3"
   })]), _vm._v(" "), _c("a", {
     staticClass: "mt-2",
@@ -13841,7 +13850,23 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "bi bi-question-circle me-2"
-  }), _vm._v("プログレッシブ ウェブアプリ（PWA）について")])]) : _vm._e()]);
+  }), _vm._v("プログレッシブ ウェブアプリ（PWA）について\n    ")])]) : _vm.isSafari ? _c("div", {
+    staticClass: "py-3"
+  }, [_c("button", {
+    staticClass: "btn btn-lg btn-light border rounded-pill w-100",
+    on: {
+      click: _vm.showSafariInstructions
+    }
+  }, [_vm._v("\n      ホーム画面に追加する方法 "), _c("i", {
+    staticClass: "bi bi-info-circle ms-3"
+  })]), _vm._v(" "), _vm.showInstructions ? _c("div", {
+    staticClass: "mt-2 text-muted",
+    staticStyle: {
+      "font-size": "13px"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-hand-index-thumb me-2"
+  }), _vm._v("\n      Safariの共有メニューから「ホーム画面に追加」を選んでください。\n    ")]) : _vm._e()]) : _vm._e()]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -14348,34 +14373,6 @@ var render = function render() {
         width: "200px"
       }
     }, [_vm._v("\n                                    " + _vm._s(contact.name) + "様\n                                ")])])])]), _vm._v(" "), _c("div", {
-      staticClass: "col-auto"
-    }, [_c("div", {
-      staticClass: "dropdown"
-    }, [_c("button", {
-      staticClass: "btn",
-      attrs: {
-        type: "button",
-        id: "contactDropdownMenuButton" + dKey,
-        "data-bs-toggle": "dropdown",
-        "aria-expanded": "false"
-      }
-    }, [_vm._m(1, true)]), _vm._v(" "), _c("ul", {
-      staticClass: "dropdown-menu",
-      attrs: {
-        "aria-labelledby": "contactDropdownMenuButton" + dKey
-      }
-    }, [_c("li", [_c("a", {
-      staticClass: "dropdown-item",
-      attrs: {
-        href: "#"
-      },
-      on: {
-        click: function click($event) {
-          $event.preventDefault();
-          return _setup.destroy(contact.id);
-        }
-      }
-    }, [_vm._v("削除")])])])])]), _vm._v(" "), _c("div", {
       staticClass: "offcanvas offcanvas-end",
       staticStyle: {
         width: "600px"
@@ -14520,7 +14517,7 @@ var render = function render() {
     staticClass: "row flex-md-column g-2 mb-2"
   }, [_c("div", {
     staticClass: "col input-group"
-  }, [_vm._m(2), _vm._v(" "), _c("input", {
+  }, [_vm._m(1), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -14628,11 +14625,11 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "row"
-  }, [_vm._m(3), _vm._v(" "), _c("div", {
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "col-auto"
   }, [_setup.not_res_conts["受信箱"] > 0 ? _c("span", {
     staticClass: "badge rounded-pill bg-danger"
-  }, [_vm._v(_vm._s(_setup.not_res_conts["受信箱"]))]) : _vm._e()])])]), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._l(_setup.type_texts, function (type_text, key) {
+  }, [_vm._v(_vm._s(_setup.not_res_conts["受信箱"]))]) : _vm._e()])])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._l(_setup.type_texts, function (type_text, key) {
     return _c("a", {
       key: key,
       staticClass: "list-group-item position-relative",
@@ -14681,7 +14678,7 @@ var render = function render() {
     staticClass: "modal-dialog modal-dialog-centered"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(5), _vm._v(" "), _c("div", {
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("label", {
     staticClass: "d-block mb-3"
@@ -14790,7 +14787,7 @@ var render = function render() {
     attrs: {
       id: "deleteContactsModal" + "Label"
     }
-  }, [_vm._v("お問い合わせ削除")])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c("div", {
+  }, [_vm._v("お問い合わせ削除")])]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
     staticClass: "btn btn-danger text-white",
@@ -14823,15 +14820,6 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "bi bi-x-lg"
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c,
-    _setup = _vm._self._setupProxy;
-  return _c("span", {
-    staticClass: "fs-5"
-  }, [_c("i", {
-    staticClass: "bi bi-three-dots-vertical"
   })]);
 }, function () {
   var _vm = this,

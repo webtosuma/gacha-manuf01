@@ -20,14 +20,6 @@
                                 url="{{ $slide['image'] }}"
                                 ></ratio-image-component>
                             </div>
-
-
-                            {{-- <div class="absolute h-100 w-100 bg-dark d-flex align-items-center justify-content-center"
-                            style="z-index:0;">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div> --}}
                         </div>
                     @endif
 
@@ -37,8 +29,5 @@
 
         @endforeach
 
-            {{-- <li class="splide__slide">Slide 01</li>
-            <li class="splide__slide">Slide 02</li>
-            <li class="splide__slide">Slide 03</li> --}}
     </ul>
 </div>
