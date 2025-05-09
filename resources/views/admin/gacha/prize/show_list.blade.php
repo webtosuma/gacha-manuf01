@@ -46,7 +46,12 @@
             "
             id="collapse{{$discription->id}}">
 
-            @if( $discription->gacha_rank_id>300 && $discription->gacha_rank_id<400 && $discription->g_prizes->count()>0 )
+            @if( $discription->g_prizes->count()>0 &&
+                (
+                    ($discription->gacha_rank_id>300 && $discription->gacha_rank_id<400) ||
+                    ($discription->gacha_rank_id>900 && $discription->gacha_rank_id<1000)
+                )
+            )
                 <div class="rounded bg-light p-2 mb-2">
                     当選番号：{{ $discription->hit_nums }}
                 </div>

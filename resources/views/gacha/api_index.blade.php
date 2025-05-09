@@ -74,13 +74,13 @@
 @section('content')
 
 
-    <section class="bg-dark" style="height:5.2rem;"
+    <section class="bg- " style="height:5.2rem;"
     data-aos="fade-in"
     ></section>
 
 
 
-    <section class="overflow-hidden bg-dark" style="background:rgb(0, 0, 0,.0);"
+    <section class="overflow-hidden bg-" style="background:rgb(0, 0, 0,.0);"
     data-aos="fade-in"
     >
 

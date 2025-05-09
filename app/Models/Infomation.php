@@ -71,7 +71,7 @@ class Infomation extends Model
         */
         public function getIsPublishedAttribute()
         {
-            return $this->published_at && $this->published_at < now()->format('Y-m-d H:i:s') ;
+            return $this->published_at && $this->published_at <= now()->format('Y-m-d H:i:s') ;
         }
 
 

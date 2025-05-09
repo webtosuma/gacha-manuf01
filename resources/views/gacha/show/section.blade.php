@@ -33,18 +33,17 @@
             @else
 
                 @php
-                $col     = $discription->g_prizes->count()==1 ? 'col-12 px-5' : ($discription->gacha_rank_id < 400 ? 'col-6' : 'col-3') ;
-                $rounded = $discription->g_prizes->count()==1 ? 'rounded-4' : 'rounded-2' ;
-                $fs      = $discription->gacha_rank_id < 400 ? 'fs-1' : '' ;
+                $col = $discription->g_prizes->count()==1 ? 'col-12' : ($discription->gacha_rank_id < 400 ? 'col-6' : 'col-3') ;
+                $fs = $discription->gacha_rank_id < 400 ? 'fs-1' : '' ;
                 @endphp
-                <div class="row g-2 mb-3 px- justify-content-center">
+                <div class="row g-2 mb-3 justify-content-center">
                     @foreach ($discription->g_prizes as $gacha_prize)
 
 
                         <div class="{{ $col }}">
                             <div class="position-relative">
                                 <ratio-image-component
-                                style_class="ratio ratio-3x4 {{$rounded}}"
+                                style_class="ratio ratio-3x4 rounded-2"
                                 url="{{$gacha_prize->prize->image_path}}"
                                 ></ratio-image-component>
 

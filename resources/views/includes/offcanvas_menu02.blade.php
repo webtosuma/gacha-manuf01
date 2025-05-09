@@ -40,6 +40,17 @@ style="max-width:90vw; min-width:30vw;">
             <!-- フッターメニュー -->
             <div class="list-group-item py-3 border-0 d-flex flex-column gap-0">
 
+
+                <!--ロゴ-->
+                <div class="text-center my-3">
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="{{asset('storage/site/image/logo.png')}}"
+                        alt="{{ config('app.name') }}" class="d-brock mx-auto" style="height:4rem;">
+                    </a>
+                    <small class="d-block text-muteddd">&copy;{{config('app.company_name')}}</small>
+                </div>
+
+
                 <!--SNS Links-->
                 @include('includes.sns_links')
 
