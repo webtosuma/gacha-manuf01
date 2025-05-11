@@ -30,19 +30,19 @@ return [
 
 
         # ガチャ画像比率
-        'gacha_card_ratio'      => env('GACHA_CARD_RATIO', 'ratio-4x3'),
+        'gacha_card_ratio'         => env('GACHA_CARD_RATIO', 'ratio-4x3'),
 
         # ユーザー商品の発送期限(日,数値)
         'user_prize_deadline_date' => (int) env('USER_PRIZE_DEADLINE_DATE', 0),
 
         # ユーザーポイントの利用可能期限(日,数値)
-        'user_point_deadline_date'   => (int) env('USER_POINT_DEADLINE_DATE', 0),
+        'user_point_deadline_date' => (int) env('USER_POINT_DEADLINE_DATE', 0),
 
         # Fobeesアカウントemail
-        'fobees_emails'   =>  explode( ',', env('APP_FOBEES_EMAILS', '') ),
+        'fobees_emails'            =>  explode( ',', env('APP_FOBEES_EMAILS', '') ),
 
         # 背景ダーク
-        'bg_dark'=> true,
+        'bg_dark'                  => (boolean) env('APP_BG_DARK', false),
 
     /*
     |--------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-<footer class="bg-white text- px-3 pt-5" style="padding-bottom:14rem;">
+<footer class="bg-white text-dark px-3 pt-5" style="padding-bottom:14rem;">
     <div class="container">
         <div class="row flex-column flex-md-row mx-0 gy-3">
 

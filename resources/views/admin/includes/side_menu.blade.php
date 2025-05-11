@@ -71,11 +71,6 @@
         //     'label' => 'チケット用商品',
         // ],
         [
-            'route' => route('admin.subscription'),
-            'key'   => 'subscription',
-            'label' => 'サブスク管理',
-        ],
-        [
             'route' => route('admin.infomation'),
             'key'   => 'infomation',
             'label' => 'お知らせ',
@@ -92,6 +87,17 @@
         ],
 
     ];
+    // サブスクの追加
+    if( env('SUBSCRIPTION') )
+    {
+        $ragistation_array[] = [
+            'route' => route('admin.subscription'),
+            'key'   => 'subscription',
+            'label' => 'サブスク管理',
+        ];
+    }
+
+
 
     if( \App\Http\Controllers\AdminLogController::logStartupSetting() && Auth::user()->admin->master ){
         $ragistation_array[] = [

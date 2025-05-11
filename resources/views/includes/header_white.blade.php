@@ -1,4 +1,4 @@
-<header class="position-fixed bg-white w-100" style="z-index:100; background:black;">
+<header class="position-fixed bg-white text-dark w-100" style="z-index:100; background:black;">
     @if ( config('app.debug') )
         <h6 class="text-danger m-0 text-center bg-light">TEST MODE</h6>
     @endif
