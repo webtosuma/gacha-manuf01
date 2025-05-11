@@ -44,7 +44,8 @@
 
 
 </head>
-<body class="bg-">
+@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-white';  @endphp
+<body class="{{ $class_bg_dark }}">
 
     <!--背景画像-->
     <div id="bgWindow"
@@ -62,7 +63,7 @@
             </a>
         </h1>
     </header>
-    <main >
+    <main>
 
         <div id="app" class="mx-auto p-3" style="max-width:600px;">
 

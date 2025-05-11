@@ -80,7 +80,7 @@
                     <button v-for="(select_order,key) in select_orders" :key="key"
                     @click="changeOrder( select_order.value )"
                     class="btn btn-sm border rounded-pill"
-                    :class=" order==select_order.value ? 'disabled btn-primary text-white' : '' "
+                    :class=" order==select_order.value ? 'disabled btn-primary text-white' : 'btn-light' "
                     style="opacity:1;"
                     >{{ select_order.lable }}</button>
                 </div>
@@ -96,11 +96,11 @@
 
 
         <!--商品一覧-->
-        <ul class="row px-3 bg-white rounded-3 mx-2 gy-3 mt-0" style="list-style:none;">
+        <ul class="row px-3 bg-white text-dark rounded-3 mx-2 gy-3 mt-0" style="list-style:none;">
 
             <!--読み込み中-->
             <li v-if="loading"
-            class="list-group-item bg-white py-5 fs-5 text-secondary">
+            class="list-group-item bg-white text-dark py-5 fs-5 text-secondary">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="spinner-border" role="status">
                         <span class="visually-hidden">Loading...</span>

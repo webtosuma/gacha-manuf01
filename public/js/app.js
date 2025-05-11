@@ -23854,7 +23854,7 @@ var render = function render() {
     return _c("button", {
       key: key,
       staticClass: "btn btn-sm border rounded-pill",
-      "class": _vm.order == select_order.value ? "disabled btn-primary text-white" : "",
+      "class": _vm.order == select_order.value ? "disabled btn-primary text-white" : "btn-light",
       staticStyle: {
         opacity: "1"
       },
@@ -23873,12 +23873,12 @@ var render = function render() {
       number: _vm.total
     }
   })], 1)])]), _vm._v(" "), _c("ul", {
-    staticClass: "row px-3 bg-white rounded-3 mx-2 gy-3 mt-0",
+    staticClass: "row px-3 bg-white text-dark rounded-3 mx-2 gy-3 mt-0",
     staticStyle: {
       "list-style": "none"
     }
   }, [_vm.loading ? _c("li", {
-    staticClass: "list-group-item bg-white py-5 fs-5 text-secondary"
+    staticClass: "list-group-item bg-white text-dark py-5 fs-5 text-secondary"
   }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.userPrizes, function (userPrize, key) {
     return _c("li", {
       key: key,

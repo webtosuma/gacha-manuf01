@@ -41,6 +41,9 @@ return [
         # Fobeesアカウントemail
         'fobees_emails'   =>  explode( ',', env('APP_FOBEES_EMAILS', '') ),
 
+        # 背景ダーク
+        'bg_dark'=> true,
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
