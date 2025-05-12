@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="text-dark">
 
         <loading-cover-component :loading="loading" />
 

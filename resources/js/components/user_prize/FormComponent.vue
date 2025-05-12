@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="text-dark">
 
         <!--ボトムメニュー-->
         <div v-if="bottom_menu == 'true'"
