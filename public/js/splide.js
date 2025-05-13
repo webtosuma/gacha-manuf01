@@ -35,7 +35,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
     /* gacha */
     // 共通のクラス名で全スライダーを取得
-    const sliders = document.querySelectorAll('.splide_gacha');
+    const sliders = document.querySelectorAll('.splide_gachas');
 
     // 各スライダーに対してSplideインスタンスを作成
     sliders.forEach((slider) => {

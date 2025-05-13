@@ -40,9 +40,9 @@
                     <ul class="splide__list">
 
                         <li v-for="( img_path, key ) in gacha.slide_imgs" :key="key"
-                        class="splide__slide p-1">
+                        class="splide__slide pe-1 py-1">
 
-                            <div class="ratio ratio-1x1 rounded-2 slide-img-bg" :style="'background-image: url('+ img_path +');'"></div>
+                            <div class="ratio ratio-3x4 rounded-2 slide-img-bg" :style="'background-image: url('+ img_path +');'"></div>
 
                         </li>
 
@@ -154,7 +154,9 @@
             //show_play_bottons
 
             /* Splideインスタンスを作成 */
-            this.splide();
+            if( this.gacha.slide_imgs && !this.gacha.i_time ){
+                this.splide();
+            }
 
 
 
@@ -164,10 +166,11 @@
 
             /* Splideインスタンスを作成 */
             splide: function(){
-                const sliders = document.querySelectorAll('.splide_gacha');
+
+                const slider = document.querySelector('#'+'splide_gacha'+this.gacha.id);
 
                 // 各スライダーに対してSplideインスタンスを作成
-                sliders.forEach((slider) => {
+                // sliders.forEach((slider) => {
 
                     new Splide( '#'+slider.id , {
 
@@ -180,8 +183,7 @@
 
                     }).mount();
 
-                });
-             },
+            },
         }
 
     }
