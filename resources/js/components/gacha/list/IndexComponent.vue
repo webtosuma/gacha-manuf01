@@ -1,8 +1,8 @@
 <template>
-    <div class="container overflow-hidden" style="min-height:50vh;">
+    <div class="container px-0 overflow-hidden" style="min-height:50vh;">
 
         <!--絞り込み-->
-        <div  v-if="!reading_data" class="row g-2 align-items-center justify-content-end mb-3">
+        <div  v-if="!reading_data" class="row g-2 align-items-center justify-content-end mb-3   px-1">
             <div class="col col-lg-auto">
                 <select
                 v-model="inputs.search_key"
@@ -27,7 +27,7 @@
 
             </div>
         </div>
-        <div v-else class="row g-2 align-items-center justify-content-end mb-3">
+        <div v-else class="row g-2 align-items-center justify-content-end mb-3   px-1">
             <div class=" col col-lg-auto">
                 <div class="px-5 py-2 bg-white rounded-pill">
                     <div class="d-flex justify-content-center">
@@ -39,8 +39,7 @@
 
         <!--読み込み中-->
         <div v-if="loading"
-        class="row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
-        >
+        class="row overflow-hidden gy-5  gx-md-5 mx-0 gx-3">
             <div v-for="(num, key) in [1,2,3,4,5,6]" :key="key"
             class="col-12 col-md-6 col-lg-4">
                 <div class="card border-0 shadow bg-transparent
@@ -72,7 +71,9 @@
         <div v-else>
 
 
-            <div class="row overflow-hidden g-5 mx-0 pb-4 gy-y" >
+            <div class="row overflow-hidden gy-5  gx-md-5 mx-0 pb-4 gy-y"
+            :class="inputs.card_size=='sm'?' gx-3 ':' gx-0 '"
+            >
                 <div v-for="(gacha, key) in gachas" :key="key"
                 :class="list_col_class" >
 
@@ -87,7 +88,7 @@
 
 
                     <u-gacha-card
-                    data-aos="zoom-in"
+                    data-aos="zoom-inin"
                     :gacha="gacha"
                     :sm_card="inputs.card_size=='sm'?1:0"
                     />

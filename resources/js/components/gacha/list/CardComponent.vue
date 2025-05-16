@@ -87,22 +87,23 @@
 
 
         <!-- play_buttons(非表示：カードサイズSM　または、カウントダウンあり) -->
-        <u-gacha-play-buttons
-        :r_action="gacha.r_action"
-        :r_costom="gacha.r_costom"
-        :one_play_point         ="gacha.one_play_point"
-        :is_disabled_oneplay_btn="gacha.is_disabled_oneplay_btn"
-        :is_disabled_tenplay_btn="gacha.is_disabled_tenplay_btn"
-        :is_disabled_custom_btn ="gacha.is_disabled_custom_btn"
+        <div class="mx-1">
+            <u-gacha-play-buttons
+            :r_action="gacha.r_action"
+            :r_costom="gacha.r_costom"
+            :one_play_point         ="gacha.one_play_point"
+            :is_disabled_oneplay_btn="gacha.is_disabled_oneplay_btn"
+            :is_disabled_tenplay_btn="gacha.is_disabled_tenplay_btn"
+            :is_disabled_custom_btn ="gacha.is_disabled_custom_btn"
 
-        :i_time                 ="gacha.i_time"
-        :limitted_i_time        ="gacha.limitted_i_time"
-        :dont_auth_user_rank    ="gacha.dont_auth_user_rank ?true :false"
-        :sub_auth_user          ="gacha.sub_auth_user       ?true :false"
-        :sm_card="sm_card"
+            :i_time                 ="gacha.i_time"
+            :limitted_i_time        ="gacha.limitted_i_time"
+            :dont_auth_user_rank    ="gacha.dont_auth_user_rank ?true :false"
+            :sub_auth_user          ="gacha.sub_auth_user       ?true :false"
+            :sm_card="sm_card"
 
-        />
-
+            />
+        </div>
 
         <!-- :show_play_bottons      ="show_play_bottons"
         :hidden_play_bottons_text="hidden_play_bottons_text" -->

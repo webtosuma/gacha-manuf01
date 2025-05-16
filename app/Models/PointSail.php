@@ -94,8 +94,9 @@ class PointSail extends Model
         {
             $ticket = floor( $this->price / 1000 );
 
-            return env('NEW_TICKET_SISTEM',false) ? $ticket: 0 ;
+            return env('NEW_TICKET_SISTEM',false) && !env('NEW_TICKET_SISTEM_NOTICKET',false) ? $ticket: 0 ;
         }
+
 
         /**
          * 画像ファイルパス (サブスク用-画像) sub_image_path

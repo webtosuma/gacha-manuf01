@@ -82,7 +82,7 @@
                     </delete-modal-component>
                 </form>
 
-                @if( env('NEW_TICKET_SISTEM',false) )
+                @if( env('NEW_TICKET_SISTEM',false) && !env('NEW_TICKET_SISTEM_NOTICKET',false) )
                 <!--チケット付与モーダル-->
                 <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
                     @csrf
@@ -107,7 +107,9 @@
                         </div>
                     </delete-modal-component>
                 </form>
+                @endif
 
+                @if( env('NEW_TICKET_SISTEM',false)  )
                 <!--会員ランク更新モーダル-->
                 <form action="{{ route('admin.user.user_rank_history.update', $user) }}" method="post">
                     @csrf

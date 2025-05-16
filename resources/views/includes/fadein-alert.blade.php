@@ -17,7 +17,11 @@
             $body  = 'alert-primary';
             $color = 'primary';
             @endphp --}}
-            <alert-modal-comp-component color="{{$color}}" icon="{{$icon}}" btn_text="閉じる">
+            <alert-modal-comp-component
+            color="{{$color}}"
+            icon ="{{$icon}}"
+            dark ="{{config('app.bg_dark')?1:0}}"
+            btn_text="閉じる">
                 <replace-text-component text="{{$body}}" ></replace-text-component>
             </alert-modal-comp-component>
 

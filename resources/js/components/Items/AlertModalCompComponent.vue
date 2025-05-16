@@ -4,7 +4,9 @@
 
         <div id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" class="modal fade show" aria-modal="true" role="dialog" style="display: block;">
             <div class="modal-dialog modal-dialog-centered anima-fadein-alert">
-                <div class="modal-content">
+                <div class="modal-content"
+                :class="dark==1?'dark-modal':''">
+
                     <div class="modal-header justify-content-center border-0 pb-0">
 
                         <h5 id="AlertModalLabel" class="modal-title" style="font-size: 6rem;">
@@ -46,6 +48,7 @@
             body:    { type: String, default: '',},
             icon:    { type: String, default: 'bi-check-circle',},
             btn_text:{ type: String, default: '閉じる',},
+            dark:    { type: [String,Number], default: 0,},
         },
         mounted() {
             this.show = this.color!='';
@@ -75,4 +78,9 @@
         }
     }
 
+
+    .dark-modal{
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+    }
 </style>

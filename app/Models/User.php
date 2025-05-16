@@ -435,9 +435,13 @@ class User extends Authenticatable
             # ポイントが0のとき
             if( ! $this->point ){ return null; }
 
+            # 期限
+            // $point_deadline_at = $this->point_deadline_at;
+            $point_deadline_at = $this->point_deadline_at->subDay(1);
+
             return ! $this->is_point_deadline
-            ? $this->point_deadline_at->format('有効期限：Y/m/d H:i')
-            : $this->point_deadline_at->format('期限切れ：Y/m/d H:i')
+            ? $point_deadline_at->format('有効期限：Y/m/d 24:00')
+            : $point_deadline_at->format('期限切れ：Y/m/d 24:00')
             ;
         }
 

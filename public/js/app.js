@@ -5111,6 +5111,10 @@ __webpack_require__.r(__webpack_exports__);
     btn_text: {
       type: String,
       "default": '閉じる'
+    },
+    dark: {
+      type: [String, Number],
+      "default": 0
     }
   },
   mounted: function mounted() {
@@ -12881,7 +12885,8 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "modal-dialog modal-dialog-centered anima-fadein-alert"
   }, [_c("div", {
-    staticClass: "modal-content"
+    staticClass: "modal-content",
+    "class": _vm.dark == 1 ? "dark-modal" : ""
   }, [_c("div", {
     staticClass: "modal-header justify-content-center border-0 pb-0"
   }, [_c("h5", {
@@ -22230,7 +22235,9 @@ var render = function render() {
     }
   }) : _vm._e()], 1)]), _vm._v(" "), _vm.gacha.subscription ? _c("div", {
     staticClass: "bg-white fw-bold"
-  }, [_vm._v("『" + _vm._s(_vm.gacha.subscription.sub_label) + "』専用")]) : _vm._e()]), _vm._v(" "), _c("u-gacha-play-buttons", {
+  }, [_vm._v("『" + _vm._s(_vm.gacha.subscription.sub_label) + "』専用")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mx-1"
+  }, [_c("u-gacha-play-buttons", {
     attrs: {
       r_action: _vm.gacha.r_action,
       r_costom: _vm.gacha.r_costom,
@@ -22244,7 +22251,7 @@ var render = function render() {
       sub_auth_user: _vm.gacha.sub_auth_user ? true : false,
       sm_card: _vm.sm_card
     }
-  })], 1);
+  })], 1)]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -22423,12 +22430,12 @@ var render = function render() {
     _c = _vm._self._c,
     _setup = _vm._self._setupProxy;
   return _c("div", {
-    staticClass: "container overflow-hidden",
+    staticClass: "container px-0 overflow-hidden",
     staticStyle: {
       "min-height": "50vh"
     }
   }, [!_setup.reading_data ? _c("div", {
-    staticClass: "row g-2 align-items-center justify-content-end mb-3"
+    staticClass: "row g-2 align-items-center justify-content-end mb-3 px-1"
   }, [_c("div", {
     staticClass: "col col-lg-auto"
   }, [_c("select", {
@@ -22478,16 +22485,17 @@ var render = function render() {
       }
     }
   }, [_vm._v("\n                " + _vm._s(_setup.inputs.card_size == "sm" ? "大きく表示" : "小さく表示") + "\n            ")])])]) : _c("div", {
-    staticClass: "row g-2 align-items-center justify-content-end mb-3"
+    staticClass: "row g-2 align-items-center justify-content-end mb-3 px-1"
   }, [_vm._m(0)]), _vm._v(" "), _setup.loading ? _c("div", {
-    staticClass: "row overflow-hidden g-3 g-md-5 mx-0 pb-4 gy-4"
+    staticClass: "row overflow-hidden gy-5 gx-md-5 mx-0 gx-3"
   }, _vm._l([1, 2, 3, 4, 5, 6], function (num, key) {
     return _c("div", {
       key: key,
       staticClass: "col-12 col-md-6 col-lg-4"
     }, [_vm._m(1, true), _vm._v(" "), _vm._m(2, true)]);
   }), 0) : _c("div", [_c("div", {
-    staticClass: "row overflow-hidden g-5 mx-0 pb-4 gy-y"
+    staticClass: "row overflow-hidden gy-5 gx-md-5 mx-0 pb-4 gy-y",
+    "class": _setup.inputs.card_size == "sm" ? " gx-3 " : " gx-0 "
   }, [_vm._l(_setup.gachas, function (gacha, key) {
     return _c("div", {
       key: key,
@@ -22503,7 +22511,7 @@ var render = function render() {
       staticClass: "fs-3 px-1"
     }, [_vm._v(_vm._s(key + 1))]), _vm._v("位\n                    ")])]) : _vm._e(), _vm._v(" "), _c("u-gacha-card", {
       attrs: {
-        "data-aos": "zoom-in",
+        "data-aos": "zoom-inin",
         gacha: gacha,
         sm_card: _setup.inputs.card_size == "sm" ? 1 : 0
       }
@@ -28814,7 +28822,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.anima-fadein-alert[data-v-a9a95e9a]{\n    animation: anima-fadein-alert-a9a95e9a 1s forwards;\n}\n@keyframes anima-fadein-alert-a9a95e9a {\nfrom {\n        opacity: 0;\n        transform: translateY(1rem);\n}\nto {\n        opacity: 1;\n        transform: translateY(0rem);\n}\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.anima-fadein-alert[data-v-a9a95e9a]{\n    animation: anima-fadein-alert-a9a95e9a 1s forwards;\n}\n@keyframes anima-fadein-alert-a9a95e9a {\nfrom {\n        opacity: 0;\n        transform: translateY(1rem);\n}\nto {\n        opacity: 1;\n        transform: translateY(0rem);\n}\n}\n.dark-modal[data-v-a9a95e9a]{\n    background-color: rgba(0, 0, 0, 0.7);\n    color: #fff;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

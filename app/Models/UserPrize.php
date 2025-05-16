@@ -148,11 +148,13 @@ class UserPrize extends Model
             $deadline_date = config('app.user_prize_deadline_date');//利用可能期間
             if( !$deadline_date ){ return ''; }
 
-            return ! $this->is_deadline
-            ? $this->deadline_at->format('有効期限：Y/m/d H:i')
-            : '期限切れ'
-            ;
+            # 期限切れテキスト
+            // $text = $this->deadline_at->format('有効期限：Y/m/d H:i');
+            $text = $this->deadline_at->subDay(1)->format('有効期限：Y/m/d 24:00');
+
+            return ! $this->is_deadline ? $text : '期限切れ' ;
         }
+
 
 
     /*
