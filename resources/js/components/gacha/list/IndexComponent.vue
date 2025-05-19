@@ -71,7 +71,7 @@
         <div v-else>
 
 
-            <div class="row overflow-hidden gy-5  gx-md-5 mx-0 pb-4 gy-y"
+            <div class="row overflow-hidden gy-5  gx-md-5 mx-1 pb-4 gy-y"
             :class="inputs.card_size=='sm'?' gx-3 ':' gx-0 '"
             >
                 <div v-for="(gacha, key) in gachas" :key="key"
