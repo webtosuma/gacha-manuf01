@@ -44,7 +44,7 @@
 
 
 </head>
-@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-white';  @endphp
+@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-body';  @endphp
 <body class="{{ $class_bg_dark }}">
 
     <!--背景画像-->
