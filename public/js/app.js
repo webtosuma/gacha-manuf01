@@ -21652,9 +21652,10 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "video-area h-100 d-flex justify-content-center"
   }, [_c("video", {
-    staticClass: "bg_video w-10 h-100",
+    staticClass: "bg_video h-100",
     staticStyle: {
-      "object-fit": "cover"
+      "object-fit": "cover",
+      "max-width": "100vw"
     },
     attrs: {
       playsinline: "",
@@ -21672,7 +21673,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
   }, [_c("button", {
-    staticClass: "btn btn-light btn-sm py-0 fs-3",
+    staticClass: "btn btn-dark btn-sm py-0 fs-3",
     attrs: {
       id: "muteButton"
     },
@@ -21699,7 +21700,7 @@ var render = function render() {
       value: _vm.rank_up
     }
   }) : _vm._e(), _vm._v(" "), _vm.time == 0 ? _c("button", {
-    staticClass: "btn btn-light btn-sm py-0",
+    staticClass: "btn btn-dark btn-sm py-0",
     attrs: {
       type: "submit"
     }

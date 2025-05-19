@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル
+|  ガチャ　モデル s_disabled_custom_btn
 | =============================================
 */
 class Gacha extends Model
@@ -773,13 +773,8 @@ class Gacha extends Model
         */
         public function getIsDisabledCustomBtnAttribute()
         {
-            # ログインユーザーの会員ランク
-            // $user = Auth::check() ? Auth::user() : null;
-            // $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-            // if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return 1; }
-
             # 終了
-            if( $this->remaining_count == 0 ){ return 1; }
+            if( in_array( $this->type, ['nomal','max_custom']) && $this->remaining_count == 0 ){ return 1; }
             # 利用可
             if( in_array( $this->type, ['nomal','max_custom'] ) ){ return 0; }
             # 非表示

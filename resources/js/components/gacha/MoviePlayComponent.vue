@@ -7,11 +7,11 @@
             <div class="section_video mx-auto w-100 h-100">
                 <!-- 動画mobile -->
                 <div class="video-area h-100 d-flex justify-content-center">
-                    <video class="bg_video w-10 h-100"
+                    <video class="bg_video h-100"
                     playsinline
                     :muted="muted"
                     poster=""
-                    style="object-fit: cover;"
+                    style="object-fit: cover; max-width:100vw;"
                     ><source :src="movie_path_mobile" />
                     </video>
                 </div>
@@ -24,7 +24,7 @@
 
                     <!-- 音声切り替えボタン -->
                     <button @click="switchMuted()"
-                    class="btn btn-light btn-sm py-0 fs-3"
+                    class="btn btn-dark btn-sm py-0 fs-3"
                     id="muteButton" >
                         <i v-if="!muted" class="bi bi-volume-up-fill"></i>
                         <i v-else class="bi bi-volume-mute-fill"></i>
@@ -37,7 +37,7 @@
 
                         <button v-if="time==0"
                         type="submit"
-                        class="btn btn-light btn-sm py-0">
+                        class="btn btn-dark btn-sm py-0">
                             <div class="d-flex justify-content-center align-items-center">
                                 <span>演出をスキップ</span>
                                 <i class="bi bi-skip-end-fill fs-3"></i>

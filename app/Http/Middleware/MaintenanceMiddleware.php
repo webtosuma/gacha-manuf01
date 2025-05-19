@@ -24,7 +24,7 @@ class MaintenanceMiddleware
     {
         # ログインユーザーがサイト管理者のとき
         if( Auth::check() && Auth::user()->admin ){
-            // return $next($request);
+            return $next($request);
         }
 
         # メンテナンス中のとき
