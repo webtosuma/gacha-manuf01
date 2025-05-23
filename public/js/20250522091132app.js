@@ -21648,13 +21648,14 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex align-items-center justify-content-center h-100 w-100 bg-"
   }, [_c("div", {
-    staticClass: "section_video mx-auto w-100 h-100"
+    staticClass: "section_video mx-auto"
   }, [_c("div", {
-    staticClass: "video-area d-flex align-items-center justify-content-center h-100"
+    staticClass: "video-area h-100 d-flex justify-content-center"
   }, [_c("video", {
     staticClass: "bg_video h-100",
     staticStyle: {
-      "object-fit": "cover"
+      "object-fit": "cover",
+      "max-width": "100vw"
     },
     attrs: {
       playsinline: "",
@@ -21714,7 +21715,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-12 col-md-6 mx-auto"
   }, [_c("a", {
-    staticClass: "btn btn-dark border fs- w-100",
+    staticClass: "btn btn-light border fs- w-100",
     attrs: {
       href: _vm.r_redirect,
       target: "_blank"

@@ -78,9 +78,9 @@
         @endif
 
 
-        @if ( isset( $message ) )
+        {{-- @if ( isset( $message ) )
             <section class="bg-dark text-warning text-center">{{$message}}</section>
-        @endif
+        @endif --}}
 
         <main>
             @yield('content')

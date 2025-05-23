@@ -9,6 +9,20 @@
 @endsection
 
 
+@section('style')
+    @php
+        $bg_image = \App\Http\Controllers\AdminBackGroundController::getBgSub();
+    @endphp
+    <style>
+        /* サイトデフォルト背景 */
+        #bgWindow{
+            background-image: url({{ $bg_image }});
+        }
+    </style>
+@endsection
+
+
+
 @section('content')
 
     <div class="container my-md-5">

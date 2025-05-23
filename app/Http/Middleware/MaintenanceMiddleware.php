@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\MaintenanceController; 
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------

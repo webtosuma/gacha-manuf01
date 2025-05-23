@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-md- mx-auto mb-3">
-                <button class="w-100 btn btn-lg btn-dark" type="submit">ログイン</button>
+                <button class="w-100 btn btn-lg btn-info" type="submit">ログイン</button>
             </div>
             <a href="" class="text-decoration-none"
             >パスワードをお忘れの方はこちら</a>
@@ -40,7 +40,7 @@
         <div class="text-center w-100">
             <small class="text-body-secondary">ユーザーログインはこちら</small>
             <a href="{{ route('login') }}"
-            class="w-100 py-2 mb-2 btn btn-primary text-white rounded-3"
+            class="w-100 py-2 mb-2 btn btn-outline-info text-white rounded-3"
             >ユーザーログイン</a>
         </div>
 

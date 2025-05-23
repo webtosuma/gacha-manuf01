@@ -1,17 +1,17 @@
 <template>
-    <div class="mx-auto bg-" style="height:100vh; max-width:100vw;">
+    <div class="mx-auto overflow-hidden" style="height:100vh; max-width:100vw;">
         <div class="d-flex align-items-center justify-content-center h-100 w-100 bg-">
 
 
 
             <div class="section_video mx-auto w-100 h-100">
                 <!-- 動画mobile -->
-                <div class="video-area h-100 d-flex justify-content-center">
+                <div class="video-area d-flex align-items-center justify-content-center h-100 ">
                     <video class="bg_video h-100"
                     playsinline
                     :muted="muted"
                     poster=""
-                    style="object-fit: cover; max-width:100vw;"
+                    style="object-fit: cover;"
                     ><source :src="movie_path_mobile" />
                     </video>
                 </div>
@@ -60,7 +60,7 @@
             class="position-fixed bottom-0 end-0 p-3 pb-4 w-100 ">
                 <div class="col-12 col-md-6 mx-auto">
                     <a :href="r_redirect"  target="_blank"
-                    class="btn btn-light border fs- w-100"
+                    class="btn btn-dark border fs- w-100"
                     >{{ redirect_text }}</a>
                 </div>
             </div>

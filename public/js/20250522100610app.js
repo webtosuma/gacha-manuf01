@@ -21672,7 +21672,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
   }, [_c("button", {
-    staticClass: "btn btn-dark btn-sm py-0 fs-3",
+    staticClass: "btn btn-light btn-sm py-0 fs-3",
     attrs: {
       id: "muteButton"
     },
@@ -21699,7 +21699,7 @@ var render = function render() {
       value: _vm.rank_up
     }
   }) : _vm._e(), _vm._v(" "), _vm.time == 0 ? _c("button", {
-    staticClass: "btn btn-dark btn-sm py-0",
+    staticClass: "btn btn-light btn-sm py-0",
     attrs: {
       type: "submit"
     }
@@ -21714,7 +21714,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-12 col-md-6 mx-auto"
   }, [_c("a", {
-    staticClass: "btn btn-dark border fs- w-100",
+    staticClass: "btn btn-light border fs- w-100",
     attrs: {
       href: _vm.r_redirect,
       target: "_blank"

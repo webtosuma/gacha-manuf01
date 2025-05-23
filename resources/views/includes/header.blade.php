@@ -1,6 +1,6 @@
 <header class="position-fixed bg-white text-dark w-100" style="z-index:100;">
     @if ( config('app.debug') )
-        <h6 class="text-danger text-center m-0 bg-light">TEST MODE</h6>
+        <h6 class="text-danger text-center m-0 bg- position-fixed w-100"  style="z-index:101;">TEST MODE</h6>
     @endif
 
     <div class="container py- px-0">
