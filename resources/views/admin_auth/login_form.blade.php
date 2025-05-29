@@ -40,7 +40,7 @@
         <div class="text-center w-100">
             <small class="text-body-secondary">ユーザーログインはこちら</small>
             <a href="{{ route('login') }}"
-            class="w-100 py-2 mb-2 btn btn-outline-info text-white rounded-3"
+            class="w-100 py-2 mb-2 btn btn-outline-info text- rounded-3"
             >ユーザーログイン</a>
         </div>
 

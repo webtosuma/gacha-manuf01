@@ -25,11 +25,11 @@
                 </a> --}}
 
                 <!--お知らせ-->
-                <a href="{{route('infomation')}}"
+                {{-- <a href="{{route('infomation')}}"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="お知らせ"
                 class="btn fs-2">
                     <i class="bi bi-bell"></i>
-                </a>
+                </a> --}}
 
                 @guest
                     <!-- ログイン前 -->

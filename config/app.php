@@ -44,6 +44,10 @@ return [
         # 背景ダーク
         'bg_dark'                  => (boolean) env('APP_BG_DARK', false),
 
+        # クーポン機能
+        'coupon'                   => (boolean) env('COUPON', false),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

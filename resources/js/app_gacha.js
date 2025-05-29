@@ -1,0 +1,81 @@
+/*
+|=============================================
+| ガチャ　コンポーネント
+|=============================================
+*/
+import Vue from 'vue'
+
+    /* ガチャ一覧 */
+    Vue.component('u-gacha-list',
+    require('./components/gacha/list/IndexComponent.vue').default);
+
+        /* ガチャ カード */
+        Vue.component('u-gacha-card',
+        require('./components/gacha/list/CardComponent.vue').default);
+
+        /* ガチャ 画像 */
+        Vue.component('u-gacha-image',
+        require('./components/gacha/list/ImageComponent.vue').default);
+
+        /* ガチャ メーター */
+        Vue.component('u-gacha-metter',
+        require('./components/gacha/list/MetterComponent.vue').default);
+
+        /* ガチャボタン */
+        Vue.component('u-gacha-play-buttons',
+        require('./components/gacha/list/PlayButtonsComponent.vue').default);
+
+
+    /* カウントダウンガチャコンポーネント */
+    Vue.component('u-countdown-gacha',
+    require('./components/gacha/CountdownGachaComponent.vue').default);
+
+    /* カウントダウン(日時)ガチャコンポーネント */
+    Vue.component('u-countdown-datetime-gacha',
+    require('./components/gacha/CountdownDatetimeGachaComponent.vue').default);
+
+    /* 動画自動再生コンポーネント */
+    Vue.component('u-movie-play',
+    require('./components/gacha/MoviePlayComponent.vue').default);
+
+    /* 動画自動再生コンポーネント(Youtube) */
+    Vue.component('u-movie-play-youtube',
+    require('./components/gacha/MoviePlayYoutubeComponent.vue').default);
+
+    /* ガチャボタンコンポーネント */
+    Vue.component('u-gacha-btn',
+    require('./components/gacha/DisabledButton.vue').default);
+
+    /* ガチャ結果フォーム */
+    Vue.component('u-gacha-result-form',
+    require('./components/gacha/ResultFormComponent.vue').default);
+
+
+
+    /* ユーザー取得景品一覧フォーム */
+    Vue.component('u-user-prize-form',
+    require('./components/user_prize/FormComponent.vue').default);
+
+    /* チケット交換一覧フォーム */
+    Vue.component('u-ticket-store',
+    require('./components/ticket_store/TicketStoreComponent.vue').default);
+
+    /* 発送申請入力フォーム */
+    Vue.component('u-shipped-form',
+    require('./components/shipped/Form.vue').default);
+
+        /* お届け先一覧 */
+        Vue.component('u-addressーlist-form',
+        require('./components/shipped/AddressListForm.vue').default);
+
+        /* お届け先の新規登録 */
+        Vue.component('u-create-user-address-form',
+        require('./components/shipped/CreateUserAddressForm.vue').default);
+
+        /* 発送景品リスト */
+        Vue.component('u-userprize-list',
+        require('./components/shipped/UserPrizes.vue').default);
+
+    /**/
+
+export default Vue

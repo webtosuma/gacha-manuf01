@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(InfomationSeeder::class);//お知らせ
         $this->call(TicketSailSeeder::class);//販売用チケット
         $this->call(StoreSeeder::class);//販売商品
+        $this->call(CouponSeeder::class);//クーポン
 
         /* 追加要素 */
         $this->call(GachaDiscriptionSeederUpdate::class);//ガチャ詳細情報の追加

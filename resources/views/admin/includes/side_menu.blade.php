@@ -96,6 +96,15 @@
             'label' => 'サブスク管理',
         ];
     }
+    // クーポンの追加
+    if( config('app.coupon') )
+    {
+        $ragistation_array[] = [
+            'route' => route('admin.coupon'),
+            'key'   => 'coupon',
+            'label' => 'クーポン管理',
+        ];
+    }
 
 
 

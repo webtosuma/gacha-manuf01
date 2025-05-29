@@ -28,8 +28,6 @@ class Contact extends Model
 
 
 
-
-
     /*
     |--------------------------------------------------------------------------
     | アクセサー
@@ -109,6 +107,8 @@ class Contact extends Model
             return $contacts;
         }
 
+
+
         /**
          * 一覧表示用データリスト（getMonthList)
          * @return Array
@@ -132,6 +132,8 @@ class Contact extends Model
                 ];
             });
         }
+
+
 
         /**
          * キーワード(key_words)から検索するメソッド holiday_summary

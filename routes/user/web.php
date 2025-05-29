@@ -134,6 +134,9 @@ Route::middleware([ /* ミドルウェアー */
     # 商品ストアー
     include('web/store.php');
 
+    # クーポン
+    include('web/coupon.php');
+    
 
 });//end middleware
 Route::middleware([ /* ミドルウェアー(メンテナンス除外) */

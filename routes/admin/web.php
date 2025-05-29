@@ -27,9 +27,6 @@ use \App\Http\Controllers;
     # 販売ポイント
     include('web/point_sail.php');
 
-    # サブスク管理
-    include('web/subscription.php');
-
     # 演出動画
     include('web/movie.php');
 
@@ -45,8 +42,16 @@ use \App\Http\Controllers;
     # メンテナンス表示
     include('web/maintenance.php');
 
+    # サブスク管理
+    include('web/subscription.php');
+
+    # クーポン
+    include('web/coupon.php');
+
     # 操作履歴
     include('web/log.php');
+
+
 
     # ポイント売上
     include('web/point_history.php');

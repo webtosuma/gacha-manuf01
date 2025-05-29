@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\GachaCategory;
-
 /*
 | =============================================
 |  サイト管理者　ガチャのカテゴリー　リクエスト

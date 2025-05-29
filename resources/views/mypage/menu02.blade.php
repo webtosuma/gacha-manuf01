@@ -29,6 +29,20 @@
                 </div>
             </a>
         </div>
+        @if( config('app.coupon') )
+            <div class="col-4">
+                <a href="{{ route('coupon') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M506.734 117.695c-5.06-11.96-13.434-22.128-24.22-29.417-11.048-7.481-23.969-11.434-37.41-11.434H66.892c-9.04 0-17.804 1.768-26.042 5.258-11.959 5.064-22.131 13.442-29.42 24.228C3.941 117.394-0.012 130.326 0 143.737v224.526c-.004 9.018 1.768 17.781 5.266 26.043 5.064 11.966 13.434 22.135 24.216 29.416 11.048 7.48 23.969 11.434 37.372 11.434h378.25c9.037 0 17.796-1.776 26.042-5.273 11.96-5.05 22.132-13.427 29.42-24.212 7.489-11.064 11.442-23.996 11.434-37.408V143.737c0-9.034-1.772-17.797-5.266-26.042zm-32.454 250.576c-.007 3.945-.776 7.759-2.285 11.342-2.185 5.157-5.946 9.72-10.597 12.854-4.891 3.29-10.373 4.957-16.294 4.965H66.892c-3.941 0-7.759-.765-11.345-2.278-5.15-2.177-9.716-5.937-12.859-10.608-3.281-4.88-4.953-10.362-4.964-16.284V143.729c.004-3.945.772-7.759 2.285-11.341 2.17-5.142 5.93-9.705 10.597-12.855 4.903-3.289 10.38-4.957 16.282-4.965h378.216c3.93 0 7.748.772 11.346 2.286 5.153 2.17 9.724 5.93 12.862 10.593 3.278 4.879 4.953 10.353 4.968 16.29v224.52z"/>
+                    <path d="M413.681 158.144h-56.037L248.913 353.856h164.768c9.4 0 17.02-7.62 17.02-17.016V175.168c0-9.404-7.62-17.024-17.02-17.024z"/>
+                    </svg>
+
+                    <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">
+                        <span>クーポン</span>
+                    </div>
+                </a>
+            </div>
+        @endif
         <div class="col-4">
             <a href="{{ route('guide') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
@@ -65,7 +79,7 @@
 <div class="bg-white border- p-3">
     <h6 class="fw-bole pb-0">履歴</h6>
     <div class="row g-2">
-        <div class="col">
+        <div class="col-4">
             <a href="{{ route('gacha_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stars" viewBox="0 0 16 16">
                     <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
@@ -73,7 +87,7 @@
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">ガチャ</div>
             </a>
         </div>
-        <div class="col">
+        <div class="col-4">
             <a href="{{ route('point_history') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                 <img src="{{asset('storage/site/image/icon/point.png')}}"
                 alt="ポイント" class="d-block mx-auto" style=" width:24px; height:24px;">
@@ -81,7 +95,7 @@
             </a>
         </div>
         @if( !env('NEW_TICKET_SISTEM_NOTICKET') )
-            <div class="col">
+            <div class="col-4">
                 <a href="{{route('ticket_history')}}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
                     <img src="{{asset('storage/site/image/ticket/dark.png')}}"
                     alt="チケット" class="d-block mx-auto" style=" width:24px; height:24px;">
@@ -90,14 +104,27 @@
                 </a>
             </div>
         @endif
-        <div class="col">
+        <div class="col-4">
             <a href="{{ route('user_rank_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
                 <img src="{{asset('storage/site/image/icon/user_rank.png')}}"
                 alt="会員ランク" class="d-block mx-auto" style=" width:24px; height:24px;">
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">会員ランク</div>
             </a>
         </div>
+        @if( config('app.coupon') )
+            <div class="col-4">
+                <a href="{{ route('coupon.history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 512 512">
+                    <path d="M506.734 117.695c-5.06-11.96-13.434-22.128-24.22-29.417-11.048-7.481-23.969-11.434-37.41-11.434H66.892c-9.04 0-17.804 1.768-26.042 5.258-11.959 5.064-22.131 13.442-29.42 24.228C3.941 117.394-0.012 130.326 0 143.737v224.526c-.004 9.018 1.768 17.781 5.266 26.043 5.064 11.966 13.434 22.135 24.216 29.416 11.048 7.48 23.969 11.434 37.372 11.434h378.25c9.037 0 17.796-1.776 26.042-5.273 11.96-5.05 22.132-13.427 29.42-24.212 7.489-11.064 11.442-23.996 11.434-37.408V143.737c0-9.034-1.772-17.797-5.266-26.042zm-32.454 250.576c-.007 3.945-.776 7.759-2.285 11.342-2.185 5.157-5.946 9.72-10.597 12.854-4.891 3.29-10.373 4.957-16.294 4.965H66.892c-3.941 0-7.759-.765-11.345-2.278-5.15-2.177-9.716-5.937-12.859-10.608-3.281-4.88-4.953-10.362-4.964-16.284V143.729c.004-3.945.772-7.759 2.285-11.341 2.17-5.142 5.93-9.705 10.597-12.855 4.903-3.289 10.38-4.957 16.282-4.965h378.216c3.93 0 7.748.772 11.346 2.286 5.153 2.17 9.724 5.93 12.862 10.593 3.278 4.879 4.953 10.353 4.968 16.29v224.52z"/>
+                    <path d="M413.681 158.144h-56.037L248.913 353.856h164.768c9.4 0 17.02-7.62 17.02-17.016V175.168c0-9.404-7.62-17.024-17.02-17.024z"/>
+                    </svg>
 
+                    <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">
+                        <span>クーポン</span>
+                    </div>
+                </a>
+            </div>
+        @endif
     </div>
 </div>
 
