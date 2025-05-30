@@ -33,7 +33,8 @@ class AdminCouponRequest extends FormRequest
 
             'service'         => ['required','in:point,prize'],
 
-            'is_count'        => ['required'],
+            'user_type'       => ['required','in:user,all_user'],
+            // 'is_count'        => ['required'],
 
             'is_expiration'   => ['required'],
 
@@ -53,11 +54,11 @@ class AdminCouponRequest extends FormRequest
 
 
         # 利用回数制限のルール追加
-        if( $request['is_count'] )
-        {
-            $rules['count']     = ['required'];
-            $rules['user_type'] = ['required'];
-        }
+        // if( $request['is_count'] )
+        // {
+        //     $rules['count']     = ['required'];
+        //     $rules['user_type'] = ['required'];
+        // }
 
         # 有効期限
         if( $request['is_expiration'] )

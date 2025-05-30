@@ -78,12 +78,15 @@ class Coupon extends Model
         'published_state',      //公開状態(0:非公開 1:公開 2:公開予約)
         'remaining_count',      //残り回数
         'admin_remaining_count',//残り回数(Admin 先着用)
+        'histories_count',       //履歴数(利用数)
 
         'is_published',         //公開中かどうか
         'is_expiration_done',   //有効期限が切れているか否か
+        'is_new',               //newか否か
 
-        'r_edit',
-        'r_destroy',
+        'r_edit',               //[ルーティング] 編集
+        'r_destroy',            //[ルーティング] 削除
+        'r_copy',               //[ルーティング] コピー
     ];
 
 
@@ -243,13 +246,7 @@ class Coupon extends Model
             # 回数指定：ユーザー別利用回数(user)のとき
             if( $this->user_type == 'user' )
             {
-                $user = Auth::user();
-                $history_count = CouponHistory::where('coupon_id',$this->id)
-                ->where('user_id',$user->id)
-                ->count();
-
-                $count = $this->count - $history_count;
-                return $count>0 ? $count : false;
+               return $this->count;
             }
 
             return false;
@@ -269,7 +266,7 @@ class Coupon extends Model
 
 
         /**
-         * 公開フォーマット published_at_format published_at_format
+         * 公開フォーマット published_at_format
          * @return String
         */
         public function getPublishedAtFormatAttribute()
@@ -278,6 +275,14 @@ class Coupon extends Model
         }
 
 
+        /**
+         * 履歴数(利用数) histories_count
+         * @return String
+        */
+        public function getHistoriesCountAttribute()
+        {
+            return CouponHistory::where('coupon_id',$this->id)->count();
+        }
 
     /*
     |--------------------------------------------------------------------------
@@ -347,6 +352,18 @@ class Coupon extends Model
             return $this->expiration_at < now()->format('Y-m-d H:i:s') ;
         }
 
+
+        /**
+         * 公開中か否か is_new
+         * @return String
+        */
+        public function getIsNewAttribute()
+        {
+            // return isset($this->published_at);
+            return $this->published_at
+            && $this->published_at <= now()->format('Y-m-d H:i:s')
+            && $this->published_at > now()->subDay(7)->format('Y-m-d H:i:s') ;
+        }
     /*
     |--------------------------------------------------------------------------
     | アクセサー ルーティング
@@ -365,6 +382,13 @@ class Coupon extends Model
          * @return String
         */
         public function getRDestroyAttribute() { return route('admin.coupon.destroy',$this->id); }
+
+
+        /**
+         * [ルーティング]コピー r_copy
+         * @return String
+        */
+        public function getRCopyAttribute() { return route('admin.coupon.copy',$this->id); }
 
 
     /*

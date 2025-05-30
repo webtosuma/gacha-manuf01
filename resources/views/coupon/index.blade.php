@@ -71,8 +71,14 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <!--body-->
                                     <div class="col p-3" style="font-size:11px;">
+                                        <div class="form-text">
+                                            {{$coupon->published_at_format}}
+                                            @if ($coupon->is_new)
+                                                <span class="text-danger">NEW</span>
+                                            @endif
+                                        </div>
                                         <h6>{{$coupon->title}}</h6>
 
                                         <div class="">{{$coupon->discription_text}}</div>

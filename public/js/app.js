@@ -6727,11 +6727,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: String,
       "default": ''
     },
-    r_api_destroy: {
+    r_create: {
       type: String,
       "default": ''
     },
-    r_create: {
+    r_history: {
       type: String,
       "default": ''
     },
@@ -15346,14 +15346,25 @@ var render = function render() {
     staticStyle: {
       top: "2rem"
     }
+  }, [_c("div", {
+    staticClass: "row g-3 mb-2"
+  }, [_c("div", {
+    staticClass: "col"
   }, [_c("a", {
-    staticClass: "btn btn-primary text-white mb-2 shadow",
+    staticClass: "btn btn-primary text-white shadow w-100",
     attrs: {
       href: _vm.r_create
     }
   }, [_c("i", {
     staticClass: "bi bi-plus-lg"
-  }), _vm._v("\n                " + _vm._s("新規登録") + "\n                ")]), _vm._v(" "), _c("div", {
+  }), _vm._v("\n                        " + _vm._s("新規登録") + "\n                        ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col"
+  }, [_c("a", {
+    staticClass: "btn btn-light border w-100",
+    attrs: {
+      href: _vm.r_history
+    }
+  }, [_vm._v("\n                        " + _vm._s("クーポン履歴") + "\n                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "row flex-column g-2 mb-2"
   }, [_vm._v("\n                    " + _vm._s(_setup.inputs.keyword) + "\n                    "), _c("div", {
     staticClass: "col input-group mb-3"
@@ -15555,9 +15566,9 @@ var render = function render() {
       key: key,
       staticClass: "list-group-item bg-white border-0"
     }, [_c("hr", {}), _vm._v(" "), _c("div", {
-      staticClass: "row align-items- py-2 g-3"
+      staticClass: "row align-items- py-2 g-1"
     }, [_c("div", {
-      staticClass: "col-auto",
+      staticClass: "col-auto pe-3",
       staticStyle: {
         width: "10rem"
       }
@@ -15585,7 +15596,9 @@ var render = function render() {
       staticClass: "badge rounded-pill bg-warning"
     }, [_vm._v(_vm._s("予約中"))]) : _vm._e()]), _vm._v(" "), _c("span", {
       staticClass: "form-text"
-    }, [_vm._v(_vm._s((_coupon$published_at_ = coupon.published_at_format) !== null && _coupon$published_at_ !== void 0 ? _coupon$published_at_ : "--.--.--"))])]), _vm._v(" "), _c("h5", {
+    }, [_vm._v(_vm._s((_coupon$published_at_ = coupon.published_at_format) !== null && _coupon$published_at_ !== void 0 ? _coupon$published_at_ : "--.--.--"))]), _vm._v(" "), coupon.is_new ? _c("div", {
+      staticClass: "text-danger"
+    }, [_vm._v("NEW")]) : _vm._e()]), _vm._v(" "), _c("h5", {
       staticClass: "fw-bold"
     }, [_vm._v(_vm._s(coupon.title))]), _vm._v(" "), coupon.is_use_code ? _c("div", {
       staticClass: "my-2"
@@ -15613,13 +15626,11 @@ var render = function render() {
       staticClass: "border px-2 text-center text-danger"
     }, [_vm._v("終了しました。")])]) : _vm._e(), _vm._v(" "), coupon.user_type == "user" ? _c("div", [_c("div", {
       staticClass: "d-flex align-items-center form-text"
-    }, [_c("span", [_vm._v("おひとり様")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(coupon.count) + "回")]), _vm._v(" "), _c("span", [_vm._v("までご利用できます。")])]), _vm._v(" "), coupon.admin_remaining_count ? _c("div", {
-      staticClass: "border px-2 d-flex align-items-center"
-    }, [_c("span", [_vm._v("あと")]), _vm._v(" "), _c("div", {
-      staticClass: "fw-bold fs-5 m-0 px-2"
-    }, [_vm._v(_vm._s(coupon.admin_remaining_count))]), _vm._v(" "), _c("span", [_vm._v("回")])]) : _c("div", {
-      staticClass: "border px-2 text-center text-danger"
-    }, [_vm._v("終了しました。")])]) : _vm._e()]) : _c("div", [_vm._v("何回でも利用可能")]), _vm._v(" "), _c("div", {
+    }, [_c("span", [_vm._v("おひとり様")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(coupon.count) + "回")]), _vm._v(" "), _c("span", [_vm._v("までご利用できます。")])])]) : _vm._e()]) : _c("div", [_vm._v("何回でも利用可能")]), _vm._v(" "), _c("div", {
+      staticClass: "borderrr px- d-flex align-items-center"
+    }, [_c("span", [_vm._v("利用済み回数：")]), _vm._v(" "), _c("span", {
+      staticClass: "text-success"
+    }, [_vm._v(_vm._s(coupon.histories_count) + "回")])]), _vm._v(" "), _c("div", {
       staticClass: "d-flex flex-column gap-0"
     }, [coupon.expiration_at_format ? _c("span", {
       staticClass: "text-secondary"
@@ -15635,6 +15646,21 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "bi bi-pencil-fill"
     })])]), _vm._v(" "), _c("div", {
+      staticClass: "col-auto"
+    }, [_c("form", {
+      attrs: {
+        action: coupon.r_copy,
+        method: "post"
+      }
+    }, [_c("input", {
+      attrs: {
+        type: "hidden",
+        name: "_token"
+      },
+      domProps: {
+        value: _vm.token
+      }
+    }), _vm._v(" "), _vm._m(1, true)])]), _vm._v(" "), _c("div", {
       staticClass: "col-auto"
     }, [_c("form", {
       attrs: {
@@ -15694,6 +15720,15 @@ var staticRenderFns = [function () {
     staticClass: "input-group-text bg-white"
   }, [_c("i", {
     staticClass: "bi bi-search"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("button", {
+    staticClass: "btn btn-sm btn-light border fs-4"
+  }, [_c("i", {
+    staticClass: "bi bi-copy"
   })]);
 }];
 render._withStripped = true;

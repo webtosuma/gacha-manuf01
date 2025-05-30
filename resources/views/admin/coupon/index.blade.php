@@ -30,8 +30,8 @@ $active_submenu = true;
         <a-coupon-list
         token="{{ csrf_token() }}"
         r_api_list   ="{{route('admin.api.coupon')}}"
-        r_api_destroy="{{route('admin.api.coupon.destroy')}}"
         r_create     ="{{route('admin.coupon.create')}}"
+        r_history    ="{{route('admin.coupon.history')}}"
         card_ration  ="{{config('app.gacha_card_ratio')}}"
         ></a-coupon-list>
 

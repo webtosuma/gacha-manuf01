@@ -1,8 +1,8 @@
 <!-- ファビコン画像の読み込み -->
 <link rel="shortcut icon" href="{{asset('storage/site/image/favicon.png')}}">
 <!-- bootstrap アイコン の読み込み-->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-
+{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"> --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/animation.css') }}" rel="stylesheet">

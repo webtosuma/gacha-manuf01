@@ -58,7 +58,7 @@ class AdminMovieController extends Controller
         $movie->save();
 
         # 操作ログの更新
-        AdminLogController::createLog( 'movie.create', $movie->id );
+        // AdminLogController::createLog( 'movie.create', $movie->id );
 
         $request->session()->regenerateToken();// 二重送信防止
 
@@ -99,7 +99,7 @@ class AdminMovieController extends Controller
         $movie->update( $inputs );
 
         # 操作ログの更新
-        AdminLogController::createLog( 'movie.edit', $movie->id );
+        // AdminLogController::createLog( 'movie.edit', $movie->id );
 
         $request->session()->regenerateToken();// 二重送信防止
 
@@ -126,7 +126,7 @@ class AdminMovieController extends Controller
         $movie->delete();
 
         # 操作ログの更新
-        AdminLogController::createLog( 'movie.delete', $movie->id );
+        // AdminLogController::createLog( 'movie.delete', $movie->id );
 
 
         # リダイレクト

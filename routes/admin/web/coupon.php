@@ -44,6 +44,11 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminCouponController ::class, 'destroy'])
     ->name('admin.coupon.destroy');
 
+    # コピー
+    Route::post('/admin/coupon/copy/{coupon}',
+    [Controllers\AdminCouponController ::class, 'copy'])
+    ->name('admin.coupon.copy');
+
 
 });//end middleware
 /*
@@ -60,10 +65,11 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.api.coupon');
 
 
-    # 削除API(admin_destroy)
-    Route::delete('/admmin/api/coupon/destroy/',
-    [Controllers\AdminApiCouponController::class, 'destroy'])
-    ->name('admin.api.coupon.destroy');
+    # 履歴一覧情報の発行API(admin_list)
+    Route::post('/admmin/api/coupon/history',
+    [Controllers\AdminApiCouponHistoryController::class, 'history'])
+    ->name('admin.api.coupon.history');
+
 
 
 });//end middleware

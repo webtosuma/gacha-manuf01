@@ -37,9 +37,10 @@ class AdminCouponController extends Controller
      */
     public function history()
     {
-        $coupon_histories = CouponHistory::orderByDesc('created_at')->get();
+        $coupon_histories = CouponHistory::orderByDesc('created_at')
+        ->paginate(20);
 
-        return view('admin.coupon.history');
+        return view('admin.coupon.history',compact('coupon_histories'));
     }
 
 
@@ -142,20 +143,67 @@ class AdminCouponController extends Controller
     /**
      * 削除
      *
+     * @param  Request $request
      * @param  Coupon $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coupon $coupon)
+    public function destroy(Request $request, Coupon $coupon)
     {
         $coupon->delete();
 
         # 操作ログの更新
         AdminLogController::createLog( 'coupon.delete', $coupon->id );
 
+        # 二重送信防止
+        $request->session()->regenerateToken();
 
         # リダイレクト
         return redirect()->route('admin.coupon')
         ->with(['alert-danger'=>'クーポン情報を削除しました。']);
+    }
+
+
+
+
+    /**
+     * コピー
+     *
+     * @param  Request $request
+     * @param  Coupon $coupon
+     * @return \Illuminate\Http\Response
+     */
+    public function copy(Request $request, Coupon $coupon)
+    {
+        # 値の加工
+        $inputs = $coupon->only([
+            'title'          ,//タイトル
+            'prize_id'       ,//ガチャ商品ID
+            'point'          ,//付与ポイント
+            'count'          ,//利用可能な回数
+            'user_type'      ,//利用者の種類
+            'target_user_ids',//対象ユーザーのID
+            'is_use_code'    ,//コードを利用するか
+            'expiration_at'  ,//有効期限
+        ]);
+        $inputs['code'] = $coupon->CreateCode();//コードの生成
+        $inputs['is_done'] = 0;        //回数制限に達したか否か
+        $inputs['published_at'] = null;//公開日時
+
+
+        # DBデータの新規登録
+        $copy_coupon = new Coupon( $inputs );
+        $copy_coupon->save();
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'coupon.copy', $coupon->id );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
+
+        # リダイレクト
+        return redirect()->route('admin.coupon')
+        ->with(['alert-success'=>'クーポン情報をコピーしました。(非公開)']);
     }
 
 
@@ -173,7 +221,9 @@ class AdminCouponController extends Controller
         $coupon = $coupon ?? new Coupon();
 
         $inputs = $request->only(
-            'is_use_code'  , //コードを利用するか
+            'is_use_code'    , //コードを利用するか
+            'count'          ,//利用可能な回数
+            'user_type'      ,//利用者の種類
         );
 
 
@@ -205,23 +255,9 @@ class AdminCouponController extends Controller
         }
 
 
-        # 利用回数制限
-        switch ($request->is_count)
-        {
-            /* 設定する */
-            case 1:
-                $inputs['user_type'] = $request->user_type;
-                $inputs['count']     = $request->count;
-                break;
-
-            /* 設定しない */
-            default:
-                $inputs['user_type'] = '';
-                $inputs['count']     = 0;
-                break;
-
-            /* */
-        }
+        # 利用回の種類
+        $inputs['user_type'] = $request->user_type;
+        if($inputs['user_type'] == 'user'){ $inputs['count'] = 1;}
 
 
         # 有効期限

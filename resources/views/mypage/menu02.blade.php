@@ -39,6 +39,13 @@
 
                     <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">
                         <span>クーポン</span>
+
+
+                        @php $coupon_count = \App\Models\Coupon::forUserPublished()->where('is_use_code',0)->count(); @endphp
+                        @if ( $coupon_count )
+                            <!--未読-->
+                            <span class="badge rounded-pill bg-warning">{{$coupon_count}}</span>
+                        @endif
                     </div>
                 </a>
             </div>

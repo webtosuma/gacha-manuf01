@@ -46,8 +46,10 @@
                 <!--body-->
                 <div class="col-12">
                     <div class="rounded-4 bg-white p-3">
+                        {{-- <div class="form-text">{{$coupon->published_at_format}}</div> --}}
                         <h5>{{$coupon->title}}</h5>
-                        <div class="">{{$coupon->code}}</div>
+                        <div class="form-text">{{$coupon->published_at_format}}</div>
+                        <div class="form-text">{{$coupon->code}}</div>
                         <div class="">{{$coupon->discription_text}}</div>
 
 

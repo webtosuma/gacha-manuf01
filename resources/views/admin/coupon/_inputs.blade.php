@@ -102,7 +102,7 @@
 
 
         <!--利用回数制限(is_count count user_type)-->
-        <div class="d-block mb-5">
+        {{-- <div class="d-block mb-5">
             <div class="form-label">
                 利用回数制限
                 <span class="text-danger">＊</span>
@@ -151,6 +151,65 @@
                         {{ old('is_count',$coupon->is_count)==0 ? 'checked' : ''}}
                         >
                         <h6 class="mb-0 mt-1">設定しない</h6>
+                    </div>
+                </label>
+
+
+                <!--error message-->
+                @if ( $errors->has('is_count') )
+                    <div class="text-danger"> {{$errors->first('is_count')}} </div>
+                @endif
+                <!--error message-->
+                @if ( $errors->has('count') )
+                    <div class="text-danger"> {{$errors->first('count')}} </div>
+                @endif
+                <!--error message-->
+                @if ( $errors->has('user_type') )
+                    <div class="text-danger"> {{$errors->first('user_type')}} </div>
+                @endif
+            </div>
+        </div> --}}
+
+
+        <!--利用回の種類(count user_type)-->
+        <div class="d-block mb-5">
+            <div class="form-label">
+                利用回の種類
+                <span class="text-danger">＊</span>
+            </div>
+
+            <div class="px-4">
+                <!-- 先着回数 -->
+                <label class="card p-2 mb-3">
+                    <div class="form-check ">
+                        <input name="user_type" value="all_user" type="radio" class="form-check-input"
+                        {{ old('user_type',$coupon->user_type)=='all_user' ? 'checked' : ''}}
+                        >
+                        <h6 class="mb-0 mt-1">先着回数</h6>
+                    </div>
+
+
+                    <div class="input-group mb-3 px-3">
+                        <!--利用回数-->
+                        <span class="input-group-text" >先着</span>
+                        <input value="{{old('count', $coupon->count )}}"
+                        name="count"
+                        type="number"
+                        min="0"
+                        class="form-control text-end">
+                        <span class="input-group-text" >回まで</span>
+                    </div>
+                </label>
+
+
+                <!-- おひとり様1回まで -->
+                <label class="card p-2 mb-3">
+                    <div class="form-check">
+                        <input name="user_type" value="user"
+                        type="radio" class="form-check-input"
+                        {{ old('user_type',$coupon->user_type)=='user' ? 'checked' : ''}}
+                        >
+                        <h6 class="mb-0 mt-1">おひとり様1回まで</h6>
                     </div>
                 </label>
 

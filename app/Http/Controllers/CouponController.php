@@ -163,9 +163,9 @@ class CouponController extends Controller
         $user = Auth::user();
         $coupon_histories = CouponHistory::where('user_id',$user->id)
         ->orderByDesc('created_at')
-        ->get();
+        ->paginate(10);
 
-        return view('coupon.history');
+        return view('coupon.history',compact('coupon_histories'));
     }
 
 

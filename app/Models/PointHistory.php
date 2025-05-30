@@ -87,7 +87,8 @@ class PointHistory extends Model
          * @return \App\Models\User
         */
         public function user(){
-            return $this->belongsTo(User::class);
+            return $this->belongsTo(User::class)
+            ->withTrashed();//削除済みも含む
         }
 
 
@@ -97,7 +98,8 @@ class PointHistory extends Model
         */
         public function user_gacha_history()
         {
-            return $this->hasOne(UserGachaHistory::class,'point_history_id');
+            return $this->hasOne(UserGachaHistory::class,'point_history_id')
+            ->withTrashed();//削除済みも含む
         }
 
 
@@ -108,7 +110,8 @@ class PointHistory extends Model
         */
         public function user_prizes()
         {
-            return $this->hasMany(UserPrize::class,'point_history_id');
+            return $this->hasMany(UserPrize::class,'point_history_id')
+            ->withTrashed();//削除済みも含む
         }
 
 

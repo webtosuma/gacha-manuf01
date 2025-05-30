@@ -9,11 +9,21 @@
             <div class="col-12 col-lg-auto">
                 <div class="position-sticky" style="top: 2rem; ">
 
-                    <a :href="r_create"
-                    class="btn btn-primary text-white mb-2 shadow">
-                    <i class="bi bi-plus-lg"></i>
-                    {{'新規登録'}}
-                    </a>
+                    <div class="row g-3 mb-2">
+                        <div class="col">
+                            <a :href="r_create"
+                            class="btn btn-primary text-white shadow w-100">
+                            <i class="bi bi-plus-lg"></i>
+                            {{'新規登録'}}
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a :href="r_history"
+                            class="btn btn-light border w-100">
+                            {{'クーポン履歴'}}
+                            </a>
+                        </div>
+                    </div>
 
                     <div class="row flex-column g-2 mb-2">
 
@@ -108,10 +118,10 @@
                     <div v-for="(coupon,key) in coupons" :key="key"
                     class="list-group-item bg-white border-0">
                         <hr class="">
-                        <div class="row align-items-  py-2 g-3">
+                        <div class="row align-items-  py-2 g-1">
 
                             <!--image-->
-                            <div class="col-auto" style="width: 10rem">
+                            <div class="col-auto pe-3" style="width: 10rem">
                                 <div class="position-relative">
                                     <div :class="card_ration"
                                     class="ratio bg-body rounded border
@@ -143,6 +153,8 @@
                                     </div>
 
                                     <span class="form-text">{{coupon.published_at_format??'--.--.--'}}</span>
+
+                                    <div v-if="coupon.is_new" class="text-danger">NEW</div>
 
                                 </div>
 
@@ -193,19 +205,27 @@
                                             <span>{{ coupon.count }}回</span>
                                             <span>までご利用できます。</span>
                                         </div>
-                                        <div v-if="coupon.admin_remaining_count"
+                                        <!-- <div v-if="coupon.admin_remaining_count"
                                         class="border px-2 d-flex align-items-center">
                                             <span>あと</span>
                                             <div class="fw-bold fs-5 m-0 px-2">{{coupon.admin_remaining_count}}</div>
                                             <span>回</span>
                                         </div>
                                         <div v-else
-                                        class="border px-2 text-center text-danger">終了しました。</div>
+                                        class="border px-2 text-center text-danger">終了しました。</div> -->
                                     </div>
 
 
                                 </div>
                                 <div v-else>何回でも利用可能</div>
+
+
+                                <!--利用済み回数-->
+                                <div class="borderrr px- d-flex align-items-center">
+                                    <span>利用済み回数：</span>
+                                    <span class="text-success">{{ coupon.histories_count }}回</span>
+                                </div>
+
 
                                 <!--有効期限-->
                                 <div class="d-flex flex-column gap-0">
@@ -225,6 +245,16 @@
                                 class="btn btn-sm btn-light border fs-4"
                                 ><i class="bi bi-pencil-fill"></i></a>
                             </div>
+                            <!--コピー-->
+                            <div class="col-auto">
+                                <form :action="coupon.r_copy" method="post">
+                                    <input type="hidden" name="_token" :value="token">
+                                    <button
+                                    class="btn btn-sm btn-light border fs-4"
+                                    ><i class="bi bi-copy"></i></button>
+                                </form>
+                            </div>
+
                             <!--削除モーダル-->
                             <div class="col-auto">
                                 <form :action="coupon.r_destroy" method="post">
@@ -270,8 +300,8 @@
     const props = defineProps({
         token:        { type: String, default: '' },
         r_api_list:   { type: String, default: '' },
-        r_api_destroy:{ type: String, default: '' },
         r_create:     { type: String, default: '' },
+        r_history:    { type: String, default: '' },
         card_ration:  { type: String, default: '' },
     });
 
