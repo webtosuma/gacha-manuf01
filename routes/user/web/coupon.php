@@ -27,4 +27,9 @@ Route::middleware(['auth','user_rank'])->group(function () {
     Route::patch('/coupon/used',
     [Controllers\CouponController ::class, 'used'])
     ->name('coupon.used');
+
+    # 利用完了
+    Route::get('/coupon/comp/{coupon_history}',
+    [Controllers\CouponController ::class, 'comp'])
+    ->name('coupon.comp');
 });

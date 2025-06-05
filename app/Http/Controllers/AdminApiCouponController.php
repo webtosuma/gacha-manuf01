@@ -103,6 +103,8 @@ class AdminApiCouponController extends Controller
             $query->orderByDesc('published_at');
             $query->orderByDesc('created_at');
 
+            # リレーション
+            $query->with('children');
 
         $coupons = $query->paginate(10);
 

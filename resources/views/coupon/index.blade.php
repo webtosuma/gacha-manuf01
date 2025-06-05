@@ -23,7 +23,7 @@
     <div class="container py-md-4 pb-5 mb-5">
         <h3 class="d-none d-md-block">クーポン</h3>
 
-        <div class="row g-5 mt-3">
+        <div class="row g-5 mt-3 mx-0">
             <div class="col-12 col-lg-4 order-lg-2">
 
 

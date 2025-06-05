@@ -154,7 +154,7 @@ class AdminPointHistoryDaily extends Controller
 
             $query->adominPointHistoryReason();//入出ID絞り込み スコープ
 
-        return $query->get()->count();
+        return $query->count();
     }
 
 

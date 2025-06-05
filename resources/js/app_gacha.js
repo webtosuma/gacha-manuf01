@@ -76,6 +76,12 @@ import Vue from 'vue'
         Vue.component('u-userprize-list',
         require('./components/shipped/UserPrizes.vue').default);
 
+    /* クーポン完了 */
+    Vue.component('u-coupon-comp',
+    require('./components/coupon/CompComponent.vue').default);
+
+
+
     /**/
 
 export default Vue

@@ -111,6 +111,13 @@ class Coupon extends Model
         }
 
 
+        /**
+         * CouponChildモデル リレーション
+         * @return \App\Models\CouponChild
+        */
+        public function children(){
+            return $this->hasMany(CouponChild::class,'coupon_id');
+        }
 
     /*
     |--------------------------------------------------------------------------

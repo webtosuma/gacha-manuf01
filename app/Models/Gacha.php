@@ -118,7 +118,8 @@ class Gacha extends Model
          * @return \App\Models\GachaCategory
         */
         public function category(){
-            return $this->belongsTo(GachaCategory::class, 'category_id');
+            return $this->belongsTo(GachaCategory::class, 'category_id')
+            ->withTrashed();
         }
 
 

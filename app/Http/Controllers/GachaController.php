@@ -14,7 +14,7 @@ use App\Models\Infomation;
 use App\Models\Movie;
 /*
 | =============================================
-|  ガチャ コントローラー 
+|  ガチャ コントローラー
 | =============================================
 */
 class GachaController extends Controller
@@ -573,7 +573,6 @@ class GachaController extends Controller
         $page_title = '「'.$gacha->name.'」の結果';
 
         # 背景画像
-        // $bg_image = asset('storage/site/image/gacha/bg_result.jpg');
         $bg_image = AdminBackGroundController::getBgResult();
 
 

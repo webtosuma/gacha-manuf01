@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AdminCouponRequest;
 use App\Models\Coupon;
+use App\Models\CouponChild;
 use App\Models\CouponHistory;
 use App\Models\Prize;
 /*
@@ -79,6 +80,16 @@ class AdminCouponController extends Controller
         $coupon = new Coupon( $inputs );
         $coupon->save();
 
+        # 一回限定クーポンの複数発行
+        if( $request->add_children_count )
+        {
+            for ($i=0; $i < $request->add_children_count; $i++) {
+                $coupon_child = new CouponChild([ 'coupon_id' => $coupon->id]);
+                $coupon_child->code = $coupon_child->CreateCode();//コードの生成
+                $coupon_child->save();
+            }
+        }
+
         # 操作ログの更新
         AdminLogController::createLog( 'coupon.create', $coupon->id );
 
@@ -121,6 +132,16 @@ class AdminCouponController extends Controller
 
         # DBデータの更新
         $coupon->update( $inputs );
+
+        # 一回限定クーポンの複数発行
+        if( $request->add_children_count )
+        {
+            for ($i=0; $i < $request->add_children_count; $i++) {
+                $coupon_child = new CouponChild([ 'coupon_id' => $coupon->id]);
+                $coupon_child->code = $coupon_child->CreateCode();//コードの生成
+                $coupon_child->save();
+            }
+        }
 
         # 回数制限に達したか否か(is_done)
         $coupon = CouponController::isDoneFanc( $coupon );

@@ -45,7 +45,7 @@
                 </div>
                 <!--body-->
                 <div class="col-12">
-                    <div class="rounded-4 bg-white p-3">
+                    <div class="rounded-4 bg-white text-dark p-3">
                         {{-- <div class="form-text">{{$coupon->published_at_format}}</div> --}}
                         <h5>{{$coupon->title}}</h5>
                         <div class="form-text">{{$coupon->published_at_format}}</div>
@@ -70,14 +70,20 @@
                 </div>
                 <div class="col-12">
 
+
+
                     <form action="{{route('coupon.used')}}" method="POST"
                     class="d-flex flex-column gap-3">
                         @csrf
                         @method('PATCH')
-                        <button
-                        name="code"
-                        value="{{$coupon->code}}"
-                        class="btn btn-lg btn-primary text-white rounded-pill w-100">このクーポンを使う</button>
+                        <input type="hidden" name="code" value="{{$code}}">
+
+
+                        <disabled-button
+                        style_class="btn btn-lg btn-primary text-white rounded-pill w-100"
+                        btn_text="このクーポンを使う"></disabled-button>
+
+
                         <a href="{{route('coupon')}}" class="btn btn-lg btn-light border rounded-pill w-100">クーポン一覧に戻る</a>
                     </form>
                 </div>

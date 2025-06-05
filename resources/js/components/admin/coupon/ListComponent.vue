@@ -138,7 +138,7 @@
                                 </div>
                             </div>
                             <!--body-->
-                            <div class="col">
+                            <div class="col pe-3">
 
                                 <!--公開状態-->
                                 <div class="d-flex align-items-center gap-2 mb-2 ">
@@ -161,17 +161,34 @@
                                 <!--タイトル-->
                                 <h5 class="fw-bold">{{coupon.title}}</h5>
 
-                                <!--クーポンコード-->
+                                <!--共通クーポンコード-->
                                 <div v-if="coupon.is_use_code" class="my-2">
-                                    <div>クーポンコード</div>
+                                    <div>共通クーポンコード</div>
                                     <div class="col-">
                                         <coppy-button-component :copy_word="coupon.code" />
                                     </div>
                                 </div>
                                 <div v-else class="form-text">*クーポンコードなし</div>
 
+                                <!--複数コード-->
+                                <div v-if="coupon.children.length" class="dropdown">
+                                    <button class="btn btn-light border dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false"
+                                    >一回限定コード</button>
 
+                                    <ul class="dropdown-menu overflow-auto" style="max-height:50vh;">
+                                        <li v-for="( coupon_child, key ) in coupon.children" :key="key" class="dropdown-item">
 
+                                            <div v-if="coupon_child.is_done"  class="input-group">
+                                                <input :value="coupon_child.code" type="text" class="form-control" disabled />
+                                                <span class="input-group-text text-danger" >利用済</span>
+                                            </div>
+
+                                            <!-- <div v-if="coupon_child.is_done" class="border rounded px-2">{{ coupon_child.code }}</div> -->
+                                            <coppy-button-component v-else :copy_word="coupon_child.code" />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="col-12 col-md">
 

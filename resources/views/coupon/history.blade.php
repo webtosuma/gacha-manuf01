@@ -48,7 +48,10 @@
                 <!--body-->
                 <div class="col">
                     <div class="form-text">{{$coupon_history->created_at_format}}</div>
-                    <div class="fw-bold">{{$coupon_history->coupon->title}}</div>
+                    <div class="fw-bold">
+                        @php $params = ['coupon_history'=>$coupon_history, 'is_history'=>'true']  @endphp
+                        <a href="{{route('coupon.comp',$params)}}">{{$coupon_history->coupon->title}}</a>
+                    </div>
                     <div class="">{{$coupon_history->discription_text}}</div>
                 </div>
             </div></li>

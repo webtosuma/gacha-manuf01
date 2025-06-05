@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Coupon;
+use App\Models\CouponChild;
 use App\Models\CouponHistory;
 use App\Models\PointHistory;
 use App\Models\UserPrize;
@@ -46,9 +47,18 @@ class CouponController extends Controller
      */
     public function show(Request $request)
     {
+        # コード
+        $code = $request->code;
+
         # クーポン情報
         $coupon = Coupon::forUserPublished()
-        ->where('code',$request->code)->first();
+        ->where('code',$code)->first();
+
+        # 一回限定で複数発行のクーポン
+        $coupon_child = CouponChild::where('is_done',0)
+        ->where('code',$code)->first();
+        $coupon = $coupon_child ? $coupon_child->coupon : $coupon;
+
 
         if(!$coupon){
             $message = 'このクーポンコードを利用することはできません。';
@@ -63,7 +73,7 @@ class CouponController extends Controller
         }
 
 
-        return view('coupon.show',compact('coupon'));
+        return view('coupon.show',compact('coupon','code'));
     }
 
 
@@ -76,9 +86,18 @@ class CouponController extends Controller
      */
     public function used(Request $request)
     {
+        # コード
+        $code = $request->code;
+
         # クーポン情報
         $coupon = Coupon::forUserPublished()
-        ->where('code',$request->code)->first();
+        ->where('code',$code)->first();
+
+        # 一回限定で複数発行のクーポン
+        $coupon_child = CouponChild::where('is_done',0)
+        ->where('code',$code)->first();
+        $coupon = $coupon_child ? $coupon_child->coupon : $coupon;
+
         if(!$coupon){
             $message = 'このクーポンコードを利用することはできません。';
             return redirect()->back()
@@ -90,7 +109,6 @@ class CouponController extends Controller
             return redirect()->back()
             ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-circle']);
         }
-
 
         # ユーザー情報
         $user = Auth::user();
@@ -138,19 +156,53 @@ class CouponController extends Controller
         # 回数制限に達したか否か(is_done)
         $coupon = CouponController::isDoneFanc( $coupon );
 
+        # 一回限定で複数発行のクーポンを利用のとき
+        if($coupon_child){ $coupon_child->update(['is_done'=>1]); };
 
         # 二重送信防止
         $request->session()->regenerateToken();
 
 
+        #
+        return redirect()->route('coupon.comp',$coupon_history);
+    }
+
+
+
+    /**
+     * 完了
+     *
+     * @param  Request $request
+     * @param  CouponHistory $coupon_history
+     * @return \Illuminate\Http\Response
+     */
+    public function comp(Request $request, CouponHistory $coupon_history)
+    {
+        # ユーザー認証
+        $user = Auth::user();
+        if( $coupon_history->user->id!=$user->id ){ return \App::abort(404); }
+
+
+        # クーポン情報
+        $coupon = $coupon_history->coupon;
+
+        # 履歴表示か否か
+        $is_history = isset($request->is_history);
+
+        # 背景画像
+        $bg_image = AdminBackGroundController::getBgResult();
+
         # メッセージ
         $message = $coupon->prize
-        ? 'クーポン利用で商品を取得しました。'
-        : 'クーポン利用でポイントを取得しました。';
+        ? "『{$coupon->prize->name}』を取得しました！"
+        : "『{$coupon->point}pt』を取得しました！";
 
-        return redirect()->route('coupon')
-        ->with(['alert-success'=>$message]);
+        return view('coupon.comp',compact(
+            'coupon_history','coupon','bg_image','message','is_history'
+        ));
     }
+
+
 
 
     /**

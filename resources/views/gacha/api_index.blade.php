@@ -74,7 +74,7 @@
 @section('content')
 
 
-    <section class="bg- " style="height:5.2rem;"
+    <section class="bg- " style="height:4.2rem;"
     data-aos="fade-in"
     ></section>
 

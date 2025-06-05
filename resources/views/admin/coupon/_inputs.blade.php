@@ -70,6 +70,51 @@
 
 
 
+
+        <!--一回限定コードの複数発行(add_children_count)-->
+        <label class="d-block mb-4">
+            <div class="form-label">
+                一回限定コードの複数発行
+                <span class="text-danger">＊</span>
+            </div>
+
+            <div class="row px-4 g-2">
+                @foreach (['0'=>'追加なし','10'=>'+10個','30'=>'+30個','50'=>'+50個',] as $value=> $label)
+                    <div class="col-6 col-md">
+                        <label class="card px-3 py-4 mb-3">
+                            <div class="form-check">
+                                <input name="add_children_count" value="{{$value}}"
+                                type="radio" class="form-check-input"
+                                {{ old('add_children_count')==$value ? 'checked' : ''}}
+                                >
+                                <h6 class="mb-0 mt-1">{{$label}}</h6>
+                            </div>
+                        </label>
+                    </div>
+                @endforeach
+
+                <div class="card card-body bg-white">
+                    <h6>作成済みコード</h6>
+                    <div class="row">
+                        @foreach ($coupon->children as $coupon_child)
+                            <div class="col-6">
+                                {{$coupon_child->code}}
+                                @if($coupon_child->is_done)<span class="text-danger"> 利用済み</span> @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <!--error message-->
+            @if ( $errors->has('add_children_count') )
+                <div class="text-danger"> {{$errors->first('add_children_count')}} </div>
+            @endif
+        </label>
+
+
+
+
         <!--プレゼント内容(service)-->
         <label class="d-block mb-5">
             <div class="form-label">
@@ -99,76 +144,6 @@
 
         </label>
 
-
-
-        <!--利用回数制限(is_count count user_type)-->
-        {{-- <div class="d-block mb-5">
-            <div class="form-label">
-                利用回数制限
-                <span class="text-danger">＊</span>
-            </div>
-
-            <div class="px-4">
-                <!-- 設定する -->
-                <label class="card p-2 mb-3">
-                    <div class="form-check ">
-                        <input name="is_count" value="1" type="radio" class="form-check-input"
-                        {{ old('is_count',$coupon->is_count)==1 ? 'checked' : ''}}
-                        >
-                        <h6 class="mb-0 mt-1">設定する</h6>
-                    </div>
-
-
-                    <div class="input-group mb-3 px-3">
-                        <!--利用者の種類-->
-                        <select class="form-select" name="user_type">
-
-                            @foreach ($coupon->user_types as $value => $label)
-                                <option
-                                @if( old('user_type',$coupon->user_type)==$value ) selected @endif
-                                value="{{$value}}"
-                                >{{$label}}</option>
-                            @endforeach
-                        </select>
-
-
-                        <!--利用回数-->
-                        <input value="{{old('count', $coupon->count )}}"
-                        name="count"
-                        type="number"
-                        min="0"
-                        class="form-control text-end">
-                        <span class="input-group-text" >回まで</span>
-                    </div>
-                </label>
-
-
-                <!-- 設定しない -->
-                <label class="card p-2 mb-3">
-                    <div class="form-check">
-                        <input name="is_count" value="0"
-                        type="radio" id="publishedType3" class="form-check-input"
-                        {{ old('is_count',$coupon->is_count)==0 ? 'checked' : ''}}
-                        >
-                        <h6 class="mb-0 mt-1">設定しない</h6>
-                    </div>
-                </label>
-
-
-                <!--error message-->
-                @if ( $errors->has('is_count') )
-                    <div class="text-danger"> {{$errors->first('is_count')}} </div>
-                @endif
-                <!--error message-->
-                @if ( $errors->has('count') )
-                    <div class="text-danger"> {{$errors->first('count')}} </div>
-                @endif
-                <!--error message-->
-                @if ( $errors->has('user_type') )
-                    <div class="text-danger"> {{$errors->first('user_type')}} </div>
-                @endif
-            </div>
-        </div> --}}
 
 
         <!--利用回の種類(count user_type)-->
@@ -228,6 +203,10 @@
                 @endif
             </div>
         </div>
+
+
+    </div>
+    <div class="col-lg">
 
 
         <!--有効期限(is_expiration)-->
@@ -290,10 +269,6 @@
                 <div class="text-danger"> {{$errors->first('expiration_at')}} </div>
             @endif
         </div>
-
-
-    </div>
-    <div class="col-lg">
 
 
         <!--公開設定(is_published)-->
