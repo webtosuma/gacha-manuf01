@@ -84,15 +84,15 @@ class AdminApiCouponController extends Controller
             ## 公開設定
             switch ($request->is_published)
             {
-                case 2://予約
-                $query->where('published_at','>', now());
-                break;
-
                 case 1://公開中
                 $query->where('published_at','<=', now());
                 break;
 
-                case 0://未公開
+                case 2://予約
+                $query->where('published_at','>', now());
+                break;
+
+                case 3://未公開
                 $query->where('published_at',null);
                 break;
 

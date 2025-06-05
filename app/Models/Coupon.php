@@ -419,7 +419,11 @@ class Coupon extends Model
             $query->where('published_at','<=',now());
 
             # 有効期限内のみ
-            $query->where('expiration_at','>=',now());
+            $query->where(function ($query)
+            {
+                $query->where('expiration_at','>=',now())
+                ->orWhere('expiration_at',null);
+            });
 
             # 新しい順
             $query->orderByDesc('published_at');
