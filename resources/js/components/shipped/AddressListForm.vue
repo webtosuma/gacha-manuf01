@@ -40,17 +40,13 @@
                             class="btn btn-sm border">削除</button> -->
 
 
-                            <button type="button" data-bs-toggle="modal"
-                            :data-bs-target="'#deleteModal'+address.id"
-                            class="btn btn-sm border"
-                            >削除する</button>
 
                             <!-- Modal -->
                             <delete-modal-component
                             @parent-func="destroy(address.id)"
                             :index_key="address.id"
                             icon="bi-trash"
-                            func_btn_type="submit"
+                            func_btn_type="button"
                             button_class="invisible">
                                 <div>
                                     <span class="fw-bold">{{ address.name }} 様</span>のお届け先情報を削除します。
@@ -58,6 +54,10 @@
                                 </div>
                             </delete-modal-component>
 
+                            <button type="button" data-bs-toggle="modal"
+                            :data-bs-target="'#deleteModal'+address.id"
+                            class="btn btn-sm border"
+                            >削除する</button>
                         </div>
                     </div>
                 </label>

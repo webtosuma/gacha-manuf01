@@ -390,15 +390,12 @@ class User extends Authenticatable
         */
         public function getPointDeadlineAtAttribute()
         {
-            # 制度開始時期
-            $start_at = \Carbon\Carbon::parse('2025/01/01');
-
             # 期限・期限なしのとき
             $deadline_date = config('app.user_point_deadline_date');//利用可能期間
             if( ! $deadline_date ){ return null; }
 
             # ユーザー最終アクセス日
-            $last_access_at = $start_at < $this->created_at ? $this->last_access_at : $start_at ;//制度開始以前の所得商品は、制度開始日からカウントスタート
+            $last_access_at = $this->last_access_at ;//制度開始以前の所得商品は、制度開始日からカウントスタート
             $last_access_at = \Carbon\Carbon::parse($last_access_at->format('Y/m/d 00:00:00'));
 
             return $last_access_at->addDay($deadline_date);
