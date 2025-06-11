@@ -278,7 +278,7 @@ class GachaController extends Controller
             // お知らせ
             $slide_infos = InfomationController::GetInfomationsQuery()
             ->where('is_slide',1)
-            // ->limit(3)
+            ->limit(10)
             ->get();
 
             foreach ($slide_infos as $slide_info) {

@@ -58,12 +58,13 @@ class GachaApiController extends Controller
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
-            ->limit(3)
-            ->get();
+            ->limit(3)->get();
 
             ## スライド
             $query = self::getPublishedGachas( $category_code, $search_key );
-            $gachas = $query->where('is_slide',1)->get();
+            $gachas = $query->where('is_slide',1)
+            ->where('is_sold_out',0)//売り切れを除く
+            ->limit(10)->get();
             $slides = GachaController::getSlides($gachas);
 
             // ## フィーバー

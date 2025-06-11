@@ -26,7 +26,7 @@
         @endif
 
         <!--本文-->
-        <p class="article-body p-3 mt-3"
+        <p class="article-body p-3 mt-3 text-dark"
         style="border-radius:1rem; background:rgb(255, 255, 255, .9);"
         ><replace-text-component text="{{ $infomation->body_text }}" ></replace-text-component></p>
 

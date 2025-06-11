@@ -38,7 +38,7 @@
     <div class="mail-container mail-bg-white">
         <div class="mail-center-image">
             <a href="{{route('home')}}">
-                <img class="mail-img" src="{{asset('storage/site/image/logo.png')}}" alt="サイトロゴ">
+                <img class="mail-img" src="{{asset('storage/site/image/logo.png')}}" alt="サイトロゴ" width="192px">
             </a>
         </div>
 

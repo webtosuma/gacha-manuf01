@@ -42,7 +42,7 @@ class AdminGachaDisriptionController extends Controller
         foreach ($discriptions as $num => $discription) {
 
             # エンコードコンポーネント入力情報のデコード処理（絵文字対策）
-            $sorce = urldecode( $request->sorces[$num] );
+            $sorce = isset($request->sorces[$num]) ? urldecode( $request->sorces[$num] ) : null;
 
             # ストレージ更新の処理（商品説明）sorce
             $old_text = $discription->sorce;  //更新前のファイルパステキスト

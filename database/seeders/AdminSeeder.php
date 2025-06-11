@@ -93,34 +93,45 @@ class AdminSeeder extends Seeder
         return   [
             [
                 'user' => [
-                    'email' => 'contact@fobees.jp',
+                    'email' => 'link-seed@samplegacha.site',
                     'password' => Hash::make('password'),
-                    'name' => 'Fobees',
+                    'name' => 'Link Seed',
                 ],
                 'admin' => [
                     'master' => 1,
                 ],
             ],
-            [
-                'user' => [
-                    'email' => 'gacha_sample@fobees.jp',
-                    'password' => Hash::make('jBWl4QMiTJid1RPL'),
-                    'name' => 'テスト用アカウント',
-                ],
-                'admin' => [
-                    'master' => 1,
-                ],
-            ],
-            [
-                'user' => [
-                    'email' => 't.sakai@tosuma.ltd',
-                    'password' => Hash::make('password'),
-                    'name' => '酒井',
-                ],
-                'admin' => [
-                    'master' => 1,
-                ],
-            ],
+
+            // [
+            //     'user' => [
+            //         'email' => 'contact@fobees.jp',
+            //         'password' => Hash::make('password'),
+            //         'name' => 'Fobees',
+            //     ],
+            //     'admin' => [
+            //         'master' => 1,
+            //     ],
+            // ],
+            // [
+            //     'user' => [
+            //         'email' => 'gacha_sample@fobees.jp',
+            //         'password' => Hash::make('jBWl4QMiTJid1RPL'),
+            //         'name' => 'テスト用アカウント',
+            //     ],
+            //     'admin' => [
+            //         'master' => 1,
+            //     ],
+            // ],
+            // [
+            //     'user' => [
+            //         'email' => 't.sakai@tosuma.ltd',
+            //         'password' => Hash::make('password'),
+            //         'name' => '酒井',
+            //     ],
+            //     'admin' => [
+            //         'master' => 1,
+            //     ],
+            // ],
 
             // [
             //     'user' => [

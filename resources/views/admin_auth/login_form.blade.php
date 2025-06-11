@@ -32,7 +32,7 @@
             <div class="col-md- mx-auto mb-3">
                 <button class="w-100 btn btn-lg btn-info" type="submit">ログイン</button>
             </div>
-            <a href="" class="text-decoration-none"
+            <a href="{{route('password.request')}}" class="text-decoration-none"
             >パスワードをお忘れの方はこちら</a>
         </form>
 
