@@ -1,11 +1,15 @@
 <div class="form-text mb-3">
     <span class="text-danger">＊</span>入力必須
+   <input type="hidden" name="prize_id" value="{{$prize->id}}">
+
+
 </div>
 <div class="row">
     <div class="col-md">
 
 
         <div class="col-6 mx-auto">
+
             <!--商品画像(image)-->
             <label class="d-block mb-4">
                 <div class="form-label">
@@ -24,6 +28,8 @@
                     <div class="text-danger"> {{$errors->first('image')}} </div>
                 @endif
             </label>
+
+
         </div>
 
 
@@ -52,6 +58,27 @@
         </label>
 
 
+        <!--商品名(name)-->
+        <label class="d-block mb-4">
+            <div class="form-label">
+                商品名<span class="text-danger">＊</span>
+            </div>
+
+            <encodedーinputtext-component
+            id="name" name="name"
+            style_class="form-control"
+            default_body="{{ $errors->all() ? urldecode( old('name') ) : $prize->name }}"
+            ></encodedーinputtext-component>
+
+
+            <div class="form-text">*絵文字を使用することはできません</div>
+            <!--error message-->
+            @if ( $errors->has('name') )
+                <div class="text-danger"> {{$errors->first('name')}} </div>
+            @endif
+        </label>
+
+
         <!--商品コード(code)-->
         <label class="d-block mb-4">
             <div class="form-label">
@@ -61,25 +88,21 @@
             <input value="{{old('code', $prize->code )}}"
             name="code"
             type="text" class="form-control">
+
+            <div class="form-text">
+                <div>*既に登録積みの商品コードを登録することはできません。</div>
+                <div>
+                    <div>*利用可能な文字</div>
+                    <ul>
+                        <li>英数字：a〜z、A〜Z、0〜9</li>
+                        <li>記号：-（ハイフン）、_（アンダースコア）、*、+、.（ドット）、,（カンマ）、!、?、#、$、%、&、~、|、^、@、;、:、(、)、[、]、{、}、/</li>
+                        <li>半角スペース</li>
+                    </ul>
+                </div>
+            </div>
             <!--error message-->
             @if ( $errors->has('code') )
                 <div class="text-danger"> {{$errors->first('code')}} </div>
-            @endif
-        </label>
-
-        <!--商品名(name)-->
-        <label class="d-block mb-4">
-            <div class="form-label">
-                商品名<span class="text-danger">＊</span>
-            </div>
-
-            <input value="{{old('name', $prize->name )}}"
-            name="name"
-            type="text" class="form-control" >
-            {{-- <div class="form-text">ユーザーには表示されない、管理用の名前です。</div> --}}
-            <!--error message-->
-            @if ( $errors->has('name') )
-                <div class="text-danger"> {{$errors->first('name')}} </div>
             @endif
         </label>
 
@@ -123,6 +146,29 @@
             <!--error message-->
             @if ( $errors->has('point') )
                 <div class="text-danger"> {{$errors->first('point')}} </div>
+            @endif
+        </label>
+
+
+
+        <!--説明文(discription)-->
+        <label class="d-block mb-4">
+            <div class="form-label">
+                説明文
+                {{-- <span class="text-danger">＊</span> --}}
+            </div>
+
+            <encodedーtextarea-component
+            name="discription" id="discription"
+            style_class="form-control" rows="6"
+            placeholder="商品の説明文を入力してください。"
+            default_body="{{ $errors->all() ? urldecode( old('discription') ) : $prize->discription_text }}"
+            ></encodedーtextarea-component>
+
+
+            <!--error message-->
+            @if ( $errors->has('discription') )
+                <div class="text-danger"> {{$errors->first('discription')}} </div>
             @endif
         </label>
 

@@ -180,7 +180,26 @@
                                 </div>
                             </td>
                             <td>{{ prize.code }}</td>
-                            <td>{{ prize.name }}</td>
+                            <td>
+                                {{ prize.name }}
+
+                                <!--商品説明-->
+                                <button v-if="prize.discription_text"
+                                class="btn btn-sm btn-dark rounded-pill"
+                                data-bs-toggle="modal"
+                                :data-bs-target="'#PrizeDiscriptionModal'+prize.id"
+                                ><i class="bi bi-search me-2"></i>商品説明</button>
+
+                                <u-prize-discription
+                                :id         ="prize.id"
+                                :name       ="prize.name"
+                                :image_path ="prize.image_path"
+                                :discription="prize.discription_text "
+                                size       ="2rem"
+                                src_icon   ="prize.discription_icon_path"
+                                no_btn     ="1"
+                                ></u-prize-discription>
+                            </td>
                             <td>{{ prize.rank.name }}</td>
                             <td>{{ prize.point }} pt</td>
                             <td class="form-text">{{ formatDate( prize.updated_at ) }}</td>

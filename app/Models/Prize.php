@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 /*
 | =============================================
 |  商品　モデル
@@ -18,14 +19,15 @@ class Prize extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'category_id',  //リレーション
-        'code',   //商品コード
-        'name',   //名前
-        'image',  //画像
-        'rank_id',//ランクID
-        'point',  //交換ポイント値
+        'category_id',      //リレーション
+        'code',             //商品コード
+        'name',             //名前
+        'image',            //画像
+        'rank_id',          //ランクID
+        'point',            //交換ポイント値
         'point_updated_at', //交換ポイント値更新日時
-        'published_at',//公開日時
+        'published_at',     //公開日時
+        'discription',      //説明文(2025/06/12追加)
     ];
 
 
@@ -39,6 +41,26 @@ class Prize extends Model
         return \Database\Factories\PrizeFactory::new();
     }
 
+
+    /* 重複しないコードの生成 */
+    public static function CreateCode()
+    {
+        $code = ''; $n =12;
+        while ( !$code ) {
+            $str = Str::random($n);
+            $model = self::where('code', $str )->first();//重複チェック
+            $code = !$model ? $str : '';
+            $n ++;
+        }
+        return $code;
+    }
+
+
+    /** アクセサーをJSONに含める */
+    protected $appends = [
+        'discription_icon_path', //説明文モーダルアイコン
+        'discription_text',      //説明文
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -124,6 +146,30 @@ class Prize extends Model
         /** UserPrizeモデル リレーション (1ケ)*/
         public function u_prize_first(){
             return $this->hasOne(UserPrize::class,'prize_id')->orderByDesc('created_at');
+        }
+
+
+
+        /**
+         * ストレージ保存された文章（説明文） discription_text
+         * @return String
+         */
+        public function getDiscriptionTextAttribute()
+        {
+            // パスから改行を取り除く
+            $text = $this->discription;
+            $path = str_replace(["\r\n", "\r", "\n"], '', $text);
+
+            return Storage::exists($path) ? Storage::get($path) : $text;
+        }
+
+
+        /**
+         * 説明文モーダルアイコン discription_icon_path
+         */
+        public static function getDiscriptionIconPathAttribute()
+        {
+            return asset('storage/site/image/prize_discription.png');
         }
 
 }

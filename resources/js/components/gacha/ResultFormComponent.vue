@@ -23,52 +23,79 @@
                 <div class="d-flex align-items-center justify-content-center h-100">
 
 
-                    <label class="w-100"
-                    data-aos="zoom-in"
-                    >
+                    <div class="w-100" data-aos="zoom-in">
+                        <!-- <label class="w-100" > -->
 
-                        <div class="position-relative">
-                            <!--チェックボックス-->
-                            <div class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
-                                <input v-model="ids" @change="changeChildren()"
-                                class="form-check-input float-xl-none m-0 rounded-pill"
-                                style="width:2em; height:2em;"
-                                type="checkbox" name="user_prize_ids[]" :value="userPrize.id">
+                            <div class="position-relative">
+                                <!--チェックボックス-->
+                                <div class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
+                                    <input v-model="ids" @change="changeChildren()"
+                                    class="form-check-input float-xl-none m-0 rounded-pill"
+                                    style="width:2em; height:2em;"
+                                    type="checkbox" name="user_prize_ids[]" :value="userPrize.id">
+                                </div>
+
+                                <!--カード画像-->
+                                <ratio-image-component
+                                style_class="ratio ratio-3x4 rounded-3"
+                                :url="userPrize.prize.image_path"
+                                ></ratio-image-component>
+
+
                             </div>
 
-                            <!--カード画像-->
-                            <ratio-image-component
-                            style_class="ratio ratio-3x4 rounded-3"
-                            :url="userPrize.prize.image_path"
-                            ></ratio-image-component>
-                        </div>
+                            <!--ポイント表示-->
+                            <div class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
 
-                        <!--ポイント表示-->
-                        <div class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
+                                <number-comma-component :number="userPrize.point" />pt
 
-                            <number-comma-component :number="userPrize.point" />pt
+                                <!-- @if($user_prize->point_history_id) -->
+                                <!--ポイント交換済み-->
+                                <div v-if="userPrize.point_history_id"
+                                class="position-absolute top-50 start-0 translate-middle-y ps-1">
+                                    <span class="text-warning">●</span>
+                                </div>
 
-                            <!-- @if($user_prize->point_history_id) -->
-                            <!--ポイント交換済み-->
-                            <div v-if="userPrize.point_history_id"
-                            class="position-absolute top-50 start-0 translate-middle-y ps-1">
-                                <span class="text-warning">●</span>
+                                <!-- @if($user_prize->shipped_id) -->
+                                <!--ポイント交換済み-->
+                                <div v-if="userPrize.shipped_id"
+                                class="position-absolute top-50 start-0 translate-middle-y ps-1">
+                                    <span class="text-primary">●</span>
+                                </div>
+
                             </div>
 
-                            <!-- @if($user_prize->shipped_id) -->
-                            <!--ポイント交換済み-->
-                            <div v-if="userPrize.shipped_id"
-                            class="position-absolute top-50 start-0 translate-middle-y ps-1">
-                                <span class="text-primary">●</span>
-                            </div>
 
-                        </div>
+                                <!--商品説明モーダル-->
+                                <button v-if="userPrize.prize.discription_text"
+                                class="btn btn-sm btn-dark rounded-pill w-100"
+                                type="button"
+                                data-bs-toggle="modal"
+                                :data-bs-target="'#PrizeDiscriptionModal'+userPrize.id"
+                                ><i class="bi bi-search me-2"></i>商品説明</button>
+                                <div v-else style="height: 2rem;"></div>
 
-                    </label>
+                        <!-- </label> -->
+                    </div>
 
 
+                </div>
+            </div>
 
 
+            <!--商品の説明モーダル-->
+            <div class="h-0 overflow-hidden">
+                <div v-for="(userPrize, key) in userPrizes" :key="key">
+                    <u-prize-discription
+                    v-if="userPrize.prize.discription_text"
+                    :id         ="userPrize.id"
+                    :name       ="userPrize.prize.name"
+                    :image_path ="userPrize.prize.image_path"
+                    :discription="userPrize.prize.discription_text"
+                    size       ="2rem"
+                    :src_icon   ="userPrize.prize.discription_icon_path"
+                    no_btn     ="1"
+                    ></u-prize-discription>
                 </div>
             </div>
 

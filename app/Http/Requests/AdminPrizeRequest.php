@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Prize;
 /*
 | =============================================
 |  サイト管理者　商品 リクエスト
@@ -28,18 +29,32 @@ class AdminPrizeRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'category_id'  => ['required','max:140',],
+            'category_id'  => ['required'],
             // 'image'        => ['required','file','max:10000','mimes:jpeg,png,jpg'], //イメージ画像
             'image'        => ['required','file',], //イメージ画像
-            'code'         => ['required'],
-            'name'         => ['required','max:140',],
-            'rank_id'      => ['required','max:140',],
+            // 'code'         => ['required'],
+            'code' => [
+                'required',
+                'max:140',
+                'regex:/^[a-z0-9 \-\_\*\+\.,!?#\$%&~\|\^@;:\(\)\[\]\{\}\/]+$/i',
+                'unique:prizes',
+            ],
+            'name'         => ['required'],
+            'rank_id'      => ['required'],
             'point'        => ['required','integer','min:0'],
         ];
+
 
         // 更新時のルール
         if($this->_method=='PATCH'){
             $rules['image'] = ['file','max:10000','mimes:jpeg,png,jpg']; //イメージ画像
+        }
+
+        # 重複ルールの条件解除
+        $prize = Prize::find($this->prize_id);
+        if( isset($prize) && $prize->code === $this->code )
+        {
+            $rules['code'] = ['required','max:140',];
         }
 
 

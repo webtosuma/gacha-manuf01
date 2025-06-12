@@ -109,41 +109,73 @@
             </li>
 
             <li v-for="(userPrize, key) in userPrizes" :key="key"
-            class="col-12 col-sm-6 col-lg-4"><label class="d-block " style="cursor:pointer;">
-                <div class="row" v-if="userPrize.prize">
-                    <div class="col-4 px-0 pe-3 position-relative">
-                        <!--チェックボックス-->
-                        <div v-if="bottom_menu == 'true'"
-                        class="position-absolute top-0 start-0 translate-middle" style="z-index:5">
+            class="col-12 col-sm-6 col-lg-4">
+                <!-- <label class="d-block " style="cursor:pointer;"> -->
+                    <div class="row" v-if="userPrize.prize">
+                        <div class="col-4 px-0 pe-3 position-relative">
 
-                            <input @change="changeChildren()"
-                            v-model="ids" :value="userPrize.id"
-                            class="form-check-input float-xl-none m-0 rounded-pill"
-                            style="width:2em; height:2em;"
-                            type="checkbox" name="user_prize_ids[]" >
+
+                            <!--チェックボックス-->
+                            <div v-if="bottom_menu == 'true'"
+                            class="position-absolute top-0 start-0 translate-middle" style="z-index:5">
+
+                                <input @change="changeChildren()"
+                                v-model="ids" :value="userPrize.id"
+                                class="form-check-input float-xl-none m-0 rounded-pill"
+                                style="width:2em; height:2em;"
+                                type="checkbox" name="user_prize_ids[]" >
+
+                            </div>
+
+                            <ratio-image-component
+                            style_class="ratio ratio-3x4 rounded-3"
+                            :url=" userPrize.prize.image_path " />
+
 
                         </div>
+                        <div class="col-8 p-0">
+                            <div class="form-text">取得日：{{ formatDate(userPrize.created_at) }}</div>
+                            <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
 
-                        <ratio-image-component
-                        style_class="ratio ratio-3x4 rounded-3"
-                        :url=" userPrize.prize.image_path " />
+                            <div class="mt- px-3 text-center border rounded-pill d-inline-block">
+                                <number-comma-component :number=" userPrize.point " />{{ 'pt' }}
+                            </div>
+                            <div class="form-text text-danger">{{ userPrize.deadline_text }}</div>
 
-                    </div>
-                    <div class="col-8 p-0">
-                        <div class="form-text">取得日：{{ formatDate(userPrize.created_at) }}</div>
-                        <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
+                            <div class="">
 
-                        <div class="mt- px-3 text-center border rounded-pill d-inline-block">
-                            <number-comma-component :number=" userPrize.point " />{{ 'pt' }}
+
+                                <!--商品説明モーダル-->
+                                <button v-if="userPrize.prize.discription_text"
+                                class="btn btn-sm btn-dark rounded-pill"
+                                type="button"
+                                data-bs-toggle="modal"
+                                :data-bs-target="'#PrizeDiscriptionModal'+userPrize.id"
+                                ><i class="bi bi-search me-2"></i>商品説明</button>
+
+                                <u-prize-discription
+                                v-if="userPrize.prize.discription_text"
+                                :id         ="userPrize.id"
+                                :name       ="userPrize.prize.name"
+                                :image_path ="userPrize.prize.image_path"
+                                :discription="userPrize.prize.discription_text"
+                                size       ="2rem"
+                                :src_icon   ="userPrize.prize.discription_icon_path"
+                                no_btn     ="1"
+                                ></u-prize-discription>
+
+
+                            </div>
                         </div>
-                        <div class="form-text text-danger">{{ userPrize.deadline_text }}</div>
                     </div>
-                </div>
-                <div v-else class="py-5">
-                    <!--商品情報が削除されたとき-->
-                    *商品情報が削除されました
-                </div>
-            </label></li>
+                    <div v-else class="py-5">
+                        <!--商品情報が削除されたとき-->
+                        *商品情報が削除されました
+                    </div>
+
+
+                <!-- </label> -->
+            </li>
 
             <li v-if="!loading && userPrizes.length==0"
             class="py-3">*取得した商品はありません。</li>

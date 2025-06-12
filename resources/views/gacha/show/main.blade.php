@@ -1,8 +1,6 @@
 <!--トップー-->
-<section class="pt-3 pb-md-5
-overflow-hidden
-">
-    <div class="container mx-auto px-3" style="max-width:600px;">
+<section class="overflow-hidden px-1">
+    <div class="container mx-auto px-0" style="max-width:600px;">
 
         <div class="overflow-hidden rounded-4"
         data-aos="zoom-out"
@@ -27,7 +25,7 @@ overflow-hidden
 </section>
 <!--各賞-->
 <section class="overflow-hidden">
-    <div class="row justify-content-center mx-auto" style="max-width:600px; margin-top:50vh;">
+    <div class="row justify-content-center mx-auto" style="max-width:600px; margin-top:20vh;">
 
         @foreach ($gacha->discriptions as $discription)
 

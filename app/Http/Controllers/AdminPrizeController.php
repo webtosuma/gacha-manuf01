@@ -53,9 +53,11 @@ class AdminPrizeController extends Controller
 
         # 新規作成モデル
         $prize = new Prize([
-            'category_id'=>$category_id,
-            'point'=>0,
+            'category_id' => $category_id,
+            'point'       => 0,
+            'code'        => Prize::CreateCode(),
         ]);
+
 
         return view('admin.prize.create', compact('prize','categories','ranks') );
     }
@@ -136,11 +138,9 @@ class AdminPrizeController extends Controller
         $request->session()->regenerateToken();// 二重送信防止
 
 
-
         $category_id = $request->category_id;
         return redirect()->route('admin.prize', $category_id)
         ->with(['alert-warning'=>'商品情報を更新しました']);
-
     }
 
 
@@ -345,18 +345,31 @@ class AdminPrizeController extends Controller
         {
             $inputs = $request->only(
                 'category_id',  //リレーション
-                'code',   //商品コード
-                'name',   //名前
-                'image',  //画像
-                'rank_id',//ランクID
-                'point',  //交換ポイント値
+                'code',         //商品コード
+                'name',         //名前
+                'image',        //画像
+                'rank_id',      //ランクID
+                'point',        //交換ポイント値
+                'discription',  //説明文
             );
+
+            # エンコード入力情報のデコード処理（絵文字対策）
+                $inputs['name']        = urldecode($inputs['name']);
+                $inputs['discription'] = urldecode($inputs['discription']) ;
 
             # ポイント更新記録
                 //新規登録
                 if( !($prize && $prize->point == $request->point) ){
                     $inputs['point_updated_at'] = now();
                 }
+
+
+            # ストレージ更新の処理（説明文）discription
+                $old_text = $prize? $prize->discription: null;  //更新前のファイルパステキスト
+                $new_text = $inputs['discription'];             //新しい入力テキスト
+                $dir = 'upload/prize/discription/';      //保存先ディレクトリ
+                $inputs['discription'] = Method::uploadStorageText($dir, $new_text, $old_text);
+
 
             # ストレージ画像ファイルの更新（イメージ画像）
                 $param = 'image';

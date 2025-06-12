@@ -51,6 +51,10 @@ import Vue from 'vue'
     require('./components/gacha/ResultFormComponent.vue').default);
 
 
+    /* 商品情報 */
+    Vue.component('u-prize-discription',
+    require('./components/prize/DiscriptionComponent.vue').default);
+
 
     /* ユーザー取得景品一覧フォーム */
     Vue.component('u-user-prize-form',
