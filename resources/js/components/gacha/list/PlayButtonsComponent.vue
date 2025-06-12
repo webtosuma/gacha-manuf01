@@ -5,7 +5,7 @@
         <div v-if="show_play_bottons" class="row g-2 mt-1">
 
             <!--1回ボタン-->
-            <div class="col-6">
+            <div class="col">
                 <form :action="r_action" method="post">
                     <input type="hidden" name="_token" :value="token">
 
@@ -21,7 +21,7 @@
             </div>
 
             <!--10連ボタン-->
-            <div class="col-6" v-if="is_disabled_tenplay_btn>-1" >
+            <div class="col" v-if="is_disabled_tenplay_btn>-1" >
                 <form :action="r_action" method="post">
                     <input type="hidden" name="_token" :value="token">
 
@@ -37,7 +37,7 @@
             </div>
 
             <!--100連ボタン-->
-            <div class="col-6" v-if="is_disabled_hundredplay_btn>-1" >
+            <!-- <div class="col" v-if="is_disabled_hundredplay_btn>-1" >
                 <form :action="r_action" method="post">
                     <input type="hidden" name="_token" :value="token">
 
@@ -50,10 +50,10 @@
                     :style_class="hundred_play_style_class"
                     />
                 </form>
-            </div>
+            </div> -->
 
             <!--カスタムボタン-->
-            <div class="col-6"  v-if="is_disabled_custom_btn>-1" >
+            <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
                 <a :href="r_costom"
                 :class    ="coustom_style_class"
                 >{{ custom_label }}</a>
@@ -215,46 +215,46 @@
 
             /* 1回ガチャる　スタイル */
             one_play_style_class: `
-            btn btn-light bg-gradient fw-bold w-100 pb-0
+            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2
             rounded-pill border-secondary border-0 shadow-sm
             position-relative shiny overflow-hidden
             `,
             /* 1回ガチャる　スタイル(売り切れ) */
             soldout_one_play_style_class: `
-            btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger
+            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-danger
             rounded-pill border-secondary border-0 shadow-sm
             `,
             /* 10連ガチャる　スタイル */
             ten_play_style_class: `
-            btn btn-dark bg-gradient text- fw-bold w-100 pb-0
+            btn btn-sm btn-dark bg-gradient text- fw-bold w-100 py-2
             rounded-pill border-danger border-0 shadow-sm
             position-relative shiny overflow-hidden
             `,
             /* 10連ガチャる　スタイル(売り切れ) */
             soldout_ten_play_style_class: `
-            btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger
+            btn btn-sm btn-dark bg-gradient text- fw-bold w-100 py-2 text-danger
             rounded-pill border-secondary border-0 shadow-sm
             `,
             /* 百連ガチャる　スタイル */
             hundred_play_style_class: `
-            btn btn-danger bg-gradient text-white fw-bold w-100 pb-0
+            btn btn-sm btn-danger bg-gradient text-white fw-bold w-100 py-2
             rounded-pill border-danger border-0 shadow-sm
             position-relative shiny overflow-hidden
             `,
             /* 百連ガチャる　スタイル(売り切れ) */
             soldout_hundred_play_style_class: `
-            btn btn-dark bg-gradient fw-bold w-100 pb-0 text-danger
+            btn btn-sm btn-dark bg-gradient fw-bold w-100 py-2 text-danger
             rounded-pill border-secondary border-0 shadow-sm
             `,
             /* カスタムボタン　スタイル */
             coustom_style_class: `
-            btn btn-info bg-gradient text-white fw-bold w-100 pb-
+            btn btn-  btn-info bg-gradient text-white fw-bold w-100 pb-
             rounded-pill border-danger border-0 shadow-sm
             position-relative shiny overflow-hidden h-100
             `,
             /* カスタムボタン　スタイル(売り切れ) */
             soldout_coustom_style_class: `
-            btn btn-info bg-gradient text-danger fw-bold w-100 pb-
+            btn btn-  btn-info bg-gradient text-danger fw-bold w-100 pb-
             rounded-pill border-secondary border-0 shadow-sm
             position-relative shiny overflow-hidden h-100
             disabled

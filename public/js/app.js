@@ -12245,21 +12245,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       /* 10連ガチャる　 disabled */
       ten_play_disabled: false,
       /* 1回ガチャる　スタイル */
-      one_play_style_class: "\n            btn btn-light bg-gradient fw-bold w-100 pb-0\n            rounded-pill border-secondary border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            ",
+      one_play_style_class: "\n            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2\n            rounded-pill border-secondary border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            ",
       /* 1回ガチャる　スタイル(売り切れ) */
-      soldout_one_play_style_class: "\n            btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger\n            rounded-pill border-secondary border-0 shadow-sm\n            ",
+      soldout_one_play_style_class: "\n            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-danger\n            rounded-pill border-secondary border-0 shadow-sm\n            ",
       /* 10連ガチャる　スタイル */
-      ten_play_style_class: "\n            btn btn-dark bg-gradient text- fw-bold w-100 pb-0\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            ",
+      ten_play_style_class: "\n            btn btn-sm btn-dark bg-gradient text- fw-bold w-100 py-2\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            ",
       /* 10連ガチャる　スタイル(売り切れ) */
-      soldout_ten_play_style_class: "\n            btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger\n            rounded-pill border-secondary border-0 shadow-sm\n            ",
+      soldout_ten_play_style_class: "\n            btn btn-sm btn-dark bg-gradient text- fw-bold w-100 py-2 text-danger\n            rounded-pill border-secondary border-0 shadow-sm\n            ",
       /* 百連ガチャる　スタイル */
-      hundred_play_style_class: "\n            btn btn-danger bg-gradient text-white fw-bold w-100 pb-0\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            ",
+      hundred_play_style_class: "\n            btn btn-sm btn-danger bg-gradient text-white fw-bold w-100 py-2\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden\n            ",
       /* 百連ガチャる　スタイル(売り切れ) */
-      soldout_hundred_play_style_class: "\n            btn btn-dark bg-gradient fw-bold w-100 pb-0 text-danger\n            rounded-pill border-secondary border-0 shadow-sm\n            ",
+      soldout_hundred_play_style_class: "\n            btn btn-sm btn-dark bg-gradient fw-bold w-100 py-2 text-danger\n            rounded-pill border-secondary border-0 shadow-sm\n            ",
       /* カスタムボタン　スタイル */
-      coustom_style_class: "\n            btn btn-info bg-gradient text-white fw-bold w-100 pb-\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden h-100\n            ",
+      coustom_style_class: "\n            btn btn-  btn-info bg-gradient text-white fw-bold w-100 pb-\n            rounded-pill border-danger border-0 shadow-sm\n            position-relative shiny overflow-hidden h-100\n            ",
       /* カスタムボタン　スタイル(売り切れ) */
-      soldout_coustom_style_class: "\n            btn btn-info bg-gradient text-danger fw-bold w-100 pb-\n            rounded-pill border-secondary border-0 shadow-sm\n            position-relative shiny overflow-hidden h-100\n            disabled\n            "
+      soldout_coustom_style_class: "\n            btn btn-  btn-info bg-gradient text-danger fw-bold w-100 pb-\n            rounded-pill border-secondary border-0 shadow-sm\n            position-relative shiny overflow-hidden h-100\n            disabled\n            "
     };
   }
 });
@@ -23750,7 +23750,7 @@ var render = function render() {
   return _c("div", {}, [_vm.show_play_bottons ? _c("div", {
     staticClass: "row g-2 mt-1"
   }, [_c("div", {
-    staticClass: "col-6"
+    staticClass: "col"
   }, [_c("form", {
     attrs: {
       action: _vm.r_action,
@@ -23774,7 +23774,7 @@ var render = function render() {
       style_class: _vm.one_play_style_class
     }
   })], 1)]), _vm._v(" "), _vm.is_disabled_tenplay_btn > -1 ? _c("div", {
-    staticClass: "col-6"
+    staticClass: "col"
   }, [_c("form", {
     attrs: {
       action: _vm.r_action,
@@ -23797,32 +23797,8 @@ var render = function render() {
       disabled: _vm.is_disabled_tenplay_btn == 0 ? 0 : 1,
       style_class: _vm.ten_play_style_class
     }
-  })], 1)]) : _vm._e(), _vm._v(" "), _vm.is_disabled_hundredplay_btn > -1 ? _c("div", {
-    staticClass: "col-6"
-  }, [_c("form", {
-    attrs: {
-      action: _vm.r_action,
-      method: "post"
-    }
-  }, [_c("input", {
-    attrs: {
-      type: "hidden",
-      name: "_token"
-    },
-    domProps: {
-      value: _vm.token
-    }
-  }), _vm._v(" "), _c("u-gacha-btn", {
-    attrs: {
-      name: "play_count",
-      value: "100",
-      label: _vm.hundred_play_label,
-      point: (_vm.one_play_point * 100).toLocaleString() + "pt",
-      disabled: _vm.is_disabled_hundredplay_btn == 0 ? 0 : 1,
-      style_class: _vm.hundred_play_style_class
-    }
   })], 1)]) : _vm._e(), _vm._v(" "), _vm.is_disabled_custom_btn > -1 ? _c("div", {
-    staticClass: "col-6"
+    staticClass: "col-12"
   }, [_c("a", {
     "class": _vm.coustom_style_class,
     attrs: {

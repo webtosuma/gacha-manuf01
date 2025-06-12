@@ -768,6 +768,7 @@ class Gacha extends Model
             return $this->isDisabledBtnMethod($this,10);
         }
 
+
         /**
          * 百連ガチャるボタンのdisabled is_disabled_hundredplay_btn
          * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
@@ -824,12 +825,14 @@ class Gacha extends Model
                     /* 1回限定 */
                     case 'one_time':
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
+                        // if( $n!=1 ){ return 1; }//終了
                         return ($remaining_count >= $n) && !($gacha->played_one_time) ? 0 : 1 ;
                         break;
 
                     /* 一日一回限定 */
                     case 'only_oneday':
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
+                        // if( $n!=1 ){ return 1; }//終了
                         if( $remaining_count < $n      ){ return 1; }//終了
                         if( $gacha->played_only_oneday ){ return 2; }//本日は終了
                         return 0;//利用可能
@@ -838,6 +841,7 @@ class Gacha extends Model
                     /* 新規会員限定 */
                     case 'only_new_user':
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
+                        // if( $n!=1 ){ return 1; }//終了
                         return ( Auth::check() && !Auth::user()->sevendays_affter_registar )//1週間以内
                         && ($remaining_count >= $n)
                         && !($gacha->played_one_time) //1回のみ
