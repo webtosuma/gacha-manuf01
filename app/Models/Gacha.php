@@ -64,6 +64,7 @@ class Gacha extends Model
     protected $appends = [
         'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
+        'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
     ];
 
 
@@ -766,6 +767,17 @@ class Gacha extends Model
         {
             return $this->isDisabledBtnMethod($this,10);
         }
+
+        /**
+         * 百連ガチャるボタンのdisabled is_disabled_hundredplay_btn
+         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+         * @return Integer
+        */
+        public function getIsDisabledHundredplayBtnAttribute()
+        {
+            return $this->isDisabledBtnMethod($this,100);
+        }
+
 
         /**
          * カスタムボタンのdisabled　is_disabled_custom_btn

@@ -94,6 +94,7 @@
             :one_play_point         ="gacha.one_play_point"
             :is_disabled_oneplay_btn="gacha.is_disabled_oneplay_btn"
             :is_disabled_tenplay_btn="gacha.is_disabled_tenplay_btn"
+            :is_disabled_hundredplay_btn="gacha.is_disabled_hundredplay_btn"
             :is_disabled_custom_btn ="gacha.is_disabled_custom_btn"
 
             :i_time                 ="gacha.i_time"
