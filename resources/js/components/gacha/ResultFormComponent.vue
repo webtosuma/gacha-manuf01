@@ -126,10 +126,18 @@
                     *選択されなかった商品は、「取得した商品一覧」に移動します。
                 </p>
                 <div class="col-md-8 mx-auto">
-                    <button type="button"
+                    <!--ポイント交換ボタン(モーダル表示)-->
+                    <button v-if="no_exchange_point==0"
+                    type="button"
                     data-bs-toggle="modal" data-bs-target="#exchangeModal"
                     class="btn btn-warning rounded-pill w-100" :disabled="disabled"
                     >選択した商品をポイント交換する</button>
+
+                    <!--商品発送ボタン-->
+                    <button v-else
+                    type="submit"
+                    class="btn btn-primary rounded-pill w-100" :disabled="disabled"
+                    >選択した商品を発送する</button>
                 </div>
                 <div class="col-md-8 mx-auto mt-2">
                     <a :href="r_gacha_category"
@@ -199,6 +207,7 @@
         r_api_use_gacha_history_show: { type: String, default: '' },
         r_gacha_category: { type: String, default: '' },
         show_change_btn:  { type: String, default: '1' },
+        no_exchange_point:{ type: [String,Number], default: 0 },
     });
 
     const loading     = ref(true); //

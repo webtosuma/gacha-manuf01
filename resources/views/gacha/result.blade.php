@@ -48,24 +48,46 @@
                 </div>
             </h2>
 
-            <!--ポイント交換フォーム-->
-            @php $params = [
-                'category_code'=>$gacha->category->code_name,
-                'user_gacha_history'=>$user_gacha_history
-            ]; @endphp
-            <form action="{{ route( 'gacha.exchange_points', $params) }}" method="POST">
-                @csrf
-                @method('PATCH')
 
-                <!--カード一覧-->
-                <u-gacha-result-form
-                token="{{ csrf_token() }}"
-                r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
-                r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
+            @if( ! config('app.no_exchange_point') )
+                <!--ポイント交換フォーム-->
+                @php $params = [
+                    'category_code'=>$gacha->category->code_name,
+                    'user_gacha_history'=>$user_gacha_history
+                ]; @endphp
+                <form action="{{ route( 'gacha.exchange_points', $params) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
 
-                ></u-gacha-result-form>
+                    <!--カード一覧-->
+                    <u-gacha-result-form
+                    token="{{ csrf_token() }}"
+                    r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
+                    r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
 
-            </form>
+                    ></u-gacha-result-form>
+
+                </form>
+
+
+
+            @else
+                <!--商品発送フォーム-->
+                <form action="{{ route( 'shipped.appli') }}" method="POST">
+                    @csrf
+
+
+                    <!--カード一覧-->
+                    <u-gacha-result-form
+                    token="{{ csrf_token() }}"
+                    r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
+                    r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
+                    no_exchange_point="1"
+                    ></u-gacha-result-form>
+
+                </form>
+            @endif
+
 
 
         </div>

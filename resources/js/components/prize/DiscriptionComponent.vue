@@ -14,16 +14,18 @@
 
         <!-- Modal -->
         <div :id="'PrizeDiscriptionModal'+id"
-        class="modal fade" tabindex="-1"
+        class="modal fade text-dark" tabindex="-1"
         :aria-labelledby="'PrizeDiscriptionModalLabel'+id"
         aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header"
+                    :class="{'bg-dark text-white':bg_dark}" >
                         <h5 class="modal-title fs-5" :id="'PrizeDiscriptionModalLabel'+id">{{ name }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body"
+                    :class="{'bg-dark text-white':bg_dark}" >
 
 
                         <!--カード画像-->
@@ -40,8 +42,11 @@
 
 
                     </div>
-                    <div class="modal-footer p-0">
-                        <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal"
+                    <div :class="{'bg-dark text-white':bg_dark}"
+                    class="modal-footer p-0">
+                        <button type="button"
+                        :class="!bg_dark ? 'btn btn-light' : 'btn btn-dark'"
+                        class="w-100" data-bs-dismiss="modal"
                         ><i class="bi bi-x me-3"></i>閉じる</button>
                     </div>
                 </div>
@@ -65,6 +70,7 @@
         size:        { type: String, default: '3rem' },
         src_icon:    { type: String, default: '' },
         no_btn:      { type: [String,Number], default: 0 },
+        bg_dark:     { type: [String,Number], default: 0 },
     });
 
 

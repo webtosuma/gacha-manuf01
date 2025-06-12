@@ -47,6 +47,8 @@ return [
         # クーポン機能
         'coupon'                   => (boolean) env('COUPON', false),
 
+        # ポイント交換なし
+        'no_exchange_point'          => (boolean) env('NO_EXCHANGE_POINT', false),
 
     /*
     |--------------------------------------------------------------------------

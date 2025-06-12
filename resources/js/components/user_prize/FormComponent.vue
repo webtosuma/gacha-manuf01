@@ -23,8 +23,8 @@
                 </div>
 
 
-                <div class="row g-2">
-                    <div class="col-6">
+                <div class="row g-2 justify-content-center">
+                    <div class="col col-md-6">
 
                         <!-- 選択した商品の発送申請 r_shipped_appli -->
                         <form :action="r_shipped_appli" method="post">
@@ -39,7 +39,8 @@
                         </form>
 
                     </div>
-                    <div class="col-6">
+                    <div v-if="no_exchange_point==0"
+                    class="col-6">
 
                         <!--選択した商品をポイント交換 r_exchange_points -->
                         <button type="button" :disabled="disabled"
@@ -184,7 +185,8 @@
 
 
         <!-- ポイント交換Modal -->
-        <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+        <div v-if="no_exchange_point==0"
+        class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body text-center">
@@ -232,6 +234,7 @@
             token:{ type: String,  default: '', },
             user_id:{ type: [String,Number],  default: '', },
             bottom_menu:{ type: String,  default: 'true', },
+            no_exchange_point:{ type: [String,Number], default: 0 },
 
             r_api_user_prize:{ type: String,  default: '', },
             r_api_user_prize:{ type: String,  default: '', },//データ取得ルート

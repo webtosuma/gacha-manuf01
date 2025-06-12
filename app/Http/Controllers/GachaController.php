@@ -602,6 +602,13 @@ class GachaController extends Controller
         Request $request, $category_code,
         UserGachaHistory $user_gacha_history
     ){
+        # ポイント交換できないとき
+        if( config('app.no_exchange_point') )
+        {
+            return back()->with('alert-warning','商品をポイントに変えることはできません。');
+        }
+
+
         # 景品のポイント交換
         $data = UserPrizeController::ExchangePoints($request);
         $point_history = $data['point_history'];

@@ -11480,6 +11480,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     show_change_btn: {
       type: String,
       "default": '1'
+    },
+    no_exchange_point: {
+      type: [String, Number],
+      "default": 0
     }
   },
   setup: function setup(__props) {
@@ -12496,6 +12500,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     no_btn: {
       type: [String, Number],
       "default": 0
+    },
+    bg_dark: {
+      type: [String, Number],
+      "default": 0
     }
   },
   setup: function setup(__props) {
@@ -13146,6 +13154,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     bottom_menu: {
       type: String,
       "default": 'true'
+    },
+    no_exchange_point: {
+      type: [String, Number],
+      "default": 0
     },
     r_api_user_prize: {
       type: String,
@@ -23282,7 +23294,7 @@ var render = function render() {
     staticClass: "text-white form-text m-0 mb-3"
   }, [_vm._v("\n                *選択されなかった商品は、「取得した商品一覧」に移動します。\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 mx-auto"
-  }, [_c("button", {
+  }, [_vm.no_exchange_point == 0 ? _c("button", {
     staticClass: "btn btn-warning rounded-pill w-100",
     attrs: {
       type: "button",
@@ -23290,7 +23302,13 @@ var render = function render() {
       "data-bs-target": "#exchangeModal",
       disabled: _setup.disabled
     }
-  }, [_vm._v("選択した商品をポイント交換する")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("選択した商品をポイント交換する")]) : _c("button", {
+    staticClass: "btn btn-primary rounded-pill w-100",
+    attrs: {
+      type: "submit",
+      disabled: _setup.disabled
+    }
+  }, [_vm._v("選択した商品を発送する")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8 mx-auto mt-2"
   }, [_c("a", {
     staticClass: "btn text-danger rounded-pill w-100",
@@ -24195,7 +24213,7 @@ var render = function render() {
       "data-bs-target": "#PrizeDiscriptionModal" + _vm.id
     }
   }) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "modal fade",
+    staticClass: "modal fade text-dark",
     attrs: {
       id: "PrizeDiscriptionModal" + _vm.id,
       tabindex: "-1",
@@ -24207,7 +24225,10 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "modal-content"
   }, [_c("div", {
-    staticClass: "modal-header"
+    staticClass: "modal-header",
+    "class": {
+      "bg-dark text-white": _vm.bg_dark
+    }
   }, [_c("h5", {
     staticClass: "modal-title fs-5",
     attrs: {
@@ -24221,7 +24242,10 @@ var render = function render() {
       "aria-label": "Close"
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "modal-body"
+    staticClass: "modal-body",
+    "class": {
+      "bg-dark text-white": _vm.bg_dark
+    }
   }, [_c("div", {
     staticClass: "col-8 p-3 mx-auto mb-3"
   }, [_c("ratio-image-component", {
@@ -24233,24 +24257,23 @@ var render = function render() {
     attrs: {
       text: _vm.discription
     }
-  })], 1), _vm._v(" "), _vm._m(0)])])])]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c,
-    _setup = _vm._self._setupProxy;
-  return _c("div", {
-    staticClass: "modal-footer p-0"
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer p-0",
+    "class": {
+      "bg-dark text-white": _vm.bg_dark
+    }
   }, [_c("button", {
-    staticClass: "btn btn-light w-100",
+    staticClass: "w-100",
+    "class": !_vm.bg_dark ? "btn btn-light" : "btn btn-dark",
     attrs: {
       type: "button",
       "data-bs-dismiss": "modal"
     }
   }, [_c("i", {
     staticClass: "bi bi-x me-3"
-  }), _vm._v("閉じる")])]);
-}];
+  }), _vm._v("閉じる")])])])])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -25076,9 +25099,9 @@ var render = function render() {
       number: _vm.totalPoint ? "+" + _vm.totalPoint : 0
     }
   })], 1), _vm._v("pt\n                ")])]), _vm._v(" "), _c("div", {
-    staticClass: "row g-2"
+    staticClass: "row g-2 justify-content-center"
   }, [_c("div", {
-    staticClass: "col-6"
+    staticClass: "col col-md-6"
   }, [_c("form", {
     attrs: {
       action: _vm.r_shipped_appli,
@@ -25109,7 +25132,7 @@ var render = function render() {
       type: "submit",
       disabled: _vm.disabled
     }
-  }, [_vm._v("発送申請")])], 2)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("発送申請")])], 2)]), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
     staticClass: "col-6"
   }, [_c("button", {
     staticClass: "btn py-md-3 btn-warning text-white rounded-pill w-100",
@@ -25119,7 +25142,7 @@ var render = function render() {
       "data-bs-toggle": "modal",
       "data-bs-target": "#exchangeModal"
     }
-  }, [_vm._v("ポイント交換")])])])])]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_vm._v("ポイント交換")])]) : _vm._e()])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row align-items-center gy-2"
   }, [_c("div", {
     staticClass: "col-12 position-relative"
@@ -25316,7 +25339,7 @@ var render = function render() {
     }, [_vm._v("\n                    *商品情報が削除されました\n                ")])]);
   }), _vm._v(" "), !_vm.loading && _vm.userPrizes.length == 0 ? _c("li", {
     staticClass: "py-3"
-  }, [_vm._v("*取得した商品はありません。")]) : _vm._e()], 2), _vm._v(" "), _c("div", {
+  }, [_vm._v("*取得した商品はありません。")]) : _vm._e()], 2), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "exchangeModal",
@@ -25382,7 +25405,7 @@ var render = function render() {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("交換する")])], 2)])])])])])])]);
+  }, [_vm._v("交換する")])], 2)])])])])])]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

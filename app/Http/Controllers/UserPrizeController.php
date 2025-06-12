@@ -35,6 +35,13 @@ class UserPrizeController extends Controller
      */
     public function exchange_points(Request $request)
     {
+        # ポイント交換できないとき
+        if( config('app.no_exchange_point') )
+        {
+            return back()->with('alert-warning','商品をポイントに変えることはできません。');
+        }
+
+
         # 商品のポイント交換
         $data = self::ExchangePoints($request);
         $point_history = $data['point_history'];
