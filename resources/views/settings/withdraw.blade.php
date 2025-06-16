@@ -25,7 +25,7 @@
         @method('delete')
 
 
-        <div class="card card-body border-danger bg-white">
+        <div class="card card-body border-danger bg-white text-dark">
 
             <div class="mb-3">
                 <h6 class="fw-bold">一度退会すると、あなたのアカウントに関する情報がすべて失われます。</h6>

@@ -30,7 +30,7 @@
         <form method="post" action="{{ route('settings.email_reception.update' ) }}" novalidate>
             @csrf
             @method('PATCH')
-            <div class="card card-body bg-white border-0 row g-2">
+            <div class="card card-body bg-white text-dark border-0 row g-2">
 
 
                 <!-- メール連絡受取り設定 -->

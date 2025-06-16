@@ -24,7 +24,7 @@
 
 
                 <div class="row g-2 justify-content-center">
-                    <div class="col col-md-6">
+                    <div class="col">
 
                         <!-- 選択した商品の発送申請 r_shipped_appli -->
                         <form :action="r_shipped_appli" method="post">
@@ -34,7 +34,7 @@
                             type="hidden" name="user_prize_ids[]" :value="id">
 
                             <button type="submit" :disabled="disabled"
-                            class="btn py-md-3 btn-light border rounded-pill w-100"
+                            class="btn py-md-3 btn-primary text-white rounded-pill w-100"
                             >発送申請</button>
                         </form>
 
@@ -113,7 +113,7 @@
             class="col-12 col-sm-6 col-lg-4">
                 <!-- <label class="d-block " style="cursor:pointer;"> -->
                     <div class="row" v-if="userPrize.prize">
-                        <div class="col-4 px-0 pe-3 position-relative">
+                        <label class="col-4 px-0 pe-3 position-relative"  style="cursor: pointer;">
 
 
                             <!--チェックボックス-->
@@ -133,12 +133,13 @@
                             :url=" userPrize.prize.image_path " />
 
 
-                        </div>
+                        </label>
                         <div class="col-8 p-0">
                             <div class="form-text">取得日：{{ formatDate(userPrize.created_at) }}</div>
                             <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
 
-                            <div class="mt- px-3 text-center border rounded-pill d-inline-block">
+                            <div v-if="no_exchange_point==0"
+                            class="mt- px-3 text-center border rounded-pill d-inline-block">
                                 <number-comma-component :number=" userPrize.point " />{{ 'pt' }}
                             </div>
                             <div class="form-text text-danger">{{ userPrize.deadline_text }}</div>

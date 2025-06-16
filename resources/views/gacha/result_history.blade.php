@@ -66,6 +66,7 @@
             r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
             r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
             show_change_btn="0"
+            no_exchange_point="{{ config('app.no_exchange_point')?1:0 }}"
             ></u-gacha-result-form>
 
 

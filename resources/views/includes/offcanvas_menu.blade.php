@@ -1,10 +1,6 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasHumberge" aria-labelledby="offcanvasHumbergeLabel"
 style="max-width:90vw; min-width:30vw;">
 
-    {{-- <div class="offcanvas-header align-items-center pb-0">
-        <!--閉じる-->
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div> --}}
     <div class="offcanvas-header align-items-center border-bottom">
         <h5 id="offcanvasHumbergeLabel" class="m-0">
             <a href="{{ route('settings.acount') }}" class="d-block text-dark">
@@ -103,9 +99,14 @@ style="max-width:90vw; min-width:30vw;">
                             url="{{$u_prize->prize->image_path}}"
                             ></ratio-image-component>
 
-                            <div class="mt-1 w-100 border rounded-pill d-inline-block" style="font-size:11px;">
+                            {{-- <div class="mt-1 w-100 border rounded-pill d-inline-block" style="font-size:11px;">
                                 {{number_format($u_prize->prize->point).'pt'}}
-                            </div>
+                            </div> --}}
+                            @if( ! config('app.no_exchange_point') )
+                                <div class="mt-1 w-100 border rounded-pill d-inline-block" style="font-size:11px;">
+                                    {{number_format($u_prize->prize->point).'pt'}}
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>

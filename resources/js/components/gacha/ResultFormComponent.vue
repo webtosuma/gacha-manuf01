@@ -19,14 +19,14 @@
             class="text-center fs-5">*表示できる商品はありません</div>
 
             <div v-for="(userPrize, key) in userPrizes" :key="key"
-            :class="userPrizes.length==1 ? 'col-6' : 'col-3'">
+            :class="userPrizes.length==1 ? 'col-6' : 'col-4 col-md-3'">
                 <div class="d-flex align-items-center justify-content-center h-100">
 
 
                     <div class="w-100" data-aos="zoom-in">
                         <!-- <label class="w-100" > -->
 
-                            <div class="position-relative">
+                            <label class="d-block position-relative" style="cursor: pointer;">
                                 <!--チェックボックス-->
                                 <div class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
                                     <input v-model="ids" @change="changeChildren()"
@@ -42,22 +42,21 @@
                                 ></ratio-image-component>
 
 
-                            </div>
+                            </label>
 
                             <!--ポイント表示-->
-                            <div class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
+                            <div v-if="no_exchange_point==0"
+                            class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
 
                                 <number-comma-component :number="userPrize.point" />pt
 
-                                <!-- @if($user_prize->point_history_id) -->
-                                <!--ポイント交換済み-->
+                                <!-- ポイント交換済み -->
                                 <div v-if="userPrize.point_history_id"
                                 class="position-absolute top-50 start-0 translate-middle-y ps-1">
                                     <span class="text-warning">●</span>
                                 </div>
 
-                                <!-- @if($user_prize->shipped_id) -->
-                                <!--ポイント交換済み-->
+                                <!-- ポイント交換済み -->
                                 <div v-if="userPrize.shipped_id"
                                 class="position-absolute top-50 start-0 translate-middle-y ps-1">
                                     <span class="text-primary">●</span>
@@ -66,14 +65,14 @@
                             </div>
 
 
-                                <!--商品説明モーダル-->
-                                <button v-if="userPrize.prize.discription_text"
-                                class="btn btn-sm btn-dark rounded-pill w-100"
-                                type="button"
-                                data-bs-toggle="modal"
-                                :data-bs-target="'#PrizeDiscriptionModal'+userPrize.id"
-                                ><i class="bi bi-search me-2"></i>商品説明</button>
-                                <div v-else style="height: 2rem;"></div>
+                            <!--商品説明モーダル-->
+                            <button v-if="userPrize.prize.discription_text"
+                            class="btn btn-sm btn-dark rounded-pill w-100 my-1"
+                            type="button"
+                            data-bs-toggle="modal"
+                            :data-bs-target="'#PrizeDiscriptionModal'+userPrize.id"
+                            ><i class="bi bi-search me-2"></i>商品説明</button>
+                            <div v-else style="height: 2rem;"></div>
 
                         <!-- </label> -->
                     </div>
@@ -101,7 +100,7 @@
 
         </div>
 
-        <!-- ポイント交換ボタン -->
+        <!-- ポイント交換 or 商品発送 ボタン -->
         <div v-if="show_change_btn!=0"
         class="rounded-3 p-3" style="background: rgb(0, 0, 0, .7);">
             <div data-aos="fade-in">
@@ -136,8 +135,9 @@
                     <!--商品発送ボタン-->
                     <button v-else
                     type="submit"
-                    class="btn btn-primary rounded-pill w-100" :disabled="disabled"
+                    class="btn btn-primary text-white rounded-pill w-100" :disabled="disabled"
                     >選択した商品を発送する</button>
+
                 </div>
                 <div class="col-md-8 mx-auto mt-2">
                     <a :href="r_gacha_category"
@@ -150,11 +150,11 @@
         </div>
         <div v-else>
             <div class="d-flex justify-content-center gap-3 fw-bold" style="font-size:14px; text-shadow: #fff 0px 0 5px;">
-                <div class="">
+                <div  v-if="no_exchange_point==0">
                     <span class="text-warning">●</span>
                     <span>ポイント交換済み</span>
                 </div>
-                <div class="">
+                <div>
                     <span class="text-primary">●</span>
                     <span>発送申請済み</span>
                 </div>
