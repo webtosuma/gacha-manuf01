@@ -54,7 +54,7 @@ $active_key = 'user';
 
                     </h5>
 
-                    <a-user-deadlin-prize-change
+                    <a-user-deadlin-prize-change 
                     token     ="{{ csrf_token() }}"
                     r_redirect="{{ route('admin.api.user.user_prize.deadline.comp_change_point') }}"
                     r_api_deadline_prize="{{ route('admin.api.user.user_prize.deadline.change_point') }}"

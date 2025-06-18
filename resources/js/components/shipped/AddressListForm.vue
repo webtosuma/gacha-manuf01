@@ -131,14 +131,15 @@
             destroy(id) {
 
                 const route = this.r_destroy+'/'+id ; //一覧取得
-                // console.log(route);
-
 
                 axios.delete( route, { _token: this.token } )
                 .then(json => {
-                    // console.log( json.data );
+
                     /* 一覧取得 */
                     this.getList();
+
+                    /** お届け先アドレスの選択変更*/
+                    this.updateSelectedAddressId(0);
                 })
                 .catch(error => {
                     alert('データ送信エラーが発生しました。');

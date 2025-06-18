@@ -183,17 +183,9 @@
                                 >キャンセル</button>
                             </div>
                             <div class="col-6">
-
-                                <u-user-prize-exchange-point-btn
-                                :token="token"
-                                :r_api_post="r_api_exchange_points"
-                                :r_redirect="r_redirect"
-                                :user_prize_ids="ids"
-                                r_redirect:=""
-                                btn_style_class="btn p-md-33 btn-warning text-white rounded-pill w-100"
-                                btn_label="交換する"
-                                />
-
+                                <button type="submit"
+                                class="btn p-md-33 btn-warning text-white rounded-pill w-100"
+                                >交換する</button>
                             </div>
                         </div>
                     </div>
@@ -216,11 +208,7 @@
         r_gacha_category: { type: String, default: '' },
         show_change_btn:  { type: String, default: '1' },
         no_exchange_point:{ type: [String,Number], default: 0 },
-
-        r_api_exchange_points: { type: String, default: '' },
-        r_redirect:            { type: String, default: '',},//
     });
-
 
     const loading     = ref(true); //
     const userPrizes  = ref([]);   /* ユーザー取得商品 */

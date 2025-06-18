@@ -26,11 +26,14 @@
         <u-user-prize-form
         token="{{ csrf_token() }}"
         no_exchange_point="{{ config('app.no_exchange_point') ?1:0 }}"
-
         r_api_user_prize ="{{ route('api_user_prize') }}"
-        r_exchange_points="{{ route('user_prize.exchange_points') }}"
         r_shipped_appli  ="{{ route('shipped.appli') }}"
+
+        r_api_exchange_points="{{ route('api.user_prize.exchange_points') }}"
+        r_redirect="{{route('user_prize.exchange_points')}}"
         ></u-user-prize-form>
+
+        {{-- r_exchange_points="{{ route('user_prize.exchange_points') }}" --}}
 
     </div>
 @endsection

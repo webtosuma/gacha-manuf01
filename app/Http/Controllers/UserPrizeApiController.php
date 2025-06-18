@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\UserPrize;
 use App\Models\Prize;
 use App\Models\User;
 use App\Models\GachaCategory;
+use App\Models\PointHistory;
 /*
 | =============================================
 |  取得した商品 API コントローラー
@@ -158,5 +161,55 @@ class UserPrizeApiController extends Controller
     }
 
 
+    /**
+     * API商品のポイント交換
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exchange_points(Request $request)
+    {
+        # 変数の定義
+        $user =Auth::user();
+        $user_prize_ids = $request->user_prize_ids;
+
+        # ポイント交換するユーザー商品を取得(発送済み以外)
+        $user_prizes = UserPrize::where('user_id',$user->id)
+        // ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
+        ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
+        ->whereIn('id',$user_prize_ids )
+        ->paginate(1);
+
+
+        DB::beginTransaction();
+        try {
+
+            foreach ($user_prizes as $user_prize)
+            {
+                # ポイント履歴の登録
+                $point_history = new PointHistory([
+                    'user_id'   => $user->id,    //ユーザー　リレーション
+                    'value'     =>  $user_prize->point, //ポイント数
+                    'reason_id' => 12, // '商品のポイント交換',
+                ]);
+                $point_history->save();
+
+                # ユーザー取得商品情報の更新
+                $user_prize->point_history_id = $point_history->id;
+                $user_prize->save();
+            }
+
+
+            DB::commit();
+        } catch (\Exception $e) {
+
+            Log::error($e);
+            DB::rollback();
+            return redirect()->json(['message'=>'エラーが発生しました。'],500);
+
+        }
+
+        return response()->json( $user_prizes );
+    }
 
 }

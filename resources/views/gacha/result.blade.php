@@ -50,25 +50,15 @@
 
 
             @if( ! config('app.no_exchange_point') )
-                <!--ポイント交換フォーム-->
-                @php $params = [
-                    'category_code'=>$gacha->category->code_name,
-                    'user_gacha_history'=>$user_gacha_history
-                ]; @endphp
-                <form action="{{ route( 'gacha.exchange_points', $params) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
 
-                    <!--カード一覧-->
-                    <u-gacha-result-form
-                    token="{{ csrf_token() }}"
-                    r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
-                    r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
-
-                    ></u-gacha-result-form>
-
-                </form>
-
+                <!--カード一覧-->
+                <u-gacha-result-form
+                token="{{ csrf_token() }}"
+                r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
+                r_api_exchange_points="{{ route('api.user_prize.exchange_points') }}"
+                r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
+                r_redirect="{{route('user_prize.exchange_points')}}"
+                ></u-gacha-result-form>
 
 
             @else

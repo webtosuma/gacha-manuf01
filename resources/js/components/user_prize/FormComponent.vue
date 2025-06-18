@@ -206,17 +206,16 @@
                             </div>
                             <div class="col-6">
 
-                                <form :action="r_exchange_points" method="post">
-                                    <input type="hidden" name="_token" :value="token">
-                                    <input type="hidden" name="_method" value="patch">
+                                <u-user-prize-exchange-point-btn
+                                :token="token"
+                                :r_api_post="r_api_exchange_points"
+                                :r_redirect="r_redirect"
+                                :user_prize_ids="ids"
+                                r_redirect:=""
+                                btn_style_class="btn p-md-33 btn-warning text-white rounded-pill w-100"
+                                btn_label="交換する"
+                                />
 
-                                    <input v-for="(id, key) in ids" :key="key"
-                                    type="hidden" name="user_prize_ids[]" :value="id">
-
-                                    <button type="submit"
-                                    class="btn p-md-33 btn-warning text-white rounded-pill w-100"
-                                    >交換する</button>
-                                </form>
 
                             </div>
                         </div>
@@ -239,8 +238,11 @@
 
             r_api_user_prize:{ type: String,  default: '', },
             r_api_user_prize:{ type: String,  default: '', },//データ取得ルート
-            r_exchange_points:{ type: String,  default: '', },//ポイント交換ルート
+            // r_exchange_points:{ type: String,  default: '', },//ポイント交換ルート
             r_shipped_appli:  { type: String,  default: '', },//発送申請ルート
+
+            r_api_exchange_points: { type: String, default: '' },
+            r_redirect:            { type: String, default: '',},//
         },
         data() { return {
 

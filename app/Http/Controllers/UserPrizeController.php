@@ -41,27 +41,28 @@ class UserPrizeController extends Controller
             return back()->with('alert-warning','商品をポイントに変えることはできません。');
         }
 
+        return back()->with(['alert-warning'=>'商品をポイントに交換しました。']);
 
-        # 商品のポイント交換
-        $data = self::ExchangePoints($request);
-        $point_history = $data['point_history'];
-        $user_prizes   = $data['user_prizes'];
+        // # 商品のポイント交換
+        // $data = self::ExchangePoints($request);
+        // $point_history = $data['point_history'];
+        // $user_prizes   = $data['user_prizes'];
 
-        # メッセージ
-        if( $user_prizes->count()>0 ){
+        // # メッセージ
+        // if( $user_prizes->count()>0 ){
 
-            $point = number_format( $point_history->value );
-            $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。";
+        //     $point = number_format( $point_history->value );
+        //     $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。";
 
-            return redirect('user_prize')
-            ->with('alert-warning',$message);
-        }
-        else{
-            $message = '不正な処理を検知しました。';
+        //     return redirect('user_prize')
+        //     ->with('alert-warning',$message);
+        // }
+        // else{
+        //     $message = '不正な処理を検知しました。';
 
-            return redirect('user_prize')
-            ->with(['alert-danger'=>$message, 'icon'=>'bi-exclamation-circle' ]);
-        }
+        //     return redirect('user_prize')
+        //     ->with(['alert-danger'=>$message, 'icon'=>'bi-exclamation-circle' ]);
+        // }
     }
 
 
@@ -70,51 +71,51 @@ class UserPrizeController extends Controller
      * 商品のポイント交換
      * @return Void
      */
-    public static function ExchangePoints($request)
-    {
-        # 変数の定義
-        $user =Auth::user();
-        $id_array = $request->user_prize_ids;
+    // public static function ExchangePoints($request)
+    // {
+    //     # 変数の定義
+    //     $user =Auth::user();
+    //     $id_array = $request->user_prize_ids;
 
-        # ポイント交換するユーザー商品を取得
-        $user_prizes = UserPrize::where('user_id',$user->id)
-        ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
-        ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
-        ->find( $id_array );
-
-
-        # 交換ポイントの合計($total_point)
-        $total_point = 0;
-        foreach ($user_prizes as $user_prize) {
-            $total_point += $user_prize->point;
-        }
-
-        # ポイント履歴の登録
-        if( $user_prizes->count()>0 ){
-            $point_history = new PointHistory([
-                'user_id'   => $user->id,    //ユーザー　リレーション
-                'value'     => $total_point, //ポイント数
-                'reason_id' => 12, // '商品のポイント交換',
-            ]);
-            $point_history->save();
-
-        }else{
-            $point_history = null;
-        }
+    //     # ポイント交換するユーザー商品を取得
+    //     $user_prizes = UserPrize::where('user_id',$user->id)
+    //     ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
+    //     ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
+    //     ->find( $id_array );
 
 
-        # ユーザー取得商品情報の更新
-        foreach ($user_prizes as $user_prize) {
-            $user_prize->point_history_id = $point_history->id;
-            $user_prize->save();
-        }
+    //     # 交換ポイントの合計($total_point)
+    //     $total_point = 0;
+    //     foreach ($user_prizes as $user_prize) {
+    //         $total_point += $user_prize->point;
+    //     }
 
-        // 二重送信防止
-        $request->session()->regenerateToken();
+    //     # ポイント履歴の登録
+    //     if( $user_prizes->count()>0 ){
+    //         $point_history = new PointHistory([
+    //             'user_id'   => $user->id,    //ユーザー　リレーション
+    //             'value'     => $total_point, //ポイント数
+    //             'reason_id' => 12, // '商品のポイント交換',
+    //         ]);
+    //         $point_history->save();
+
+    //     }else{
+    //         $point_history = null;
+    //     }
 
 
-        return compact('user_prizes','point_history');
-    }
+    //     # ユーザー取得商品情報の更新
+    //     foreach ($user_prizes as $user_prize) {
+    //         $user_prize->point_history_id = $point_history->id;
+    //         $user_prize->save();
+    //     }
+
+    //     // 二重送信防止
+    //     $request->session()->regenerateToken();
+
+
+    //     return compact('user_prizes','point_history');
+    // }
 
 }
 
