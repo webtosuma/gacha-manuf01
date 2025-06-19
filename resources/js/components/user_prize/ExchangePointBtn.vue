@@ -66,54 +66,89 @@
         methods: {
 
 
-        /* お知らせメールの送信 */
-        post() {
+            /* ポイント交換処理 */
+            post() {
 
-            // 送信中カバーの表示
-            this.loading = true;
+                // 送信中カバーの表示
+                this.loading = true;
 
-            const route = this.postUrl;
-            axios.post( route , {
-                _token: this.token,
-                user_prize_ids: this.user_prize_ids,
-            } )
-            .then(json => {
-                // console.log(json.data);
+                const route = this.postUrl;
+                axios.post( route , {
+                    _token: this.token,
+                    user_prize_ids: this.user_prize_ids,
+                } )
+                .then(json => {
+                    // console.log(json.data);
 
-                this.postUrl = json.data.next_page_url;     //URLの更新
-                const current_page = json.data.current_page;//表示中ページ
-                const last_page    = json.data.last_page;   //最終ページ
-                this.progress      = Math.ceil(current_page/last_page*100);
-
-
-                if( current_page != last_page ){
-                    this.post();
-                }
-                else{
-                    // 完了後、一覧ページへリダイレクト
-                    setTimeout(() => {
-                        window.location.href = this.r_redirect;
-                    }, 2*1000);
-                    return;
-                }
+                    this.postUrl = json.data.next_page_url;     //URLの更新
+                    const current_page = json.data.current_page;//表示中ページ
+                    const last_page    = json.data.last_page;   //最終ページ
+                    this.progress      = Math.ceil(current_page/last_page*100);
 
 
-            })
-            .catch(error => {
-
-                if (error.response && error.response.status === 450) {
-                    alert(`通信エラーが発生しました`)
-                    console.log( error.response.data );
-                } else {
-                    alert(`通信エラーが発生しました`)
-                    console.log( error.response.data );
-                }
-                this.loading = false;
-
-            });
-        },
+                    if( current_page != last_page ){
+                        this.post();
+                    }
+                    else{
+                        // 完了後、一覧ページへリダイレクト
+                        setTimeout(() => {
+                            window.location.href = this.r_redirect;
+                        }, 2*1000);
+                        return;
+                    }
 
 
+                })
+                .catch(error => {
+
+                    if (error.response && error.response.status === 450) {
+                        alert(`通信エラーが発生しました`)
+                        console.log( error.response.data );
+                    } else {
+                        alert(`通信エラーが発生しました`)
+                        console.log( error.response.data );
+                    }
+                    this.loading = false;
+
+                });
+            },
+
+
+            // async post() {
+            //     // 送信中カバーの表示
+            //     this.loading = true;
+            //     let count    = 0;
+
+            //     try {
+            //         for (const id of this.user_prize_ids)
+            //         {
+            //             const route = this.postUrl;
+            //             await axios.post(route, {
+            //                 _token: this.token,
+            //                 user_prize_ids: [id],
+            //             });
+            //             count++;
+            //             this.progress = Math.ceil( count/this.user_prize_ids.length *100 );
+            //         }
+
+            //         // すべてのPOSTが完了後にリダイレクト
+            //         setTimeout(() => {
+            //             window.location.href = this.r_redirect;
+            //         }, 2*1000);
+            //         return;
+
+            //     } catch (error) {
+            //         if (error.response && error.response.status === 450) {
+            //             alert('通信エラーが発生しました');
+            //             console.log(error.response.data);
+            //         } else {
+            //             alert('通信エラーが発生しました');
+            //             console.log(error);
+            //         }
+            //     } finally {
+            //         // this.loading = false;
+            //     }
+            // }
+        }
     }
-}
 </script>

@@ -13454,6 +13454,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
       return "".concat(year, "/").concat(month, "/").concat(day);
     }
+
+    /** アクティブなカテゴリーのセット */
+    // setActiveCategory( category_id ) {
+
+    //     this.search_key=''; //キーワードのリセット
+
+    //     this.category_id = category_id;//アクティブなカテゴリーIDのセット
+    //     this.getData(); /* データ取得 */
+    // },
   }
 });
 

@@ -387,18 +387,6 @@
             },
 
 
-            /** アクティブなカテゴリーのセット */
-            // setActiveCategory( category_id ) {
-
-            //     this.search_key=''; //キーワードのリセット
-
-            //     this.category_id = category_id;//アクティブなカテゴリーIDのセット
-            //     this.getData(); /* データ取得 */
-            // },
-
-
-
-
         },
 
     };

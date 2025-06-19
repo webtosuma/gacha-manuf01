@@ -178,14 +178,17 @@ class UserPrizeApiController extends Controller
         // ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
         ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
         ->whereIn('id',$user_prize_ids )
-        ->paginate(1);
+        ->paginate(20);
 
-
+        
         DB::beginTransaction();
         try {
 
             foreach ($user_prizes as $user_prize)
             {
+                # 処理済の時はスキップ
+                if($user_prize->point_history_id){ continue; }
+
                 # ポイント履歴の登録
                 $point_history = new PointHistory([
                     'user_id'   => $user->id,    //ユーザー　リレーション
