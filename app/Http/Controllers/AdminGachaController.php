@@ -77,7 +77,7 @@ class AdminGachaController extends Controller
 
 
         # カテゴリーデータ(select要素用)
-        $categories = GachaCategory::all();
+        $categories = GachaCategory::adminList()->get();
 
         # ユーザーランク
         $user_ranks = UserRankHistory::UserRanks();
@@ -152,7 +152,7 @@ class AdminGachaController extends Controller
     public function edit(Gacha $gacha)
     {
         # カテゴリーデータ(select要素用)
-        $categories = GachaCategory::all();
+        $categories = GachaCategory::adminList()->get();
 
         # ユーザーランク
         $user_ranks = UserRankHistory::UserRanks();

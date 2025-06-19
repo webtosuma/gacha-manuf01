@@ -31,7 +31,7 @@ class UserPrizeApiController extends Controller
 
         # カテゴリー
         $categories = [ new GachaCategory(['name'=>'全て', 'id'=>0]) ];
-        $get_categories = GachaCategory::where('is_published',1)->orderBy('created_at')->get();
+        $get_categories = GachaCategory::userList()->get();
         foreach ($get_categories as $get_category) { $categories[] = $get_category; }
 
         # ユーザーの取得商品情報
@@ -180,7 +180,7 @@ class UserPrizeApiController extends Controller
         ->whereIn('id',$user_prize_ids )
         ->paginate(20);
 
-        
+
         DB::beginTransaction();
         try {
 

@@ -5,6 +5,10 @@
 */
 import Vue from 'vue'
 
+    /* カテゴリー並び替え */
+    Vue.component('a-category-change-order',
+    require('./components/admin/category/ChangeOrder.vue').default);
+
     /* 商品管理 */
     Vue.component('a-prize-list',
     require('./components/admin/prize/Index.vue').default);

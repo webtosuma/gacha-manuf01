@@ -1,6 +1,5 @@
 @php
-$gacha_categories = \App\Models\GachaCategory::where('is_published',1)
-->orderBy('created_at')->get();
+$gacha_categories = \App\Models\GachaCategory::userList()->get();
 @endphp
 @if($gacha_categories->count()>1)
     <div class="col-auto">

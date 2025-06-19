@@ -23,6 +23,7 @@ class GachaCategory extends Model
         'code_name',   //'コードネーム（ルーティング用）'
         'bg_image' ,   //'背景画像'
         'is_published',//公開(bool)
+        'order',       //並び順(2026/06/19追加)
     ];
 
 
@@ -122,4 +123,36 @@ class GachaCategory extends Model
 
             return $prize ? $prize->image_path : null;
         }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | スコープ
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * ユーザー用一覧 スコープ GachaCategory::userList()->get();
+         *
+         * @return $query
+        */
+        public function scopeUserList($query)
+        {
+            $query->where('is_published',1)
+            ->orderBy('order')
+            ->orderBy('created_at');
+        }
+
+
+        /**
+         * Admin用一覧 スコープ GachaCategory::adminList()->get();
+         *
+         * @return $query
+        */
+        public function scopeAdminList($query)
+        {
+            $query->orderBy('order')->orderBy('created_at');
+        }
+
 }

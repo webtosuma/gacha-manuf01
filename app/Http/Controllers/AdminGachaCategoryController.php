@@ -19,10 +19,7 @@ class AdminGachaCategoryController extends Controller
      */
     public function index()
     {
-        $gacha_categories = GachaCategory::orderBy('created_at')
-        ->get();
-
-        // dd($gacha_categories);
+        $gacha_categories = GachaCategory::adminList()->get();
 
         return view('admin.category.index', compact('gacha_categories') );
     }
@@ -209,33 +206,68 @@ class AdminGachaCategoryController extends Controller
 
 
 
+        /**
+         * 入力データの加工 self::processingInputs( $request )
+         *
+         * @param \Illuminate\Http\Request $request
+         * @param \App\Models\Gacha $gacha //新規登録のとき===null
+         * @return Array
+         */
+        public function processingInputs( $request, $gacha_category=null )
+        {
+            $inputs = $request->only(
+                'name',        //名前
+                'code_name',   //'コードネーム（ルーティング用）'
+                'bg_image' ,   //'背景画像'
+                'is_published',//公開(bool)
+            );
+
+
+            # ストレージ画像ファイルの更新（イメージ画像）
+            $param = 'bg_image';
+            $dir = 'upload/gacha_category/'.$param;        //保存先ディレクトリ
+            $request_file    = $request->file($param);     //画像のリクエスト
+            $old_image_path  = $gacha_category? $gacha_category->bg_image: null; //更新前の画像パス
+            $image_dalete    = $request[$param.'_dalete']; //画像を削除するか否か
+            $copy_image_puth = $request->copy_image_puth;  //コピー用画像パス
+            $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth) ?? '';
+
+
+            return $inputs;
+        }
+
+
+
     /**
-     * 入力データの加工 self::processingInputs( $request )
+     * 並び替え
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Gacha $gacha //新規登録のとき===null
-     * @return Array
+     * @return \Illuminate\Http\Response
      */
-    public function processingInputs( $request, $gacha_category=null )
+    public function change_order()
     {
-        $inputs = $request->only(
-            'name',        //名前
-            'code_name',   //'コードネーム（ルーティング用）'
-            'bg_image' ,   //'背景画像'
-            'is_published',//公開(bool)
-        );
-
-
-        # ストレージ画像ファイルの更新（イメージ画像）
-        $param = 'bg_image';
-        $dir = 'upload/gacha_category/'.$param;        //保存先ディレクトリ
-        $request_file    = $request->file($param);     //画像のリクエスト
-        $old_image_path  = $gacha_category? $gacha_category->bg_image: null; //更新前の画像パス
-        $image_dalete    = $request[$param.'_dalete']; //画像を削除するか否か
-        $copy_image_puth = $request->copy_image_puth;  //コピー用画像パス
-        $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth) ?? '';
-
-
-        return $inputs;
+        return view('admin.category.change_order');
     }
+
+
+
+    /**
+     * 並び替え更新
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function change_order_update(Request $request)
+    {
+
+        foreach ($request->category_ids as $order => $id)
+        {
+            $category = GachaCategory::find($id);
+            $category->update(['order'=> $order]);
+        }
+
+        # リダイレクト
+        return redirect()->route('admin.category')
+        ->with(['alert-warning'=>'ガチャのカテゴリーの並び順を更新しました。']);
+    }
+
 }

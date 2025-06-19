@@ -41,11 +41,22 @@ $active_submenu = true;
         @endif
 
 
-        <a href="{{ route('admin.category.create') }}"
-        class="btn btn-primary text-white shadow">
-        <i class="bi bi-plus-lg"></i>
-        {{'新規登録'}}
-        </a>
+        <div class="d-flex gap-3">
+
+            <a href="{{ route('admin.category.create') }}"
+            class="btn btn-primary text-white shadow">
+            <i class="bi bi-plus-lg"></i>
+            {{'新規登録'}}
+            </a>
+
+            <a href="{{ route('admin.category.change_order') }}"
+            class="btn btn-light border">
+            <i class="bi bi-arrow-clockwise"></i>
+            {{'並び替え'}}
+            </a>
+
+        </div>
+
 
         <section class="card card-body bg-white my-3 overflow-auto">
             <table class="table mb-0">

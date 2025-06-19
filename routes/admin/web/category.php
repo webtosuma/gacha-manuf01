@@ -53,5 +53,21 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminGachaCategoryController::class, 'destroy'])
     ->name('admin.category.destroy');
 
+    # 並び替え
+    Route::get('/admin/category/change_order',
+    [Controllers\AdminGachaCategoryController::class, 'change_order'])
+    ->name('admin.category.change_order');
+
+        # 並び替えの更新
+        Route::patch('/admin/category/change_order/update',
+        [Controllers\AdminGachaCategoryController::class, 'change_order_update'])
+        ->name('admin.category.change_order.update');
+
+
+
+    # 並び替えの更新
+    Route::patch('/admin/category/change_order/update',
+    [Controllers\AdminGachaCategoryController::class, 'change_order_update'])
+    ->name('admin.category.change_order.update');
 
 });//end middleware

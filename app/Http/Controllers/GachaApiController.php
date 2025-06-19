@@ -41,9 +41,7 @@ class GachaApiController extends Controller
             $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
             ## ガチャのカテゴリーグループ一覧
-            $categories = GachaCategory::where('is_published',1) //公開中
-            ->get();
-
+            $categories = GachaCategory::userList()->get();
 
             ## カードサイズ
             $card_size = $request->card_size ? $request->card_size : null;

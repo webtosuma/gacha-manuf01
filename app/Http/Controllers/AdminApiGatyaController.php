@@ -23,7 +23,7 @@ class AdminApiGatyaController extends Controller
      */
     public function category(Request $request)
     {
-        $category = GachaCategory::orderBy('created_at')->get();
+        $category = GachaCategory::adminList()->get();
 
         return response()->json( $category );
     }
@@ -148,11 +148,9 @@ class AdminApiGatyaController extends Controller
         }
 
 
-
-
-
         # カテゴリー一覧
-        $categories = GachaCategory::orderBy('created_at')->get();
+        $categories = GachaCategory::adminList()->get();
+
 
         # 公開状態選択肢
         $published_statuses = [
