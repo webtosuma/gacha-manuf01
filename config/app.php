@@ -48,7 +48,10 @@ return [
         'coupon'                   => (boolean) env('COUPON', false),
 
         # ポイント交換なし
-        'no_exchange_point'          => (boolean) env('NO_EXCHANGE_POINT', false),
+        'no_exchange_point'        => (boolean) env('NO_EXCHANGE_POINT', false),
+
+        # カウントダウン時間
+        'countdown_minute'         => env('COUNTDOWN_HOUR', 30), //env('COUNTDOWN_HOUR', 24*60),
 
     /*
     |--------------------------------------------------------------------------
