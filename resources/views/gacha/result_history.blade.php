@@ -100,30 +100,32 @@
         <div class="container px-3 py-4"  style="max-width:500px;">
 
 
-            <!-- ガチャ情報 -->
-            <div class="pt- my-5">
+            @if( ! $gacha->deleted_at )
+                <!-- ガチャ情報 -->
+                <div class="pt- my-5">
 
 
-                <h5 class="fw-bold text-center mb-">ガチャ情報</h5>
+                    <h5 class="fw-bold text-center mb-">ガチャ情報</h5>
 
-                <a href="{{ $gacha->route }}"
-                class="card border-secondary border-0 shadow bg-white
-                text-dark text-center overflow-hidden text-decoration-none
-                hover_anime" style="border-radius:1rem;">
+                    <a href="{{ $gacha->route }}"
+                    class="card border-secondary border-0 shadow bg-white
+                    text-dark text-center overflow-hidden text-decoration-none
+                    hover_anime" style="border-radius:1rem;">
 
 
-                    <!--image-->
-                    @include('gacha.common.top_image')
+                        <!--image-->
+                        @include('gacha.common.top_image')
 
-                    <!--metter-->
-                    @include('gacha.common.metter')
+                        <!--metter-->
+                        @include('gacha.common.metter')
 
-                </a>
+                    </a>
 
-                <!--play_buttons-->
-                @include('gacha.common.play_buttons')
+                    <!--play_buttons-->
+                    @include('gacha.common.play_buttons')
 
-            </div>
+                </div>
+            @endif
 
 
             @if( env('SHARE_BTNS') )

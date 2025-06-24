@@ -9,7 +9,7 @@ use App\Models\GachaDiscription;
 use App\Models\GachaPrize;
 /*
 | =============================================
-|  ガチャ サイト管理者API コントローラー 
+|  ガチャ サイト管理者API コントローラー
 | =============================================
 */
 class AdminApiGatyaController extends Controller

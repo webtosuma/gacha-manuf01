@@ -12,7 +12,7 @@ use App\Models\TicketHistory;
 use App\Models\GachaCategory;
 /*
 | =============================================
-|  チケット ストアー API コントローラー
+|  チケット ストアー API コントローラー 
 | =============================================
 */
 class TicketStoreApiController extends Controller

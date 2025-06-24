@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div> 
         <button
         @click="post()" type="button"
         :class="btn_style_class"

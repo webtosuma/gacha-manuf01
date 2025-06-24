@@ -7,7 +7,7 @@ use App\Http\Requests\AdminGachaCategoryRequest;
 use App\Models\GachaCategory;
 /*
 | =============================================
-|  サイト管理者 ガチャのカテゴリー コントローラー
+|  サイト管理者 ガチャのカテゴリー コントローラー 
 | =============================================
 */
 class AdminGachaCategoryController extends Controller

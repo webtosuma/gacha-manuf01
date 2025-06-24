@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
 | =============================================
-|  ガチャのカテゴリーグループ　モデル 
+|  ガチャのカテゴリーグループ　モデル
 | =============================================
 */
 class GachaCategory extends Model
