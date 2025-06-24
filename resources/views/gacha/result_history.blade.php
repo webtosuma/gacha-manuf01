@@ -70,71 +70,6 @@
             ></u-gacha-result-form>
 
 
-            {{-- <ul class="row justify-content-center align-items-center ps-0 g-2 gy-4 mb-4"
-            style="list-style:none; min-height:50vh;">
-
-                @forelse ($user_prizes as $user_prize)
-                <li  class="{{ $user_prizes->count()==1? 'col-6' : 'col-3' }}">
-                    <div class="d-flex align-items-center justify-content-center h-100">
-                        <div class="w-100"
-                        data-aos="zoom-in"
-                        >
-
-
-
-                            <div class="position-relative">
-                                <!--loading-->
-                                <div class="ratio ratio-3x4">
-                                    <div class="d-flex align-items-center justify-content-center"
-                                    style="z-index:0;">
-                                        <div class="spinner-border text-primary" role="status">
-                                            <span class="visually-hidden">Loading...</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!--image-->
-                                <div class="position-absolute top-0 start-0 w-100 h-100"
-                                style="z-index:1;">
-                                    <ratio-image-component
-                                    url="{{ $user_prize->prize->image_path }}" style_class="ratio ratio-3x4 rounded-3"
-                                    ></ratio-image-component>
-                                </div>
-                            </div>
-
-                            <!--ポイント表示-->
-                            <div class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
-                                <number-comma-component number="{{$user_prize->point}}"></number-comma-component>pt
-
-
-                                @if($user_prize->point_history_id)
-                                    <!--ポイント交換済み-->
-                                    <div class="position-absolute top-50 start-0 translate-middle-y ps-1">
-                                        <span class="text-warning">●</span>
-                                    </div>
-                                @endif
-
-                                @if($user_prize->shipped_id)
-                                    <!--ポイント交換済み-->
-                                    <div class="position-absolute top-50 start-0 translate-middle-y ps-1">
-                                        <span class="text-primary">●</span>
-                                    </div>
-                                @endif
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                </li>
-                @empty
-                    <li class="text-center text-secondary border-0 py-5">
-                        *取得商品はありません
-                    </li>
-                @endforelse
-
-            </ul> --}}
 
 
             <!--操作ボタン-->
@@ -147,18 +82,6 @@
                         class="btn w-100 py-0 fs-1 text-dark"
                         ><i class="bi bi-arrow-left-circle"></i></a>
                     @endif
-                </div>
-                <div class="col">
-                    {{-- <div class="text-center" style="font-size:10px;">
-                        <div class="">
-                            <span class="text-warning">●</span>
-                            <span>ポイント交換済み</span>
-                        </div>
-                        <div class="">
-                            <span class="text-primary">●</span>
-                            <span>発送申請済み</span>
-                        </div>
-                    </div> --}}
                 </div>
                 <div class="col">
                     @if($next_gacha_history)

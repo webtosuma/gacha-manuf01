@@ -13,7 +13,7 @@ use App\Models\GachaCategory;
 use App\Models\PointHistory;
 /*
 | =============================================
-|  取得した商品 API コントローラー
+|  取得した商品 API コントローラー 
 | =============================================
 */
 class UserPrizeApiController extends Controller

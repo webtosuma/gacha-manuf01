@@ -63,5 +63,5 @@ Route::middleware(['admin_auth'])->group(function () {
         [Controllers\AdminGachaCategoryController::class, 'change_order_update'])
         ->name('admin.category.change_order.update');
 
-        
+
 });//end middleware

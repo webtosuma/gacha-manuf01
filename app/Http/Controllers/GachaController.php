@@ -269,7 +269,7 @@ class GachaController extends Controller
 
 
         /**
-         * スライド情報
+         * スライド情報 
         */
         public static function getSlides($gachas)
         {

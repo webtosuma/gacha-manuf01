@@ -13,7 +13,7 @@ use App\Models\PointHistory;
 use App\Models\Infomation;
 /*
 | =============================================
-|  ガチャ テスト Apiを利用したガチャ一覧 コントローラー
+|  ガチャ テスト Apiを利用したガチャ一覧 コントローラー 
 | =============================================
 */
 class GachaApiController extends Controller
@@ -60,8 +60,9 @@ class GachaApiController extends Controller
 
             ## スライド
             $query = self::getPublishedGachas( $category_code, $search_key );
-            $gachas = $query->where('is_slide',1)
-            ->where('is_sold_out',0)//売り切れを除く
+            $gachas = $query->where('is_slide',1)//スライドのみ
+            ->where('is_sold_out',0)             //売り切れを除く
+            ->where('published_at','<',now())    //予告を除く
             ->limit(10)->get();
             $slides = GachaController::getSlides($gachas);
 

@@ -23511,7 +23511,7 @@ var render = function render() {
       staticStyle: {
         cursor: "pointer"
       }
-    }, [_c("div", {
+    }, [_vm.show_change_btn != 0 ? _c("div", {
       staticClass: "position-absolute top-0 start-0 translate-middle",
       staticStyle: {
         "z-index": "3"
@@ -23556,7 +23556,7 @@ var render = function render() {
           return _setup.changeChildren();
         }]
       }
-    })]), _vm._v(" "), _c("ratio-image-component", {
+    })]) : _vm._e(), _vm._v(" "), _c("ratio-image-component", {
       attrs: {
         style_class: "ratio ratio-3x4 rounded-3",
         url: userPrize.prize.image_path

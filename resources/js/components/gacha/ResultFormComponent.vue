@@ -28,7 +28,8 @@
 
                             <label class="d-block position-relative" style="cursor: pointer;">
                                 <!--チェックボックス-->
-                                <div class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
+                                <div v-if="show_change_btn!=0"
+                                class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
                                     <input v-model="ids" @change="changeChildren()"
                                     class="form-check-input float-xl-none m-0 rounded-pill"
                                     style="width:2em; height:2em;"
