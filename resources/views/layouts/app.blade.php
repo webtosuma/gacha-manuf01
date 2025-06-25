@@ -87,6 +87,7 @@
         </main>
 
         @include('includes.footer')
+        {{-- @include('includes.footer_dark') --}}
 
 
         <!-- フェードインアラート -->

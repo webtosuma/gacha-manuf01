@@ -15,7 +15,7 @@
 
 
                 <!--SNS Links-->
-                @include('includes.sns_links')
+                @include('includes.sns_links_white')
             </div>
 
 

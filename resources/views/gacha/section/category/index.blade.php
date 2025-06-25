@@ -5,15 +5,14 @@
 <div class="d-none d-lg-block py-2">
 
 
-    @if($category_card)
-        <div class="px-0 px-lg-3 overflow-auto">
-            <nav class="nav gap-1 flex-nowrap mx-auto" style="width:{{($categories->count()+1)*4.8}}rem;">
-
-                @include('gacha.section.category.card')
-
-            </nav>
+    {{-- @if($category_card) --}}
+        <div class="container my-3">
+            <h5 class="fw-bold">カテゴリーを選択</h5>
+            <div class="row gy-3">
+                @include('gacha.section.category.card_pc')
+            </div>
         </div>
-    @else
+    {{-- @else
         <div class="container px-0 px-lg-3 overflow-auto">
             <nav class="nav gap-1 flex-nowrap " >
 
@@ -21,7 +20,7 @@
 
             </nav>
         </div>
-    @endif
+    @endif --}}
 
 </div>
 <!-- ボトムメニュー -->
