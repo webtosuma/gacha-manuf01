@@ -4,15 +4,21 @@
 
 <div class="d-none d-lg-block py-2">
 
+    <div class="container my-3">
+        <h5 class="fw-bold text-secondary">カテゴリーを選択</h5>
+        <div class="row gy-3">
+            @include('gacha.section.category.card_pc')
+        </div>
+    </div>
 
-    {{-- @if($category_card) --}}
+    {{-- @if($category_card)
         <div class="container my-3">
             <h5 class="fw-bold">カテゴリーを選択</h5>
             <div class="row gy-3">
                 @include('gacha.section.category.card_pc')
             </div>
         </div>
-    {{-- @else
+    @else
         <div class="container px-0 px-lg-3 overflow-auto">
             <nav class="nav gap-1 flex-nowrap " >
 

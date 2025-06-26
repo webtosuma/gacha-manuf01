@@ -185,7 +185,7 @@ class AdminApiPrizeController extends Controller
     public function copy(Request $request, Prize $prize)
     {
         # 入力データの加工
-        $inputs = AdminPrizeController::processingInputs( $request, $prize );
+        // $inputs = AdminPrizeController::processingInputs( $request, $prize );
 
         # 画像ファイルの複製
         $dir = 'upload/prize/image/';//保存先ディレクトリ
@@ -195,7 +195,7 @@ class AdminApiPrizeController extends Controller
         # DBデータのコピー
         $copy_prize = new Prize([
             'category_id' => $prize->category_id,//リレーション
-            'code'        => $prize->code,       //商品コード
+            'code'        => Prize::CreateCode(),//商品コード
             'name'        => $prize->name,       //名前
             'image'       => $new_image_path,    //画像
             'rank_id'     => $prize->rank_id,    //ランクID

@@ -1,6 +1,6 @@
 <!--トップー-->
 <section class="overflow-hidden px-1">
-    <div class="containerr mx-auto px-0">
+    <div class="container mx-auto px-0" style="max-width:600px;">
 
         <div class="overflow-hidden rounded-4"
         data-aos="zoom-out"
@@ -11,7 +11,7 @@
         </div>
 
         @if( env('SHARE_BTNS') )
-            <div class="d-flex justify-content-end mt-3 d-lg-none">
+            <div class="d-flex justify-content-end mt-3">
                 @php
                 $sns_url  = request()->url();
                 $sns_text = $gacha->name;

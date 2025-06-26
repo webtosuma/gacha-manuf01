@@ -18,8 +18,8 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
 
                             <div class=" d-flex align-items-center justify-content-center
                             position-absolute top-0 start-0 w-100 h-100 fw-bold
-                            @if($category_code==$gacha_category->code_name) bg-primary text-white @else text-white @endif"
-                            style="background:rgba(0, 0, 0, 0.5);"
+                            @if(isset($category_code) && $category_code==$gacha_category->code_name) bg-primary text-white @else text-white @endif"
+                            style="background:rgba(0, 0, 0, .8); opacity:.7;"
                             ></div>
                         </div>
 
