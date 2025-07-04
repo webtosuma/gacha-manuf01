@@ -132,5 +132,7 @@
 
 <!-- PWAインストールボタン -->
 <div class="px-3">
-    <pwa-install-btn></pwa-install-btn>
+    <pwa-install-btn
+    r_about_pwa="{{route('about_pwa')}}"
+    ></pwa-install-btn>
 </div>

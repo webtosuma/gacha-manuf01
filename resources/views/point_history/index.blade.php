@@ -23,9 +23,14 @@
 
         {{-- 所持ポイント --}}
         <li class="list-group-item bg-white py-4 fs-">
-            <div class="d-flex justify-content-between align-items-center bg-white">
+            <div>所持ポイント：</div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="col-auto pe-2">
+
+                    @include('includes.point_icon')
+
+                </div>
                 <div class="col">
-                    <div class="">所持ポイント：</div>
                     <div class="">
                         <span class="fs-3 fw-bold">
                             <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
@@ -34,9 +39,11 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
+                    <a href="{{ route('point_sail') }}" class="btn btn- btn-warning text-dark rounded-pill shadow">ポイント購入</a>
                 </div>
             </div>
+            <div class="form-text text-secondary">{{Auth::user()->point_deadline_text}}</div>
+
         </li>
 
 

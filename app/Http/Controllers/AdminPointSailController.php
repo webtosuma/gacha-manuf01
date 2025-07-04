@@ -142,12 +142,15 @@ class AdminPointSailController extends Controller
             'value'       ,// '付与ポイント数',
             'price'       ,// 'ポイント販売価格',
             'is_published',// '公開設定',
-            'stripe_id',   //Stipeの商品ID
+            // 'stripe_id',   //Stipeの商品ID
         );
 
         # お得分の計算
         $service = $request->value - $request->price;
         $inputs['service'] = $service > 0? $service : 0 ;
+
+        # Stripe ID
+        $inputs['stripe_id'] = $pointSail ? $pointSail->stripe_id : PointSail::CreateCode() ;
 
         return $inputs;
     }

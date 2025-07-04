@@ -8,18 +8,6 @@
 $active_key = 'gacha';
 @endphp @endsection
 
-@section('style')
-<style>
-    /* ガチャのホバーアニメーション */
-    .hover_anime:hover{
-        position: relative;
-        transform: scale(1.05) translateY(-1rem);
-
-        transition: all .2s;
-    }
-</style>
-@endsection
-
 
 @section('content')
     <div class="container mb-4">

@@ -13,6 +13,7 @@ use Stripe\StripeClient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Gacha;
 use App\Models\PointSail;
@@ -137,6 +138,17 @@ class StripeController extends Controller
         $user = Auth::user();
         $customer = $user->createOrGetStripeCustomer();
 
+        # ランクごとのポイント還元率
+        $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
+        ? $user->now_rank->point_sail_ratio : 1 ;
+
+        # 購入ポイント
+        $point = floor( $point_sail->value * $rank_ratio );
+
+        # 決済名
+        $productName = number_format($point).'pt購入';      //
+
+
         $checkout_session = Session::create([
 
             'customer' => $customer->id, //顧客ID
@@ -161,13 +173,34 @@ class StripeController extends Controller
             ],
 
             'mode' => 'payment',
+
+
+            'metadata' => [
+                'point_sail_id' => $point_sail->id,
+            ],
+
+            // 'line_items' => [[
+            //     'price' => $point_sail->stripe_id,
+            //     'quantity' => 1,
+            // ]],
+
             'line_items' => [[
-                'price' => $point_sail->stripe_id,
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+
+                        'name'  => $productName,//決済名
+
+                    ],
+                    'unit_amount' => $point_sail->price, // 金額（単位：円）
+                ],
                 'quantity' => 1,
             ]],
+
             'shipping_address_collection' => [
                 'allowed_countries' => ['JP'], // 配送可能な国を指定
             ],
+
             'automatic_tax' => [ 'enabled' => false, ],
 
             'success_url' => route('point_sail.comp',$point_sail->stripe_id),//成功リダイレクトパス
@@ -234,15 +267,21 @@ class StripeController extends Controller
     public function webhook(Request $request)
     {
         $payload = json_decode($request->getContent(), true);
-
-        // シークレットキーを使ってStripeの署名を検証する
-        $sigHeader = $request->header('Stripe-Signature');
-        $endpointSecret = config('stripe.endpoint_secret'); // Stripeダッシュボードで生成されたシークレットキー
-        $event = null;
+        $sigHeader = $request->header('Stripe-Signature'); // シークレットキーを使ってStripeの署名を検証する
+        $endpointSecret = config('stripe.subscription_endpoint_secret'); // Stripeダッシュボードで生成されたシークレットキー
 
         try {
 
-            $event = Event::constructFrom($payload, $sigHeader, $endpointSecret);
+            $event   = Event::constructFrom($payload, $sigHeader, $endpointSecret);
+            $session = $event->data->object;
+
+
+            # EC商品の決済のとき
+            if( isset( $session['metadata']['store_history_id'] ) )
+            {
+                $store_stripe_controller = new \App\Http\Controllers\Store\StripeController;
+                return $store_stripe_controller->webhook($event,$session);
+            }
 
 
             // イベントタイプごとに処理を実行
@@ -250,38 +289,27 @@ class StripeController extends Controller
 
                 ## クレジット・ウォレットで支払いが成功した場合の処理
                 case 'checkout.session.completed':
-                    $session = $event->data->object;
 
-                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
-
-                    return response(compact('point_history'), 200);
+                    /* 注文のフルフィルメントを実行 */
+                    return $this->handleCheckoutSessionCompleted($session);
                     break;
 
 
                 ## 銀行振込などの非同期型決済での、発送業務等のシステム連携処理
                 case 'checkout.session.async_payment_succeeded':
-                    $session = $event->data->object;
 
-                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
-
-                    return response(compact('point_history'), 200);
+                    /* 注文のフルフィルメントを実行 */
+                    return $this->handleCheckoutSessionCompleted($session);
                     break;
 
 
                 ##
                 // case 'payment_intent.succeeded':
-                //     $session = $event->data->object;
-                //     if (isset($session->payment_status) && $session->payment_status === 'paid') {
-                //         $point_history = $this->handleCheckoutSessionCompleted($session);
-                //     }
-
-                //     return response(compact('point_history'), 200);
                 //     break;
-
-
 
                 default:
                     // 未知のイベントに対する処理
+                    return response()->json(['message'=>'未知のイベントが処理されました。'], 200);
                     break;
             }
 
@@ -305,54 +333,79 @@ class StripeController extends Controller
      * @param  Object $session //Stripe Checkout Session オブジェクト
      * @return Void
      */
-    private function handleCheckoutSessionCompleted($request, $session)
+    private function handleCheckoutSessionCompleted($session)
     {
         # Stripe側で決済が完了済(paid)でなければ、スキップ
-        $paid = isset($session->payment_status) && $session->payment_status === 'paid';
-        if( !$paid ){ return null; }
+
+            $paid = isset($session->payment_status) && $session->payment_status === 'paid';
+            $response = ['message' => '決済が未完了です。'];
+            if( !$paid ){ return response()->json( $response, 200 );}
 
 
         # CheckoutSessionが処理済みの時は、スキップ
-        $session_id = $session['id'];
-        $column = 'stripe_checkout_session_id';
-        $previous_point_history = PointHistory::where($column,$session_id)->first();
-        if( $previous_point_history ){ return null; }
+
+            $session_id = $session['id'];
+            $column = 'stripe_checkout_session_id';
+            $previous_point_history = PointHistory::where($column,$session_id)->first();
+
+            $response = ['message' => '購入内容は処理済みです。'];
+            if( $previous_point_history ){ return response()->json( $response, 200 );}
 
 
         # 客の情報
-        $user = User::where('stripe_id', $session['customer'])->first();
+
+            $user = User::where('stripe_id', $session['customer'])
+            ->withTrashed()//退会者を含む
+            ->first();
+
+            $response = ['message' => '一致するユーザー情報がありません。'];
+            if( !$user ){ return response()->json( $response, 403 ); }
+
 
         # 購入アイテムの情報
-        $amounSubtotal = $session['amount_subtotal'];
-        $point_sail    = PointSail::where('price', $amounSubtotal)->first();
+
+            // $amounSubtotal = $session['amount_subtotal'];
+            // $point_sail    = PointSail::where('price', $amounSubtotal)
+            // ->withTrashed()//退会者を含む
+            // ->first();
+
+            $ps_id      = $session['metadata']['point_sail_id'];
+            $point_sail = PointSail::withTrashed()->find($ps_id);
+
+            $response = ['message' => '商品情報がありません。','session.metadata.point_sail_id'=>$ps_id];
+            if( !$point_sail ){ return response()->json( $response, 403 ); }
+
 
         # ランクごとのポイント還元率
-        $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
-        ? $user->now_rank->point_sail_ratio : 1 ;
+
+            $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
+            ? $user->now_rank->point_sail_ratio : 1 ;
 
 
         # ポイント履歴の登録
-        $point_history = new PointHistory([
-            'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
-            'price'     => $point_sail->price, //販売価格(税込み)
-            'reason_id' => 11, //入出理由ID
 
-            'stripe_checkout_session_id' => $session_id,//CheckoutSession
-        ]);
-        $point_history->save();
+            $point_history = new PointHistory([
+                'user_id'   => $user->id,          //ユーザー　リレーション
+                'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
+                'price'     => $point_sail->price, //販売価格(税込み)
+                'reason_id' => 11, //入出理由ID
+
+                'stripe_checkout_session_id' => $session_id,//CheckoutSession
+            ]);
+            $point_history->save();
 
 
         #チケットの付与
-        if( $point_sail->ticket > 0 )
-        {
-            $ticket_history = new TicketHistory([
-                'user_id'   => $user->id,
-                'value'     => $point_sail->ticket,
-                'reason_id' => 16, //ポイント購入時プレゼント
-            ]);
-            $ticket_history->save();
-        }
+
+            if( $point_sail->ticket > 0 )
+            {
+                $ticket_history = new TicketHistory([
+                    'user_id'   => $user->id,
+                    'value'     => $point_sail->ticket,
+                    'reason_id' => 16, //ポイント購入時プレゼント
+                ]);
+                $ticket_history->save();
+            }
 
 
         # [紹介キャンペーン]ポイント付与
@@ -362,12 +415,16 @@ class StripeController extends Controller
         CanpaingFirstPointSailController::grant($user);
 
 
-        # ポイント購入完了メールの送信
-        $request->user       = $user;
-        $request->point_sail = $point_sail;
-        $request->email      = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : 't.sakai@tosuma.ltd';//ローカルではメール送信しない
-        SendMailController::PaymentComp( $request );
-
+        # サイト管理者へ送信
+        $subject = 'ID:'.$user->id.' '.$user->name.'様が、'.$point_sail->value.'pt購入しました';
+        $email   = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : 't.sakai@tosuma.ltd';//ローカルではメール送信しない
+        $inputs  = compact('user','point_sail','email');
+        Mail::to( $email ) //宛先
+        ->send(new \App\Mail\SendHtmlMailMailable([
+            'inputs'  => $inputs, //入力変数
+            'view'    => 'emails.payment_comp.admin' , //テンプレート
+            'subject' => $subject , //件名
+        ]) );
 
 
         return $point_history;

@@ -2,7 +2,7 @@
     <span class="text-danger">＊</span>入力必須
 </div>
 <div class="row">
-    <div class="col-md">
+    <div class="col-md-6">
 
 
         <!--請求金額(price)-->
@@ -13,11 +13,10 @@
             </div>
 
             <div class="input-group mb-3">
-                <input type="hidden" value="{{ $point_sail->price }}" name="price">
+                {{-- <input type="hidden" value="{{ $point_sail->price }}" name="price"> --}}
 
                 <input  value="{{old('price', $point_sail->price )}}"
                 name="price"
-                @if($point_sail->id) disabled @endif
                 type="number" min="0" class="form-control text-end">
                 <span class="input-group-text">円</span>
             </div>
@@ -50,7 +49,7 @@
 
 
         <!--Stripeの商品ID(stripe_id)-->
-        <label class="d-block mb-4">
+        {{-- <label class="d-block mb-4">
             <div class="form-label">
                 Stripeの商品ID
                 <span class="text-danger">＊</span>
@@ -77,11 +76,11 @@
                 Stripeの商品IDの異なる商品を登録する場合は、「新規登録」より再度登録をお願いします。
             </div>
 
-        </label>
+        </label> --}}
 
 
-    </div>
-    <div class="col-md-6">
+    {{-- </div>
+    <div class="col-md-6"> --}}
 
 
         <!--公開設定(is_published)-->
@@ -95,8 +94,10 @@
                 <!-- 公開 -->
                 <label class="card p-2 mb-3">
                     <div class="form-check">
-                        <input name="is_published" value="1" type="radio" class="form-check-input"
-                        {{ $point_sail->is_published ? 'checked' : ''}}
+                        <input name="is_published"
+                        value="1"
+                        type="radio" class="form-check-input"
+                        {{ old('is_published',$point_sail->is_published)==1 ? 'checked' : ''}}
                         >
                         <h6 class="mb-0 mt-1">公開</h6>
 
@@ -110,9 +111,11 @@
                 <!-- 非公開 -->
                 <label class="card p-2 mb-3">
                     <div class="form-check">
-                        <input name="is_published" value="0"
+                        <input
+                        name="is_published"
+                        value="0"
                         type="radio" id="publishedType3" class="form-check-input"
-                        {{ !$point_sail->is_published ? 'checked' : ''}}
+                        {{  old('is_published',$point_sail->is_published)==0 ? 'checked' : ''}}
                         >
                         <h6 class="mb-0 mt-1">非公開</h6>
                     </div>

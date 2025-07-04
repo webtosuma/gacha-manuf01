@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
@@ -51,6 +52,21 @@ class PointSail extends Model
         '月額','週額','日額','3ヶ月','6ヶ月','12ヶ月'
     ]; }
 
+
+
+
+    /* 重複しないコード('stripe_id')の生成 */
+    public static function CreateCode()
+    {
+        $code = ''; $n =12;
+        while ( !$code ) {
+            $str = Str::random($n);
+            $model = self::where('stripe_id', $str )->first();//重複チェック
+            $code = !$model ? $str : '';
+            $n ++;
+        }
+        return $code;
+    }
 
 
     /*

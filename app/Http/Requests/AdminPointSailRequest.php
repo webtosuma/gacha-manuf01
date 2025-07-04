@@ -32,7 +32,7 @@ class AdminPointSailRequest extends FormRequest
             'price'  => ['required','integer','min:0'],
             'service'=> ['integer','min:0'],
             'is_published' => ['required','in:0,1'],
-            'stripe_id' => ['required','max:140',],
+            // 'stripe_id' => ['required','max:140',],
         ];
     }
 
