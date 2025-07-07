@@ -106,6 +106,21 @@ class Prize extends Model
         {
             return $this->hasMany(UserPrize::class,'prize_id');
         }
+
+
+
+        /**
+         * StoreItemモデル リレーション
+         * @return \App\Models\StoreItem
+        */
+        public function store_item()
+        {
+            return $this->hasOne(StoreItem::class,'prize_id');
+        }
+
+
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

@@ -50,7 +50,7 @@ require('./components/ExampleComponent.vue').default);
 |=============================================
 */
 
-    // require('./app_store.js');
+    require('./app_store.js');
 
 
 
@@ -62,7 +62,7 @@ require('./components/ExampleComponent.vue').default);
 
     require('./app_admin.js');
     require('./app_admin_gacha.js');
-    // require('./app_admin_store.js');
+    require('./app_admin_store.js');
 
 
 /*

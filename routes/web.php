@@ -14,4 +14,6 @@ include('user/api.php');
 include('user/web.php');//
 
 
+# ストアー
+include('store/web.php');
 

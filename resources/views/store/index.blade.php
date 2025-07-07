@@ -1,109 +1,128 @@
-@extends('layouts.app')
+@extends('store.layouts.app')
 
 <!----- title ----->
 @section('title','商品ストアー')
 
 
 @section('style')
-<style>
-    .ratio-3x4{ --bs-aspect-ratio: 133.3%; }
-</style>
+    <!-- splide css-->
+    <link href="
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css
+    " rel="stylesheet">
+@endsection
+
+
+@section('script')
+
+    <!-- splide js -->
+    <script src="
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js
+    "></script>
+    <script src="{{ asset('js/splide_store.js') }}"></script>
+
 @endsection
 
 
 @section('content')
 
-    <!--breadcrumb-->
-    <div class="container mt-md-3">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">商品ストアー</li>
-            </ol>
-        </nav>
-    </div>
+    <!--スライド-->
+    <section class="bg- pt-3" style="background:rgb(0, 0, 0,.0);">
 
-
-    <section>
-
-        <div class="container py-md-4 py-5 mb-5">
-
-            <h3 class="">商品ストアー</h3>
-
-            {{-- <a href="{{route('store.search')}}">検索ページ</a> --}}
-
-            <div class="card card-body text-center d-flex align-items-center" style="height:10rem;">hoge</div>
-
+        <!-- PC -->
+        <div id="splide_store_pc" class="splide d-none d-md-block" aria-label="Splideの基本的なHTML">
+            @include('store.section.common.splide')
         </div>
+        <!-- Mobile -->
+        <div id="splide_store_mobile" class="splide d-md-none" aria-label="Splideの基本的なHTML">
+            @include('store.section.common.splide')
+        </div>
+
     </section>
 
 
     <!--カテゴリーから探す-->
     <section>
-        <div class="container py-md-4 py-5 mb-5">
+        <div class="container py-4 px-">
 
-            <h5 class="fs-4 fw-bold">カテゴリーから探す</h5>
+            <h5 class="fs- fw-bold px-3">カテゴリーから探す</h5>
 
-            <div class="row gy-4">
-                @for ($i = 0; $i < 8; $i++)
-                <div class="col-3">
-                    <div class="card card-body">hoge</div>
-                </div>
-                @endfor
+            <div class="row g-0">
+                @foreach ($categories as $category)
+
+                    <div class="col-6 col-md-auto">
+                        <a href="{{route('store.search',['category_code_name'=>$category->code_name])}}"
+                        class="btn h-100 fw-bold
+                        d-flex gap-3 flex-column align-items-center justify-content-center
+                        ">
+                            <div style="width:6rem;">
+                                <ratio-image-component
+                                url="{{ $category->top_store_item_image_path }}"
+                                style_class="ratio ratio-1x1 bg-body border rounded-pill"
+                                ></ratio-image-component>
+                            </div>
+
+                            {{ $category->name }}
+                        </a>
+                    </div>
+
+                @endforeach
             </div>
         </div>
     </section>
 
 
-    <!--新着商品-->
-    <section>
-        <div class="container py-md-4 py-5 mb-5">
+    <!--各セクション-->
+    @foreach ($section_group as $section)
+        @php
+        $line_id     = $section['line_id'];
+        $line_label  = $section['line_label'];
+        $line_r_more = $section['line_r_more'];
+        $store_items = $section['store_items'];
+        @endphp
+        <!--PC-->
+        <section class="d-none d-md-block">
+            <div class="container py-4 px-0">
+                <h5 class="fs- fw-bold px-3">{{$line_label}}</h5>
+                <div id="{{$line_id}}"
+                class="splide splide_store_item "
+                aria-label="{{$line_label}}">
 
-            <h5 class="fs-4 fw-bold">新着商品</h5>
+                    @include('store.section.common.spride_store_item')
 
-            <div class="row gy-4">
-                @for ($i = 0; $i < 8; $i++)
-                <div class="col-3">
-                    <div class="card card-body">hoge</div>
                 </div>
-                @endfor
             </div>
-        </div>
-    </section>
+        </section>
+        <!--mobile-->
+        <section class="d-md-none">
+            <div class="container py-4">
+                <h5 class="fs- fw-bold">{{$line_label}}</h5>
 
-
-    <!--ランキング-->
-    <section>
-        <div class="container py-md-4 py-5 mb-5">
-
-            <h5 class="fs-4 fw-bold">ランキング</h5>
-
-            <div class="row gy-4">
-                @for ($i = 0; $i < 8; $i++)
-                <div class="col-3">
-                    <div class="card card-body">hoge</div>
+                <div class="row g-3">
+                    @include('store.section.common.card')
                 </div>
-                @endfor
             </div>
-        </div>
-    </section>
+        </section>
+
+    @endforeach
 
 
-    <!--再入荷-->
-    <section>
-        <div class="container py-md-4 py-5 mb-5">
+    <!--ガチャ-->
+    @if($gachas->count()>0)
+        <section>
+            <div class="container py-4 rounded-4">
+                <h5 class="fs- fw-bold">{{'ガチャ'}}</h5>
 
-            <h5 class="fs-4 fw-bold">再入荷</h5>
+                @include('store.section.common.gachas')
 
-            <div class="row gy-4">
-                @for ($i = 0; $i < 8; $i++)
-                <div class="col-3">
-                    <div class="card card-body">hoge</div>
-                </div>
-                @endfor
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
+
+
+    <!--お知らせ-->
+    @include('store.section.infomation')
+
+
 
 
 

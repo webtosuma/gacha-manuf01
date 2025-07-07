@@ -1,4 +1,4 @@
-@extends('layouts.sub')
+@extends('layouts.sub_toggl')
 
 <!----- title ----->
 @section('title','退会の手続き')

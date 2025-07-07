@@ -185,13 +185,55 @@ class User extends Authenticatable
 
 
         /**
-         * UserStoreKeepモデル リレーション ($user->user_store_keeps)
+         * UserStoreKeepモデル リレーション ($user->store_keeps)
          * @return \App\Models\UserStoreKeep
         */
-        public function user_store_keeps()
+        public function store_keeps()
         {
-            return $this->hasMany(UserStoreKeep::class,'user_id');
+            return $this->hasMany(StoreKeep::class,'user_id')
+            ->where('is_buy_now',0)//今すぐ購入の商品を除く
+            ->where('done_at',null)//購入済み商品を除く
+            ;
         }
+
+        /**
+         * UserStoreKeepモデル リレーション ($user->store_limit_keeps)
+         * @return \App\Models\UserStoreKeep
+        */
+        public function store_limit_keeps()
+        {
+            return $this->hasMany(StoreKeep::class,'user_id')
+            ->where('is_buy_now',0)//今すぐ購入の商品を除く
+            ->where('done_at',null)//購入済み商品を除く
+            ->limit(4)
+            ;
+        }
+
+        /**
+         * UserStoreKeepモデル リレーション 購入した商品 ($user->store_purchaseds)
+         * @return \App\Models\UserStoreKeep
+        */
+        public function store_purchaseds()
+        {
+            return $this->hasMany(StoreKeep::class,'user_id')
+            ->where('done_at','<>',null)//購入済み商品を除く
+            ->orderByDesc('done_at')
+            ;
+        }
+
+        /**
+         * UserStoreKeepモデル リレーション 最近購入した商品(上限あり) ($user->store_limit_purchaseds)
+         * @return \App\Models\UserStoreKeep
+        */
+        public function store_limit_purchaseds()
+        {
+            return $this->hasMany(StoreKeep::class,'user_id')
+            ->where('done_at','<>',null)//購入済み商品を除く
+            ->orderByDesc('done_at')
+            ->limit(4)
+            ;
+        }
+
 
     /*
     |--------------------------------------------------------------------------

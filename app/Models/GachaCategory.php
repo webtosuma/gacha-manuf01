@@ -125,6 +125,19 @@ class GachaCategory extends Model
         }
 
 
+        /**
+         * 高ポイントEC商品　画像パス top_store_item_image_path
+         * @return String
+        */
+        public function getTopStoreItemImagePathAttribute()
+        {
+            $store_item = StoreItem::where('category_id',$this->id)
+            ->orderByDesc('price')
+            ->orderByDesc('created_at')
+            ->first();
+
+            return $store_item ? $store_item->image_path : null;
+        }
     /*
     |--------------------------------------------------------------------------
     | スコープ

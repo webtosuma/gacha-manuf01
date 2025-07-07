@@ -1,0 +1,27 @@
+        <a href="{{$gacha->route}}"
+        class="card border-secondary border-0 shadow bg-white
+        text-dark text-center overflow-hidden text-decoration-none
+        position-relative shiny
+        hover_anime" style="border-radius:1rem;"
+        target="_blank" >
+
+
+            <!--image-->
+            @include('gacha.common.top_image')
+
+            <!--metter-->
+            <u-gacha-metter
+            sm_card         ="1"
+            new_label_path  ="{{$gacha->new_label_path}}"
+            bg_color        =""
+            gacha_type      ="{{$gacha->type}}"
+            sponsor_ad      ="{{$gacha->sponsor_ad}}"
+            gacha_play_point="{{$gacha->one_play_point}}"
+            is_meter        ="{{$gacha->is_meter}}"
+            remaining_ratio ="{{$gacha->remaining_ratio}}"
+            remaining_count ="{{$gacha->remaining_count}}"
+            max_count       ="{{$gacha->max_count}}"
+            ></u-gacha-metter>
+
+
+        </a>

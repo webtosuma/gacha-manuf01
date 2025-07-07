@@ -1,91 +1,9 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@if( !config('app.layout_app') )
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    @yield('meta')
+    @include('admin.layouts.apps.index')
 
+@else
 
-    <title>@yield('title') - {{ config('app.name') }} サイト管理者ページ</title>
+    @include(config('app.layout_app').'_admin.layouts.app'  )
 
-
-
-    <!--共通CSS-->
-    @include('includes.css')
-
-    @yield('style')
-
-    <style>
-        a{ text-decoration: none; }
-        th,td{ background-color: #fff !important; }
-        .nav-tabs .nav-link.active{
-            background-color: #fff;
-        }
-    </style>
-
-</head>
-<body class="">
-    <div id="app">
-
-
-        @include('admin.includes.header')
-
-        <main class="row mx-0 g-0">
-
-
-            <!--flex-c1-->
-            <aside class="d-none d-lg-block col-auto pe-0 bg-body">
-                <div class="position-sticky ps-2" style="top: 2rem; ">
-
-
-                    @include('admin.includes.side_menu')
-
-                </div>
-            </aside>
-            <!--flex-c2-->
-            <div class="col bg-white">
-
-                <div style="min-height:90vh;">
-                    @yield('content')
-                </div>
-
-
-                <!-- Footer -->
-                <footer class="p-3 bg-white text-center">
-                    <small class="d-block mb-3 text-muteddd">&copy;{{config('app.company_name')}}</small>
-                </footer>
-                {{-- @include('includes.footer') --}}
-            </div>
-        </main>
-
-
-
-        <!-- フェードインアラート -->
-        @include('includes.fadein-alert')
-
-    </div>
-
-
-
-    <!-- Scripts -->
-    @include('includes.appjs')
-
-    <!----- animation ----->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        AOS.init({
-            delay: 100,/*発火までの秒数 (ms)*/
-            duration: 1200,/*アニメーション時間 (ms)*/
-            once: false,/*発火を1回のみにする*/
-            placement:"top-top"/*発火位置:画面中央*/
-        });
-    </script>
-
-
-    @yield('script')
-
-</body>
-</html>
+@endif

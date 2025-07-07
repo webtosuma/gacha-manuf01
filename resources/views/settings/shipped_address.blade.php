@@ -1,5 +1,4 @@
-{{-- @extends('layouts.app') --}}
-@extends('layouts.sub')
+@extends('layouts.sub_toggl')
 
 <!----- title ----->
 @section('title','商品発送先の住所設定')

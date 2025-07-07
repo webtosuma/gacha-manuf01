@@ -1,4 +1,4 @@
-@extends('layouts.small')
+@extends('layouts.sub_toggl')
 
 <!----- title ----->
 @section('title','クレジット情報設定')
