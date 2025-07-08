@@ -160,13 +160,16 @@ class AdminPrizeController extends Controller
         $prizes = AdminApiPrizeController::getPrizes($request);
 
         $data_array = [];
-        $header = ['カテゴリー名','商品コード','商品名','ランク','交換ポイント','更新日時'];
+        // $header = ['カテゴリー名','商品コード','商品名','ランク','交換ポイント','更新日時'];
+        $header = ['カテゴリー名','画像ファイル','商品コード','商品名','ランク','交換ポイント'];
+
         $header = self::convertArrayToSJIS($header);
         $data_array[] = implode(',',$header);
 
         foreach ($prizes as $prize) {
             $data = [
                 $prize->category->name, //カテゴリー名
+                $prize->image_path, //画像ファイル
                 $prize->code,       //商品コード
                 $prize->name,       //商品名
                 $prize->rank->name, //ランク
@@ -263,7 +266,7 @@ class AdminPrizeController extends Controller
             if (!$rank) { continue; }
 
             # コードが未入力ならば、スキップ
-            if ( !$row[2] ) { continue; }
+            // if ( !$row[2] ) { continue; }
 
             # pointの値が数値でなければ0を代入
             $point = $row[5];
@@ -272,7 +275,7 @@ class AdminPrizeController extends Controller
 
             # 新しいPrizeを作成または更新
             Prize::updateOrCreate(
-                ['code' => $row[2]], // 商品コードでレコードを検索、存在しない場合は新規作成
+                ['code' => strlen( $row[2] )>0 ? $row[2] : Prize::CreateCode() ], // 商品コードでレコードを検索、存在しない場合は新規作成
                 [
                     'category_id' => $category->id,
                     'image'   => $row[1] ? 'upload/prize/image/' . $row[1] : '',

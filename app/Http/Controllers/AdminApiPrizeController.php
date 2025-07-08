@@ -101,7 +101,7 @@ class AdminApiPrizeController extends Controller
                 }
 
             // $prizes = $query->with('rank')->get();
-            $prizes = $query->with('rank')->paginate(10);
+            $prizes = $query->with('rank')->paginate(20);
 
             # 画像パスの登録
             foreach ($prizes as $prize) {
@@ -231,6 +231,25 @@ class AdminApiPrizeController extends Controller
         return response()->json(['message'=>'delete OK!']);
     }
 
+
+
+    /**
+     * 複数削除
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function multiple_destroy(Request $request)
+    {
+        # DBデータの理論削除
+        $prizes = Prize::find($request->prize_ids);
+        foreach( $prizes as $prize) { $prize->delete(); }
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'prize.delete' );
+
+        return response()->json(['message'=>'multiple destroy OK!','inputs'=>$request->all()]);
+    }
 
 
 

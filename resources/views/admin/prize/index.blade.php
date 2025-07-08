@@ -34,6 +34,8 @@ $active_submenu = true;
         r_api_copy    ="{{ route('admin.api.prize.copy') }}"
         r_api_destroy ="{{ route('admin.api.prize.destroy') }}"
         r_api_category="{{ route('admin.api.gacha.category') }}"
+        r_api_multiple_destroy="{{ route('admin.api.prize.multiple_destroy') }}"
+
         r_create      ="{{ route('admin.prize.create') }}"
         r_edit        ="{{ route('admin.prize.edit') }}"
         r_download_csv="{{ route('admin.prize.download_csv') }}"

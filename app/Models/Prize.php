@@ -45,7 +45,7 @@ class Prize extends Model
     /* 重複しないコードの生成 */
     public static function CreateCode()
     {
-        $code = ''; $n =12;
+        $code = ''; $n =8;
         while ( !$code ) {
             $str = Str::random($n);
             $model = self::where('code', $str )->first();//重複チェック

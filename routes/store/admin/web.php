@@ -10,10 +10,14 @@ use App\Http\Controllers\Store;
  */
 
     # ホーム(home)
-    Route::get('/admin',
-    [Store\AdminHomeController::class,'index'])
-    ->middleware('admin_auth')
-    ->name('admin.home');
+    if( config('app.layout_app')=='store' ){
+
+        Route::get('/admin',
+        [Store\AdminHomeController::class,'index'])
+        ->middleware('admin_auth')
+        ->name('admin.home');
+
+    }
 
 
     # ストアー商品

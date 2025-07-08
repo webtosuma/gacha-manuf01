@@ -51,6 +51,11 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminApiPrizeController::class, 'destroy'])
     ->name('admin.api.prize.destroy');
 
+    # 商品情報の複数削除
+    Route::patch('admin/api/prize/multiple_destroy',
+    [Controllers\AdminApiPrizeController::class, 'multiple_destroy'])
+    ->name('admin.api.prize.multiple_destroy');
+
 
 });
 Route::middleware(['admin_auth'])->group(function () {
