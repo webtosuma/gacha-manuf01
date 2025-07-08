@@ -30,7 +30,8 @@ class GachaSeeder extends Seeder
             foreach ($datalist as $data)
             {
                 $data['category_id'] = $category->id;
-                $data['key'] = Str::random(16);
+                $data['key']  = Str::random(16);
+                // $data['type'] = 'no_custom';
 
                 # ガチャの登録
                 $gacha = new Gacha($data);

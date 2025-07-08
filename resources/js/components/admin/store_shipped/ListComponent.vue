@@ -87,12 +87,12 @@
                                 <div v-if="store_history.state_id==11">
                                     {{ store_history.done_at_format }}
 
-                                    <span  class="badge text-bg-danger">発送待ち</span>
+                                    <span  class="badge bg-danger">発送待ち</span>
                                 </div>
                                 <div v-if="store_history.state_id==21">
                                     {{ store_history.shipment_at_format }}
 
-                                    <span class="badge text-bg-success">発送済み</span>
+                                    <span class="badge bg-success">発送済み</span>
                                 </div>
 
                                 <!--発送コード-->
@@ -260,3 +260,8 @@
 
 
 </script>
+<style scoped>
+.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+    color: white;
+}
+</style>

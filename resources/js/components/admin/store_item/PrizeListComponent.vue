@@ -115,6 +115,12 @@
 
                         </tbody>
                     </table>
+
+                    <div v-show="nextPageUrl" class="mt-3">
+                        <a @click.prevent="getData( nextPageUrl )"
+                        class="btn btn-light border"
+                        href="">もっと読み込む</a>
+                    </div>
                 </section>
             </div>
 
@@ -164,7 +170,7 @@
 
                     <!--送信ボタン-->
                     <div class="mt-5">
-                        <button class="btn btn-primary w-100" type="submit"
+                        <button class="btn btn-primary text-white w-100" type="submit"
                         :disabled="!ids.length>0"
                         >選択したガチャ用商品を登録</button>
                     </div>
@@ -219,6 +225,7 @@
     const allCheck = ref(false)
     const disabled = ref(true)
     const edit = ref(false)
+    const nextPageUrl = ref('');  /* 次のデータの読み込みURL */
 
 
 
@@ -261,11 +268,14 @@
 
             selects.prize_ranks = res.data.prize_ranks
 
-            const current_page = paginate.current_page
-            const last_page = paginate.last_page
-            if (current_page !== last_page) {
-            getData(paginate.next_page_url)
-            }
+            const { current_page, last_page, next_page_url } = paginate;
+            nextPageUrl.value = current_page !== last_page ? next_page_url : null;
+
+            // if (current_page !== last_page) {
+            //     getData(paginate.next_page_url)
+            // }
+
+
         } catch (error) {
             alert('通信エラーが発生しました。')
             console.error(error.response?.data)

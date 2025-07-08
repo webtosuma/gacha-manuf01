@@ -8,17 +8,6 @@ style="height: 80vh"
             <h5 class="offcanvas-title" id="offcanvaSearchLabel">商品検索</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <!--キーワード検索-->
-    {{-- <div class="container px-3 position-relative mb-3" style="max-width:900px;">
-        <input name="keyword" type="text"
-        class="form-control form-control-lg" placeholder="キーワード"
-        value="{{ isset( $search_inputs['keyword'] ) ? $search_inputs['keyword'] : '' }}"
-        >
-
-        <div class="position-absolute top-50 end-0 translate-middle-y pe-4">
-            <i class="bi bi-search"></i>
-        </div>
-    </div> --}}
     <div class="container offcanvas-body" style="max-width:900px;">
 
         <!--キーワード検索-->
@@ -57,7 +46,7 @@ style="height: 80vh"
     </div>
     <div class="container p-3" style="max-width:900px;">
         <div class="col-md-6 mx-auto">
-            <button class="btn btn-primary rounded-pill w-100">検索</button>
+            <button class="btn btn-primary text-white rounded-pill w-100">検索</button>
         </div>
     </div>
 

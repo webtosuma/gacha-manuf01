@@ -71,7 +71,7 @@
                     <button
                     @click="keep"
                     type="button"
-                    class="btn btn-lg btn-primary rounded-pill w-100"
+                    class="btn btn-lg btn-primary text-white rounded-pill w-100"
                     :disabled="disabled"
                     ><i class="bi bi-cart4"></i>カートに入れる</button>
                 </div>

@@ -25,6 +25,7 @@ use App\Http\Controllers\Store;
     ->name('store.show');
 
 
+
 /* API */
 
     # 一覧API

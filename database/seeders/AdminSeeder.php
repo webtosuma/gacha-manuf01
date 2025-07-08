@@ -35,25 +35,25 @@ class AdminSeeder extends Seeder
             $admin->save();
 
             # お届け先アドレス
-            // $user_address = new \App\Models\UserAddress([
-            //     'name' =>'山田　太朗',//宛名
-            //     'tell' =>'00011112222',//電話番号
-            //     'user_id'     => $user->id,    //リレーションID
-            //     'postal_code' => '1234567',//'郵便番号'
-            //     'todohuken'   => '北海道', //'住所-都道府県'
-            //     'shikuchoson' => '函館市',//'住所-市町村'
-            //     'number'      => '1',     //'住所-番地'
-            //     'is_default'  => 1,//デフォルトの送信先か否か
-            // ]);
-            // $user_address->save();
+            $user_address = new \App\Models\UserAddress([
+                'name' =>'山田　太朗',//宛名
+                'tell' =>'00011112222',//電話番号
+                'user_id'     => $user->id,    //リレーションID
+                'postal_code' => '1234567',//'郵便番号'
+                'todohuken'   => '北海道', //'住所-都道府県'
+                'shikuchoson' => '函館市',//'住所-市町村'
+                'number'      => '1',     //'住所-番地'
+                'is_default'  => 1,//デフォルトの送信先か否か
+            ]);
+            $user_address->save();
 
             # ポイント付与
-            // $point_history = new \App\Models\PointHistory([
-            //     'user_id'   => $user->id,          //ユーザー　リレーション
-            //     'value'     => 100, //ポイント数
-            //     'reason_id' => 14 //入出理由ID
-            // ]);
-            // $point_history->save();
+            $point_history = new \App\Models\PointHistory([
+                'user_id'   => $user->id,          //ユーザー　リレーション
+                'value'     => 1000, //ポイント数
+                'reason_id' => 14 //入出理由ID
+            ]);
+            $point_history->save();
 
             # ポイント付与
             // $point_history = new \App\Models\PointHistory([

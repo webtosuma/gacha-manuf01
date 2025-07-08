@@ -100,7 +100,7 @@
                     </div>
 
 
-                    <button class="btn btn-primary rounded-pill w-100 my-4">検索</button>
+                    <button class="btn btn-primary text-white rounded-pill w-100 my-4">検索</button>
 
                 </form>
             </div>

@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-lg btn-primary rounded-pill w-100 mb-3" type="submit"
+                    <button class="btn btn-lg btn-primary text-white rounded-pill w-100 mb-3" type="submit"
                     :disabled="store_keep_ids.length==0"
                     >ご購入手続き</button>
 

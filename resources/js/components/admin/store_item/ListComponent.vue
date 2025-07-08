@@ -276,7 +276,7 @@
                     <!--新規登録-->
                     <div class="d-flex flex-md-column gap-3 mb-3 px-3">
                         <a :href="r_create+'?category_id='+inputs.category_id"
-                        class="btn btn-primary"
+                        class="btn btn-primary text-white"
                         ><i class="bi bi-plus-lg me-2 "></i>新規登録</a>
 
                         <a v-if="r_prize_create"

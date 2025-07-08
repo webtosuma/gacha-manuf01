@@ -36,9 +36,3 @@ include('web/shipped.php');
 # ポイント購入履歴
 include('web/point_history.php');
 
-
-
-
-
-
-

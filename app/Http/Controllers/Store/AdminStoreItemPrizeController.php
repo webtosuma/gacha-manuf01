@@ -55,6 +55,7 @@ class AdminStoreItemPrizeController extends Controller
         foreach ($prizes as $prize)
         {
             $store_item = new StoreItem([
+                'code'        => StoreItem::CreateCode(),//商品コードの登録
                 'category_id' => $prize->category_id,//カテゴリー　リレーション
                 'prize_id'    => $prize->id,         //ガチャ用商品リレーション
                 'item_name'   => $prize->name,//アイテム名

@@ -32,20 +32,20 @@ class CouponSeeder extends Seeder
 
 
         # クーポン履歴
-        $user = User::first();
-        $point_history = new PointHistory([
-            'user_id'   => $user ->id,//ユーザーリレーション
-            'value'     => $coupon->point,//ポイント数
-            'reason_id' => 17,//入出理由ID
-        ]);
-        $point_history->save();
-        $coupon_history = new CouponHistory([
-            'user_id'         => $user ->id,//ユーザーリレーション
-            'coupon_id'       => $coupon->id,//クーポンリレーション
-            'point_history_id'=> $point_history->id,//ポイント履歴(ポイント交換の時)
-            // 'user_prize_id'   =>'',//ガチャ商品ID(商品交換の時)
-        ]);
-        $coupon_history->save();
+        // $user = User::first();
+        // $point_history = new PointHistory([
+        //     'user_id'   => $user ->id,//ユーザーリレーション
+        //     'value'     => $coupon->point,//ポイント数
+        //     'reason_id' => 17,//入出理由ID
+        // ]);
+        // $point_history->save();
+        // $coupon_history = new CouponHistory([
+        //     'user_id'         => $user ->id,//ユーザーリレーション
+        //     'coupon_id'       => $coupon->id,//クーポンリレーション
+        //     'point_history_id'=> $point_history->id,//ポイント履歴(ポイント交換の時)
+        //     // 'user_prize_id'   =>'',//ガチャ商品ID(商品交換の時)
+        // ]);
+        // $coupon_history->save();
     }
 
 
