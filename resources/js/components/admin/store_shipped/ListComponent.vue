@@ -87,12 +87,14 @@
                                 <div v-if="store_history.state_id==11">
                                     {{ store_history.done_at_format }}
 
-                                    <span  class="badge bg-danger">発送待ち</span>
+                                    <span  class="badge text-danger">発送待ち</span>
                                 </div>
                                 <div v-if="store_history.state_id==21">
+
                                     {{ store_history.shipment_at_format }}
 
-                                    <span class="badge bg-success">発送済み</span>
+                                    <span class="badge text-success">発送済み</span>
+                                    <span v-if="!store_history.shipment_read" class="badge rounded-pill bg-warning">未読</span>
                                 </div>
 
                                 <!--発送コード-->

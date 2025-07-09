@@ -132,7 +132,7 @@
                             <!--カテゴリー-->
                             <div class="mb-2">
                                 <a href="{{route('store.search',[ 'category_code_name'=>$store_item->category->code_name ])}}"
-                                class="btn btn-sm border rounded-pill">{{$store_item->category->name}}</a>
+                                class="btn btn-sm border text-secondary rounded-pill">{{$store_item->category->name}}</a>
                             </div>
 
                             <!--ブランド名-->

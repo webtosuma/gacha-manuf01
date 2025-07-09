@@ -8,7 +8,7 @@
         <nav class="d-flex justify-content-between align-items-center">
 
             <h1 class="d-flex align-items-center gap-3 m-0 ms-3">
-                <a class="navbar-brand" href="{{ url('/') }}" style="shad">
+                <a class="navbar-brand" href="{{ route('gacha_category') }}" style="shad">
                     <img src="{{asset('storage/site/image/logo.png')}}"
                     alt="{{ config('app.name') }}" class="d-brock" style="height:3.4rem;">
                 </a>
@@ -17,12 +17,17 @@
 
             <div class="d-flex align-items-center ">
 
-                <!--商品ストアー-->
-                {{-- <a href="{{route('store')}}"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" title="商品ストアー"
-                class="btn fs-2">
-                    <i class="bi bi-shop-window"></i>
-                </a> --}}
+                @if(config('store.r_store'))
+                    <!--商品ストアー-->
+                    <a href="{{config('store.r_store')}}"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="商品ストアー"
+                    class="btn px-0 position-relative"
+                    target="_blank"
+                    >
+                        <img src="{{asset('storage/site/image/icon/shop-black.png')}}"
+                        alt="商品ストアー" class="d-block" style=" height:2.4rem;">
+                    </a>
+                @endif
 
                 <!--お知らせ-->
                 {{-- <a href="{{route('infomation')}}"

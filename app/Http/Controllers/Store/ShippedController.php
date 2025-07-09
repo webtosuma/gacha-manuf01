@@ -39,6 +39,11 @@ class ShippedController extends Controller
         ->where('code',$store_history_code)->first();
         if( ! $store_history ){ return \App::abort(404); }
 
+        # 既読更新
+        if( !$store_history->shipment_read ){
+            $store_history->update(['shipment_read'=>1]);
+        }
+
         return view('store.shipped.show',compact(
             'store_history'
         ));
@@ -70,6 +75,8 @@ class ShippedController extends Controller
         ->where('user_id',$user->id)
         ->count();
 
+        # 未読数
+        $unread_count = $request->page ? null : StoreHistory::forUserSendUnReadCount();
 
         # 月データ(初回の読み込み時のみ)
         $months = !$request->page ? self::getMonts($request->state_id) : null;
@@ -82,7 +89,7 @@ class ShippedController extends Controller
 
 
         return response()->json( compact(
-            'store_histories','total_count','months','states','inputs'
+            'store_histories','total_count','unread_count','months','states','inputs'
         ) );
     }
 

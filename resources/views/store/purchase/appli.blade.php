@@ -48,7 +48,9 @@
             >
 
                 <!--注意事項-->
-                @include('store.includes.notes')
+                <div class="card px-3 border-0 bg-white rounded-4 text-dark">
+                    @include('store.includes.notes')
+                </div>
 
 
             </u-store-purchase-appli>

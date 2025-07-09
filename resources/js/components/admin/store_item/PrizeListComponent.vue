@@ -8,7 +8,7 @@
 
             <!-- mainテーブル -->
             <div class="col order-lg-2">
-                <section class="card card-body bg-white my- overflow-auto" style="height: 90vh;">
+                <section class="card card-body bg-white my- overflow-autoo" >
                     <table class="table bg-white " style="min-width: 600px; font-size: 16px;">
                         <!--ヘッド（並べ替えボタン）-->
                         <thead>
@@ -94,7 +94,9 @@
                                 <td>{{ prize.name }}</td>
                                 <td>{{ prize.rank.name }}</td>
                                 <td>{{ prize.point }} pt</td>
-                                <td class="form-text">{{ formatDate( prize.updated_at ) }}</td>
+                                <td class="form-text"
+                                style="width:9rem;"
+                                >{{ formatDate( prize.updated_at ) }}</td>
                             </tr>
 
                             <tr v-if="!loading && prizes.length==0">
@@ -127,15 +129,14 @@
 
             <!-- side -->
             <div class="col-12 col-lg-auto order-lg-1">
+                <div class="position-sticky" style="top: 2rem; ">
                     <!--キーワード検索-->
                     <div class="mb-2">
                         <div class="form-text">キーワード検索</div>
-                        <!-- @change="changeKeyWord()" -->
-                            <input v-model="inputs.key_words"
-                            type="text" class="form-control form-control-lgg" placeholder="検索：商品名・商品コード名"
-                            aria-label="Username" aria-describedby="basic-addon1" />
-                        </div>
-                    <div class="position-sticky" style="top: 2rem; ">
+                        <input v-model="inputs.key_words"
+                        type="text" class="form-control form-control-lgg" placeholder="検索：商品名・商品コード名"
+                        aria-label="Username" aria-describedby="basic-addon1" />
+                    </div>
 
 
                     <!--カテゴリー選択-->

@@ -64,7 +64,7 @@
                                 <div class="row g-2">
                                     <div class="col-4">
                                         <ratio-image-component
-                                        style_class="ratio ratio-3x4 rounded-3 bg-danger"
+                                        style_class="ratio ratio-3x4 rounded-3 bg-light"
                                         url="{{ $g_prize->prize->image_path }}"
                                         ></ratio-image-component>
                                     </div>

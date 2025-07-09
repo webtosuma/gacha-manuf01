@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 /*
 | =============================================
@@ -325,6 +326,39 @@ class StoreHistory extends Model
         }
 
 
+
+        /**
+         * Admin用　EC発送受付数 ->forAdminWaitingCount()
+         * @return Integer
+        */
+        public function scopeForAdminWaitingCount($query)
+        {
+
+            ## 状態の絞り込み
+            $query->where('state_id',11);//
+
+            return $query->count();
+        }
+
+
+        /**
+         * ユーザー用　EC発送済み数 ->forUserSendUnReadCount()
+         * @return Integer
+        */
+        public function scopeForUserSendUnReadCount($query)
+        {
+            $user = Auth::user();
+            if(!$user){ return 0; }
+            $query->where('user_id',$user->id);//
+
+            # 状態の絞り込み
+            $query->where('state_id',21);//
+
+            # 未読のみ
+            $query->where('shipment_read',0);//
+
+            return $query->count();
+        }
     /*
     |--------------------------------------------------------------------------
     | ルーティング
@@ -352,7 +386,6 @@ class StoreHistory extends Model
         */
         public function getRAdminUserAttribute()
         { return route('admin.user.show', $this->user->id); }
-
 
 
     /**/

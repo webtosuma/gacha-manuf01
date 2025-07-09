@@ -1,4 +1,4 @@
-@if( !config('app.layout_app') )
+@if( !config('store.admin') )
 
     @include('admin.layouts.apps.index')
 

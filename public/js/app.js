@@ -9163,17 +9163,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _edit_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit.vue */ "./resources/js/components/admin/prize/edit.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 
@@ -9247,7 +9247,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var selects = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)({
       prize_ranks: {}
     });
-    var keyWords = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)('');
+    var keyWords = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(''); //
     var allCheck = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(false);
     var nextPageUrl = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(''); /* 次のデータの読み込みURL */
 
@@ -9264,6 +9264,28 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       max_point: null,
       min_point: null,
       prize_ids: []
+    });
+
+    /* 監視 */
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.watch)(function () {
+      return inputs.value.category_id;
+    }, function () {
+      return getData();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.watch)(function () {
+      return inputs.value.key_words;
+    }, function () {
+      return getData();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.watch)(function () {
+      return inputs.value.max_point;
+    }, function () {
+      return getData();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.watch)(function () {
+      return inputs.value.min_point;
+    }, function () {
+      return getData();
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       getCategoryData();
@@ -9284,9 +9306,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var getData = function getData() {
       var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : props.r_api_prize;
       loading.value = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, _objectSpread({
-        _token: props.token
-      }, inputs)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value).then(function (res) {
         //ページネーションデータ
         var paginate = res.data.prizes;
 
@@ -9363,10 +9383,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
 
     /** キーワード検索 */
-    var changeKeyWord = function changeKeyWord() {
-      inputs.key_words = keyWords.value;
-      getData();
-    };
+    // const changeKeyWord = () => {
+    //     inputs.key_words = keyWords.value;
+    //     getData();
+    // };
 
     /** アクティブなカテゴリーのセット */
     var setActiveCategory = function setActiveCategory(category_id) {
@@ -9378,8 +9398,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
     /** 並び替え */
     var changeOrder = function changeOrder(key) {
-      var order = inputs[key];
-      inputs[key] = order === '' ? 'asc' : order === 'asc' ? 'desc' : '';
+      var order = inputs.value[key];
+      inputs.value[key] = order === '' ? 'asc' : order === 'asc' ? 'desc' : '';
       getData();
     };
 
@@ -9428,7 +9448,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       copy: copy,
       destory: destory,
       multiple_destroy: multiple_destroy,
-      changeKeyWord: changeKeyWord,
       setActiveCategory: setActiveCategory,
       changeOrder: changeOrder,
       changeAll: changeAll,
@@ -15083,6 +15102,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     /* 合計件数 */
     var total_count = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0); //
 
+    /* 未読数 */
+    var unread_count = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0);
+
     /* 入力値 */
     var inputs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
       _token: props.token,
@@ -15134,6 +15156,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
         /* 合計件数 */
         total_count.value = response.data.total_count || total_count.value;
+
+        /* 未読数 */
+        unread_count.value = response.data.unread_count || unread_count.value;
         loading.value = false; /* 読み込み */
 
         /* 次のデータの読み込み */
@@ -15169,6 +15194,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       nextPageUrl: nextPageUrl,
       store_histories: store_histories,
       total_count: total_count,
+      unread_count: unread_count,
       inputs: inputs,
       states: states,
       months: months,
@@ -21296,197 +21322,13 @@ var render = function render() {
       "toggle-edit": _setup.toggleEdit,
       "edit-update": _setup.update
     }
-  })], 1) : _c("div", [_c("section", {
-    staticClass: "mb-3"
-  }, [_c("ul", {
-    staticClass: "nav nav-tabs"
-  }, [_c("li", {
-    staticClass: "nav-item"
-  }, [_c("a", {
-    staticClass: "nav-link",
-    "class": {
-      "active disabled": _setup.inputs.category_id == ""
-    },
-    attrs: {
-      href: "#"
-    },
-    on: {
-      click: function click($event) {
-        return _setup.setActiveCategory("");
-      }
-    }
-  }, [_vm._v(_vm._s("すべて"))])]), _vm._v(" "), _vm._l(_setup.categories, function (category, key) {
-    return _c("li", {
-      key: key,
-      staticClass: "nav-item"
-    }, [_c("a", {
-      staticClass: "nav-link",
-      "class": {
-        "active disabled": _setup.inputs.category_id == category.id
-      },
-      attrs: {
-        href: "#"
-      },
-      on: {
-        click: function click($event) {
-          return _setup.setActiveCategory(category.id);
-        }
-      }
-    }, [_vm._v(_vm._s(category.name))])]);
-  })], 2)]), _vm._v(" "), _c("section", {
+  })], 1) : _c("div", [_c("div", {
+    staticClass: "row g-3 gy-"
+  }, [_c("div", {
+    staticClass: "col order-lg-2"
+  }, [_c("section", {
     staticClass: "mb-"
   }, [_c("div", {
-    staticClass: "row g-2"
-  }, [_c("div", {
-    staticClass: "col-auto"
-  }, [_c("a", {
-    staticClass: "btn btn- btn-primary text-white px-4 shadow",
-    attrs: {
-      href: _vm.r_create + "?gacha_category_id=" + _setup.inputs.category_id
-    }
-  }, [_vm._v("+ 商品の新規登録")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-auto"
-  }, [_c("button", {
-    staticClass: "btn btn- btn-light border",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        return _setup.toggleEdit();
-      }
-    }
-  }, [_c("i", {
-    staticClass: "bi bi-pencil-fill fs-"
-  }), _vm._v("一括編集")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-auto"
-  }, [_c("form", {
-    attrs: {
-      action: _vm.r_download_csv,
-      method: "post"
-    }
-  }, [_c("input", {
-    attrs: {
-      type: "hidden",
-      name: "_token"
-    },
-    domProps: {
-      value: _vm.token
-    }
-  }), _vm._v(" "), _vm._l(_setup.inputs, function (value, name) {
-    return _c("input", {
-      key: name,
-      attrs: {
-        type: "hidden",
-        name: name
-      },
-      domProps: {
-        value: value
-      }
-    });
-  }), _vm._v(" "), _vm._m(0)], 2)]), _vm._v(" "), _c("div", {
-    staticClass: "col-auto"
-  }, [_c("a", {
-    staticClass: "btn btn-light border py-0 mb-3",
-    attrs: {
-      href: _vm.r_import_csv
-    }
-  }, [_c("i", {
-    staticClass: "bi bi-filetype-csv fs-4",
-    attrs: {
-      "data-v-3e26587a": ""
-    }
-  }), _vm._v("\n                        インポート\n                    ")])])]), _vm._v(" "), _c("div", {
-    staticClass: "row g-2"
-  }, [_c("div", {
-    staticClass: "col-12 col-md"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _setup.keyWords,
-      expression: "keyWords"
-    }],
-    staticClass: "form-control form-control-lgg",
-    attrs: {
-      type: "text",
-      placeholder: "検索：商品名・商品コード名",
-      "aria-label": "Username",
-      "aria-describedby": "basic-addon1"
-    },
-    domProps: {
-      value: _setup.keyWords
-    },
-    on: {
-      change: function change($event) {
-        return _setup.changeKeyWord();
-      },
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _setup.keyWords = $event.target.value;
-      }
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "col-auto"
-  }, [_c("div", {
-    staticClass: "input-group mb-3"
-  }, [_c("span", {
-    staticClass: "input-group-text"
-  }, [_vm._v("最大・最低pt")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _setup.inputs.max_point,
-      expression: "inputs.max_point"
-    }],
-    staticClass: "form-control",
-    staticStyle: {
-      width: "6rem"
-    },
-    attrs: {
-      type: "number",
-      placeholder: "最大pt"
-    },
-    domProps: {
-      value: _setup.inputs.max_point
-    },
-    on: {
-      change: function change($event) {
-        return _setup.getData();
-      },
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_setup.inputs, "max_point", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _setup.inputs.min_point,
-      expression: "inputs.min_point"
-    }],
-    staticClass: "form-control",
-    staticStyle: {
-      width: "6rem"
-    },
-    attrs: {
-      type: "number",
-      placeholder: "最低pt"
-    },
-    domProps: {
-      value: _setup.inputs.min_point
-    },
-    on: {
-      change: function change($event) {
-        return _setup.getData();
-      },
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_setup.inputs, "min_point", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _c("div", {}, [_c("div", {
     staticClass: "row g-3 align-items-center mb-2 px-2",
     staticStyle: {
       "min-height": "3rem"
@@ -21533,7 +21375,7 @@ var render = function render() {
     staticClass: "form-check-label ps-1"
   }, [_vm._v("すべて選択")])])]), _vm._v(" "), _setup.inputs.prize_ids.length ? _c("div", {
     staticClass: "col-auto"
-  }, [_vm._v("\n                        チェックしたものを：\n                    ")]) : _vm._e(), _vm._v(" "), _setup.inputs.prize_ids.length ? _c("div", {
+  }, [_vm._v("\n                            チェックしたものを：\n                        ")]) : _vm._e(), _vm._v(" "), _setup.inputs.prize_ids.length ? _c("div", {
     staticClass: "col-auto"
   }, [_c("button", {
     staticClass: "btn btn-sm border btn-light text-danger",
@@ -21541,11 +21383,8 @@ var render = function render() {
       "data-bs-toggle": "modal",
       "data-bs-target": "#deletePrizesModal"
     }
-  }, [_vm._v("すべて削除")])]) : _vm._e()])])]), _vm._v(" "), _c("section", {
-    staticClass: "card card-body bg-white my- overflow-auto",
-    staticStyle: {
-      height: "90vh"
-    }
+  }, [_vm._v("すべて削除")])]) : _vm._e()])]), _vm._v(" "), _c("section", {
+    staticClass: "card card-body bg-white my-"
   }, [_c("table", {
     staticClass: "table bg-white",
     staticStyle: {
@@ -21611,40 +21450,6 @@ var render = function render() {
     staticClass: "row align-items-end g-0"
   }, [_c("div", {
     staticClass: "col-auto"
-  }, [_c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _setup.inputs.where_rank_id,
-      expression: "inputs.where_rank_id"
-    }],
-    staticClass: "form-select form-select-sm fw-bold",
-    on: {
-      change: [function ($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_setup.inputs, "where_rank_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }, function ($event) {
-        return _setup.getData();
-      }]
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("評価ランク")]), _vm._v(" "), _vm._l(_setup.selects.prize_ranks, function (prize_rank, key) {
-    return _c("option", {
-      key: key,
-      domProps: {
-        value: prize_rank.id
-      }
-    }, [_vm._v(_vm._s(prize_rank.name))]);
-  })], 2)]), _vm._v(" "), _c("div", {
-    staticClass: "col-auto"
   }, [_c("a", {
     staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
     attrs: {
@@ -21656,7 +21461,7 @@ var render = function render() {
         return _setup.changeOrder("order_rank_id");
       }
     }
-  }, [_setup.inputs["order_rank_id"] != "desc" ? _c("i", {
+  }, [_c("span", [_vm._v("評価ランク")]), _vm._v(" "), _setup.inputs["order_rank_id"] != "desc" ? _c("i", {
     staticClass: "bi bi-caret-up-fill"
   }) : _vm._e(), _vm._v(" "), _setup.inputs["order_rank_id"] != "asc" ? _c("i", {
     staticClass: "bi bi-caret-down-fill"
@@ -21749,7 +21554,13 @@ var render = function render() {
         style_class: "ratio ratio-3x4 rounded",
         url: prize.image_path
       }
-    })], 1)]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", [_vm._v("\n                            " + _vm._s(prize.name) + "\n\n                            "), _vm._v(" "), prize.discription_text ? _c("button", {
+    })], 1)]), _vm._v(" "), _c("td", [_c("div", {}, [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("div", {
+      staticStyle: {
+        width: "4rem"
+      }
+    }, [prize.is_used ? _c("span", {
+      staticClass: "badge rounded-pill bg-success"
+    }, [_vm._v(_vm._s("利用中"))]) : _vm._e()])]), _vm._v(" "), _c("td", [_vm._v("\n                                    " + _vm._s(prize.name) + "\n\n                                    "), _vm._v(" "), prize.discription_text ? _c("button", {
       staticClass: "btn btn-sm btn-dark rounded-pill",
       attrs: {
         "data-bs-toggle": "modal",
@@ -21768,16 +21579,13 @@ var render = function render() {
         no_btn: "1"
       }
     }) : _vm._e()], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", {
-      staticClass: "form-text"
+      staticClass: "form-text",
+      staticStyle: {
+        width: "9rem"
+      }
     }, [_vm._v(_vm._s(_setup.formatDate(prize.updated_at)))]), _vm._v(" "), _c("td", {}, [_c("div", {
       staticClass: "d-flex gap-2 justify-content-end h-100"
-    }, [_c("div", {
-      staticStyle: {
-        width: "4rem"
-      }
-    }, [prize.is_used ? _c("span", {
-      staticClass: "badge rounded-pill bg-success"
-    }, [_vm._v(_vm._s("利用中"))]) : _vm._e()]), _vm._v(" "), _c("a", {
+    }, [_c("a", {
       staticClass: "btn btn-sm btn-light border",
       attrs: {
         href: _vm.r_edit + "/" + prize.id
@@ -21821,7 +21629,7 @@ var render = function render() {
     attrs: {
       colspan: "8"
     }
-  }, [_vm._v("\n                            *商品の登録情報はありません。\n                        ")])]) : _vm._e(), _vm._v(" "), _setup.loading ? _c("tr", [_vm._m(1)]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                    *商品の登録情報はありません。\n                                ")])]) : _vm._e(), _vm._v(" "), _setup.loading ? _c("tr", [_vm._m(0)]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -21841,6 +21649,227 @@ var render = function render() {
       }
     }
   }, [_vm._v("もっと読み込む")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg-auto order-lg-1"
+  }, [_c("div", {
+    staticClass: "position-sticky",
+    staticStyle: {
+      top: "2rem"
+    }
+  }, [_c("div", {
+    staticClass: "mb-2"
+  }, [_c("div", {
+    staticClass: "form-text"
+  }, [_vm._v("キーワード検索")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.key_words,
+      expression: "inputs.key_words"
+    }],
+    staticClass: "form-control form-control-lgg",
+    attrs: {
+      type: "text",
+      placeholder: "検索：商品名・商品コード名",
+      "aria-label": "Username",
+      "aria-describedby": "basic-addon1"
+    },
+    domProps: {
+      value: _setup.inputs.key_words
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "key_words", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-2"
+  }, [_c("div", {
+    staticClass: "form-text"
+  }, [_vm._v("カテゴリー選択")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.category_id,
+      expression: "inputs.category_id"
+    }],
+    staticClass: "form-select",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_setup.inputs, "category_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("すべて")]), _vm._v(" "), _vm._l(_setup.categories, function (category, key) {
+    return _c("option", {
+      key: key,
+      domProps: {
+        value: category.id
+      }
+    }, [_vm._v(_vm._s(category.name))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "mb-2"
+  }, [_c("div", {
+    staticClass: "form-text"
+  }, [_vm._v("評価ランク")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.where_rank_id,
+      expression: "inputs.where_rank_id"
+    }],
+    staticClass: "form-select",
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_setup.inputs, "where_rank_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, function ($event) {
+        return _setup.getData();
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("すべて")]), _vm._v(" "), _vm._l(_setup.selects.prize_ranks, function (prize_rank, key) {
+    return _c("option", {
+      key: key,
+      domProps: {
+        value: prize_rank.id
+      }
+    }, [_vm._v(_vm._s(prize_rank.name))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "mb-2"
+  }, [_c("div", {
+    staticClass: "form-text"
+  }, [_vm._v("交換ポイント")]), _vm._v(" "), _c("div", {
+    staticClass: "input-group mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.max_point,
+      expression: "inputs.max_point"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      width: "6rem"
+    },
+    attrs: {
+      type: "number",
+      placeholder: "最大pt"
+    },
+    domProps: {
+      value: _setup.inputs.max_point
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "max_point", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.min_point,
+      expression: "inputs.min_point"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      width: "6rem"
+    },
+    attrs: {
+      type: "number",
+      placeholder: "最低pt"
+    },
+    domProps: {
+      value: _setup.inputs.min_point
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "min_point", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("section", {
+    staticClass: "mb-"
+  }, [_c("div", {
+    staticClass: "row flex-column g-2"
+  }, [_c("div", {
+    staticClass: "col-12"
+  }, [_c("a", {
+    staticClass: "btn btn- btn-primary text-white px-4 shadow w-100",
+    attrs: {
+      href: _vm.r_create + "?gacha_category_id=" + _setup.inputs.category_id
+    }
+  }, [_vm._v("+ 商品の新規登録")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-warning w-100",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _setup.toggleEdit();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-pencil-fill fs-"
+  }), _vm._v("一括編集")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_c("form", {
+    attrs: {
+      action: _vm.r_download_csv,
+      method: "post"
+    }
+  }, [_c("input", {
+    attrs: {
+      type: "hidden",
+      name: "_token"
+    },
+    domProps: {
+      value: _vm.token
+    }
+  }), _vm._v(" "), _vm._l(_setup.inputs, function (value, name) {
+    return _c("input", {
+      key: name,
+      attrs: {
+        type: "hidden",
+        name: name
+      },
+      domProps: {
+        value: value
+      }
+    });
+  }), _vm._v(" "), _vm._m(1)], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_c("a", {
+    staticClass: "btn btn-light border py-0 mb-3 w-100",
+    attrs: {
+      href: _vm.r_import_csv
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-filetype-csv fs-4",
+    attrs: {
+      "data-v-3e26587a": ""
+    }
+  }), _vm._v("\n                                インポート\n                            ")])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "deletePrizesModal",
@@ -21873,18 +21902,6 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c,
     _setup = _vm._self._setupProxy;
-  return _c("button", {
-    staticClass: "btn btn- btn-light border py-0",
-    attrs: {
-      type: "submit"
-    }
-  }, [_c("i", {
-    staticClass: "bi bi-filetype-csv fs-4"
-  }), _vm._v("ダウンロード")]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c,
-    _setup = _vm._self._setupProxy;
   return _c("td", {
     staticClass: "text-center text-secondary border-0 py-5",
     attrs: {
@@ -21900,6 +21917,18 @@ var staticRenderFns = [function () {
   }, [_c("span", {
     staticClass: "visually-hidden"
   }, [_vm._v("Loading...")])])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("button", {
+    staticClass: "btn btn- btn-light border w-100 py-0",
+    attrs: {
+      type: "submit"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-filetype-csv fs-4"
+  }), _vm._v("ダウンロード")]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c,
@@ -21941,28 +21970,16 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("section", {
-    staticClass: "mb-3"
-  }, [_c("ul", {
-    staticClass: "nav nav-tabs"
-  }, [_c("li", {
-    staticClass: "nav-item"
-  }, [_c("a", {
-    staticClass: "nav-link",
-    "class": {
-      "active disabled": _vm.inputs.category_id == ""
+  return _c("div", [_c("div", {
+    staticClass: "row g-3 gy-"
+  }, [_c("div", {
+    staticClass: "col-12 col-lg-auto order-lg-1"
+  }, [_c("div", {
+    staticClass: "position-sticky",
+    staticStyle: {
+      top: "2rem"
     }
-  }, [_vm._v(_vm._s("すべて"))])]), _vm._v(" "), _vm._l(_vm.categories, function (category, key) {
-    return _c("li", {
-      key: key,
-      staticClass: "nav-item"
-    }, [_c("a", {
-      staticClass: "nav-link text-secondary",
-      "class": {
-        "active disabled": _vm.inputs.category_id == category.id
-      }
-    }, [_vm._v(_vm._s(category.name))])]);
-  })], 2)]), _vm._v(" "), _c("section", {
+  }, [_c("section", {
     staticClass: "mb-2"
   }, [_c("div", {
     staticClass: "row g-3"
@@ -21980,11 +21997,10 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "bi bi-pencil-fill me-2"
-  }), _vm._v("一括編集を終了する")])])])]), _vm._v(" "), _c("section", {
-    staticClass: "card card-body bg-white my-3 overflow-auto border-warning border-3",
-    staticStyle: {
-      height: "90vh"
-    }
+  }), _vm._v("一括編集を終了する")])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col order-lg-2"
+  }, [_c("section", {
+    staticClass: "card card-body bg-white border-warning border-3"
   }, [_c("table", {
     staticClass: "table",
     staticStyle: {
@@ -22126,7 +22142,7 @@ var render = function render() {
     attrs: {
       colspan: "8"
     }
-  }, [_vm._v("\n                        *商品の登録情報はありません。\n                    ")])]) : _vm._e()], 2)])])]);
+  }, [_vm._v("\n                                *商品の登録情報はありません。\n                            ")])]) : _vm._e()], 2)])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -22302,12 +22318,9 @@ var render = function render() {
       "data-bs-target": "#deleteModal"
     }
   }, [_vm._v("すべて削除")])]) : _vm._e()])]) : _vm._e(), _vm._v(" "), _c("section", {
-    staticClass: "card card-body bg-white overflow-auto w-100",
+    staticClass: "card card-body bg-white w-100",
     "class": {
       "border-warning border-3": _setup.edit
-    },
-    staticStyle: {
-      "max-height": "80vh"
     }
   }, [_c("table", {
     staticClass: "table bg-white",
@@ -22980,10 +22993,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col order-lg-2"
   }, [_c("section", {
-    staticClass: "card card-body bg-white my- overflow-auto",
-    staticStyle: {
-      height: "90vh"
-    }
+    staticClass: "card card-body bg-white my- overflow-autoo"
   }, [_c("table", {
     staticClass: "table bg-white",
     staticStyle: {
@@ -23223,7 +23233,10 @@ var render = function render() {
         url: prize.image_path
       }
     })], 1)]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", {
-      staticClass: "form-text"
+      staticClass: "form-text",
+      staticStyle: {
+        width: "9rem"
+      }
     }, [_vm._v(_vm._s(_setup.formatDate(prize.updated_at)))])]);
   }), _vm._v(" "), !_setup.loading && _setup.prizes.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center text-secondary border-0 py-5",
@@ -23252,6 +23265,11 @@ var render = function render() {
   }, [_vm._v("もっと読み込む")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-lg-auto order-lg-1"
   }, [_c("div", {
+    staticClass: "position-sticky",
+    staticStyle: {
+      top: "2rem"
+    }
+  }, [_c("div", {
     staticClass: "mb-2"
   }, [_c("div", {
     staticClass: "form-text"
@@ -23279,11 +23297,6 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "position-sticky",
-    staticStyle: {
-      top: "2rem"
-    }
-  }, [_c("div", {
     staticClass: "mb-2"
   }, [_c("div", {
     staticClass: "form-text"
@@ -23581,10 +23594,12 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "col-auto"
     }, [store_history.state_id == 11 ? _c("div", [_vm._v("\n                                " + _vm._s(store_history.done_at_format) + "\n\n                                "), _c("span", {
-      staticClass: "badge bg-danger"
-    }, [_vm._v("発送待ち")])]) : _vm._e(), _vm._v(" "), store_history.state_id == 21 ? _c("div", [_vm._v("\n                                " + _vm._s(store_history.shipment_at_format) + "\n\n                                "), _c("span", {
-      staticClass: "badge bg-success"
-    }, [_vm._v("発送済み")])]) : _vm._e(), _vm._v(" "), _c("div", {}, [_vm._v("発送コード；" + _vm._s(store_history.code))])]), _vm._v(" "), _c("div", {
+      staticClass: "badge text-danger"
+    }, [_vm._v("発送待ち")])]) : _vm._e(), _vm._v(" "), store_history.state_id == 21 ? _c("div", [_vm._v("\n\n                                " + _vm._s(store_history.shipment_at_format) + "\n\n                                "), _c("span", {
+      staticClass: "badge text-success"
+    }, [_vm._v("発送済み")]), _vm._v(" "), !store_history.shipment_read ? _c("span", {
+      staticClass: "badge rounded-pill bg-warning"
+    }, [_vm._v("未読")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("div", {}, [_vm._v("発送コード；" + _vm._s(store_history.code))])]), _vm._v(" "), _c("div", {
       staticClass: "col text-center"
     }, [_c("a", {
       staticClass: "fs-5 text-primary",
@@ -28928,7 +28943,7 @@ var render = function render() {
   }, [_vm._v("数量：")]), _vm._v(" "), _c("div", {
     staticClass: "col-auto"
   }, [_c("button", {
-    staticClass: "btn btn-outline-secondary btn-sm rounded-circle",
+    staticClass: "btn btn-light border text-secondary btn-sm rounded-circle",
     staticStyle: {
       width: "3rem",
       height: "3rem"
@@ -28956,7 +28971,7 @@ var render = function render() {
   })]), _vm._v(" "), _c("div", {
     staticClass: "col-auto"
   }, [_c("button", {
-    staticClass: "btn btn-outline-secondary btn-sm rounded-circle",
+    staticClass: "btn btn-light border text-secondary btn-sm rounded-circle",
     staticStyle: {
       width: "3rem",
       height: "3rem"
@@ -29027,7 +29042,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "col-12 col-lg"
   }, [_c("button", {
-    staticClass: "btn btn-lg btn-outline-info text-dark rounded-pill w-100",
+    staticClass: "btn btn-lg btn-outline-info text- rounded-pill w-100",
     attrs: {
       type: "submit"
     }
@@ -29640,7 +29655,7 @@ var render = function render() {
   })])])])]), _vm._v(" "), _c("section", {
     staticClass: "my-5"
   }, [_c("h5", [_vm._v("ご注文商品")]), _vm._v(" "), _c("div", {
-    staticClass: "card card-body"
+    staticClass: "card card-body text-dark"
   }, [_c("u-store-purchase-appli-storekeeps", {
     attrs: {
       store_keeps: _setup.store_keeps,
@@ -29650,7 +29665,7 @@ var render = function render() {
   })], 1)])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-lg-4"
   }, [_c("section", [_c("h5", [_vm._v("ご請求金額")]), _vm._v(" "), _c("div", {
-    staticClass: "card card-body text-end"
+    staticClass: "card card-body text-end text-dark"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -30075,7 +30090,7 @@ var render = function render() {
     attrs: {
       "for": "btn-11"
     }
-  }, [_vm._v("発送待ち")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("\n                            発送待ち\n                        ")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -30102,7 +30117,9 @@ var render = function render() {
     attrs: {
       "for": "btn-21"
     }
-  }, [_vm._v("発送済み")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            発送済み\n                            "), _setup.unread_count > 0 ? _c("span", {
+    staticClass: "badge rounded-pill bg-warning"
+  }, [_vm._v(_vm._s(_setup.unread_count))]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "col-auto"
   }, [_c("select", {
     directives: [{
@@ -30159,10 +30176,12 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "col"
     }, [store_history.state_id == 11 ? _c("div", [_vm._v("\n                                " + _vm._s(store_history.done_at_format) + "\n\n                                "), _c("span", {
-      staticClass: "badge text-bg-danger"
-    }, [_vm._v("発送待ち")])]) : _vm._e(), _vm._v(" "), store_history.state_id == 21 ? _c("div", [_vm._v("\n                                " + _vm._s(store_history.shipment_at_format) + "\n\n                                "), _c("span", {
-      staticClass: "badge text-bg-success"
-    }, [_vm._v("発送済み")])]) : _vm._e(), _vm._v(" "), _c("div", {
+      staticClass: "badge text-danger"
+    }, [_vm._v("発送待ち")])]) : _vm._e(), _vm._v(" "), store_history.state_id == 21 ? _c("div", [_vm._v("\n\n                                " + _vm._s(store_history.shipment_at_format) + "\n\n                                "), _c("span", {
+      staticClass: "badge text-success"
+    }, [_vm._v("発送済み")]), _vm._v(" "), !store_history.shipment_read ? _c("span", {
+      staticClass: "badge rounded-pill bg-warning"
+    }, [_vm._v("未読")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("div", {
       staticClass: "fs-5 text-primary"
     }, [_vm._v(_vm._s(store_history.address.name + " 様"))]), _vm._v(" "), _c("div", {
       staticClass: "form-text"

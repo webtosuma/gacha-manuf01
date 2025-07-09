@@ -1,5 +1,5 @@
 {{-- @extends('layouts.app') --}}
-@extends('layouts.sub') 
+@extends('layouts.sub')
 
 <!----- title ----->
 @section('title','取得した商品')
@@ -10,7 +10,7 @@
     <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('gacha_category') }}">トップ</a></li>
             <li class="breadcrumb-item active" aria-current="page">取得した商品</li>
             </ol>
         </nav>

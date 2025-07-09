@@ -35,7 +35,7 @@
     <div class="container mt-md-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('gacha_category') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('ticket_store') }}">チケット交換</a></li>
             <li class="breadcrumb-item active" aria-current="page">交換完了</li>
             </ol>

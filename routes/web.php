@@ -15,5 +15,9 @@ include('user/web.php');//
 
 
 # ストアー
-include('store/web.php');
+if( config('store.admin') )
+{
+    include('store/web.php');
+}
+
 

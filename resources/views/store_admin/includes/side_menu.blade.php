@@ -95,7 +95,7 @@
         [
             'route' => route('admin.prize'),
             'key'   => 'prize',
-            'label' => 'ガチャ用商品',
+            'label' => '商品管理',
         ],
         [
             'route' => route('admin.movie'),
@@ -205,34 +205,61 @@
 
 
         <!-- ガチャ -->
-        <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle"
-        data-bs-toggle="collapse" href="#collapseAdminGachaMenu" role="button" aria-expanded="false"
-        aria-controls="collapseAdminGachaMenu"
-        type="button" >
-            <i class="bi bi-gift text-primary fs-4 me-3"></i>
-            {{ __('ガチャ') }}
-        </button>
-        <div class="collapse ps-3 {{ isset($active_gacha_menu)&&$active_gacha_menu==true ? 'show' :  ''}}"
-        id="collapseAdminGachaMenu">
+        @if( ! config('store.no_gacha') )
+            @php $waiting_shippeds_count = Auth()->user()->admin->waiting_shippeds->count(); @endphp
 
-            @foreach ($gachas_array as $menu)
-            <a href="{{ $menu['route'] }}"
-            class="list-group-item border-0 p-2 px-3 w-100 text-start
-            {{ isset($active_key)&&$active_key==$menu['key'] ? $active_class :  ''}}"
-            style="border-radius: 2rem  2rem;"
-            >{{ $menu['label'] }}</a>
-            @endforeach
+            <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle position-relative"
+            data-bs-toggle="collapse" href="#collapseAdminGachaMenu" role="button" aria-expanded="false"
+            aria-controls="collapseAdminGachaMenu"
+            type="button" >
+                    <i class="bi bi-gift text-primary fs-4 me-3"></i>
 
-        </div>
+                    <span>{{ __('ガチャ') }}</span>
 
+                    @if ( $waiting_shippeds_count )
+                        <!--商品　未発送数-->
+                        <span class="position-absolute top-50 end-0 translate-middle-y
+                        badge rounded-pill bg-warning fs-5"><i class="bi bi-box-seam"></i></span>
+                    @endif
+            </button>
+            <div class="collapse ps-3 {{ isset($active_gacha_menu)&&$active_gacha_menu==true ? 'show' :  ''}}"
+            id="collapseAdminGachaMenu">
+
+                @foreach ($gachas_array as $menu)
+                <a href="{{ $menu['route'] }}"
+                class="list-group-item border-0 p-2 px-3 w-100 text-start
+                {{ isset($active_key)&&$active_key==$menu['key'] ? $active_class :  ''}}"
+                style="border-radius: 2rem  2rem;">
+                    <div class="d-flex align-items-center gap-3">
+                        <span>{{ $menu['label'] }}</span>
+
+                        @if ( $menu['key']=='shipped' && $waiting_shippeds_count )
+                            <!--商品　未発送数-->
+                            <span class="badge rounded-pill bg-warning">{{$waiting_shippeds_count}}</span>
+                        @endif
+                    </div>
+                </a>
+                @endforeach
+
+            </div>
+        @endif
 
         <!-- EC販売 -->
-        <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle"
+        @php $waiting_store_shippeds_count = \App\Models\StoreHistory::forAdminWaitingCount(); @endphp
+        <button  class="list-group-item border-0 p-2 px-3 w-100 text-start dropdown-toggle position-relative"
         data-bs-toggle="collapse" href="#collapseAdminStoreMenu" role="button" aria-expanded="false"
         aria-controls="collapseAdminStoreMenu"
         type="button" >
             <i class="bi bi-cart4 text-primary fs-4 me-3"></i>
+
             {{ __('EC販売') }}
+
+
+            @if ( $waiting_store_shippeds_count )
+                <!--商品　未発送数-->
+                <span class="position-absolute top-50 end-0 translate-middle-y
+                badge rounded-pill bg-warning fs-5"><i class="bi bi-box-seam"></i></span>
+            @endif
         </button>
         <div class="collapse ps-3 {{ isset($active_store_menu)&&$active_store_menu==true ? 'show' :  ''}}"
         id="collapseAdminStoreMenu">
@@ -241,8 +268,18 @@
             <a href="{{ $menu['route'] }}"
             class="list-group-item border-0 p-2 px-3 w-100 text-start
             {{ isset($active_key)&&$active_key==$menu['key'] ? $active_class :  ''}}"
-            style="border-radius: 2rem  2rem;"
-            >{{ $menu['label'] }}</a>
+            style="border-radius: 2rem  2rem;">
+                <div class="d-flex align-items-center gap-3">
+
+                    <span>{{ $menu['label'] }}</span>
+
+                    @if ( $menu['key']=='store_shipped' && $waiting_store_shippeds_count )
+                        <!--商品　未発送数-->
+                        <span class="badge rounded-pill bg-warning">{{$waiting_store_shippeds_count}}</span>
+                    @endif
+
+                </div>
+            </a>
             @endforeach
 
         </div>

@@ -43,12 +43,13 @@ style="max-width:90vw; min-width:30vw;">
 
                 <!--ロゴ-->
                 <div class="text-center my-3">
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ route('gacha_category') }}">
                         <img src="{{asset('storage/site/image/logo.png')}}"
                         alt="{{ config('app.name') }}" class="d-brock mx-auto" style="height:4rem;">
                     </a>
                     <small class="d-block text-muteddd">&copy;{{config('app.company_name')}}</small>
                 </div>
+
 
 
                 <!--SNS Links-->

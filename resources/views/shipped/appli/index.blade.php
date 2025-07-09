@@ -10,7 +10,7 @@
     <div class="container mt-">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('gacha_category') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('user_prize') }}">取得した商品</a></li>
             <li class="breadcrumb-item active" aria-current="page">発送申請</li>
             </ol>

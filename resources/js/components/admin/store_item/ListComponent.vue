@@ -59,9 +59,9 @@
                 </div>
 
                 <!--テーブル-->
-                <section class="card card-body bg-white overflow-auto w-100"
+                <section class="card card-body bg-white w-100"
                 :class="{'border-warning border-3':edit}"
-                style="max-height: 80vh;">
+                >
                     <table class="table bg-white " style="min-width: 600px; ">
                         <thead class="text-center">
                             <tr class="bg-white">

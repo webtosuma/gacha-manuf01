@@ -126,11 +126,11 @@ style="max-width:90vw; min-width:30vw;">
                         <div class="text-secondary mt-" style="font-size:10px; line-height:18px;">
                             <span>発送</span>
 
-                            {{-- @php $unread_count = Auth::user()->unread_send_shippeds_count; @endphp
+                            @php $unread_count =  \App\Models\StoreHistory::forUserSendUnReadCount(); @endphp
                             @if ( $unread_count )
                                 <!--未読-->
                                 <span class="badge rounded-pill bg-warning">{{$unread_count}}</span>
-                            @endif --}}
+                            @endif
                         </div>
                     </a>
                 </div>
@@ -190,7 +190,7 @@ style="max-width:90vw; min-width:30vw;">
 
         <!--ロゴ-->
         <div class="text-center mt-5 mb-3">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ route('store') }}">
                 <img src="{{asset('storage/site/image/logo.png')}}"
                 alt="{{ config('app.name') }}" class="d-brock mx-auto" style="height:4rem;">
             </a>

@@ -22,7 +22,7 @@
                 <div class="col-auto">
                     <button @click="subCount"
                     type="button"
-                    class="btn btn-outline-secondary btn-sm rounded-circle"
+                    class="btn btn-light border text-secondary btn-sm rounded-circle"
                     :disabled=" inputs.count<=1 "
                     style="width:3rem; height:3rem;">
                         <div class="d-flex align-item-center justify-content-center h-100">
@@ -47,7 +47,7 @@
                 <div class="col-auto">
                     <button @click="addCount"
                     type="button"
-                    class="btn btn-outline-secondary btn-sm rounded-circle"
+                    class="btn btn-light border text-secondary btn-sm rounded-circle"
                     :disabled=" inputs.count>=max_count "
                     style="width:3rem; height:3rem;">
                         <div class="d-flex align-item-center justify-content-center h-100">
@@ -80,7 +80,7 @@
                 <div class="col-12 col-lg">
                     <button
                     type="submit"
-                    class="btn btn-lg btn-outline-info text-dark rounded-pill w-100"
+                    class="btn btn-lg btn-outline-info text- rounded-pill w-100"
                     >今すぐ購入する</button>
                 </div>
             </div>

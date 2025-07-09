@@ -17,14 +17,18 @@
                             value="11"
                             type="radio" class="btn-check" id="btn-11" autocomplete="off">
                             <label class="btn btn-lg btn-outline-primary w-50" for="btn-11"
-                            style="border-radius:.5rem 0 0 .5rem;"
-                            >発送待ち</label>
+                            style="border-radius:.5rem 0 0 .5rem;">
+                                発送待ち
+                            </label>
 
                             <input v-model="inputs.state_id"
                             value="21"
                             type="radio" class="btn-check" id="btn-21" autocomplete="off">
-                            <label class="btn btn-lg btn-outline-primary w-50" for="btn-21"
-                            >発送済み</label>
+                            <label class="btn btn-lg btn-outline-primary w-50" for="btn-21">
+                                発送済み
+                                <span v-if="unread_count>0"
+                                class="badge rounded-pill bg-warning">{{unread_count}}</span>
+                            </label>
 
                         </div>
                     </div>
@@ -71,12 +75,14 @@
                                 <div v-if="store_history.state_id==11">
                                     {{ store_history.done_at_format }}
 
-                                    <span  class="badge text-bg-danger">発送待ち</span>
+                                    <span  class="badge text-danger">発送待ち</span>
                                 </div>
                                 <div v-if="store_history.state_id==21">
+
                                     {{ store_history.shipment_at_format }}
 
-                                    <span class="badge text-bg-success">発送済み</span>
+                                    <span class="badge text-success">発送済み</span>
+                                    <span v-if="!store_history.shipment_read" class="badge rounded-pill bg-warning">未読</span>
                                 </div>
 
 
@@ -154,6 +160,9 @@
     /* 合計件数 */
     const total_count = ref(0);    //
 
+    /* 未読数 */
+    const unread_count = ref(0);
+
     /* 入力値 */
     const inputs = ref({
         _token : props.token,
@@ -200,7 +209,10 @@
             months.value = response.data.months || months.value;
 
             /* 合計件数 */
-            total_count.value =response.data.total_count || total_count.value;
+            total_count.value  = response.data.total_count || total_count.value;
+
+            /* 未読数 */
+            unread_count.value = response.data.unread_count || unread_count.value;
 
             loading.value = false;/* 読み込み */
 

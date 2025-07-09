@@ -6,7 +6,10 @@
 
 @section('meta') @php
 $active_key = 'gacha';
+$active_submenu    = ! config('store.admin');//ガチャ用Adminのとき
+$active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 @endphp @endsection
+
 
 @section('script')
  <!-- フォームのページ離脱防止アラート -->

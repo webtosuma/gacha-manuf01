@@ -49,7 +49,7 @@
             <section class="my-5">
                 <h5>ご注文商品</h5>
 
-                <div class="card card-body">
+                <div class="card card-body text-dark">
                     <u-store-purchase-appli-storekeeps
                     :store_keeps="store_keeps"
                     :sum_items_price="calcs.sum_items_price"
@@ -68,7 +68,7 @@
                 <section >
                     <h5>ご請求金額</h5>
 
-                    <div class="card card-body text-end">
+                    <div class="card card-body text-end text-dark">
 
                         <div class="row">
                             <div class="col-auto">
