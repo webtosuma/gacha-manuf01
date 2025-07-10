@@ -47,9 +47,16 @@
 
                             <!--ポイント表示-->
                             <div v-if="no_exchange_point==0"
-                            class="bg-white text-center mt-1 px-1 rounded-pill position-relative">
+                            class="bg-white border border-warning text-end
+                            mt-1 px-2 rounded-pill position-relative
+                            position-relative">
 
-                                <number-comma-component :number="userPrize.point" />pt
+                                <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
+                                    <i class="bi bi-p-circle  fs-5 text-warning"></i>
+                                </div>
+
+
+                                {{ userPrize.point.toLocaleString() }}pt
 
                                 <!-- ポイント交換済み -->
                                 <div v-if="userPrize.point_history_id"
@@ -65,6 +72,20 @@
 
                             </div>
 
+                            <!--交換チケット-->
+                            <div v-if="change_ticket!=0"
+                            class="bg-white border border-success text-end
+                            mt-1 px-2 rounded-pill position-relative
+                            position-relative">
+
+                                <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
+                                    <i class="bi bi-ticket-perforated-fill fs-5 text-success"></i>
+                                </div>
+
+
+                                <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+'tk'}}</span>
+                                <span v-else style="font-size:11px;">チケット交換なし</span>
+                            </div>
 
                             <!--商品説明モーダル-->
                             <button v-if="userPrize.prize.discription_text"
@@ -107,7 +128,7 @@
             <div data-aos="fade-in">
 
 
-                <div class="d-flex justify-content-between align-items-start text-white">
+                <!-- <div class="d-flex justify-content-between align-items-start text-white">
                     <div class="form-check mb-">
                         <input v-model="allCheck" @change="changeAll()"
                         class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -121,26 +142,80 @@
                             <number-comma-component :number="totalPoint" />
                         </span>pt
                     </div>
+                </div> -->
+                <div class="row justify-content-between align-items-center g-2 px-2 text-white mb-2">
+                    <!--すべて選択-->
+                    <div class="col-12">
+                        <label class="form-check" style="cursor:pointer;">
+                            <input v-model="allCheck" @change="changeAll()"
+                            class="form-check-input" type="checkbox">
+                            <span class="form-check-label fs-">
+                                全て選択
+                            </span>
+                        </label>
+                    </div>
+                    <!--選択中ポイント合計-->
+                    <div v-if="no_exchange_point==0" class="col">
+                        <div class="form-check">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <div class="">
+                                    <i class="bi bi-p-circle fs-3 text-warning"></i>
+                                    <i class="bi bi-x"></i>
+                                </div>
+
+                                <div class="">
+                                    <span class="fs-3 fw-bold">{{ totalPoint.toLocaleString() }}</span>pt
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--選択中チケット合計-->
+                    <div v-if="change_ticket!=0" class="col">
+                        <div class="form-check">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <div class="">
+                                    <i class="bi bi-ticket-perforated-fill fs-3 text-success"></i>
+                                    <i class="bi bi-x"></i>
+                                </div>
+
+                                <div class="">
+                                    <span class="fs-3 fw-bold">{{ totalTickets.toLocaleString() }}</span>tk
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-white form-text m-0 mb-3">
-                    *選択されなかった商品は、「取得した商品一覧」に移動します。
+                <div class="row gy-3">
+                    <div class="col-12 col-md">
+                        <!--ポイント交換ボタン(モーダル表示)-->
+                        <button v-if="no_exchange_point==0"
+                        type="button"
+                        data-bs-toggle="modal" data-bs-target="#exchangeModal"
+                        class="btn btn-warning text-white rounded-pill w-100" :disabled="disabled"
+                        >ポイントと交換する</button>
+
+                        <!--商品発送ボタン-->
+                        <button v-else
+                        type="submit"
+                        class="btn btn-primary text-white rounded-pill w-100" :disabled="disabled"
+                        >選択した商品を発送する</button>
+                    </div>
+
+
+                    <div v-if="change_ticket!=0" class="col-12 col-md">
+                        <!--チケット交換ボタン(モーダル表示)-->
+                        <button
+                        type="button"
+                        data-bs-toggle="modal" data-bs-target="#exchangeTicketModal"
+                        class="btn btn-success text-white rounded-pill w-100" :disabled="disabled"
+                        >チケットと交換する</button>
+                    </div>
+                </div>
+                <p class="text-white form-text text-md-center m-0 my-3">
+                    *選択されなかった商品は、
+                    <a :href="r_user_prize" class="btn btn-link p-0 text-white">『取得した商品一覧』</a>に移動します。
                 </p>
-                <div class="col-md-8 mx-auto">
-                    <!--ポイント交換ボタン(モーダル表示)-->
-                    <button v-if="no_exchange_point==0"
-                    type="button"
-                    data-bs-toggle="modal" data-bs-target="#exchangeModal"
-                    class="btn btn-warning rounded-pill w-100" :disabled="disabled"
-                    >選択した商品をポイント交換する</button>
-
-                    <!--商品発送ボタン-->
-                    <button v-else
-                    type="submit"
-                    class="btn btn-primary text-white rounded-pill w-100" :disabled="disabled"
-                    >選択した商品を発送する</button>
-
-                </div>
-                <div class="col-md-8 mx-auto mt-2">
+                <div class="">
                     <a :href="r_gacha_category"
                     class="btn text-danger rounded-pill w-100" :disabled="disabled"
                     >SKIP</a>
@@ -166,7 +241,8 @@
 
 
         <!-- ポイント交換Modal -->
-        <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="exchangeModal" tabindex="-1"
+        aria-labelledby="exchangeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body text-center">
@@ -188,12 +264,111 @@
                                 <u-user-prize-exchange-point-btn
                                 :token="token"
                                 :r_api_post="r_api_exchange_points"
-                                :r_redirect="r_redirect"
+                                :r_redirect="r_redirect_exchange_points"
                                 :user_prize_ids="ids"
-                                r_redirect:=""
                                 btn_style_class="btn p-md-33 btn-warning text-white rounded-pill w-100"
                                 btn_label="交換する"
                                 />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <!-- ポイント交換Modal -->
+        <div v-if="no_exchange_point==0"
+        class="modal fade" id="exchangeModal"
+        tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center border-0 pb-0">
+
+                        <h5 id="AlertModalLabel" class="modal-title" style="font-size: 6rem;">
+                            <i class="bi bi-p-circle text-warning"></i>
+                        </h5>
+
+                    </div>
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="exchangeTicketModalLabel">
+                            <p>
+                                商品を{{totalPoint.toLocaleString()+'pt'}}と交換します。<br>
+                                よろしいですか？
+                            </p>
+                        </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button type="button"
+                                class="btn p-md-33 btn-light border rounded-pill w-100"
+                                data-bs-dismiss="modal"
+                                >キャンセル</button>
+                            </div>
+                            <div class="col-6">
+
+                                <u-user-prize-exchange-point-btn
+                                :token="token"
+                                :r_api_post="r_api_exchange_points"
+                                :r_redirect="r_redirect_exchange_points"
+                                :user_prize_ids="ids"
+                                btn_style_class="btn p-md-33 btn-warning text-white rounded-pill w-100"
+                                btn_label="交換する"
+                                />
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- チケット交換Modal -->
+        <div v-if="change_ticket!=0"
+        class="modal fade" id="exchangeTicketModal"
+        tabindex="-1" aria-labelledby="exchangeTicketModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header justify-content-center border-0 pb-0">
+
+                        <h5 id="AlertModalLabel" class="modal-title" style="font-size: 6rem;">
+                            <i class="bi bi-ticket-perforated-fill text-success"></i>
+                        </h5>
+
+                    </div>
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="exchangeTicketModalLabel">
+                            <p>
+                                商品をチケット{{totalTickets.toLocaleString()+'tk'}}と交換します。<br>
+                                よろしいですか？
+                            </p>
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button type="button"
+                                class="btn p-md-33 btn-light border rounded-pill w-100"
+                                data-bs-dismiss="modal"
+                                >キャンセル</button>
+                            </div>
+                            <div class="col-6">
+
+                                <u-user-prize-exchange-ticket-btn
+                                :token="token"
+                                :r_api_post="r_api_exchange_tickets"
+                                :r_redirect="r_redirect_exchange_tickets"
+                                :user_prize_ids="ids"
+                                btn_style_class="btn p-md-33 btn-success text-white rounded-pill w-100"
+                                btn_label="交換する"
+                                />
+
 
                             </div>
                         </div>
@@ -215,11 +390,17 @@
         token: { type: String, default: '' },
         r_api_use_gacha_history_show: { type: String, default: '' },
         r_gacha_category: { type: String, default: '' },
+        r_user_prize:     { type: String, default: '',},//[ルーティング]取得商品一覧
+
         show_change_btn:  { type: String, default: '1' },
         no_exchange_point:{ type: [String,Number], default: 0 },
+        change_ticket:    { type: [String, Number], default: 0 },
 
-        r_api_exchange_points: { type: String, default: '' },
-        r_redirect:            { type: String, default: '',},//
+        r_api_exchange_points:     { type: String, default: '' },
+        r_redirect_exchange_points:{ type: String, default: '',},//
+        r_api_exchange_tickets:      { type: String, default: '' },
+        r_redirect_exchange_tickets: { type: String, default: '' },
+
     });
 
 
@@ -230,6 +411,8 @@
     const nextPageUrl = ref('');   /* 次のデータの読み込みURL */
     const allCheck    = ref(false);/*全てチェック*/
     const totalPoint  = ref(0);    /*チェック中のユーザー商品の合計ポイント*/
+    const totalTickets = ref(0);   /*チェック中のユーザー商品の合計チケット*/
+
     const disabled    = ref(true); //
 
     /* 入力値 */
@@ -285,14 +468,16 @@
     const changeAll = () => {
         const idsList = userPrizes.value.map(value => value.id);
         ids.value = allCheck.value ? idsList : [];
-        calcTotalPoint();
+        calcTotalPoint();  //ポイント合計値の計算
+        calcTotalTickets();//チケット合計値の計算
     };
 
     /** 子チェックをクリック */
     const changeChildren = () => {
         const idsList = userPrizes.value.map(value => value.id);
         allCheck.value = ids.value.length === idsList.length;
-        calcTotalPoint();
+        calcTotalPoint();  //ポイント合計値の計算
+        calcTotalTickets();//チケット合計値の計算
     };
 
     /** ポイント合計値の計算 */
@@ -301,6 +486,21 @@
             return ids.value.includes(userPrize.id) ? sum + userPrize.point : sum;
         }, 0);
         disabled.value = totalPoint.value === 0;
+    };
+
+    /** チケット合計値の計算 */
+    const calcTotalTickets = () => {
+        totalTickets.value = 0;
+
+        //チケット交換がないとき
+        if (props.change_ticket == 0){ return; }
+
+        userPrizes.value.forEach(userPrize => {
+            if (ids.value.includes(userPrize.id) && userPrize.prize) {
+                totalTickets.value += userPrize.ticket;
+            }
+        })
+        disabled.value = totalTickets.value === 0;
     };
 
 </script>

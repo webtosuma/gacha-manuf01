@@ -49,19 +49,27 @@
             </h2>
 
 
-            @if( ! config('app.no_exchange_point') )
+            {{-- @if( ! config('app.no_exchange_point') ) --}}
 
                 <!--カード一覧-->
                 <u-gacha-result-form
                 token="{{ csrf_token() }}"
                 r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
-                r_api_exchange_points="{{ route('api.user_prize.exchange_points') }}"
                 r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
                 r_redirect="{{route('user_prize.exchange_points')}}"
+                r_user_prize    ="{{route('user_prize')}}"
+
+                no_exchange_point="{{ config('app.no_exchange_point') ?1:0 }}"
+                change_ticket    ="{{ config('u_rank_ticket.change_prize_to_ticket')?1:0 }}"
+
+                r_api_exchange_points      ="{{ route('api.user_prize.exchange_points') }}"
+                r_redirect_exchange_points ="{{ route('user_prize.exchange_points')}}"
+                r_api_exchange_tickets     ="{{ route('api.user_prize.exchange_tickets') }}"
+                r_redirect_exchange_tickets="{{ route('user_prize.exchange_tickets')}}"
                 ></u-gacha-result-form>
 
 
-            @else
+            {{-- @else
                 <!--商品発送フォーム-->
                 <form action="{{ route( 'shipped.appli') }}" method="POST">
                     @csrf
@@ -73,10 +81,11 @@
                     r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
                     r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
                     no_exchange_point="1"
+                    r_user_prize    ="{{route('user_prize')}}"
                     ></u-gacha-result-form>
 
                 </form>
-            @endif
+            @endif --}}
 
 
 

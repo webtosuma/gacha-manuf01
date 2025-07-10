@@ -20,7 +20,7 @@
             </div>
         </div>
         <!-- 会員ランク -->
-        @if( env('NEW_TICKET_SISTEM',false) && $user->now_rank )
+        @if( config('u_rank_ticket.user_rank',false) && $user->now_rank )
             @php $now_rank = $user->now_rank; @endphp
 
             <div class="d-flex justify-content-between gap-3 mt-3">
@@ -82,34 +82,34 @@
                     </delete-modal-component>
                 </form>
 
-                @if( env('NEW_TICKET_SISTEM',false) && !env('NEW_TICKET_SISTEM_NOTICKET',false) )
-                <!--チケット付与モーダル-->
-                <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
-                    @csrf
-                    @method('PATCH')
+                @if( config('u_rank_ticket.ticket',false) )
+                    <!--チケット付与モーダル-->
+                    <form action="{{ route('admin.user.add_ticket', $user) }}" method="post">
+                        @csrf
+                        @method('PATCH')
 
-                    <delete-modal-component
-                    index_key="{{'add_ticket'.$user->id}}"
-                    icon="bi-ticket-fill" color="success"
-                    func_btn_type="submit"
-                    button_text="+チケット付与"
-                    button_class="btn btn-success btn-sm text-white rounded-pill form-text">
-                    <div>
-                            <span class="fw-bold">『{{$user->name}}』さんに</span>チケットを付与します。
-                            <div class="col-8 mx-auto">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon3">付与チケット</span>
-                                    <input class="form-control text-end"  type="number" name="value" value="100" min="0">
-                                    <span class="input-group-text" id="basic-addon3">枚</span>
+                        <delete-modal-component
+                        index_key="{{'add_ticket'.$user->id}}"
+                        icon="bi-ticket-fill" color="success"
+                        func_btn_type="submit"
+                        button_text="+チケット付与"
+                        button_class="btn btn-success btn-sm text-white rounded-pill form-text">
+                        <div>
+                                <span class="fw-bold">『{{$user->name}}』さんに</span>チケットを付与します。
+                                <div class="col-8 mx-auto">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon3">付与チケット</span>
+                                        <input class="form-control text-end"  type="number" name="value" value="100" min="0">
+                                        <span class="input-group-text" id="basic-addon3">枚</span>
+                                    </div>
                                 </div>
+                                よろしいですか？
                             </div>
-                            よろしいですか？
-                        </div>
-                    </delete-modal-component>
-                </form>
+                        </delete-modal-component>
+                    </form>
                 @endif
 
-                @if( env('NEW_TICKET_SISTEM',false)  )
+                @if( config('u_rank_ticket.user_rank',false)  )
                 <!--会員ランク更新モーダル-->
                 <form action="{{ route('admin.user.user_rank_history.update', $user) }}" method="post">
                     @csrf

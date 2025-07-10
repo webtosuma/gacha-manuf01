@@ -43,9 +43,9 @@
 
                                 <th scope="col">交換ポイント</th>
 
-                                <th scope="col">更新</th>
+                                <th v-if="change_ticket!=0" scope="col">交換チケット</th>
 
-                                <th><!--編集--></th>
+                                <th scope="col">更新</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,6 +63,13 @@
                                     <input v-model="prize.code"
                                     @change="update(prize)"
                                     type="text" class="form-control">
+
+                                    <div class="d-flex gap-2 justify-content-start h-100 mt-1">
+                                        <div class="" style="width:4rem;">
+                                            <span v-if="prize.is_used"
+                                            class="badge rounded-pill bg-success">{{ '利用中' }}</span>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <!--商品名-->
@@ -90,25 +97,26 @@
                                         <div class="col-auto">pt</div>
                                     </div>
                                 </td>
+                                <td v-if="change_ticket!=0">
+                                    <!--交換チケット-->
+                                    <div class="row g-2 align-items-center">
+                                        <div class="col">
+                                            <input v-model="prize.ticket"
+                                            @change="update(prize)"
+                                            type="text" class="form-control text-end">
+                                        </div>
+                                        <div class="col-auto">枚</div>
+                                    </div>
+                                </td>
                                 <td class="form-text">{{ formatDate( prize.updated_at ) }}</td>
-                                <td class="">
+                                <!-- <td class="">
                                     <div class="d-flex gap-2 justify-content-end h-100">
                                         <div class="" style="width:4rem;">
                                             <span v-if="prize.is_used"
                                             class="badge rounded-pill bg-success">{{ '利用中' }}</span>
                                         </div>
-                                        <!--削除モーダル-->
-                                        <!-- <delete-modal-component
-                                        @parent-func="destory(prize.id)"
-                                        :indexKey="'delete'+prize.id"
-                                        icon="bi-trash"
-                                        :button_class=" prize.is_used ? 'disabled btn btn-sm btn-secondary border' :'btn btn-sm btn-light border' ">
-                                            <div>この商品を削除します。<br />よろしいですか？</div>
-                                            <div class="form-text">商品コード：{{ prize.code }}</div>
-                                            <div class="form-text">商品名：{{ prize.name }}</div>
-                                        </delete-modal-component> -->
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>
 
                             <tr v-if="prizes.length==0">
@@ -138,6 +146,7 @@
             categories: { type: [Array,Object],  default: '', },
             prop_prizes:{ type: [Array,Object],  default: '', },
             selects:    { type: [Array,Object],  default: '', },
+            change_ticket:{ type: [String,Number],  default: 0, },//チケット交換があるか否か
         },
         data() { return {
 

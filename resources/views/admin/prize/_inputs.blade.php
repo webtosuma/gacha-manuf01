@@ -150,6 +150,26 @@
         </label>
 
 
+        <!--交換チケット(ticket)-->
+        @if( config('u_rank_ticket.change_prize_to_ticket') )
+            <label class="d-block mb-4">
+                <div class="form-label">
+                    交換チケット<span class="text-danger">＊</span>
+                </div>
+
+                <div class="col-4">
+                    <input value="{{old('ticket', $prize->ticket )}}"
+                    name="ticket"
+                    type="number" class="form-control" min="0">
+                </div>
+
+                <!--error message-->
+                @if ( $errors->has('ticket') )
+                    <div class="text-danger"> {{$errors->first('ticket')}} </div>
+                @endif
+            </label>
+        @endif
+
 
         <!--説明文(discription)-->
         <label class="d-block mb-4">

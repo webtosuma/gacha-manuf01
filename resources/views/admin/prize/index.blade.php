@@ -42,6 +42,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         r_download_csv="{{ route('admin.prize.download_csv') }}"
         r_import_csv  ="{{ route('admin.prize.import_csv') }}"
         category_id   ="{{$category_id}}"
+        change_ticket ="{{config('u_rank_ticket.change_prize_to_ticket')?1:0}}"
         ></a-prize-list>
 
 

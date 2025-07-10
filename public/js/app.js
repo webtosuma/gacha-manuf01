@@ -9236,7 +9236,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     category_id: {
       type: String,
       "default": ''
-    }
+    },
+    change_ticket: {
+      type: [String, Number],
+      "default": 0
+    } //チケット交換があるか否か
   },
   setup: function setup(__props) {
     var props = __props;
@@ -9253,16 +9257,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
     var inputs = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)({
       _token: props.token,
-      key_words: '',
       category_id: props.category_id || '',
+      key_words: '',
       order_code: '',
       order_name: '',
       order_rank_id: '',
       order_point: '',
+      order_ticket: '',
       updated_at: '',
       where_rank_id: '',
       max_point: null,
       min_point: null,
+      max_ticket: null,
+      min_ticket: null,
       prize_ids: []
     });
 
@@ -9284,6 +9291,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.watch)(function () {
       return inputs.value.min_point;
+    }, function () {
+      return getData();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.watch)(function () {
+      return inputs.value.max_ticket;
+    }, function () {
+      return getData();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.watch)(function () {
+      return inputs.value.min_ticket;
     }, function () {
       return getData();
     });
@@ -9496,7 +9513,11 @@ __webpack_require__.r(__webpack_exports__);
     selects: {
       type: [Array, Object],
       "default": ''
-    }
+    },
+    change_ticket: {
+      type: [String, Number],
+      "default": 0
+    } //チケット交換があるか否か
   },
   data: function data() {
     return {
@@ -12399,6 +12420,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: String,
       "default": ''
     },
+    r_user_prize: {
+      type: String,
+      "default": ''
+    },
+    //[ルーティング]取得商品一覧
+
     show_change_btn: {
       type: String,
       "default": '1'
@@ -12407,14 +12434,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: [String, Number],
       "default": 0
     },
+    change_ticket: {
+      type: [String, Number],
+      "default": 0
+    },
     r_api_exchange_points: {
       type: String,
       "default": ''
     },
-    r_redirect: {
+    r_redirect_exchange_points: {
       type: String,
       "default": ''
-    } //
+    },
+    //
+    r_api_exchange_tickets: {
+      type: String,
+      "default": ''
+    },
+    r_redirect_exchange_tickets: {
+      type: String,
+      "default": ''
+    }
   },
   setup: function setup(__props) {
     var props = __props;
@@ -12425,6 +12465,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var nextPageUrl = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(''); /* 次のデータの読み込みURL */
     var allCheck = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false); /*全てチェック*/
     var totalPoint = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0); /*チェック中のユーザー商品の合計ポイント*/
+    var totalTickets = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0); /*チェック中のユーザー商品の合計チケット*/
+
     var disabled = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(true); //
 
     /* 入力値 */
@@ -12497,7 +12539,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return value.id;
       });
       ids.value = allCheck.value ? idsList : [];
-      calcTotalPoint();
+      calcTotalPoint(); //ポイント合計値の計算
+      calcTotalTickets(); //チケット合計値の計算
     };
 
     /** 子チェックをクリック */
@@ -12506,7 +12549,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return value.id;
       });
       allCheck.value = ids.value.length === idsList.length;
-      calcTotalPoint();
+      calcTotalPoint(); //ポイント合計値の計算
+      calcTotalTickets(); //チケット合計値の計算
     };
 
     /** ポイント合計値の計算 */
@@ -12515,6 +12559,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return ids.value.includes(userPrize.id) ? sum + userPrize.point : sum;
       }, 0);
       disabled.value = totalPoint.value === 0;
+    };
+
+    /** チケット合計値の計算 */
+    var calcTotalTickets = function calcTotalTickets() {
+      totalTickets.value = 0;
+
+      //チケット交換がないとき
+      if (props.change_ticket == 0) {
+        return;
+      }
+      userPrizes.value.forEach(function (userPrize) {
+        if (ids.value.includes(userPrize.id) && userPrize.prize) {
+          totalTickets.value += userPrize.ticket;
+        }
+      });
+      disabled.value = totalTickets.value === 0;
     };
     return {
       __sfc: true,
@@ -12525,12 +12585,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       nextPageUrl: nextPageUrl,
       allCheck: allCheck,
       totalPoint: totalPoint,
+      totalTickets: totalTickets,
       disabled: disabled,
       inputs: inputs,
       getData: getData,
       changeAll: changeAll,
       changeChildren: changeChildren,
-      calcTotalPoint: calcTotalPoint
+      calcTotalPoint: calcTotalPoint,
+      calcTotalTickets: calcTotalTickets
     };
   }
 });
@@ -15476,10 +15538,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/FormComponent.vue?vue&type=script&lang=js":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/FormComponent.vue?vue&type=script&lang=js ***!
-  \******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -15489,20 +15551,154 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-var _props;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    r_api_post: {
+      type: String,
+      "default": ''
+    },
+    //
+    r_redirect: {
+      type: String,
+      "default": ''
+    },
+    //
+    btn_style_class: {
+      type: String,
+      "default": 'btn btn-light border rounded-pill w-100'
+    },
+    btn_label: {
+      type: String,
+      "default": '実行'
+    },
+    user_prize_ids: {
+      type: [Array, Object],
+      "default": null
+    }
+  },
+  data: function data() {
+    return {
+      postUrl: "",
+      /* メール送信URL(書き換えあり) */
+
+      loading: false,
+      /* 送信中 */
+      progress: 0
+    };
+  },
+  mounted: function mounted() {
+    this.postUrl = this.r_api_post; //メール送信URLのセット
+  },
+
+  methods: {
+    /* ポイント交換処理 */post: function post() {
+      var _this = this;
+      // 送信中カバーの表示
+      this.loading = true;
+      var route = this.postUrl;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, {
+        _token: this.token,
+        user_prize_ids: this.user_prize_ids
+      }).then(function (json) {
+        // console.log(json.data);
+
+        _this.postUrl = json.data.next_page_url; //URLの更新
+        var current_page = json.data.current_page; //表示中ページ
+        var last_page = json.data.last_page; //最終ページ
+        _this.progress = Math.ceil(current_page / last_page * 100);
+        if (current_page != last_page) {
+          _this.post();
+        } else {
+          // 完了後、一覧ページへリダイレクト
+          setTimeout(function () {
+            window.location.href = _this.r_redirect;
+          }, 2 * 1000);
+          return;
+        }
+      })["catch"](function (error) {
+        if (error.response && error.response.status === 450) {
+          alert("\u901A\u4FE1\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F");
+          console.log(error.response.data);
+        } else {
+          alert("\u901A\u4FE1\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F");
+          console.log(error.response.data);
+        }
+        _this.loading = false;
+      });
+    } // async post() {
+    //     // 送信中カバーの表示
+    //     this.loading = true;
+    //     let count    = 0;
+    //     try {
+    //         for (const id of this.user_prize_ids)
+    //         {
+    //             const route = this.postUrl;
+    //             await axios.post(route, {
+    //                 _token: this.token,
+    //                 user_prize_ids: [id],
+    //             });
+    //             count++;
+    //             this.progress = Math.ceil( count/this.user_prize_ids.length *100 );
+    //         }
+    //         // すべてのPOSTが完了後にリダイレクト
+    //         setTimeout(() => {
+    //             window.location.href = this.r_redirect;
+    //         }, 2*1000);
+    //         return;
+    //     } catch (error) {
+    //         if (error.response && error.response.status === 450) {
+    //             alert('通信エラーが発生しました');
+    //             console.log(error.response.data);
+    //         } else {
+    //             alert('通信エラーが発生しました');
+    //             console.log(error);
+    //         }
+    //     } finally {
+    //         // this.loading = false;
+    //     }
+    // }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/FormComponent.vue?vue&type=script&setup=true&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/FormComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+// Propsの定義
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: (_props = {
+  __name: 'FormComponent',
+  props: {
     token: {
       type: String,
       "default": ''
@@ -15519,163 +15715,232 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       type: [String, Number],
       "default": 0
     },
+    change_ticket: {
+      type: [String, Number],
+      "default": 0
+    },
     r_api_user_prize: {
       type: String,
       "default": ''
+    },
+    //データ取得ルート
+    r_shipped_appli: {
+      type: String,
+      "default": ''
+    },
+    //発送申請ルート
+
+    r_api_exchange_points: {
+      type: String,
+      "default": ''
+    },
+    r_redirect_exchange_points: {
+      type: String,
+      "default": ''
+    },
+    r_api_exchange_tickets: {
+      type: String,
+      "default": ''
+    },
+    r_redirect_exchange_tickets: {
+      type: String,
+      "default": ''
     }
-  }, _defineProperty(_props, "r_api_user_prize", {
-    type: String,
-    "default": ''
-  }), _defineProperty(_props, "r_shipped_appli", {
-    type: String,
-    "default": ''
-  }), _defineProperty(_props, "r_api_exchange_points", {
-    type: String,
-    "default": ''
-  }), _defineProperty(_props, "r_redirect", {
-    type: String,
-    "default": ''
-  }), _props),
-  data: function data() {
-    return {
-      loading: true,
-      categories: [],
-      //ガチャ カテゴリー
-      userPrizes: [],
-      /* ユーザー取得商品 */
-      total: 0,
-      /* ユーザー取得商品数 */
-
-      ids: [],
-      /*チェックボックスのID*/
-
-      allCheck: false,
-      /*全てチェック*/
-
-      totalPoint: 0,
-      /*チェック中のユーザー商品の合計ポイント*/
-
-      disabled: true,
-      category_id: 0,
-      //カテゴリーID
-      search_key: '',
-      //検索キーワード
-      order: 'desc_created',
-      //並び順
-
-      select_orders: [{
-        lable: '新しい順',
-        value: 'desc_created'
-      }, {
-        lable: '古い順',
-        value: 'asc_created'
-      }, {
-        lable: '高ポイント順',
-        value: 'desc_point'
-      }, {
-        lable: '低ポイント順',
-        value: 'asc_point'
-      }]
-    };
   },
-  mounted: function mounted() {
+  setup: function setup(__props) {
+    var props = __props;
+
+    // data 相当
+    var loading = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(true); //
+    var categories = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); //ガチャ カテゴリー
+    var userPrizes = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); //ユーザー取得商品
+    var total = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0); //ユーザー取得商品数
+
+    var ids = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]); //チェックボックスのID
+    var allCheck = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false); //全てチェック
+    var totalPoint = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0); //チェック中のユーザー商品の合計ポイント
+    var totalTickets = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0); //チェック中のユーザー商品の合計チケット
+
+    var disabled = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(true); //
+    var category_id = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0); //カテゴリーID
+    var search_key = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(''); //検索キーワード
+    var order = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('desc_created'); //並び順
+
+    var select_orders = [{
+      lable: '新しい順',
+      value: 'desc_created'
+    }, {
+      lable: '古い順',
+      value: 'asc_created'
+    }, {
+      lable: '高ポイント順',
+      value: 'desc_point'
+    }, {
+      lable: '低ポイント順',
+      value: 'asc_point'
+    }]; //
+
+    // onMounted でデータ取得
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      getData();
+    });
+
+    // methods 相当
+
     /* データ取得 */
-    this.getData();
-  },
-  methods: {
-    /* データ取得 */
-    getData: function getData() {
-      var _this = this;
-      var route = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.r_api_user_prize;
-      var params = {
-        _token: this.token,
-        user_id: this.user_id,
-        search_key: this.search_key,
-        //検索キーワード
-        order: this.order,
-        //並び順
-        category_id: this.category_id
+    var getData = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var route,
+          params,
+          res,
+          data,
+          paginate,
+          _error$response,
+          _args = arguments;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              route = _args.length > 0 && _args[0] !== undefined ? _args[0] : props.r_api_user_prize;
+              params = {
+                _token: props.token,
+                user_id: props.user_id,
+                search_key: search_key.value,
+                order: order.value,
+                category_id: category_id.value
+              };
+              _context.prev = 2;
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, params);
+            case 5:
+              res = _context.sent;
+              data = res.data;
+              categories.value = data.categories;
+              categories.value[0].id = 0;
+
+              // 商品情報の登録（新規登録・ページネーション追加）
+              paginate = data.user_prizes;
+              userPrizes.value = route === props.r_api_user_prize ? paginate.data : [].concat(_toConsumableArray(userPrizes.value), _toConsumableArray(paginate.data));
+              total.value = paginate.total;
+              loading.value = false;
+              ids.value = [];
+              allCheck.value = false;
+              totalPoint.value = 0;
+              totalTickets.value = 0;
+
+              /* 次のデータの読み込み */
+              if (paginate.current_page !== paginate.last_page) {
+                getData(paginate.next_page_url);
+              }
+              _context.next = 24;
+              break;
+            case 20:
+              _context.prev = 20;
+              _context.t0 = _context["catch"](2);
+              alert('通信エラーが発生しました。');
+              console.log(((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data) || _context.t0);
+            case 24:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[2, 20]]);
+      }));
+      return function getData() {
+        return _ref.apply(this, arguments);
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, params).then(function (json) {
-        console.log(json.data);
+    }();
 
-        // // カテゴリー
-        _this.categories = json.data.categories;
-        _this.categories[0].id = 0; //すべて　id:p0
-
-        //ページネーションデータ
-        var paginate = json.data.user_prizes;
-
-        // 商品情報の登録（新規登録・ページネーション追加）
-        _this.userPrizes = route == _this.r_api_user_prize ? paginate.data : [].concat(_toConsumableArray(_this.userPrizes), _toConsumableArray(paginate.data));
-        _this.total = paginate.total;
-        _this.loading = false; //読み込み中
-        _this.ids = []; //チェックボックスのリセット
-        _this.allCheck = false;
-        _this.totalPoint = 0; //ポイント合計値のリセット
-
-        /* 次のデータの読み込み */
-        var current_page = paginate.current_page; //表示中ページ
-        var last_page = paginate.last_page; //最終ページ
-        if (current_page != last_page) {
-          var nextPageUrl = paginate.next_page_url; //URLの更新
-          _this.getData(nextPageUrl);
-        }
-      })["catch"](function (error) {
-        alert('通信エラーが発生しました。');
-        console.log(error.response.data);
-      });
-    },
     /* 並び順の変更 */
-    changeOrder: function changeOrder(value) {
-      this.order = value;
-      this.getData();
-    },
+    var changeOrder = function changeOrder(value) {
+      order.value = value;
+      getData();
+    };
+
     /* 検索キーワードのリセット */
-    resetSearchKey: function resetSearchKey() {
-      this.search_key = '';
-      this.getData();
-    },
+    var resetSearchKey = function resetSearchKey() {
+      search_key.value = '';
+      getData();
+    };
+
     /** 全て選択をクリック */
-    changeAll: function changeAll() {
-      var ids = this.userPrizes.map(function (value) {
-        return value.id;
+    var changeAll = function changeAll() {
+      var allIds = userPrizes.value.map(function (v) {
+        return v.id;
       });
-      this.ids = this.allCheck ? ids : [];
-      this.calcTotalPoint(); //ポイント合計値の計算
-    },
+      ids.value = allCheck.value ? allIds : [];
+      calcTotalPoint(); //ポイント合計値の計算
+      calcTotalTickets(); //チケット合計値の計算
+    };
 
     /** 子チェックをクリック */
-    changeChildren: function changeChildren() {
-      var ids = this.userPrizes.map(function (value) {
-        return value.id;
+    var changeChildren = function changeChildren() {
+      var allIds = userPrizes.value.map(function (v) {
+        return v.id;
       });
-      this.allCheck = this.ids.length == ids.length;
-      this.calcTotalPoint(); //ポイント合計値の計算
-    },
+      allCheck.value = ids.value.length === allIds.length;
+      calcTotalPoint(); //ポイント合計値の計算
+      calcTotalTickets(); //チケット合計値の計算
+    };
 
     /** ポイント合計値の計算 */
-    calcTotalPoint: function calcTotalPoint() {
-      var _this2 = this;
-      this.totalPoint = 0;
-      this.userPrizes.forEach(function (userPrize) {
-        if (_this2.ids.some(function (id) {
-          return id === userPrize.id;
-        }) && userPrize.prize) {
-          _this2.totalPoint += userPrize.point;
+    var calcTotalPoint = function calcTotalPoint() {
+      totalPoint.value = 0;
+      userPrizes.value.forEach(function (userPrize) {
+        if (ids.value.includes(userPrize.id) && userPrize.prize) {
+          totalPoint.value += userPrize.point;
         }
       });
-      this.disabled = this.totalPoint == 0;
-    },
+      disabled.value = totalPoint.value === 0;
+    };
+
+    /** チケット合計値の計算 */
+    var calcTotalTickets = function calcTotalTickets() {
+      totalTickets.value = 0;
+
+      //チケット交換がないとき
+      if (props.change_ticket == 0) {
+        return;
+      }
+      userPrizes.value.forEach(function (userPrize) {
+        if (ids.value.includes(userPrize.id) && userPrize.prize) {
+          totalTickets.value += userPrize.ticket;
+        }
+      });
+      disabled.value = totalTickets.value === 0;
+    };
+
     /** 日付データをテクスト変換  */
-    formatDate: function formatDate(inputString) {
+    var formatDate = function formatDate(inputString) {
       var date = new Date(inputString);
       var year = date.getFullYear();
-      var month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
-      var day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
-
+      var month = String(date.getMonth() + 1).padStart(2, '0');
+      var day = String(date.getDate()).padStart(2, '0');
       return "".concat(year, "/").concat(month, "/").concat(day);
-    }
+    };
+    return {
+      __sfc: true,
+      props: props,
+      loading: loading,
+      categories: categories,
+      userPrizes: userPrizes,
+      total: total,
+      ids: ids,
+      allCheck: allCheck,
+      totalPoint: totalPoint,
+      totalTickets: totalTickets,
+      disabled: disabled,
+      category_id: category_id,
+      search_key: search_key,
+      order: order,
+      select_orders: select_orders,
+      getData: getData,
+      changeOrder: changeOrder,
+      resetSearchKey: resetSearchKey,
+      changeAll: changeAll,
+      changeChildren: changeChildren,
+      calcTotalPoint: calcTotalPoint,
+      calcTotalTickets: calcTotalTickets,
+      formatDate: formatDate
+    };
   }
 });
 
@@ -21316,7 +21581,8 @@ var render = function render() {
       inputs: _setup.inputs,
       categories: _setup.categories,
       prop_prizes: _setup.prizes,
-      selects: _setup.selects
+      selects: _setup.selects,
+      change_ticket: _vm.change_ticket
     },
     on: {
       "toggle-edit": _setup.toggleEdit,
@@ -21484,7 +21750,26 @@ var render = function render() {
     staticClass: "bi bi-caret-up-fill"
   }) : _vm._e(), _vm._v(" "), _setup.inputs["order_point"] != "asc" ? _c("i", {
     staticClass: "bi bi-caret-down-fill"
-  }) : _vm._e()])]), _vm._v(" "), _c("th", {
+  }) : _vm._e()])]), _vm._v(" "), _vm.change_ticket != 0 ? _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_c("a", {
+    staticClass: "btn btn-sm w-100 fw-bold fs-6 text-start p-0",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _setup.changeOrder("order_ticket");
+      }
+    }
+  }, [_c("span", [_vm._v("交換チケット")]), _vm._v(" "), _setup.inputs["order_ticket"] != "desc" ? _c("i", {
+    staticClass: "bi bi-caret-up-fill"
+  }) : _vm._e(), _vm._v(" "), _setup.inputs["order_ticket"] != "asc" ? _c("i", {
+    staticClass: "bi bi-caret-down-fill"
+  }) : _vm._e()])]) : _vm._e(), _vm._v(" "), _c("th", {
     attrs: {
       scope: "col"
     }
@@ -21578,7 +21863,7 @@ var render = function render() {
         src_icon: "prize.discription_icon_path",
         no_btn: "1"
       }
-    }) : _vm._e()], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point) + " pt")]), _vm._v(" "), _c("td", {
+    }) : _vm._e()], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.rank.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(prize.point.toLocaleString()) + " pt")]), _vm._v(" "), _vm.change_ticket != 0 ? _c("td", [_vm._v(_vm._s(prize.ticket.toLocaleString()) + " 枚")]) : _vm._e(), _vm._v(" "), _c("td", {
       staticClass: "form-text",
       staticStyle: {
         width: "9rem"
@@ -21806,7 +22091,61 @@ var render = function render() {
         _vm.$set(_setup.inputs, "min_point", $event.target.value);
       }
     }
-  })])]), _vm._v(" "), _c("section", {
+  })])]), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+    staticClass: "mb-2"
+  }, [_c("div", {
+    staticClass: "form-text"
+  }, [_vm._v("交換チケット")]), _vm._v(" "), _c("div", {
+    staticClass: "input-group mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.max_ticket,
+      expression: "inputs.max_ticket"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      width: "6rem"
+    },
+    attrs: {
+      type: "number",
+      placeholder: "最大枚数"
+    },
+    domProps: {
+      value: _setup.inputs.max_ticket
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "max_ticket", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.min_ticket,
+      expression: "inputs.min_ticket"
+    }],
+    staticClass: "form-control",
+    staticStyle: {
+      width: "6rem"
+    },
+    attrs: {
+      type: "number",
+      placeholder: "最低枚数"
+    },
+    domProps: {
+      value: _setup.inputs.min_ticket
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "min_ticket", $event.target.value);
+      }
+    }
+  })])]) : _vm._e(), _vm._v(" "), _c("section", {
     staticClass: "mb-"
   }, [_c("div", {
     staticClass: "row flex-column g-2"
@@ -22007,7 +22346,38 @@ var render = function render() {
       "min-width": "600px",
       "font-size": "16px"
     }
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.prizes, function (prize, key) {
+  }, [_c("thead", [_c("tr", {}, [_c("th", {
+    staticStyle: {
+      width: "4rem"
+    },
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("画像")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("商品コード")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("商品名")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("評価ランク")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("交換ポイント")]), _vm._v(" "), _vm.change_ticket != 0 ? _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("交換チケット")]) : _vm._e(), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("更新")])])]), _vm._v(" "), _c("tbody", [_vm._l(_vm.prizes, function (prize, key) {
     return _c("tr", {
       key: key
     }, [_c("td", {
@@ -22046,7 +22416,15 @@ var render = function render() {
           _vm.$set(prize, "code", $event.target.value);
         }
       }
-    })]), _vm._v(" "), _c("td", [_c("input", {
+    }), _vm._v(" "), _c("div", {
+      staticClass: "d-flex gap-2 justify-content-start h-100 mt-1"
+    }, [_c("div", {
+      staticStyle: {
+        width: "4rem"
+      }
+    }, [prize.is_used ? _c("span", {
+      staticClass: "badge rounded-pill bg-success"
+    }, [_vm._v(_vm._s("利用中"))]) : _vm._e()])])]), _vm._v(" "), _c("td", [_c("input", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -22126,17 +22504,38 @@ var render = function render() {
       }
     })]), _vm._v(" "), _c("div", {
       staticClass: "col-auto"
-    }, [_vm._v("pt")])])]), _vm._v(" "), _c("td", {
-      staticClass: "form-text"
-    }, [_vm._v(_vm._s(_vm.formatDate(prize.updated_at)))]), _vm._v(" "), _c("td", {}, [_c("div", {
-      staticClass: "d-flex gap-2 justify-content-end h-100"
+    }, [_vm._v("pt")])])]), _vm._v(" "), _vm.change_ticket != 0 ? _c("td", [_c("div", {
+      staticClass: "row g-2 align-items-center"
     }, [_c("div", {
-      staticStyle: {
-        width: "4rem"
+      staticClass: "col"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: prize.ticket,
+        expression: "prize.ticket"
+      }],
+      staticClass: "form-control text-end",
+      attrs: {
+        type: "text"
+      },
+      domProps: {
+        value: prize.ticket
+      },
+      on: {
+        change: function change($event) {
+          return _vm.update(prize);
+        },
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(prize, "ticket", $event.target.value);
+        }
       }
-    }, [prize.is_used ? _c("span", {
-      staticClass: "badge rounded-pill bg-success"
-    }, [_vm._v(_vm._s("利用中"))]) : _vm._e()])])])]);
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "col-auto"
+    }, [_vm._v("枚")])])]) : _vm._e(), _vm._v(" "), _c("td", {
+      staticClass: "form-text"
+    }, [_vm._v(_vm._s(_vm.formatDate(prize.updated_at)))])]);
   }), _vm._v(" "), _vm.prizes.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center text-secondary border-0 py-5",
     attrs: {
@@ -22144,38 +22543,7 @@ var render = function render() {
     }
   }, [_vm._v("\n                                *商品の登録情報はありません。\n                            ")])]) : _vm._e()], 2)])])])])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("thead", [_c("tr", {}, [_c("th", {
-    staticStyle: {
-      width: "4rem"
-    },
-    attrs: {
-      scope: "col"
-    }
-  }, [_vm._v("画像")]), _vm._v(" "), _c("th", {
-    attrs: {
-      scope: "col"
-    }
-  }, [_vm._v("商品コード")]), _vm._v(" "), _c("th", {
-    attrs: {
-      scope: "col"
-    }
-  }, [_vm._v("商品名")]), _vm._v(" "), _c("th", {
-    attrs: {
-      scope: "col"
-    }
-  }, [_vm._v("評価ランク")]), _vm._v(" "), _c("th", {
-    attrs: {
-      scope: "col"
-    }
-  }, [_vm._v("交換ポイント")]), _vm._v(" "), _c("th", {
-    attrs: {
-      scope: "col"
-    }
-  }, [_vm._v("更新")]), _vm._v(" "), _c("th")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -27183,12 +27551,8 @@ var render = function render() {
         url: userPrize.prize.image_path
       }
     })], 1), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
-      staticClass: "bg-white text-center mt-1 px-1 rounded-pill position-relative"
-    }, [_c("number-comma-component", {
-      attrs: {
-        number: userPrize.point
-      }
-    }), _vm._v("pt\n\n                            "), _vm._v(" "), userPrize.point_history_id ? _c("div", {
+      staticClass: "bg-white border border-warning text-end mt-1 px-2 rounded-pill position-relative position-relative"
+    }, [_vm._m(1, true), _vm._v("\n\n\n                            " + _vm._s(userPrize.point.toLocaleString()) + "pt\n\n                            "), _vm._v(" "), userPrize.point_history_id ? _c("div", {
       staticClass: "position-absolute top-50 start-0 translate-middle-y ps-1"
     }, [_c("span", {
       staticClass: "text-warning"
@@ -27196,7 +27560,15 @@ var render = function render() {
       staticClass: "position-absolute top-50 start-0 translate-middle-y ps-1"
     }, [_c("span", {
       staticClass: "text-primary"
-    }, [_vm._v("●")])]) : _vm._e()], 1) : _vm._e(), _vm._v(" "), userPrize.prize.discription_text ? _c("button", {
+    }, [_vm._v("●")])]) : _vm._e()]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+      staticClass: "bg-white border border-success text-end mt-1 px-2 rounded-pill position-relative position-relative"
+    }, [_vm._m(2, true), _vm._v(" "), userPrize.prize.ticket ? _c("span", {
+      staticClass: "fs-6"
+    }, [_vm._v(_vm._s(userPrize.ticket.toLocaleString() + "tk"))]) : _c("span", {
+      staticStyle: {
+        "font-size": "11px"
+      }
+    }, [_vm._v("チケット交換なし")])]) : _vm._e(), _vm._v(" "), userPrize.prize.discription_text ? _c("button", {
       staticClass: "btn btn-sm btn-dark rounded-pill w-100 my-1",
       attrs: {
         type: "button",
@@ -27236,9 +27608,14 @@ var render = function render() {
       "data-aos": "fade-in"
     }
   }, [_c("div", {
-    staticClass: "d-flex justify-content-between align-items-start text-white"
+    staticClass: "row justify-content-between align-items-center g-2 px-2 text-white mb-2"
   }, [_c("div", {
-    staticClass: "form-check mb-"
+    staticClass: "col-12"
+  }, [_c("label", {
+    staticClass: "form-check",
+    staticStyle: {
+      cursor: "pointer"
+    }
   }, [_c("input", {
     directives: [{
       name: "model",
@@ -27248,12 +27625,10 @@ var render = function render() {
     }],
     staticClass: "form-check-input",
     attrs: {
-      type: "checkbox",
-      value: "",
-      id: "flexCheckDefault"
+      type: "checkbox"
     },
     domProps: {
-      checked: Array.isArray(_setup.allCheck) ? _vm._i(_setup.allCheck, "") > -1 : _setup.allCheck
+      checked: Array.isArray(_setup.allCheck) ? _vm._i(_setup.allCheck, null) > -1 : _setup.allCheck
     },
     on: {
       change: [function ($event) {
@@ -27261,7 +27636,7 @@ var render = function render() {
           $$el = $event.target,
           $$c = $$el.checked ? true : false;
         if (Array.isArray($$a)) {
-          var $$v = "",
+          var $$v = null,
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
             $$i < 0 && (_setup.allCheck = $$a.concat([$$v]));
@@ -27275,40 +27650,60 @@ var render = function render() {
         return _setup.changeAll();
       }]
     }
-  }), _vm._v(" "), _c("label", {
-    staticClass: "form-check-label",
-    attrs: {
-      "for": "flexCheckDefault"
-    }
-  }, [_vm._v("\n                        全て選択\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "form-check mb-"
-  }, [_c("span", {
-    staticClass: "fs-1 fw-bold"
-  }, [_c("number-comma-component", {
-    attrs: {
-      number: _setup.totalPoint
-    }
-  })], 1), _vm._v("pt\n                ")])]), _vm._v(" "), _c("p", {
-    staticClass: "text-white form-text m-0 mb-3"
-  }, [_vm._v("\n                *選択されなかった商品は、「取得した商品一覧」に移動します。\n            ")]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-8 mx-auto"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "form-check-label fs-"
+  }, [_vm._v("\n                            全て選択\n                        ")])])]), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "form-check"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end align-items-center"
+  }, [_vm._m(3), _vm._v(" "), _c("div", {}, [_c("span", {
+    staticClass: "fs-3 fw-bold"
+  }, [_vm._v(_vm._s(_setup.totalPoint.toLocaleString()))]), _vm._v("pt\n                            ")])])])]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "form-check"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end align-items-center"
+  }, [_vm._m(4), _vm._v(" "), _c("div", {}, [_c("span", {
+    staticClass: "fs-3 fw-bold"
+  }, [_vm._v(_vm._s(_setup.totalTickets.toLocaleString()))]), _vm._v("tk\n                            ")])])])]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "row gy-3"
+  }, [_c("div", {
+    staticClass: "col-12 col-md"
   }, [_vm.no_exchange_point == 0 ? _c("button", {
-    staticClass: "btn btn-warning rounded-pill w-100",
+    staticClass: "btn btn-warning text-white rounded-pill w-100",
     attrs: {
       type: "button",
       "data-bs-toggle": "modal",
       "data-bs-target": "#exchangeModal",
       disabled: _setup.disabled
     }
-  }, [_vm._v("選択した商品をポイント交換する")]) : _c("button", {
+  }, [_vm._v("ポイントと交換する")]) : _c("button", {
     staticClass: "btn btn-primary text-white rounded-pill w-100",
     attrs: {
       type: "submit",
       disabled: _setup.disabled
     }
-  }, [_vm._v("選択した商品を発送する")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-8 mx-auto mt-2"
-  }, [_c("a", {
+  }, [_vm._v("選択した商品を発送する")])]), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+    staticClass: "col-12 col-md"
+  }, [_c("button", {
+    staticClass: "btn btn-success text-white rounded-pill w-100",
+    attrs: {
+      type: "button",
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#exchangeTicketModal",
+      disabled: _setup.disabled
+    }
+  }, [_vm._v("チケットと交換する")])]) : _vm._e()]), _vm._v(" "), _c("p", {
+    staticClass: "text-white form-text text-md-center m-0 my-3"
+  }, [_vm._v("\n                *選択されなかった商品は、\n                "), _c("a", {
+    staticClass: "btn btn-link p-0 text-white",
+    attrs: {
+      href: _vm.r_user_prize
+    }
+  }, [_vm._v("『取得した商品一覧』")]), _vm._v("に移動します。\n            ")]), _vm._v(" "), _c("div", {}, [_c("a", {
     staticClass: "btn text-danger rounded-pill w-100",
     attrs: {
       href: _vm.r_gacha_category,
@@ -27322,7 +27717,7 @@ var render = function render() {
     }
   }, [_vm.no_exchange_point == 0 ? _c("div", [_c("span", {
     staticClass: "text-warning"
-  }, [_vm._v("●")]), _vm._v(" "), _c("span", [_vm._v("ポイント交換済み")])]) : _vm._e(), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("●")]), _vm._v(" "), _c("span", [_vm._v("ポイント交換済み")])]) : _vm._e(), _vm._v(" "), _vm._m(5)])]), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "exchangeModal",
@@ -27334,36 +27729,63 @@ var render = function render() {
     staticClass: "modal-dialog"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_c("div", {
+  }, [_vm._m(6), _vm._v(" "), _c("div", {
     staticClass: "modal-body text-center"
   }, [_c("h5", {
     staticClass: "modal-title",
     attrs: {
-      id: "exchangeModalLabel"
+      id: "exchangeTicketModalLabel"
     }
-  }, [_c("p", [_vm._v("ポイント交換しますか？")]), _vm._v(" "), _c("p", [_vm._v("商品を"), _c("strong", {
-    staticClass: "fs-3"
-  }, [_c("number-comma-component", {
-    attrs: {
-      number: _setup.totalPoint
-    }
-  }), _vm._v("pt")], 1), _vm._v("と交換する")])])]), _vm._v(" "), _c("div", {
+  }, [_c("p", [_vm._v("\n                            商品を" + _vm._s(_setup.totalPoint.toLocaleString() + "pt") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row g-2"
-  }, [_vm._m(2), _vm._v(" "), _c("div", {
+  }, [_vm._m(7), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("u-user-prize-exchange-point-btn", {
     attrs: {
       token: _vm.token,
       r_api_post: _vm.r_api_exchange_points,
-      r_redirect: _vm.r_redirect,
+      r_redirect: _vm.r_redirect_exchange_points,
       user_prize_ids: _setup.ids,
-      "r_redirect:": "",
       btn_style_class: "btn p-md-33 btn-warning text-white rounded-pill w-100",
       btn_label: "交換する"
     }
-  })], 1)])])])])])], 1);
+  })], 1)])])])])]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "exchangeTicketModal",
+      tabindex: "-1",
+      "aria-labelledby": "exchangeTicketModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(8), _vm._v(" "), _c("div", {
+    staticClass: "modal-body text-center"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "exchangeTicketModalLabel"
+    }
+  }, [_c("p", [_vm._v("\n                            商品をチケット" + _vm._s(_setup.totalTickets.toLocaleString() + "tk") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("div", {
+    staticClass: "row g-2"
+  }, [_vm._m(9), _vm._v(" "), _c("div", {
+    staticClass: "col-6"
+  }, [_c("u-user-prize-exchange-ticket-btn", {
+    attrs: {
+      token: _vm.token,
+      r_api_post: _vm.r_api_exchange_tickets,
+      r_redirect: _vm.r_redirect_exchange_tickets,
+      user_prize_ids: _setup.ids,
+      btn_style_class: "btn p-md-33 btn-success text-white rounded-pill w-100",
+      btn_label: "交換する"
+    }
+  })], 1)])])])])]) : _vm._e()], 1);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -27381,9 +27803,98 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c,
     _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "position-absolute top-50 start-0 translate-middle-y px-1",
+    staticStyle: {
+      "padding-top": "2px"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-p-circle fs-5 text-warning"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "position-absolute top-50 start-0 translate-middle-y px-1",
+    staticStyle: {
+      "padding-top": "2px"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-ticket-perforated-fill fs-5 text-success"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {}, [_c("i", {
+    staticClass: "bi bi-p-circle fs-3 text-warning"
+  }), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-x"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {}, [_c("i", {
+    staticClass: "bi bi-ticket-perforated-fill fs-3 text-success"
+  }), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-x"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("div", [_c("span", {
     staticClass: "text-primary"
   }, [_vm._v("●")]), _vm._v(" "), _c("span", [_vm._v("発送申請済み")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "modal-header justify-content-center border-0 pb-0"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    staticStyle: {
+      "font-size": "6rem"
+    },
+    attrs: {
+      id: "AlertModalLabel"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-p-circle text-warning"
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "col-6"
+  }, [_c("button", {
+    staticClass: "btn p-md-33 btn-light border rounded-pill w-100",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal"
+    }
+  }, [_vm._v("キャンセル")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "modal-header justify-content-center border-0 pb-0"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    staticStyle: {
+      "font-size": "6rem"
+    },
+    attrs: {
+      id: "AlertModalLabel"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-ticket-perforated-fill text-success"
+  })])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c,
@@ -30257,7 +30768,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "m-"
   }, [_c("div", {
-    staticClass: "row align-items-center gy-1 mb-3"
+    staticClass: "row align-items-center gy-1 mb-4"
   }, [_c("div", {
     staticClass: "col-12 position-relative"
   }, [_c("input", {
@@ -30340,15 +30851,7 @@ var render = function render() {
         }
       }
     }, [_vm._v(_vm._s(select_order.lable))]);
-  }), 0)]), _vm._v(" "), _c("div", {
-    staticClass: "col-12"
-  }, [_vm._v("\n            該当商品数：\n            "), _c("span", {
-    staticClass: "fs-1 fw-bold"
-  }, [_c("number-comma-component", {
-    attrs: {
-      number: _vm.stores.length
-    }
-  })], 1)])]), _vm._v(" "), _c("div", {
+  }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "row gx-2 gy-4"
   }, [_vm._l(_vm.stores, function (store, key) {
     return _c("div", {
@@ -30388,31 +30891,22 @@ var render = function render() {
       }
     }, [_c("div", {
       staticClass: "bg-dark text-white px-1 rounded-pill fw-bold fs-"
-    }, [_vm._v(_vm._s("×" + store.count))])]) : _vm._e(), _vm._v(" "), _c("div", {
-      staticClass: "position-absolute bottom-0 end-0 p-1 w-100"
-    }, [_c("div", {
-      staticClass: "d-flex gap-0 align-items-center justify-content-center text-success px-2 rounded",
+    }, [_vm._v(_vm._s("×" + store.count))])]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "text-start mt-2"
+    }, [_c("div", {}, [_vm._v("\n                        " + _vm._s(store.prize.name) + "\n                    ")]), _vm._v(" "), _c("div", {
+      staticClass: "d-flex gap-0 align-items-center justify-content-start text-success",
       staticStyle: {
-        "font-size": "11px",
-        "background-color": "rgb(0 0 0 / 80%)"
+        "font-size": "14px"
       }
-    }, [_c("img", {
-      staticClass: "d-block",
-      staticStyle: {
-        width: "20px",
-        height: "20px"
-      },
-      attrs: {
-        src: _vm.src_ticket_image,
-        alt: "チケット"
-      }
+    }, [_c("i", {
+      staticClass: "bi bi-ticket-perforated-fill fs-5 text-success"
     }), _vm._v(" "), _c("i", {
       staticClass: "bi bi-x"
     }), _vm._v(" "), _c("div", {
       staticClass: "text-success"
     }, [_c("span", {
       staticClass: "fs-6"
-    }, [_vm._v(_vm._s(store.ticket_count))])])])])])])]);
+    }, [_vm._v(_vm._s(store.ticket_count.toLocaleString()))])])])])])]);
   }), _vm._v(" "), _vm.stores.length < 1 ? _c("div", {
     staticClass: "col-12 text-secondary py-5"
   }, [_vm._v("*交換できる商品はありません")]) : _vm._e()], 2)]);
@@ -30469,7 +30963,7 @@ var render = function render() {
     staticClass: "text-center w-100 px-5"
   }, [_c("h5", {
     staticClass: "fs-3 mb-3"
-  }, [_vm._v("ポイント交換中")]), _vm._v(" "), _c("h5", {
+  }, [_vm._v("ポイントに交換中")]), _vm._v(" "), _c("h5", {
     staticClass: "fs-6"
   }, [_vm._v("そのままお待ちください")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "progress rounded-pill",
@@ -30478,6 +30972,100 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "progress-bar bg-warning",
+    style: "width:" + _vm.progress + "%;",
+    attrs: {
+      role: "progressbar",
+      "aria-valuenow": _vm.progress,
+      "aria-valuemin": "0",
+      "aria-valuemax": "100"
+    }
+  }, [_vm._v(_vm._s(_vm.progress + "%"))])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "my-3"
+  }, [_c("span", {
+    staticClass: "spinner-grow spinner-grow-sm",
+    attrs: {
+      role: "status",
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "spinner-grow spinner-grow-sm",
+    attrs: {
+      role: "status",
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "spinner-grow spinner-grow-sm",
+    attrs: {
+      role: "status",
+      "aria-hidden": "true"
+    }
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=template&id=fca2c972":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=template&id=fca2c972 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("button", {
+    "class": _vm.btn_style_class,
+    attrs: {
+      type: "button",
+      disabled: _vm.user_prize_ids.length < 1
+    },
+    on: {
+      click: function click($event) {
+        return _vm.post();
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.btn_label))]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.loading,
+      expression: "loading"
+    }],
+    staticClass: "modal-backdrop faid show",
+    staticStyle: {
+      opacity: ".9"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex align-items-center justify-content-center h-100 text-white mx-auto",
+    staticStyle: {
+      "max-width": "600px"
+    }
+  }, [_c("div", {
+    staticClass: "text-center w-100 px-5"
+  }, [_c("h5", {
+    staticClass: "fs-3 mb-3"
+  }, [_vm._v("チケットに交換中")]), _vm._v(" "), _c("h5", {
+    staticClass: "fs-6"
+  }, [_vm._v("そのままお待ちください")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "progress rounded-pill",
+    staticStyle: {
+      height: "1.6rem"
+    }
+  }, [_c("div", {
+    staticClass: "progress-bar bg-success",
     style: "width:" + _vm.progress + "%;",
     attrs: {
       role: "progressbar",
@@ -30531,7 +31119,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var render = function render() {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("div", {
     staticClass: "text-dark"
   }, [_vm.bottom_menu == "true" ? _c("div", {
@@ -30541,12 +31130,14 @@ var render = function render() {
       "z-index": "50"
     }
   }, [_c("div", {
-    staticClass: "container",
+    staticClass: "container p-0",
     staticStyle: {
       "max-width": "900px"
     }
   }, [_c("div", {
-    staticClass: "d-flex justify-content-between align-items-center px-3"
+    staticClass: "row justify-content-between align-items-center g-2 px-2"
+  }, [_c("div", {
+    "class": _vm.change_ticket != 0 && _vm.no_exchange_point == 0 ? "col-12 col-md" : "col"
   }, [_c("label", {
     staticClass: "form-check",
     staticStyle: {
@@ -30556,7 +31147,7 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.allCheck,
+      value: _setup.allCheck,
       expression: "allCheck"
     }],
     staticClass: "form-check-input",
@@ -30564,42 +31155,74 @@ var render = function render() {
       type: "checkbox"
     },
     domProps: {
-      checked: Array.isArray(_vm.allCheck) ? _vm._i(_vm.allCheck, null) > -1 : _vm.allCheck
+      checked: Array.isArray(_setup.allCheck) ? _vm._i(_setup.allCheck, null) > -1 : _setup.allCheck
     },
     on: {
       change: [function ($event) {
-        var $$a = _vm.allCheck,
+        var $$a = _setup.allCheck,
           $$el = $event.target,
           $$c = $$el.checked ? true : false;
         if (Array.isArray($$a)) {
           var $$v = null,
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.allCheck = $$a.concat([$$v]));
+            $$i < 0 && (_setup.allCheck = $$a.concat([$$v]));
           } else {
-            $$i > -1 && (_vm.allCheck = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+            $$i > -1 && (_setup.allCheck = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
           }
         } else {
-          _vm.allCheck = $$c;
+          _setup.allCheck = $$c;
         }
       }, function ($event) {
-        return _vm.changeAll();
+        return _setup.changeAll();
       }]
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "form-check-label fs-5"
-  }, [_vm._v("\n                        全て選択\n                    ")])]), _vm._v(" "), _c("div", {
-    staticClass: "form-check mb-"
-  }, [_c("span", {
-    staticClass: "fs-1 fw-bold"
-  }, [_c("number-comma-component", {
-    attrs: {
-      number: _vm.totalPoint ? "+" + _vm.totalPoint : 0
-    }
-  })], 1), _vm._v("pt\n                ")])]), _vm._v(" "), _c("div", {
-    staticClass: "row g-2 justify-content-center"
-  }, [_c("div", {
+    staticClass: "form-check-label fs-"
+  }, [_vm._v("\n                            全て選択\n                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "col"
+  }, [_c("div", {
+    staticClass: "form-check"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end align-items-center"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {}, [_c("span", {
+    staticClass: "fs-3 fw-bold"
+  }, [_vm._v(_vm._s(_setup.totalPoint.toLocaleString()))]), _vm._v("pt\n                            ")])])])]), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "form-check"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end align-items-center"
+  }, [_vm._m(1), _vm._v(" "), _c("div", {}, [_c("span", {
+    staticClass: "fs-3 fw-bold"
+  }, [_vm._v(_vm._s(_setup.totalTickets.toLocaleString()))]), _vm._v("tk\n                            ")])])])]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "w-100 overflow-auto"
+  }, [_c("div", {
+    staticClass: "p-2 pt-0"
+  }, [_c("div", {
+    staticClass: "row g-2 justify-content-center align-items-end"
+  }, [_vm.no_exchange_point == 0 ? _c("div", {
+    staticClass: "col order-2"
+  }, [_c("button", {
+    staticClass: "btn py-md-3 btn-warning text-white rounded-pill w-100",
+    attrs: {
+      type: "button",
+      disabled: _setup.disabled,
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#exchangeModal"
+    }
+  }, [_vm._v("ポイントと交換")])]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+    staticClass: "col order-3"
+  }, [_c("button", {
+    staticClass: "btn py-md-3 btn-success text-white rounded-pill w-100",
+    attrs: {
+      type: "button",
+      disabled: _setup.disabled,
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#exchangeTicketModal"
+    }
+  }, [_vm._v("チケットと交換")])]) : _vm._e(), _vm._v(" "), _c("div", {
+    "class": _vm.change_ticket != 0 && _vm.no_exchange_point == 0 ? "col-12 col-md order-4 order-md-1" : "col order-1"
   }, [_c("form", {
     attrs: {
       action: _vm.r_shipped_appli,
@@ -30613,7 +31236,7 @@ var render = function render() {
     domProps: {
       value: _vm.token
     }
-  }), _vm._v(" "), _vm._l(_vm.ids, function (id, key) {
+  }), _vm._v(" "), _vm._l(_setup.ids, function (id, key) {
     return _c("input", {
       key: key,
       attrs: {
@@ -30628,19 +31251,9 @@ var render = function render() {
     staticClass: "btn py-md-3 btn-primary text-white rounded-pill w-100",
     attrs: {
       type: "submit",
-      disabled: _vm.disabled
+      disabled: _setup.disabled
     }
-  }, [_vm._v("発送申請")])], 2)]), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
-    staticClass: "col-6"
-  }, [_c("button", {
-    staticClass: "btn py-md-3 btn-warning text-white rounded-pill w-100",
-    attrs: {
-      type: "button",
-      disabled: _vm.disabled,
-      "data-bs-toggle": "modal",
-      "data-bs-target": "#exchangeModal"
-    }
-  }, [_vm._v("ポイント交換")])]) : _vm._e()])])]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_vm._v("発送申請")])], 2)])])])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row align-items-center gy-2"
   }, [_c("div", {
     staticClass: "col-12 position-relative"
@@ -30648,7 +31261,7 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.search_key,
+      value: _setup.search_key,
       expression: "search_key"
     }],
     staticClass: "form-control rounded-pill",
@@ -30657,15 +31270,15 @@ var render = function render() {
       placeholder: "商品名検索"
     },
     domProps: {
-      value: _vm.search_key
+      value: _setup.search_key
     },
     on: {
       change: function change($event) {
-        return _vm.getData();
+        return _setup.getData();
       },
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.search_key = $event.target.value;
+        _setup.search_key = $event.target.value;
       }
     }
   }), _vm._v(" "), _c("button", {
@@ -30674,7 +31287,7 @@ var render = function render() {
       right: "1rem"
     },
     on: {
-      click: _vm.resetSearchKey
+      click: _setup.resetSearchKey
     }
   }, [_vm._v("×")])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-lg"
@@ -30682,7 +31295,7 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.category_id,
+      value: _setup.category_id,
       expression: "category_id"
     }],
     staticClass: "form-select form-select-sm",
@@ -30694,12 +31307,12 @@ var render = function render() {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.category_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+        _setup.category_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
       }, function ($event) {
-        return _vm.getData();
+        return _setup.getData();
       }]
     }
-  }, _vm._l(_vm.categories, function (category, key) {
+  }, _vm._l(_setup.categories, function (category, key) {
     return _c("option", {
       key: key,
       domProps: {
@@ -30710,17 +31323,17 @@ var render = function render() {
     staticClass: "col-12 col-md"
   }, [_c("div", {
     staticClass: "d-flex gap-1"
-  }, _vm._l(_vm.select_orders, function (select_order, key) {
+  }, _vm._l(_setup.select_orders, function (select_order, key) {
     return _c("button", {
       key: key,
       staticClass: "btn btn-sm border rounded-pill",
-      "class": _vm.order == select_order.value ? "disabled btn-primary text-white" : "btn-light",
+      "class": _setup.order == select_order.value ? "disabled btn-primary text-white" : "btn-light",
       staticStyle: {
         opacity: "1"
       },
       on: {
         click: function click($event) {
-          return _vm.changeOrder(select_order.value);
+          return _setup.changeOrder(select_order.value);
         }
       }
     }, [_vm._v(_vm._s(select_order.lable))]);
@@ -30730,16 +31343,16 @@ var render = function render() {
     staticClass: "fs-1 fw-bold"
   }, [_c("number-comma-component", {
     attrs: {
-      number: _vm.total
+      number: _setup.total
     }
   })], 1)])]), _vm._v(" "), _c("ul", {
     staticClass: "row px-3 bg-white text-dark rounded-3 mx-2 gy-3 mt-0",
     staticStyle: {
       "list-style": "none"
     }
-  }, [_vm.loading ? _c("li", {
+  }, [_setup.loading ? _c("li", {
     staticClass: "list-group-item bg-white text-dark py-5 fs-5 text-secondary"
-  }, [_vm._m(0)]) : _vm._e(), _vm._v(" "), _vm._l(_vm.userPrizes, function (userPrize, key) {
+  }, [_vm._m(2)]) : _vm._e(), _vm._v(" "), _vm._l(_setup.userPrizes, function (userPrize, key) {
     return _c("li", {
       key: key,
       staticClass: "col-12 col-sm-6 col-lg-4"
@@ -30759,7 +31372,7 @@ var render = function render() {
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: _vm.ids,
+        value: _setup.ids,
         expression: "ids"
       }],
       staticClass: "form-check-input float-xl-none m-0 rounded-pill",
@@ -30773,26 +31386,26 @@ var render = function render() {
       },
       domProps: {
         value: userPrize.id,
-        checked: Array.isArray(_vm.ids) ? _vm._i(_vm.ids, userPrize.id) > -1 : _vm.ids
+        checked: Array.isArray(_setup.ids) ? _vm._i(_setup.ids, userPrize.id) > -1 : _setup.ids
       },
       on: {
         change: [function ($event) {
-          var $$a = _vm.ids,
+          var $$a = _setup.ids,
             $$el = $event.target,
             $$c = $$el.checked ? true : false;
           if (Array.isArray($$a)) {
             var $$v = userPrize.id,
               $$i = _vm._i($$a, $$v);
             if ($$el.checked) {
-              $$i < 0 && (_vm.ids = $$a.concat([$$v]));
+              $$i < 0 && (_setup.ids = $$a.concat([$$v]));
             } else {
-              $$i > -1 && (_vm.ids = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+              $$i > -1 && (_setup.ids = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
             }
           } else {
-            _vm.ids = $$c;
+            _setup.ids = $$c;
           }
         }, function ($event) {
-          return _vm.changeChildren();
+          return _setup.changeChildren();
         }]
       }
     })]) : _vm._e(), _vm._v(" "), _c("ratio-image-component", {
@@ -30804,17 +31417,41 @@ var render = function render() {
       staticClass: "col-8 p-0"
     }, [_c("div", {
       staticClass: "form-text"
-    }, [_vm._v("取得日：" + _vm._s(_vm.formatDate(userPrize.created_at)))]), _vm._v(" "), _c("h6", {
+    }, [_vm._v("取得日：" + _vm._s(_setup.formatDate(userPrize.created_at)))]), _vm._v(" "), _c("h6", {
       attrs: {
         classs: "fw-bold"
       }
     }, [_vm._v(_vm._s(userPrize.prize.name))]), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
-      staticClass: "mt- px-3 text-center border rounded-pill d-inline-block"
-    }, [_c("number-comma-component", {
-      attrs: {
-        number: userPrize.point
+      staticClass: "my-1"
+    }, [_c("div", {
+      staticClass: "d-flex gap-0 align-items-center justify-content-start",
+      staticStyle: {
+        "font-size": "14px"
       }
-    }), _vm._v(_vm._s("pt") + "\n                        ")], 1) : _vm._e(), _vm._v(" "), _c("div", {
+    }, [_c("i", {
+      staticClass: "bi bi-p-circle fs-5 text-warning"
+    }), _vm._v(" "), _c("i", {
+      staticClass: "bi bi-x"
+    }), _vm._v(" "), _c("span", {
+      staticClass: "fs-6"
+    }, [_vm._v(_vm._s(userPrize.point.toLocaleString() + "pt"))])])]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+      staticClass: "my-1"
+    }, [_c("div", {
+      staticClass: "d-flex gap-0 align-items-center justify-content-start",
+      staticStyle: {
+        "font-size": "14px"
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-ticket-perforated-fill fs-5 text-success"
+    }), _vm._v(" "), _c("i", {
+      staticClass: "bi bi-x"
+    }), _vm._v(" "), userPrize.prize.ticket ? _c("span", {
+      staticClass: "fs-6"
+    }, [_vm._v(_vm._s(userPrize.ticket.toLocaleString() + "tk"))]) : _c("span", {
+      staticStyle: {
+        "font-size": "11px"
+      }
+    }, [_vm._v("チケット交換なし")])])]) : _vm._e(), _vm._v(" "), _c("div", {
       staticClass: "form-text text-danger"
     }, [_vm._v(_vm._s(userPrize.deadline_text))]), _vm._v(" "), _c("div", {}, [userPrize.prize.discription_text ? _c("button", {
       staticClass: "btn btn-sm btn-dark rounded-pill",
@@ -30838,7 +31475,7 @@ var render = function render() {
     }) : _vm._e()], 1)])]) : _c("div", {
       staticClass: "py-5"
     }, [_vm._v("\n                    *商品情報が削除されました\n                ")])]);
-  }), _vm._v(" "), !_vm.loading && _vm.userPrizes.length == 0 ? _c("li", {
+  }), _vm._v(" "), !_setup.loading && _setup.userPrizes.length == 0 ? _c("li", {
     staticClass: "py-3"
   }, [_vm._v("*取得した商品はありません。")]) : _vm._e()], 2), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
     staticClass: "modal fade",
@@ -30852,40 +31489,86 @@ var render = function render() {
     staticClass: "modal-dialog"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_c("div", {
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
     staticClass: "modal-body text-center"
   }, [_c("h5", {
     staticClass: "modal-title",
     attrs: {
-      id: "exchangeModalLabel"
+      id: "exchangeTicketModalLabel"
     }
-  }, [_c("p", [_vm._v("ポイント交換しますか？")]), _vm._v(" "), _c("p", [_vm._v("商品を"), _c("strong", {
-    staticClass: "fs-3"
-  }, [_c("number-comma-component", {
-    attrs: {
-      number: _vm.totalPoint
-    }
-  }), _vm._v("pt")], 1), _vm._v("と交換する")])])]), _vm._v(" "), _c("div", {
+  }, [_c("p", [_vm._v("\n                            商品を" + _vm._s(_setup.totalPoint.toLocaleString() + "pt") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row g-2"
-  }, [_vm._m(1), _vm._v(" "), _c("div", {
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("u-user-prize-exchange-point-btn", {
     attrs: {
       token: _vm.token,
       r_api_post: _vm.r_api_exchange_points,
-      r_redirect: _vm.r_redirect,
-      user_prize_ids: _vm.ids,
-      "r_redirect:": "",
+      r_redirect: _vm.r_redirect_exchange_points,
+      user_prize_ids: _setup.ids,
       btn_style_class: "btn p-md-33 btn-warning text-white rounded-pill w-100",
+      btn_label: "交換する"
+    }
+  })], 1)])])])])]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "exchangeTicketModal",
+      tabindex: "-1",
+      "aria-labelledby": "exchangeTicketModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(5), _vm._v(" "), _c("div", {
+    staticClass: "modal-body text-center"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "exchangeTicketModalLabel"
+    }
+  }, [_c("p", [_vm._v("\n                            商品をチケット" + _vm._s(_setup.totalTickets.toLocaleString() + "tk") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("div", {
+    staticClass: "row g-2"
+  }, [_vm._m(6), _vm._v(" "), _c("div", {
+    staticClass: "col-6"
+  }, [_c("u-user-prize-exchange-ticket-btn", {
+    attrs: {
+      token: _vm.token,
+      r_api_post: _vm.r_api_exchange_tickets,
+      r_redirect: _vm.r_redirect_exchange_tickets,
+      user_prize_ids: _setup.ids,
+      btn_style_class: "btn p-md-33 btn-success text-white rounded-pill w-100",
       btn_label: "交換する"
     }
   })], 1)])])])])]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {}, [_c("i", {
+    staticClass: "bi bi-p-circle fs-3 text-warning"
+  }), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-x"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {}, [_c("i", {
+    staticClass: "bi bi-ticket-perforated-fill fs-3 text-success"
+  }), _vm._v(" "), _c("i", {
+    staticClass: "bi bi-x"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("div", {
     staticClass: "d-flex justify-content-center align-items-center"
   }, [_c("div", {
@@ -30898,7 +31581,55 @@ var staticRenderFns = [function () {
   }, [_vm._v("Loading...")])])]);
 }, function () {
   var _vm = this,
-    _c = _vm._self._c;
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "modal-header justify-content-center border-0 pb-0"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    staticStyle: {
+      "font-size": "6rem"
+    },
+    attrs: {
+      id: "AlertModalLabel"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-p-circle text-warning"
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "col-6"
+  }, [_c("button", {
+    staticClass: "btn p-md-33 btn-light border rounded-pill w-100",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal"
+    }
+  }, [_vm._v("キャンセル")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {
+    staticClass: "modal-header justify-content-center border-0 pb-0"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    staticStyle: {
+      "font-size": "6rem"
+    },
+    attrs: {
+      id: "AlertModalLabel"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-ticket-perforated-fill text-success"
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("div", {
     staticClass: "col-6"
   }, [_c("button", {
@@ -31189,6 +31920,9 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('u-user-prize-form', (__we
 
 /* ポイント交換ボタン */
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('u-user-prize-exchange-point-btn', (__webpack_require__(/*! ./components/user_prize/ExchangePointBtn.vue */ "./resources/js/components/user_prize/ExchangePointBtn.vue")["default"]));
+
+/* チケット交換ボタン */
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('u-user-prize-exchange-ticket-btn', (__webpack_require__(/*! ./components/user_prize/ExchangeTicketBtn.vue */ "./resources/js/components/user_prize/ExchangeTicketBtn.vue")["default"]));
 
 /* チケット交換一覧フォーム */
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('u-ticket-store', (__webpack_require__(/*! ./components/ticket_store/TicketStoreComponent.vue */ "./resources/js/components/ticket_store/TicketStoreComponent.vue")["default"]));
@@ -58257,6 +58991,45 @@ component.options.__file = "resources/js/components/user_prize/ExchangePointBtn.
 
 /***/ }),
 
+/***/ "./resources/js/components/user_prize/ExchangeTicketBtn.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/user_prize/ExchangeTicketBtn.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ExchangeTicketBtn_vue_vue_type_template_id_fca2c972__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExchangeTicketBtn.vue?vue&type=template&id=fca2c972 */ "./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=template&id=fca2c972");
+/* harmony import */ var _ExchangeTicketBtn_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExchangeTicketBtn.vue?vue&type=script&lang=js */ "./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ExchangeTicketBtn_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ExchangeTicketBtn_vue_vue_type_template_id_fca2c972__WEBPACK_IMPORTED_MODULE_0__.render,
+  _ExchangeTicketBtn_vue_vue_type_template_id_fca2c972__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user_prize/ExchangeTicketBtn.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/user_prize/FormComponent.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/user_prize/FormComponent.vue ***!
@@ -58269,7 +59042,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _FormComponent_vue_vue_type_template_id_2b42abda__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=template&id=2b42abda */ "./resources/js/components/user_prize/FormComponent.vue?vue&type=template&id=2b42abda");
-/* harmony import */ var _FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user_prize/FormComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/user_prize/FormComponent.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -58279,7 +59052,7 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
   _FormComponent_vue_vue_type_template_id_2b42abda__WEBPACK_IMPORTED_MODULE_0__.render,
   _FormComponent_vue_vue_type_template_id_2b42abda__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -59672,10 +60445,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/user_prize/FormComponent.vue?vue&type=script&lang=js":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/user_prize/FormComponent.vue?vue&type=script&lang=js ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=script&lang=js":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -59683,8 +60456,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/FormComponent.vue?vue&type=script&lang=js");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeTicketBtn_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExchangeTicketBtn.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeTicketBtn_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user_prize/FormComponent.vue?vue&type=script&setup=true&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/user_prize/FormComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormComponent.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/FormComponent.vue?vue&type=script&setup=true&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -61146,6 +61935,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangePointBtn_vue_vue_type_template_id_39b8d665__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangePointBtn_vue_vue_type_template_id_39b8d665__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExchangePointBtn.vue?vue&type=template&id=39b8d665 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/ExchangePointBtn.vue?vue&type=template&id=39b8d665");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=template&id=fca2c972":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=template&id=fca2c972 ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeTicketBtn_vue_vue_type_template_id_fca2c972__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeTicketBtn_vue_vue_type_template_id_fca2c972__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeTicketBtn_vue_vue_type_template_id_fca2c972__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExchangeTicketBtn.vue?vue&type=template&id=fca2c972 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user_prize/ExchangeTicketBtn.vue?vue&type=template&id=fca2c972");
 
 
 /***/ }),

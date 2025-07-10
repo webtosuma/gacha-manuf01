@@ -385,6 +385,12 @@ class AdminPrizeController extends Controller
                 $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
             //
 
+            # 交換チケット値(チケット交換があるとき)
+            if( config('u_rank_ticket.change_prize_to_ticket') ){
+                $inputs['ticket'] = $request->ticket;
+            }
+
+
             return $inputs;
         }
 }

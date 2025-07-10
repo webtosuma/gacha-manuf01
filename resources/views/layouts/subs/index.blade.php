@@ -51,7 +51,8 @@
 
 
 </head>
-<body class="bg-white">
+@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-body';  @endphp
+<body class="{{ $class_bg_dark }}">
     <div id="app">
 
         <!--背景画像-->
@@ -72,7 +73,7 @@
         <!--header-->
         @if(Auth::check())
 
-            @if ( env('NEW_TICKET_SISTEM',false) )
+            @if ( config('u_rank_ticket.user_rank',false) )
                 @include('includes.offcanvas_menu02')
             @else
                 @include('includes.offcanvas_menu')

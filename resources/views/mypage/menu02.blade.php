@@ -88,17 +88,22 @@
             </a>
         </div>
         <div class="col-4">
-            <a href="{{ route('point_history') }}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
-                <img src="{{asset('storage/site/image/icon/point.png')}}"
-                alt="ポイント" class="d-block mx-auto" style=" width:24px; height:24px;">
+            <a href="{{ route('point_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-p-circle" viewBox="0 0 16 16">
+                    <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.5 4.002h2.962C10.045 4.002 11 5.104 11 6.586c0 1.494-.967 2.578-2.55 2.578H6.784V12H5.5zm2.77 4.072c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97z"/>
+                </svg>
+
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">ポイント</div>
             </a>
         </div>
-        @if( !env('NEW_TICKET_SISTEM_NOTICKET') )
+        @if( config('u_rank_ticket.ticket',false) )
             <div class="col-4">
-                <a href="{{route('ticket_history')}}" class="btn rounded-3 text-primary shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
-                    <img src="{{asset('storage/site/image/ticket/dark.png')}}"
-                    alt="チケット" class="d-block mx-auto" style=" width:24px; height:24px;">
+                <a href="{{route('ticket_history')}}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 w-100" style="font-size:11px;">
+                    {{-- <img src="{{asset('storage/site/image/ticket/dark.png')}}"
+                    alt="チケット" class="d-block mx-auto" style=" width:24px; height:24px;"> --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-ticket-perforated-fill" viewBox="0 0 16 16">
+                        <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6zm4-1v1h1v-1zm1 3v-1H4v1zm7 0v-1h-1v1zm-1-2h1v-1h-1zm-6 3H4v1h1zm7 1v-1h-1v1zm-7 1H4v1h1zm7 1v-1h-1v1zm-8 1v1h1v-1zm7 1h1v-1h-1z"/>
+                    </svg>
 
                     <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">チケット</div>
                 </a>
@@ -106,8 +111,12 @@
         @endif
         <div class="col-4">
             <a href="{{ route('user_rank_history') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
-                <img src="{{asset('storage/site/image/icon/user_rank.png')}}"
-                alt="会員ランク" class="d-block mx-auto" style=" width:24px; height:24px;">
+                {{-- <img src="{{asset('storage/site/image/icon/user_rank.png')}}"
+                alt="会員ランク" class="d-block mx-auto" style=" width:24px; height:24px;"> --}}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trophy" viewBox="0 0 16 16">
+                    <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5q0 .807-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33 33 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935m10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1q.01.775.056 1.469c.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.5.5 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667q.045-.694.056-1.469z"/>
+                </svg>
+
                 <div class="text-secondary mt-2" style="font-size:10px; line-height:18px;">会員ランク</div>
             </a>
         </div>

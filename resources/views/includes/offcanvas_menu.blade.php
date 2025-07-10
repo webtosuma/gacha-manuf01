@@ -50,21 +50,63 @@ style="max-width:90vw; min-width:30vw;">
                 </div>
             </div>
         @else
-            <div class="d-flex justify-content-between align-items-center p-3 bg-white">
-                <div class="col">
-                    <div class="">所持ポイント：</div>
-                    <div class="">
-                        <span class="fs-3 fw-bold">
-                            <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
-                        </span>
-                        <span>pt</span>
+            <!-- 所持ポイント -->
+            <div class="p-3 bg-white border-top pt-2">
+                <div  style="font-size:14px;">所持ポイント：</div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="col-auto pe-2">
+
+                        @include('includes.point_icon')
+
                     </div>
-                    <div class="form-text">{{Auth::user()->point_deadline_text}}</div>
+                    <div class="col">
+                        <div class="">
+                            <span class="fs-3 fw-bold">
+                                <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                            </span>
+                            <span>pt</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('point_sail') }}" class="btn btn- btn-warning text-white rounded-pill shadow">ポイント購入</a>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('point_sail') }}" class="btn btn-warning text-white rounded-pill shadow">ポイント購入</a>
-                </div>
+                <div class="form-text ">{{Auth::user()->point_deadline_text}}</div>
             </div>
+            <!-- 所持チケット -->
+            @if( config('u_rank_ticket.ticket',false) )
+                <div class="p-3 bg-white border-top pt-2">
+                    <div  style="font-size:14px;">所持チケット：</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="col-auto fs-5 pe-2">
+                            <i class="bi bi-ticket-perforated-fill fs-2 text-success"></i>
+
+                            {{-- <img src="{{asset('storage/site/image/ticket/success.png')}}"
+                            alt="チケット" class="d-block mx-auto"  style=" width:1.6rem; height:1.6rem; margin:.2rem 0;"> --}}
+                        </div>
+                        <div class="col">
+                            <div class="">
+                                <span class="fs-3 fw-bold">
+                                    <number-comma-component number="{{ Auth::user()->ticket }}"></number-comma-component>
+                                </span>
+                                <span>枚</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{{ route('ticket_store') }}"
+                            class="d-block btn py-1 btn-success rounded-pill shadow w-100">
+                                <div class="d-flex gap-2 text-white align-items-center">
+
+                                    <div class="">チケット交換</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {{-- <a href="https://note.com/cardfesta/n/ne78f9144184a"
+                    style="font-size:11px;" target="_blank"
+                    ><i class="bi bi-question-circle me-2"></i>チケットについて</a> --}}
+                </div>
+            @endif
         @endguest
 
 
@@ -130,16 +172,28 @@ style="max-width:90vw; min-width:30vw;">
             >ポイント履歴
 
 
-                <div class="position-absolute top-50 start-0 translate-middle-y p-3">
-                    <div class="rounded-circle border border-secondary fw-bold fs-6 bg-gradient text-secondary
-                    d-flex align-items-center justify-content-center
-                    " style="width:1.125rem; height:1.125rem;">P</div>
-                </div>
+                <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                ><i class="bi bi-p-circle fs-5"></i></div>
 
 
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
+
+            @if( config('u_rank_ticket.ticket',false) )
+                <a href="{{ route('ticket_history') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
+                >チケット履歴
+
+
+                    <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                    ><i class="bi bi-ticket-perforated-fill fs-5"></i></div>
+
+
+
+                    <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                    ><i class="bi bi-chevron-right"></i></div>
+                </a>
+            @endif
 
             <a href="{{ route('shipped') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative">
                 発送履歴

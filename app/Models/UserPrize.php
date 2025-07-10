@@ -18,13 +18,13 @@ class UserPrize extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'user_id',    //ユーザー　リレーション
-        'prize_id',   //商品リレーション
-        'gacha_history_id',//入手したガチャのID (チケットで取得した時のID：１)
-        'point_history_id',//ポイント収支履歴リレーション（ポイント交換した時のみ）
-        'shipped_id',//有効履歴（有効した時のみ）
-        'point',  //(商品取得時の)交換ポイント値
-        'ticket_history_id',//チケット収支履歴リレーション(チッケトと交換て入手した時のみ)
+        'user_id',          //ユーザー　リレーション
+        'prize_id',         //商品リレーション
+        'gacha_history_id', //入手したガチャのID (チケットで取得した時のID：１)
+        'point_history_id', //ポイント交換履歴ID(ポイントと交換て入手した時のみ)
+        'ticket_history_id',//チケット交換履歴ID(チッケトと交換て入手した時のみ)
+        'shipped_id',       //発送履歴（発送した時のみ）
+        'point',            //(商品取得時の)交換ポイント値
     ];
 
 
@@ -37,6 +37,12 @@ class UserPrize extends Model
     {
         return \Database\Factories\UserPrizeFactory::new();
     }
+
+
+    /** アクセサーをJSONに含める */
+    protected $appends = [
+        'ticket',    //交換チケットの値
+    ];
 
 
 
@@ -93,6 +99,21 @@ class UserPrize extends Model
         }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー　
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 交換チケットの値 ticket
+         * @return \Carbon\Carbon
+        */
+        public function getTicketAttribute()
+        {
+            return isset($this->prize->ticket) ? $this->prize->ticket : 0;
+        }
 
     /*
     |--------------------------------------------------------------------------

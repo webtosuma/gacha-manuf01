@@ -2,7 +2,7 @@
     <div class="m-">
 
         <!--Headー-->
-        <div class="row align-items-center gy-1 mb-3">
+        <div class="row align-items-center gy-1 mb-4">
             <div class="col-12 position-relative">
                 <input v-model="inputs.key_words"
                 @change="getData()"
@@ -32,12 +32,12 @@
                     >{{ select_order.lable }}</button>
                 </div>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
                 該当商品数：
                 <span class="fs-1 fw-bold">
                     <number-comma-component :number="stores.length" />
                 </span>
-            </div>
+            </div> -->
         </div>
 
 
@@ -81,21 +81,33 @@
                         </div>
 
                         <!--チケット枚数-->
-                        <div class="position-absolute bottom-0 end-0 p-1 w-100">
+                        <!-- <div class="position-absolute bottom-0 end-0 p- w-100">
                             <div class="d-flex gap-0 align-items-center justify-content-center text-success
                             px-2 rounded" style="font-size:11px; background-color: rgb(0 0 0 / 80%);">
-                                <img :src="src_ticket_image"
-                                alt="チケット" class="d-block"  style="width:20px; height:20px;">
+                                <i class="bi bi-ticket-perforated-fill fs-5 text-success"></i>
+
                                 <i class="bi bi-x"></i>
                                 <div class="text-success">
                                     <span class="fs-6">{{store.ticket_count}}</span>
-                                    <!-- 枚 -->
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
+                    <div class="text-start mt-2">
+                        <div class="">
+                            {{ store.prize.name }}
+                        </div>
+                        <!--チケット枚数-->
+                        <div class="d-flex gap-0 align-items-center justify-content-start text-success" style="font-size:14px;">
+                            <i class="bi bi-ticket-perforated-fill fs-5 text-success"></i>
 
+                            <i class="bi bi-x"></i>
+                            <div class="text-success">
+                                <span class="fs-6">{{store.ticket_count.toLocaleString()}}</span>
+                            </div>
+                        </div>
+                    </div>
                 </a>
             </div>
 

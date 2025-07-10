@@ -68,7 +68,7 @@
         @if(Auth::check())
 
 
-            @if ( env('NEW_TICKET_SISTEM',false) )
+            @if ( config('u_rank_ticket.user_rank',false) )
                 @include('includes.offcanvas_menu02')
             @else
                 @include('includes.offcanvas_menu')

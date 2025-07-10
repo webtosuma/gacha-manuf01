@@ -20,15 +20,15 @@
                     </div>
                     <!--選択中ポイント合計-->
                     <div class="col">
-                        <div class="form-check">
+                    <div class="form-check">
                             <div class="d-flex justify-content-end align-items-center">
                                 <div class="">
-                                    <i class="bi bi-p-circle fs-3 text-warning"></i>
+                                    <i class="bi bi-p-circle fs-5 text-warning"></i>
                                     <i class="bi bi-x"></i>
                                 </div>
 
                                 <div class="">
-                                    <span class="fs-3 fw-bold">{{ totalPoint.toLocaleString() }}</span>pt
+                                    <span class="fs-5 fw-bold">{{ totalPoint ? '+'+totalPoint.toLocaleString() : 0 }}</span>pt
                                 </div>
                             </div>
                         </div>
@@ -38,12 +38,12 @@
                         <div class="form-check">
                             <div class="d-flex justify-content-end align-items-center">
                                 <div class="">
-                                    <i class="bi bi-ticket-perforated-fill fs-3 text-success"></i>
+                                    <i class="bi bi-ticket-perforated-fill fs-5 text-success"></i>
                                     <i class="bi bi-x"></i>
                                 </div>
 
                                 <div class="">
-                                    <span class="fs-3 fw-bold">{{ totalTickets.toLocaleString() }}</span>tk
+                                    <span class="fs-5 fw-bold">{{ totalTickets ? '+'+totalTickets.toLocaleString() : 0 }}</span>pt
                                 </div>
                             </div>
                         </div>
@@ -199,7 +199,7 @@
 
                                     <i class="bi bi-x"></i>
 
-                                    <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+'tk'}}</span>
+                                    <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()}}</span>
                                     <span v-else style="font-size:11px;">チケット交換なし</span>
                                 </div>
                             </div>
@@ -313,7 +313,7 @@
                     <div class="modal-body text-center">
                         <h5 class="modal-title" id="exchangeTicketModalLabel">
                             <p>
-                                商品をチケット{{totalTickets.toLocaleString()+'tk'}}と交換します。<br>
+                                商品をチケット{{totalTickets.toLocaleString()+'枚'}}と交換します。<br>
                                 よろしいですか？
                             </p>
                         </h5>
@@ -348,160 +348,188 @@
 
     </div>
 </template>
-<script setup>
-    import { ref, reactive, onMounted } from 'vue'
-    import axios from 'axios'
+<script>
+    import axios from 'axios';
 
-    // Propsの定義
-    const props = defineProps({
+    export default {
+        props: {
+            token:            { type: String,  default: '', },
+            user_id:          { type: [String,Number],  default: '', },
+            bottom_menu:      { type: String,  default: 'true', },
+            no_exchange_point:{ type: [String,Number], default: 0 },
+            change_ticket:    { type: [String,Number], default: 0 },
 
-        token:             { type: String, default: '' },
-        user_id:           { type: [String, Number], default: '' },
-        bottom_menu:       { type: String, default: 'true' },
-        no_exchange_point: { type: [String, Number], default: 0 },
-        change_ticket:     { type: [String, Number], default: 0 },
+            r_api_user_prize:{ type: String,  default: '', },//データ取得ルート
+            r_shipped_appli:  { type: String,  default: '', },//発送申請ルート
 
-        r_api_user_prize:  { type: String, default: '' }, //データ取得ルート
-        r_shipped_appli:   { type: String, default: '' },//発送申請ルート
+            r_api_exchange_points:      { type: String, default: '' },
+            r_redirect_exchange_points: { type: String, default: '',},//
+            r_api_exchange_tickets:      { type: String, default: '' },
+            r_redirect_exchange_tickets: { type: String, default: '',},//
+        },
+        data() { return {
 
-        r_api_exchange_points:       { type: String, default: '' },
-        r_redirect_exchange_points:  { type: String, default: '' },
-        r_api_exchange_tickets:      { type: String, default: '' },
-        r_redirect_exchange_tickets: { type: String, default: '' },
+            loading: true,
 
-    });
+            categories:[],//ガチャ カテゴリー
+            userPrizes: [],/* ユーザー取得商品 */
+            total: 0,/* ユーザー取得商品数 */
 
-    // data 相当
-    const loading      = ref(true); //
-    const categories   = ref([]);   //ガチャ カテゴリー
-    const userPrizes   = ref([]);   //ユーザー取得商品
-    const total        = ref(0);    //ユーザー取得商品数
+            ids: [],/*チェックボックスのID*/
 
-    const ids          = ref([]);   //チェックボックスのID
-    const allCheck     = ref(false);//全てチェック
-    const totalPoint   = ref(0);    //チェック中のユーザー商品の合計ポイント
-    const totalTickets = ref(0);    //チェック中のユーザー商品の合計チケット
+            allCheck: false,/*全てチェック*/
 
-    const disabled     = ref(true); //
-    const category_id  = ref(0);    //カテゴリーID
-    const search_key   = ref('');   //検索キーワード
-    const order        = ref('desc_created');//並び順
+            totalPoint:   0,/*チェック中のユーザー商品の合計ポイント*/
+            totalTickets: 0,/*チェック中のユーザー商品の合計チケット*/
+
+            disabled: true,
+
+            category_id: 0,//カテゴリーID
+            search_key: '',//検索キーワード
+            order: 'desc_created',//並び順
+
+            select_orders :[
+                { lable: '新しい順',      value:'desc_created', },
+                { lable: '古い順',        value:'asc_created', },
+                { lable: '高ポイント順', value:'desc_point', },
+                { lable: '低ポイント順', value:'asc_point', },
+            ],
+        } },
+        mounted() {
+
+            /* データ取得 */
+            this.getData();
+
+        },
+        methods:{
 
 
-    const select_orders = [
-        { lable: '新しい順', value: 'desc_created' },
-        { lable: '古い順', value: 'asc_created' },
-        { lable: '高ポイント順', value: 'desc_point' },
-        { lable: '低ポイント順', value: 'asc_point' },
-    ];//
+            /* データ取得 */
+            getData :function(route = this.r_api_user_prize){
+
+                const params = {
+                    _token:     this.token,
+                    user_id:    this.user_id,
+                    search_key: this.search_key,//検索キーワード
+                    order:      this.order,     //並び順
+                    category_id:this.category_id,
+                };
 
 
-    // onMounted でデータ取得
-    onMounted(() => { getData(); });
+                axios.post( route, params )
+                .then(json => {
+                    console.log(json.data);
+
+                    // // カテゴリー
+                    this.categories = json.data.categories;
+                    this.categories[0].id = 0;//すべて　id:p0
+
+                    //ページネーションデータ
+                    const paginate = json.data.user_prizes;
+
+                    // 商品情報の登録（新規登録・ページネーション追加）
+                    this.userPrizes = route == this.r_api_user_prize ? paginate.data
+                    : [ ...this.userPrizes, ...paginate.data];
+
+                    this.total = paginate.total;
+
+                    this.loading = false;//読み込み中
+                    this.ids = [];//チェックボックスのリセット
+                    this.allCheck = false;
+                    this.totalPoint   = 0; //ポイント合計値のリセット
+                    this.totalTickets = 0;
+
+                    /* 次のデータの読み込み */
+                    const current_page = paginate.current_page;//表示中ページ
+                    const last_page    = paginate.last_page;   //最終ページ
+                    if( current_page != last_page ){
+                        const nextPageUrl = paginate.next_page_url;     //URLの更新
+                        this.getData( nextPageUrl );
+                    }
+
+                })
+                .catch(error => {
+                    alert('通信エラーが発生しました。')
+                    console.log( error.response.data );
+
+                });
+
+            },
 
 
-    // methods 相当
+            /* 並び順の変更 */
+            changeOrder :function( value ){
+                this.order = value;
+                this.getData();
+            },
 
-    /* データ取得 */
-    const getData = async (route = props.r_api_user_prize) => {
-        const params = {
-            _token: props.token,
-            user_id: props.user_id,
-            search_key: search_key.value,
-            order: order.value,
-            category_id: category_id.value,
-        };
 
-        try {
-            const res = await axios.post(route, params);
-            const data = res.data;
-            categories.value = data.categories;
-            categories.value[0].id = 0;
+            /* 検索キーワードのリセット */
+            resetSearchKey :function(){
+                this.search_key = '';
+                this.getData();
+            },
 
-            // 商品情報の登録（新規登録・ページネーション追加）
-            const paginate = data.user_prizes;
-            userPrizes.value = route === props.r_api_user_prize
-            ? paginate.data
-            : [ ...userPrizes.value ,...paginate.data];
 
-            total.value        = paginate.total;
-            loading.value      = false;
-            ids.value          = [];
-            allCheck.value     = false;
-            totalPoint.value   = 0;
-            totalTickets.value = 0;
+            /** 全て選択をクリック */
+            changeAll: function(){
+                const ids = this.userPrizes.map( value => { return value.id; } );
+                this.ids  = this.allCheck ? ids : [];
 
-            /* 次のデータの読み込み */
-            if (paginate.current_page !== paginate.last_page) {
-                getData(paginate.next_page_url);
-            }
-        }
-        catch (error) {
-            alert('通信エラーが発生しました。')
-            console.log(error.response?.data || error)
-        }
-    }
+                this.calcTotalPoint();  //ポイント合計値の計算
+                this.calcTotalTickets();//チケット合計値の計算
+            },
 
-    /* 並び順の変更 */
-    const changeOrder = (value) => {
-        order.value = value;
-        getData();
-    }
+            /** 子チェックをクリック */
+            changeChildren: function(){
+                const ids = this.userPrizes.map( value => { return value.id; } );
+                this.allCheck = this.ids.length == ids.length;
 
-    /* 検索キーワードのリセット */
-    const resetSearchKey = () => {
-        search_key.value = '';
-        getData();
-    };
+                this.calcTotalPoint();  //ポイント合計値の計算
+                this.calcTotalTickets();//チケット合計値の計算
+            },
 
-    /** 全て選択をクリック */
-    const changeAll = () => {
-        const allIds = userPrizes.value.map(v => v.id);
-        ids.value = allCheck.value ? allIds : [];
-        calcTotalPoint();  //ポイント合計値の計算
-        calcTotalTickets();//チケット合計値の計算
-    };
+            /** ポイント合計値の計算 */
+            calcTotalPoint: function(){
+                this.totalPoint = 0;
 
-    /** 子チェックをクリック */
-    const changeChildren = () => {
-        const allIds = userPrizes.value.map(v => v.id);
-        allCheck.value = ids.value.length === allIds.length;
-        calcTotalPoint();  //ポイント合計値の計算
-        calcTotalTickets();//チケット合計値の計算
-    };
+                this.userPrizes.forEach( userPrize => {
+                    if( this.ids.some( id => id === userPrize.id) && userPrize.prize ){
+                        this.totalPoint += userPrize.point;
+                    }
+                } );
 
-    /** ポイント合計値の計算 */
-    const calcTotalPoint = () => {
-        totalPoint.value = 0;
-        userPrizes.value.forEach(userPrize => {
-            if (ids.value.includes(userPrize.id) && userPrize.prize) {
-                totalPoint.value += userPrize.point;
-            }
-        });
-        disabled.value = totalPoint.value === 0;
-    };
+                this.disabled = this.totalPoint==0;
+            },
 
-    /** チケット合計値の計算 */
-    const calcTotalTickets = () => {
-        totalTickets.value = 0;
+            /** チケット合計値の計算 */
+            calcTotalTickets: function(){
+                this.totalTickets = 0;
 
-        //チケット交換がないとき
-        if (props.change_ticket == 0){ return; }
+                //チケット交換がないとき
+                if(this.change_ticket==0){return;}
 
-        userPrizes.value.forEach(userPrize => {
-            if (ids.value.includes(userPrize.id) && userPrize.prize) {
-                totalTickets.value += userPrize.ticket;
-            }
-        })
-        disabled.value = totalTickets.value === 0;
-    };
+                this.userPrizes.forEach( userPrize => {
+                    if( this.ids.some( id => id === userPrize.id) && userPrize.prize ){
+                        this.totalTickets += userPrize.ticket;
+                    }
+                } );
 
-    /** 日付データをテクスト変換  */
-    const formatDate = (inputString) => {
-        const date = new Date(inputString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}/${month}/${day}`;
+                this.disabled = this.totalTickets==0;
+            },
+
+            /** 日付データをテクスト変換  */
+            formatDate: function(inputString) {
+                const date = new Date(inputString);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1し、2桁にパディング
+                const day = String(date.getDate()).padStart(2, '0'); // 日も2桁にパディング
+
+                return `${year}/${month}/${day}`;
+            },
+
+
+        },
+
     };
 </script>

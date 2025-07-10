@@ -28,6 +28,7 @@ class Prize extends Model
         'point_updated_at', //交換ポイント値更新日時
         'published_at',     //公開日時
         'discription',      //説明文(2025/06/12追加)
+        'ticket',           //交換チケット値(2025/07/09追加)
     ];
 
 

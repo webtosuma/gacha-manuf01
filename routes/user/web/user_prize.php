@@ -15,6 +15,7 @@ Route::middleware(['auth','user_rank'])->group(function () {
     [Controllers\UserPrizeController::class, 'index'])
     ->name('user_prize');
 
+
     # 商品のポイント交換
     Route::get('user_prize/exchange_points',
     [Controllers\UserPrizeController::class, 'exchange_points'])
@@ -24,4 +25,15 @@ Route::middleware(['auth','user_rank'])->group(function () {
     Route::post('user_prize/exchange_points',
     [Controllers\UserPrizeApiController::class, 'exchange_points'])
     ->name('api.user_prize.exchange_points');
+
+
+    # 商品のチケット交換
+    Route::get('user_prize/exchange_tickets',
+    [Controllers\UserPrizeController::class, 'exchange_tickets'])
+    ->name('user_prize.exchange_tickets');
+
+    # API商品のチケット交換
+    Route::post('user_prize/exchange_tickets',
+    [Controllers\UserPrizeApiController::class, 'exchange_tickets'])
+    ->name('api.user_prize.exchange_tickets');
 });

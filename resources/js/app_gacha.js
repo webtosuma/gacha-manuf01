@@ -60,9 +60,13 @@ import Vue from 'vue'
     Vue.component('u-user-prize-form',
     require('./components/user_prize/FormComponent.vue').default);
 
-        /* ポイント交換ボタン */ 
+        /* ポイント交換ボタン */
         Vue.component('u-user-prize-exchange-point-btn',
         require('./components/user_prize/ExchangePointBtn.vue').default);
+
+        /* チケット交換ボタン */
+        Vue.component('u-user-prize-exchange-ticket-btn',
+        require('./components/user_prize/ExchangeTicketBtn.vue').default);
 
     /* チケット交換一覧フォーム */
     Vue.component('u-ticket-store',

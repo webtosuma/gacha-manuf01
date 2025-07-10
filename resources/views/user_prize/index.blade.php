@@ -26,11 +26,16 @@
         <u-user-prize-form
         token="{{ csrf_token() }}"
         no_exchange_point="{{ config('app.no_exchange_point') ?1:0 }}"
+        change_ticket ="{{ config('u_rank_ticket.change_prize_to_ticket')?1:0 }}"
+
         r_api_user_prize ="{{ route('api_user_prize') }}"
         r_shipped_appli  ="{{ route('shipped.appli') }}"
 
-        r_api_exchange_points="{{ route('api.user_prize.exchange_points') }}"
-        r_redirect="{{route('user_prize.exchange_points')}}"
+        r_api_exchange_points      ="{{ route('api.user_prize.exchange_points') }}"
+        r_redirect_exchange_points ="{{ route('user_prize.exchange_points')}}"
+
+        r_api_exchange_tickets     ="{{ route('api.user_prize.exchange_tickets') }}"
+        r_redirect_exchange_tickets="{{ route('user_prize.exchange_tickets')}}"
         ></u-user-prize-form>
 
         {{-- r_exchange_points="{{ route('user_prize.exchange_points') }}" --}}

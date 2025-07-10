@@ -24,7 +24,7 @@
     <div class="list-group list-group-flush">
 
 
-        @if( env('NEW_TICKET_SISTEM',false) && Auth::user()->now_rank )
+        @if( config('u_rank_ticket.user_rank',false) && Auth::user()->now_rank )
 
             @php $now_rank = Auth::user()->now_rank; @endphp
             <div class="list-group-item bg-white py-">

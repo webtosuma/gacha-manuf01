@@ -72,6 +72,11 @@ class AdminApiPrizeController extends Controller
                     $query->orderBy('point', $request->order_point);
                 }
 
+                # 並び替え：チケット
+                if( $request->order_ticket ){
+                    $query->orderBy('ticket', $request->order_ticket);
+                }
+
                 # 並び替え：更新日
                 if( $request->updated_at ){
                     $query->orderBy('updated_at', $request->updated_at);
@@ -89,6 +94,15 @@ class AdminApiPrizeController extends Controller
                     $query->where('point','>=', $request->min_point);
                 }
 
+                # チケット最大値
+                if( $request->max_ticket ){
+                    $query->where('ticket','<=', $request->max_ticket);
+                }
+
+                # チケット最低値
+                if( $request->min_ticket ){
+                    $query->where('ticket','>=', $request->min_ticket);
+                }
 
                 # 指定したIDを含む
                 if( $request->ids ){

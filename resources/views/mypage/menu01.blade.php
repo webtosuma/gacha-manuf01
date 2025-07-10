@@ -100,13 +100,14 @@
 
 
         <!-- 所持チケット -->
-        @if( !env('NEW_TICKET_SISTEM_NOTICKET') )
+        @if( config('u_rank_ticket.ticket',false) )
             <div class="mt-3 border-top pt-2">
                 <div  style="font-size:14px;">所持チケット：</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="col-auto fs-5 pe-2">
-                        <img src="{{asset('storage/site/image/ticket/success.png')}}"
-                        alt="チケット" class="d-block mx-auto"  style=" width:2rem; height:2rem; margin:.2rem 0;">
+                        {{-- <img src="{{asset('storage/site/image/ticket/success.png')}}"
+                        alt="チケット" class="d-block mx-auto"  style=" width:2rem; height:2rem; margin:.2rem 0;"> --}}
+                        <i class="bi bi-ticket-perforated-fill fs-2 text-success"></i>
                     </div>
                     <div class="col">
                         <div class="">

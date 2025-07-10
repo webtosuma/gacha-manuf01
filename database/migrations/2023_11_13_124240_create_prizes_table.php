@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 /*
 | =============================================
-|  景品　テーブル
+|  商品　テーブル
 | =============================================
 */
 class CreatePrizesTable extends Migration

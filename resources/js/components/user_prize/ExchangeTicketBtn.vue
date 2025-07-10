@@ -14,7 +14,7 @@
 
 
                 <div class="text-center w-100 px-5">
-                    <h5 class="fs-3 mb-3">ポイントに交換中</h5>
+                    <h5 class="fs-3 mb-3">チケットに交換中</h5>
 
                     <h5 class="fs-6">そのままお待ちください</h5>
 
@@ -24,7 +24,7 @@
                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     </div>
                     <div class="progress rounded-pill" style="height: 1.6rem;">
-                        <div class="progress-bar bg-warning" role="progressbar"
+                        <div class="progress-bar bg-success" role="progressbar"
                         :style="'width:'+progress+'%;'" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"
                         >{{ progress+'%' }}</div>
                     </div>

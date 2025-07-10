@@ -11,9 +11,10 @@ use App\Models\Prize;
 use App\Models\User;
 use App\Models\GachaCategory;
 use App\Models\PointHistory;
+use App\Models\TicketHistory;
 /*
 | =============================================
-|  取得した商品 API コントローラー 
+|  取得した商品 API コントローラー
 | =============================================
 */
 class UserPrizeApiController extends Controller
@@ -187,7 +188,8 @@ class UserPrizeApiController extends Controller
             foreach ($user_prizes as $user_prize)
             {
                 # 処理済の時はスキップ
-                if($user_prize->point_history_id){ continue; }
+                if($user_prize->point_history_id){  continue; }
+                if($user_prize->ticket_history_id){ continue; }
 
                 # ポイント履歴の登録
                 $point_history = new PointHistory([
@@ -214,5 +216,68 @@ class UserPrizeApiController extends Controller
 
         return response()->json( $user_prizes );
     }
+
+
+
+    /**
+     * API商品のチケット交換
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exchange_tickets(Request $request)
+    {
+        # 変数の定義
+        $user =Auth::user();
+        $user_prize_ids = $request->user_prize_ids;
+
+        # チケット交換するユーザー商品を取得(発送済み以外)
+        $user_prizes = UserPrize::where('user_id',$user->id)
+        // ->where('point_history_id',NULL)//チケット収支履歴（未交換のみ）
+        ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
+        ->whereIn('id',$user_prize_ids )
+        ->paginate(20);
+
+
+        DB::beginTransaction();
+        try {
+
+            foreach ($user_prizes as $user_prize)
+            {
+                # 処理済の時はスキップ
+                if($user_prize->point_history_id){  continue; }
+                if($user_prize->ticket_history_id){ continue; }
+
+                # チケット交換の値が0のときはスキップ
+                if($user_prize->ticket){  continue; }
+
+
+                # チケット履歴の保存
+                $ticket_history = new TicketHistory([
+                    'user_id'   => $user->id,          //ユーザー　リレーション
+                    'value'     => $user_prize->ticket,//チケット取得数
+                    'reason_id' => 12,// 商品->チケットに交換,
+                ]);
+                $ticket_history->save();
+
+
+                # ユーザー取得商品情報の更新
+                $user_prize->ticket_history_id = $ticket_history->id;
+                $user_prize->save();
+            }
+
+
+            DB::commit();
+        } catch (\Exception $e) {
+
+            Log::error($e);
+            DB::rollback();
+            return redirect()->json(['message'=>'エラーが発生しました。'],500);
+
+        }
+
+        return response()->json( $user_prizes );
+    }
+
 
 }

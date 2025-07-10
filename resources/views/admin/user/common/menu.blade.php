@@ -26,7 +26,7 @@
             </a>
         </div>
 
-        @if( env('NEW_TICKET_SISTEM',false) )
+        @if( config('u_rank_ticket.ticket',false) )
         <div class="col-6 col-md">
             <a href="{{route('admin.user.ticket_history',$user->id)}}" class="btn btn-light border py-3 w-100">
                 <h6>チケット履歴</h6>
@@ -37,7 +37,7 @@
         </div>
         @endif
 
-        @if( env('NEW_TICKET_SISTEM',false) )
+        @if( config('u_rank_ticket.user_rank',false)  )
         <div class="col-6 col-md">
             <a href="{{route('admin.user.user_rank_history',$user)}}"
                 class="btn btn-light border py-3 w-100">

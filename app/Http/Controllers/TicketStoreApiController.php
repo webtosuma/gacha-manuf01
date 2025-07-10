@@ -12,7 +12,7 @@ use App\Models\TicketHistory;
 use App\Models\GachaCategory;
 /*
 | =============================================
-|  チケット ストアー API コントローラー 
+|  チケット ストアー API コントローラー
 | =============================================
 */
 class TicketStoreApiController extends Controller
@@ -26,7 +26,7 @@ class TicketStoreApiController extends Controller
     public function index(Request $request)
     {
         # カテゴリー
-        $categories = [ new GachaCategory(['name'=>'全て', 'id'=>0]) ];
+        $categories = [ new GachaCategory(['name'=>'カテゴリー選択', 'id'=>0]) ];
         $get_categories = GachaCategory::userList()->get();
         foreach ($get_categories as $get_category) { $categories[] = $get_category; }
 

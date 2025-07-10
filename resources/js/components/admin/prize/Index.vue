@@ -14,6 +14,7 @@
             :categories="categories"
             :prop_prizes="prizes"
             :selects="selects"
+            :change_ticket="change_ticket"
             ></edit-component>
 
 
@@ -27,36 +28,6 @@
 
                     <!--操作ボタン-->
                     <section class="mb-">
-                        <!-- <div class="row g-2 ">
-                            <div class="col-auto">
-                                <a :href="r_create+'?gacha_category_id='+inputs.category_id"
-                                class="btn btn- btn-primary text-white px-4 shadow"
-                                >+ 商品の新規登録</a>
-                            </div>
-                            <div class="col-auto">
-                                <button @click="toggleEdit()"
-                                class="btn btn- btn-light border" type="button"
-                                ><i class="bi bi-pencil-fill fs-"></i>一括編集</button>
-                            </div>
-                            <div class="col-auto">
-                                <form :action="r_download_csv" method="post">
-                                    <input type="hidden" name="_token" :value="token">
-                                    <input v-for="(value, name) in inputs" :key="name"
-                                    type="hidden" :name="name" :value="value">
-
-                                    <button class="btn btn- btn-light border  py-0" type="submit"
-                                    ><i class="bi bi-filetype-csv fs-4"></i>ダウンロード</button>
-                                </form>
-                            </div>
-                            <div class="col-auto">
-                                <a :href="r_import_csv"
-                                class="btn btn-light border py-0 mb-3">
-                                    <i data-v-3e26587a="" class="bi bi-filetype-csv fs-4"></i>
-                                    インポート
-                                </a>
-                            </div>
-                        </div> -->
-
                         <div class="row g-3 align-items-center mb-2 px-2"  style="min-height:3rem;">
                             <div class="col-auto">
                                 <label  class="form-check">
@@ -111,15 +82,6 @@
                                     </a></th>
 
                                     <th scope="col"><div class="row align-items-end g-0">
-                                        <!-- <div class="col-auto">
-                                            <select @change="getData()"
-                                            v-model="inputs.where_rank_id"
-                                            class="form-select form-select-sm fw-bold">
-                                                <option value="">評価ランク</option>
-                                                <option v-for="(prize_rank, key) in selects.prize_ranks" :key="key"
-                                                :value="prize_rank.id">{{ prize_rank.name }}</option>
-                                            </select>
-                                        </div> -->
                                         <div class="col-auto">
                                             <a @click.prevent="changeOrder( 'order_rank_id' )"
                                             href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
@@ -137,6 +99,15 @@
                                         <span>交換ポイント</span>
                                         <i v-if="inputs['order_point']!='desc'" class="bi bi-caret-up-fill"></i>
                                         <i v-if="inputs['order_point']!='asc'"  class="bi bi-caret-down-fill"></i>
+                                    </a></th>
+
+                                    <th v-if="change_ticket!=0"
+                                    scope="col"><a
+                                    @click.prevent="changeOrder( 'order_ticket' )"
+                                    href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
+                                        <span>交換チケット</span>
+                                        <i v-if="inputs['order_ticket']!='desc'" class="bi bi-caret-up-fill"></i>
+                                        <i v-if="inputs['order_ticket']!='asc'"  class="bi bi-caret-down-fill"></i>
                                     </a></th>
 
                                     <th scope="col"><a
@@ -194,8 +165,13 @@
                                         ></u-prize-discription>
 
                                     </td>
+
                                     <td>{{ prize.rank.name }}</td>
-                                    <td>{{ prize.point }} pt</td>
+
+                                    <td>{{ prize.point.toLocaleString() }} pt</td>
+
+                                    <td v-if="change_ticket!=0">{{ prize.ticket.toLocaleString() }} 枚</td>
+
                                     <td class="form-text"
                                     style="width:9rem;"
                                     >{{ formatDate( prize.updated_at ) }}</td>
@@ -312,6 +288,20 @@
                                 placeholder="最低pt" style="width:6rem;">
                             </div>
                         </div>
+                        <!--交換チケット-->
+                        <div v-if="change_ticket!=0" class="mb-2">
+                            <div class="form-text">交換チケット</div>
+                            <div class="input-group mb-3">
+                                <input
+                                v-model="inputs.max_ticket"
+                                type="number" class="form-control"
+                                placeholder="最大枚数" style="width:6rem;">
+                                <input
+                                v-model="inputs.min_ticket"
+                                type="number" class="form-control"
+                                placeholder="最低枚数" style="width:6rem;">
+                            </div>
+                        </div>
 
 
                     <!--操作ボタン-->
@@ -403,6 +393,7 @@
         r_download_csv:{ type: String,  default: '', },//csvファイルダウンロードパス
         r_import_csv:  { type: String,  default: '', },//csvファイルインポートパス
         category_id:{ type: String,  default: '', },
+        change_ticket:{ type: [String,Number],  default: 0, },//チケット交換があるか否か
     });
 
     const loading     = ref(true);
@@ -416,17 +407,20 @@
 
     const inputs = ref({
         _token: props.token,
-        key_words: '',
         category_id: props.category_id || '',
-        order_code: '',
-        order_name: '',
+        key_words:     '',
+        order_code:    '',
+        order_name:    '',
         order_rank_id: '',
-        order_point: '',
-        updated_at: '',
+        order_point:   '',
+        order_ticket:  '',
+        updated_at:    '',
         where_rank_id: '',
-        max_point: null,
-        min_point: null,
-        prize_ids: [],
+        max_point:     null,
+        min_point:     null,
+        max_ticket:    null,
+        min_ticket:    null,
+        prize_ids:     [],
     });
 
     /* 監視 */
@@ -434,6 +428,8 @@
     watch(() => inputs.value.key_words,   () => getData());
     watch(() => inputs.value.max_point,   () => getData());
     watch(() => inputs.value.min_point,   () => getData());
+    watch(() => inputs.value.max_ticket,  () => getData());
+    watch(() => inputs.value.min_ticket,  () => getData());
 
     onMounted(() => {
 
