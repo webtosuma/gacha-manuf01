@@ -27562,7 +27562,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "bi bi-check-circle-fill fs-1"
-    }), _vm._v(" "), _vm._m(1, true)]) : _vm._e(), _vm._v(" "), userPrize.ticket_history_id ? _c("div", {
+    }), _vm._v(" "), _vm._m(1, true)]) : _vm._e(), _vm._v(" "), userPrize.to_ticket_history_id ? _c("div", {
       staticClass: "d-flex justify-content-center align-items-center flex-column fw-bold rounded text-success position-absolute top-0 start-0 h-100 w-100",
       staticStyle: {
         "z-index": "5",

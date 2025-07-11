@@ -55,7 +55,7 @@
                                 </div>
 
                                 <!-- チケット交換済み -->
-                                <div v-if="userPrize.ticket_history_id"
+                                <div v-if="userPrize.to_ticket_history_id"
                                 style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
                                 class="d-flex justify-content-center align-items-center flex-column
                                 fw-bold rounded  text-success

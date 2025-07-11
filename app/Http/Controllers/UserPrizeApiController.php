@@ -203,7 +203,7 @@ class UserPrizeApiController extends Controller
 
 
     /**
-     * API商品のチケット交換
+     * API商品->チケット交換
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -229,7 +229,7 @@ class UserPrizeApiController extends Controller
             {
                 # 処理済の時はスキップ
                 if($user_prize->point_history_id){  continue; }
-                if($user_prize->ticket_history_id){ continue; }
+                if($user_prize->to_ticket_history_id){ continue; }
 
                 # チケット交換の値が0のときはスキップ
                 if( !$user_prize->ticket ){  continue; }
@@ -245,7 +245,7 @@ class UserPrizeApiController extends Controller
 
 
                 # ユーザー取得商品情報の更新
-                $user_prize->ticket_history_id = $ticket_history->id;
+                $user_prize->to_ticket_history_id = $ticket_history->id;
                 $user_prize->save();
             }
 

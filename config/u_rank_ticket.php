@@ -10,8 +10,6 @@ return [
 
     # ユーザーランクの利用
     'user_rank' => env('USER_RANK_SISTEM', false),
-    // 'user_rank' => true,
-
 
     # チケットシステムの利用
     'ticket'    => env('TIKET_SISTEM',    false),

@@ -69,7 +69,7 @@
 
                                 {{-- 商品と交換 --}}
                                 @if( $ticket_history->reason_id==22 )
-                                    <div class="form-text">数量：{{$ticket_history->user_prizes->count()}}</div>
+                                    <div class="form-text">{{$ticket_history->user_prizes[0]->prize->name.' × '.$ticket_history->user_prizes->count()}}</div>
                                 @endif
                             </div>
 

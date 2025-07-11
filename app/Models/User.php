@@ -292,8 +292,6 @@ class User extends Authenticatable
             $count = $query->limit(4999)->count();
 
             return $count < 4999 ? $count :'4,999以上';
-
-            // return $user_prizes->count();
         }
 
 

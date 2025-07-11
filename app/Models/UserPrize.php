@@ -18,13 +18,14 @@ class UserPrize extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'user_id',          //ユーザー　リレーション
-        'prize_id',         //商品リレーション
-        'gacha_history_id', //入手したガチャのID (チケットで取得した時のID：１)
-        'point_history_id', //ポイント交換履歴ID(ポイントと交換て入手した時のみ)
-        'ticket_history_id',//チケット交換履歴ID(チッケトと交換て入手した時のみ)
-        'shipped_id',       //発送履歴（発送した時のみ）
-        'point',            //(商品取得時の)交換ポイント値
+        'user_id',              //ユーザー　リレーション
+        'prize_id',             //商品リレーション
+        'gacha_history_id',     //入手したガチャのID (チケットで取得した時のID：１)
+        'point_history_id',     //ポイント交換履歴ID(ポイントと交換て入手した時のみ)
+        'shipped_id',           //発送履歴（発送した時のみ）
+        'point',                //(商品取得時の)交換ポイント値
+        'ticket_history_id',    //チケット->商品交換履歴ID(チッケトで商品入手した時のみ)
+        'to_ticket_history_id', //商品->チケット交換(2025/07/11追加)
     ];
 
 
@@ -91,13 +92,21 @@ class UserPrize extends Model
         }
 
         /**
-         * TicketHistoryモデル リレーション
+         * TicketHistoryモデル リレーション(チケット->商品取得)
          * @return \App\Models\TicketHistory
         */
         public function ticket_history(){
             return $this->belongsTo(TicketHistory::class,'ticket_history_id');
         }
 
+
+        /**
+         * TicketHistoryモデル リレーション(商品->チケット交換)
+         * @return \App\Models\TicketHistory
+        */
+        public function to_ticket_history(){
+            return $this->belongsTo(TicketHistory::class,'to_ticket_history_id');
+        }
 
     /*
     |--------------------------------------------------------------------------
@@ -201,8 +210,8 @@ class UserPrize extends Model
             # ポイント交換ずみのデータを除く
             $query->where('point_history_id',NULL);
 
-            # チケット交換ずみのデータを除く
-            $query->where('ticket_history_id',NULL);
+            # 商品->チケット交換ずみのデータを除く
+            $query->where('to_ticket_history_id',NULL);
 
             # 発送済みデータを除く
             $query->where('shipped_id',Null);
