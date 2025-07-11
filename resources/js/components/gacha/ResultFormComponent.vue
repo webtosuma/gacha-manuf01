@@ -43,47 +43,66 @@
                                 ></ratio-image-component>
 
 
+
+                                <!-- ポイント交換済み -->
+                                <div v-if="userPrize.point_history_id"
+                                style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
+                                class="d-flex justify-content-center align-items-center flex-column
+                                fw-bold rounded  text-warning
+                                position-absolute top-0 start-0 h-100 w-100 ">
+                                    <i class="bi bi-check-circle-fill fs-1 "></i>
+                                    <span >ポイント<br>交換済み</span>
+                                </div>
+
+                                <!-- チケット交換済み -->
+                                <div v-if="userPrize.ticket_history_id"
+                                style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
+                                class="d-flex justify-content-center align-items-center flex-column
+                                fw-bold rounded  text-success
+                                position-absolute top-0 start-0 h-100 w-100 ">
+                                    <i class="bi bi-check-circle-fill fs-1 "></i>
+                                    <span >チケット<br>交換済み</span>
+                                </div>
+
+                                <!-- 発送済み -->
+                                <div v-if="userPrize.shipped_id"
+                                style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
+                                class="d-flex justify-content-center align-items-center flex-column
+                                fw-bold rounded  text-primary
+                                position-absolute top-0 start-0 h-100 w-100 ">
+                                    <i class="bi bi-check-circle-fill fs-1 "></i>
+                                    <span >発送申請済み</span>
+                                </div>
+
+
                             </label>
 
                             <!--ポイント表示-->
                             <div v-if="no_exchange_point==0"
-                            class="bg-white border border-warning text-end
+                            class="bg-warning text-end text-dark
                             mt-1 px-2 rounded-pill position-relative
                             position-relative">
 
                                 <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
-                                    <i class="bi bi-p-circle  fs-5 text-warning"></i>
+                                    <i class="bi bi-p-circle  fs-5 text-"></i>
                                 </div>
 
 
-                                {{ userPrize.point.toLocaleString() }}pt
-
-                                <!-- ポイント交換済み -->
-                                <div v-if="userPrize.point_history_id"
-                                class="position-absolute top-50 start-0 translate-middle-y ps-1">
-                                    <span class="text-warning">●</span>
-                                </div>
-
-                                <!-- ポイント交換済み -->
-                                <div v-if="userPrize.shipped_id"
-                                class="position-absolute top-50 start-0 translate-middle-y ps-1">
-                                    <span class="text-primary">●</span>
-                                </div>
-
+                                {{ userPrize.point.toLocaleString()+' pt' }}
                             </div>
 
                             <!--交換チケット-->
                             <div v-if="change_ticket!=0"
-                            class="bg-white border border-success text-end
+                            class="bg-success text-end text-dark
                             mt-1 px-2 rounded-pill position-relative
                             position-relative">
 
                                 <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
-                                    <i class="bi bi-ticket-perforated-fill fs-5 text-success"></i>
+                                    <i class="bi bi-ticket-perforated-fill fs-5 text-"></i>
                                 </div>
 
 
-                                <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+'tk'}}</span>
+                                <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+' 枚'}}</span>
                                 <span v-else style="font-size:11px;">チケット交換なし</span>
                             </div>
 
@@ -124,25 +143,10 @@
 
         <!-- ポイント交換 or 商品発送 ボタン -->
         <div v-if="show_change_btn!=0"
-        class="rounded-3 p-3" style="background: rgb(0, 0, 0, .7);">
+        class="rounded-3 p-3" style="background: rgb(0, 0, 0, .5);">
             <div data-aos="fade-in">
 
 
-                <!-- <div class="d-flex justify-content-between align-items-start text-white">
-                    <div class="form-check mb-">
-                        <input v-model="allCheck" @change="changeAll()"
-                        class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            全て選択
-                        </label>
-                    </div>
-
-                    <div class="form-check mb-">
-                        <span class="fs-1 fw-bold">
-                            <number-comma-component :number="totalPoint" />
-                        </span>pt
-                    </div>
-                </div> -->
                 <div class="row justify-content-between align-items-center g-2 px-2 text-white mb-2">
                     <!--すべて選択-->
                     <div class="col-12">
@@ -179,7 +183,8 @@
                                 </div>
 
                                 <div class="">
-                                    <span class="fs-3 fw-bold">{{ totalTickets.toLocaleString() }}</span>tk
+                                    <span class="fs-3 fw-bold">{{ totalTickets.toLocaleString()}}</span>
+                                    <span> 枚</span>
                                 </div>
                             </div>
                         </div>
@@ -224,58 +229,23 @@
 
             </div>
         </div>
-        <div v-else>
-            <div class="d-flex justify-content-center gap-3 fw-bold" style="font-size:14px; text-shadow: #fff 0px 0 5px;">
+        <!-- <div v-else>
+            <div class="d-flex flex-wrap justify-content-center gap-3 fw-bold" style="font-size:14px; text-shadow: #fff 0px 0 5px;">
                 <div  v-if="no_exchange_point==0">
                     <span class="text-warning">●</span>
                     <span>ポイント交換済み</span>
+                </div>
+                <div v-if="change_ticket!=0">
+                    <span class="text-success">●</span>
+                    <span>チケット交換済み</span>
                 </div>
                 <div>
                     <span class="text-primary">●</span>
                     <span>発送申請済み</span>
                 </div>
             </div>
-        </div>
-
-
-
-
-        <!-- ポイント交換Modal -->
-        <!-- <div class="modal fade" id="exchangeModal" tabindex="-1"
-        aria-labelledby="exchangeModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <h5 class="modal-title" id="exchangeModalLabel">
-                            <p>ポイント交換しますか？</p>
-                            <p>商品を<strong class="fs-3"><number-comma-component :number="totalPoint" />pt</strong>と交換する</p>
-                        </h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <button type="button"
-                                class="btn p-md-33 btn-light border rounded-pill w-100"
-                                data-bs-dismiss="modal"
-                                >キャンセル</button>
-                            </div>
-                            <div class="col-6">
-
-                                <u-user-prize-exchange-point-btn
-                                :token="token"
-                                :r_api_post="r_api_exchange_points"
-                                :r_redirect="r_redirect_exchange_points"
-                                :user_prize_ids="ids"
-                                btn_style_class="btn p-md-33 btn-warning text-white rounded-pill w-100"
-                                btn_label="交換する"
-                                />
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div> -->
+
 
 
         <!-- ポイント交換Modal -->
@@ -345,7 +315,7 @@
                     <div class="modal-body text-center">
                         <h5 class="modal-title" id="exchangeTicketModalLabel">
                             <p>
-                                商品をチケット{{totalTickets.toLocaleString()+'tk'}}と交換します。<br>
+                                商品をチケット{{totalTickets.toLocaleString()+'枚'}}と交換します。<br>
                                 よろしいですか？
                             </p>
                         </h5>
@@ -470,6 +440,7 @@
         ids.value = allCheck.value ? idsList : [];
         calcTotalPoint();  //ポイント合計値の計算
         calcTotalTickets();//チケット合計値の計算
+        disabled.value = !( ids.value.length > 0 );//選択なしのときは、disabled
     };
 
     /** 子チェックをクリック */
@@ -478,6 +449,7 @@
         allCheck.value = ids.value.length === idsList.length;
         calcTotalPoint();  //ポイント合計値の計算
         calcTotalTickets();//チケット合計値の計算
+        disabled.value = !( ids.value.length > 0 );//選択なしのときは、disabled
     };
 
     /** ポイント合計値の計算 */
@@ -485,7 +457,7 @@
         totalPoint.value = userPrizes.value.reduce((sum, userPrize) => {
             return ids.value.includes(userPrize.id) ? sum + userPrize.point : sum;
         }, 0);
-        disabled.value = totalPoint.value === 0;
+        // disabled.value = totalPoint.value === 0;
     };
 
     /** チケット合計値の計算 */
@@ -500,7 +472,7 @@
                 totalTickets.value += userPrize.ticket;
             }
         })
-        disabled.value = totalTickets.value === 0;
+        // disabled.value = totalTickets.value === 0;
     };
 
 </script>

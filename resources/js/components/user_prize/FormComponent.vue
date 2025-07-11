@@ -43,7 +43,7 @@
                                 </div>
 
                                 <div class="">
-                                    <span class="fs-3 fw-bold">{{ totalTickets.toLocaleString() }}</span>tk
+                                    <span class="fs-3 fw-bold">{{ totalTickets.toLocaleString() }}</span>枚
                                 </div>
                             </div>
                         </div>
@@ -199,7 +199,7 @@
 
                                     <i class="bi bi-x"></i>
 
-                                    <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+'tk'}}</span>
+                                    <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+'枚'}}</span>
                                     <span v-else style="font-size:11px;">チケット交換なし</span>
                                 </div>
                             </div>
@@ -313,7 +313,7 @@
                     <div class="modal-body text-center">
                         <h5 class="modal-title" id="exchangeTicketModalLabel">
                             <p>
-                                商品をチケット{{totalTickets.toLocaleString()+'tk'}}と交換します。<br>
+                                商品をチケット{{totalTickets.toLocaleString()+'枚'}}と交換します。<br>
                                 よろしいですか？
                             </p>
                         </h5>
@@ -460,6 +460,7 @@
         ids.value = allCheck.value ? allIds : [];
         calcTotalPoint();  //ポイント合計値の計算
         calcTotalTickets();//チケット合計値の計算
+        disabled.value = !( ids.value.length > 0 );//選択なしのときは、disabled
     };
 
     /** 子チェックをクリック */
@@ -468,6 +469,7 @@
         allCheck.value = ids.value.length === allIds.length;
         calcTotalPoint();  //ポイント合計値の計算
         calcTotalTickets();//チケット合計値の計算
+        disabled.value = !( ids.value.length > 0 );//選択なしのときは、disabled
     };
 
     /** ポイント合計値の計算 */
@@ -478,7 +480,6 @@
                 totalPoint.value += userPrize.point;
             }
         });
-        disabled.value = totalPoint.value === 0;
     };
 
     /** チケット合計値の計算 */
@@ -493,7 +494,6 @@
                 totalTickets.value += userPrize.ticket;
             }
         })
-        disabled.value = totalTickets.value === 0;
     };
 
     /** 日付データをテクスト変換  */

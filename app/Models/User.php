@@ -134,21 +134,11 @@ class User extends Authenticatable
         {
             $query = UserPrize::query();
 
-                # 商品情報とのリレーションがあること
-                $query->has('prize');
-
-                # ログインユーザーのデータに絞る
-                $query->where('user_id',$this->id);
-
-                # ポイント交換ずみのデータを除く
-                $query->where('point_history_id',NULL);
-
-                # 発送済みデータを除く
-                $query->where('shipped_id',Null);
-
+                # ポイントが高い順
                 $query->orderByDesc('point');
-                // $query->orderByDesc('created_at');
 
+                # 共通スコープ
+                $query->onlyPossessionScope( $this->id );
 
             return $query->limit(4)->get();
         }
@@ -294,29 +284,12 @@ class User extends Authenticatable
         */
         public function getUPrizesCountAttribute()
         {
-            // return 3;
-
             $query = UserPrize::query();
 
-                # ログインユーザーのデータに絞る
-                $query->where('user_id',$this->id);
+                # 共通スコープ
+                $query->onlyPossessionScope( $this->id );
 
-                # 商品情報とのリレーションがあること
-                $query->has('prize');
-
-                # ポイント交換ずみのデータを除く
-                $query->where('point_history_id',NULL);
-
-                # 発送済みデータを除く
-                $query->where('shipped_id',Null);
-
-                # 取得が新しい順
-                $query->orderByDesc('created_at');
-
-                # 商品テーブル(prize)とのリレーション
-                $query->with(['prize.rank' => function ($query) { }]);
-
-            $count = $query->limit(4999)->get()->count();
+            $count = $query->limit(4999)->count();
 
             return $count < 4999 ? $count :'4,999以上';
 

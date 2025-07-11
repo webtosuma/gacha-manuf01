@@ -12541,6 +12541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       ids.value = allCheck.value ? idsList : [];
       calcTotalPoint(); //ポイント合計値の計算
       calcTotalTickets(); //チケット合計値の計算
+      disabled.value = !(ids.value.length > 0); //選択なしのときは、disabled
     };
 
     /** 子チェックをクリック */
@@ -12551,6 +12552,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       allCheck.value = ids.value.length === idsList.length;
       calcTotalPoint(); //ポイント合計値の計算
       calcTotalTickets(); //チケット合計値の計算
+      disabled.value = !(ids.value.length > 0); //選択なしのときは、disabled
     };
 
     /** ポイント合計値の計算 */
@@ -12558,7 +12560,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       totalPoint.value = userPrizes.value.reduce(function (sum, userPrize) {
         return ids.value.includes(userPrize.id) ? sum + userPrize.point : sum;
       }, 0);
-      disabled.value = totalPoint.value === 0;
+      // disabled.value = totalPoint.value === 0;
     };
 
     /** チケット合計値の計算 */
@@ -12574,8 +12576,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           totalTickets.value += userPrize.ticket;
         }
       });
-      disabled.value = totalTickets.value === 0;
+      // disabled.value = totalTickets.value === 0;
     };
+
     return {
       __sfc: true,
       props: props,
@@ -15869,6 +15872,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       ids.value = allCheck.value ? allIds : [];
       calcTotalPoint(); //ポイント合計値の計算
       calcTotalTickets(); //チケット合計値の計算
+      disabled.value = !(ids.value.length > 0); //選択なしのときは、disabled
     };
 
     /** 子チェックをクリック */
@@ -15879,6 +15883,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       allCheck.value = ids.value.length === allIds.length;
       calcTotalPoint(); //ポイント合計値の計算
       calcTotalTickets(); //チケット合計値の計算
+      disabled.value = !(ids.value.length > 0); //選択なしのときは、disabled
     };
 
     /** ポイント合計値の計算 */
@@ -15889,7 +15894,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           totalPoint.value += userPrize.point;
         }
       });
-      disabled.value = totalPoint.value === 0;
     };
 
     /** チケット合計値の計算 */
@@ -15905,7 +15909,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           totalTickets.value += userPrize.ticket;
         }
       });
-      disabled.value = totalTickets.value === 0;
     };
 
     /** 日付データをテクスト変換  */
@@ -27550,21 +27553,40 @@ var render = function render() {
         style_class: "ratio ratio-3x4 rounded-3",
         url: userPrize.prize.image_path
       }
-    })], 1), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
-      staticClass: "bg-white border border-warning text-end mt-1 px-2 rounded-pill position-relative position-relative"
-    }, [_vm._m(1, true), _vm._v("\n\n\n                            " + _vm._s(userPrize.point.toLocaleString()) + "pt\n\n                            "), _vm._v(" "), userPrize.point_history_id ? _c("div", {
-      staticClass: "position-absolute top-50 start-0 translate-middle-y ps-1"
-    }, [_c("span", {
-      staticClass: "text-warning"
-    }, [_vm._v("●")])]) : _vm._e(), _vm._v(" "), userPrize.shipped_id ? _c("div", {
-      staticClass: "position-absolute top-50 start-0 translate-middle-y ps-1"
-    }, [_c("span", {
-      staticClass: "text-primary"
-    }, [_vm._v("●")])]) : _vm._e()]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
-      staticClass: "bg-white border border-success text-end mt-1 px-2 rounded-pill position-relative position-relative"
-    }, [_vm._m(2, true), _vm._v(" "), userPrize.prize.ticket ? _c("span", {
+    }), _vm._v(" "), userPrize.point_history_id ? _c("div", {
+      staticClass: "d-flex justify-content-center align-items-center flex-column fw-bold rounded text-warning position-absolute top-0 start-0 h-100 w-100",
+      staticStyle: {
+        "z-index": "5",
+        "font-size": "14px",
+        background: "rgb(0, 0, 0, .5)"
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-check-circle-fill fs-1"
+    }), _vm._v(" "), _vm._m(1, true)]) : _vm._e(), _vm._v(" "), userPrize.ticket_history_id ? _c("div", {
+      staticClass: "d-flex justify-content-center align-items-center flex-column fw-bold rounded text-success position-absolute top-0 start-0 h-100 w-100",
+      staticStyle: {
+        "z-index": "5",
+        "font-size": "14px",
+        background: "rgb(0, 0, 0, .5)"
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-check-circle-fill fs-1"
+    }), _vm._v(" "), _vm._m(2, true)]) : _vm._e(), _vm._v(" "), userPrize.shipped_id ? _c("div", {
+      staticClass: "d-flex justify-content-center align-items-center flex-column fw-bold rounded text-primary position-absolute top-0 start-0 h-100 w-100",
+      staticStyle: {
+        "z-index": "5",
+        "font-size": "14px",
+        background: "rgb(0, 0, 0, .5)"
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-check-circle-fill fs-1"
+    }), _vm._v(" "), _c("span", [_vm._v("発送申請済み")])]) : _vm._e()], 1), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
+      staticClass: "bg-warning text-end text-dark mt-1 px-2 rounded-pill position-relative position-relative"
+    }, [_vm._m(3, true), _vm._v("\n\n\n                            " + _vm._s(userPrize.point.toLocaleString() + " pt") + "\n                        ")]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+      staticClass: "bg-success text-end text-dark mt-1 px-2 rounded-pill position-relative position-relative"
+    }, [_vm._m(4, true), _vm._v(" "), userPrize.prize.ticket ? _c("span", {
       staticClass: "fs-6"
-    }, [_vm._v(_vm._s(userPrize.ticket.toLocaleString() + "tk"))]) : _c("span", {
+    }, [_vm._v(_vm._s(userPrize.ticket.toLocaleString() + " 枚"))]) : _c("span", {
       staticStyle: {
         "font-size": "11px"
       }
@@ -27601,7 +27623,7 @@ var render = function render() {
   }), 0)], 2), _vm._v(" "), _vm.show_change_btn != 0 ? _c("div", {
     staticClass: "rounded-3 p-3",
     staticStyle: {
-      background: "rgb(0, 0, 0, .7)"
+      background: "rgb(0, 0, 0, .5)"
     }
   }, [_c("div", {
     attrs: {
@@ -27658,7 +27680,7 @@ var render = function render() {
     staticClass: "form-check"
   }, [_c("div", {
     staticClass: "d-flex justify-content-end align-items-center"
-  }, [_vm._m(3), _vm._v(" "), _c("div", {}, [_c("span", {
+  }, [_vm._m(5), _vm._v(" "), _c("div", {}, [_c("span", {
     staticClass: "fs-3 fw-bold"
   }, [_vm._v(_vm._s(_setup.totalPoint.toLocaleString()))]), _vm._v("pt\n                            ")])])])]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
     staticClass: "col"
@@ -27666,9 +27688,9 @@ var render = function render() {
     staticClass: "form-check"
   }, [_c("div", {
     staticClass: "d-flex justify-content-end align-items-center"
-  }, [_vm._m(4), _vm._v(" "), _c("div", {}, [_c("span", {
+  }, [_vm._m(6), _vm._v(" "), _c("div", {}, [_c("span", {
     staticClass: "fs-3 fw-bold"
-  }, [_vm._v(_vm._s(_setup.totalTickets.toLocaleString()))]), _vm._v("tk\n                            ")])])])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_setup.totalTickets.toLocaleString()))]), _vm._v(" "), _c("span", [_vm._v(" 枚")])])])])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "row gy-3"
   }, [_c("div", {
     staticClass: "col-12 col-md"
@@ -27709,15 +27731,7 @@ var render = function render() {
       href: _vm.r_gacha_category,
       disabled: _setup.disabled
     }
-  }, [_vm._v("SKIP")])])])]) : _c("div", [_c("div", {
-    staticClass: "d-flex justify-content-center gap-3 fw-bold",
-    staticStyle: {
-      "font-size": "14px",
-      "text-shadow": "#fff 0px 0 5px"
-    }
-  }, [_vm.no_exchange_point == 0 ? _c("div", [_c("span", {
-    staticClass: "text-warning"
-  }, [_vm._v("●")]), _vm._v(" "), _c("span", [_vm._v("ポイント交換済み")])]) : _vm._e(), _vm._v(" "), _vm._m(5)])]), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
+  }, [_vm._v("SKIP")])])])]) : _vm._e(), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "exchangeModal",
@@ -27729,7 +27743,7 @@ var render = function render() {
     staticClass: "modal-dialog"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(6), _vm._v(" "), _c("div", {
+  }, [_vm._m(7), _vm._v(" "), _c("div", {
     staticClass: "modal-body text-center"
   }, [_c("h5", {
     staticClass: "modal-title",
@@ -27740,7 +27754,7 @@ var render = function render() {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row g-2"
-  }, [_vm._m(7), _vm._v(" "), _c("div", {
+  }, [_vm._m(8), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("u-user-prize-exchange-point-btn", {
     attrs: {
@@ -27763,18 +27777,18 @@ var render = function render() {
     staticClass: "modal-dialog"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(8), _vm._v(" "), _c("div", {
+  }, [_vm._m(9), _vm._v(" "), _c("div", {
     staticClass: "modal-body text-center"
   }, [_c("h5", {
     staticClass: "modal-title",
     attrs: {
       id: "exchangeTicketModalLabel"
     }
-  }, [_c("p", [_vm._v("\n                            商品をチケット" + _vm._s(_setup.totalTickets.toLocaleString() + "tk") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
+  }, [_c("p", [_vm._v("\n                            商品をチケット" + _vm._s(_setup.totalTickets.toLocaleString() + "枚") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row g-2"
-  }, [_vm._m(9), _vm._v(" "), _c("div", {
+  }, [_vm._m(10), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("u-user-prize-exchange-ticket-btn", {
     attrs: {
@@ -27803,13 +27817,23 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c,
     _setup = _vm._self._setupProxy;
+  return _c("span", [_vm._v("ポイント"), _c("br"), _vm._v("交換済み")]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("span", [_vm._v("チケット"), _c("br"), _vm._v("交換済み")]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
   return _c("div", {
     staticClass: "position-absolute top-50 start-0 translate-middle-y px-1",
     staticStyle: {
       "padding-top": "2px"
     }
   }, [_c("i", {
-    staticClass: "bi bi-p-circle fs-5 text-warning"
+    staticClass: "bi bi-p-circle fs-5 text-"
   })]);
 }, function () {
   var _vm = this,
@@ -27821,7 +27845,7 @@ var staticRenderFns = [function () {
       "padding-top": "2px"
     }
   }, [_c("i", {
-    staticClass: "bi bi-ticket-perforated-fill fs-5 text-success"
+    staticClass: "bi bi-ticket-perforated-fill fs-5 text-"
   })]);
 }, function () {
   var _vm = this,
@@ -27841,13 +27865,6 @@ var staticRenderFns = [function () {
   }), _vm._v(" "), _c("i", {
     staticClass: "bi bi-x"
   })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c,
-    _setup = _vm._self._setupProxy;
-  return _c("div", [_c("span", {
-    staticClass: "text-primary"
-  }, [_vm._v("●")]), _vm._v(" "), _c("span", [_vm._v("発送申請済み")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c,
@@ -31195,7 +31212,7 @@ var render = function render() {
     staticClass: "d-flex justify-content-end align-items-center"
   }, [_vm._m(1), _vm._v(" "), _c("div", {}, [_c("span", {
     staticClass: "fs-3 fw-bold"
-  }, [_vm._v(_vm._s(_setup.totalTickets.toLocaleString()))]), _vm._v("tk\n                            ")])])])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_setup.totalTickets.toLocaleString()))]), _vm._v("枚\n                            ")])])])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "w-100 overflow-auto"
   }, [_c("div", {
     staticClass: "p-2 pt-0"
@@ -31447,7 +31464,7 @@ var render = function render() {
       staticClass: "bi bi-x"
     }), _vm._v(" "), userPrize.prize.ticket ? _c("span", {
       staticClass: "fs-6"
-    }, [_vm._v(_vm._s(userPrize.ticket.toLocaleString() + "tk"))]) : _c("span", {
+    }, [_vm._v(_vm._s(userPrize.ticket.toLocaleString() + "枚"))]) : _c("span", {
       staticStyle: {
         "font-size": "11px"
       }
@@ -31530,7 +31547,7 @@ var render = function render() {
     attrs: {
       id: "exchangeTicketModalLabel"
     }
-  }, [_c("p", [_vm._v("\n                            商品をチケット" + _vm._s(_setup.totalTickets.toLocaleString() + "tk") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
+  }, [_c("p", [_vm._v("\n                            商品をチケット" + _vm._s(_setup.totalTickets.toLocaleString() + "枚") + "と交換します。"), _c("br"), _vm._v("\n                            よろしいですか？\n                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row g-2"

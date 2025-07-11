@@ -46,7 +46,7 @@ class AdminPrizeController extends Controller
         $category_id = $request->gacha_category_id ? $request->gacha_category_id :'';
 
         # カテゴリーデータ
-        $categories = GachaCategory::all();
+        $categories = GachaCategory::adminList()->get();
 
         # 評価ランクデータ
         $ranks = PrizeRank::all();
@@ -102,11 +102,8 @@ class AdminPrizeController extends Controller
      */
     public function edit(Request $request, Prize $prize)
     {
-        # カテゴリーIDの指定
-        $category_id = $request->gacha_category_id ? $request->gacha_category_id :'';
-
         # カテゴリーデータ
-        $categories = GachaCategory::all();
+        $categories = GachaCategory::adminList()->get();
 
         # 評価ランクデータ
         $ranks = PrizeRank::all();
@@ -357,8 +354,8 @@ class AdminPrizeController extends Controller
             );
 
             # エンコード入力情報のデコード処理（絵文字対策）
-                $inputs['name']        = urldecode($inputs['name']);
-                $inputs['discription'] = urldecode($inputs['discription']) ;
+                $inputs['name']        = urldecode( $request->name);
+                $inputs['discription'] = urldecode( $request->discription ) ;
 
             # ポイント更新記録
                 //新規登録

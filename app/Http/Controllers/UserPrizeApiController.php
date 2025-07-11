@@ -38,27 +38,6 @@ class UserPrizeApiController extends Controller
         # ユーザーの取得商品情報
         $query = UserPrize::query();
 
-            # 商品情報とのリレーションがあること
-            $query->has('prize');
-
-            # ログインユーザーのデータに絞る
-            $query->where('user_id',$user->id);
-
-            # ポイント交換ずみのデータを除く
-            $query->where('point_history_id',NULL);
-
-            # 発送済みデータを除く
-            $query->where('shipped_id',Null);
-
-
-            # 商品テーブル(prize)とのリレーション
-            $query->with(['prize.rank' => function ($query) {
-
-                // prizeテーブルのpointカラムを降順に並び替える
-                // $query->orderBy('point', 'desc');
-
-            }]);
-
             # カテゴリーの選択
             if(  $request->category_id ){
                 # 商品ID配列
@@ -103,10 +82,14 @@ class UserPrizeApiController extends Controller
                 $query->whereIn('prize_id',$prize_ids);
             }
 
-        // $user_prizes = $query->get();
+
+            # 共通スコープ
+            $query->onlyPossessionScope( $user->id );
 
 
-        $user_prizes = $query->paginate(100);
+
+        $user_prizes = $query->paginate(20);
+
 
 
         # 追加データ
@@ -249,7 +232,7 @@ class UserPrizeApiController extends Controller
                 if($user_prize->ticket_history_id){ continue; }
 
                 # チケット交換の値が0のときはスキップ
-                if($user_prize->ticket){  continue; }
+                if( !$user_prize->ticket ){  continue; }
 
 
                 # チケット履歴の保存

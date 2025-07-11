@@ -160,7 +160,7 @@
 
                         @if( ! config('app.no_exchange_point') )
                             <div class="mt-1 w-100 border rounded-pill d-inline-block" style="font-size:11px;">
-                                {{number_format($u_prize->prize->point).'pt'}}
+                                {{number_format($u_prize->point).'pt'}}
                             </div>
                         @endif
                     </div>

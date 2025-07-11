@@ -186,9 +186,10 @@ class UserPrize extends Model
     |
     |
     */
-        /** 保有中のみ（全体or個人）  */
+        /** 保有中のみ（全体or個人）　onlyPossessionScope($user_id ) */
         public function scopeOnlyPossessionScope( $query ,$user_id )
         {
+
             # ログインユーザーのデータに絞る
             if($user_id){
                 $query->where('user_id',$user_id);
@@ -200,7 +201,10 @@ class UserPrize extends Model
             # ポイント交換ずみのデータを除く
             $query->where('point_history_id',NULL);
 
-            # 有効済みデータを除く
+            # チケット交換ずみのデータを除く
+            $query->where('ticket_history_id',NULL);
+
+            # 発送済みデータを除く
             $query->where('shipped_id',Null);
 
             # 取得が新しい順
@@ -212,5 +216,8 @@ class UserPrize extends Model
 
             return $query;
         }
+
+
+
 
 }

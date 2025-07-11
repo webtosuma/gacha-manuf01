@@ -41,6 +41,9 @@ class UserGachaHistoryApiContloller extends Controller
                 # ポイント交換ずみのデータを除く
                 $query->where('point_history_id',NULL);
 
+                # チケット交換ずみのデータを除く
+                $query->where('ticket_history_id',NULL);
+
                 # 発送済みデータを除く
                 $query->where('shipped_id',Null);
 
