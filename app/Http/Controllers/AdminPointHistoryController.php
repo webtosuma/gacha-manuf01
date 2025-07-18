@@ -60,6 +60,8 @@ class AdminPointHistoryController extends Controller
             'table' => $request->table ? $request->table : 'daily_report'
         ];
 
+        // dd($params['chart']['data']);
+
         return view('admin.point_history.index', $params );
     }
 

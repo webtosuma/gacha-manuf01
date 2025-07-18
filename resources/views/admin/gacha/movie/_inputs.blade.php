@@ -1,5 +1,9 @@
 @foreach ($gacha->discriptions as $num => $discription)
-    @if ( $discription->gacha_rank_id<900)
+    @if (
+        $discription->gacha_rank_id<900
+        || ($discription->gacha_rank_id>900 && $discription->gacha_rank_id<1000)
+    )
+
 
         <div class="mx-3 py-2 border-bottom">
             <button class="btn w-100 text-start" type="button"

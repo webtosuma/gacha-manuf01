@@ -57,6 +57,7 @@ class AdminPrizeController extends Controller
             'point'       => 0,
             'code'        => Prize::CreateCode(),
         ]);
+        $prize->ticket = 0;
 
 
         return view('admin.prize.create', compact('prize','categories','ranks') );

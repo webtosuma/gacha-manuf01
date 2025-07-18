@@ -27,6 +27,18 @@ $active_report_menu = true;
         <h2 class="my-5 py-3 border-bottom">EC売上レポート</h2>
 
 
+        {{-- <form action="">
+            <input type="hidden" name="days_type" value="2025-07-01">
+            <input type="hidden" name="start_day" value="2025-07-01">
+            <input type="hidden" name="last_day"  value="2025-07-31">
+            <button>send</button>
+        </form> --}}
+
+        <a-store-salesreport-list
+        token="{{ csrf_token() }}"
+        r_api_list="{{ route('admin.api.store.sales_report') }}"
+        ></a-store-salesreport-list>
+
 
     </div>
 @endsection

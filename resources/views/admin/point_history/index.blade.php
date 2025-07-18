@@ -96,6 +96,8 @@ $active_report_menu = true;
                 </div>
             </div>
 
+
+
             <!--グラフコンポーネント-->
             <a-pointhistory-chart
             s_labels="{{ $chart['labels'] }}"

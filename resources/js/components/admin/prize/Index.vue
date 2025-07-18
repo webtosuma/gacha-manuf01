@@ -194,12 +194,12 @@
                                             </delete-modal-component>
 
 
-                                            <!-- 削除モーダル -->
+                                            <!--削除モーダル-->
                                             <delete-modal-component
                                             @parent-func="destory(prize.id)"
                                             :index_key="'delete'+prize.id"
                                             icon="bi-trash"
-                                            :button_class=" prize.is_used ? 'disabled btn btn-sm btn-secondary border' :'btn btn-sm btn-light border' ">
+                                            button_class=" btn btn-sm btn-light border ">
                                                 <div>この商品を削除します。<br />よろしいですか？</div>
                                                 <div class="form-text">商品コード：{{ prize.code }}</div>
                                                 <div class="form-text">商品名：{{ prize.name }}</div>

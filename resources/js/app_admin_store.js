@@ -18,5 +18,10 @@ import Vue from 'vue'
     Vue.component('a-store-shipped-list',
     require('./components/admin/store_shipped/ListComponent').default);
 
+    /* レポート */
+    Vue.component('a-store-salesreport-list',
+    require('./components/admin/store_sales_report/ListComponent').default);
 
+    Vue.component('a-store-salesreport-chart',
+    require('./components/admin/store_sales_report/Chart').default);
 export default Vue

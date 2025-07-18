@@ -56,13 +56,12 @@ class UserPrizeController extends Controller
     public function exchange_tickets(Request $request)
     {
         # チケット交換できないとき
-        if(  config('u_rank_ticket.change_prize_to_ticket') )
+        if( ! config('u_rank_ticket.change_prize_to_ticket') )
         {
-            return back()->with('alert-warning','商品をチケットに変えることはできません。');
+            return back()->with('alert-danger','商品をチケットに変えることはできません。');
         }
 
-        return back()->with(['alert-warning'=>'商品をチケットに交換しました。']);
-
+        return back()->with(['alert-success'=>'商品をチケットに交換しました。']);
     }
 }
 

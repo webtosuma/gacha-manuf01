@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Cashier\Billable; //決済
+use Laravel\Cashier\Billable; //決済　
 
 
 class User extends Authenticatable
@@ -224,7 +224,17 @@ class User extends Authenticatable
             ;
         }
 
+        /**
+         * StoreHistoryモデル リレーション
+         * @return \App\Models\StoreHistory
+        */
+        public function store_histories()
+        {
+            return $this->hasMany(StoreHistory::class);
+        }
 
+
+        
     /*
     |--------------------------------------------------------------------------
     | アクセサー

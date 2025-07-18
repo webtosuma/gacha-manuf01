@@ -14,7 +14,7 @@ use App\Models\UserRankHistory;
 use App\Models\PointSail;
 /*
 | =============================================
-|  サイト管理者 ガチャ コントローラー 
+|  サイト管理者 ガチャ コントローラー
 | =============================================
 */
 class AdminGachaController extends Controller
@@ -279,13 +279,18 @@ class AdminGachaController extends Controller
         $gacha->published_at=null;//非公開
         $gacha->save();
 
+
+        # DBデータの論理削除
+        $gacha->delete();
+
+        # リレーション関係にないガチャ商品の削除
+        $delete_gacha_prizes = GachaPrize::doesntHave('gacha')->get();
+        foreach ($delete_gacha_prizes as $gacha_prize) { $gacha_prize->delete(); }
+
         # 操作ログの更新
         AdminLogController::createLog( 'gacha.delete', $gacha->id );
 
         $request->session()->regenerateToken();// 二重送信防止
-
-        # DBデータの論理削除
-        $gacha->delete();
 
         return redirect()->route('admin.gacha',$gacha->category->code_name)
         ->with(['alert-danger'=>'ガチャを1件削除しました']);

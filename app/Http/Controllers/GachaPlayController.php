@@ -276,6 +276,7 @@ class GachaPlayController extends Controller
     }
 
 
+
     /**
      * 最大ランク
      * @param  Array $randReminingGPIdArray
@@ -283,7 +284,22 @@ class GachaPlayController extends Controller
     */
     public static function MaxRank( $randReminingGPIdArray )
     {
+        /* 当選商品が複数の場合の演出動画の再生優先順位 */
+
+        # ラストワン・個人賞優先
         $gacha_prizes = GachaPrize::orderBy('gacha_rank_id','asc')//ランクが高い順
+        ->whereIn('gacha_rank_id',[ 10,361,362,363 ])
+        ->find($randReminingGPIdArray);
+
+        # ゾロ目・キリ番・ポタリ賞・シークレット優先
+        $gacha_prizes = $gacha_prizes->count() ? $gacha_prizes :
+        GachaPrize::orderBy('gacha_rank_id','asc')//ランクが高い順
+        ->whereIn('gacha_rank_id',[ 330,310,320,901,903 ])
+        ->find($randReminingGPIdArray);
+
+        # 通常ランク
+        $gacha_prizes = $gacha_prizes->count() ? $gacha_prizes :
+        GachaPrize::orderBy('gacha_rank_id','asc')//ランクが高い順
         ->find($randReminingGPIdArray);
 
         return $gacha_prizes[0]->gacha_rank_id;

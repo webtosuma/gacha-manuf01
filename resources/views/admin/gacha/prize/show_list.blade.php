@@ -42,7 +42,7 @@
 
             <!-- 登録商品 -->
             <div class="collapse my-3
-            @if($discription->gacha_rank_id>300 && $discription->gacha_rank_id<400 && $discription->g_prizes->count()>0 ) showww @endif
+            @if($discription->gacha_rank_id>300 && $discription->gacha_rank_id<400 && $discription->g_prizes->count()>0 ) showww @endif 
             "
             id="collapse{{$discription->id}}">
 
