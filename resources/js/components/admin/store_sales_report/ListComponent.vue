@@ -57,10 +57,15 @@
 
         <section v-if="active_data.length"
         class="card card-body bg-white">
-            <a-store-salesreport-chart
+            <!-- <a-store-salesreport-chart
             :s_labels=" data_list.labels.join(',') "
             :s_data  =" active_data.join(',') "
+            /> -->
+            <a-store-salesreport-chart
+            :s_labels=" data_list.labels"
+            :s_data  =" active_data"
             />
+
         </section>
 
 

@@ -6054,6 +6054,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFile100k.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFile100k.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      /* 表示画像のソース */
+      src: null,
+      /* エラーメッセージ */
+      err_message: '',
+      /* 削除 */
+      delete_radio: null
+    };
+  },
+  props: {
+    img_path: {
+      type: String,
+      "default": ''
+    },
+    //表示画像のパス
+    noimg_path: {
+      type: String,
+      "default": ''
+    },
+    //画像無しのパス
+    alt: {
+      type: String,
+      "default": 'サムネ画像'
+    },
+    name: {
+      type: String,
+      "default": 'image'
+    },
+    //インプット要素のname名
+    style_class: {
+      type: String,
+      "default": 'ratio ratio-3x4 rounded-3'
+    },
+    no_text: {
+      type: [Boolean, String, Number],
+      "default": 0
+    }
+  },
+  mounted: function mounted() {
+    //プロップの値をデータに保存 ※プロップの値は直接変更できないので、データに保存
+    this.src = this.img_path !== '' ? this.img_path : this.noimg_path;
+    this.delete_radio = this.img_path == this.noimg_path ? 'delete' : null;
+  },
+  methods: {
+    onChange: function onChange(event) {
+      var file = event.target.files[0];
+      var input_file = document.getElementById('file_input' + this.name);
+      if (
+      //ファイル形式
+      (file.type === 'image/jpeg' || file.type === 'image/png') &&
+      //ファイルサイズ
+      file.size < 100 * 1000) {
+        this.src = URL.createObjectURL(file); //表示画像の変更
+        this.err_message = '';
+
+        // 削除チェックを外す
+        this.delete_radio = null;
+      } else {
+        this.src = this.img_path;
+        this.err_message = '※エラー：ファイルサイズか形式が異なります。';
+        input_file.value = ''; //インプット要素内を空にする。
+      }
+    },
+
+    delete_image: function delete_image() {
+      this.src = this.noimg_path;
+      var input_file = document.getElementById('file_input' + this.name);
+      input_file.value = ''; //インプット要素内を空にする。
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFileComponent.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFileComponent.vue?vue&type=script&lang=js ***!
@@ -10137,73 +10224,72 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'LineChart',
   props: {
     s_labels: {
-      type: String,
-      "default": ''
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
     },
     s_data: {
-      type: String,
-      "default": ''
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
     }
   },
-  data: function data() {
-    return {
-      labels: ['01', '02', '03', '04', '05', '06', '07'],
-      data: [10, 11, 13, 9, 12, 16, 17],
-      max: 100 //グラフの最大値
-    };
-  },
   mounted: function mounted() {
-    this.labels = this.s_labels.split(',');
-    this.data = this.s_data.split(',');
-    this.max = Math.floor(Math.max.apply(Math, _toConsumableArray(this.data)) * 1.1);
-
-    // 外部スクリプトの読み込み・新規作成
-    this.createChart();
+    this.drawChart();
+  },
+  watch: {
+    s_labels: 'drawChart',
+    s_data: 'drawChart'
   },
   methods: {
-    /** 外部スクリプトの読み込み・新規作成*/createChart: function createChart() {
+    drawChart: function drawChart() {
       var _this = this;
-      var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/chart.js@3.7.1';
-      script.async = true;
-      script.onload = function () {
-        // ここにChart.jsを使用するコードを記述する
-        _this.newChart();
-      };
+      if (typeof nv === 'undefined' || !this.s_labels.length || !this.s_data.length) {
+        // データがない時の処理（空のグラフかメッセージ表示など）
+        d3.select(this.$refs.chart).html(''); // グラフクリア
+        return;
+      }
+      var labels = this.s_labels;
+      var values = this.s_data.map(Number);
+      var maxYRaw = Math.max.apply(Math, _toConsumableArray(values));
 
-      // body要素にスクリプトを追加
-      document.body.appendChild(script);
-    },
-    /** 表の作成 */newChart: function newChart() {
-      var context = document.querySelector("#fukuoka_temperature_chart").getContext('2d');
-      new Chart(context, {
-        type: 'line',
-        data: {
-          labels: this.labels,
-          datasets: [{
-            label: "月間売上",
-            data: this.data,
-            borderColor: '#55b5d8',
-            backgroundColor: '#55b5d8'
-          }
-          // {
-          //     label: "前の期間",
-          //     data: [17,10,11,13,9,12,16,],
-          // },
-          ]
-        },
+      // 最大値が0以下のときは1にセット
+      var maxY = maxYRaw > 0 ? maxYRaw : 1;
+      var paddedMaxY = Math.ceil(maxY * 1.2);
+      var data = [{
+        key: "データ系列",
+        values: labels.map(function (label, i) {
+          return {
+            x: i,
+            y: values[i]
+          };
+        })
+      }];
+      nv.addGraph(function () {
+        var chart = nv.models.lineChart().useInteractiveGuideline(true).margin({
+          left: 50,
+          right: 30,
+          top: 30,
+          bottom: 50
+        }).showLegend(false);
+        chart.xAxis.axisLabel('日付').tickFormat(function (i) {
+          return labels[i] || '';
+        });
+        chart.yAxis
+        // .axisLabel('値')
+        .tickFormat(d3.format(',.0f'));
 
-        options: {
-          responsive: false,
-          scales: {
-            y: {
-              min: 0,
-              max: this.max
-            }
-          }
-        }
+        // Y軸は0始まり、上限は paddedMaxY（最低1以上）
+        chart.forceY([0, paddedMaxY]);
+        d3.select(_this.$refs.chart).html(''); // クリア
+        d3.select(_this.$refs.chart).datum(data).call(chart);
+        nv.utils.windowResize(chart.update);
+        return chart;
       });
     }
   }
@@ -17352,6 +17438,102 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFile100k.vue?vue&type=template&id=72976d5e":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFile100k.vue?vue&type=template&id=72976d5e ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {}, [_c("div", {
+    staticClass: "mb-2 d-block position-relative"
+  }, [_c("label", {
+    staticClass: "d-block btn p-0 border-0",
+    attrs: {
+      "for": "file_input" + _vm.name
+    }
+  }, [_c("ratio-image-component", {
+    attrs: {
+      style_class: _vm.style_class,
+      url: _vm.src
+    }
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "text-light position-absolute bottom-0 end-0 p-1",
+    staticStyle: {
+      "z-index": "5"
+    }
+  }, [_c("label", {
+    staticClass: "btn btn-light rounded-pill border",
+    "class": {
+      "": _vm.delete_radio == null
+    },
+    attrs: {
+      "data-bs-toggle": "tooltip",
+      "data-bs-placement": "bottom",
+      title: "画像の削除",
+      "for": _vm.name + "_dalete"
+    }
+  }, [_c("i", {
+    staticClass: "bi bi-x-lg"
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "input-group mb-3 d-none"
+  }, [_c("input", {
+    staticClass: "form-control",
+    staticStyle: {
+      padding: ".4rem"
+    },
+    attrs: {
+      type: "file",
+      name: _vm.name,
+      id: "file_input" + _vm.name
+    },
+    on: {
+      change: _vm.onChange
+    }
+  })]), _vm._v(" "), _vm.no_text == 0 ? _c("div", {
+    staticClass: "form-text"
+  }, [_vm._v("※ファイルは100kバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。")]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "form-check d-none"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.delete_radio,
+      expression: "delete_radio"
+    }],
+    staticClass: "form-check-input",
+    attrs: {
+      type: "radio",
+      name: _vm.name + "_dalete",
+      id: _vm.name + "_dalete",
+      value: "delete"
+    },
+    domProps: {
+      checked: _vm._q(_vm.delete_radio, "delete")
+    },
+    on: {
+      change: [function ($event) {
+        _vm.delete_radio = "delete";
+      }, _vm.delete_image]
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "form-text text-danger"
+  }, [_vm._v(_vm._s(_vm.err_message))])]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFileComponent.vue?vue&type=template&id=7d6de136":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFileComponent.vue?vue&type=template&id=7d6de136 ***!
@@ -24101,19 +24283,15 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", [_c("canvas", {
-    staticClass: "w-100",
-    attrs: {
-      id: "fukuoka_temperature_chart",
-      height: "300"
+  return _c("div", [_c("svg", {
+    ref: "chart",
+    staticStyle: {
+      width: "100%",
+      height: "300px"
     }
   })]);
-}];
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -24260,8 +24438,8 @@ var render = function render() {
     staticClass: "card card-body bg-white"
   }, [_c("a-store-salesreport-chart", {
     attrs: {
-      s_labels: _setup.data_list.labels.join(","),
-      s_data: _setup.active_data.join(",")
+      s_labels: _setup.data_list.labels,
+      s_data: _setup.active_data
     }
   })], 1) : _vm._e(), _vm._v(" "), _c("section", {
     staticClass: "card card-body bg-white my-5 overflow-auto overflou-auto",
@@ -32562,6 +32740,9 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('ratio-image-component', (
 
 /* 画像ファイル読み込み　Input */
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('read-image-file-component', (__webpack_require__(/*! ./components/Items/ReadImageFileComponent.vue */ "./resources/js/components/Items/ReadImageFileComponent.vue")["default"]));
+
+/* 画像ファイル読み込み 100kバイトまで　Input */
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('read-image-file-100k-component', (__webpack_require__(/*! ./components/Items/ReadImageFile100k.vue */ "./resources/js/components/Items/ReadImageFile100k.vue")["default"]));
 
 /* 動画ファイル読み込み　Input */
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('read-movie-file-component', (__webpack_require__(/*! ./components/Items/ReadMovieFileComponent.vue */ "./resources/js/components/Items/ReadMovieFileComponent.vue")["default"]));
@@ -56885,6 +57066,45 @@ component.options.__file = "resources/js/components/Items/RatioImageComponent.vu
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/ReadImageFile100k.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/Items/ReadImageFile100k.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ReadImageFile100k_vue_vue_type_template_id_72976d5e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReadImageFile100k.vue?vue&type=template&id=72976d5e */ "./resources/js/components/Items/ReadImageFile100k.vue?vue&type=template&id=72976d5e");
+/* harmony import */ var _ReadImageFile100k_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReadImageFile100k.vue?vue&type=script&lang=js */ "./resources/js/components/Items/ReadImageFile100k.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReadImageFile100k_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReadImageFile100k_vue_vue_type_template_id_72976d5e__WEBPACK_IMPORTED_MODULE_0__.render,
+  _ReadImageFile100k_vue_vue_type_template_id_72976d5e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Items/ReadImageFile100k.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/ReadImageFileComponent.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/Items/ReadImageFileComponent.vue ***!
@@ -60013,6 +60233,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Items/ReadImageFile100k.vue?vue&type=script&lang=js":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/Items/ReadImageFile100k.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadImageFile100k_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReadImageFile100k.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFile100k.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadImageFile100k_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Items/ReadImageFileComponent.vue?vue&type=script&lang=js":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/Items/ReadImageFileComponent.vue?vue&type=script&lang=js ***!
@@ -61467,6 +61703,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RatioImageComponent_vue_vue_type_template_id_0231d9fa_scoped_true__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RatioImageComponent_vue_vue_type_template_id_0231d9fa_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RatioImageComponent.vue?vue&type=template&id=0231d9fa&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/RatioImageComponent.vue?vue&type=template&id=0231d9fa&scoped=true");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Items/ReadImageFile100k.vue?vue&type=template&id=72976d5e":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/Items/ReadImageFile100k.vue?vue&type=template&id=72976d5e ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadImageFile100k_vue_vue_type_template_id_72976d5e__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadImageFile100k_vue_vue_type_template_id_72976d5e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReadImageFile100k_vue_vue_type_template_id_72976d5e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReadImageFile100k.vue?vue&type=template&id=72976d5e */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/ReadImageFile100k.vue?vue&type=template&id=72976d5e");
 
 
 /***/ }),

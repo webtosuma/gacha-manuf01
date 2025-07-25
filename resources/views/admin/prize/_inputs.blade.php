@@ -16,12 +16,19 @@
                     商品画像<span class="text-danger">＊</span>
                 </div>
 
-                <read-image-file-component
+                {{-- <read-image-file-component
                 img_path="{{ $prize->image_path }}"
                 noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
                 style_class="ratio ratio-3x4 rounded-3 shadow"
                 name="image"
-                ></read-image-file-component>
+                ></read-image-file-component> --}}
+
+                <read-image-file-100k-component
+                img_path="{{ $prize->image_path }}"
+                noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
+                style_class="ratio ratio-3x4 rounded-3 shadow"
+                name="image"
+                />
 
                 <!--error message-->
                 @if ( $errors->has('image') )

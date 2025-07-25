@@ -9,12 +9,19 @@
                 <div class="form-label">トップ画像</div>
                 <div class="form-text">*この登録画像は、ガチャのメイン画像として使用されます。</div>
 
-                <read-image-file-component
+                {{-- <read-image-file-component
                 img_path="{{ $gacha->image_path }}"
                 noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
                 style_class="ratio {{config('app.gacha_card_ratio')}} rounded-3"
                 name="image"
-                ></read-image-file-component>
+                ></read-image-file-component> --}}
+
+                <read-image-file-100k-component
+                img_path="{{ $gacha->image_path }}"
+                noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
+                style_class="ratio {{config('app.gacha_card_ratio')}} rounded-3"
+                name="image"
+                />
 
                 <!--error message-->
                 @if ( $errors->has('image') )

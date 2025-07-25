@@ -4,10 +4,21 @@
 @section('title','EC売上レポート')
 
 
-@section('meta') @php
-$active_key = 'sales_report';
-$active_report_menu = true;
-@endphp @endsection
+@section('meta')
+    @php
+    $active_key = 'sales_report';
+    $active_report_menu = true;
+    @endphp
+
+    <!-- D3 v3 -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+    <!-- NVD3 -->
+    <link href="https://cdn.jsdelivr.net/npm/nvd3/build/nv.d3.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/nvd3/build/nv.d3.min.js"></script>
+
+@endsection
+
 
 
 @section('content')

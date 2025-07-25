@@ -31,6 +31,10 @@ import Vue from 'vue'
     Vue.component('read-image-file-component',
     require('./components/Items/ReadImageFileComponent.vue').default);
 
+    /* 画像ファイル読み込み 100kバイトまで　Input */
+    Vue.component('read-image-file-100k-component',
+    require('./components/Items/ReadImageFile100k.vue').default);
+
     /* 動画ファイル読み込み　Input */
     Vue.component('read-movie-file-component',
     require('./components/Items/ReadMovieFileComponent.vue').default);

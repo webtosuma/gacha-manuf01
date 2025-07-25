@@ -30,12 +30,12 @@
                 </div>
             </div> --}}
 
-            <div class="mt-5">
-                {{-- <a href="{{route('privacy_policy','2024-01-15')}}"
-                >2024年1月15日制定</a><br> --}}
+            {{-- <div class="mt-5">
+                <a href="{{route('privacy_policy','2024-01-15')}}"
+                >2024年1月15日制定</a><br>
                 <a href="{{route('privacy_policy','2024-03-01')}}"
                 >2024年3月1日制定</a><br>
-            </div>
+            </div> --}}
 
         </section>
 

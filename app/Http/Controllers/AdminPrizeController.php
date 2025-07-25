@@ -355,8 +355,8 @@ class AdminPrizeController extends Controller
             );
 
             # エンコード入力情報のデコード処理（絵文字対策）
-                $inputs['name']        = urldecode( $request->name);
-                $inputs['discription'] = urldecode( $request->discription ) ;
+                $inputs['name']        = $request->name        ? urldecode($request->name) : null;
+                $inputs['discription'] = $request->discription ? urldecode( $request->discription ) : null ;
 
             # ポイント更新記録
                 //新規登録

@@ -39,6 +39,10 @@ class ShippedAppliController extends Controller
 
         $user = Auth::user();
         $id_array = $request->user_prize_ids;//発送するユーザー商品ID
+        if( !$id_array ){
+            $message = "発送する商品が選択されていません。";
+            return back()->with('alert-warning',$message);
+        }
 
 
         # ユーザー商品に期限切れがないか、チェック
