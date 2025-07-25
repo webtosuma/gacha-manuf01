@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use \App\Models\Admin;
 /*
 |--------------------------------------------------------------------------
@@ -159,13 +160,13 @@ class SendMailController extends Controller
 
 
             // 認証番号メールの送信
-            Mail::to( $request->email ) //宛先
-            ->send(new \App\Mail\SendHtmlMailMailable([
+            Mail::mailer('register_auth')
+            ->to( $request->email ) //宛先
+            ->send(new \App\Mail\RegisterAuthMailable([
                 'inputs' => compact('verification_code') , //入力変数
                 'view' => 'emails.user_register.01_verification' , //テンプレート
                 'subject' => '会員登録認証コード'.$verification_code , //件名
             ]) );
-
 
             # 認証コードを返す
             return $verification_code;
@@ -184,8 +185,9 @@ class SendMailController extends Controller
 
             # 求職者へメール送信
 
-                Mail::to( $user->email ) //宛先
-                ->send(new \App\Mail\SendHtmlMailMailable([
+                Mail::mailer('register_comp')
+                ->to( $user->email ) //宛先
+                ->send(new \App\Mail\RegisterCompMailable([
                     'inputs' => null , //入力変数
                     'view' => 'emails.user_register.02_completion' , //テンプレート
                     'subject' => '会員登録が完了いたしました。' , //件名
@@ -193,6 +195,7 @@ class SendMailController extends Controller
 
 
             # サイト管理者へメール送信
+            try {
 
                 // メール受取り設定の管理者ユーザーの取得
                 $admins = \App\Models\Admin::where('get_mail',1)->get();
@@ -210,6 +213,11 @@ class SendMailController extends Controller
                     ]) );
                 }
 
+            } catch (\Exception $e) {
+
+                Log::error('会員登録完了Adminメール送信エラー: ' . $e->getMessage());
+                // 処理は止めず継続
+            }
             //
             # テンプレートの表示
             // return view('emails.admin_worker_auth_register', $inputs );

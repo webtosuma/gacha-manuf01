@@ -59,6 +59,35 @@ return [
             'from_name'    => env('MAIL_INFO_FROM_NAME'),
         ],
 
+        # 会員登録・メール認証用メールアドレス
+        'register_auth' => [
+            'transport' => 'smtp',
+            'host'         => env('MAIL_REGISTER_AUTH_HOST', 'smtp.mailgun.org'),
+            'port'         => env('MAIL_REGISTER_AUTH_PORT', 587),
+            'encryption'   => env('MAIL_REGISTER_AUTH_ENCRYPTION', 'tls'),
+            'username'     => env('MAIL_REGISTER_AUTH_USERNAME'),
+            'password'     => env('MAIL_REGISTER_AUTH_PASSWORD'),
+            'timeout'      => null,
+            'auth_mode'    => null,
+            'from_address' => env('MAIL_REGISTER_AUTH_FROM_ADDRESS'),
+            'from_name'    => env('MAIL_REGISTER_AUTH_FROM_NAME'),
+        ],
+
+        # 会員登録・完了用メールアドレス
+        'register_comp' => [
+            'transport' => 'smtp',
+            'host'         => env('MAIL_REGISTER_COMP_HOST', 'smtp.mailgun.org'),
+            'port'         => env('MAIL_REGISTER_COMP_PORT', 587),
+            'encryption'   => env('MAIL_REGISTER_COMP_ENCRYPTION', 'tls'),
+            'username'     => env('MAIL_REGISTER_COMP_USERNAME'),
+            'password'     => env('MAIL_REGISTER_COMP_PASSWORD'),
+            'timeout'      => null,
+            'auth_mode'    => null,
+            'from_address' => env('MAIL_REGISTER_COMP_FROM_ADDRESS'),
+            'from_name'    => env('MAIL_REGISTER_COMP_FROM_NAME'),
+        ],
+
+
         'ses' => [
             'transport' => 'ses',
         ],
