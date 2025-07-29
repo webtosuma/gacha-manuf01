@@ -88,10 +88,6 @@ class RegisterController extends Controller
         $request->session()->regenerate();
 
 
-        # ユーザーIPアドレスの保存
-        // self::ipPost($request);
-
-
         # リダイレクト
         return redirect()->route('register.comp')
         ->with(['alert_register'=>'会員登録が完了しました。']);

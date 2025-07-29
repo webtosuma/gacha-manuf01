@@ -13278,29 +13278,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               paginate = response.data.gachas;
               gachas.value = route === props.r_api_gacha_list ? paginate.data : [].concat(_toConsumableArray(gachas.value), _toConsumableArray(paginate.data));
               searchs.value = response.data.searchs;
-              loading.value = false;
 
               // 次のデータの読み込み
               current_page = paginate.current_page, last_page = paginate.last_page, next_page_url = paginate.next_page_url;
               if (current_page !== last_page) {
                 getData(next_page_url);
               } else {
+                loading.value = false;
                 reading_data.value = false;
               }
-              _context.next = 18;
+              _context.next = 17;
               break;
-            case 14:
-              _context.prev = 14;
+            case 13:
+              _context.prev = 13;
               _context.t0 = _context["catch"](2);
               console.error((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data);
               if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
               }
-            case 18:
+            case 17:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[2, 14]]);
+        }, _callee, null, [[2, 13]]);
       }));
       return function getData() {
         return _ref.apply(this, arguments);
@@ -28956,7 +28956,11 @@ var render = function render() {
     staticStyle: {
       "min-height": "50vh"
     }
-  }, [!_setup.reading_data ? _c("div", {
+  }, [_c("loading-cover-component", {
+    attrs: {
+      loading: _setup.loading
+    }
+  }), _vm._v(" "), !_setup.reading_data ? _c("div", {
     staticClass: "row g-2 align-items-center justify-content-end mb-3 px-1"
   }, [_c("div", {
     staticClass: "col col-lg-auto"
@@ -29040,7 +29044,7 @@ var render = function render() {
     })], 1);
   }), _vm._v(" "), _setup.gachas.length < 1 ? _c("div", {
     staticClass: "col-12 text-secondary bg-light-subtle p-3 fs-5 rounded-3 shadow"
-  }, [_vm._v("*該当するガチャがありません。")]) : _vm._e()], 2)])]);
+  }, [_vm._v("*該当するガチャがありません。")]) : _vm._e()], 2)])], 1);
 };
 var staticRenderFns = [function () {
   var _vm = this,

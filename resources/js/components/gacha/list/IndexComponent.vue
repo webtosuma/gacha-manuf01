@@ -1,6 +1,9 @@
 <template>
     <div class="container px-0 overflow-hidden" style="min-height:50vh;">
 
+        <loading-cover-component :loading="loading" />
+
+
         <!--絞り込み-->
         <div  v-if="!reading_data" class="row g-2 align-items-center justify-content-end mb-3   px-1">
             <div class="col col-lg-auto">
@@ -174,7 +177,6 @@
             route === props.r_api_gacha_list ? paginate.data : [...gachas.value, ...paginate.data];
 
             searchs.value = response.data.searchs;
-            loading.value = false;
 
             // 次のデータの読み込み
             const { current_page, last_page, next_page_url } = paginate;
@@ -182,6 +184,7 @@
                 getData(next_page_url);
             }
             else{
+                loading.value      = false;
                 reading_data.value = false;
             }
 
