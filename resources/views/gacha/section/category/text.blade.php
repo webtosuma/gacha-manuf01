@@ -5,10 +5,10 @@
     $params = ['category_code'=>'all'];
     @endphp
 
-    <a  href="{{ route('gacha_category',$params) }}"
+    {{-- <a  href="{{ route('gacha_category',$params) }}"
     class="{{ $style_class }} d-flex align-items-center justify-content-center">
         <span>{{ 'すべて' }}</span>
-    </a>
+    </a> --}}
 
     @foreach ($categories as $category)
         @php

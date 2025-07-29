@@ -13,7 +13,7 @@ use App\Models\PointHistory;
 use App\Models\Infomation;
 /*
 | =============================================
-|  ガチャ テスト Apiを利用したガチャ一覧 コントローラー 
+|  ガチャ テスト Apiを利用したガチャ一覧 コントローラー
 | =============================================
 */
 class GachaApiController extends Controller
@@ -35,7 +35,11 @@ class GachaApiController extends Controller
         # 変数
 
             ## カテゴリー名（ページタイトル）
-            $category_name = $category ? $category->name : 'すべて';
+            // $category_name = $category ? $category->name : 'すべて';
+
+            $first_category = GachaCategory::first();
+            $category_name = $category ? $category->name : $first_category->name;
+            $category_code = $category ? $category->code_name : $first_category->code_name;
 
             ## 背景画像
             $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();

@@ -7,7 +7,7 @@
         // $params = ['category_code'=>'all', 'search_key'=>$search_key, 'card_size'=>$card_size];
         $params = ['category_code'=>'all'];
         @endphp
-        <a  href="{{ route('gacha_category', $params ) }}"
+        {{-- <a  href="{{ route('gacha_category', $params ) }}"
         class="col-md btn btn-light border-0 d-block p-0 position-relative overflow-hidden
         "
         style="width: 6rem;">
@@ -19,7 +19,7 @@
             "
             style="background:rgba(0, 0, 0, 0.5);"
             >{{'すべて'}}</div>
-        </a>
+        </a> --}}
 
         @foreach ($categories as $category)
             @php
