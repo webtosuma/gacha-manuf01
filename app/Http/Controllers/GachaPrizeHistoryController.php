@@ -36,7 +36,7 @@ class GachaPrizeHistoryController extends Controller
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 
         # 商品履歴の表示許可
-        // if( ! config('app.gacha_prize_history') ){ return \App::abort(404); }
+        if( ! config('app.gacha_prize_history') ){ return \App::abort(404); }
 
         # 売切れチェック
         if( $gacha->remaining_count!=0 ){ return \App::abort(404); }
