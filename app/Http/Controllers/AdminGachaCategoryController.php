@@ -7,7 +7,7 @@ use App\Http\Requests\AdminGachaCategoryRequest;
 use App\Models\GachaCategory;
 /*
 | =============================================
-|  サイト管理者 ガチャのカテゴリー コントローラー 
+|  サイト管理者 ガチャのカテゴリー コントローラー
 | =============================================
 */
 class AdminGachaCategoryController extends Controller
@@ -146,8 +146,13 @@ class AdminGachaCategoryController extends Controller
         #　ガチャの削除
         foreach ($gacha_category->gachas as $gacha) { $gacha->delete(); }
 
-        # 商品の削除
+        # ガチャ商品の削除
         foreach ($gacha_category->prizes as $prize) { $prize->delete(); }
+
+        # EC商品の削除
+        foreach ($gacha_category->store_items as $store_item) { $store_item->delete(); }
+
+
 
         # カテゴリーの削除
         $gacha_category->delete();

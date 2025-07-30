@@ -40,7 +40,6 @@ class PurchaseController extends Controller
         $store_item_count = $request->count;
 
 
-
         # いますぐ購入からの注文
         if( $request->store_item_id )
         {
@@ -77,7 +76,7 @@ class PurchaseController extends Controller
             $store_keep_ids = !$store_keeps ? [] : $store_keeps->pluck('id')->toArray();
 
             # エラーメッセージ
-            if ( $message = self::ErrCheckMessage($request,$store_keeps) ){
+            if ( $message = PurchaseController::ErrCheckMessage($request,$store_keeps) ){
                 return redirect()->back()
                 ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-triangle']);
             }
@@ -93,81 +92,6 @@ class PurchaseController extends Controller
             'r_buynow_item',  //すぐ購入のとき、商品ページURLの保存
         ));
     }
-
-
-
-
-    /**
-     * 確認
-     *
-     * @param Request $request
-     * @return \Illuminate\View\View
-    */
-    // public function confirm_post(Request $request)
-    // {
-    //     # ログインユーザー
-    //     $user = Auth::user();
-
-    //     # 発送料金
-    //     $shipped_price = self::shippedPrice($request);
-
-    //     # 注文商品($store_keeps)
-    //     $ids = $request->store_keep_ids;
-    //     $store_keeps = StoreKeep::where('user_id',$user->id)//ログインユーザーのカート
-    //     ->find($ids);
-
-    //     # お届け先アドレス
-
-    //         $default_address_id = $request->user_address_id;//ユーザーアドレスID
-    //         $default_address    = (bool) $request->default_address;//選択のアドレスをデフォルトにする
-
-    //         /* お届け先アドレス */
-    //         $user_address = UserAddress::where('user_id',$user->id)->find($default_address_id);
-    //         // if( !$user_address ){ return \App::abort(404); }//データがないとき
-
-    //         /* 選択のアドレスをデフォルトにする */
-    //         if( $default_address ){
-    //             UserAddressApiController::UpdateDeffaultAddress( $default_address_id );
-    //         }
-
-    //     # エラーメッセージ
-    //     // if ( $message = self::ErrCheckMessage($request,$store_keeps) ){
-    //     //     return \App::abort(404);
-    //     // }
-
-
-    //     # 利用ポイント
-    //     /* ~ */
-
-
-    //     # 注文履歴の作成
-    //     $store_history = new StoreHistory([
-    //         'user_id'          => $user->id,//ユーザー　　　リレーション
-    //         'point_history_id' => null,//利用ポイント　リレーション
-    //         'user_address_id'  => $user_address->id,//発送先アドレス(保存用)
-
-    //         'shipped_price'    => $shipped_price,//発送料金
-    //         // 'done_at'          => '',//決済完了日時
-    //     ]);
-    //     $store_history->save();
-
-    //     $request->session()->regenerateToken();// 二重送信防止
-
-    //     return redirect()->route('store.purchase.confirm',$store_history);
-    // }
-
-
-
-    // /**
-    //  * 確認
-    //  *
-    //  * @param StoreHistory $store_history
-    //  * @return \Illuminate\View\View
-    // */
-    // public function confirm(StoreHistory $store_history)
-    // {
-    //     return view('store.purchase.confirm',compact('store_history'));
-    // }
 
 
 

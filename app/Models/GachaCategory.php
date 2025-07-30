@@ -83,6 +83,16 @@ class GachaCategory extends Model
         }
 
 
+        /**
+         * StoreItemモデル リレーション
+         * @return \App\Models\StoreItem
+        */
+        public function store_items()
+        {
+            return $this->hasMany(StoreItem::class,'category_id')
+            ->orderByDesc('created_at');
+        }
+
 
     /*
     |--------------------------------------------------------------------------

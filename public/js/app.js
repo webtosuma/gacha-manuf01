@@ -30716,9 +30716,15 @@ var render = function render() {
         rawName: "v-model",
         value: _setup.store_keep_ids,
         expression: "store_keep_ids"
+      }, {
+        name: "show",
+        rawName: "v-show",
+        value: !store_keep.store_item.is_sold_out,
+        expression: "!store_keep.store_item.is_sold_out"
       }],
       staticClass: "form-check-input p-3 rounded-circle",
       attrs: {
+        disabled: store_keep.store_item.is_sold_out,
         name: "store_keep_ids[]",
         type: "checkbox"
       },

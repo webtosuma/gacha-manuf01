@@ -262,7 +262,7 @@ class StoreItem extends Model
             }
 
             # カテゴリーがないor非公開
-            if( !$this->category || !$this->category->is_published ){
+            if( $this->category->deleted_at || !$this->category->is_published ){
                 return '現在、こちらのカテゴリー商品を販売することができません。';
             }
 
@@ -419,6 +419,11 @@ class StoreItem extends Model
 
             # 公開中
             $query->where('published_at','<>',null)->where('published_at','<=',now());//公開中
+
+            # カテゴリーが公開中
+            $query->whereHas('category', function ($query){
+                $query->where('is_published', 1);
+            });
         }
 
 
@@ -562,7 +567,7 @@ class StoreItem extends Model
             # 販売停止(非公開)のとき
             if( $this->published_at>now() || $this->published_at==null )
             {
-                $message = '販売停止中の商品を購入することはできません。';
+                $message = '売切れ商品を購入することはできません。';
             }
 
             return $message;

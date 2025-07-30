@@ -35,6 +35,20 @@ class StripeController extends Controller
     */
     public function checkout(Request $request)
     {
+        $user = Auth::user();//顧客情報
+
+
+        # エラーメッセージ
+        $ids = $request->store_keep_ids;//カート商品ID($store_keep_ids)
+        $store_keeps = StoreKeep::where('user_id',$user->id)->find($ids);//ログインユーザーのカート
+        $store_keep_ids = !$store_keeps ? [] : $store_keeps->pluck('id')->toArray();//注文商品ID
+
+        if ( $message = PurchaseController::ErrCheckMessage($request,$store_keeps) ){
+            return redirect()->route('store.keep')
+            ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-triangle']);
+        }
+
+
         # 購入履歴の新規作成
         $store_history = self::createStoreHistory($request);
 
@@ -44,7 +58,6 @@ class StripeController extends Controller
         # テスト用完了メソッド *後で消す！
         $test = env('APP_DEBUG');
         if( $test ){
-            $user = Auth::user();//顧客情報
             $session_id = 'stripe_checkout_session_id';//stripeセッションID
 
             # 決済完了のDB情報の登録メソッド

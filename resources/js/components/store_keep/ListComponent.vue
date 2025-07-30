@@ -67,6 +67,8 @@
                                 <input
                                 v-model="store_keep_ids"
                                 :value="store_keep.id"
+                                :disabled="store_keep.store_item.is_sold_out"
+                                v-show="!store_keep.store_item.is_sold_out"
                                 name="store_keep_ids[]"
                                 class="form-check-input p-3 rounded-circle"
                                 type="checkbox" >
