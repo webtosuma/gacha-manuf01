@@ -37,6 +37,10 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminContactController::class, 'admin_type_create'])
     ->name('api.admin.contact.type_create');
 
+    # CSVファイルのダウンロード
+    Route::get('/admin/contact/dl_csv',
+    [Controllers\AdminContactController::class, 'dl_csv'])
+    ->name('admin.contact.dl_csv');
 
 
 });//end middleware

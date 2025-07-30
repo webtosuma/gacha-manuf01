@@ -211,5 +211,64 @@ class AdminContactController extends Controller
     }
 
 
+    /**
+     * CSVファイルのダウンロード
+     *
+     * @param Request $request　
+     * @return \Illuminate\Http\Response
+     */
+    public function dl_csv(Request $request)
+    {
+        # 発送申請：発送待ち
+        $ids = $request->contact_ids;
+        $contacts = Contact::find($ids);
+
+        # CSVデータ作成
+        $data_array = [];
+        $header = [
+            '氏名','メール','電話番号','本文','お問い合わせの種類','対応',
+        ];
+        $header = self::convertArrayToSJIS($header);
+        $data_array[] = implode(',',$header);
+
+        foreach ($contacts as $contact) {
+
+            $data = [
+                $contact->name,      //氏名
+                $contact->email,     //メール
+                $contact->tell,      //電話番号
+                str_replace(["\r\n", "\r", "\n"], '', $contact->storage_body),      //本文
+                $contact->type_text, //お問い合わせの種類
+                $contact->responsed ? '済' : '', //対応済みか否か
+            ];
+
+            #UTF-8にエンコード
+            $data = self::convertArrayToSJIS($data);
+
+            # カンマに変換
+            $data_array[] = implode(',',$data);
+        }
+        // dd($data_array);
+
+
+        # 一覧テキストの保存
+        $contents = implode("\n",$data_array);     //改行文章に変換し、変数に保存
+        $path = 'upload/contact/csv/data.csv';//ファイルパス
+        Storage::put($path,$contents);
+
+        # 一覧テキストのダウンロード
+        return Storage::download($path,'お問い合わせ一覧.csv');
+
+    }
+
+        /** UTF-8からSJISにフォーマット */
+        public static function convertArrayToSJIS($data)
+        {
+            array_walk_recursive($data, function (&$value) {
+                $value = mb_convert_encoding($value, 'SJIS', 'UTF-8');
+            });
+
+            return $data;
+        }
 
 }

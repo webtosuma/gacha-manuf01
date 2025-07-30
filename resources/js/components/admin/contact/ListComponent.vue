@@ -69,6 +69,14 @@
                             data-bs-toggle="modal" :data-bs-target="'#deleteContactsModal'"
                             class="btn btn-sm border btn-light text-danger">すべて削除</button>
                         </div>
+                        <!--csv_DL-->
+                        <div v-if="inputs.contact_ids.length " class="col-auto">
+                            <form :action="r_csv_dl">
+                                <input v-for="(contact_id,key) in inputs.contact_ids" :key="key"
+                                type="hidden" name="contact_ids[]" :value="contact_id">
+                                <button class="btn btn-sm btn-light border"><i class="bi bi-filetype-csv"></i>ダウンロード</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="list-group">
@@ -424,6 +432,7 @@
         r_api_update: { type: String, default: '' },
         r_api_destroy: { type: String, default: '' },
         r_api_type_create: { type: String, default: '' },//フォルダの作成
+        r_csv_dl: { type: String, default: '' },//フォルダの作成
     });
 
 
