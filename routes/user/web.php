@@ -61,6 +61,8 @@ Route::middleware([ /* ミドルウェアー */
     # ガチャ
     include('web/gacha.php');
 
+    # ガチャ商品履歴
+    include('web/gacha_prize_history.php');
 
     # ポイント購入・履歴
 

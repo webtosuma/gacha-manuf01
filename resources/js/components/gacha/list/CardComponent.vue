@@ -86,8 +86,14 @@
         </div>
 
 
+        <!-- 商品履歴リンク -->
+        <a v-if="gacha.r_prize_history"
+        :href="gacha.r_prize_history"
+        class="btn btn-warning text-dark fw-bold rounded-pill w-100 mt-3"
+        >商品履歴を見る</a>
+
         <!-- play_buttons(非表示：カードサイズSM　または、カウントダウンあり) -->
-        <div class="mx-1">
+        <div v-if=" ! gacha.r_prize_history" class="mx-1">
             <u-gacha-play-buttons
             :r_action="gacha.r_action"
             :r_costom="gacha.r_costom"

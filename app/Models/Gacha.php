@@ -65,6 +65,7 @@ class Gacha extends Model
         'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
         'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
+        'r_prize_history',     //[ルーティング]ガチャ商品履歴
     ];
 
 
@@ -228,13 +229,28 @@ class Gacha extends Model
 
 
         /**
-         * ガチャ詳細ページ ルーティング route
+         * [ルーティング]ガチャ詳細ページ route
          * @return String
         */
         public function getRouteAttribute()
         {
             $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
             return route('gacha',$params);
+        }
+
+
+
+        /**
+         * [ルーティング]ガチャ商品履歴 r_prize_history
+         * 商品履歴の表示許可があるとき&&売り切れのとき
+         * @return String
+        */
+        public function getRPrizeHistoryAttribute()
+        {
+            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
+
+            return config('app.gacha_prize_history') && $this->is_sold_out
+            ? route('gacha.prize_history',$params) : null;
         }
 
 

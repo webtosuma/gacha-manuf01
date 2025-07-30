@@ -70,6 +70,11 @@ class User extends Authenticatable
 
 
 
+    /** アクセサーをJSONに含める */
+    protected $appends = [
+        'image_path',//画像ファイルパス
+    ];
+
 
 
     /*
@@ -234,7 +239,7 @@ class User extends Authenticatable
         }
 
 
-        
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

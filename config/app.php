@@ -53,9 +53,11 @@ return [
         # カウントダウン時間
         'countdown_minute'         => env('COUNTDOWN_HOUR', 30), //env('COUNTDOWN_HOUR', 24*60),
 
+        # ガチャの商品履歴の表示
+        'gacha_prize_history'      => env('GACHA_PRIZE_HISTORY', false),
+
         # 基本レイアウト
         'layout_app' => env('APP_LAYOUT', ''),
-        // 'layout_app' => env('APP_LAYOUT', 'store'),
 
     /*
     |--------------------------------------------------------------------------
