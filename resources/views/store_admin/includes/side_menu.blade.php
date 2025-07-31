@@ -318,7 +318,7 @@
     </div>
 
 
-    <a href="{{ route('store') }}" target="_blank"
+    <a href="{{ route('home') }}" target="_blank"
     class="list-group-item border-0 p-2 px-3 w-100 text-start" style="border-radius: 2rem  2rem;">
         <div class="d-flex align-items-center gap-3">
             <i class="bi bi-house fs-4"></i>

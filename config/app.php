@@ -56,6 +56,10 @@ return [
         # ガチャの商品履歴の表示
         'gacha_prize_history'      => env('GACHA_PRIZE_HISTORY', false),
 
+        # 住所入力に靴の入力を指定する
+        'address_use_size'         => env('ADDRESS_USE_SIZE', false) ? 1 : 0,
+
+
         # 基本レイアウト
         'layout_app' => env('APP_LAYOUT', ''),
 

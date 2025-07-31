@@ -33,6 +33,9 @@
                             <div class="fw-bold">
                                 <span>{{ address.tell }}</span>
                             </div>
+                            <div v-if="address.size" class="fw-bold">
+                                <span>靴のサイズ：{{ address.size }}</span>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <!-- <button @click="destroy(address.id)"
@@ -72,7 +75,10 @@
                 <!-- お届け先の新規登録フォーム -->
                 <u-create-user-address-form
                 @my-created="getList()"
-                :token="token" :r_store="r_store"/>
+                :token="token"
+                :r_store="r_store"
+                :use_size="use_size"
+                />
 
             </li>
         </ul>
@@ -87,6 +93,7 @@
             r_store:  { type: [String,Number], default: null },//＊新規作成コンポーネントで利用
             r_destroy:{ type: [String,Number], default: null },
             show_check :{ type: [String,Number], defualt: '1' },//チェックボックスの表示
+            use_size:{ type: [String,Number], default: 0 },
         },
         data() { return {
 

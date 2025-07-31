@@ -36,6 +36,8 @@
             u_prize_ids="{{ implode(',',$id_array) }}"
             shipped_point="{{$shipped_point}}"
             r_find="{{ route('api.user_prize.find') }}"
+
+            use_size="{{config('app.address_use_size')}}"
             ></u-shipped-form>
 
 

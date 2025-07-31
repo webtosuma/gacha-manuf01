@@ -26,6 +26,7 @@ class UserAddress extends Model
         'shikuchoson',//'住所-市町村'
         'number',     //'住所-番地'
         'is_default',//デフォルトの送信先か否か
+        'size',//靴のサイズ 2024/12/26追加
     ];
 
 

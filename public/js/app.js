@@ -14133,7 +14133,12 @@ __webpack_require__.r(__webpack_exports__);
     show_check: {
       type: [String, Number],
       defualt: '1'
-    } //チェックボックスの表示
+    },
+    //チェックボックスの表示
+    use_size: {
+      type: [String, Number],
+      "default": 0
+    }
   },
   data: function data() {
     return {
@@ -14221,6 +14226,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     r_store: {
       type: [String, Number],
       "default": null
+    },
+    use_size: {
+      type: [String, Number],
+      "default": 0
     }
   },
   data: function data() {
@@ -14236,9 +14245,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         //住所-都道府県
         shikuchoson: 'まち',
         //住所-市町村
-        number: '１２３' //住所-番地
+        number: '１２３',
+        //住所-番地
+        size: ''
       },
-
       errors: {},
       /* エラー内容 */
 
@@ -14249,6 +14259,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
       /* オプションデータ */
       form_option: {
+        //靴のサイズ
+        sizes: ['24.0cm', '24.5cm', '25.0cm', '25.5cm', '26.0cm', '26.5cm', '27.0cm', '27.5cm', '28.0cm', '28.5cm', '29.0cm', '29.5cm', '30.0cm'],
         // 都道府県
         todohukens: {
           1: '北海道',
@@ -14408,7 +14420,12 @@ __webpack_require__.r(__webpack_exports__);
     shipped_point: {
       type: [String, Number],
       "default": 0
-    } /* 発送ポイント */
+    },
+    /* 発送ポイント */
+    use_size: {
+      type: [Number],
+      "default": 0
+    } /* 靴サイズの利用 */
   },
   data: function data() {
     return {
@@ -29850,7 +29867,9 @@ var render = function render() {
       staticClass: "fw-bold"
     }, [_c("span", [_vm._v(_vm._s("〒" + address.postal_code.substring(0, 3) + "-" + address.postal_code.substring(3, 7)))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.todohuken))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.shikuchoson))]), _vm._v(" "), _c("span", [_vm._v(_vm._s(address.number))])]), _vm._v(" "), _c("div", {
       staticClass: "fw-bold"
-    }, [_c("span", [_vm._v(_vm._s(address.tell))])])]), _vm._v(" "), _c("div", {
+    }, [_c("span", [_vm._v(_vm._s(address.tell))])]), _vm._v(" "), address.size ? _c("div", {
+      staticClass: "fw-bold"
+    }, [_c("span", [_vm._v("靴のサイズ：" + _vm._s(address.size))])]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "col-auto"
     }, [_c("delete-modal-component", {
       attrs: {
@@ -29881,7 +29900,8 @@ var render = function render() {
   }, [_c("u-create-user-address-form", {
     attrs: {
       token: _vm.token,
-      r_store: _vm.r_store
+      r_store: _vm.r_store,
+      use_size: _vm.use_size
     },
     on: {
       "my-created": function myCreated($event) {
@@ -29919,7 +29939,9 @@ var render = function render() {
       "data-bs-target": "#createAddressModal",
       disabled: _vm.comp
     }
-  }, [_vm._v("お届け先の新規登録")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("お届け先の新規登録")]), _vm._v(" "), _vm.use_size != 0 ? _c("div", {
+    staticClass: "text-danger mt-2 form-text"
+  }, [_vm._v("スニーカーを発送の際は発送先情報のサイズの欄に入力登録をお願いします。")]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "createAddressModal",
@@ -29979,7 +30001,50 @@ var render = function render() {
     attrs: {
       role: "alert"
     }
-  }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("label", {
+  }, [_vm._v("※" + _vm._s(_vm.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _vm.use_size != 0 ? _c("label", {
+    staticClass: "mb-3 d-block"
+  }, [_c("div", {
+    staticClass: "form-label"
+  }, [_vm._v("希望の靴サイズ（cm）")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.inputs.size,
+      expression: "inputs.size"
+    }],
+    staticClass: "form-select",
+    attrs: {
+      name: "size",
+      disabled: _vm.loading
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.inputs, "size", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("選択してください")]), _vm._v(" "), _vm._l(_vm.form_option.sizes, function (size, key) {
+    return _c("option", {
+      key: key,
+      domProps: {
+        value: size
+      }
+    }, [_vm._v(_vm._s(size))]);
+  })], 2), _vm._v(" "), _vm.errors.size ? _c("div", {
+    staticClass: "text-danger",
+    attrs: {
+      role: "alert"
+    }
+  }, [_vm._v("※" + _vm._s(_vm.errors.size[0]))]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("label", {
     staticClass: "mb-3 d-block"
   }, [_c("div", {
     staticClass: "form-label"
@@ -30215,7 +30280,8 @@ var render = function render() {
       token: _vm.token,
       r_index: _vm.r_index,
       r_store: _vm.r_store,
-      r_destroy: _vm.r_destroy
+      r_destroy: _vm.r_destroy,
+      use_size: _vm.use_size
     },
     on: {
       "update-address": _vm.updateSelectedAddressId

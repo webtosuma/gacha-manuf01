@@ -36,10 +36,15 @@ class GachaApiController extends Controller
 
             ## カテゴリー名（ページタイトル）
             // $category_name = $category ? $category->name : 'すべて';
-
             $first_category = GachaCategory::first();
-            $category_name = $category ? $category->name : $first_category->name;
-            $category_code = $category ? $category->code_name : $first_category->code_name;
+            if($first_category){
+                $category_name = $category ? $category->name : $first_category->name;
+                $category_code = $category ? $category->code_name : $first_category->code_name;
+            }
+            else{
+                $category_name = null;
+                $category_code = null;
+            }
 
             ## 背景画像
             $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();

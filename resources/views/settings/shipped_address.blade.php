@@ -35,6 +35,7 @@
             r_store="{{ route('api.use_address.store') }}"
             r_destroy="{{ route('api.use_address.destroy') }}"
             show_check="0"
+            use_size="{{config('app.address_use_size')}}"
             ></u-addressーlist-form>
         </section>
 

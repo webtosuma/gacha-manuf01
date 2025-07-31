@@ -164,7 +164,7 @@ class AdminShippedWaitingController extends Controller
         $header = [
             'お届け先郵便番号','お届け先氏名','お届け先敬称',
             'お届け先住所1行目','お届け先住所2行目','お届け先住所3行目','お届け先住所4行目',
-            '内容品','発送商品',
+            '内容品','備考','発送商品',
         ];
         $header = self::convertArrayToSJIS($header);
         $data_array[] = implode(',',$header);
@@ -192,8 +192,9 @@ class AdminShippedWaitingController extends Controller
                 $user_address->shikuchoson, //お届け先住所2行目
                 $user_address->number,      //お届け先住所3行目
                 '',                         //お届け先住所4行目
-                'ホビー・カード',             //内容品
-                $prizes_string,             //発送商品
+                '*商品内容',                 //内容品
+                $user_address->size,       //希望スニーカーサイズ
+                $prizes_string,            //発送商品
             ];
 
             #UTF-8にエンコード

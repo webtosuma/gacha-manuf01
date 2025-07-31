@@ -7,6 +7,10 @@
         :disabled="comp"
         >お届け先の新規登録</button>
 
+        <div v-if="use_size!=0"
+        class="text-danger mt-2 form-text">スニーカーを発送の際は発送先情報のサイズの欄に入力登録をお願いします。</div>
+
+
         <!-- Modal -->
         <div class="modal fade" id="createAddressModal" tabindex="-1" aria-labelledby="createAddressModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -27,6 +31,17 @@
                             type="text" class="form-control" placeholder="">
                             <!-- error message -->
                             <div v-if="errors.name" class="text-danger" role="alert">※{{ errors.name[0] }}</div>
+                        </label>
+
+                        <label v-if="use_size!=0" class="mb-3 d-block">
+                            <div class="form-label">希望の靴サイズ（cm）</div>
+                            <select v-model="inputs.size" name="size" class="form-select" :disabled="loading">
+                                <option value="">選択してください</option>
+                                <option  v-for="(size, key) in form_option.sizes" :key="key"
+                                :value="size">{{ size }}</option>
+                            </select>
+
+                            <div v-if="errors.size" class="text-danger" role="alert">※{{ errors.size[0] }}</div>
                         </label>
 
                         <label class="mb-3 d-block">
@@ -122,6 +137,7 @@
         props: {
             token:{ type: String,  default: '', },
             r_store: { type: [String,Number], default: null },
+            use_size:{ type: [String,Number], default: 0 },
         },
         data() { return {
 
@@ -132,6 +148,7 @@
                 todohuken   :'北海道',//住所-都道府県
                 shikuchoson :'まち',//住所-市町村
                 number      :'１２３',//住所-番地
+                size        :'',
             },
 
             errors : {},/* エラー内容 */
@@ -142,6 +159,10 @@
 
             /* オプションデータ */
             form_option : {
+                //靴のサイズ
+                sizes : [
+                    '24.0cm','24.5cm','25.0cm','25.5cm','26.0cm','26.5cm','27.0cm','27.5cm','28.0cm','28.5cm','29.0cm','29.5cm','30.0cm'
+                ],
                 // 都道府県
                 todohukens : {
                     1 : '北海道', 2 : '青森県', 3 : '岩手県', 4 : '宮城県', 5 : '秋田県', 6 : '山形県', 7 : '福島県',

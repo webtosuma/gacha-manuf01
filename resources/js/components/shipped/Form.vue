@@ -6,9 +6,12 @@
             <h5>お届け先の選択</h5>
 
             <u-addressーlist-form
-            :token="token" :r_index="r_index"
-            :r_store="r_store" :r_destroy="r_destroy"
+            :token   ="token"
+            :r_index  ="r_index"
+            :r_store  ="r_store"
+            :r_destroy="r_destroy"
             @update-address="updateSelectedAddressId"
+            :use_size="use_size"
             ></u-addressーlist-form>
         </section>
 
@@ -67,8 +70,9 @@
             r_destroy:{ type: [String,Number], default: null },
             /* 発送商品リスト */
             u_prize_ids:  { type: [String], default: '' },
-            r_find:  { type: [String,Number], default: null },
+            r_find:       { type: [String,Number], default: null },
             shipped_point:{ type: [String,Number], default: 0 },/* 発送ポイント */
+            use_size:     { type: [Number], default: 0 },/* 靴サイズの利用 */
         },
         data() { return {
 

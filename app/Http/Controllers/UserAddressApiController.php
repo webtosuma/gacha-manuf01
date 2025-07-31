@@ -47,6 +47,7 @@ class UserAddressApiController extends Controller
             'shikuchoson' =>$request->shikuchoson,//'住所-市町村'
             'number'      =>$request->number,     //'住所-番地'
             'is_default'  => 1,//デフォルトの送信先か否か
+            'size'        =>$request->size,       //靴のサイズ
         ]);
         $address->save();
 
