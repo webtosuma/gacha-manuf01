@@ -8,43 +8,53 @@
         <ul class="row g-3 rounded-3 p-0 m-0" style="list-style:none;">
 
             <li v-for="(userPrize, key) in user_prizes" :key="key"
-            class="col-6 col-md-4 col-lg-3">
-                <!-- <label class="d-block " style="cursor:pointer;"> -->
-                    <div class="row" v-if="userPrize.prize">
-                        <label class="col-4 px-0 pe-3 position-relative"  style="cursor: pointer;">
+            class="col-6 col-md-4 col-lg-">
 
+                <div class="row g-0" v-if="userPrize.prize">
+                    <div class="col-4 px-0 position-relative pe-2"  style="cursor: pointer;">
+                        <div class="position-relativeee ">
+
+                            <div class="position-absoluteee top-0 start-0 w-100" style="font-size:11px; z-index:3; opacity:1;">
+                                <div class="bg-dark text-white text-center px-1">No.{{ Number(key+1) }}</div>
+                            </div>
 
                             <ratio-image-component
                             style_class="ratio ratio-3x4 rounded-3"
                             :url=" userPrize.prize.image_path " />
 
-
-                        </label>
-                        <div class="col-8 p-0">
-                            <div class="form-text">{{ formatDate(userPrize.created_at) }}</div>
-                            <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
-
-                            <!--ユーザー情報-->
-                            <!-- <div class="d-flex align-items-center">
-                                <div style="width: 18px">
-                                    <ratio-image-component
-                                    style_class="ratio ratio-1x1 rounded-pill border"
-                                    :url=" userPrize.user.image_path "
-                                    ></ratio-image-component>
-                                </div>
-
-                                <span class="mt-1">{{userPrize.user.name}}</span>
-                            </div> -->
-
                         </div>
                     </div>
-                    <div v-else class="py-5">
-                        <!--商品情報が削除されたとき-->
-                        *商品情報が削除されました
+                    <div class="col-8 p-0">
+
+
+                        <div style="font-size:11px;" >{{ formatDate(userPrize.created_at) }}</div>
+                        <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
+
+                        <!-- <div
+                        class="mt- px-3 text-center border rounded-pill d-inline-block">
+                            <number-comma-component :number=" userPrize.point " />{{ 'pt' }}
+                        </div>
+                        -->
+
+
+                        <!--ユーザー情報-->
+                        <!-- <div class="d-flex align-items-center">
+                            <div style="width: 18px">
+                                <ratio-image-component
+                                style_class="ratio ratio-1x1 rounded-pill border"
+                                :url=" userPrize.user.image_path "
+                                ></ratio-image-component>
+                            </div>
+
+                            <span class="mt-1">{{userPrize.user.name}}</span>
+                        </div> -->
+
                     </div>
-
-
-                <!-- no_exchange_point -->
+                </div>
+                <div v-else class="py-5">
+                    <!--商品情報が削除されたとき-->
+                    *商品情報が削除されました
+                </div>
             </li>
 
 
@@ -97,7 +107,7 @@
 
 
             const { current_page, last_page, next_page_url } = paginate;
-            // nextPageUrl.value = current_page !== last_page ? next_page_url : null; targetHight
+
 
             // 次のデータの読み込み
             if (current_page !== last_page) {

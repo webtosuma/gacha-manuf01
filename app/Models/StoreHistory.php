@@ -308,7 +308,7 @@ class StoreHistory extends Model
                 /*発送待ち*/
                 case '11':
                     $query->where('state_id',11);//
-                    $query->orderByDesc('done_at');
+                    $query->orderBy('done_at');
                     break;
 
                 /*発送済み*/

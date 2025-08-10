@@ -22,16 +22,45 @@ class AdminStoreSalesReportController extends Controller
      */
     public function index(Request $request)
     {
-        $day = Carbon::parse('2025-07-17');
-        list( $start_day, $last_day, $days_labels ) = self::aggDays($request);
+        $start_day = Carbon::now()->startOfMonth(); // 今月の1日（00:00:00）
+        $last_day  = Carbon::now()->endOfMonth();   // 今月の末日（23:59:59）
 
-        // dd(
-            // Daily::getTotalSales($day)
-            # 還元ポイント(redemption_point_count)
-            // list($total_redemption_point_count, $data_list['redemption_point_count'] )
-            // = self::aggRedemptionPointCount( $start_day, $last_day)
+        # 顧客情報
+        $query = User::query();
 
-        // );
+            # 商品購入ユーザーの絞り込み
+            $query->whereHas('store_histories', function($sh_query) use ($start_day,$last_day){
+                $sh_query->whereNotNull('done_at')
+                ->whereBetween('done_at',[$start_day->startOfDay(),$last_day->endOfDay()]);
+            });
+
+            # 購入回数(sales_count)カラムの追加
+            $query->withCount([ 'store_histories as sales_count' => function($sk_query) use ($start_day,$last_day){
+                $sk_query->whereBetween('done_at',[$start_day->startOfDay(),$last_day->endOfDay()])
+                ;
+            }]);
+
+            # 購入商品数(product_count)カラムの追加
+            $query->withSum([ 'done_store_keeps as product_count' => function($sk_query) use ($start_day,$last_day){
+                $sk_query->whereBetween('done_at',[$start_day->startOfDay(),$last_day->endOfDay()])
+                ;
+            }],'count');
+
+            # 並び替え
+
+
+        $visiters = $query->get();
+
+
+
+        # 購入数(payment_count)カラムの追加
+        foreach ($visiters as $visiter)
+            {
+            # code...
+        }
+        dd($visiters->toArray());
+
+
 
         return view('store_admin.sales_report.index');
     }
@@ -50,10 +79,26 @@ class AdminStoreSalesReportController extends Controller
         $data_list = [];
 
         # 開始日・終了日・日付ラベル
-        list( $start_day, $last_day, $days_labels ) = self::aggDays($request);
+        list( $start_day, $last_day ) = self::aggDays($request);
         $start_day_format = $start_day->format('Y-m-d');
         $last_day_format  = $last_day->format('Y-m-d');
-        $data_list['labels'] = $days_labels;//データリスト保存
+
+        # 日付ラベル配列を作成
+        $data_list['labels']   = [];//日付ラベル配列
+        $data_list['w_labels'] = [];//曜日配列
+        $period = CarbonPeriod::create($start_day, $last_day);// 日付期間を作成
+        foreach ($period as $day) {
+            $data_list['labels'][]   = $day->format('m/d');
+            $data_list['w_labels'][] = self::$weeks[$day->format('w')];
+        }
+
+        # 日別レポートルーティングの保存
+        $data_list['r_daily_array'] = [];
+        $period = CarbonPeriod::create($start_day, $last_day);// 日付期間を作成
+        foreach ($period as $day) {
+            $data_list['r_daily_array'][] = route('admin.store.sales_report.daily',$day->format('Y-m-d'));
+        }
+
 
         # 売上集計(sales)
         list($total_sales, $data_list['sales'] )
@@ -71,9 +116,9 @@ class AdminStoreSalesReportController extends Controller
         list($total_payment_count, $data_list['payment_count'] )
         = self::aggPaymentCount( $start_day, $last_day);
 
-        # 販売商品数(sales_prodact_count)
-        list($total_sales_prodact_count, $data_list['sales_prodact_count'] )
-        = self::aggSalesProdactCount( $start_day, $last_day);
+        # 販売商品数(sales_product_count)
+        list($total_sales_product_count, $data_list['sales_product_count'] )
+        = self::aggSalesProductCount( $start_day, $last_day);
 
         # 還元ポイント(redemption_point_count)
         list($total_redemption_point_count, $data_list['redemption_point_count'] )
@@ -85,7 +130,7 @@ class AdminStoreSalesReportController extends Controller
             'visiters_count'         => ['value'=> $total_visiters_count,         'label'=> '顧客数'],        //合計客数
             'reprater_count'         => ['value'=> $total_reprater_count,         'label'=> 'リピーター数'], //リピーター数
             'payment_count'          => ['value'=> $total_payment_count,          'label'=> '販売回数'],    //販売回数
-            'sales_prodact_count'    => ['value'=> $total_sales_prodact_count,    'label'=> '販売商品数'],   //販売商品数
+            'sales_product_count'    => ['value'=> $total_sales_product_count,    'label'=> '販売商品数'],   //販売商品数
             'redemption_point_count' => ['value'=> $total_redemption_point_count, 'label'=> '還元ポイント'], //還元ポイント
         ];
 
@@ -95,10 +140,14 @@ class AdminStoreSalesReportController extends Controller
         # 入力値
         $inputs = $request->all();
 
+        # ルーティング
+        $r_api_visiters = route('admin.api.store.sales_report.visiters');//API 顧客一覧
+        $r_api_products = route('admin.api.store.sales_report.products');//API 商品一覧
 
         return response()->json( compact(
             'start_day_format', 'last_day_format',
-            'data_list','totals','select_day_types','inputs'
+            'data_list','totals','select_day_types','inputs',
+            'r_api_visiters','r_api_products',
         ) );
     }
 
@@ -117,6 +166,11 @@ class AdminStoreSalesReportController extends Controller
             '30days'     => '過去30日間',
         ];
 
+
+        /**
+         *  曜日配列
+         */
+        protected static array $weeks = ['(日)','(月)','(火)','(水)','(木)','(金)','(土)',];
 
 
         /**
@@ -172,15 +226,7 @@ class AdminStoreSalesReportController extends Controller
                     break;
             }
 
-
-            # 日付ラベル配列を作成
-            $days_labels = [];
-            $period = CarbonPeriod::create($start_day, $last_day);// 日付期間を作成
-            foreach ($period as $day) {
-                $days_labels[] = $day->format('m/d');
-            }
-
-            return [ $start_day, $last_day, $days_labels];
+            return [ $start_day, $last_day];
         }
 
 
@@ -275,16 +321,16 @@ class AdminStoreSalesReportController extends Controller
 
 
         /**
-         * [メソッド] 販売商品数(sales_prodact_count)
+         * [メソッド] 販売商品数(sales_product_count)
         */
-        private function aggSalesProdactCount( $start_day, $last_day)
+        private function aggSalesProductCount( $start_day, $last_day)
         {
             $days = [];
             $total = 0;
 
             $period = CarbonPeriod::create($start_day, $last_day);// 日付期間を作成
             foreach ($period as $day) {
-                $daily_val = Daily::getSalesProdactCount($day);
+                $daily_val = Daily::getSalesProductCount($day);
                 $days[]    = $daily_val;
                 $total    += $daily_val;
             }
@@ -312,5 +358,9 @@ class AdminStoreSalesReportController extends Controller
             return [ $total, $days];
         }
 
-    /*  */
+    /* end API 一覧 */
+
+
+
+
 }

@@ -34,19 +34,56 @@ class AdminStoreSalesReportDailyController extends Controller
      * API 一覧
      *
      * @param \Illuminate\Http\Request $request
+     * @param String $date_format
      * @return \Illuminate\Http\Response
     */
-    public function api_index(Request $request)
+    public function api_index( Request $request, $date_format )
     {
+
+        # 日付カーボン
+        $day = Carbon::parse( $date_format );
+        $day_format = $day->format('Y年m月d日').self::$weeks[$day->format('w')];
+
+        # 売上レポート
+        $data_list = StoreHistory::whereNotNull('done_at')
+        ->whereDate('done_at', $day->toDateString())
+        ->paginate(20);
+
+        foreach ($data_list as $data) {
+            $data->sum_count             = $data->sumItemsCount();//点数
+            $data->sum_points_redemption = $data->sumItemsPointsRedemption();//還元ポイント
+            $data->total_price           = $data->totalItemsPrice();//請求金額
+
+            $data->ra_user_show = route('admin.user.show',$data->user);             //[Adminルーティング]ユーザー詳細
+            $data->ra_store_shipped_show = route('admin.store.shipped.show',$data); //[Adminルーティング]発送詳細
+        }
+
+
+        # 合計値リスト
+        $totals = [
+            'sales'                  => ['value'=> self::getTotalSales($day),           'label'=> '売上'],        //合計売上
+            'visiters_count'         => ['value'=> self::getVisitersCount($day),        'label'=> '顧客数'],        //合計客数
+            'reprater_count'         => ['value'=> self::getRepraterCount($day),        'label'=> 'リピーター数'], //リピーター数
+            'payment_count'          => ['value'=> self::getPaymentCount($day),         'label'=> '販売回数'],    //販売回数
+            'sales_product_count'    => ['value'=> self::getSalesProductCount($day),    'label'=> '販売商品数'],   //販売商品数
+            'redemption_point_count' => ['value'=> self::getRedemptionPointCount($day), 'label'=> '還元ポイント'], //還元ポイント
+        ];
+
         # 入力値
         $inputs = $request->all();
 
-
         return response()->json( compact(
+            'day_format','data_list','totals',
             'inputs'
         ) );
     }
 
+
+
+        /**
+         *  曜日配列
+         */
+        protected static array $weeks = ['(日)','(月)','(火)','(水)','(木)','(金)','(土)',];
 
 
 
@@ -61,7 +98,7 @@ class AdminStoreSalesReportDailyController extends Controller
             # 小計の合計
             $totalDonePrice = StoreKeep::whereHas('store_history', function ($query) use ($day) {
                 $query->whereNotNull('done_at')
-                    ->whereDate('done_at', $day->toDateString());
+                ->whereDate('done_at', $day->toDateString());
             })->sum('done_sum_price');
 
             # 発送料金の合計
@@ -129,12 +166,12 @@ class AdminStoreSalesReportDailyController extends Controller
 
 
         /**
-         * [メソッド]日別合計　販売商品数(sales_prodact_count)
+         * [メソッド]日別合計　販売商品数(sales_product_count)
          *
          * @param Carbon $day
          * @return Array
         */
-        public static function getSalesProdactCount($day)
+        public static function getSalesProductCount($day)
         {
             return (Int) StoreKeep::whereHas('store_history', function ($query) use ($day) {
                 $query->whereNotNull('done_at')

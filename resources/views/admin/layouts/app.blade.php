@@ -4,6 +4,6 @@
 
 @else
 
-    @include(config('app.layout_app').'_admin.layouts.app'  )
+    @include('store_admin.layouts.app'  )
 
 @endif

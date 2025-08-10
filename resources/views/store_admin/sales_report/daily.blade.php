@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','EC売上レポート')
+@section('title','日別売上レポート')
 
 
 @section('meta')
@@ -29,19 +29,24 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"
-                    >{{ 'Top' }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">EC売上レポート</li>
+                >{{ 'Top' }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.store.sales_report') }}"
+                >{{ 'EC売上レポート' }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">日別売上レポート</li>
             </ol>
         </nav>
 
 
-        <h2 class="my-5 py-3 border-bottom">EC売上レポート</h2>
+        <h2 class="my- py-3 border-bottom">日別売上レポート</h2>
 
+        <a href="{{route('admin.store.sales_report')}}"
+        class="btn my-3 border rounded-pill"
+        ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
-        <a-store-salesreport-list
+        <a-store-salesreport-daily
         token="{{ csrf_token() }}"
-        r_api_list="{{ route('admin.api.store.sales_report') }}"
-        ></a-store-salesreport-list>
+        r_api_list="{{ route('admin.api.store.sales_report.daily',$date_format) }}"
+        ></a-store-salesreport-daily>
 
 
     </div>

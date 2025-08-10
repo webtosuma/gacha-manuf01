@@ -3,7 +3,6 @@
         <div :class="card_style_class">
 
 
-
             <!--image-->
             <a :href="gacha.route"  :class="href_class"  style="opacity:1 !important;">
 
@@ -86,17 +85,12 @@
         </div>
 
 
-        <!-- 商品履歴リンク -->
-        <a v-if="gacha.r_prize_history"
-        :href="gacha.r_prize_history"
-        class="btn btn-warning text-dark fw-bold rounded-pill w-100 mt-3"
-        >商品履歴を見る</a>
-
         <!-- play_buttons(非表示：カードサイズSM　または、カウントダウンあり) -->
-        <div v-if=" ! gacha.r_prize_history" class="mx-1">
+        <div class="mx-1">
             <u-gacha-play-buttons
             :r_action="gacha.r_action"
             :r_costom="gacha.r_costom"
+            :r_prize_history="gacha.r_prize_history"
             :one_play_point         ="gacha.one_play_point"
             :is_disabled_oneplay_btn="gacha.is_disabled_oneplay_btn"
             :is_disabled_tenplay_btn="gacha.is_disabled_tenplay_btn"

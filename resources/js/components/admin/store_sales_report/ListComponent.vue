@@ -3,9 +3,11 @@
 
         <loading-cover-component :loading="loading" />
 
+        {{ active_table_type }}
 
-        <section class="mb-3">
 
+        <!-- 選択エリア -->
+        <!-- <section class="mb-3">
             <div class="row align-items-center g-2">
                 <div class="col-auto pe-3">
                     <select v-model="inputs.days_type"
@@ -35,9 +37,11 @@
                     </div>
                 </div>
             </div>
+        </section> -->
 
 
-            {{ inputs.active_key }}
+        <!-- 合計値 -->
+        <!-- <section class="mb-3">
             <div class="row mt-3 g-0">
                 <div v-for="( total, key  ) in totals" :key="key"
                 class="col-6 col-md">
@@ -49,31 +53,41 @@
                     </button>
                 </div>
             </div>
-        </section>
+        </section> -->
 
-
-        <!-- {{ data_list.labels.join(',') }}<br> -->
-        <!-- {{ active_data }} -->
-
-        <section v-if="active_data.length"
+        <!-- グラフ -->
+        <!-- <section v-if="active_data.length"
         class="card card-body bg-white">
-            <!-- <a-store-salesreport-chart
-            :s_labels=" data_list.labels.join(',') "
-            :s_data  =" active_data.join(',') "
-            /> -->
+
             <a-store-salesreport-chart
             :s_labels=" data_list.labels"
             :s_data  =" active_data"
             />
 
-        </section>
+        </section> -->
 
 
-        <section class="card card-body bg-white my-5 overflow-auto overflou-auto" style="max-height:50vh;">
-            <div class="mb-3">日別レポート</div>
+        <section class="card card-body bg-white my-5 overflow-auto ">
+
+            <div class="d-flex gap-2 mb-3">
+                <div v-for="(label, key) in table_types" :key="key">
+                    <input v-model="active_table_type"
+                    type="radio"
+                    :id="key"
+                    name="table"
+                    :value="key"
+                    class="btn-check"
+                    autocomplete="off">
+                    <label class="btn border"
+                    :class="key==active_table_type ? 'btn-primary text-white' : ''"
+                    :for="key">{{ label }}</label>
+                </div>
+            </div>
 
 
-            <table class="table bg-white ">
+            <!-- 日別レポート -->
+            <table v-if=" active_table_type=='selse' "
+            class="table bg-white ">
                 <!--head-->
                 <thead>
                     <tr class="bg-white text-center">
@@ -89,10 +103,12 @@
                 <tbody class="text-center">
                     <tr v-for="(day,d_key) in data_list.labels" :key="d_key">
 
-                        <td>{{ day }}</td>
+                        <td>
+                            <a :href="data_list.r_daily_array[d_key]"
+                            >{{ day + data_list.w_labels[d_key] }}</a>
+                        </td>
 
                         <th v-for="(total,t_key) in totals" :key="t_key" scope="col">
-                            <!-- {{ t_key }} -->
                               {{ data_list[t_key][d_key] }}
                         </th>
 
@@ -116,18 +132,6 @@
         </section>
 
 
-        <section class="card card-body bg-white my-5 overflow-auto overflou-auto" style="max-height:50vh;">
-            <div class="mb-3">顧客レポート</div>
-
-        </section>
-
-
-        <section class="card card-body bg-white my-5 overflow-auto overflou-auto" style="max-height:50vh;">
-            <div class="mb-3">商品レポート</div>
-
-        </section>
-
-
     </div>
 </template>
 
@@ -139,7 +143,6 @@
     const props = defineProps({
         token:       { type: String, default: '' },
         r_api_list:  { type: String, default: '' },
-
     });
 
 
@@ -148,7 +151,6 @@
 
     /* データリスト */
     const data_list = ref({}); //
-
     const active_data = ref([]);
 
     /* 今日の日付フォーマット */
@@ -160,12 +162,34 @@
         visiters_count:        {value: 0, label: '客数'}, //客数
         reprater_count:        {value: 0, label: 'リピーター数'}, //リピーター数
         payment_count :        {value: 0, label: '販売回数'},    //販売回数
-        sales_prodact_count:   {value: 0, label: '販売商品数'},  //販売商品数
+        sales_product_count:   {value: 0, label: '販売商品数'},  //販売商品数
         redemption_point_count:{value: 0, label: '還元ポイント'},//還元ポイント
     });
 
     /* 日付の種類選択 */
     const select_day_types = ref(null);
+
+
+
+    /* テーブルの種類 */
+    const table_types = ref({
+        selse:    '売上レポート',
+        visiters: '顧客レポート',
+        products:  '商品レポート',
+    });
+
+    /* 選択中のテーブルの種類 */
+    const active_table_type = ref('selse');
+
+    /* テーブルデータリスト */
+    const data_list_visiters = ref({});//顧客データ
+    const data_list_products = ref({});//顧客データ
+
+
+    /* APIルーティング */
+    const r_api_visiters = ref('');//API 顧客一覧
+    const r_api_products = ref('');//API 商品一覧
+
 
     /* 入力値 */
     const inputs = ref({
@@ -180,7 +204,6 @@
 
     /* 監視 */
     watch(() => inputs.value.active_key,  () =>{
-        // active_data.value.unshift( data_list.value[ inputs.value.active_key ] );
         active_data.value = data_list.value[ inputs.value.active_key ];
     });
     watch(() => inputs.value.days_type,  () =>{
@@ -188,6 +211,22 @@
     });
     watch(() => inputs.value.start_day, () => getData());
     watch(() => inputs.value.last_day,  () => getData());
+
+    /* 監視：テーブルの切り替え */
+    watch(() => active_table_type.value, () => {
+
+        // 顧客履歴データの取得
+        if( active_table_type.value == 'visiters' ){
+            loading.value = true;
+            getDataVisiters();
+        }
+        // 商品履歴データの取得
+        if( active_table_type.value == 'products' ){
+            loading.value = true;
+            getDataProducts();
+        }
+
+    });
 
 
     /* 初回データ取得 */
@@ -220,6 +259,11 @@
 
             /*日付の種類選択*/
             select_day_types.value = response.data['select_day_types'];
+
+            /*テーブルAPIルーティング*/
+            r_api_visiters.value = response.data['r_api_visiters'];//API 顧客一覧
+            r_api_products.value = response.data['r_api_products'];//API 商品一覧
+
             loading.value = false;
 
 
@@ -233,6 +277,53 @@
 
         }
     };
+
+
+    /* 顧客履歴データ取得 */
+    const getDataVisiters = async () => {
+        loading.value = true;
+        try {
+            const response = await axios.post( r_api_visiters.value, inputs.value);
+
+            /*データリスト*/
+            data_list_visiters.value   = response.data['data_list_visiters'];
+            loading.value = false;
+
+
+        } catch (error) {
+
+            console.error(error.response?.data);
+
+            if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+                location.reload();
+            }
+
+        }
+    };
+
+
+    /* 商品履歴データ取得 */
+    const getDataProducts = async () => {
+        loading.value = true;
+        try {
+            const response = await axios.post( r_api_products.value, inputs.value);
+
+            /*データリスト*/
+            data_list_products.value   = response.data['data_list_products'];
+            loading.value = false;
+
+
+        } catch (error) {
+
+            console.error(error.response?.data);
+
+            if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+                location.reload();
+            }
+
+        }
+    };
+
 
 
     /* 今日の日付フォーマット */

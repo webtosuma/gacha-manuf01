@@ -191,6 +191,19 @@ class User extends Authenticatable
             ;
         }
 
+
+        /**
+         * 購入済みUserStoreKeepモデル リレーション ($user->done_store_keeps)
+         * @return \App\Models\UserStoreKeep
+        */
+        public function done_store_keeps()
+        {
+            return $this->hasMany(StoreKeep::class,'user_id')
+            ->whereNotNull('done_at')//購入済み商品のみ
+            ;
+        }
+
+
         /**
          * UserStoreKeepモデル リレーション ($user->store_limit_keeps)
          * @return \App\Models\UserStoreKeep
@@ -237,7 +250,6 @@ class User extends Authenticatable
         {
             return $this->hasMany(StoreHistory::class);
         }
-
 
 
     /*

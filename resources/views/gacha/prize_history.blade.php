@@ -29,9 +29,25 @@
 @section('content')
 
 
+    <!--ボトムメニュー-->
+    <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white d-lg-none"
+    style="z-index:50; background:rgb(0, 0, 0, .7);">
+        <div class="container mx-auto" style="max-width:600px;">
+
+            @php
+            $params = [ 'category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key ];
+            @endphp
+            <a href="{{ route( 'gacha', $params )         }}"
+            class="btn btn-light fw-bold rounded-pill w-100 mt-3"
+            >詳細を見る</a>
+
+        </div>
+    </div>
+
+
     <div class="container">
         <div class="row">
-            <div class="col-12 col-lg ">
+            <div class="col-12 col-lg" style="min-height:100vh;">
 
                 <!--トップ画像-->
                 <div class="overflow-hidden rounded-4"
@@ -53,33 +69,16 @@
 
 
 
-
-                {{-- <div class="row gy-3 my-5">
-                    @foreach ($user_prizes as $user_prize)
-                    <div class="col-auto">
-                        <div class="form-text">{{$user_prize->created_at->format('Y/m/d h:i')}}</div>
-                        <ratio-image-component
-                        style_class="ratio ratio-3x4 rounded-3"
-                        url="{{$user_prize->prize->image_path}}"
-                        ></ratio-image-component>
-                        <div class="d-flex align-items-center">
-                            <div style="width: 18px">
-                                <ratio-image-component
-                                style_class="ratio ratio-1x1 rounded-pill border"
-                                url="{{ $user_prize->user->image_path }}"
-                                ></ratio-image-component>
-                            </div>
-
-                            <span class="mt-1">{{mb_substr($user_prize->user->name,0,8).'...'}}</span>
-                        </div>
-                    </div>
-                    @endforeach
-                </div> --}}
-
-
             </div>
             <div class="col-12 col-lg-4"  style="min-width: 360px;">
                 <div class="position-sticky ps-2 mb-5" style="top: 4rem; ">
+
+
+                    <div>
+                        <a href="{{ route( 'gacha', $params )         }}"
+                        class="btn btn-light shadow fw-bold rounded-pill w-100 mt-3"
+                        >詳細を見る</a>
+                    </div>
 
 
 
