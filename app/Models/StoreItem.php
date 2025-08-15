@@ -126,6 +126,13 @@ class StoreItem extends Model
         }
 
 
+        /**
+         * StoreKeepモデル リレーション (カート商品＋販売済商品)
+         * @return \App\Models\StoreKeep
+        */
+        public function store_keeps(){
+            return $this->hasMany(StoreKeep::class);
+        }
 
 
     /*

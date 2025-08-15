@@ -3,11 +3,9 @@
 
         <loading-cover-component :loading="loading" />
 
-        {{ active_table_type }}
-
 
         <!-- 選択エリア -->
-        <!-- <section class="mb-3">
+        <section class="mb-3">
             <div class="row align-items-center g-2">
                 <div class="col-auto pe-3">
                     <select v-model="inputs.days_type"
@@ -37,11 +35,11 @@
                     </div>
                 </div>
             </div>
-        </section> -->
+        </section>
 
 
         <!-- 合計値 -->
-        <!-- <section class="mb-3">
+        <section class="mb-3">
             <div class="row mt-3 g-0">
                 <div v-for="( total, key  ) in totals" :key="key"
                 class="col-6 col-md">
@@ -53,10 +51,10 @@
                     </button>
                 </div>
             </div>
-        </section> -->
+        </section>
 
         <!-- グラフ -->
-        <!-- <section v-if="active_data.length"
+        <section v-if="active_data.length"
         class="card card-body bg-white">
 
             <a-store-salesreport-chart
@@ -64,7 +62,7 @@
             :s_data  =" active_data"
             />
 
-        </section> -->
+        </section>
 
 
         <section class="card card-body bg-white my-5 overflow-auto ">
@@ -85,7 +83,7 @@
             </div>
 
 
-            <!-- 日別レポート -->
+            <!-- 日別データ テーブル -->
             <table v-if=" active_table_type=='selse' "
             class="table bg-white ">
                 <!--head-->
@@ -125,6 +123,94 @@
 
                     </tr>
                 </tfoot>
+
+            </table>
+
+
+            <!-- 顧客データ　テーブル -->
+            <table v-if=" active_table_type=='visiters' "
+            class="table bg-white ">
+                <!--head-->
+                <thead>
+                    <tr class="bg-white text-center">
+
+                        <th scope="col">アカウント名</th>
+
+                        <th scope="col">購入金額(円)</th>
+
+                        <th scope="col">購入回数</th>
+
+                        <th scope="col">購入商品数</th>
+
+                    </tr>
+                </thead>
+                <!--body-->
+                <tbody class="text-center">
+                    <tr v-for="(visiter,v_key) in data_list_visiters" :key="v_key">
+
+                        <!-- アカウント名 -->
+                        <td scope="col">
+
+                            <a :href=" visiter.ra_user_show " class="d-block mb-2"
+                            >{{ 'ID:'+visiter.id+' '+visiter.name }}</a>
+
+                        </td>
+
+                        <!-- 購入金額(円) -->
+                        <td scope="col">{{ visiter.total_price.toLocaleString()+'円' }}</td>
+
+                        <!-- 購入回数(sales_count) -->
+                        <td scope="col">{{ visiter.sales_count.toLocaleString() }}</td>
+
+                        <!-- 購入商品数(product_count) -->
+                        <td scope="col">{{ visiter.product_count.toLocaleString() }}</td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+
+
+            <!-- 販売商品データ　テーブル -->
+            <table v-if=" active_table_type=='products' "
+            class="table bg-white ">
+                <!--head-->
+                <thead>
+                    <tr class="bg-white text-center">
+
+                        <th scope="col">商品名</th>
+
+                        <th scope="col">販売数</th>
+
+                        <th scope="col">売上金額(円)</th>
+
+                        <th scope="col">還元ポイント(pt)</th>
+
+                    </tr>
+                </thead>
+                <!--body-->
+                <tbody class="text-center">
+                    <tr v-for="(product,v_key) in data_list_products" :key="v_key">
+
+                        <!-- アカウント名 -->
+                        <td scope="col">
+
+                            <a :href=" product.ra_show " class="d-block mb-2"
+                            >{{ product.name }}</a>
+
+                        </td>
+
+                        <!-- 販売数 -->
+                        <td scope="col">{{ Number(product.sum_count).toLocaleString() }}</td>
+
+                        <!-- 売上金額(sum_price) -->
+                        <td scope="col">{{ Number(product.sum_price).toLocaleString()+'円' }}</td>
+
+                        <!-- 還元ポイント(sum_points_redemption) -->
+                        <td scope="col">{{ Number(product.sum_points_redemption).toLocaleString()+'pt' }}</td>
+
+                    </tr>
+                </tbody>
 
             </table>
 
@@ -202,16 +288,18 @@
 
     });
 
-    /* 監視 */
+    /* 監視：選択中のデータの種類 */
     watch(() => inputs.value.active_key,  () =>{
         active_data.value = data_list.value[ inputs.value.active_key ];
     });
+    /* 監視：日付の種類 */
     watch(() => inputs.value.days_type,  () =>{
         if( inputs.value.days_type!='custom' ){ getData(); }
     });
+    /* 監視：開始日 */
     watch(() => inputs.value.start_day, () => getData());
+    /* 監視：終了日 */
     watch(() => inputs.value.last_day,  () => getData());
-
     /* 監視：テーブルの切り替え */
     watch(() => active_table_type.value, () => {
 
@@ -264,6 +352,17 @@
             r_api_visiters.value = response.data['r_api_visiters'];//API 顧客一覧
             r_api_products.value = response.data['r_api_products'];//API 商品一覧
 
+
+            /* テーブルデータ */
+            // 顧客履歴データの取得
+            if( active_table_type.value == 'visiters' ){
+                getDataVisiters();
+            }
+            // 商品履歴データの取得
+            if( active_table_type.value == 'products' ){
+                getDataProducts();
+            }
+
             loading.value = false;
 
 
@@ -286,7 +385,7 @@
             const response = await axios.post( r_api_visiters.value, inputs.value);
 
             /*データリスト*/
-            data_list_visiters.value   = response.data['data_list_visiters'];
+            data_list_visiters.value   = response.data['visiters'];
             loading.value = false;
 
 
@@ -309,8 +408,9 @@
             const response = await axios.post( r_api_products.value, inputs.value);
 
             /*データリスト*/
-            data_list_products.value   = response.data['data_list_products'];
+            data_list_products.value = response.data['products'];
             loading.value = false;
+            console.log(data_list_products.value);
 
 
         } catch (error) {

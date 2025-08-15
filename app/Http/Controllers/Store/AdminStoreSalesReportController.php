@@ -22,46 +22,9 @@ class AdminStoreSalesReportController extends Controller
      */
     public function index(Request $request)
     {
-        $start_day = Carbon::now()->startOfMonth(); // 今月の1日（00:00:00）
-        $last_day  = Carbon::now()->endOfMonth();   // 今月の末日（23:59:59）
-
-        # 顧客情報
-        $query = User::query();
-
-            # 商品購入ユーザーの絞り込み
-            $query->whereHas('store_histories', function($sh_query) use ($start_day,$last_day){
-                $sh_query->whereNotNull('done_at')
-                ->whereBetween('done_at',[$start_day->startOfDay(),$last_day->endOfDay()]);
-            });
-
-            # 購入回数(sales_count)カラムの追加
-            $query->withCount([ 'store_histories as sales_count' => function($sk_query) use ($start_day,$last_day){
-                $sk_query->whereBetween('done_at',[$start_day->startOfDay(),$last_day->endOfDay()])
-                ;
-            }]);
-
-            # 購入商品数(product_count)カラムの追加
-            $query->withSum([ 'done_store_keeps as product_count' => function($sk_query) use ($start_day,$last_day){
-                $sk_query->whereBetween('done_at',[$start_day->startOfDay(),$last_day->endOfDay()])
-                ;
-            }],'count');
-
-            # 並び替え
-
-
-        $visiters = $query->get();
-
-
-
-        # 購入数(payment_count)カラムの追加
-        foreach ($visiters as $visiter)
-            {
-            # code...
-        }
-        dd($visiters->toArray());
-
-
-
+        // dd(
+        //     AdminStoreSalesReportVisitersController::api_index($request)
+        // );
         return view('store_admin.sales_report.index');
     }
 
@@ -137,12 +100,12 @@ class AdminStoreSalesReportController extends Controller
         # 日付の種類選択
         $select_day_types = self::$selectDayTypes;
 
-        # 入力値
-        $inputs = $request->all();
-
         # ルーティング
         $r_api_visiters = route('admin.api.store.sales_report.visiters');//API 顧客一覧
         $r_api_products = route('admin.api.store.sales_report.products');//API 商品一覧
+
+        # 入力値
+        $inputs = $request->all();
 
         return response()->json( compact(
             'start_day_format', 'last_day_format',
@@ -179,7 +142,7 @@ class AdminStoreSalesReportController extends Controller
          * @param \Illuminate\Http\Request $request
          * @return Array [ $start_day, $last_day, $days_labels]
         */
-        private function aggDays($request)
+        public static function aggDays($request)
         {
             # 日付カーボンの生成
             switch ($request->days_type)

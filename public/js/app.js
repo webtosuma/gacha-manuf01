@@ -10580,12 +10580,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       last_day: '' //終了日
     });
 
-    /* 監視 */
+    /* 監視：選択中のデータの種類 */
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return inputs.value.active_key;
     }, function () {
       active_data.value = data_list.value[inputs.value.active_key];
     });
+    /* 監視：日付の種類 */
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return inputs.value.days_type;
     }, function () {
@@ -10593,17 +10594,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         getData();
       }
     });
+    /* 監視：開始日 */
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return inputs.value.start_day;
     }, function () {
       return getData();
     });
+    /* 監視：終了日 */
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return inputs.value.last_day;
     }, function () {
       return getData();
     });
-
     /* 監視：テーブルの切り替え */
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return active_table_type.value;
@@ -10663,21 +10665,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               r_api_visiters.value = response.data['r_api_visiters']; //API 顧客一覧
               r_api_products.value = response.data['r_api_products']; //API 商品一覧
 
+              /* テーブルデータ */
+              // 顧客履歴データの取得
+              if (active_table_type.value == 'visiters') {
+                getDataVisiters();
+              }
+              // 商品履歴データの取得
+              if (active_table_type.value == 'products') {
+                getDataProducts();
+              }
               loading.value = false;
-              _context.next = 21;
+              _context.next = 23;
               break;
-            case 17:
-              _context.prev = 17;
+            case 19:
+              _context.prev = 19;
               _context.t0 = _context["catch"](2);
               console.error((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data);
               if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
               }
-            case 21:
+            case 23:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[2, 17]]);
+        }, _callee, null, [[2, 19]]);
       }));
       return function getData() {
         return _ref.apply(this, arguments);
@@ -10698,7 +10709,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 4:
               response = _context2.sent;
               /*データリスト*/
-              data_list_visiters.value = response.data['data_list_visiters'];
+              data_list_visiters.value = response.data['visiters'];
               loading.value = false;
               _context2.next = 13;
               break;
@@ -10734,22 +10745,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 4:
               response = _context3.sent;
               /*データリスト*/
-              data_list_products.value = response.data['data_list_products'];
+              data_list_products.value = response.data['products'];
               loading.value = false;
-              _context3.next = 13;
+              console.log(data_list_products.value);
+              _context3.next = 14;
               break;
-            case 9:
-              _context3.prev = 9;
+            case 10:
+              _context3.prev = 10;
               _context3.t0 = _context3["catch"](1);
               console.error((_error$response3 = _context3.t0.response) === null || _error$response3 === void 0 ? void 0 : _error$response3.data);
               if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
               }
-            case 13:
+            case 14:
             case "end":
               return _context3.stop();
           }
-        }, _callee3, null, [[1, 9]]);
+        }, _callee3, null, [[1, 10]]);
       }));
       return function getDataProducts() {
         return _ref3.apply(this, arguments);
@@ -24939,7 +24951,133 @@ var render = function render() {
     attrs: {
       loading: _setup.loading
     }
-  }), _vm._v("\n\n    " + _vm._s(_setup.active_table_type) + "\n\n\n    "), _vm._v(" "), _c("section", {
+  }), _vm._v(" "), _c("section", {
+    staticClass: "mb-3"
+  }, [_c("div", {
+    staticClass: "row align-items-center g-2"
+  }, [_c("div", {
+    staticClass: "col-auto pe-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.days_type,
+      expression: "inputs.days_type"
+    }],
+    staticClass: "form-select form-select-lg",
+    attrs: {
+      "aria-label": "Default select example"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_setup.inputs, "days_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, _vm._l(_setup.select_day_types, function (between_days, key) {
+    return _c("option", {
+      key: key,
+      domProps: {
+        value: key
+      }
+    }, [_vm._v(_vm._s(between_days))]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_c("div", {
+    staticClass: "form-floating"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.start_day,
+      expression: "inputs.start_day"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      disabled: _setup.inputs.days_type != "custom",
+      id: "startDayInput"
+    },
+    domProps: {
+      value: _setup.inputs.start_day
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "start_day", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "startDayInput"
+    }
+  }, [_vm._v("開始日")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_vm._v("〜")]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_c("div", {
+    staticClass: "form-floating"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.last_day,
+      expression: "inputs.last_day"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      disabled: _setup.inputs.days_type != "custom",
+      id: "lastDayInput"
+    },
+    domProps: {
+      value: _setup.inputs.last_day
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "last_day", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "lastDayInput"
+    }
+  }, [_vm._v("終了日")])])])])]), _vm._v(" "), _c("section", {
+    staticClass: "mb-3"
+  }, [_c("div", {
+    staticClass: "row mt-3 g-0"
+  }, _vm._l(_setup.totals, function (total, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "col-6 col-md"
+    }, [_c("button", {
+      staticClass: "btn text-start w-100",
+      "class": _setup.inputs.active_key == key ? "bg-primary-subtle" : "",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          _setup.inputs.active_key = key;
+        }
+      }
+    }, [_c("div", {}, [_vm._v(_vm._s(total.label))]), _vm._v(" "), _c("div", {
+      staticClass: "h3 fw-bold"
+    }, [_vm._v(_vm._s(total.value.toLocaleString()))])])]);
+  }), 0)]), _vm._v(" "), _setup.active_data.length ? _c("section", {
+    staticClass: "card card-body bg-white"
+  }, [_c("a-store-salesreport-chart", {
+    attrs: {
+      s_labels: _setup.data_list.labels,
+      s_data: _setup.active_data
+    }
+  })], 1) : _vm._e(), _vm._v(" "), _c("section", {
     staticClass: "card card-body bg-white my-5 overflow-auto"
   }, [_c("div", {
     staticClass: "d-flex gap-2 mb-3"
@@ -25025,9 +25163,113 @@ var render = function render() {
         scope: "col"
       }
     }, [_vm._v("\n                        " + _vm._s(total.value) + "\n                    ")]);
-  })], 2)])]) : _vm._e()])], 1);
+  })], 2)])]) : _vm._e(), _vm._v(" "), _setup.active_table_type == "visiters" ? _c("table", {
+    staticClass: "table bg-white"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", {
+    staticClass: "text-center"
+  }, _vm._l(_setup.data_list_visiters, function (visiter, v_key) {
+    return _c("tr", {
+      key: v_key
+    }, [_c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_c("a", {
+      staticClass: "d-block mb-2",
+      attrs: {
+        href: visiter.ra_user_show
+      }
+    }, [_vm._v(_vm._s("ID:" + visiter.id + " " + visiter.name))])]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(visiter.total_price.toLocaleString() + "円"))]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(visiter.sales_count.toLocaleString()))]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(visiter.product_count.toLocaleString()))])]);
+  }), 0)]) : _vm._e(), _vm._v(" "), _setup.active_table_type == "products" ? _c("table", {
+    staticClass: "table bg-white"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", {
+    staticClass: "text-center"
+  }, _vm._l(_setup.data_list_products, function (product, v_key) {
+    return _c("tr", {
+      key: v_key
+    }, [_c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_c("a", {
+      staticClass: "d-block mb-2",
+      attrs: {
+        href: product.ra_show
+      }
+    }, [_vm._v(_vm._s(product.name))])]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(Number(product.sum_count).toLocaleString()))]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(Number(product.sum_price).toLocaleString() + "円"))]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(Number(product.sum_points_redemption).toLocaleString() + "pt"))])]);
+  }), 0)]) : _vm._e()])], 1);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("thead", [_c("tr", {
+    staticClass: "bg-white text-center"
+  }, [_c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("アカウント名")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("購入金額(円)")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("購入回数")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("購入商品数")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("thead", [_c("tr", {
+    staticClass: "bg-white text-center"
+  }, [_c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("商品名")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("販売数")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("売上金額(円)")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("還元ポイント(pt)")])])]);
+}];
 render._withStripped = true;
 
 
