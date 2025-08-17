@@ -32,9 +32,3 @@ use App\Http\Controllers\Store;
 
     # EC売上レポート 一覧
     include('web/sales_report.php');
-
-
-    # EC販売商品レポート 一覧
-    Route::get('/admin/store/prodact_report',
-    [Store\AdminStoreProdactReportController::class,'index'])
-    ->name('admin.store.prodact_report');

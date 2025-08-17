@@ -25139,12 +25139,12 @@ var render = function render() {
         href: _setup.data_list.r_daily_array[d_key]
       }
     }, [_vm._v(_vm._s(day + _setup.data_list.w_labels[d_key]))])]), _vm._v(" "), _vm._l(_setup.totals, function (total, t_key) {
-      return _c("th", {
+      return _c("td", {
         key: t_key,
         attrs: {
           scope: "col"
         }
-      }, [_vm._v("\n                          " + _vm._s(_setup.data_list[t_key][d_key]) + "\n                    ")]);
+      }, [_vm._v("\n                          " + _vm._s(_setup.data_list[t_key][d_key].toLocaleString()) + "\n                    ")]);
     })], 2);
   }), 0), _vm._v(" "), _c("tfoot", {
     staticClass: "text-center"
@@ -25162,7 +25162,7 @@ var render = function render() {
       attrs: {
         scope: "col"
       }
-    }, [_vm._v("\n                        " + _vm._s(total.value) + "\n                    ")]);
+    }, [_vm._v("\n                        " + _vm._s(total.value.toLocaleString()) + "\n                    ")]);
   })], 2)])]) : _vm._e(), _vm._v(" "), _setup.active_table_type == "visiters" ? _c("table", {
     staticClass: "table bg-white"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", {
@@ -25183,15 +25183,15 @@ var render = function render() {
       attrs: {
         scope: "col"
       }
-    }, [_vm._v(_vm._s(visiter.total_price.toLocaleString() + "円"))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(Number(visiter.total_price).toLocaleString() + "円"))]), _vm._v(" "), _c("td", {
       attrs: {
         scope: "col"
       }
-    }, [_vm._v(_vm._s(visiter.sales_count.toLocaleString()))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(Number(visiter.sales_count).toLocaleString()))]), _vm._v(" "), _c("td", {
       attrs: {
         scope: "col"
       }
-    }, [_vm._v(_vm._s(visiter.product_count.toLocaleString()))])]);
+    }, [_vm._v(_vm._s(Number(visiter.product_count).toLocaleString()))])]);
   }), 0)]) : _vm._e(), _vm._v(" "), _setup.active_table_type == "products" ? _c("table", {
     staticClass: "table bg-white"
   }, [_vm._m(1), _vm._v(" "), _c("tbody", {

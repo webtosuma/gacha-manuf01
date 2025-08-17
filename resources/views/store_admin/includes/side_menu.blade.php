@@ -67,6 +67,11 @@
             'key'   => 'point_history',
             'label' => 'ポイント売上',
         ],
+        [
+            'route' => route('admin.point_sales_report'),
+            'key'   => 'point_history',
+            'label' => 'ポイント売上(改正版)',
+        ],
         // [
         //     'route' => '#',
         //     'key'   => 'gacha_history',
@@ -81,11 +86,6 @@
             'route' => route('admin.store.sales_report'),
             'key'   => 'sales_report',
             'label' => 'EC売上',
-        ],
-        [
-            'route' => route('admin.store.prodact_report'),
-            'key'   => 'prodact_report',
-            'label' => 'EC販売商品',
         ],
     ];
 

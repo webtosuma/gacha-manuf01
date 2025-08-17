@@ -56,6 +56,8 @@ use \App\Http\Controllers;
     # ポイント売上
     include('web/point_history.php');
 
+    include('web/point_sales_report.php');
+
     # ガチャ
     include('web/gacha/index.php');//(基本情報)
     include('web/gacha/detail.php');//(詳細情報)

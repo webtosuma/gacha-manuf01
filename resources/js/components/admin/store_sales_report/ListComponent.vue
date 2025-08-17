@@ -106,9 +106,9 @@
                             >{{ day + data_list.w_labels[d_key] }}</a>
                         </td>
 
-                        <th v-for="(total,t_key) in totals" :key="t_key" scope="col">
-                              {{ data_list[t_key][d_key] }}
-                        </th>
+                        <td v-for="(total,t_key) in totals" :key="t_key" scope="col">
+                              {{ data_list[t_key][d_key].toLocaleString() }}
+                        </td>
 
                     </tr>
                 </tbody>
@@ -118,7 +118,7 @@
                         <th scope="col" class="border-0">合計</th>
 
                         <th v-for="(total,t_key) in totals" :key="t_key" scope="col" class="border-0">
-                            {{ total.value }}
+                            {{ total.value.toLocaleString() }}
                         </th>
 
                     </tr>
@@ -157,13 +157,13 @@
                         </td>
 
                         <!-- 購入金額(円) -->
-                        <td scope="col">{{ visiter.total_price.toLocaleString()+'円' }}</td>
+                        <td scope="col">{{ Number(visiter.total_price).toLocaleString()+'円' }}</td>
 
                         <!-- 購入回数(sales_count) -->
-                        <td scope="col">{{ visiter.sales_count.toLocaleString() }}</td>
+                        <td scope="col">{{ Number(visiter.sales_count).toLocaleString() }}</td>
 
                         <!-- 購入商品数(product_count) -->
-                        <td scope="col">{{ visiter.product_count.toLocaleString() }}</td>
+                        <td scope="col">{{ Number(visiter.product_count).toLocaleString() }}</td>
 
                     </tr>
                 </tbody>
