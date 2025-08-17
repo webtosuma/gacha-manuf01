@@ -69,7 +69,7 @@
         ],
         [
             'route' => route('admin.point_sales_report'),
-            'key'   => 'point_history',
+            'key'   => 'point_sales_report',
             'label' => 'ポイント売上(改正版)',
         ],
         // [

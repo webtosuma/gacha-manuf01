@@ -134,9 +134,23 @@ class StripeController extends Controller
     {
         Stripe::setApiKey( config('stripe.secret_key') );
 
+
+
         # 顧客情報
         $user = Auth::user();
         $customer = $user->createOrGetStripeCustomer();
+
+
+        # テスト用完了メソッド *後で消す！
+        $test = env('APP_DEBUG');
+        if( $test ){
+            # 決済完了のDB情報の登録メソッド
+            $session_id = 'stripe_checkout_session_id';
+            self::completedMethod( $point_sail, $user, $session_id );
+
+            return redirect()->route('point_sail.comp',$point_sail->stripe_id);
+        }
+
 
         # ランクごとのポイント還元率
         $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
@@ -429,6 +443,68 @@ class StripeController extends Controller
 
         return $point_history;
     }
+
+
+
+        /**
+         * 決済完了のDB情報の登録メソッド
+        */
+        public function completedMethod( $point_sail, $user, $session_id )
+        {
+
+            # ランクごとのポイント還元率
+
+                $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
+                ? $user->now_rank->point_sail_ratio : 1 ;
+
+
+            # ポイント履歴の登録
+
+                $point_history = new PointHistory([
+                    'user_id'   => $user->id,          //ユーザー　リレーション
+                    'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
+                    'price'     => $point_sail->price, //販売価格(税込み)
+                    'reason_id' => 11, //入出理由ID
+
+                    'stripe_checkout_session_id' => $session_id,//CheckoutSession
+                ]);
+                $point_history->save();
+
+
+            #チケットの付与
+
+                if( $point_sail->ticket > 0 )
+                {
+                    $ticket_history = new TicketHistory([
+                        'user_id'   => $user->id,
+                        'value'     => $point_sail->ticket,
+                        'reason_id' => 16, //ポイント購入時プレゼント
+                    ]);
+                    $ticket_history->save();
+                }
+
+
+            # [紹介キャンペーン]ポイント付与
+            CanpaingIntroductoryController::grant($user);
+
+            # [キャンペーン]初回ポイント購入
+            CanpaingFirstPointSailController::grant($user);
+
+
+            # サイト管理者へ送信
+            $subject = 'ID:'.$user->id.' '.$user->name.'様が、'.$point_sail->value.'pt購入しました';
+            $email   = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : 't.sakai@tosuma.ltd';//ローカルではメール送信しない
+            $inputs  = compact('user','point_sail','email');
+            Mail::to( $email ) //宛先
+            ->send(new \App\Mail\SendHtmlMailMailable([
+                'inputs'  => $inputs, //入力変数
+                'view'    => 'emails.payment_comp.admin' , //テンプレート
+                'subject' => $subject , //件名
+            ]) );
+
+
+            return $point_history;
+        }
 
 
 }

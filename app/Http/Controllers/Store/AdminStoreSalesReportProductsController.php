@@ -62,19 +62,6 @@ class AdminStoreSalesReportProductsController extends Controller
         # 購入数(payment_count)カラムの追加
         foreach ($products as $product)
         {
-            ## 購入金額(total_price)
-            // $total_price = 0;
-            // $store_histories = StoreHistory::where('user_id',$product->id)
-            // ->whereNotNull('done_at')
-            // ->whereBetween('done_at',[$start_day->startOfDay(),$last_day->endOfDay()])
-            // ->get();
-            // foreach ( $store_histories as $store_history ) {
-            //     $total_price += $store_history->totalItemsPrice();
-            // }
-
-
-            // $product['total_price'] = $total_price;
-
             ## [Adminルーティング]ユーザー詳細
             $product['ra_show'] = route('admin.store_item.edit',$product);
         }

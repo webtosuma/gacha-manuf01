@@ -95,6 +95,16 @@ class PointSail extends Model
             ->orderByDesc('created_at');
         }
 
+        /**
+         * PointHistoryモデル リレーション
+         * @return \App\Models\PointHistory
+        */
+        public function point_histories()
+        {
+            return $this->hasMany(PointHistory::class,'point_history_id')
+            ->withTrashed();//削除済みも含む
+        }
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

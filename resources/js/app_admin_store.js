@@ -26,6 +26,8 @@ import Vue from 'vue'
         Vue.component('a-store-salesreport-daily',
         require('./components/admin/store_sales_report/DailyComponent').default);
 
-    Vue.component('a-store-salesreport-chart',
-    require('./components/admin/store_sales_report/Chart').default);
+        // グラフ
+        Vue.component('a-store-salesreport-chart',
+        require('./components/admin/store_sales_report/Chart').default);
+
 export default Vue

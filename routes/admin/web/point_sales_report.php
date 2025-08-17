@@ -36,10 +36,10 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminPointSalesReportVisitersController::class,'api_index'])
     ->name('admin.api.point_sales_report.visiters');
 
-    # API 商品一覧
-    Route::post('/admin/api/point_sales_report/products',
-    [Controllers\AdminPointSalesReportProductsController::class,'api_index'])
-    ->name('admin.api.point_sales_report.products');
+    // # API 商品一覧
+    // Route::post('/admin/api/point_sales_report/products',
+    // [Controllers\AdminPointSalesReportProductsController::class,'api_index'])
+    // ->name('admin.api.point_sales_report.products');
 
 
 });//end middleware

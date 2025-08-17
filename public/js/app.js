@@ -9239,6 +9239,534 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'LineChart',
+  props: {
+    s_labels: {
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
+    },
+    s_data: {
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.drawChart();
+  },
+  watch: {
+    s_labels: 'drawChart',
+    s_data: 'drawChart'
+  },
+  methods: {
+    drawChart: function drawChart() {
+      var _this = this;
+      if (typeof nv === 'undefined' || !this.s_labels.length || !this.s_data.length) {
+        // データがない時の処理（空のグラフかメッセージ表示など）
+        d3.select(this.$refs.chart).html(''); // グラフクリア
+        return;
+      }
+      var labels = this.s_labels;
+      var values = this.s_data.map(Number);
+      var maxYRaw = Math.max.apply(Math, _toConsumableArray(values));
+
+      // 最大値が0以下のときは1にセット
+      var maxY = maxYRaw > 0 ? maxYRaw : 1;
+      var paddedMaxY = Math.ceil(maxY * 1.2);
+      var data = [{
+        key: "データ系列",
+        values: labels.map(function (label, i) {
+          return {
+            x: i,
+            y: values[i]
+          };
+        })
+      }];
+      nv.addGraph(function () {
+        var chart = nv.models.lineChart().useInteractiveGuideline(true).margin({
+          left: 50,
+          right: 30,
+          top: 30,
+          bottom: 50
+        }).showLegend(false);
+        chart.xAxis.axisLabel('日付').tickFormat(function (i) {
+          return labels[i] || '';
+        });
+        chart.yAxis
+        // .axisLabel('値')
+        .tickFormat(d3.format(',.0f'));
+
+        // Y軸は0始まり、上限は paddedMaxY（最低1以上）
+        chart.forceY([0, paddedMaxY]);
+        d3.select(_this.$refs.chart).html(''); // クリア
+        d3.select(_this.$refs.chart).datum(data).call(chart);
+        nv.utils.windowResize(chart.update);
+        return chart;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=script&setup=true&lang=js":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  __name: 'DailyComponent',
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    r_api_list: {
+      type: String,
+      "default": ''
+    }
+  },
+  setup: function setup(__props) {
+    var props = __props;
+
+    /* 読み込み中 */
+    var loading = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(true);
+
+    /* 次のデータの読み込みURL */
+    var nextPageUrl = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('');
+
+    /* データリスト */
+    var data_list = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({}); //
+
+    /* 日付フォーマット */
+    var day_format = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('');
+
+    /* 合計値 */
+    var totals = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
+      sales: {
+        value: 0,
+        label: '売上'
+      },
+      //売上
+      visiters_count: {
+        value: 0,
+        label: '客数'
+      },
+      //客数
+      reprater_count: {
+        value: 0,
+        label: 'リピーター数'
+      },
+      //リピーター数
+      payment_count: {
+        value: 0,
+        label: '販売回数'
+      },
+      //販売回数
+      sales_prodact_count: {
+        value: 0,
+        label: 'ガチャ回転数'
+      } //ガチャ回転数
+    });
+
+    /* 入力値 */
+    var inputs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
+      _token: props.token,
+      order: ''
+    });
+
+    /* 初回データ取得 */
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      getData();
+    });
+
+    /* データ取得 */
+    var getData = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var route,
+          response,
+          paginate,
+          current_page,
+          last_page,
+          next_page_url,
+          _error$response,
+          _args = arguments;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              route = _args.length > 0 && _args[0] !== undefined ? _args[0] : props.r_api_list;
+              loading.value = true;
+              _context.prev = 2;
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value);
+            case 5:
+              response = _context.sent;
+              /*データリスト*/
+              paginate = response.data['data_list'];
+              data_list.value = route === props.r_api_list ? paginate.data : [].concat(_toConsumableArray(data_list.value), _toConsumableArray(paginate.data));
+
+              /*合計値リスト*/
+              totals.value = response.data['totals'];
+
+              /*日付フォーマット*/
+              day_format.value = response.data['day_format'];
+              console.log(response.data);
+
+              /* 次のデータURLの保存 */
+              current_page = paginate.current_page, last_page = paginate.last_page, next_page_url = paginate.next_page_url;
+              nextPageUrl.value = current_page !== last_page ? next_page_url : null;
+              loading.value = false;
+              _context.next = 20;
+              break;
+            case 16:
+              _context.prev = 16;
+              _context.t0 = _context["catch"](2);
+              console.error((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data);
+              if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+                location.reload();
+              }
+            case 20:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[2, 16]]);
+      }));
+      return function getData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+    return {
+      __sfc: true,
+      props: props,
+      loading: loading,
+      nextPageUrl: nextPageUrl,
+      data_list: data_list,
+      day_format: day_format,
+      totals: totals,
+      inputs: inputs,
+      getData: getData
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=script&setup=true&lang=js":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  __name: 'ListComponent',
+  props: {
+    token: {
+      type: String,
+      "default": ''
+    },
+    r_api_list: {
+      type: String,
+      "default": ''
+    }
+  },
+  setup: function setup(__props) {
+    var props = __props;
+
+    /* 読み込み中 */
+    var loading = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(true);
+
+    /* データリスト */
+    var data_list = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({}); //
+    var active_data = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+
+    /* 今日の日付フォーマット */
+    var todayFormatted = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('');
+
+    /* 合計値 */
+    var totals = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
+      sales: {
+        value: 0,
+        label: '売上'
+      },
+      //売上
+      visiters_count: {
+        value: 0,
+        label: '客数'
+      },
+      //客数
+      reprater_count: {
+        value: 0,
+        label: 'リピーター数'
+      },
+      //リピーター数
+      payment_count: {
+        value: 0,
+        label: '販売回数'
+      },
+      //購入回数
+      gacha_played_count: {
+        value: 0,
+        label: 'ガチャ回転数'
+      } //ガチャ回転数
+    });
+
+    /* 日付の種類選択 */
+    var select_day_types = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+
+    /* テーブルの種類 */
+    var table_types = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
+      selse: '売上レポート',
+      visiters: '顧客レポート'
+    });
+
+    /* 選択中のテーブルの種類 */
+    var active_table_type = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('selse');
+
+    /* テーブルデータリスト */
+    var data_list_visiters = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({}); //顧客データ
+
+    /* APIルーティング */
+    var r_api_visiters = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(''); //API 顧客一覧
+
+    /* 入力値 */
+    var inputs = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
+      _token: props.token,
+      active_key: 'sales',
+      //選択中データの種類
+      days_type: 'this_month',
+      //日付の種類
+      start_day: '',
+      //開始日
+      last_day: '' //終了日
+    });
+
+    /* 監視：選択中のデータの種類 */
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return inputs.value.active_key;
+    }, function () {
+      active_data.value = data_list.value[inputs.value.active_key];
+    });
+    /* 監視：日付の種類 */
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return inputs.value.days_type;
+    }, function () {
+      if (inputs.value.days_type != 'custom') {
+        getData();
+      }
+    });
+    /* 監視：開始日 */
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return inputs.value.start_day;
+    }, function () {
+      return getData();
+    });
+    /* 監視：終了日 */
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return inputs.value.last_day;
+    }, function () {
+      return getData();
+    });
+    /* 監視：テーブルの切り替え */
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return active_table_type.value;
+    }, function () {
+      // 顧客履歴データの取得
+      if (active_table_type.value == 'visiters') {
+        loading.value = true;
+        getDataVisiters();
+      }
+    });
+
+    /* 初回データ取得 */
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      getTodayFormatted(); /* 今日の日付フォーマット */
+
+      getData();
+    });
+
+    /* データ取得 */
+    var getData = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var route,
+          response,
+          _error$response,
+          _args = arguments;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              route = _args.length > 0 && _args[0] !== undefined ? _args[0] : props.r_api_list;
+              loading.value = true;
+              _context.prev = 2;
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post(route, inputs.value);
+            case 5:
+              response = _context.sent;
+              /*データリスト*/
+              data_list.value = response.data['data_list'];
+              active_data.value = data_list.value[inputs.value.active_key];
+
+              /*データ範囲*/
+              inputs.value.start_day = response.data['start_day_format'];
+              inputs.value.last_day = response.data['last_day_format'];
+
+              /*合計値リスト*/
+              totals.value = response.data['totals'];
+
+              /*日付の種類選択*/
+              select_day_types.value = response.data['select_day_types'];
+
+              /*テーブルAPIルーティング*/
+              r_api_visiters.value = response.data['r_api_visiters']; //API 顧客一覧
+
+              /* テーブルデータ */
+              // 顧客履歴データの取得
+              if (active_table_type.value == 'visiters') {
+                getDataVisiters();
+              }
+              loading.value = false;
+              _context.next = 21;
+              break;
+            case 17:
+              _context.prev = 17;
+              _context.t0 = _context["catch"](2);
+              console.error((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data);
+              if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+                location.reload();
+              }
+            case 21:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[2, 17]]);
+      }));
+      return function getData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    /* 顧客履歴データ取得 */
+    var getDataVisiters = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response, _error$response2;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              loading.value = true;
+              _context2.prev = 1;
+              _context2.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post(r_api_visiters.value, inputs.value);
+            case 4:
+              response = _context2.sent;
+              /*データリスト*/
+              data_list_visiters.value = response.data['visiters'];
+              loading.value = false;
+              _context2.next = 13;
+              break;
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](1);
+              console.error((_error$response2 = _context2.t0.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data);
+              if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+                location.reload();
+              }
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[1, 9]]);
+      }));
+      return function getDataVisiters() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
+    /* 今日の日付フォーマット */
+    var getTodayFormatted = function getTodayFormatted() {
+      var today = new Date();
+      var YY = String(today.getFullYear()).slice(-4);
+      var mm = String(today.getMonth() + 1).padStart(2, '0');
+      var dd = String(today.getDate()).padStart(2, '0');
+      todayFormatted.value = "".concat(YY, "-").concat(mm, "-").concat(dd);
+    };
+    return {
+      __sfc: true,
+      props: props,
+      loading: loading,
+      data_list: data_list,
+      active_data: active_data,
+      todayFormatted: todayFormatted,
+      totals: totals,
+      select_day_types: select_day_types,
+      table_types: table_types,
+      active_table_type: active_table_type,
+      data_list_visiters: data_list_visiters,
+      r_api_visiters: r_api_visiters,
+      inputs: inputs,
+      getData: getData,
+      getDataVisiters: getDataVisiters,
+      getTodayFormatted: getTodayFormatted
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/prize/Index.vue?vue&type=script&setup=true&lang=js":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/prize/Index.vue?vue&type=script&setup=true&lang=js ***!
@@ -22516,6 +23044,525 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=template&id=183f6860":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=template&id=183f6860 ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("svg", {
+    ref: "chart",
+    staticStyle: {
+      width: "100%",
+      height: "300px"
+    }
+  })]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=template&id=12f3b062":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=template&id=12f3b062 ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {}, [_c("loading-cover-component", {
+    attrs: {
+      loading: _setup.loading
+    }
+  }), _vm._v(" "), _c("h3", [_vm._v(_vm._s(_setup.day_format))]), _vm._v(" "), _c("section", {
+    staticClass: "mb-3"
+  }, [_c("div", {
+    staticClass: "row mt-3 g-0"
+  }, _vm._l(_setup.totals, function (total, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "col-6 col-md"
+    }, [_c("button", {
+      staticClass: "btn text-start w-100",
+      "class": _setup.inputs.active_key == key ? "bg-primary-subtle" : "",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          _setup.inputs.active_key = key;
+        }
+      }
+    }, [_c("div", {}, [_vm._v(_vm._s(total.label))]), _vm._v(" "), _c("div", {
+      staticClass: "h3 fw-bold"
+    }, [_vm._v(_vm._s(total.value.toLocaleString()))])])]);
+  }), 0)]), _vm._v(" "), _c("section", {
+    staticClass: "card card-body bg-white mb-5 overflow-auto"
+  }, [_c("table", {
+    staticClass: "table bg-white"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_setup.data_list, function (data, key) {
+    return _c("tr", {
+      key: key,
+      staticClass: "bg-white text-center"
+    }, [_c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_c("a", {
+      staticClass: "d-block mb-2",
+      attrs: {
+        href: data.ra_user_show
+      }
+    }, [_vm._v(_vm._s("ID:" + data.user.id + " " + data.user.name))])]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(data.value.toLocaleString() + "pt"))]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(data.price.toLocaleString() + "円"))]), _vm._v(" "), _c("td", [data.reason_id > 2000 ? _c("div", {
+      staticClass: "badge bg-info"
+    }, [_vm._v("サブスク")]) : _vm._e()]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(data.created_at_format))]), _vm._v(" "), _c("td", [_c("div", {
+      staticClass: "dropdown"
+    }, [_c("button", {
+      staticClass: "btn btn-light border rounded-pill",
+      attrs: {
+        type: "button",
+        id: "dropdownMenuButton" + data.id,
+        "data-bs-toggle": "dropdown",
+        "aria-expanded": "false"
+      }
+    }, [_c("i", {
+      staticClass: "bi bi-three-dots-vertical"
+    })]), _vm._v(" "), _c("ul", {
+      staticClass: "dropdown-menu bg-white",
+      attrs: {
+        "aria-labelledby": "dropdownMenuButton" + data.id
+      }
+    }, [_c("li", [_c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: data.ra_user_show
+      }
+    }, [_vm._v("ユーザー情報")])]), _vm._v(" "), _c("li", [_c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: data.ra_user_point_history
+      }
+    }, [_vm._v("ポイント購入履歴")])])])])])]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _setup.nextPageUrl,
+      expression: "nextPageUrl"
+    }],
+    staticClass: "mt-3"
+  }, [_c("a", {
+    staticClass: "btn btn-light border",
+    attrs: {
+      href: ""
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _setup.getData(_setup.nextPageUrl);
+      }
+    }
+  }, [_vm._v("もっと読み込む")])])])], 1);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("thead", [_c("tr", {
+    staticClass: "bg-white text-center"
+  }, [_c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("アカウント名")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("購入ポイント")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("売上金額")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("受付時間")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      "max-width": "3rem"
+    },
+    attrs: {
+      scope: "col"
+    }
+  })])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=template&id=829c411e":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=template&id=829c411e ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("div", {}, [_c("loading-cover-component", {
+    attrs: {
+      loading: _setup.loading
+    }
+  }), _vm._v(" "), _c("section", {
+    staticClass: "mb-3"
+  }, [_c("div", {
+    staticClass: "row align-items-center g-2"
+  }, [_c("div", {
+    staticClass: "col-auto pe-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.days_type,
+      expression: "inputs.days_type"
+    }],
+    staticClass: "form-select form-select-lg",
+    attrs: {
+      "aria-label": "Default select example"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_setup.inputs, "days_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, _vm._l(_setup.select_day_types, function (between_days, key) {
+    return _c("option", {
+      key: key,
+      domProps: {
+        value: key
+      }
+    }, [_vm._v(_vm._s(between_days))]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_c("div", {
+    staticClass: "form-floating"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.start_day,
+      expression: "inputs.start_day"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      disabled: _setup.inputs.days_type != "custom",
+      id: "startDayInput"
+    },
+    domProps: {
+      value: _setup.inputs.start_day
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "start_day", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "startDayInput"
+    }
+  }, [_vm._v("開始日")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_vm._v("〜")]), _vm._v(" "), _c("div", {
+    staticClass: "col-auto"
+  }, [_c("div", {
+    staticClass: "form-floating"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _setup.inputs.last_day,
+      expression: "inputs.last_day"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      disabled: _setup.inputs.days_type != "custom",
+      id: "lastDayInput"
+    },
+    domProps: {
+      value: _setup.inputs.last_day
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_setup.inputs, "last_day", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "lastDayInput"
+    }
+  }, [_vm._v("終了日")])])])])]), _vm._v(" "), _c("section", {
+    staticClass: "mb-3"
+  }, [_c("div", {
+    staticClass: "row mt-3 g-0"
+  }, _vm._l(_setup.totals, function (total, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "col-6 col-md"
+    }, [_c("button", {
+      staticClass: "btn text-start w-100",
+      "class": _setup.inputs.active_key == key ? "bg-primary-subtle" : "",
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          _setup.inputs.active_key = key;
+        }
+      }
+    }, [_c("div", {}, [_vm._v(_vm._s(total.label))]), _vm._v(" "), _c("div", {
+      staticClass: "h3 fw-bold"
+    }, [_vm._v(_vm._s(total.value.toLocaleString()))])])]);
+  }), 0)]), _vm._v(" "), _setup.active_data.length ? _c("section", {
+    staticClass: "card card-body bg-white"
+  }, [_c("a-pointsalesreport-chart", {
+    attrs: {
+      s_labels: _setup.data_list.labels,
+      s_data: _setup.active_data
+    }
+  })], 1) : _vm._e(), _vm._v(" "), _c("section", {
+    staticClass: "card card-body bg-white my-5 overflow-auto"
+  }, [_c("div", {
+    staticClass: "d-flex gap-2 mb-3"
+  }, _vm._l(_setup.table_types, function (label, key) {
+    return _c("div", {
+      key: key
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _setup.active_table_type,
+        expression: "active_table_type"
+      }],
+      staticClass: "btn-check",
+      attrs: {
+        type: "radio",
+        id: key,
+        name: "table",
+        autocomplete: "off"
+      },
+      domProps: {
+        value: key,
+        checked: _vm._q(_setup.active_table_type, key)
+      },
+      on: {
+        change: function change($event) {
+          _setup.active_table_type = key;
+        }
+      }
+    }), _vm._v(" "), _c("label", {
+      staticClass: "btn border",
+      "class": key == _setup.active_table_type ? "btn-primary text-white" : "",
+      attrs: {
+        "for": key
+      }
+    }, [_vm._v(_vm._s(label))])]);
+  }), 0), _vm._v(" "), _setup.active_table_type == "selse" ? _c("table", {
+    staticClass: "table bg-white"
+  }, [_c("thead", [_c("tr", {
+    staticClass: "bg-white text-center"
+  }, [_c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("\n                        日付\n                    ")]), _vm._v(" "), _vm._l(_setup.totals, function (total, t_key) {
+    return _c("th", {
+      key: t_key,
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v("\n                        " + _vm._s(total.label) + "\n                    ")]);
+  })], 2)]), _vm._v(" "), _c("tbody", {
+    staticClass: "text-center"
+  }, _vm._l(_setup.data_list.labels, function (day, d_key) {
+    return _c("tr", {
+      key: d_key
+    }, [_c("td", [_c("a", {
+      attrs: {
+        href: _setup.data_list.r_daily_array[d_key]
+      }
+    }, [_vm._v(_vm._s(day + _setup.data_list.w_labels[d_key]))])]), _vm._v(" "), _vm._l(_setup.totals, function (total, t_key) {
+      return _c("td", {
+        key: t_key,
+        attrs: {
+          scope: "col"
+        }
+      }, [_vm._v("\n                          " + _vm._s(_setup.data_list[t_key][d_key].toLocaleString()) + "\n                    ")]);
+    })], 2);
+  }), 0), _vm._v(" "), _c("tfoot", {
+    staticClass: "text-center"
+  }, [_c("tr", {
+    staticClass: "bg-white text-center"
+  }, [_c("th", {
+    staticClass: "border-0",
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("合計")]), _vm._v(" "), _vm._l(_setup.totals, function (total, t_key) {
+    return _c("th", {
+      key: t_key,
+      staticClass: "border-0",
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v("\n                        " + _vm._s(total.value.toLocaleString()) + "\n                    ")]);
+  })], 2)])]) : _vm._e(), _vm._v(" "), _setup.active_table_type == "visiters" ? _c("table", {
+    staticClass: "table bg-white"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", {
+    staticClass: "text-center"
+  }, _vm._l(_setup.data_list_visiters, function (visiter, v_key) {
+    return _c("tr", {
+      key: v_key
+    }, [_c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_c("a", {
+      staticClass: "d-block mb-2",
+      attrs: {
+        href: visiter.ra_user_show
+      }
+    }, [_vm._v(_vm._s("ID:" + visiter.id + " " + visiter.name))])]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(Number(visiter.total_price).toLocaleString() + "円"))]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(Number(visiter.sales_count).toLocaleString()))])]);
+  }), 0)]) : _vm._e(), _vm._v(" "), _setup.active_table_type == "products" ? _c("table", {
+    staticClass: "table bg-white"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", {
+    staticClass: "text-center"
+  }, _vm._l(_vm.data_list_products, function (product, v_key) {
+    return _c("tr", {
+      key: v_key
+    }, [_c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_c("a", {
+      staticClass: "d-block mb-2",
+      attrs: {
+        href: product.ra_show
+      }
+    }, [_vm._v(_vm._s(product.name))])]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(Number(product.sum_count).toLocaleString()))]), _vm._v(" "), _c("td", {
+      attrs: {
+        scope: "col"
+      }
+    }, [_vm._v(_vm._s(Number(product.sum_price).toLocaleString() + "円"))])]);
+  }), 0)]) : _vm._e()])], 1);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("thead", [_c("tr", {
+    staticClass: "bg-white text-center"
+  }, [_c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("アカウント名")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("購入金額(円)")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("購入回数")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c,
+    _setup = _vm._self._setupProxy;
+  return _c("thead", [_c("tr", {
+    staticClass: "bg-white text-center"
+  }, [_c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("販売ポイント")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("販売数")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("売上金額(円)")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/prize/Index.vue?vue&type=template&id=3e26587a&scoped=true":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/prize/Index.vue?vue&type=template&id=3e26587a&scoped=true ***!
@@ -33482,6 +34529,15 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-gachaprize-prize-list',
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-pointhistory-selectmonth', (__webpack_require__(/*! ./components/admin/point_history/SelectMonth.vue */ "./resources/js/components/admin/point_history/SelectMonth.vue")["default"]));
 // グラフ
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-pointhistory-chart', (__webpack_require__(/*! ./components/admin/point_history/Chart.vue */ "./resources/js/components/admin/point_history/Chart.vue")["default"]));
+
+/* ポイント売上(改正版)　レポート */
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-pointsalesreport-list', (__webpack_require__(/*! ./components/admin/point_sales_report/ListComponent */ "./resources/js/components/admin/point_sales_report/ListComponent.vue")["default"]));
+
+// 日別詳細
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-pointsalesreport-daily', (__webpack_require__(/*! ./components/admin/point_sales_report/DailyComponent */ "./resources/js/components/admin/point_sales_report/DailyComponent.vue")["default"]));
+
+// グラフ
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-pointsalesreport-chart', (__webpack_require__(/*! ./components/admin/point_sales_report/Chart */ "./resources/js/components/admin/point_sales_report/Chart.vue")["default"]));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
@@ -33519,6 +34575,8 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-store-salesreport-list'
 
 // 日別詳細
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-store-salesreport-daily', (__webpack_require__(/*! ./components/admin/store_sales_report/DailyComponent */ "./resources/js/components/admin/store_sales_report/DailyComponent.vue")["default"]));
+
+// グラフ
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('a-store-salesreport-chart', (__webpack_require__(/*! ./components/admin/store_sales_report/Chart */ "./resources/js/components/admin/store_sales_report/Chart.vue")["default"]));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
@@ -58800,6 +59858,123 @@ component.options.__file = "resources/js/components/admin/point_history/SelectMo
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/point_sales_report/Chart.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/Chart.vue ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Chart_vue_vue_type_template_id_183f6860__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Chart.vue?vue&type=template&id=183f6860 */ "./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=template&id=183f6860");
+/* harmony import */ var _Chart_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Chart.vue?vue&type=script&lang=js */ "./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Chart_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Chart_vue_vue_type_template_id_183f6860__WEBPACK_IMPORTED_MODULE_0__.render,
+  _Chart_vue_vue_type_template_id_183f6860__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/point_sales_report/Chart.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/point_sales_report/DailyComponent.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/DailyComponent.vue ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DailyComponent_vue_vue_type_template_id_12f3b062__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DailyComponent.vue?vue&type=template&id=12f3b062 */ "./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=template&id=12f3b062");
+/* harmony import */ var _DailyComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DailyComponent.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DailyComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DailyComponent_vue_vue_type_template_id_12f3b062__WEBPACK_IMPORTED_MODULE_0__.render,
+  _DailyComponent_vue_vue_type_template_id_12f3b062__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/point_sales_report/DailyComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/point_sales_report/ListComponent.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/ListComponent.vue ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ListComponent_vue_vue_type_template_id_829c411e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListComponent.vue?vue&type=template&id=829c411e */ "./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=template&id=829c411e");
+/* harmony import */ var _ListComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListComponent.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListComponent_vue_vue_type_template_id_829c411e__WEBPACK_IMPORTED_MODULE_0__.render,
+  _ListComponent_vue_vue_type_template_id_829c411e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/point_sales_report/ListComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/prize/Index.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/components/admin/prize/Index.vue ***!
@@ -61558,6 +62733,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=script&lang=js":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Chart.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=script&setup=true&lang=js":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DailyComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DailyComponent.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=script&setup=true&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DailyComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=script&setup=true&lang=js":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=script&setup=true&lang=js ***!
+  \***************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ListComponent.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=script&setup=true&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/prize/Index.vue?vue&type=script&setup=true&lang=js":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/admin/prize/Index.vue?vue&type=script&setup=true&lang=js ***!
@@ -63081,6 +64304,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectMonth_vue_vue_type_template_id_b2044142__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectMonth_vue_vue_type_template_id_b2044142__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SelectMonth.vue?vue&type=template&id=b2044142 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_history/SelectMonth.vue?vue&type=template&id=b2044142");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=template&id=183f6860":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=template&id=183f6860 ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_template_id_183f6860__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_template_id_183f6860__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Chart_vue_vue_type_template_id_183f6860__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Chart.vue?vue&type=template&id=183f6860 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/Chart.vue?vue&type=template&id=183f6860");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=template&id=12f3b062":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=template&id=12f3b062 ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DailyComponent_vue_vue_type_template_id_12f3b062__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DailyComponent_vue_vue_type_template_id_12f3b062__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DailyComponent_vue_vue_type_template_id_12f3b062__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DailyComponent.vue?vue&type=template&id=12f3b062 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/DailyComponent.vue?vue&type=template&id=12f3b062");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=template&id=829c411e":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=template&id=829c411e ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_829c411e__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_829c411e__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ListComponent_vue_vue_type_template_id_829c411e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ListComponent.vue?vue&type=template&id=829c411e */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/point_sales_report/ListComponent.vue?vue&type=template&id=829c411e");
 
 
 /***/ }),

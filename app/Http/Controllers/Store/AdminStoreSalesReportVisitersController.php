@@ -25,9 +25,6 @@ class AdminStoreSalesReportVisitersController extends Controller
     */
     public function api_index(Request $request)
     {
-        // $start_day = Carbon::now()->startOfMonth(); // 今月の1日（00:00:00）
-        // $last_day  = Carbon::now()->endOfMonth();   // 今月の末日（23:59:59）
-
         # 開始日・終了日・日付ラベル
         list( $start_day, $last_day ) = Report::aggDays($request);
 

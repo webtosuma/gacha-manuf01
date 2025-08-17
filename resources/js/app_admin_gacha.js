@@ -62,4 +62,18 @@ import Vue from 'vue'
         require('./components/admin/point_history/Chart.vue').default);
 
 
+    /* ポイント売上(改正版)　レポート */
+    Vue.component('a-pointsalesreport-list',
+    require('./components/admin/point_sales_report/ListComponent').default);
+
+        // 日別詳細
+        Vue.component('a-pointsalesreport-daily',
+        require('./components/admin/point_sales_report/DailyComponent').default);
+
+        // グラフ
+        Vue.component('a-pointsalesreport-chart',
+        require('./components/admin/point_sales_report/Chart').default);
+
+
+
 export default Vue
