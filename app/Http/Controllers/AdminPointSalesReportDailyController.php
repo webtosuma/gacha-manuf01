@@ -45,6 +45,7 @@ class AdminPointSalesReportDailyController extends Controller
         # 売上レポート
         $data_list = PointHistory::adominPointHistoryReason()//入出ID絞り込み スコープ
         ->whereDate('created_at', $day)
+        // ->ordrByDesc('created_at')
         ->with('user')
         ->paginate(20);
 

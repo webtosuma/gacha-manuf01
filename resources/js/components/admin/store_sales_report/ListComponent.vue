@@ -282,7 +282,7 @@
 
         _token: props.token,
         active_key: 'sales',      //選択中データの種類
-        days_type:  'this_month', //日付の種類
+        days_type:  '7days', //日付の種類
         start_day:  '',           //開始日
         last_day:   '',           //終了日
 

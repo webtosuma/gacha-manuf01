@@ -47,6 +47,7 @@ class AdminStoreSalesReportDailyController extends Controller
         # 売上レポート
         $data_list = StoreHistory::whereNotNull('done_at')
         ->whereDate('done_at', $day->toDateString())
+        // ->ordrByDesc('done_at')
         ->paginate(20);
 
         foreach ($data_list as $data) {
