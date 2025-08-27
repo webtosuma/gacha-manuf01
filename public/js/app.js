@@ -33883,7 +33883,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "form-check-label fs-"
-  }, [_vm._v("\n                            全て選択\n                        ")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            全て選択\n                        ")])])]), _vm._v(" "), _vm.no_exchange_point == 0 ? _c("div", {
     staticClass: "col"
   }, [_c("div", {
     staticClass: "form-check"
@@ -33891,7 +33891,7 @@ var render = function render() {
     staticClass: "d-flex justify-content-end align-items-center"
   }, [_vm._m(0), _vm._v(" "), _c("div", {}, [_c("span", {
     staticClass: "fs-3 fw-bold"
-  }, [_vm._v(_vm._s(_setup.totalPoint.toLocaleString()))]), _vm._v("pt\n                            ")])])])]), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
+  }, [_vm._v(_vm._s(_setup.totalPoint.toLocaleString()))]), _vm._v("pt\n                            ")])])])]) : _vm._e(), _vm._v(" "), _vm.change_ticket != 0 ? _c("div", {
     staticClass: "col"
   }, [_c("div", {
     staticClass: "form-check"

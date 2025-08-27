@@ -10,7 +10,13 @@
             <h1 class="d-flex align-items-center gap-3 m-0 ms-3">
                 <a class="navbar-brand" href="{{ route('gacha_category') }}" style="shad">
                     <img src="{{asset('storage/site/image/logo.png')}}"
-                    alt="{{ config('app.name') }}" class="d-brock" style="height:3.4rem;">
+                    alt="{{ config('app.name') }}" class="d-brock"
+                    style="height:3.4rem;">
+
+                    {{-- <img src="{{asset('storage/site/image/logo.png')}}"
+                    alt="{{ config('app.name') }}" class="d-brock"
+                    style="width:5rem;"> --}}
+
                 </a>
             </h1>
 

@@ -65,11 +65,11 @@
             'key'   => 'point_sail',
             'label' => '販売ポイント',
         ],
-        [
-            'route' => route('admin.ticket_store'),
-            'key'   => 'ticket_store',
-            'label' => 'チケット用商品',
-        ],
+        // [
+        //     'route' => route('admin.ticket_store'),
+        //     'key'   => 'ticket_store',
+        //     'label' => 'チケット用商品',
+        // ],
         [
             'route' => route('admin.infomation'),
             'key'   => 'infomation',

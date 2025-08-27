@@ -60,7 +60,7 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
     </ul>
 </div>
 <div class="col-auto">
-    <div class="form-text my-3">
+    <div class="my-3">
         古物商営業許可<br>
         第 000010000000 号<br>
         ○○県公安委員会<br>

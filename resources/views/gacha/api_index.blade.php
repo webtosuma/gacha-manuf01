@@ -4,7 +4,7 @@
 @section('title')
     @php
     $title = config('app.name')."|オンラインガチャを24時間365日楽しめる！ ";
-    $title = $category_code=='all' ? $title : $category_name.'のガチャ一覧';
+    $title = $category_code=='all' || !isset($category_name) ? $title : $category_name.'のガチャ一覧';
     @endphp
 
     {{$title}}

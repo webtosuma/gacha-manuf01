@@ -183,7 +183,12 @@
             <h6 class="fs-5">ご利用可能な決済方法</h6>
 
             <div class="row g-3">
-                @if ( env('SUBSCRIPTION',false) )
+                @php
+                $subscriptions_count = \App\Models\PointSail::where('is_subscription',true)//サブスクのみ
+                ->where('is_published',true)//公開中のみ
+                ->count();
+                @endphp
+                @if ( env('SUBSCRIPTION',false) && $subscriptions_count>0 )
                     <!--サブスク-->
                     <div class="col-12 ">
                         <a href="{{route('point_sail.subscription')}}"
@@ -235,14 +240,14 @@
                     </a>
                 </div>
 
-                <div class="col-12 col-md-4">
+                {{-- <div class="col-12 col-md-4">
                     <a href="{{ route( 'point_sail', ['payment_type'=>'PayPay'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                         <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                         <div class="">PayPay</div>
                         <div class=""><i class="bi bi-phone fs-4"></i></div>
                     </a>
-                </div>
+                </div> --}}
 
                 <div class="col-12 col-md-4">
                     <a href="{{ route( 'point_sail', ['payment_type'=>'銀行振込'] ) }}"

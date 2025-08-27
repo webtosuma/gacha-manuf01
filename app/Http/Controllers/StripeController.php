@@ -41,9 +41,13 @@ class StripeController extends Controller
         # 支払いタイプテキスト
         $payment_type = $request->payment_type;
 
+
         # 販売用ポイント情報取得
-        $point_sails = PointSail::where('is_published',1)//公開ずみのみ
-        ->orderBy('value','asc')->get();//ポイントが低い順
+        $point_sails = PointSail::where('is_subscription',false)//サブスク以外
+        ->where('is_published',1)//公開ずみのみ
+        ->orderBy('value','asc')//ポイントが低い順
+        ->get();
+
 
         # 支払いタイプ別支払いページURL
         switch ($payment_type) {

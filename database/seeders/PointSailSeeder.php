@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\PointSail;
 /*
 | =============================================
 |  販売用ポイント登録　シーダー
@@ -21,6 +22,7 @@ class PointSailSeeder extends Seeder
 
         foreach ($datalist as $data)
         {
+            $data['stripe_id'] = PointSail::CreateCode();
             $pointSail = new \App\Models\PointSail($data);
             $pointSail->save();
         }
@@ -39,34 +41,46 @@ class PointSailSeeder extends Seeder
     {
         return   [
             [
-                'value'   => 1000,  //実際付与されるポイント
-                'price'   => 1000,  //支払い金額
+                'value'   => 500,  //実際付与されるポイント
+                'price'   => 500,  //支払い金額
                 'service' => 0,//サービス差異
-                'stripe_id'=>'price_1OXZ2OKoJdkajOL0BOK0AkIi',
+                'stripe_id'=>'',
             ],
             [
-                'value'   => 3000,  //実際付与されるポイント
-                'price'   => 3000,  //支払い金額
+                'value'   => 1*1000,  //実際付与されるポイント
+                'price'   => 1*1000,  //支払い金額
                 'service' => 0,//サービス差異
-                'stripe_id'=>'price_1OXZ2zKoJdkajOL0eOBChesf',
+                'stripe_id'=>'',
+            ],
+            // [
+            //     'value'   => 3*1000,  //実際付与されるポイント
+            //     'price'   => 3*1000,  //支払い金額
+            //     'service' => 0,//サービス差異
+            //     'stripe_id'=>'',
+            // ],
+            [
+                'value'   => 5*1000,  //実際付与されるポイント
+                'price'   => 5*1000,  //支払い金額
+                'service' => 0,//サービス差異
+                'stripe_id'=>'',
             ],
             [
-                'value'   => 5000,  //実際付与されるポイント
-                'price'   => 5000,  //支払い金額
+                'value'   => 10*1000,  //実際付与されるポイント
+                'price'   => 10*1000,  //支払い金額
                 'service' => 0,//サービス差異
-                'stripe_id'=>'price_1OXZ3YKoJdkajOL0Xuh40BWc',
+                'stripe_id'=>'',
             ],
             [
-                'value'   => 10000,  //実際付与されるポイント
-                'price'   => 10000,  //支払い金額
+                'value'   => 50*1000,  //実際付与されるポイント
+                'price'   => 50*1000,  //支払い金額
                 'service' => 0,//サービス差異
-                'stripe_id'=>'price_1OXZ4GKoJdkajOL0Rhb98kYK',
+                'stripe_id'=>'',
             ],
             [
-                'value'   => 50000,  //実際付与されるポイント
-                'price'   => 50000,  //支払い金額
+                'value'   => 100*1000,  //実際付与されるポイント
+                'price'   => 10*1000,  //支払い金額
                 'service' => 0,//サービス差異
-                'stripe_id'=>'price_1OXZ55KoJdkajOL042ykDRjf',
+                'stripe_id'=>'',
             ],
 
         ];

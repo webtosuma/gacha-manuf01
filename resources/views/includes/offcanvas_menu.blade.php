@@ -210,7 +210,18 @@ style="max-width:90vw; min-width:30vw;">
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
+            @if( config('app.coupon') )
+                <a href="{{ route('coupon') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
+                >クーポン
 
+
+                    <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                    ><i class="bi bi-ticket-perforated fs-5"></i></div>
+
+                    <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                    ><i class="bi bi-chevron-right"></i></div>
+                </a>
+            @endif
             <a href="{{ route('settings') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >会員情報設定
 

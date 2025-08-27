@@ -146,6 +146,16 @@
     ];
 
 
+    // サブスクの追加
+    if( env('SUBSCRIPTION') )
+    {
+        $gachas_array[] = [
+            'route' => route('admin.subscription'),
+            'key'   => 'subscription',
+            'label' => 'サブスクポイント管理',
+        ];
+    }
+
 
 @endphp
 <div class="d-flex flex-column justify-content-between py-3 px-2">

@@ -19,7 +19,7 @@
                         </label>
                     </div>
                     <!--選択中ポイント合計-->
-                    <div class="col">
+                    <div v-if="no_exchange_point==0" class="col">
                         <div class="form-check">
                             <div class="d-flex justify-content-end align-items-center">
                                 <div class="">

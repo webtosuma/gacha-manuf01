@@ -16,7 +16,7 @@
 
 
             <!-- 検索ボタン(PC) -->
-            <div class="col">
+            <div class="col d-none d-md-block">
                 <div class="ps-3 me-3 position-relative">
                     <button class="btn btn-lg btn-light border text-start w-100 overflow-hidden position-relative"
                     type="button"
