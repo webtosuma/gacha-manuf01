@@ -1,5 +1,4 @@
-{{-- @extends('layouts.app') --}}
-@extends('layouts.sub')
+@extends('layouts.sub_toggl')
 
 <!----- title ----->
 @section('title','特定商取引法に基づく表記')

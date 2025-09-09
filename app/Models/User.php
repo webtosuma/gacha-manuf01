@@ -35,6 +35,9 @@ class User extends Authenticatable
         'payjp_customer_id',
         'subscription_id',//サブスクIDカラム　2024/04/18追加
         'fincode_id',     //fincode顧客ID
+
+        'line_id'    ,//[snsログイン]LINE 　  2025/8/26追加
+        'facebook_id',//[snsログイン]facebook 2025/8/26追加
     ];
 
 
@@ -278,7 +281,8 @@ class User extends Authenticatable
          * @return String
         */
         public function getPointAttribute() {
-            return $this->point_histories->sum('value');
+            // return $this->point_histories->sum('value');//利用禁止！
+            return PointHistory::where('user_id',$this->id)->sum('value');
         }
 
 

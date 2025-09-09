@@ -275,7 +275,7 @@ class UserRankHistoryController extends Controller
 
 
     /**
-     * c.降格=>現ランクのpt消費数の50%をクリアしていない・ビギナーランクではない
+     * d.ボーナス付与
      *
      * @param  User   $user
      * @param  Carbon $date

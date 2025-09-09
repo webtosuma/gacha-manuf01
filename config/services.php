@@ -14,20 +14,72 @@ return [
     |
     */
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
-    ],
+        'mailgun' => [
+            'domain' => env('MAILGUN_DOMAIN'),
+            'secret' => env('MAILGUN_SECRET'),
+            'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        ],
 
-    'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
-    ],
+        'postmark' => [
+            'token' => env('POSTMARK_TOKEN'),
+        ],
 
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-    ],
+        'ses' => [
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | SNSログイン
+    |--------------------------------------------------------------------------
+    |
+    */
+
+        /* LINEログイン */
+        'line' => [
+
+            'client_id'     => env('AUTH_LINE_CLIENT_ID'),
+            'client_secret' => env('AUTH_LINE_CLIENT_SECRET'),
+            'redirect'      => env('AUTH_LINE_REDIRECT_URI'),
+
+        ],
+
+
+
+        /* X(twitter)グイン */
+        'twitter' => [
+
+            'client_id'     => env('AUTH_X_CLIENT_ID'),
+            'client_secret' => env('AUTH_X_CLIENT_SECRET'),
+            'redirect'      => env('AUTH_X_REDIRECT_URI'),
+            'oauth' => 2,  // OAuth 2.0を使用する設定を追加
+
+        ],
+
+
+
+        /* Yahooグイン */
+        'yahoo' => [
+
+            'client_id'     => env('AUTH_YAHOO_CLIENT_ID'),
+            'client_secret' => env('AUTH_YAHOO_CLIENT_SECRET'),
+            'redirect'      => env('AUTH_YAHOO_REDIRECT_URI'),
+
+        ],
+
+
+
+        /* Googleグイン */
+        'google' => [
+
+            'client_id'     => env('AUTH_GOOGLE_CLIENT_ID'),
+            'client_secret' => env('AUTH_GOOGLE_CLIENT_SECRET'),
+            'redirect'      => env('AUTH_GOOGLE_REDIRECT_URI'),
+
+        ],
+
+    /*  */
 ];

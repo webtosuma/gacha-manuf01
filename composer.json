@@ -11,6 +11,7 @@
         "laravel/cashier": "*",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
+        "laravel/socialite": "*",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "payjp/payjp-php": "^1.5",

@@ -58,6 +58,9 @@ Route::middleware([ /* ミドルウェアー */
     # 認証
     include('web/auth.php');
 
+    # SNSログイン
+    include('web/auth-sns.php');
+
     # ガチャ
     include('web/gacha.php');
 
@@ -147,6 +150,9 @@ Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
 
     # 認証
     include('web/auth.php');
+
+    # SNSログイン
+    include('web/auth-sns.php');
 
     # (Stripe・webhook)
     include('web/stripe.php');

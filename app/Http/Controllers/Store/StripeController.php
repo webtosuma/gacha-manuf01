@@ -118,9 +118,9 @@ class StripeController extends Controller
                 'quantity' => 1,
             ]],
 
-            'shipping_address_collection' => [ // 配送可能な国を指定
-                'allowed_countries' => ['JP'],
-            ],
+            // 'shipping_address_collection' => [ // 配送可能な国を指定
+            //     'allowed_countries' => ['JP'],
+            // ],
 
             'automatic_tax' => ['enabled' => false],
 

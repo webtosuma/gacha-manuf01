@@ -193,7 +193,7 @@
 }
 
 
-/* 商品比率4x3 */
+/* 商品比率4x3 88:63 */
 .ratio-3x4{
     --bs-aspect-ratio: 140% !important;
 }

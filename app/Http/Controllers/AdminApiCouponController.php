@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Coupon;
 /*
 |--------------------------------------------------------------------------
-| Admin クーポン API コントローラーa
+| Admin クーポン API コントローラー
 |--------------------------------------------------------------------------
 */
 class AdminApiCouponController extends Controller

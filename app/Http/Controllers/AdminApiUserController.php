@@ -47,7 +47,7 @@ class AdminApiUserController extends Controller
             $user->gacha_play_count = $user->gacha_play_count;
             $user->point  = $user->point;
             $user->sail   = \App\Models\PointHistory::where('user_id',$user->id)
-            ->where('reason_id',11)->get()->sum('price');
+            ->where('reason_id',11)->sum('price');
 
             $user->created_at_format        = $user->created_at->format('Y/m/d H:i');        //登録日
             $user->last_access_at_format    = $user->last_access_at->format('Y/m/d H:i');    //最終アクセス

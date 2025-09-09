@@ -206,8 +206,8 @@
                         <div class="">クレジットカード</div>
                         <i class="bi bi-credit-card-fill fs-4"></i>
                         <div class="">
-                            {{-- <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;"> --}}
-                            <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            {{-- <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;"> --}}
                         </div>
                     </a>
                 </div>
