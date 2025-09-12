@@ -59,6 +59,8 @@ return [
         # 住所入力に靴の入力を指定する
         'address_use_size'         => env('ADDRESS_USE_SIZE', false) ? 1 : 0,
 
+        # 買取表の表示
+        'purchase'                 => env('PURCHASE', false),
 
         # 基本レイアウト
         'layout_app' => env('APP_LAYOUT', ''),

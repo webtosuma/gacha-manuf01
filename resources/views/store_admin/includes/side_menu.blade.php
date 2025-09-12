@@ -155,7 +155,24 @@
             'label' => 'サブスクポイント管理',
         ];
     }
-
+    // クーポンの追加
+    if( config('app.coupon') )
+    {
+        $gachas_array[] = [
+            'route' => route('admin.coupon'),
+            'key'   => 'coupon',
+            'label' => 'クーポン管理',
+        ];
+    }
+    // 買取表の追加
+    if( config('app.purchase') )
+    {
+        $gachas_array[] = [
+            'route' => route('admin.purchase'),
+            'key'   => 'purchase',
+            'label' => '買取表管理',
+        ];
+    }
 
 @endphp
 <div class="d-flex flex-column justify-content-between py-3 px-2">

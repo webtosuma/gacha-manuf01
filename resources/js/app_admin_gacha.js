@@ -75,5 +75,13 @@ import Vue from 'vue'
         require('./components/admin/point_sales_report/Chart').default);
 
 
+    /* 買取表一覧 */
+    Vue.component('a-purchase-list',
+    require('./components/admin/purchase/ListComponent').default);
+
+        /* 買取表ガチャ商品 一覧 */
+        Vue.component('a-purchase-prize-list',
+        require('./components/admin/purchase/PrizeListComponent').default);
+
 
 export default Vue

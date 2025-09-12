@@ -37,8 +37,8 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
 
 <div class="col-auto">
     <ul class="list-unstyled m-0 gap-3">
-        <li class="mb-2"><a class="link-secondary text-decoration-none"
-        href="{{ route('guide') }}">利用ガイド</a></li>
+        {{-- <li class="mb-2"><a class="link-secondary text-decoration-none"
+        href="{{ route('guide') }}">利用ガイド</a></li> --}}
         <li class="mb-2"><a class="link-secondary text-decoration-none" target="_blank"
         href="{{ route('trems') }}">利用規約</a></li>
         <li class="mb-2"><a class="link-secondary text-decoration-none" target="_blank"

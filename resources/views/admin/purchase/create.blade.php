@@ -5,7 +5,7 @@
 
 
 @section('meta') @php
-$active_key = 'coupon';
+$active_key = 'purchase';
 $active_submenu = !config('store.admin');
 $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 @endphp @endsection
@@ -26,7 +26,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"
                 >{{ 'Top' }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.coupon') }}"
+                <li class="breadcrumb-item"><a href="{{ route('admin.purchase') }}"
                 >{{ 'クーポン管理' }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">新規登録</li>
             </ol>
@@ -37,17 +37,17 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
 
-        <a href="{{route('admin.coupon')}}"
+        <a href="{{route('admin.purchase')}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
 
         <section>
-            <form action="{{ route('admin.coupon.store',) }}" method="POST" novalidate
+            <form action="{{ route('admin.purchase.store',) }}" method="POST" novalidate
             enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
                 @csrf
 
-                @include('admin.coupon._inputs')
+                @include('admin.purchase._inputs')
 
 
             </form>

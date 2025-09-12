@@ -233,7 +233,7 @@ style="max-width:90vw; min-width:30vw;">
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
+            {{-- <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >利用ガイド
 
                 <div class="position-absolute top-50 start-0 translate-middle-y p-3"
@@ -241,7 +241,7 @@ style="max-width:90vw; min-width:30vw;">
 
                 <div class="position-absolute top-50 end-0 translate-middle-y p-3"
                 ><i class="bi bi-chevron-right"></i></div>
-            </a>
+            </a> --}}
 
             <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >お知らせ

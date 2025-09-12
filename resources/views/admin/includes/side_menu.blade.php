@@ -105,6 +105,15 @@
             'label' => 'クーポン管理',
         ];
     }
+    // 買取表の追加
+    if( config('app.purchase') )
+    {
+        $ragistation_array[] = [
+            'route' => route('admin.purchase'),
+            'key'   => 'purchase',
+            'label' => '買取表管理',
+        ];
+    }
 
 
 

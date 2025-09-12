@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
 
 
-@section('title','クーポン管理')
+@section('title','買取表管理')
 
 
 @section('meta') @php
-$active_key = 'coupon';
+$active_key = 'purchase';
 $active_submenu = !config('store.admin');
 $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 @endphp @endsection
@@ -20,21 +20,22 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"
                     >{{ 'Top' }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">クーポン管理</li>
+                <li class="breadcrumb-item active" aria-current="page">買取表管理</li>
             </ol>
         </nav>
 
 
-        <h2 class="mb-5 py-3 border-bottom">クーポン管理</h2>
+        <h2 class="mb-5 py-3 border-bottom">買取表管理</h2>
 
 
-        <a-coupon-list
+        <a-purchase-list
         token="{{ csrf_token() }}"
-        r_api_list   ="{{route('admin.api.coupon')}}"
-        r_create     ="{{route('admin.coupon.create')}}"
-        r_history    ="{{route('admin.coupon.history')}}"
-        card_ration  ="{{config('app.gacha_card_ratio')}}"
-        ></a-coupon-list>
+        r_api_list    ="{{ route('admin.api.store_item') }}"
+        r_api_update  ="{{ route('admin.api.store_item.update') }}"
+        r_create      ="{{ route('admin.store_item.create') }}"
+        r_prize_create="{{ $r_prize_create }}"
+        category_id   ="{{ $category_id }}"
+        ></a-purchase-list>
 
 
     </div>

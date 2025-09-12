@@ -28,7 +28,7 @@
             >
         </div>
 
-        <div v-if="no_text==0" class="form-text">※ファイルは100kバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。</div>
+        <div v-if="no_text==0" class="form-text">※ファイルは{{kbite}}kバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。</div>
 
         <!-- delete(hidden) -->
         <div class="form-check d-none">
@@ -64,6 +64,7 @@
             name:       { type: String, default: 'image', }, //インプット要素のname名
             style_class:{ type: String, default: 'ratio ratio-3x4 rounded-3', },
             no_text:    { type: [Boolean,String,Number] ,default: 0, },
+            kbite:      { type: [String,Number] ,default: 600, },
         },
         mounted() {
             //プロップの値をデータに保存 ※プロップの値は直接変更できないので、データに保存
@@ -82,7 +83,7 @@
                     //ファイル形式
                     ( file.type==='image/jpeg' || file.type==='image/png' ) &&
                     //ファイルサイズ
-                    file.size < 100*1000
+                    file.size < this.kbite *1000
                 ){
                     this.src = URL.createObjectURL(file); //表示画像の変更
                     this.err_message = ''

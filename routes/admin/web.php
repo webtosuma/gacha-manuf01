@@ -48,6 +48,9 @@ use \App\Http\Controllers;
     # クーポン
     include('web/coupon.php');
 
+    # 買取表
+    include('web/purchase.php');
+
     # 操作履歴
     include('web/log.php');
 
