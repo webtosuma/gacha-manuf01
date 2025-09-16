@@ -87,7 +87,7 @@
         ],
 
     ];
-    // サブスクの追加
+    # サブスクの追加
     if( env('SUBSCRIPTION') )
     {
         $ragistation_array[] = [
@@ -96,7 +96,7 @@
             'label' => 'サブスク管理',
         ];
     }
-    // クーポンの追加
+    # クーポンの追加
     if( config('app.coupon') )
     {
         $ragistation_array[] = [
@@ -105,7 +105,7 @@
             'label' => 'クーポン管理',
         ];
     }
-    // 買取表の追加
+    # 買取表の追加
     if( config('app.purchase') )
     {
         $ragistation_array[] = [
@@ -231,6 +231,17 @@
             <span>{{ 'ユーザーサイト' }}</span>
         </div>
     </a>
+
+    @if( config('app.purchase') )
+        <!--買取表-->
+        <a href="{{ route('purchase') }}" target="_blank"
+        class="list-group-item border-0 p-2 px-3 w-100 text-start" style="border-radius: 2rem  2rem;">
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-card-checklist fs-4"></i>
+                <span>{{ '買取表' }}</span>
+            </div>
+        </a>
+    @endif
 
 
     <form action="{{ route('admin_auth.logout') }}" method="POST">

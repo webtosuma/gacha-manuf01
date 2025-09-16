@@ -42,16 +42,20 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         ><i class="bi bi-arrow-left-short"></i>戻る</a>
 
 
-        <section>
-            <form action="{{ route('admin.purchase.store',) }}" method="POST" novalidate
-            enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
-                @csrf
+        <form action="{{route('admin.purchase.store')}}" method="post"
+        novalidate
+        enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
 
-                @include('admin.purchase._inputs')
+            @csrf
 
-
-            </form>
-        </section>
+            <div class="fs-4">登録するガチャ用商品を選択してください。</div>
+            <a-purchase-prize-list
+            token="{{ csrf_token() }}"
+            r_api_prize   ="{{ route('admin.api.purchase.prize') }}"
+            r_api_category="{{ route('admin.api.gacha.category') }}"
+            category_id   ="{{$category_id}}"
+            ></a-purchase-prize-list>
+        </form>
 
 
     </div>

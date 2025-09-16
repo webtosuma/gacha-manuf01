@@ -30,10 +30,9 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
         <a-purchase-list
         token="{{ csrf_token() }}"
-        r_api_list    ="{{ route('admin.api.store_item') }}"
-        r_api_update  ="{{ route('admin.api.store_item.update') }}"
-        r_create      ="{{ route('admin.store_item.create') }}"
-        r_prize_create="{{ $r_prize_create }}"
+        r_api_list    ="{{ route('admin.api.purchase') }}"
+        r_api_update  ="{{ route('admin.api.purchase.update') }}"
+        r_create      ="{{ route('admin.purchase.create') }}"
         category_id   ="{{ $category_id }}"
         ></a-purchase-list>
 

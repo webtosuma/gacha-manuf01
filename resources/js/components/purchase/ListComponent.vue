@@ -19,194 +19,9 @@
 
         <div class="row g-3 gy-">
 
-
-            <!-- main -->
-            <div class="col order-lg-2">
-
-                <!--header menu-->
-                <div v-if="edit" class="mb-1">
-                    <div class="row g-3 align-items-center justify-content-between px-2"  style="min-height:3rem;">
-                        <div class="col">
-                            <label  class="form-check">
-                                <input v-model="allChecked" class="form-check-input p-2 mt-0" type="checkbox"
-                                @click="toggleAllChecks">
-                                <div class="form-check-label">すべて</div>
-                            </label>
-                        </div>
-
-
-                        <div v-if="inputs.purchase_ids.length" class="col-auto">
-                            チェックしたものを：
-                        </div>
-                        <!--一括 対応切替-->
-                        <div v-if="inputs.purchase_ids.length" class="col-auto">
-                            <div class="input-group">
-                                <select v-model="inputs.bulk"
-                                class="form-select form-select-sm">
-                                    <option value="">選択してください</option>
-                                    <option v-for="(label, value) in selectBlucks" :key="value"
-                                    :value="value"
-                                    >{{ label }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!--一括 削除-->
-                        <div v-if="inputs.purchase_ids.length " class="col-auto">
-                            <button
-                            data-bs-toggle="modal" :data-bs-target="'#deleteModal'"
-                            class="btn btn-sm border btn-light text-danger">すべて削除</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!--テーブル-->
-                <section class="card card-body bg-white w-100"
-                :class="{'border-warning border-3':edit}"
-                >
-                    <table class="table bg-white " style="min-width: 600px; ">
-                        <thead class="text-center">
-                            <tr class="bg-white">
-                                <th v-if="edit"><!--checkbox--></th>
-                                <th scope="col">
-                                    <span>公開</span>
-                                </th>
-
-                                <th scope="col" colspan="1"></th>
-
-                                <th scope="col" colspan="1" class="text-start">商品</th>
-
-                                <th scope="col"><a
-                                @click.prevent="changeOrder( 'order_price' )"
-                                href="#" class="btn btn-sm w-100 fw-bold fs-6 p-0">
-                                    <span>販売価格(税込)</span>
-                                    <i v-if="inputs['order_price']!='asc'"  class="bi bi-caret-up-fill"></i>
-                                    <i v-if="inputs['order_price']!='desc'" class="bi bi-caret-down-fill"></i>
-                                </a></th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody class="text-center">
-                            <tr v-for="(purchase, key) in purchases" :key="key">
-
-                                <!--チェックボックス-->
-                                <td v-if="edit" style="width:2rem;">
-                                    <input v-model="inputs.purchase_ids"
-                                    :value="purchase.id"
-                                    class="form-check-input p-2"
-                                    type="checkbox" >
-                                </td>
-
-
-                                <!--公開-->
-                                <td class="text- start" style="width:10rem;">
-
-
-                                    <div v-if="edit"
-                                    class="form-check form-switch ms-4">
-                                        <input v-model="purchase.is_published"
-                                        @change="update(purchase)"
-                                        class="form-check-input" type="checkbox">
-                                    </div>
-
-                                    <div v-else >
-
-                                        <span v-if="purchase.is_published"
-                                        class="badge rounded-pill bg-success">{{ '公開中' }}</span>
-                                        <span v-else-if="!purchase.is_published && purchase.published_at"
-                                        class="badge rounded-pill bg-warning">{{ '公開予約' }}</span>
-                                        <span v-else
-                                        class="badge rounded-pill bg-danger">{{ '非公開' }}</span>
-
-                                        <!-- 公開日 -->
-                                        <div class="form-text">{{ formatAt(purchase.published_at) }}</div>
-
-                                        <!-- 購入数 -->
-                                        <!-- <div class="form-text">
-                                            <i class="bi bi-bag-check me-2"></i>{{ purchase.purchased_count.toLocaleString() }}
-                                        </div> -->
-
-                                        <!-- 表示数 -->
-                                        <!-- <div class="form-text">
-                                            <i class="bi bi-eye me-2"></i>{{ purchase.showed_count.toLocaleString() }}
-                                        </div> -->
-
-                                    </div>
-
-
-                                </td>
-                                <!--画像-->
-                                <td style="width:6rem;">
-
-                                    <ratio-image-component
-                                    style_class="ratio ratio-3x4 rounded"
-                                    :url=" purchase.prize.image_path " />
-
-                                </td>
-                                <!--商品名-->
-                                <td class="text-start">
-                                    <div class="border rounded-pill form-text d-inline-block px-2">{{ purchase.prize.category.name }}</div>
-                                    <div class="fw-bold mt-2">{{ purchase.prize.name }}</div>
-
-                                    <movie-modal-component
-                                    v-if="purchase.movie_path"
-                                    :id   ="purchase.id+'-movie'"
-                                    :title="purchase.name"
-                                    :src  ="purchase.movie_path ?? purchase.youtube_url "
-                                    btn_label="動画再生"
-                                    max_width="400px"
-                                    ></movie-modal-component>
-
-                                </td>
-
-                                <!--販売価格-->
-                                <td>
-                                    <div class="row g-1 align-items-center justify-content-center">
-                                        <div class="col" v-if="edit"  style="width:6rem;" >
-                                            <input v-model="purchase.price"
-                                            @input="update(purchase)"
-                                            type="number" class="form-control text-end" min="0">
-                                        </div>
-                                        <div class="col-auto" v-else>{{ purchase.price.toLocaleString() }}</div>
-                                        <div class="col-auto">円(税込)</div>
-                                    </div>
-                                </td>
-
-
-                            </tr>
-                        </tbody>
-
-                        <tfoot v-show="nextPageUrl"><tr><td colspan="7" class="border-0">
-                            <div  class="mt-3">
-                                <a @click.prevent="getData( nextPageUrl )"
-                                class="btn btn-light border"
-                                href="">もっと読み込む</a>
-                            </div>
-                        </td></tr></tfoot>
-                    </table>
-                </section>
-            </div>
-
-
-
             <!-- side -->
-            <div class="col-12 col-lg-auto order-lg-1">
-                <div class="position-sticky" style="top: 2rem; ">
-
-
-                    <!--新規登録-->
-                    <div class="d-flex flex-md-column gap-3 mb-3 px-3">
-                        <a :href="r_create+'?category_id='+inputs.category_id"
-                        class="btn btn-primary text-white"
-                        ><i class="bi bi-plus-lg me-2 "></i>ガチャ商品から登録</a>
-
-                        <button
-                        @click="cahngeEdit"
-                        :class="edit ? 'btn-warning' : 'btn-outline-warning'"
-                        class="btn "><i class="bi bi-pencil-fill fs-"></i>
-                        {{edit ? '一括編編集終了' : '一括編集'}}</button>
-
-                    </div>
+            <div class="col-12 col-lg-auto order-lg-2">
+                <div class="position-sticky" style="top: 5rem; ">
 
 
                     <!--キーワード検索-->
@@ -238,35 +53,90 @@
                     </div>
 
 
-                    <!--公開状態-->
-                    <div class="col">
-                        <div class="form-text">公開状態</div>
-                        <select v-model="inputs.published_status" class="form-select">
-                            <option value="">すべて</option>
-
-                            <option v-for="(published_status, key) in published_statuses" :key="key"
-                            :value="published_status.key"
-                            >{{ published_status.label }}</option>
-                        </select>
-                    </div>
-
-
-                    <!--並び替え-->
-                    <!-- <div class="col">
-                        <div class="form-text">並び替え</div>
-                        <select v-model="inputs.order" class="form-select">
-                            <option value="">すべて</option>
-
-                            <option v-for="(order, key) in orders" :key="key"
-                            :value="order.key"
-                            >{{ order.label }}</option>
-                        </select>
-                    </div> -->
-
-
-
                 </div>
             </div>
+
+
+
+            <!-- main -->
+            <div class="col-12 col-lg order-lg-1">
+
+
+                <div class="row gy-3">
+                    <div v-for="(purchase, key) in purchases" :key="key"
+                    class="col-4 col-md-3 col-lg-2">
+
+
+                        <!--商品画像-->
+                        <div class="position-relative">
+
+                            <ratio-image-component
+                            style_class="ratio ratio-3x4 rounded shiny"
+                            :url=" purchase.prize.image_path " />
+
+                            <!--説明モーダル　ボタン-->
+                            <div v-if="purchase.prize.discription_text"
+                            class="position-absolute w-100 text-end"
+                            style="z-index:3; top:-5%; left:5%;">
+                                <img v-if="no_btn!=1"
+                                :src="purchase.prize.discription_icon_path"
+                                alt="商品説明ボタン"
+                                class="btn btn-dark p-0 rounded-circle shadow"
+                                style="width:3rem;"
+                                data-bs-toggle="modal"
+                                :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
+                                >
+                            </div>
+                        </div>
+
+
+                        <!--商品説明モーダル-->
+                        <div v-if="purchase.prize.discription_text">
+                            <u-prize-discription
+                            :id         ="purchase.id"
+                            :name       ="purchase.prize.name"
+                            :image_path ="purchase.prize.image_path"
+                            :discription="purchase.prize.discription_text"
+                            size       ="2rem"
+                            :src_icon   ="purchase.prize.discription_icon_path"
+                            no_btn     ="1"
+                            ></u-prize-discription>
+                        </div>
+
+
+
+                        <div class="text-center">
+                            {{ purchase.prize.name}}
+                        </div>
+
+
+                        <!--買取価格-->
+                        <div class="row g-1 align-items-center justify-content-end
+                        bg-dark text-white px-2  fs-5">
+                            <span class="col-12" style="font-size:11px;">買取価格</span>
+                            <span class="col-auto">¥</span>
+                            <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div v-if="purchases.length<1"
+                class="col-12 text-secondary bg-light-subtle
+                p-3 fs-5 rounded-3 shadow
+                ">*該当する商品がありません。</div>
+
+                <div  v-show="nextPageUrl"  class="mt-3">
+                    <a @click.prevent="getData( nextPageUrl )"
+                    class="btn btn-light border w-100"
+                    href="">もっと読み込む</a>
+                </div>
+
+
+            </div>
+
 
 
             <!-- Modal  -->

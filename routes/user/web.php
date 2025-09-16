@@ -139,6 +139,9 @@ Route::middleware([ /* ミドルウェアー */
     # クーポン
     include('web/coupon.php');
 
+    # 買取表
+    include('web/purchase.php');
+
 
 });//end middleware
 Route::middleware([ /* ミドルウェアー(メンテナンス除外) */

@@ -354,6 +354,18 @@
     </a>
 
 
+    @if( config('app.purchase') )
+        <!--買取表-->
+        <a href="{{ route('purchase') }}" target="_blank"
+        class="list-group-item border-0 p-2 px-3 w-100 text-start" style="border-radius: 2rem  2rem;">
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-card-checklist fs-4"></i>
+                <span>{{ '買取表' }}</span>
+            </div>
+        </a>
+    @endif
+
+
     <form action="{{ route('admin_auth.logout') }}" method="POST">
         @csrf
         <button  class="list-group-item border-0 p-2 px-3 w-100 text-start" type="submit">

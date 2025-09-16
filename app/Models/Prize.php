@@ -122,6 +122,17 @@ class Prize extends Model
 
 
 
+        /**
+         * Purchaseモデル リレーション //買取表
+         * @return \App\Models\Purchase
+        */
+        public function purchases()
+        {
+            return $this->hasMany(Purchase::class,'prize_id');
+        }
+
+
+
 
     /*
     |--------------------------------------------------------------------------

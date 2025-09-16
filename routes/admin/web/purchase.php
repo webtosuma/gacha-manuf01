@@ -23,27 +23,27 @@ Route::middleware(['admin_auth'])->group(function () {
         [Controllers\AdminPurchaseController ::class, 'store'])
         ->name('admin.purchase.store');
 
-    # 基本情報の編集
-    Route::get('/admin/purchase/edit/{purchase}',
-    [Controllers\AdminPurchaseController ::class, 'edit'])
-    ->name('admin.purchase.edit');
+    // # 基本情報の編集
+    // Route::get('/admin/purchase/edit/{purchase}',
+    // [Controllers\AdminPurchaseController ::class, 'edit'])
+    // ->name('admin.purchase.edit');
 
-        # 基本情報の更新
-        Route::patch('/admin/purchase/update/{purchase}',
-        [Controllers\AdminPurchaseController ::class, 'update'])
-        ->name('admin.purchase.update');
+    //     # 基本情報の更新
+    //     Route::patch('/admin/purchase/update/{purchase}',
+    //     [Controllers\AdminPurchaseController ::class, 'update'])
+    //     ->name('admin.purchase.update');
 
-    # 削除
-    Route::delete('/admin/purchase/destroy/{purchase}',
-    [Controllers\AdminPurchaseController ::class, 'destroy'])
-    ->name('admin.purchase.destroy');
+    // # 削除
+    // Route::delete('/admin/purchase/destroy/{purchase}',
+    // [Controllers\AdminPurchaseController ::class, 'destroy'])
+    // ->name('admin.purchase.destroy');
 
 
 
 });//end middleware
 /*
 |--------------------------------------------------------------------------
-| Admin - クーポン API
+| Admin - 買取表 API
 |--------------------------------------------------------------------------
 */
 Route::middleware(['admin_auth'])->group(function () {
@@ -51,8 +51,27 @@ Route::middleware(['admin_auth'])->group(function () {
 
     # 一覧情報の発行API(admin_list)
     Route::post('/admmin/api/purchase/',
-    [Controllers\AdminApipurchaseController::class, 'index'])
+    [Controllers\AdminApiPurchaseController::class, 'index'])
     ->name('admin.api.purchase');
+
+    # 更新
+    Route::patch('admin/api/purchase/update',
+    [Controllers\AdminApiPurchaseController::class, 'update'])
+    ->name('admin.api.purchase.update');
 
 
 });//end middleware
+/*
+|--------------------------------------------------------------------------
+| Admin - 買取表 API ガチャ商品の登録 ルーティング
+|--------------------------------------------------------------------------
+ */
+Route::middleware(['admin_auth'])->group(function () {
+
+    # 商品一覧情報の取得
+    Route::post('admin/api/purchase/prize',
+    [Controllers\AdminApiPurchaseController::class, 'prize'])
+    ->name('admin.api.purchase.prize');
+
+
+});

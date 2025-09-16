@@ -21,7 +21,7 @@ class AdminStoreItemPrizeController extends Controller
     /**
      * ガチャ用商品を追加
      *
-     * @param String $category_code
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)

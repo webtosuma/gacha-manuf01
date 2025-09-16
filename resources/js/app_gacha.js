@@ -95,6 +95,9 @@ import Vue from 'vue'
     Vue.component('u-coupon-comp',
     require('./components/coupon/CompComponent.vue').default);
 
+    /* 買取表一覧 */
+    Vue.component('u-purchase-list',
+    require('./components/purchase/ListComponent').default);
 
 
     /**/
