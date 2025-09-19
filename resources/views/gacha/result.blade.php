@@ -21,6 +21,24 @@
         /* body{
             background-image: url({{ $bg_image }});
         } */
+
+
+        /* アイコンを下にスライドさせるアニメーション */
+        .slide-updown {
+        display: inline-block;
+        animation: slideDown 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes slideDown {
+        from { transform: translateY(-16px); }
+        to   { transform: translateY(0px); } /* 8px下に移動（調整可） */
+        }
+
+        /* 視覚負荷軽減対応 */
+        @media (prefers-reduced-motion: reduce){
+        .slide-updown { animation: none; }
+        }
+
     </style>
 @endsection
 
@@ -31,11 +49,8 @@
         <div class="container px-3 py-4"  style="max-width:500px;">
 
 
-            {{-- <h3 class="text-secondaryy fw-bold rounded-3 p-2 text-center w-100 mb-4"
-            >ガチャ結果</h3> --}}
-            <!-- PLAY情報 -->
-            <h2 class="p- mb-3 fs-6">
-                <div class="rounded-3 p-3 text-light" style="background: rgb(0, 0, 0, .7);">
+            <h2 class="p- mb- fs-6">
+                <div class="rounded-3 p-3 text-light position-relative" style="background: rgb(0, 0, 0, .7);">
 
                     <div class="mb-2" style="font-size:10px;">
                         <div class="">{{$user_gacha_history->created_at->format('Y/m/d H:i')}}</div>
@@ -45,9 +60,21 @@
                     <div class="mb-3" style="font-size:.8rem;">
                         <div class="fs-5 text-center">{{$page_title}}</div>
                     </div>
-                </div>
-            </h2>
 
+                </div>
+
+                <!--下へスクロールボタン-->
+                <div class="d-flex justify-content-end">
+                    <a href="#all_check" style="z-index:4;"
+                    class="btn btn-dark rounded-pill py-0
+                    d-flex align-items-center gap-2
+                    slide-updown">
+                    <i class="bi bi-arrow-down-circle-fill fs-3"></i>
+                    <span style="font-size:11px;">「全て選択」へスクロール</span>
+                    </a>
+                </div>
+
+            </h2>
 
 
             <!--商品発送フォーム-->
@@ -73,8 +100,6 @@
 
 
             </form>
-
-
 
 
 

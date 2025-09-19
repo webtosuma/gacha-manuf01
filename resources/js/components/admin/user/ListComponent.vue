@@ -4,6 +4,7 @@
         <loading-cover-component :loading="loading" />
 
 
+
         <div class="row g-2  align-items-center mb-3">
             <div class="col-auto">
                 <select v-model="inputs.selected_column_name" class="form-select">
@@ -52,7 +53,36 @@
 
 
         <section class="card card-body bg-white mb-3 overflow-auto">
-            <table class="table bg-white my-3" style="min-width:680px;">
+
+
+            <!-- ページネーション -->
+            <nav v-if="pagenate.links.length > 3" aria-label="Pagination">
+                <ul class="pagination justify-content-start align-items-center">
+                    <li
+                    v-for="(link, index) in pagenate.links"
+                    :key="index"
+                    class="page-item"
+                    :class="{
+                        active: link.active,
+                        disabled: !link.url
+                    }"
+                    >
+                        <a
+                        v-if="link.url"
+                        class="page-link"
+                        href="#"
+                        v-html="linkLavel( link.label )"
+                        @click.prevent="getData( link.url  )"
+                        ></a>
+                        <span v-else class="page-link" v-html="linkLavel( link.label )"></span>
+                    </li>
+                </ul>
+                <div class="">{{ users.length }}件表示</div>
+            </nav>
+
+
+
+            <table class="table bg-white mb-3" style="min-width:680px;">
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>
                     <tr class="bg-white text-center">
@@ -140,11 +170,33 @@
             </table>
 
 
-            <div v-show="nextPageUrl">
-                <a @click.prevent="getData( nextPageUrl )"
-                class="btn btn-light border"
-                href="">もっと読み込む</a>
-            </div>
+
+            <!-- ページネーション -->
+            <nav v-if="pagenate.links.length > 3" aria-label="Pagination">
+                <ul class="pagination justify-content-start">
+                    <li
+                    v-for="(link, index) in pagenate.links"
+                    :key="index"
+                    class="page-item"
+                    :class="{
+                        active: link.active,
+                        disabled: !link.url
+                    }"
+                    >
+                        <a
+                        v-if="link.url"
+                        class="page-link"
+                        href="#"
+                        v-html="linkLavel( link.label )"
+                        @click.prevent="getData( link.url  )"
+                        ></a>
+                        <span v-else class="page-link" v-html="linkLavel( link.label )"></span>
+                    </li>
+                </ul>
+                <div class="">{{ users.length }}件表示</div>
+            </nav>
+
+
         </section>
 
     </div>
@@ -178,7 +230,10 @@
         deleted: false,
     });
 
-
+    const pagenate = ref({/* ページネーションデータ */
+        current_page :0,
+        links: {}
+    });
 
     const users = ref([ ]);  /* データリスト */
 
@@ -209,8 +264,7 @@
             const paginate = json.data['users'];
 
             // 情報の登録（新規登録・ページネーション追加）
-            users.value = route == props.r_api_list ? paginate.data
-            : [ ...users.value, ...paginate.data];
+            users.value = paginate.data;
 
 
             column_names.value = json.data['column_names'];/* 検索絞り込み用のカラム一覧の保存 */
@@ -223,6 +277,9 @@
             const current_page = paginate.current_page;//表示中ページ
             const last_page    = paginate.last_page;   //最終ページ
             nextPageUrl.value  = current_page != last_page ? paginate.next_page_url : null;//URLの更新
+
+            pagenate.value.current_page = paginate.current_page;//表示中ページ
+            pagenate.value.links = paginate.links;//ページネートURL
         })
         .catch(error => {
 
@@ -237,4 +294,13 @@
     };
 
 
+    /* ページネーションラベルのカスタマイズ */
+    const linkLavel = label => {
+
+        if(label=='pagination.next'){     return '>>'; }
+
+        if(label=='pagination.previous'){ return '<<'; }
+
+        return label;
+    };
 </script>

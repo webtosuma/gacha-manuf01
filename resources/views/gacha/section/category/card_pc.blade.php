@@ -1,7 +1,7 @@
 @php
 $params = ['category_code'=>'all'];
 @endphp
-{{-- <div class="col-auto">
+<div class="col-auto">
     <a  href="{{ route('gacha_category', $params ) }}"
     class="category-link h-100
     btn d-block p-0">
@@ -12,11 +12,11 @@ $params = ['category_code'=>'all'];
             position-absolute top-0 start-0 w-100 h-100 fw-bold
                 @if($category_code=='all') bg-primary text-white @else text-white @endif
             "
-            style="background:rgba(0, 0, 0, .8); opacity:.7;"
+            style="background:rgba(0, 0, 0, .8); opacity:.7;" 
             >{{'すべて'}}</div>
         </div>
     </a>
-</div> --}}
+</div>
 
 
 

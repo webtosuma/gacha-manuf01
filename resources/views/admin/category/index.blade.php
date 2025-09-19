@@ -136,8 +136,9 @@ $active_submenu = true;
                                     func_btn_type="submit"
                                     button_class="btn btn-sm btn-light border ">
                                         <div>
-                                            <span class="fw-bold">『{{$gacha_category->name}}』</span>を削除します。
-                                            <br />よろしいですか？
+                                            <span class="fw-bold">『{{$gacha_category->name}}』</span>を削除します。<br>
+                                            関連するガチャ・ガチャ商品も削除されます。<br>
+                                            よろしいですか？
                                         </div>
                                     </delete-modal-component>
                                 </form>

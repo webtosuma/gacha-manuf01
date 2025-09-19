@@ -103,7 +103,7 @@
 
 
                                 <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+' 枚'}}</span>
-                                <span v-else style="font-size:11px;">チケット交換なし</span>
+                                <span v-else style="font-size:11px;">交換なし</span>
                             </div>
 
                             <!--商品説明モーダル-->
@@ -142,7 +142,8 @@
         </div>
 
         <!-- ポイント交換 or 商品発送 ボタン -->
-        <div v-if="show_change_btn!=0"
+        <div id="all_check"
+        v-if="show_change_btn!=0"
         class="rounded-3 p-3" style="background: rgb(0, 0, 0, .5);">
             <div data-aos="fade-in">
 

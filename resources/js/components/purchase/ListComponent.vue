@@ -2,30 +2,57 @@
     <div class="">
         <loading-cover-component :loading="loading" />
 
+        <!--ボトムメニュー-->
+        <div class="position-fixed bottom-0 end-0 w-100 pb-3 bg-dark text-white border"
+        style="border-radius: 1rem 1rem 0 0; z-index:50;">
+            <div class="container p-0" style="max-width:900px;">
 
-        <!-- トーストポップアップ -->
-        <div id="toast_container" class="position-fixed bottom-0 end-0 p-2" style="z-index:10;">
-            <div v-for="(message, key) in messages" :key="key"
-            class="toast fade show mb-1 fade-in-message" role="alert" aria-live="assertive" aria-atomic="true" >
-                <div class="toast-header bg-dark text-white">
-                    <strong class="me-auto">{{ message }}</strong>
-                    <button type="button" class="btn px-1 py-0 text-white fs-5" data-bs-dismiss="toast"><i class="bi bi-x-lg"></i></button>
+                <div class="row justify-content-between align-items-center g-2 px-2">
+
+                    <!--すべて選択-->
+                    <div class="col-auto">
+                        <label class="form-check" style="cursor:pointer;">
+                            <input v-model="allCheck" @change="changeAll()"
+                            class="form-check-input" type="checkbox">
+                            <span class="form-check-label fs-">
+                                全て選択
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-auto">
+                        選択中
+                        <span class="fs-2 fw-bold">{{ ids.length.toLocaleString() }}</span>
+                    </div>
+
+                    <div class="col-12">
+                        ＊選択した商品から、買取金額の査定ができます。
+                    </div>
+                </div>
+
+                <!--BTN-->
+                <div class="w-100 overflow-auto">
+                    <div class="p-2 pt-0">
+
+                        <button type="button" :disabled="disabled"
+                        data-bs-toggle="modal" data-bs-target="#exchangeModal"
+                        class="btn py-md-3 btn-primary text-white rounded-pill w-100 fs-5"
+                        >買取金額を査定する</button>
+
+                    </div>
                 </div>
             </div>
         </div>
-
-
 
 
         <div class="row g-3 gy-">
 
             <!-- side -->
             <div class="col-12 col-lg-auto order-lg-2">
-                <div class="position-sticky" style="top: 5rem; ">
+                <div class="position-sticky" style="top: 2rem; ">
 
 
                     <!--キーワード検索-->
-                    <div class="input-group mb-3">
+                    <div class="input-group input-group- mb-3">
                         <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
                         <input type="text"
                         v-model="inputs.keyword"
@@ -43,7 +70,7 @@
                         <div class="form-text">カテゴリー選択</div>
                         <select
                         v-model="inputs.category_id"
-                        class="form-select"
+                        class="form-select form-select-"
                         >
                             <option value="">すべて</option>
 
@@ -62,33 +89,73 @@
             <div class="col-12 col-lg order-lg-1">
 
 
-                <div class="row gy-3">
+                <div class="row gy-3 gx-1">
                     <div v-for="(purchase, key) in purchases" :key="key"
-                    class="col-4 col-md-3 col-lg-2">
+                    class="col-3 col-md-3 col-lg-3">
+                    <!-- class="col-4 col-md-3 col-lg-2" -->
 
 
                         <!--商品画像-->
-                        <div class="position-relative">
+                        <div class="p-2">
+                            <div class="position-relative">
 
-                            <ratio-image-component
-                            style_class="ratio ratio-3x4 rounded shiny"
-                            :url=" purchase.prize.image_path " />
+                                <!--商品画像-->
+                                <ratio-image-component
+                                style_class="ratio ratio-3x4 rounded shiny"
+                                :url=" purchase.prize.image_path " />
 
-                            <!--説明モーダル　ボタン-->
-                            <div v-if="purchase.prize.discription_text"
-                            class="position-absolute w-100 text-end"
-                            style="z-index:3; top:-5%; left:5%;">
-                                <img v-if="no_btn!=1"
-                                :src="purchase.prize.discription_icon_path"
-                                alt="商品説明ボタン"
-                                class="btn btn-dark p-0 rounded-circle shadow"
-                                style="width:3rem;"
-                                data-bs-toggle="modal"
-                                :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
-                                >
+                                <!--チェックボックス-->
+                                <div class=" p-1
+                                position-absolute top-0 start-0"
+                                style="z-index:5">
+
+                                    <!--mobile-->
+                                    <input @change="changeChildren()"
+                                    v-model="ids" :value="purchase.id"
+                                    class=" d-md-none
+                                    form-check-input float-xl-none m-0 rounded-pill"
+                                    style="width:1.6em; height:1.6em;"
+                                    type="checkbox" name="purchase_ids[]" >
+
+                                    <!--PC-->
+                                    <input @change="changeChildren()"
+                                    v-model="ids" :value="purchase.id"
+                                    class=" d-none d-md-block
+                                    form-check-input float-xl-none m-0 rounded-pill"
+                                    style="width:2em; height:2em;"
+                                    type="checkbox" name="purchase_ids[]" >
+
+                                </div>
+
+
+                                <!--説明モーダル　ボタン-->
+                                <div v-if="purchase.prize.discription_text"
+                                class=" p-1
+                                position-absolute top-0 end-0"
+                                style="z-index:6;">
+
+                                    <!--mobile-->
+                                    <img :src="purchase.prize.discription_icon_path"
+                                    alt="商品説明ボタン"
+                                    class=" d-md-none
+                                    btn btn-dark p-0 rounded-circle shadow"
+                                    style="width:1.6rem;"
+                                    data-bs-toggle="modal"
+                                    :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
+                                    >
+
+                                    <!--PC-->
+                                    <img :src="purchase.prize.discription_icon_path"
+                                    alt="商品説明ボタン"
+                                    class=" d-none d-md-block
+                                    btn btn-dark p-0 rounded-circle shadow"
+                                    style="width:2rem;"
+                                    data-bs-toggle="modal"
+                                    :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
+                                    >
+                                </div>
                             </div>
                         </div>
-
 
                         <!--商品説明モーダル-->
                         <div v-if="purchase.prize.discription_text">
@@ -105,19 +172,28 @@
 
 
 
-                        <div class="text-center">
+                        <div class="bg-dark text-white px-2  d-none d-md-block">
                             {{ purchase.prize.name}}
                         </div>
 
 
-                        <!--買取価格-->
-                        <div class="row g-1 align-items-center justify-content-end
-                        bg-dark text-white px-2  fs-5">
-                            <span class="col-12" style="font-size:11px;">買取価格</span>
-                            <span class="col-auto">¥</span>
-                            <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
+                        <!--買取価格 mobile-->
+                        <div class="d-md-none bg-dark text-white px-2  fs-">
+                            <div class="row g-1 align-items-center justify-content-end"
+                            style="font-size:14px;">
+                                <span class="col-12" style="font-size:11px;">買取価格</span>
+                                <span class="col-auto">¥</span>
+                                <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
+                            </div>
                         </div>
-
+                        <!--買取価格 pc-->
+                        <div class="d-none d-md-block bg-dark text-white px-2  fs-5">
+                            <div class="row g-1 align-items-center justify-content-end">
+                                <span class="col-12" style="font-size:14px;">買取価格</span>
+                                <span class="col-auto">¥</span>
+                                <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -195,6 +271,11 @@
     const nextPageUrl = ref('');   /* 次のデータの読み込みURL */
     const messages    = ref([]);   /* ポップアップメッセージ */
     const edit        = ref(false);/* 編集中 */
+
+    // チェック
+    const ids          = ref([]);   //チェックボックスのID
+    const allCheck     = ref(false);//全てチェック
+    const disabled     = ref(true); //
 
 
     const inputs   = ref({
@@ -297,30 +378,8 @@
     };
 
 
-    /* 非同期更新 */
-    const cahngeEdit = ()=>{ edit.value = !edit.value };
-    const update = (purchase) => {
-
-        console.log(purchase);
-
-        const route = props.r_api_update
-        axios.patch(route, purchase)
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.error(error.response?.data);
-            if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
-                location.reload();
-            }
-        });
-    };
 
 
-    /* 一括処理(削除) */
-    const changeBulk = (key) => {
-        inputs.value.bulk = key;
-    };
 
 
 
@@ -355,54 +414,24 @@
     };
 
 
-    /* すべてチェック */
-    const toggleAllChecks = () => {
-        if (allChecked.value) {
-            inputs.value.purchase_ids = [];
-        } else {
-            inputs.value.purchase_ids = purchases.value.map(purchase => purchase.id);
-        }
+    /** 全て選択をクリック */
+    const changeAll = () => {
+        const allIds = purchases.value.map(v => v.id);
+        ids.value = allCheck.value ? allIds : [];
+        disabled.value = !( ids.value.length > 0 );//選択なしのときは、disabled
     };
 
-
-    /* キーワードの削除 */
-    const deleteKeyword = () => {
-        inputs.value.keyword = '';
-        getData();
-    };
-
-
-    /** 並び替え */
-    const changeOrder = (key) => {
-        const order = inputs.value[key];
-
-        switch (order) {
-            case 'asc':  inputs.value[key]=null;   break;
-            case 'desc': inputs.value[key]='asc';  break;
-            default:     inputs.value[key]='desc'; break;
-        }
-
-        getData(); /* データ取得 */
-    };
-
-
-    /* 日時変換 */
-    const formatAt = (inputString) => {
-        if(!inputString){return `----/--/--`;}
-
-        const date = new Date(inputString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${year}/${month}/${day} ${hours}:${minutes}`;
+    /** 子チェックをクリック */
+    const changeChildren = () => {
+        const allIds = purchases.value.map(v => v.id);
+        allCheck.value = ids.value.length === allIds.length;
+        disabled.value = !( ids.value.length > 0 );//選択なしのときは、disabled
     };
 
 
 
 </script>
-<style scoped>
+<!-- <style scoped>
     @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -419,4 +448,4 @@
         opacity: 0; /* 初期状態を透明に */
         animation: fadeInUp .8s ease-out forwards;
     }
-</style>
+</style> -->

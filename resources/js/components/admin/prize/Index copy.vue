@@ -2,8 +2,24 @@
     <div class="">
         <loading-cover-component :loading="loading" />
 
+        <div v-if="edit">
 
-        <div >
+            <!--一括編集モード-->
+            <edit-component
+            @toggle-edit="toggleEdit"
+            @edit-update="update"
+
+            :token="token"
+            :inputs="inputs"
+            :categories="categories"
+            :prop_prizes="prizes"
+            :selects="selects"
+            :change_ticket="change_ticket"
+            ></edit-component>
+
+
+        </div>
+        <div v-else>
             <div class="row g-3 gy-">
 
 
@@ -11,7 +27,7 @@
                 <div class="col order-lg-2">
 
                     <!--操作ボタン-->
-                    <section v-if="edit" class="mb-">
+                    <section class="mb-">
                         <div class="row g-3 align-items-center mb-2 px-2"  style="min-height:3rem;">
                             <div class="col-auto">
                                 <label  class="form-check">
@@ -37,14 +53,15 @@
                     </section>
 
                     <!--テーブル-->
-                    <section class="card card-body bg-white my- "
-                    :class="{'border-warning border-3':edit}"
-                    >
+                    <section class="card card-body bg-white my- ">
                         <table class="table bg-white " style="min-width: 600px; font-size: 16px;">
                             <!--ヘッド（並べ替えボタン）-->
                             <thead>
                                 <tr class="bg-white">
-                                    <th v-if="edit"><!--checkbox--></th>
+                                    <th style="width:1rem;"><!--チェックボックス-->
+                                        <!-- <input v-model="allCheck" @change="changeAll()"
+                                        class="form-check-input" type="checkbox"> -->
+                                    </th>
 
                                     <th scope="col" style="width:4rem;">画像</th>
 
@@ -93,67 +110,41 @@
                                         <i v-if="inputs['order_ticket']!='asc'"  class="bi bi-caret-down-fill"></i>
                                     </a></th>
 
-                                    <th scope="col" v-if="!edit"><a
+                                    <th scope="col"><a
                                     @click.prevent="changeOrder( 'updated_at' )"
                                     href="#" class="btn btn-sm w-100 fw-bold fs-6 text-start p-0">
                                         <span>更新</span>
                                         <i v-if="inputs['updated_at']!='desc'" class="bi bi-caret-up-fill"></i>
                                         <i v-if="inputs['updated_at']!='asc'"  class="bi bi-caret-down-fill"></i>
                                     </a></th>
-
-                                    <!--メニューボタン-->
-                                    <th v-if="!edit"></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(prize, key) in prizes" :key="key">
-
-
-                                    <!-- チェックボックス -->
-                                    <td v-if="edit" style="width:1rem;">
+                                    <td>
                                         <input v-model="inputs.prize_ids" :value="prize.id"
                                         @change="changeChildren()"
                                         class="form-check-input" type="checkbox" >
                                     </td>
-
-
-                                    <!-- 画像 -->
                                     <td scope="row">
+                                        <!-- 画像 -->
                                         <div style="width:3rem;">
                                             <ratio-image-component
                                             style_class="ratio ratio-3x4 rounded"
                                             :url=" prize.image_path " />
                                         </div>
                                     </td>
-
-
-                                    <!--商品コード-->
                                     <td>
-                                        <input v-if="edit"
-                                        v-model="prize.code"
-                                        @change="update(prize)"
-                                        type="text" class="form-control">
-
-                                        <div v-else
-                                        class="">{{ prize.code }}</div>
-
+                                        <div class="">{{ prize.code }}</div>
 
                                         <div class="" style="width:4rem;">
                                             <span v-if="prize.is_used"
                                             class="badge rounded-pill bg-success">{{ '利用中' }}</span>
                                         </div>
                                     </td>
-
-
-                                    <!--商品名-->
                                     <td>
-                                        <input v-if="edit"
-                                        v-model="prize.name"
-                                        @change="update(prize)"
-                                        type="text" class="form-control">
-
-                                        <div v-else>{{ prize.name }}</div>
-
+                                        {{ prize.name }}
 
                                         <!-- 商品説明 -->
                                         <button v-if="prize.discription_text"
@@ -175,65 +166,17 @@
 
                                     </td>
 
+                                    <td>{{ prize.rank.name }}</td>
 
-                                    <!--評価ランク-->
-                                    <td>
-                                        <select v-if="edit"
-                                        v-model="prize.rank_id"
-                                        @change="update(prize)"
-                                        class="form-select form-select-sm fw-bold">
-                                            <option v-for="(prize_rank, key) in selects.prize_ranks" :key="key"
-                                            :value="prize_rank.id">{{ prize_rank.name }}</option>
-                                        </select>
+                                    <td>{{ prize.point.toLocaleString() }} pt</td>
 
-                                        <div v-else>{{ prize.rank.name }}</div>
+                                    <td v-if="change_ticket!=0">{{ prize.ticket.toLocaleString() }} 枚</td>
 
-                                    </td>
-
-
-                                    <!--交換ポイント-->
-                                    <td>
-                                        <div v-if="edit"
-                                        class="row g-2 align-items-center">
-                                            <div class="col">
-                                                <input v-model="prize.point"
-                                                @change="update(prize)"
-                                                type="text" class="form-control text-end">
-                                            </div>
-                                            <div class="col-auto">pt</div>
-                                        </div>
-
-                                        <div v-else>{{ prize.point.toLocaleString() }} pt</div>
-
-                                    </td>
-
-
-                                    <!--交換チケット-->
-                                    <td v-if="change_ticket!=0">
-                                        <div v-if="edit"
-                                        class="row g-2 align-items-center">
-                                            <div class="col">
-                                                <input v-model="prize.ticket"
-                                                @change="update(prize)"
-                                                type="text" class="form-control text-end">
-                                            </div>
-                                            <div class="col-auto">枚</div>
-                                        </div>
-
-                                        <div v-else>{{ prize.ticket.toLocaleString() }} 枚</div>
-
-                                    </td>
-
-
-                                    <!--更新日-->
-                                    <td v-if="!edit"
-                                    class="form-text"
+                                    <td class="form-text"
                                     style="width:9rem;"
                                     >{{ formatDate( prize.updated_at ) }}</td>
 
-
-                                    <!--メニューボタン-->
-                                    <td v-if="!edit">
+                                    <td class="">
                                         <div class="d-flex gap-2 justify-content-end h-100">
                                             <!-- 編集 -->
                                             <a class="btn btn-sm btn-light border "
@@ -631,7 +574,7 @@
 
     /** 編集モード切り替え */
     const toggleEdit = () => {
-        //getData();
+        getData();
         edit.value = !edit.value;
     };
 

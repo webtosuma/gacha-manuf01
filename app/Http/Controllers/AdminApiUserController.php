@@ -36,7 +36,7 @@ class AdminApiUserController extends Controller
 
             $query->orderByDesc('created_at')->orderByDesc('id');
 
-        $users = $query->paginate(20);//ページネーション
+        $users = $query->paginate(100);//ページネーション
 
 
         # 追加データ
