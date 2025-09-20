@@ -70,7 +70,7 @@
         </div>
         <div class="d-md-none">
 
-            @include('includes.header_sub')
+            @include('store.includes.header_sub')
 
         </div>
         @if(Auth::check())

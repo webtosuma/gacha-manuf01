@@ -7,7 +7,7 @@
         <nav class="d-flex justify-content-between align-items-center">
 
             <h1 class="d-flex align-items-center gap-3 m-0 ms-3">
-                <a class="navbar-brand" href="{{ url('/') }}" style="shad">
+                <a class="navbar-brand" href="{{ route('gacha_category') }}" style="shad">
                     <img src="{{asset('storage/site/image/logo.png')}}"
                     alt="{{ config('app.name') }}" class="d-brock" style="height:4.4rem;">
                 </a>
