@@ -39,6 +39,9 @@ class AdminApiPrizeController extends Controller
         {
             $query = Prize::query();
 
+                # カテゴリーとのリレーションがあること
+                $query->has('category');
+
                 # キーワード(key_words)から検索
                 self::KeyWordSearch($request, $query);
 

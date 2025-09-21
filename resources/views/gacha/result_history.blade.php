@@ -66,7 +66,7 @@
 
             token="{{ csrf_token() }}"
             r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
-            r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
+            r_gacha_category="{{ route('gacha_category',$gacha->category_code_name) }}"
             r_redirect="{{route('user_prize.exchange_points')}}"
             r_user_prize    ="{{route('user_prize')}}"
 

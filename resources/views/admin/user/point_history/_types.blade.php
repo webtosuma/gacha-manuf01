@@ -76,7 +76,8 @@
                                     {{-- <a href="{{route('gacha.result_history',$point_history->user_gacha_history->key)}}"  target="_blank"> --}}
                                     @php
                                     $params=[
-                                        'category_code'     => $point_history->user_gacha_history->gacha->category->code_name ,
+                                        // 'category_code'     => $point_history->user_gacha_history->gacha->category->code_name ,
+                                        'category_code'     => $point_history->user_gacha_history->gacha->category_code_name ,
                                         'user_gacha_history'=> $point_history->user_gacha_history->id
                                     ];
                                     @endphp

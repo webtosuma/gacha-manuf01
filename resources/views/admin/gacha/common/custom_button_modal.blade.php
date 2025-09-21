@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                @php $params = ['category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+                @php $params = ['category_code'=>$gacha->category_code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
                 <form action="{{ route('admin.gacha.play', $params) }}" method="post">
                     @csrf
 

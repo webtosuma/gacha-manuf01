@@ -1,5 +1,5 @@
 @php
-$params = [ 'category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key ];
+$params = [ 'category_code'=>$gacha->category_code_name, 'gacha'=>$gacha, 'key'=>$gacha->key ];
 @endphp
 <u-gacha-play-buttons
 r_action="{{ route( 'gacha.play', $params )         }}"

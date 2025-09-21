@@ -79,7 +79,7 @@ class AdminShippedWaitingController extends Controller
 
         # 発送する商品:種類別($shipped_prizes)
         $id_array = $user_prizes->pluck('prize_id')->toArray();
-        $shipped_prizes = Prize::find( $id_array );//カードの重複除去
+        $shipped_prizes = Prize::withTrashed()->find( $id_array );//カードの重複除去
         foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
             $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
         }

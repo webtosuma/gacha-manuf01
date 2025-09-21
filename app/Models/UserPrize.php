@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ユーザー取得商品　モデル
+|  ユーザー取得商品　モデル 
 | =============================================
 */
 

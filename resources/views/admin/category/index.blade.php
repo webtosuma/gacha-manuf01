@@ -124,7 +124,7 @@ $active_submenu = true;
                                 class="btn btn-sm btn-light border "
                                 ><i class="bi bi-pencil-fill"></i></a>
                             </div>
-                            <div class="col-auto">
+                            <div class="col-auto"> 
                                 <!--削除モーダル-->
                                 <form action="{{ route('admin.category.destroy', $gacha_category) }}" method="post">
                                     @csrf

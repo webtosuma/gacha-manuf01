@@ -33,8 +33,8 @@
                 >{{ 'Top' }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.gacha') }}"
                 >{{ 'ガチャ管理' }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.gacha',$gacha->category->code_name) }}"
-                >{{ $gacha->category->name }}</a></li>
+                {{-- <li class="breadcrumb-item"><a href="{{ route('admin.gacha',$gacha->category_code_name) }}"
+                >{{ $gacha->category->name }}</a></li> --}}
                 <li class="breadcrumb-item active" aria-current="page">{{ $gacha->name }}</li>
             </ol>
         </nav>
@@ -44,7 +44,7 @@
         <h2 class="mb- py-3 border-bottom">『{{ $gacha->name }}』詳細情報</h2>
 
 
-        <a href="{{route('admin.gacha',$gacha->category->code_name)}}"
+        <a href="{{route('admin.gacha',$gacha->category_code_name)}}"
         class="btn my-3 border rounded-pill"
         ><i class="bi bi-arrow-left-short"></i>一覧に戻る</a>
 
@@ -83,7 +83,7 @@
                             <!--ポイント交換フォーム-->
                             @php
                             $params = [
-                                'category_code'=>$gacha->category->code_name,
+                                'category_code'=>$gacha->category_code_name,
                                 'user_gacha_history'=>$user_gacha_history->id
                             ];
                             @endphp
@@ -94,32 +94,12 @@
 
 
                                 <!--カード一覧-->
-                                {{-- <u-gacha-result-form
-                                token="{{ csrf_token() }}"
-                                r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
-                                r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
-                                show_change_btn ="0"
-                                ></u-gacha-result-form> --}}
-
-                                <!--カード一覧-->
                                 <u-gacha-result-form
-                                show_change_btn="0"
-
                                 token="{{ csrf_token() }}"
                                 r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show',$user_gacha_history) }}"
-                                r_gacha_category="{{ route('gacha_category',$gacha->category->code_name) }}"
-                                r_redirect="{{route('user_prize.exchange_points')}}"
-                                r_user_prize    ="{{route('user_prize')}}"
-
-                                no_exchange_point="{{ config('app.no_exchange_point') ?1:0 }}"
-                                change_ticket    ="{{ config('u_rank_ticket.change_prize_to_ticket')?1:0 }}"
-
-                                {{-- r_api_exchange_points      ="{{ route('api.user_prize.exchange_points') }}"
-                                r_redirect_exchange_points ="{{ route('user_prize.exchange_points')}}"
-                                r_api_exchange_tickets     ="{{ route('api.user_prize.exchange_tickets') }}"
-                                r_redirect_exchange_tickets="{{ route('user_prize.exchange_tickets')}}" --}}
+                                r_gacha_category="{{ route('gacha_category',$gacha->category_code_name) }}"
+                                show_change_btn="0"
                                 ></u-gacha-result-form>
-
 
 
                             </form>

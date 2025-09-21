@@ -234,7 +234,7 @@ class Gacha extends Model
         */
         public function getRouteAttribute()
         {
-            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
+            $params = ['category_code'=>$this->category_code_name, 'gacha'=>$this, 'key'=>$this->key];
             return route('gacha',$params);
         }
 
@@ -643,6 +643,17 @@ class Gacha extends Model
             if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return true; }
 
             return false;
+        }
+
+
+
+        /**
+         * カテゴリーコードネーム(カテゴリー削除対応) category_code_name
+         * @return String
+        */
+        public function getCategoryCodeNameAttribute()
+        {
+            return $this->category ? $this->category->code_name : 'unknown' ;
         }
 
 
