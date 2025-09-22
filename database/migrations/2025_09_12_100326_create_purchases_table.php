@@ -22,7 +22,8 @@ class CreatePurchasesTable extends Migration
             $table->integer('prize_id'  );
             $table->integer('price'  )->default(0);
             $table->timestamp('published_at' )->nullable()->default(NULL);//公開日時
-            $table->timestamp('done_at')->nullable()->default(NULL);//買取終了
+            // $table->timestamp('done_at')->nullable()->default(NULL);//買取終了
+            $table->boolean('is_recommend')->default(0);//お勧めか否か
             $table->timestamps();
 
         });

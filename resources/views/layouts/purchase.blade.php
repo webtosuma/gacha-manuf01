@@ -85,7 +85,7 @@
 
 
 
-    <header class="mx-auto container" style="max-width:1000px;">
+    <header class="mx-auto container" >
         <h1 class="m-0 fs-6 d-flex align-items-center gap-3">
             {{-- <a href="{{route('home')}}" class="navbar-brand  fs-2 fw-bold"> --}}
                 <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}"
@@ -97,7 +97,7 @@
     </header>
     <main style="min-height:80vh;">
 
-        <div id="app" class="mx-auto container" style="max-width:1000px;">
+        <div id="app" class="mx-auto container" >
 
             @yield('content')
 

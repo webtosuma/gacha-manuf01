@@ -13,10 +13,10 @@ Route::middleware(['auth','user_rank'])->group(function () {
     [Controllers\PurchaseController ::class, 'index'])
     ->name('purchase');
 
-        # 詳細
-        Route::get('/purchase/show',
-        [Controllers\PurchaseController ::class, 'show'])
-        ->name('purchase.show');
+    # 査定
+    Route::post('/purchase/appraisal',
+    [Controllers\PurchaseController ::class, 'appraisal'])
+    ->name('purchase.appraisal');
 
 
 
@@ -31,7 +31,7 @@ Route::middleware(['admin_auth'])->group(function () {
 
     # 一覧情報の発行API(admin_list)
     Route::post('/purchase/api',
-    [Controllers\ApiPurchaseController::class, 'index'])
+    [Controllers\PurchaseController::class, 'api'])
     ->name('purchase.api');
 
 

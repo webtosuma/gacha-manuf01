@@ -13,38 +13,35 @@
         <!--ボトムメニュー-->
         <div class="position-fixed bottom-0 end-0 w-100 pb-3 bg-dark text-white border"
         style="border-radius: 1rem 1rem 0 0; z-index:50;">
-            <div class="container p-0" >
+            <div class="container p-0">
 
                 <div class="row justify-content-between align-items-center g-2 px-2">
-
-                    <!--すべて選択-->
                     <div class="col-auto">
-                        <label class="form-check" style="cursor:pointer;">
-                            <input v-model="allCheck" @change="changeAll()"
-                            class="form-check-input" type="checkbox">
-                            <span class="form-check-label fs-">
-                                全て選択
-                            </span>
-                        </label>
+                        <span>合計買取価格</span>
                     </div>
                     <div class="col-auto">
-                        選択中
-                        <span class="fs-2 fw-bold">{{ ids.length.toLocaleString() }}</span>
+                        <span>¥</span>
+                        <span class="fs-1 fw-bold">{{ totalAmont.toLocaleString() }}</span>
                     </div>
-
-                    <div class="col-12">
-                        ＊選択した商品から、買取金額の査定ができます。
+                </div>
+                <div class="row justify-content-between align-items-center g-2 px-2">
+                    <div class="col-auto">
+                    </div>
+                    <div class="col-auto">
+                        <span>合計点数</span>
+                        <span class="fs-5 fw-bold">{{ totalCount.toLocaleString() }}</span>
+                        <span>点</span>
                     </div>
                 </div>
 
                 <!--BTN-->
-                <div class="w-100 overflow-auto">
-                    <div class="p-2 pt-0">
+                <div class="w-100 mt-3">
+                    <div class="p-2 pt-0 col-md-8 mx-auto">
 
-                        <button type="submit" :disabled="disabled"
-                        data-bs-toggle="modal" data-bs-target="#exchangeModal"
-                        class="btn py-md-3 btn-primary text-white rounded-pill w-100 fs-5"
-                        >買取金額を査定する</button>
+                        <button @click="goBack()"
+                        type="button"
+                        class="btn btn-light border rounded-pill w-100 fs-"
+                        >買取表に戻る</button>
 
                     </div>
                 </div>
@@ -55,153 +52,77 @@
         <div class="row g-3 gy-">
 
             <!-- side -->
-            <div class="col-12 col-lg-auto order-lg-2">
-                <div class="position-sticky" style="top: 2rem; ">
-
-
-                    <!--キーワード検索-->
-                    <div class="input-group input-group- mb-3">
-                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                        <input type="text"
-                        v-model="inputs.keyword"
-                        class="form-control"
-                        placeholder="商品名">
-
-                        <span
-                        @click="deleteKeyword()"
-                        class="btn btn-light border"><i class="bi bi-x"></i></span>
-                    </div>
-
-
-                    <!--カテゴリー選択-->
-                    <div class="mb-2">
-                        <div class="form-text">カテゴリー選択</div>
-                        <select
-                        v-model="inputs.category_id"
-                        class="form-select form-select-"
-                        >
-                            <option value="">すべて</option>
-
-                            <option v-for="( category, key ) in categories" :key="key"
-                            :value="category.id">{{ category.name }}</option>
-                        </select>
-                    </div>
-
-
-                </div>
-            </div>
-
 
 
             <!-- main -->
-            <div class="col-12 col-lg order-lg-1">
+            <div class="col-12 col-lg-10 mx-auto">
 
 
-                <div class="row gy-3 gx-1">
+                <div class="row gy-3 ">
                     <div v-for="(purchase, key) in purchases" :key="key"
-                    class="col-3 col-md-3 col-lg-3">
-                    <!-- class="col-4 col-md-3 col-lg-2" -->
+                    class="col-12 col-md-6 col-lg-3">
 
 
-                        <!--商品画像-->
-                        <div class="p-2">
-                            <div class="position-relative">
+                        <div class="row g-0">
+                            <div class="col-4 col-lg-12">
 
                                 <!--商品画像-->
                                 <ratio-image-component
                                 style_class="ratio ratio-3x4 rounded shiny"
                                 :url=" purchase.prize.image_path " />
 
-                                <!--チェックボックス-->
-                                <div class=" p-1
-                                position-absolute top-0 start-0"
-                                style="z-index:5">
+                            </div>
+                            <div class="col">
 
-                                    <!--mobile-->
-                                    <input @change="changeChildren()"
-                                    v-model="ids" :value="purchase.id"
-                                    class=" d-md-none
-                                    form-check-input float-xl-none m-0 rounded-pill"
-                                    style="width:1.6em; height:1.6em;"
-                                    type="checkbox">
+                                <div class="bg-d text- px-2">
+                                    {{ purchase.prize.name}}
+                                </div>
 
-                                    <!--PC-->
-                                    <input @change="changeChildren()"
-                                    v-model="ids" :value="purchase.id"
-                                    class=" d-none d-md-block
-                                    form-check-input float-xl-none m-0 rounded-pill"
-                                    style="width:2em; height:2em;"
-                                    type="checkbox" >
+                                <!--買取価格-->
+                                <div class="px-2  fs-4">
+                                    <div class="row g-1 align-items-center justify-content-">
+                                        <span class="col-12" style="font-size:14px;">買取価格</span>
+                                        <span class="col-auto">¥</span>
+                                        <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
+                                    </div>
+                                </div>
+
+
+                                <!--数量変更-->
+                                <div class="p-3">
+                                    <div class="input-group rounded-pill mb-2">
+
+                                        <div class="form-control text-center " style="flex:2;">{{ purchase.count }}</div>
+
+                                        <!-- リセット -->
+                                        <button type="button" class="form-control"
+                                        @click="countReset( key )"
+                                        ><i class="bi bi-x"></i></button>
+                                    </div>
+
+                                    <div class="input-group rounded-pill mb-2">
+                                        <!-- +1 -->
+                                        <button type="button" class="form-control btn btn-dark"
+                                        @click="countUpdate( key, 1 )"
+                                        >+ 1</button>
+
+                                        <!-- +3 -->
+                                        <button type="button" class="form-control btn btn-dark"
+                                        @click="countUpdate( key, 3 )"
+                                        >+ 3</button>
+
+                                        <!-- +10 -->
+                                        <button type="button" class="form-control btn btn-dark"
+                                        @click="countUpdate( key, 10 )"
+                                        >+ 10</button>
+                                    </div>
 
                                 </div>
 
 
-                                <!--説明モーダル　ボタン-->
-                                <div v-if="purchase.prize.discription_text"
-                                class=" p-1
-                                position-absolute top-0 end-0"
-                                style="z-index:6;">
-
-                                    <!--mobile-->
-                                    <img :src="purchase.prize.discription_icon_path"
-                                    alt="商品説明ボタン"
-                                    class=" d-md-none
-                                    btn btn-dark p-0 rounded-circle shadow"
-                                    style="width:1.6rem;"
-                                    data-bs-toggle="modal"
-                                    :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
-                                    >
-
-                                    <!--PC-->
-                                    <img :src="purchase.prize.discription_icon_path"
-                                    alt="商品説明ボタン"
-                                    class=" d-none d-md-block
-                                    btn btn-dark p-0 rounded-circle shadow"
-                                    style="width:2rem;"
-                                    data-bs-toggle="modal"
-                                    :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
-                                    >
-                                </div>
                             </div>
                         </div>
 
-                        <!--商品説明モーダル-->
-                        <div v-if="purchase.prize.discription_text">
-                            <u-prize-discription
-                            :id         ="purchase.id"
-                            :name       ="purchase.prize.name"
-                            :image_path ="purchase.prize.image_path"
-                            :discription="purchase.prize.discription_text"
-                            size       ="2rem"
-                            :src_icon   ="purchase.prize.discription_icon_path"
-                            no_btn     ="1"
-                            ></u-prize-discription>
-                        </div>
-
-
-
-                        <div class="bg-dark text-white px-2  d-none d-md-block">
-                            {{ purchase.prize.name}}
-                        </div>
-
-
-                        <!--買取価格 mobile-->
-                        <div class="d-md-none bg-dark text-white px-2  fs-">
-                            <div class="row g-1 align-items-center justify-content-end"
-                            style="font-size:14px;">
-                                <span class="col-12" style="font-size:11px;">買取価格</span>
-                                <span class="col-auto">¥</span>
-                                <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
-                            </div>
-                        </div>
-                        <!--買取価格 pc-->
-                        <div class="d-none d-md-block bg-dark text-white px-2  fs-5">
-                            <div class="row g-1 align-items-center justify-content-end">
-                                <span class="col-12" style="font-size:14px;">買取価格</span>
-                                <span class="col-auto">¥</span>
-                                <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
@@ -280,8 +201,12 @@
     const published_statuses = ref([]);/* 公開状態選択肢 */
     const orders      = ref([]);   /* 並び替え */
     const nextPageUrl = ref('');   /* 次のデータの読み込みURL */
-    const messages    = ref([]);   /* ポップアップメッセージ */
-    const edit        = ref(false);/* 編集中 */
+    // const messages    = ref([]);   /* ポップアップメッセージ */
+    // const edit        = ref(false);/* 編集中 */
+
+    const totalCount  = ref( 0 );/* 合計数 */
+    const totalAmont  = ref( 0 );/* 合計価格 */
+
 
     // チェック
     const ids          = ref([]);   //チェックボックスのID
@@ -376,10 +301,18 @@
             orders.value              = response.data['orders'] ;
 
 
-            loading.value = false;/* 読み込み */
 
             const { current_page, last_page, next_page_url } = paginate;
             nextPageUrl.value = current_page !== last_page ? next_page_url : null;
+
+            if( nextPageUrl.value == null){
+                getTotalCount();  //合計数の計算
+                getTotalAmount(); //合計価格の計算
+                loading.value = false;/* 読み込み */
+            }else{
+                /* 次の読み込み */
+                getData(nextPageUrl.value);
+            }
 
         })
         .catch(error => {
@@ -415,6 +348,62 @@
     };
 
 
+
+    /**
+     * 数量変更
+     *
+     * @param Integer key //store_keeps　キー
+     * @param Integer add //加算・減算数
+     * @return Void
+     */
+    const countUpdate = ( key, add ) => {
+        purchases.value[key].count += add;//加算・減算
+
+        getTotalCount();  //合計数の計算
+        getTotalAmount(); //合計価格の計算
+    }
+
+
+
+    /**
+     * 数量リセット
+     *
+     * @param Integer key //store_keeps　キー
+     * @param Integer add //加算・減算数
+     * @return Void
+     */
+    const countReset = ( key ) => {
+        purchases.value[key].count = 0;
+
+        getTotalCount();  //合計数の計算
+        getTotalAmount(); //合計価格の計算
+    }
+
+
+    /**
+     * 合計数の計算
+     *
+     * @return Void
+     */
+    const getTotalCount = () => {
+        totalCount.value = purchases.value.reduce((sum, item) => sum + item.count, 0);
+    }
+
+    /**
+     * 合計価格の計算
+     *
+     * @return Void
+     */
+    const getTotalAmount = () => {
+        totalAmont.value = purchases.value.reduce((sum, item) => {
+            return sum + (item.price * item.count);
+        }, 0);
+   }
+
+
+
+   /* 前のページへ戻る */
+   const goBack = () => { window.history.back(); }　
 
 </script>
 <!-- <style scoped>

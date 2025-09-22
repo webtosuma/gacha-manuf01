@@ -60,6 +60,11 @@ class AdminUserShowControlle extends Controller
      */
     public function destroy(Request $request, User $user)
     {
+        // if($user->admin){
+        //     return redirect()->back()
+        //     ->with(['alert-warning'=>"管理者アカウントを削除することはできません。"]);
+        // }
+
         $user_text = '(id:'.$user->id.')'.$user->name;
 
         # アカウントの削除

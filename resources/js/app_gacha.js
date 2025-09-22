@@ -99,6 +99,9 @@ import Vue from 'vue'
     Vue.component('u-purchase-list',
     require('./components/purchase/ListComponent').default);
 
+        /* 査定 */
+        Vue.component('u-purchase-appraisal',
+        require('./components/purchase/AppraisalComponent').default);
 
     /**/
 

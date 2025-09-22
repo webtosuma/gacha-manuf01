@@ -35,6 +35,11 @@ class AdminController extends Controller
             $fobees_user_ids = User::whereIn('email',$fobees_emails)->get()->pluck('id')->toArray();
             $query->WhereNotIn('user_id',$fobees_user_ids);
 
+
+            $query->whereHas('user', function ($query) {
+                $query->whereNull('deleted_at');//ユーザーが削除されているデータは、非表示
+            });
+
         $admins = $query->get();
 
 
@@ -171,7 +176,8 @@ class AdminController extends Controller
     public function destroy(Request $request, Admin $admin)
     {
         # 管理者の削除
-        $admin->delete();
+        $admin->user->delete();
+        // $admin->delete(); //soft_deleteがないので、削除しない
 
 
         # リダイレクト

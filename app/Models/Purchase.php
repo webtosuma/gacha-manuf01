@@ -19,14 +19,13 @@ class Purchase extends Model
         'prize_id',      //ガチャ商品ID
         'price',         //買取価格
         'published_at',  //公開日
-        'done_at',       //買取停止日
+        'is_recommend',  //お勧め中か否か
     ];
 
 
 
     protected $casts = [
-        'published_at'  => 'datetime',///公開日
-        'done_at'       => 'datetime',//買取停止日
+        'published_at' => 'datetime',//公開日
     ];
 
 
@@ -34,6 +33,7 @@ class Purchase extends Model
     /** アクセサーをJSONに含める */
     protected $appends = [
         'is_published',//公開中かどうか
+        'count',       //査定用数量
     ];
 
 
@@ -63,12 +63,12 @@ class Purchase extends Model
 
 
         /**
-         * Prizeモデル リレーション
+         * Prizeモデル リレーション //削除ガチャ用商品のデータは含まない
          * @return \App\Models\Prize
         */
         public function prize(){
-            return $this->belongsTo(Prize::class)
-            ->withTrashed();//削除済みも含む
+            return $this->belongsTo(Prize::class);
+            // ->withTrashed();//削除済みも含む
         }
 
 
@@ -91,6 +91,15 @@ class Purchase extends Model
         }
 
 
+        /**
+         * 査定用数量　count
+         * @return Boolean
+        */
+        public function getCountAttribute(){ return 1; }
+
+
+
+
     /*
     |--------------------------------------------------------------------------
     | スコープ
@@ -103,16 +112,13 @@ class Purchase extends Model
         */
         public function scopeForUserPublished($query)
         {
-            # カテゴリーリレーション(API用)
-            // $query->with('category');
-
             # 公開中
             $query->where('published_at','<>',null)->where('published_at','<=',now());//公開中
 
             # カテゴリーが公開中
-            // $query->whereHas('category', function ($query){
-            //     $query->where('is_published', 1);
-            // });
+            $query->whereHas('prize.category', function ($query){
+                $query->where('is_published', 1);
+            });
         }
 
 
@@ -122,6 +128,16 @@ class Purchase extends Model
         */
         public function scopeSearchQuery($query,$request)
         {
+
+            # カテゴリー・ガチャ用商品とのリレーションがあること
+            $query->has('prize.category');
+
+
+            # ID絞り込み(文字列->配列)
+            if( $request->ids ){
+                $query->whereIn( 'id', explode(',',$request->ids) );
+            }
+
 
             #　キーワード検索
             if( $request->keyword )
