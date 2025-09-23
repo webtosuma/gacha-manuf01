@@ -33808,9 +33808,12 @@ var render = function render() {
       }
     }
   }, [_vm._v("買取表に戻る")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "row g-3 gy-"
+    staticClass: "row g-3 gy- mx-auto",
+    staticStyle: {
+      "max-width": "1000px"
+    }
   }, [_c("div", {
-    staticClass: "col-12 col-lg-10 mx-auto"
+    staticClass: "col-12 col-lg- mx-auto"
   }, [_c("div", {
     staticClass: "row gy-3"
   }, _vm._l(_setup.purchases, function (purchase, key) {

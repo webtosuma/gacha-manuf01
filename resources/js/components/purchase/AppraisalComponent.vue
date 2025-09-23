@@ -49,13 +49,13 @@
         </div>
 
 
-        <div class="row g-3 gy-">
+        <div class="row g-3 gy- mx-auto" style="max-width:1000px;">
 
             <!-- side -->
 
 
             <!-- main -->
-            <div class="col-12 col-lg-10 mx-auto">
+            <div class="col-12 col-lg- mx-auto">
 
 
                 <div class="row gy-3 ">
