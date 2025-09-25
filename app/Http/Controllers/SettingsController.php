@@ -42,6 +42,10 @@ class SettingsController extends Controller
             $inputs['image'] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
         //
 
+        # 二段階認証の利用
+        $inputs['is_tfa'] = $request->is_tfa ? true :false ;
+
+
         # 求職者情報の保存
         $user->update($inputs);
         $request->session()->regenerateToken();// 二重送信防止

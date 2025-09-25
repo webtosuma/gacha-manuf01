@@ -43,12 +43,14 @@ class UserController extends Controller
             }
 
             # 認証番号メールの送信(メール送信は1回のみ)
-            // $verification_code = SendMailController::SendVerifEmail( $request );
             $verification_code = SendMailController::SendUpdatePassworVerifEmail( $request );
+
+            # 認証キーの保存
+            $user->tfa_key = $verification_code;
+            $user->save();
 
             return response()->json([
                 'message' => 'reset_pass_step01 ok!',
-                'verification_code' => $verification_code,
             ]);
         }
 
@@ -63,17 +65,17 @@ class UserController extends Controller
         {
             # 入力データに、DBへ保存した認証コードを追加
             $user = \App\Models\User::where('email', $request->email)->first();
+            $reset_pass_code = $user->tfa_key;
             $request_all = $request->all();
 
 
             # 入力内容のバリデーション
             $rules = [
-                'reset_pass_code' => ['required','confirmed'],
+                'reset_pass_code' => ['required'],
                 'password' => ['required','confirmed','regex:/^[0-9a-zA-Z]{8,20}/','max:20'],
             ];
             $messages = [
                 '*.required' => '入力されていません。',
-                'reset_pass_code.confirmed' => '認証コードが正しくありません。',
                 'password.confirmed' => '確認用パスワードと入力が異なります。',
                 'password.regex' => '8文字以上20文字以下の半角英数字で入力して下さい。',
                 'password.max' => '8文字以上20文字以下の半角英数字で入力して下さい。',
@@ -81,9 +83,19 @@ class UserController extends Controller
             $validator = Validator::make($request_all, $rules, $messages,);
 
 
-            // バリデーションエラーレスポンス
+            # バリデーションエラーレスポンス
             if( $validator->fails() ){
                 return response()->json([ 'errors' => $validator->errors(), 'request_all'=>$request->all() ], 422);
+            }
+
+            # 認証コードの一致チェック
+            if ($request->reset_pass_code !== $reset_pass_code) {
+                return response()->json([
+                    'errors' => [
+                        'reset_pass_code' => ['認証コードが正しくありません。']
+                    ],
+                    'request_all'=>$request->all()
+                ], 422);
             }
 
 

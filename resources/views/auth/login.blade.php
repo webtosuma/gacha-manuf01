@@ -1,5 +1,5 @@
-{{-- @extends('layouts.app') --}}
-@extends('layouts.small')
+@extends('layouts.simple')
+{{-- @extends('layouts.small') --}}
 
 <!----- title ----->
 @section('title','ログイン')
@@ -14,46 +14,72 @@
 @section('script') @endsection
 
 
-@section('content')
+@section('content') 
 
-<div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5"
-style="min-height: 80vh; max-width:600px;">
-    <form method="POST" action="{{ route('login') }}" class="w-100 text-center">
-        @csrf
-        <h2 class="h3 mb-3 fw-bold">ログイン</h2>
 
-        @if (session('login_error'))
-            <div class="text-danger mb-3 text-center">※{{ session('login_error') }}</div>
-        @endif
+<div class="container">
 
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" autofocus
-          name="email"
-          value="{{ session('email') ? session('email') : $email }}">
+    <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5"
+    style="min-height: 80vh;">
 
-          <label for="floatingInput">メールアドレス</label>
+        <div class="row justify-content-center gy-5">
+
+            <!-- 通常ログイン -->
+            <div class="col-12 col-md-6">
+
+
+                <div class="w-100 text-center">
+
+                    <h2 class="h3 mb-3 fw-bold">ログイン</h2>
+
+                    @if (session('login_error'))
+                        <div class="text-danger mb-3 text-center">※{{ session('login_error') }}</div>
+                    @endif
+
+                    <login-form-tfa
+                    token     ="{{ csrf_token() }}"
+                    email     ="{{ session('email') ? session('email') : $email }}"
+                    password  ="{{ session('password') ? session('password') : $password }}"
+                    r_api_pass   ="{{ route('auth.api.login.password') }}"
+                    r_api_tfa_key="{{ route('auth.api.login.tfa_key') }}"
+                    r_pass_request="{{route('password.request')}}"
+                    r_action="{{ route('login') }}"
+                    ></login-form-tfa>
+
+
+
+                    <div class="text-center w-100">
+
+                        <hr class="my-4 w-100">
+
+                        <small class="text-body-secondary">新規登録はこちら</small>
+
+                        <a href="{{ route('register') }}"
+                        class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
+                        >会員登録</a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            @if(config('services.google.client_id'))
+                <div class="col">
+
+                    <!-- SNSログイン -->
+                    @include('auth.login_sns_section')
+
+                </div>
+            @endif
+
+
+
         </div>
-        <div class="form-floating mb-3">
-          <input type="password" class="form-control" id="floatingPassword"
-          name="password"
-          value="{{ session('password') ? session('password') : $password }}">
-          <label for="floatingPassword">パスワード</label>
-        </div>
-
-        <div class="col-md- mx-auto mt-5 my-3">
-            <button class="w-100 btn btn-lg btn-primary text-white" type="submit">ログイン</button>
-        </div>
-        <a href="{{route('password.request')}}" class="text-decoration-none"
-        >パスワードをお忘れの方はこちら</a>
-    </form>
-
-
-    <hr class="my-4 w-100">
-    <div class="text-center w-100">
-        <small class="text-body-secondary">新規登録はこちら</small>
-        <a href="{{ route('register') }}"
-        class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
-        >会員登録</a>
     </div>
+
+
 </div>
+
+
 @endsection

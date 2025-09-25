@@ -1,6 +1,6 @@
 <div class="form-text mb-3">
     <span class="text-danger">＊</span>入力必須
-</div>
+</div> 
 
 <div class="row">
     <div class="col">
@@ -73,6 +73,31 @@
             @if ( $errors->has('twitter_id') )
                 <div class="text-danger"> {{$errors->first('twitter_id')}} </div>
             @endif
+        </label>
+
+
+
+        <!--二段階認証の利用-->
+        <label class="d-block mb-4">
+            <div class="form-label mb-0">二段階認証の利用</div>
+
+            <div class="d-flex align-items-end px-3">
+                <div style="width:7rem;">利用しない</div>
+                <div class="form-check form-switch ms-3">
+                    <input class="form-check-input fs-3" type="checkbox" name="is_tfa" value="1"
+                    {{ old('is_tfa',Auth::user()->is_tfa) ? 'checked' : ''}}
+                    >
+                </div>
+                <div class="">利用する</div>
+            </div>
+            <p class="p-3 mt-2 rounded bg-warning-subtle form-text">
+                セキュリティ向上のため、ログイン時に メールで認証キーを受け取る二段階認証 をご利用いただけます。<br>
+                二段階認証を有効にすると、パスワードに加えて認証キーの入力が必要となり、第三者による不正ログインを防ぐ効果があります。<br>
+                <br>
+                二段階認証の設定は任意です。<br>
+                セキュリティを強化したい方は、ぜひ設定を有効にしてください。<br>
+            </p>
+
         </label>
 
     </div>

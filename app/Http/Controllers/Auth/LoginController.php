@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use App\Models\User; 
 
 class LoginController extends Controller
 {
@@ -50,11 +51,8 @@ class LoginController extends Controller
 
 
         # ログインページの表示
-        $admin    = Admin::first();
-        $email    = config('app.debug') ? $admin->email : '';
-        $password = config('app.debug') ? 'password' : '';
-
-
+        $email    = '';
+        $password = '';
         return view('auth.login',compact('email','password'));
     }
 
@@ -69,6 +67,54 @@ class LoginController extends Controller
     */
     public function login(Request $request)
     {
+        # ユーザーアカウント
+        $user = User::where('email', $request->email)->first();
+
+        # 失敗回数のリセット
+        $AgoeHoursAgo = now()->subHours( (Int) self::MaxFreezingHours() );
+        if(
+            $user && $user->tfa_failures_at && $user->tfa_failures_at < $AgoeHoursAgo//凍結時間内
+        ){
+            $user->tfa_failures_count = 0;
+            $user->tfa_failures_at    = null;
+            $user->save();
+        }
+
+
+        # 失敗回数の保存
+        if( $user &&  !Hash::check( $request->password, $user->password) )
+        {
+            $user->tfa_failures_count += 1;
+            $user->tfa_failures_at     = now();
+            $user->save();
+        }
+
+
+        # ログイン凍結レスポンス
+        $AgoeHoursAgo = now()->subHours( (Int) self::MaxFreezingHours() );
+        if(
+            $user
+            && $user->tfa_failures_count > (Int) self::MaxTfaFailuresCount() //最大カウントを超える
+            && $user->tfa_failures_at > $AgoeHoursAgo//凍結時間内
+        ){
+            $message = 'ログインの試行回数が上限に達しました。一定時間経過後に、再度ログインをお試しください';
+            return redirect()->route('login')
+            ->with('login_error',$message)
+            ->with('email',$request->email)
+            ->with('password',$request->password);
+        }
+
+
+        // # Adminチェック(TFA認証時はスキップ)
+        // if($user && $user->admin && !$request->tfa_key==$user->tfa_key)
+        // {
+        //     $message = '先ほどのメールアドレスは、こちらのページからログインすることができません。';
+        //     return redirect()->route('login')
+        //     ->with('login_error',$message)
+        //     ->with('email',$request->email)
+        //     ->with('password',$request->password);
+        // }
+
 
         # ログイン成功処理（求職者のアカウントが照合された時）
         $remember = true; //$request->remember(ログイン状態の維持)
@@ -110,7 +156,11 @@ class LoginController extends Controller
 
     }
 
+        /** 最大失敗回数 */
+        public static function MaxTfaFailuresCount(){ return 3; }
 
+        /** 最大凍結時間 */
+        public static function MaxFreezingHours(){ return 3; }
 
 
     /**

@@ -38,6 +38,12 @@ class User extends Authenticatable
 
         'line_id'    ,//[snsログイン]LINE 　  2025/8/26追加
         'facebook_id',//[snsログイン]facebook 2025/8/26追加
+
+        'tfa_key'           ,//二段階認証キー　2025/9/24追加
+        'tfa_failures_count',//二段階認証の失敗数　      2025/9/24追加
+        'tfa_failures_at'   ,//二段階認証の失敗日時    　2025/9/24追加
+        'is_tfa'            ,//二段階認証を利用するか否か 2025/9/24追加
+
     ];
 
 
@@ -58,6 +64,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'tfa_failures_at'   => 'datetime',//二段階認証の失敗日時
+        'is_tfa'            => 'boolean', //二段階認証を利用するか否か
     ];
 
 

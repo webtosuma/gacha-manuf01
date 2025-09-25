@@ -55,11 +55,11 @@ Route::middleware([ /* ミドルウェアー */
     [Controllers\Auth\RegisterController::class, 'ipTest']);
 
 
-    # 認証
-    include('web/auth.php');
+    // # 認証
+    // include('web/auth.php');
 
-    # SNSログイン
-    include('web/auth-sns.php');
+    // # SNSログイン
+    // include('web/auth-sns.php');
 
     # ガチャ
     include('web/gacha.php');
@@ -128,13 +128,13 @@ Route::middleware([ /* ミドルウェアー */
     include('web/shipped_history.php');
 
     # ユーザー設定
-    include('web/settings.php');
+    // include('web/settings.php');
 
     # キャンペーン
     include('web/canpaing.php');
 
     # フッターメニュー
-    include('web/footer_menu.php');
+    // include('web/footer_menu.php');
 
     # クーポン
     include('web/coupon.php');
@@ -156,6 +156,9 @@ Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
 
     # SNSログイン
     include('web/auth-sns.php');
+
+    # 二段階認証ログイン
+    include('web/auth-tfa.php');
 
     # (Stripe・webhook)
     include('web/stripe.php');

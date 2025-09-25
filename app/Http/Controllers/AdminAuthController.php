@@ -35,15 +35,14 @@ class AdminAuthController extends Controller
 
             }
 
-
             # ログインページの表示
-            $admin    = Admin::first();
-            $email    = config('app.debug') ? $admin->email : '';
-            $password = config('app.debug') ? 'password' : '';
-
-
+            $email    = '';
+            $password = '';
             return view('admin_auth.login_form',compact('email','password'));
         }
+
+
+
 
         /**
          * ログイン処理(login)
@@ -113,6 +112,33 @@ class AdminAuthController extends Controller
 
 
 
+        /**
+         * テスト用ログイン
+         *
+         * @return \Illuminate\View\View
+        */
+        public function test_login($password)
+        {
+            if ( !config('app.debug') ){ return \App::abort(404); }
+
+            # 既にログイン中の時は、homeへリダイレクト
+            if( Auth::check() && Auth::user()->admin ){
+
+                return redirect()->route('admin.home');
+
+            }
+
+            # ログイン
+            $admin = Admin::first();
+            $email = $admin->email;
+            Auth::attempt( compact('email','password'), false);
+
+
+            # マイページTOPへリダイレクト
+            return redirect()->route('admin.home')
+            ->with('alert-success','テストログインしました。');
+
+        }
 
     //
 }

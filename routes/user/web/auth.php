@@ -57,5 +57,3 @@ Route::delete('auth/destroy',
 Route::get('auth/completed_destroy',
 function () { return view('auth.completed_destroy'); })
 ->name('auth.completed_destroy');        //
-
-

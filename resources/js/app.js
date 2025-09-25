@@ -12,6 +12,10 @@ require('./components/ExampleComponent.vue').default);
 | ユーザーページ　コンポーネント
 |=============================================
 */
+    /* ログインフォーム TFA User・Admin共用 */ 
+    Vue.component('login-form-tfa',
+    require('./components/auth/LoginFormTfaComponent.vue').default);
+
     /* 会員登録フォーム */
     Vue.component('u-register-form',
     require('./components/auth/RegisterFormConpornent.vue').default);
@@ -22,7 +26,8 @@ require('./components/ExampleComponent.vue').default);
 
 
     /* お問い合わせフォーム */
-    Vue.component('contact-form-component', require('./components/contact/FormComponent.vue').default);
+    Vue.component('contact-form-component',
+    require('./components/contact/FormComponent.vue').default);
 
     /* お知らせ 一覧 */
     Vue.component('u-infomation-list',

@@ -22,4 +22,12 @@ use \App\Http\Controllers;
     [Controllers\AdminAuthController ::class, 'logout'])
     ->name('admin_auth.logout');
 
+
+    # テスト用ログイン
+    if ( config('app.debug') )
+    {
+        Route::get('/admin_auth/test_login/{password}',
+        [Controllers\AdminAuthController ::class, 'test_login'])
+        ->name('admin_auth.test_login');
+    }
 //

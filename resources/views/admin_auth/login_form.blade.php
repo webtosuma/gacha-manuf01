@@ -1,48 +1,59 @@
-@extends('layouts.small')
+{{-- @extends('layouts.small') --}}
+@extends('layouts.simple')
 
 <!----- title ----->
 @section('title','管理者ログイン')
 
 
 @section('content')
-    <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3"
-    style="min-height: 80vh; max-width:600px;">
+<div class="container">
 
-        <form method="POST" action="{{ route('admin_auth.login') }}" class="w-100 text-center">
-            @csrf
-            <h2 class="h3 mb-3 fw-normal">サイト管理者ログイン</h2>
+    <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5"
+    style="min-height: 80vh;">
 
-            @if (session('login_error'))
-                <div class="text-danger mb-3 text-center">※{{ session('login_error') }}</div>
-            @endif
+        <div class="row justify-content-center gy-5 w-100">
 
-            <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" autofocus
-            name="email"
-            value="{{ session('email') ? session('email') : $email }}">
-            <label for="floatingInput">メールアドレス</label>
+            <!-- 通常ログイン -->
+            <div class="col-12 col-md-6 text-center">
+
+
+                {{-- <form method="POST" action="{{ route('admin_auth.login') }}" class="w-100 text-center"> --}}
+                    @csrf
+
+                    <h2 class="h3 mb-3 fw-normal">サイト管理者ログイン</h2>
+
+                    @if (session('login_error'))
+                        <div class="text-danger mb-3 text-center">※{{ session('login_error') }}</div>
+                    @endif
+
+                    <login-form-tfa
+                    token     ="{{ csrf_token() }}"
+                    email     ="{{ session('email') ? session('email') : $email }}"
+                    password  ="{{ session('password') ? session('password') : $password }}"
+                    is_admin  ="1"
+                    r_api_pass    ="{{ route('auth.api.login.password') }}"
+                    r_api_tfa_key ="{{ route('auth.api.login.tfa_key') }}"
+                    r_pass_request="{{route('password.request')}}"
+                    r_action="{{ route('admin_auth.login') }}"
+                    ></login-form-tfa>
+
+                {{-- </form> --}}
+
+
+                <div class="text-center w-100">
+
+                    <hr class="my-4 w-100">
+
+                    <small class="text-body-secondary">ユーザーログインはこちら</small>
+                    <a href="{{ route('login') }}"
+                    class="w-100 py-2 mb-2 btn btn-outline-info text- rounded-3"
+                    >ユーザーログイン</a>
+
+                </div>
+
             </div>
-            <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword"
-            name="password"
-            value="{{ session('password') ? session('password') : $password }}">
-            <label for="floatingPassword">パスワード</label>
-            </div>
 
-            <div class="col-md- mx-auto mb-3">
-                <button class="w-100 btn btn-lg btn-info" type="submit">ログイン</button>
-            </div>
-            <a href="{{route('password.request')}}" class="text-decoration-none"
-            >パスワードをお忘れの方はこちら</a>
-        </form>
-
-        <hr class="my-4 w-100">
-        <div class="text-center w-100">
-            <small class="text-body-secondary">ユーザーログインはこちら</small>
-            <a href="{{ route('login') }}"
-            class="w-100 py-2 mb-2 btn btn-outline-info text- rounded-3"
-            >ユーザーログイン</a>
         </div>
-
     </div>
+</div>
 @endsection
