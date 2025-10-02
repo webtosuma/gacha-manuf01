@@ -62,6 +62,9 @@ return [
         # 買取表の表示
         'purchase'                 => env('PURCHASE', false),
 
+        # アンケート機能
+        'survey'                   => env('SURVEY', false),
+
         # 基本レイアウト
         'layout_app' => env('APP_LAYOUT', ''),
 

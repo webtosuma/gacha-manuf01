@@ -12837,7 +12837,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     /* パスワード認証 */
     var checkPassword = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var route, response, _document$querySelect, _error$response;
+        var route, response, _document$querySelect;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -12866,16 +12866,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               err_message.value = response.data.err_message; //エラーメッセージ
               loading.value = false;
-              _context.next = 19;
+              _context.next = 18;
               break;
             case 15:
               _context.prev = 15;
               _context.t0 = _context["catch"](2);
-              console.error((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.data);
+              // console.error(error.response?.data);
               if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
               }
-            case 19:
+            case 18:
             case "end":
               return _context.stop();
           }

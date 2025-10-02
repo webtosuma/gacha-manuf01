@@ -1,4 +1,4 @@
-@extends('layouts.sub')
+@extends('layouts.sub') 
 
 <!--title-->
 @section('title',$gacha->name.'-商品履歴')

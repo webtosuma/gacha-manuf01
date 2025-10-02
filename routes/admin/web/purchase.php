@@ -23,22 +23,6 @@ Route::middleware(['admin_auth'])->group(function () {
         [Controllers\AdminPurchaseController ::class, 'store'])
         ->name('admin.purchase.store');
 
-    // # 基本情報の編集
-    // Route::get('/admin/purchase/edit/{purchase}',
-    // [Controllers\AdminPurchaseController ::class, 'edit'])
-    // ->name('admin.purchase.edit');
-
-    //     # 基本情報の更新
-    //     Route::patch('/admin/purchase/update/{purchase}',
-    //     [Controllers\AdminPurchaseController ::class, 'update'])
-    //     ->name('admin.purchase.update');
-
-    // # 削除
-    // Route::delete('/admin/purchase/destroy/{purchase}',
-    // [Controllers\AdminPurchaseController ::class, 'destroy'])
-    // ->name('admin.purchase.destroy');
-
-
 
 });//end middleware
 /*

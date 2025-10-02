@@ -50,7 +50,21 @@
 
     ];
 
-    if( \App\Http\Controllers\AdminLogController::logStartupSetting() && Auth::user()->admin->master ){
+    # アンケート
+    if( config('app.survey') )
+    {
+        $ragistation_array[] = [
+            'route' => route('admin.survey'),
+            'key'   => 'survey',
+            'label' => 'アンケート登録',
+        ];
+    }
+
+    # 操作履歴
+    if(
+        \App\Http\Controllers\AdminLogController::logStartupSetting()
+        && Auth::user()->admin->master
+    ){
         $ragistation_array[] = [
             'route' => route('admin.log'),
             'key'   => 'log',

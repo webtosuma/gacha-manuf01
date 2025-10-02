@@ -10,7 +10,7 @@
         <loading-cover-component :loading="loading" />
 
 
-        <!--エラーメッセージ--> 
+        <!--エラーメッセージ-->
         <div v-if="err_message"
         class="text-danger mb-3 text-center">※{{ err_message }}</div>
 
@@ -166,7 +166,7 @@
 
         } catch (error) {
 
-            // console.error(error.response?.data);
+            console.error(error.response?.data);
             if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
             }

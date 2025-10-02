@@ -45,7 +45,7 @@ class Coupon extends Model
 
 
     /** Carbonオブジェクトとして利用 */
-    protected $casts = [
+    protected $casts = [ 
         'published_at'  => 'datetime',//公開設定(利用しない->非公開*消さない)
         'expiration_at' => 'datetime',//有効期限
     ];

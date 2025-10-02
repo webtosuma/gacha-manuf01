@@ -14,7 +14,7 @@
 @section('script') @endsection
 
 
-@section('content') 
+@section('content')
 
 
 <div class="container">
@@ -22,7 +22,7 @@
     <div class="d-flex flex-column align-items-center justify-content-center mx-auto p-3 my-5"
     style="min-height: 80vh;">
 
-        <div class="row justify-content-center gy-5">
+        <div class="row justify-content-center gy-5 w-100">
 
             <!-- 通常ログイン -->
             <div class="col-12 col-md-6">

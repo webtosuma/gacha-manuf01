@@ -51,6 +51,9 @@ use \App\Http\Controllers;
     # 買取表
     include('web/purchase.php');
 
+    # アンケート
+    include('web/survey.php');
+
     # 操作履歴
     include('web/log.php');
 

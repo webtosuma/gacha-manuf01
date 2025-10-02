@@ -87,6 +87,8 @@
         ],
 
     ];
+
+
     # サブスクの追加
     if( env('SUBSCRIPTION') )
     {
@@ -112,6 +114,15 @@
             'route' => route('admin.purchase'),
             'key'   => 'purchase',
             'label' => '買取表管理',
+        ];
+    }
+    # アンケート
+    if( config('app.survey') )
+    {
+        $ragistation_array[] = [
+            'route' => route('admin.survey'),
+            'key'   => 'survey',
+            'label' => 'アンケート登録',
         ];
     }
 

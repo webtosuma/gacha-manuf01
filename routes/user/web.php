@@ -51,8 +51,8 @@ Route::middleware([ /* ミドルウェアー */
         return view('pwa');
     });
 
-    Route::get('/ip',
-    [Controllers\Auth\RegisterController::class, 'ipTest']);
+    // Route::get('/ip',
+    // [Controllers\Auth\RegisterController::class, 'ipTest']);
 
 
     // # 認証
@@ -141,6 +141,9 @@ Route::middleware([ /* ミドルウェアー */
 
     # 買取表
     include('web/purchase.php');
+
+    # アンケート
+    include('web/survey.php');
 
 
 });//end middleware
