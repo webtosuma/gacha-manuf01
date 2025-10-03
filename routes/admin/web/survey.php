@@ -25,8 +25,13 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminSurveyController::class, 'answer'])
     ->name('admin.survey.answer');
 
+    # 新規登録
+    Route::get('admin/survey/create',
+    [Controllers\AdminSurveyController::class, 'create'])
+    ->name('admin.survey.create');
+
     # 編集
-    Route::patch('admin/survey/edit/{code}',
+    Route::get('admin/survey/edit/{code?}',
     [Controllers\AdminSurveyController::class, 'edit'])
     ->name('admin.survey.edit');
 
@@ -57,9 +62,14 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.api.survey.show');
 
     # 詳細
-    Route::post('admin/api/survey/show/{survey}',
+    Route::post('admin/api/survey/show/{survey?}',
     [Controllers\AdminApiSurveyController::class, 'show'])
     ->name('admin.api.survey.show');
+
+    # 登録
+    Route::post('admin/api/survey/post/',
+    [Controllers\AdminApiSurveyController::class, 'post'])
+    ->name('admin.api.survey.post');
 
     # 更新
     Route::patch('admin/api/survey/update/{survey}',
@@ -79,10 +89,10 @@ Route::middleware(['admin_auth'])->group(function () {
 */
 Route::middleware(['admin_auth'])->group(function () {
 
-    # 新規作成
-    Route::post('admin/api/survey/question/create',
-    [Controllers\AdminApiSurveyQuestionController::class, 'create'])
-    ->name('admin.api.survey.question.create');
+    # 登録
+    Route::post('admin/api/survey/question/post',
+    [Controllers\AdminApiSurveyQuestionController::class, 'post'])
+    ->name('admin.api.survey.question.post');
 
     # 更新
     Route::patch('admin/api/survey/question/update/{question}',
@@ -95,7 +105,7 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.api.survey.question.destroy');
 
     # 並び替え
-    Route::patch('admin/api/survey/question/order/{question}',
+    Route::patch('admin/api/survey/question/order',
     [Controllers\AdminApiSurveyQuestionController::class, 'order'])
     ->name('admin.api.survey.question.order');
 

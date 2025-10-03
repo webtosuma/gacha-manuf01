@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendEmailInfomationJob;
 /*
 | =============================================
-|  サイト管理者　お知らせ コントローラー
+|  サイト管理者　お知らせ コントローラー 
 | =============================================
 */
 class AdminInfomationController extends Controller

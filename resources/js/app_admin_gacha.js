@@ -84,4 +84,12 @@ import Vue from 'vue'
         require('./components/admin/purchase/PrizeListComponent').default);
 
 
+    /* アンケート登録 */
+    Vue.component('a-survey-list',
+    require('./components/admin/survey/ListComponent').default);
+
+        /* アンケート登録 */
+        Vue.component('a-survey-editform',
+        require('./components/admin/survey/EditFormComponent').default);
+
 export default Vue

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 /*
 | =============================================
-|  サイト管理者　お知らせ　リクエスト
+|  サイト管理者　お知らせ　リクエスト 
 | =============================================
 */
 class AdminInfomationRequest extends FormRequest
