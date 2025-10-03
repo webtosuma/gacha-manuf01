@@ -65,4 +65,9 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminGachaController ::class, 'history'])
     ->name('admin.gacha.history');
 
+    # 商品履歴
+    Route::get('/admin/gacha/prize_history/{gacha}',
+    [Controllers\AdminGachaController ::class, 'prize_history'])
+    ->name('admin.gacha.prize_history');
+
 });//end middleware

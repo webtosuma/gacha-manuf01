@@ -78,8 +78,10 @@ class GachaPrizeHistoryController extends Controller
         $gacha_id = $gacha->id;
         $user_prizes = UserPrize::whereHas('ug_history', function ($query) use ($gacha_id) {
             $query->where('gacha_id', $gacha_id);
-        })->orderBy('created_at', 'asc')
+        })
+        ->orderBy('id', 'asc')
         ->with('user','prize')->paginate(20);
+
 
         return response()->json( compact('user_prizes') );
     }

@@ -384,4 +384,20 @@ class AdminGachaController extends Controller
 
         return view('admin.gacha.history.index',compact('gacha','user','user_gacha_histories'));
     }
+
+
+
+    /**
+     * 商品履歴
+     *
+     * @param  \App\Models\Gacha  $gacha
+     * @return \Illuminate\Http\Response
+     */
+    public function prize_history(Gacha $gacha)
+    {
+        return view('admin.gacha.prize_history', compact('gacha'));
+    }
+
+
+
 }

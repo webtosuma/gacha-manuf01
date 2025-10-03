@@ -30,6 +30,14 @@
         </li>
         <li class="nav-item">
             @php
+            $active = isset($tab) &&$tab=='admin.gacha.prize_history' ? $active_class : '';
+            @endphp
+            <a class="nav-link {{$active}}"
+            href="{{ route('admin.gacha.prize_history',$gacha) }}"
+            >商品履歴</a>
+        </li>
+        <li class="nav-item">
+            @php
             $active = isset($tab) &&$tab=='admin.gacha.edit'? $active_class : '';
             @endphp
             <a class="nav-link text-warning {{$active}}"
