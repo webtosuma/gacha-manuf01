@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminSurveyRequest;
 use App\Models\Survey;
+use App\Models\SurveyQuestion;
 /*
 | =============================================
 |  Admin API　アンケート コントローラー
@@ -12,6 +13,45 @@ use App\Models\Survey;
 */
 class AdminApiSurveyController extends Controller
 {
+    /**
+     * 一覧
+     *
+     * @param Request $request
+     * @return JSON
+    */
+    public function index(Request $request)
+    {
+        # アンケート情報
+        $query = Survey::query();
+
+            # キーワード(タイトル・コード)検索
+            // $query->keyWordSearch($request);
+
+            # フォルダ分け
+
+            # ガチャ紐付きの有無
+
+            # 並び順
+            $query->orderByDesc('created_at')->orderByDesc('id');
+
+        $surveys = $query->paginate(20);
+
+        # [ルーティング]新規登録
+        $r_create = route('admin.survey.create');
+
+        # 入力情報
+        $inputs = $request->all();
+
+
+        # JSONを返す
+        return response()->json( compact(
+            'surveys','r_create','inputs'
+        ));
+    }
+
+
+
+
     /**
      * 詳細
      *
@@ -22,11 +62,18 @@ class AdminApiSurveyController extends Controller
     public function show(Request $request, Survey $survey)
     {
         # 新規登録データ
-        $new_survey = new Survey(['id'=>0, 'title'=>'タイトル', 'resume'=>'説明文',]);
+        // $new_survey = new Survey(['id'=>0, 'title'=>'タイトル', 'resume'=>'説明文',]);
+        $new_survey = new Survey(['id'=>0, 'title'=>'', 'resume'=>'',]);
         $survey = $survey->id ? $survey : $new_survey ;
 
         # 問い情報
-        $survey_questions = $survey->questions;
+        $questions = $survey->questions;
+
+        # 新規登録用　問い
+        $new_question = new SurveyQuestion(['body'=>'hoge', 'type'=>'text', 'survey_id'=>$survey->id]);
+
+        # [セレクト]問いの種類
+        $select_question_types = SurveyQuestion::types();
 
         # 入力情報
         $inputs = $request->all();
@@ -35,7 +82,9 @@ class AdminApiSurveyController extends Controller
         # JSONを返す
         return response()->json( compact(
             'survey',
-            'survey_questions',
+            'questions',
+            'new_question',
+            'select_question_types',
             'inputs'
         ));
     }

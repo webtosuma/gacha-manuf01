@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ユーザー取得商品　モデル 
+|  ユーザー取得商品　モデル
 | =============================================
 */
 
@@ -43,6 +43,7 @@ class UserPrize extends Model
     /** アクセサーをJSONに含める */
     protected $appends = [
         'ticket',    //交換チケットの値
+        'image_path',//画像ファイルパス
     ];
 
 
@@ -60,7 +61,8 @@ class UserPrize extends Model
          * @return \App\Models\User
         */
         public function user(){
-            return $this->belongsTo(User::class);
+            return $this->belongsTo(User::class)
+            ->withTrashed();
         }
 
 
@@ -108,9 +110,12 @@ class UserPrize extends Model
             return $this->belongsTo(TicketHistory::class,'to_ticket_history_id');
         }
 
+
+
+
     /*
     |--------------------------------------------------------------------------
-    | アクセサー　
+    | アクセサー
     |--------------------------------------------------------------------------
     |
     |
@@ -123,6 +128,19 @@ class UserPrize extends Model
         {
             return isset($this->prize->ticket) ? $this->prize->ticket : 0;
         }
+
+
+
+        /**
+         * 画像ファイルパス image_path
+         * @return String
+        */
+        public function getImagePathAttribute()
+        {
+            return $this->prize ? $this->prize->image_path : '';
+        }
+
+
 
     /*
     |--------------------------------------------------------------------------

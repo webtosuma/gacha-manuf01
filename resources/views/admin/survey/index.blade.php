@@ -27,7 +27,7 @@ $active_submenu = true;
 
         <h2 class="mb-5 py-3 border-bottom">アンケート登録</h2>
 
-        <div class="mb-5">
+        {{-- <div class="mb-5">
             <a href="{{route('admin.survey.create')}}" >新規登録</a>
         </div>
 
@@ -36,13 +36,13 @@ $active_submenu = true;
                 <a href="{{$survey->r_admin_edit}}" >{{$survey->title}}</a>
                 {{$survey->r_admin_edit}}
             </div>
-        @endforeach
-        {{-- <a-infomation-list
+        @endforeach --}}
+
+        <a-survey-list
         token="{{ csrf_token() }}"
-        r_api_list="{{route('infomation.api.list')}}"
-        use_mail="{{ config('mail.mailers.info_smtp.from_address') }}"
-        is_published=""
-        ></a-infomation-list> --}}
+        r_api_list="{{route('admin.api.survey')}}"
+        ></a-survey-list>
+
 
     </div>
 @endsection

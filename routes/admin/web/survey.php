@@ -20,7 +20,7 @@ Route::middleware(['admin_auth'])->group(function () {
     [Controllers\AdminSurveyController::class, 'show'])
     ->name('admin.survey.show');
 
-    # 回答結果
+    # 集計結果
     Route::get('admin/survey/answer/{code}',
     [Controllers\AdminSurveyController::class, 'answer'])
     ->name('admin.survey.answer');
@@ -59,7 +59,7 @@ Route::middleware(['admin_auth'])->group(function () {
     # 一覧
     Route::post('admin/api/survey',
     [Controllers\AdminApiSurveyController::class, 'index'])
-    ->name('admin.api.survey.show');
+    ->name('admin.api.survey');
 
     # 詳細
     Route::post('admin/api/survey/show/{survey?}',

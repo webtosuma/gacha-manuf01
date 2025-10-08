@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Survey;
+use App\Models\SurveyQuestion;
 /*
 | =============================================
 |  Admin　アンケート コントローラー
@@ -46,7 +47,7 @@ class AdminSurveyController extends Controller
     public function create()
     {
         $survey = new Survey(['id'=>'', 'title'=>'タイトル', 'resume'=>'ホゲホゲ',]);
-        // dd($survey->toArray());
+
         return view('admin.survey.edit', compact('survey'));
     }
 
@@ -60,9 +61,7 @@ class AdminSurveyController extends Controller
     public function edit($code=null)
     {
         $survey = Survey::where('code',$code)->first();
-        // dd($survey->toArray());
-        // $new_survey = new Survey(['id'=>'', 'title'=>'', 'resume'=>'',]);
-        // dd($new_survey->toArray());
+
         return view('admin.survey.edit', compact('survey'));
     }
 

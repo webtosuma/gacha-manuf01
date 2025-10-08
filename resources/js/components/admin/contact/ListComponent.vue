@@ -18,7 +18,7 @@
         <div class="row g-3 gy-">
 
 
-            <!-- お問い合わせリスト length -->
+            <!-- お問い合わせリスト -->
             <div class="col order-lg-2">
 
                 <!--header menu-->
@@ -26,7 +26,9 @@
                     <div class="row g-3 align-items-center justify-content-between mb-2 px-2"  style="min-height:3rem;">
                         <div class="col">
                             <label  class="form-check">
-                                <input v-model="allChecked" class="form-check-input p-2" type="checkbox" @click="toggleAllChecks">
+                                <input v-model="allChecked"
+                                @click="toggleAllChecks"
+                                class="form-check-input p-2" type="checkbox" >
                                 <div class="form-check-label">すべて</div>
                             </label>
                         </div>
@@ -79,6 +81,7 @@
                         </div>
                     </div>
                 </div>
+                <!--DATA LIST-->
                 <div class="list-group">
 
 

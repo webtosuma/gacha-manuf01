@@ -19,8 +19,9 @@
                             </div>
 
                             <ratio-image-component
-                            style_class="ratio ratio-3x4 rounded-3"
-                            :url=" userPrize.prize.image_path " />
+                            style_class="ratio ratio-3x4 rounded-3 mt-1"
+                            :url=" userPrize.image_path " />
+
 
                         </div>
                     </div>
@@ -29,6 +30,8 @@
 
                         <div style="font-size:11px;" >{{ formatDate(userPrize.created_at) }}</div>
                         <h6 classs="fw-bold">{{ userPrize.prize.name }}</h6>
+
+                        <h6 classs="mt-2" style="font-size:12px;">{{ userPrize.user.name }}</h6>
 
                     </div>
                 </div>

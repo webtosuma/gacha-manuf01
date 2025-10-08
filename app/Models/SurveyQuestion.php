@@ -19,7 +19,6 @@ class SurveyQuestion extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'title',//題名
         'body' ,//本文
         'image',//画像
         'type' ,//質問の種類
@@ -31,8 +30,11 @@ class SurveyQuestion extends Model
 
     /**　アクセサーをJSONに含める　*/
     protected $appends = [
-        'image_path',//画像ファイルパス
-        'body_text', //ストレージ保存された文章を含む'本文'
+        'image_path',         //画像ファイルパス
+        'encode_body_text',   //エンコードされたテキスト'本文'
+        'body_text',          //ストレージ保存された文章を含む'本文'
+        'options_array',
+        'r_admin_api_post',   //[ルーティングAPI]登録
         'r_admin_api_update', //[ルーティングAPI]更新
         'r_admin_api_destroy',//[ルーティングAPI]削除
     ];
@@ -41,6 +43,16 @@ class SurveyQuestion extends Model
 
     /** 型を指定 */
     protected $casts = [ ];
+
+
+    /** 問の種類 */
+    public static function types()
+    { return [
+        'check'  => '一つ選択',
+        'radio'  => '複数選択',
+        'select' => 'セレクトボックス(一つ選択)',
+        'text'   => 'テキスト入力',
+    ]; }
 
 
 
@@ -89,13 +101,28 @@ class SurveyQuestion extends Model
     |
     |
     */
+        /** 画像なしの時の画像 */
+        public static function noImage(){
+            return null; //return asset( 'storage/site/image/no_image.jpg' );
+        }
+
         /**
          * 画像ファイルパス image_path
          * @return String
         */
         public function getImagePathAttribute()
         {
-            return $this->prize ? $this->prize->image_path : self::pointImage();
+            return $this->image && Storage::exists($this->image) ?
+            asset( 'storage/'.$this->image ) :  self::noImage();
+        }
+
+
+        /**
+         * エンコードされたテキスト'本文' encode_body_text
+         * @return String
+         */
+        public function getEncodeBodyTextAttribute(){
+            return urlencode( $this->body_text );
         }
 
 
@@ -114,6 +141,16 @@ class SurveyQuestion extends Model
 
 
 
+        /**
+         * 回答選択肢配列 options_array
+         * @return String
+         */
+        public function getOptionsArrayAttribute(){
+            return ['one','twe','tree'];
+        }
+
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー ルーティング
@@ -122,16 +159,28 @@ class SurveyQuestion extends Model
     |
     */
         /**
+         * [ルーティングAPI]登録 r_admin_api_post
+         * @return String
+        */
+        public function getRAdminApiPostAttribute() {
+            return $this->id ? route('admin.api.survey.question.post',$this->id) : '' ;
+        }
+
+        /**
          * [ルーティングAPI]更新 r_admin_api_update
          * @return String
         */
-        public function getRAdminApiUpdateAttribute() { return route('admin.api.survey.question.update',$this->id); }
+        public function getRAdminApiUpdateAttribute() {
+            return $this->id ? route('admin.api.survey.question.update',$this->id) : '' ;
+        }
 
         /**
          * [ルーティングAPI]削除 r_admin_api_destroy
          * @return String
         */
-        public function getRAdminApiDestroyAttribute() { return route('admin.api.survey.question.destroy',$this->id); }
+        public function getRAdminApiDestroyAttribute() {
+            return $this->id ? route('admin.api.survey.question.destroy',$this->id) : '' ;
+        }
 
 
 

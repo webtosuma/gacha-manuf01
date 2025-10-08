@@ -52,7 +52,7 @@ import Vue from 'vue'
         require('./components/admin/gacha/prize/edit/PrizeList.vue').default);
 
         // 商品履歴
-        Vue.component('a-gacha-prize-history',
+        Vue.component('a-gacha-prize-history', 
         require('./components/admin/gacha/PrizeHistoryComponent.vue').default);
 
     /* ポイント売上 */
@@ -87,12 +87,16 @@ import Vue from 'vue'
         require('./components/admin/purchase/PrizeListComponent').default);
 
 
-    /* アンケート登録 */
+    /* アンケート */
     Vue.component('a-survey-list',
     require('./components/admin/survey/ListComponent').default);
 
-        /* アンケート登録 */
+        /* 編集 */
         Vue.component('a-survey-editform',
         require('./components/admin/survey/EditFormComponent').default);
+
+        /* 問い編集 */
+        Vue.component('a-survey-question-editform',
+        require('./components/admin/survey/QuestionEditFormComponent').default);
 
 export default Vue

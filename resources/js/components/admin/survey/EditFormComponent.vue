@@ -15,13 +15,12 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-lg-6">
 
-        {{ r_admin_api_update }}
-        <!-- アンケート基本情報 -->
-        <section>
+                <!-- アンケート基本情報 -->
+                <section>
 
-            <div class="row">
-                <div class="col-lg-6">
 
                     <!--新規登録 CONTAINER-->
                     <div v-if=" !survey.id "
@@ -66,136 +65,121 @@
 
 
 
-
-                    <div class="my-5 d-none">
-
-                        <div class="form-text mb-3">
-                            <span class="text-danger">＊</span>入力必須
+                    <!--offcanvas-->
+                    <div class="offcanvas offcanvas-end" tabindex="-1"
+                    id="ocSurvey" aria-labelledby="ocSurveyLabel">
+                        <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="ocSurveyLabel">アンケート基本情報</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
+                        <div class="offcanvas-body">
 
-
-                        <!--タイトル(title resume_text)-->
-                        <label class="d-block mb-4">
-                            <div class="form-label">
-                                タイトル
-                                <span class="text-danger">＊</span>
+                            <div class="form-text mb-3">
+                                <span class="text-danger">＊</span>入力必須
                             </div>
 
-                            <input v-model="survey.title"
-                            type="text" class="form-control">
 
-                            <!--error message-->
-                            <div v-if="errors?.title" class="text-danger">{{ errors.title[0] }}</div>
-                            {{ survey.encode_title }}
-                        </label>
+                            <!--タイトル(title resume_text)-->
+                            <label class="d-block mb-4">
+                                <div class="form-label">
+                                    タイトル
+                                    <span class="text-danger">＊</span>
+                                </div>
+
+                                <input v-model="inputs.title"
+                                type="text" class="form-control">
+
+                                <!--error message-->
+                                <div v-if="errors?.title" class="text-danger">{{ errors.title[0] }}</div>
+                            </label>
 
 
-                        <!--本文(resume_text encode_resume_text)-->
-                        <label class="d-block mb-4">
-                            <div class="form-label">
-                                説明文
+                            <!--本文(resume_text encode_resume_text)-->
+                            <label class="d-block mb-4">
+                                <div class="form-label">
+                                    説明文
+                                </div>
+
+                                <textarea v-model="inputs.resume_text"
+                                class="form-control" style="height:10rem;"
+                                placeholder="アンケートの説明文を入力してください。"
+                                ></textarea>
+
+
+                                <!--error message-->
+                                <div v-if="errors?.resume_text" class="text-danger">{{ errors.resume_text[0] }}</div>
+                            </label>
+
+
+                            <div class="row mt-5">
+                                <div class="col">
+                                    <button class="btn btn-light border w-100"
+                                    type="button"
+                                    data-bs-toggle="offcanvas" data-bs-target="#ocSurvey" aria-controls="offcanvasRight"
+                                    >閉じる</button>
+                                </div>
+                                <div class="col">
+                                    <button @click="updateSurvey()"
+                                    class="btn text-white w-100"
+                                    type="button"
+                                    :class=" !survey.id?'btn-primary':'btn-warning' "
+                                    >{{ !survey.id?'登録':'更新' }}</button>
+                                </div>
                             </div>
 
-                            <textarea v-model="survey.resume_text"
-                            class="form-control" style="height:10rem;"
-                            placeholder="アンケートの説明文を入力してください。"
-                            ></textarea>
-
-
-                            <!--error message-->
-                            <div v-if="errors?.resume_text" class="text-danger">{{ errors.resume_text[0] }}</div>
-                            {{ survey.encode_resume_text }}
-                        </label>
-
-
-                        <div class="row">
-                            <div class="col">
-                                <button class="btn btn-light border w-100" type="button"
-                                >閉じる</button>
-                            </div>
-                            <div class="col">
-                                <button @click="updateSurvey()"
-                                class="btn text-white w-100" type="button"
-                                :class=" !survey.id?'btn-primary':'btn-warning' "
-                                >{{ !survey.id?'登録':'更新' }}</button>
-                            </div>
                         </div>
-
                     </div>
 
+                </section>
 
 
+                <!-- 問い情報 -->
+                <section class="my-3">
+                    <div
+                    class="d-flex align-items-center justify-content-center p-3 bg-light rounded-4"
+                    style="min-height: 300px;">
 
-                </div>
-            </div>
+                        <div class="w-100">
+                            <h6 class="fw-bold">Q01</h6>
 
-            <!--offcanvas-->
-            <div class="offcanvas offcanvas-end" tabindex="-1"
-            id="ocSurvey" aria-labelledby="ocSurveyLabel">
-                <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="ocSurveyLabel">アンケート基本情報</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
+                            <p class="mb-4 border-bottom pt-2"
+                            >アンケート質問文</p>
 
-                    <div class="form-text mb-3">
-                        <span class="text-danger">＊</span>入力必須
-                    </div>
-
-
-                    <!--タイトル(title resume_text)-->
-                    <label class="d-block mb-4">
-                        <div class="form-label">
-                            タイトル
-                            <span class="text-danger">＊</span>
-                        </div>
-
-                        <input v-model="inputs.survey.title"
-                        type="text" class="form-control">
-
-                        <!--error message-->
-                        <div v-if="errors?.title" class="text-danger">{{ errors.title[0] }}</div>
-                    </label>
+                            <div class="mb-3">
+                                A<br />
+                                A<br />
+                                A<br />
+                                A<br />
+                            </div>
 
 
-                    <!--本文(resume_text encode_resume_text)-->
-                    <label class="d-block mb-4">
-                        <div class="form-label">
-                            説明文
-                        </div>
-
-                        <textarea v-model="inputs.survey.resume_text"
-                        class="form-control" style="height:10rem;"
-                        placeholder="アンケートの説明文を入力してください。"
-                        ></textarea>
-
-
-                        <!--error message-->
-                        <div v-if="errors?.resume_text" class="text-danger">{{ errors.resume_text[0] }}</div>
-                    </label>
-
-
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-light border w-100"
-                            type="button"
+                            <button
+                            class="btn btn-warning text-white"
                             data-bs-toggle="offcanvas" data-bs-target="#ocSurvey" aria-controls="offcanvasRight"
-                            >閉じる</button>
-                        </div>
-                        <div class="col">
-                            <button @click="updateSurvey()"
-                            class="btn text-white w-100"
                             type="button"
-                            :class=" !survey.id?'btn-primary':'btn-warning' "
-                            >{{ !survey.id?'登録':'更新' }}</button>
+                            ><i class="bi bi-pencil me-2"></i>編集</button>
+
                         </div>
+
                     </div>
 
-                </div>
+
+
+
+
+
+                </section>
+
+                <a-survey-question-editform
+                v-if="survey.id>0"
+                :token="token"
+                :question="new_question"
+                :select_question_types="select_question_types"
+                ></a-survey-question-editform>
+
+
             </div>
-
-        </section>
-
+        </div>
 
     </div>
 </template>
@@ -215,25 +199,28 @@
     const loading     = ref(true); /* 読み込み中 */
     const messages    = ref([]);   /* ポップアップメッセージ */
 
-    const survey = ref({});           //アンケート基本情報
-    const survey_questions = ref({}); //アンケート・問い
-    const errors = ref({});           //エラー
+    const survey    = ref({}); //アンケート基本情報
+    const questions = ref({}); //アンケート・問い
+    const errors    = ref({}); //エラー
 
-    const r_admin_api_update = ref('');//[ルーティングAPI]アンケートデータ更新
+    const r_admin_api_update    = ref('');//[ルーティングAPI]アンケートデータ更新
 
     /* 入力データ */
     const inputs = ref({
         _token: props.token,
-        survey: {},
+
     });
+
+    const new_question = ref({});//問いの新規登録用データ
+    const select_question_types = ref({});//問いの種類
 
 
     /* 監視 */
-    watch(() => inputs.value.survey.title,  () => {
-        inputs.value.survey.encode_title = encodeURIComponent( inputs.value.survey.title );
+    watch(() => inputs.value.title,  () => {
+        inputs.value.encode_title = encodeURIComponent( inputs.value.title );
     });
-    watch(() => inputs.value.survey.resume_text,  () => {
-        inputs.value.survey.encode_resume_text = encodeURIComponent( inputs.value.survey.resume_text );
+    watch(() => inputs.value.resume_text,  () => {
+        inputs.value.encode_resume_text = encodeURIComponent( inputs.value.resume_text );
     });
 
 
@@ -247,12 +234,15 @@
         const route  = props.r_api_show;
         try {
             const response = await axios.post(route, inputs.value);
-            // console.log(response.data);
+            console.log(response.data);
 
             survey.value = response.data['survey'];
-            inputs.value.survey = { ...response.data['survey'] };
-            survey_questions.value = response.data['survey_questions'] || {};
+            inputs.value = { ...response.data['survey'] };
+            questions.value = response.data['questions'] || {};
             r_admin_api_update.value = response.data['survey']['r_admin_api_update'] || '';
+
+            new_question.value = response.data['new_question'];//問いの新規登録用データ
+            select_question_types.value = response.data['select_question_types'];
 
             loading.value = false;
 
@@ -269,20 +259,19 @@
 
 
 
-    /* アンケートデータ更新 */
+    /* アンケートデータ新規登録or更新 */
     const updateSurvey = async () => {
+
         loading.value = true;
         errors.value  = null;
-        const route  = r_admin_api_update.value;
-        // const inputs = {
-        //     _token: props.token,
-        //      ...survey.value
-        // }
+        const route   = r_admin_api_update.value;
         const message_type = !survey.value.id?'survey.post':'survey.update';
         try {
-            const response = await axios.post(route, inputs.value);
+
+            const response = !survey.value.id
+            ? await axios.post(route, inputs.value)   //新規登録
+            : await axios.patch(route, inputs.value); //更新
             // console.log(response.data);
-            // console.log('登録');
 
             survey.value = response.data['survey'];
             r_admin_api_update.value = response.data['survey']['r_admin_api_update'] || '';

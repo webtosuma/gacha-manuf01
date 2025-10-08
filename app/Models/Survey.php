@@ -34,7 +34,9 @@ class Survey extends Model
         'encode_resume_text',  // エンコードされたテキスト'説明文'
         'resume_text',         //ストレージ保存された文章を含む'説明文'
 
+        'r_admin_show',               //[ルーティング]詳細 (プレビュー)
         'r_admin_edit',               // [ルーティング]編集
+        'r_admin_answer',             // [ルーティング]集計結果
         'r_admin_copy',               // [ルーティング]コピー
         'r_admin_destroy',            // [ルーティング]削除
         'r_admin_api_update',         // [ルーティングAPI]更新
@@ -148,10 +150,28 @@ class Survey extends Model
     |
     */
         /**
+         * [ルーティング]詳細 (プレビュー) r_admin_show
+         * @return String
+        */
+        public function getRAdminShowAttribute() {
+            return $this->code ? route('admin.survey.show',$this->code) : '';
+        }
+
+        /**
          * [ルーティング]編集 r_admin_edit
          * @return String
         */
-        public function getRAdminEditAttribute() { return route('admin.survey.edit',$this->code); }
+        public function getRAdminEditAttribute() {
+            return $this->code ? route('admin.survey.edit',$this->code) : '';
+        }
+
+        /**
+         * [ルーティング]集計結果 r_admin_answer
+         * @return String
+        */
+        public function getRAdminAnswerAttribute() {
+            return $this->code ? route('admin.survey.answer',$this->code) : '';
+        }
 
         /**
          * [ルーティング]コピー r_admin_copy

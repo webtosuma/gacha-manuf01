@@ -19,7 +19,6 @@ class CreateSurveyQuestionsTable extends Migration
     {
         Schema::create('survey_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');//題名
             $table->string('body' )->nullable()->default(null);//本文
             $table->string('image')->nullable()->default(null);//画像
             $table->string('type');//質問の種類
