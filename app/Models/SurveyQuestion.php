@@ -131,7 +131,7 @@ class SurveyQuestion extends Model
          * ストレージ保存された文章を含む'本文' body_text
          * @return String
          */
-        public function getBodyTextAttribute()
+      public function getBodyTextAttribute()
         {
             $text = $this->body;
             $path = str_replace(["\r\n", "\r", "\n"], '', $text);

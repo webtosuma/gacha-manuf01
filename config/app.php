@@ -65,6 +65,9 @@ return [
         # アンケート機能
         'survey'                   => env('SURVEY', false),
 
+        # イベントガチャ
+        'event_gacha'              => env('EVENT_GACHA', false),
+
         # 基本レイアウト
         'layout_app' => env('APP_LAYOUT', ''),
 

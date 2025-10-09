@@ -391,35 +391,36 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
-        // dd($gacha->is_show_timezone);
-
         # キーのチェック
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 
-        # 会員ランク専用ガチャ：ログインユーザーのランクと異なれば非表示
-        // $user = Auth::check() ? Auth::user() : null;
-        // $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-        // if(
-        //     $gacha->user_rank_id != null
-        //     && $gacha->user_rank_id != $user_rank_id
-
-        // ){ return \App::abort(401); }
+        ## 背景画像
+        $category = $gacha->category;
+        $bg_image = $category && $category->bg_image_path
+        ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
 
         ## 表示できるガチャ一覧
         $category_code = $gacha->category->code_name;
-        $gachas = self::getPublishedGachas( $category_code, null );
+        $query = GachaApiController::getPublishedGachas( $category_code, $search_key=null );
+
+            ## イベントガチャ (is_event_gacha)
+            $query->where('type','<>','event');
+            // $query->where('type','event');
+
+        $gachas = $query->paginate(6);
 
         return view('gacha.show.index', compact(
             'gacha',
-            'gachas','category_code'
+            'gachas','category_code',
+            'bg_image'
         ));
     }
 
 
 
     /**
-     * 詳細表示
+     * カスタム回数
      * @param String $category_code      //カテゴリーコード名
      * @param  \App\Models\Gacha  $gacha
      * @param String $key                //ガチャモデル・キー
@@ -515,8 +516,14 @@ class GachaController extends Controller
 
 
         ## 表示できるガチャ一覧
-        // $category_code = $gacha->category->code_name;
-        $gachas = self::getPublishedGachas( $category_code, null );
+        $category_code = $gacha->category->code_name;
+        $query = GachaApiController::getPublishedGachas( $category_code, $search_key=null );
+
+            ## イベントガチャ (is_event_gacha)
+            $query->where('type','<>','event');
+            // $query->where('type','event');
+
+        $gachas = $query->paginate(6);
 
         return view('gacha.result',compact(
             'gacha','user_gacha_history', 'page_title', 'bg_image', 'rank_up',
@@ -577,10 +584,14 @@ class GachaController extends Controller
 
 
         ## 表示できるガチャ一覧
-        // $category_code =  $gacha->category->code_name ;
-        $category_code =  $gacha->category_code_name ;
-        $gachas = self::getPublishedGachas( $category_code, null );
+        $category_code = $gacha->category->code_name;
+        $query = GachaApiController::getPublishedGachas( $category_code, $search_key=null );
 
+            ## イベントガチャ (is_event_gacha)
+            $query->where('type','<>','event');
+            // $query->where('type','event');
+
+        $gachas = $query->paginate(6);
 
         return view('gacha.result_history',compact(
             'gacha','user_gacha_history', 'user_prizes', 'user', 'page_title', 'bg_image',

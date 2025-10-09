@@ -104,7 +104,8 @@ class GachaCategory extends Model
         /** 画像なしの時の画像 */
         // public static function noImage(){ return asset( 'storage/'.'site/image/bg02.jpg' );}
         public static function noImage(){
-           return \App\Http\Controllers\AdminBackGroundController::getBgTop();
+            return null;
+        //    return \App\Http\Controllers\AdminBackGroundController::getBgTop();
         }
 
         /**

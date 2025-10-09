@@ -12,6 +12,7 @@
         props: {
 
             text:{ type: String, default: 'test', }, //
+            replace_link:{ type: [String,Number], default: 1, }, //リンク変換の有無
 
         },
         data : function() {
@@ -31,6 +32,7 @@
 
 
                 //[リンクタグへの変換]
+                if( this.replace_link!=0 ){
 
                     // ターゲットキー
                     const targetKey = this.getRandomStr(16);
@@ -55,6 +57,9 @@
                         body = body.replace( target, replace);
 
                     }
+
+                }
+
 
                 //[改行の変換]
                 body = body.replace(/\r?\n/g, '<br>');

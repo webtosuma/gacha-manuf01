@@ -31,7 +31,8 @@ class AdminGachaRequest extends FormRequest
             'category_id'   => ['required','max:140',],
             // 'image'         => ['required','file','max:10000','mimes:jpeg,png,jpg'], //イメージ画像
             'image'        => ['required','file',], //イメージ画像
-            'name'          => ['required','max:140',],
+            // 'name'          => ['required','max:140',],
+            'name'          => ['required'],
             'one_play_point'=> ['required','integer','min:0'],
             'type' => ['required',],  //ガチャの種類
         ];

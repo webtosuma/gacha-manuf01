@@ -38,6 +38,8 @@ class Gacha extends Model
         'is_over_date',// 日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
         'updated_prizes_at',// 登録商品更新日時 2025/02/04追加
         'subscription_id',  //サブスクプランID(PointSail) 2025/03/23追加
+        'resume',           //説明文 　　　　　　2025/10/09追加
+        'end_published_at', //公開終了日時　　　 2025/10/09追加
     ];
 
 
@@ -66,6 +68,10 @@ class Gacha extends Model
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
         'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
         'r_prize_history',     //[ルーティング]ガチャ商品履歴
+
+        'resume_text',   //ストレージ保存された文章を含む'説明文'
+        'r_event_show',  //[ルーティング]イベント詳細
+        'r_event_play',  //[ルーティング]イベントガチャカで遊ぶ
     ];
 
 
@@ -84,10 +90,17 @@ class Gacha extends Model
             'one_time'     => '一回限定',
             'only_oneday'  => '1日1回限定',
             'only_new_user'=> '新規会員限定',
+
+            'survey' => 'アンケートガチャ',
         ];
+
+        # イベント用
+        if( config('app.event_gacha') ){ $array['event'] ='イベント用'; }
 
         return $array;
     }
+
+
 
     /** カスタムボタンの上限 */
     public static function max_custom_count(){ return 99; }
@@ -923,6 +936,57 @@ class Gacha extends Model
             $user_sub_ids = $user->user_subscriptions->pluck('subscription_id')->toArray();
             return in_array( $this->subscription_id, $user_sub_ids );
         }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー(イベント)
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * ストレージ保存された文章を含む'説明文' resume_text
+         * @return String
+         */
+        public function getResumeTextAttribute()
+        {
+            // return <<<__
+            // テキストテキスト
+            // テキストテキストテキスト
+            // テキストテキスト
+            // https://www.google.com/
+            // __;
+
+            $text = $this->resume;
+            $path = str_replace(["\r\n", "\r", "\n"], '', $text);
+
+            return Storage::exists($path) ? Storage::get($path) : $text;
+        }
+
+
+        /**
+         * [ルーティング]イベント詳細 r_event_show
+         * @return String
+        */
+        public function getREventShowAttribute()
+        {
+            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this->id, 'key'=>$this->key];
+            return route('event.gacha.show',$params);
+        }
+
+
+        /**
+         * [ルーティング]イベントガチャカで遊ぶ r_event_play
+         * @return String
+        */
+        public function getREventPlayAttribute()
+        {
+            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this->id, 'key'=>$this->key];
+            return route('event.gacha.play',$params);
+        }
+
 
     /* end */
 }

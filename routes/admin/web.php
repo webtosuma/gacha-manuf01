@@ -68,6 +68,9 @@ use \App\Http\Controllers;
     include('web/gacha/detail.php');//(詳細情報)
     include('web/gacha/play.php');//(play)
 
+    # イベントガチャ
+    include('web/event_gacha.php');//(play)
+
     # スポンサー・スポンサー広告
     include('web/sponsor.php');
     include('web/sponsor_ad.php');

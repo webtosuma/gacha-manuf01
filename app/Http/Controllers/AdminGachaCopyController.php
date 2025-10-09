@@ -64,6 +64,10 @@ class AdminGachaCopyController extends Controller
         $path = $gacha->image;
         $new_image_path = Method::copyStorageFile( $dir, $path );
 
+        # ストレージの複製（説明文）resume
+        $dir = 'upload/gacha/resume/';
+        $path = $gacha->resume_text;
+        $new_resume_path = Method::copyStorageFile( $dir, $path );
 
         # コピー情報の新規登録
         $copy_gacha = new Gacha([
@@ -72,7 +76,7 @@ class AdminGachaCopyController extends Controller
             'type'           => $gacha['type'] ,          //ガチャの種類
             'one_play_point' => $gacha['one_play_point'] ,//1回PLAYポイント数
             'image'          => $new_image_path,          //イメージ画像
-
+            'resume'         => $new_resume_path,         //説明文
             'is_meter'       => $gacha['is_meter'],       //残数メーターの表示有無
             'is_slide'       => $gacha['is_slide'],       //スライドの表示有無
             'user_rank_id'   => $gacha['user_rank_id'],   //会員ランクの指定

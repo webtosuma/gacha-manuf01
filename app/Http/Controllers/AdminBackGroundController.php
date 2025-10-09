@@ -19,6 +19,8 @@ class AdminBackGroundController extends Controller
             'bg_top'    => 'upload/gacha_category/bg_image/all.jpg' ,
             'bg_sub'    => 'site/image/bg01.jpg' ,
             'bg_result' => 'site/image/gacha/bg_result.jpg',
+            'bg_ec'     => '',
+            'bg_event'  => '',
         ];
 
         // return [
@@ -30,21 +32,37 @@ class AdminBackGroundController extends Controller
     }
 
     /* 各背景画像パス */
-    public static function  getBgTop(){
-        $bg_paths= Method::getStorageObjData( self::storagePath() );
-        $bg_paths = $bg_paths ?? self::defaultData();
-        return asset( 'storage/'.$bg_paths['bg_top'] );
-    }
-    public static function  getBgSub(){
-        $bg_paths= Method::getStorageObjData( self::storagePath() );
-        $bg_paths = $bg_paths ?? self::defaultData();
-        return asset('storage/'.$bg_paths['bg_sub'] );
-    }
-    public static function  getBgResult(){
-        $bg_paths= Method::getStorageObjData( self::storagePath() );
-        $bg_paths = $bg_paths ?? self::defaultData();
-        return asset('storage/'.$bg_paths['bg_result'] );
-    }
+
+        # ガチャトップ背景
+        public static function  getBgTop(){
+            $bg_paths= Method::getStorageObjData( self::storagePath() );
+            $bg_paths = $bg_paths ?? self::defaultData();
+            return asset( 'storage/'.$bg_paths['bg_top'] );
+        }
+        # サブページ背景
+        public static function  getBgSub(){
+            $bg_paths= Method::getStorageObjData( self::storagePath() );
+            $bg_paths = $bg_paths ?? self::defaultData();
+            return asset('storage/'.$bg_paths['bg_sub'] );
+        }
+        # ガチャ結果背景
+        public static function  getBgResult(){
+            $bg_paths= Method::getStorageObjData( self::storagePath() );
+            $bg_paths = $bg_paths ?? self::defaultData();
+            return asset('storage/'.$bg_paths['bg_result'] );
+        }
+        # EC背景
+        public static function  getBgEc(){
+            $bg_paths= Method::getStorageObjData( self::storagePath() );
+            $bg_paths = isset($bg_paths['bg_ec']) ? $bg_paths : self::defaultData();
+            return asset('storage/'.$bg_paths['bg_ec'] );
+        }
+        # イベント背景
+        public static function  getBgEvent(){
+            $bg_paths= Method::getStorageObjData( self::storagePath() );
+            $bg_paths = isset($bg_paths['bg_event']) ? $bg_paths : self::defaultData();
+            return asset('storage/'.$bg_paths['bg_event'] );
+        }
 
 
 
@@ -68,8 +86,12 @@ class AdminBackGroundController extends Controller
     public function edit()
     {
         # 連想配列データ(Object)をストレージより取得
-        $bg_paths= Method::getStorageObjData( self::storagePath() );
-        $bg_paths = $bg_paths ?? self::defaultData();
+        $storage_paths= Method::getStorageObjData( self::storagePath() );
+        $default_paths = self::defaultData();
+        $bg_paths = [];
+        foreach ( $default_paths as $param => $default_path) {
+            $bg_paths[ $param ] = isset($storage_paths[$param]) ? $storage_paths[$param] : $default_path;
+        }
 
         return view('admin.back_ground.edit',$bg_paths);
     }
@@ -86,8 +108,12 @@ class AdminBackGroundController extends Controller
     public function update(Request $request)
     {
         # 連想配列データ(Object)をストレージより取得
-        $bg_paths = Method::getStorageObjData( self::storagePath() );
-        $bg_paths = $bg_paths ?? self::defaultData();
+        $storage_paths= Method::getStorageObjData( self::storagePath() );
+        $default_paths = self::defaultData();
+        $bg_paths = [];
+        foreach ( $default_paths as $param => $default_path) {
+            $bg_paths[ $param ] = isset($storage_paths[$param]) ? $storage_paths[$param] : $default_path;
+        }
 
 
         # ストレージ画像ファイルの更新

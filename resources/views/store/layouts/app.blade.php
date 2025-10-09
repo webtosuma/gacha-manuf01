@@ -25,7 +25,7 @@
     @include('includes.css')
     @php
     /* 背景パス */
-    $bg_image_path = \App\Http\Controllers\AdminBackGroundController::getBgTop();
+    $bg_image_path = \App\Http\Controllers\AdminBackGroundController::getBgEc();
     @endphp
     <style>
         a{ text-decoration: none; }

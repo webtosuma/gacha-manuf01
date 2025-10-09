@@ -47,7 +47,9 @@ class GachaApiController extends Controller
             // }
 
             ## 背景画像
-            $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
+            // $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
+            $bg_image = $category && $category->bg_image_path
+            ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
             ## ガチャのカテゴリーグループ一覧
             $categories = GachaCategory::userList()->get();
@@ -101,21 +103,27 @@ class GachaApiController extends Controller
      */
     public function list( Request $request )
     {
-        ## カテゴリーコード
+        # カテゴリーコード
         $category_code = $request->category_code ?? 'all';
 
-        ## 絞り込みキー
+        # 絞り込みキー
         $search_key = $request->search_key ? $request->search_key : null;
 
-        ## 表示できるガチャ一覧
+        # 表示できるガチャ一覧
         $query = self::getPublishedGachas( $category_code, $search_key );
+
+            ## イベントガチャ (is_event_gacha)
+            if( $request->is_event_gacha ){ $query->where('type','event'); }
+            else{ $query->where('type','<>','event'); }
+
+
         $gachas = $query->paginate(3);
         self::addApiGachaData($gachas);//API用の追加データ
 
-        ## カウントダウンガチャ
+        # カウントダウンガチャ
         $countdown_gachas = GachaController::getCountdownGachas($category_code);
 
-        ## 検索キーワード
+        # 検索キーワード
         $searchs = GachaController::getsearchs();
 
 
@@ -129,9 +137,8 @@ class GachaApiController extends Controller
         /**
          * ガチャ一覧で表示できるガチャ一覧の取得
          */
-        public static function getPublishedGachas($category_code, $search_key=null )
+        public static function getPublishedGachas( $category_code, $search_key=null )
         {
-
             # カテゴリー
             $gacha_category = GachaCategory::where('code_name',$category_code)
             ->where('is_published',true)->first();

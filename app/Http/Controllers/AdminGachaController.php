@@ -340,6 +340,18 @@ class AdminGachaController extends Controller
         if( $gacha == null ){ $inputs['key'] = \Illuminate\Support\Str::random(16); }
 
 
+        # エンコードコンポーネント入力情報のデコード処理（絵文字対策）
+            $inputs['name']   = urldecode($request['name']);
+            $inputs['resume'] = urldecode($request['resume']) ;
+
+
+        # ストレージ更新の処理（説明文）resume
+            $old_text = $gacha? $gacha->resume: null;  //更新前のファイルパステキスト
+            $new_text = $inputs['resume'];             //新しい入力テキスト
+            $dir = 'upload/gacha/resume/';      //保存先ディレクトリ
+            $inputs['resume'] = Method::uploadStorageText($dir, $new_text, $old_text);
+
+
         # ストレージ画像ファイルの更新（イメージ画像）
             $param = 'image';
             $dir = 'upload/gacha/'.$param;                   //保存先ディレクトリ
@@ -350,7 +362,26 @@ class AdminGachaController extends Controller
             $copy_image_puth = $request->copy_image_puth;    //コピー用画像パス
 
             $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
-        //
+
+        #
+
+
+        # イベントガチャ
+        if( $inputs['type'] == 'event' )
+        {
+            ## イベントガチャの内容に更新
+            $update = [
+                'one_play_point' => 0,      //1回PLAYポイント数
+                'is_meter'       => 0,      //残数メーターの表示有無
+                'is_slide'       => 0,      //スライドの表示有無
+                'user_rank_id'   => null,   //会員ランクの指定
+                'subscription_id'=> false,  //サブスクプランID(PointSail) 2025/03/23追加
+            ];
+
+            $inputs = array_replace($inputs, $update);
+        }
+
+
 
         return $inputs;
     }

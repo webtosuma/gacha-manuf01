@@ -16,12 +16,14 @@
                 name="image"
                 ></read-image-file-component> --}}
 
-                <read-image-file-100k-component
-                img_path="{{ $gacha->image_path }}"
-                noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
-                style_class="ratio {{config('app.gacha_card_ratio')}} rounded-3"
-                name="image"
-                />
+                <div class="col-md-8">
+                    <read-image-file-100k-component
+                    img_path="{{ $gacha->image_path }}"
+                    noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
+                    style_class="ratio {{config('app.gacha_card_ratio')}} rounded-3"
+                    name="image"
+                    ></read-image-file-100k-component>
+                </div>
 
                 <!--error message-->
                 @if ( $errors->has('image') )
@@ -54,9 +56,17 @@
             <label class="d-block mb-4">
                 <div class="form-label">ガチャ名</div>
 
-                <input value="{{old('name', $gacha->name )}}"
+                {{-- <input value="{{old('name', $gacha->name )}}"
                 name="name"
                 type="text" class="form-control">
+ --}}
+                <encodedーinputtext-component
+                id="name" name="name"
+                style_class="form-control"
+                default_body="{{ $errors->all() ? urldecode( old('name') ) : $gacha->name }}"
+                ></encodedーinputtext-component>
+
+
                 <!--error message-->
                 @if ( $errors->has('name') )
                     <div class="text-danger"> {{$errors->first('name')}} </div>
@@ -81,6 +91,29 @@
                     <div class="text-danger"> {{$errors->first('one_play_point')}} </div>
                 @endif
             </label>
+
+
+            <!--説明文(resume)-->
+            <label class="d-block mb-4">
+                <div class="form-label">
+                    説明文
+                    {{-- <span class="text-danger">＊</span> --}}
+                </div>
+
+                <encodedーtextarea-component
+                name="resume" id="resume"
+                style_class="form-control" rows="6"
+                placeholder="ガチャの説明文を入力してください。"
+                default_body="{{ $errors->all() ? urldecode( old('resume') ) : $gacha->resume_text }}"
+                ></encodedーtextarea-component>
+
+
+                <!--error message-->
+                @if ( $errors->has('resume') )
+                    <div class="text-danger"> {{$errors->first('resume')}} </div>
+                @endif
+            </label>
+
 
 
         </div>

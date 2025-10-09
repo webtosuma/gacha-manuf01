@@ -20,7 +20,7 @@
 
     /* サイトデフォルト背景 */
     #bgWindow{
-        background-image: url({{ $gacha->category->bg_image_path }});
+        background-image: url({{ $bg_image }});
     }
 </style>
 @endsection

@@ -254,6 +254,17 @@
         </a>
     @endif
 
+    @if( config('app.event_gacha') )
+        <!--イベント-->
+        <a href="{{ route('event.gacha') }}" target="_blank"
+        class="list-group-item border-0 p-2 px-3 w-100 text-start" style="border-radius: 2rem  2rem;">
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-balloon fs-4"></i>
+                <span>{{ 'イベントガチャ' }}</span>
+            </div>
+        </a>
+    @endif
+
 
     <form action="{{ route('admin_auth.logout') }}" method="POST">
         @csrf
