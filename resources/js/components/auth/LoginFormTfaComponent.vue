@@ -49,7 +49,7 @@
         <!-- page02 TFAキー認証 -->
         <div v-if="page===2" class="text-start">
 
-            <p class="bg-light p-3 rounded"
+            <p class="bg-light text-dark p-3 rounded"
             :class="is_admin ? 'bg-info-subtle' : 'bg-primary-subtle'"
             >
                 入力されたメールアドレス宛にメールをお送りしました。<br>

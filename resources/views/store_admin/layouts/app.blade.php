@@ -41,7 +41,7 @@
 
 
             <!--flex-c1-->
-            <aside class="d-none d-lg-block col-auto pe-0 bg-info-subtle">
+            <aside class="d-none d-lg-block col-auto pe-0 bg-body">
                 <div class="position-sticky ps-2" style="top: 0rem; ">
 
 

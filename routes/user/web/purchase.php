@@ -6,7 +6,7 @@ use \App\Http\Controllers;
 | 買取表
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth','user_rank'])->group(function () {
+// Route::middleware(['auth','user_rank'])->group(function () {
 
     # 一覧
     Route::get('/purchase',
@@ -20,13 +20,12 @@ Route::middleware(['auth','user_rank'])->group(function () {
 
 
 
-});//end middleware
+// });//end middleware
 /*
 |--------------------------------------------------------------------------
 | 買取表 API
 |--------------------------------------------------------------------------
 */
-Route::middleware(['admin_auth'])->group(function () {
 
 
     # 一覧情報の発行API(admin_list)
@@ -35,4 +34,3 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('purchase.api');
 
 
-});//end middleware

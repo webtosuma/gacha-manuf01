@@ -11,6 +11,7 @@
 .env_heteml_webhook_test
 .env_heteml_fobees
 .env_heteml_linkseed
+.env_heteml_event
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml

@@ -93,7 +93,7 @@ class AdminSeeder extends Seeder
         return   [
             [
                 'user' => [
-                    'email' => 'link-seed@samplegacha.site',
+                    'email' => env('APP_FOBEES_EMAILS'),
                     'password' => Hash::make('password'),
                     'name' => 'Link Seed',
                 ],

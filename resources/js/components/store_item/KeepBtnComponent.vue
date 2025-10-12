@@ -14,7 +14,7 @@
         </div>
 
 
-        <div class="my-3 col-8 mx-auto" >
+        <div class="my-3 col-md-8 mx-auto" >
             <div class="row align-items-center w-100 ms-2">
                 <div class="col-12 col-md-aut0">数量：</div>
 

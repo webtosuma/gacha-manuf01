@@ -78,7 +78,7 @@
         <div class="mx-auto" style="max-width:900px;">
 
 
-            <div class="row gy-3 gx-5">
+            <div class="row gy-3 gx-5 mx-0">
                 <div class="col-12 col-lg-6">
 
                     <!--image-->
