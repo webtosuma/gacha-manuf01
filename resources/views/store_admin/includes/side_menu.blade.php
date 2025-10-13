@@ -72,6 +72,17 @@
         ];
     }
 
+    # 買取表の追加
+    if( config('app.purchase') )
+    {
+        $ragistation_array[] = [
+            'route' => route('admin.purchase'),
+            'key'   => 'purchase',
+            'label' => '買取表管理',
+        ];
+    }
+
+
 
     /* レポートメニュー */
     $report_array = [
@@ -143,23 +154,6 @@
         ],
 
     ];
-
-
-    /* ECメニュー */
-    $stores_array = [
-        [
-            'route' => route('admin.store_item'),
-            'key'   => 'store_item',
-            'label' => 'EC商品',
-        ],
-        [
-            'route' => route('admin.store.shipped'),
-            'key'   => 'store_shipped',
-            'label' => 'EC発送受付',
-        ],
-    ];
-
-
     // サブスクの追加
     if( env('SUBSCRIPTION') )
     {
@@ -178,15 +172,24 @@
             'label' => 'クーポン管理',
         ];
     }
-    // 買取表の追加
-    if( config('app.purchase') )
-    {
-        $gachas_array[] = [
-            'route' => route('admin.purchase'),
-            'key'   => 'purchase',
-            'label' => '買取表管理',
-        ];
-    }
+
+
+    /* ECメニュー */
+    $stores_array = [
+        [
+            'route' => route('admin.store_item'),
+            'key'   => 'store_item',
+            'label' => 'EC商品',
+        ],
+        [
+            'route' => route('admin.store.shipped'),
+            'key'   => 'store_shipped',
+            'label' => 'EC発送受付',
+        ],
+    ];
+
+
+
 
 @endphp
 <div class="d-flex flex-column justify-content-between py-3 px-2">

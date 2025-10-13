@@ -31,7 +31,7 @@ class GachaSeeder extends Seeder
             {
                 $data['category_id'] = $category->id;
                 $data['key']  = Str::random(16);
-                // $data['type'] = 'no_custom';
+                $data['type'] = config('gacha.defaults_type','');
 
                 # ガチャの登録
                 $gacha = new Gacha($data);

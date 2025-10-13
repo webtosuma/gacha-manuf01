@@ -17,8 +17,12 @@ use App\Models\UserAddress;
 */
 class PurchaseController extends Controller
 {
-    /** 発送料金の計算 */
-    public static function shippedPrice($request=null){ return 700; }
+    /** 発送ポイントの計算 */
+    public static function shippedPrice($request=null)
+    {
+        /*.設定は。config.storeに記述*/
+        return config('store.shipped_point',0);
+    }
 
 
     /**

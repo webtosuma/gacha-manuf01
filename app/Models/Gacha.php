@@ -79,31 +79,18 @@ class Gacha extends Model
     /** ガチャの種類　一覧 */
     public static function types()
     {
-        $array =  [
-            // 'no_custom'    => '通常',
-
-            'nomal'        => 'カスタムボタンあり',
-            'max_custom'   => 'カスタムボタンあり(上限付き)',
-            'no_custom'    => 'カスタムボタンなし',
-
-            // 'one_chance'   => '1回or10回限定',
-            'one_time'     => '一回限定',
-            'only_oneday'  => '1日1回限定',
-            'only_new_user'=> '新規会員限定',
-
-            'survey' => 'アンケートガチャ',
-        ];
-
-        # イベント用
-        if( config('app.event_gacha') ){ $array['event'] ='イベント用'; }
-
-        return $array;
+        /*.設定は。config.gachaに記述 */
+        return config('gacha.types', []);
     }
 
 
 
     /** カスタムボタンの上限 */
-    public static function max_custom_count(){ return 99; }
+    public static function max_custom_count()
+    {
+        /*.設定は。config.gachaに記述 */
+        return config('gacha.max_custom_count', 99);
+    }
 
 
 

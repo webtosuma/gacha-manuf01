@@ -23,7 +23,11 @@ use App\Models\Prize;
 class ShippedAppliController extends Controller
 {
     /** 発送ポイント */
-    public function shippedPoint(){ return 0; }
+    public function shippedPoint()
+    {
+        /*.設定は。config.gachaに記述 */
+        return config('gacha.shipped_point',0);
+    }
 
 
 

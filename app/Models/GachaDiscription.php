@@ -37,32 +37,8 @@ class GachaDiscription extends Model
     /** ガチャランク　一覧 */ //ガチャ詳細・ガチャ商品登録のランクの並び
     public static function gacha_ranks()
     {
-        return [
-
-            100 => 'RankSS',
-            200 => 'RankS',
-            300 => 'RankA',
-
-            400 => 'RankB',
-            500 => 'RankC',
-            600 => 'RankD',
-
-            901 => 'シークレット・キリ',
-            903 => 'シークレット・ピタリ',
-
-            320 => 'ゾロ目',
-            310 => 'キリ番',
-            330 => 'ピタリ賞',
-
-            362 => '個人ゾロ目',
-            361 => '個人キリ番',
-            363 => '個人ピタリ賞',
-
-            10  => 'ラストワン',
-
-            1001  => 'スライド表示',
-
-        ];
+        /*.設定は。config.gachaに記述 */
+        return config('gacha.ranks',[]);
     }
 
 

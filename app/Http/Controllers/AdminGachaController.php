@@ -20,10 +20,12 @@ use App\Models\PointSail;
 class AdminGachaController extends Controller
 {
     /**
-     *  デフォルトタイプ
+     * デフォルトタイプ
+     * .設定は。config.gachaに記述
      */
-    protected static string $defaults_type = 'nomal';//カスタムボタンあり
-    // protected static string $defaults_type = 'no_custom';//カスタムボタンなし
+    public static function defaults_type(){
+        return config('gacha.defaults_type','');
+    }
 
 
     /**
@@ -74,7 +76,7 @@ class AdminGachaController extends Controller
         $gacha = new Gacha([
             'category_id' => $gacha_category ? $gacha_category->id : null,
             'point'=>0,
-            'type' => self::$defaults_type,  //ガチャの種類
+            'type' => self::defaults_type(),  //ガチャの種類
             'is_meter'=>1,//残数メーターの表示有無
             'is_slide'=>1,//スライドの表示有無
 

@@ -9,13 +9,6 @@
                 <div class="form-label">トップ画像</div>
                 <div class="form-text">*この登録画像は、ガチャのメイン画像として使用されます。</div>
 
-                {{-- <read-image-file-component
-                img_path="{{ $gacha->image_path }}"
-                noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
-                style_class="ratio {{config('app.gacha_card_ratio')}} rounded-3"
-                name="image"
-                ></read-image-file-component> --}}
-
                 <div class="col-md-8">
                     <read-image-file-100k-component
                     img_path="{{ $gacha->image_path }}"
@@ -56,10 +49,6 @@
             <label class="d-block mb-4">
                 <div class="form-label">ガチャ名</div>
 
-                {{-- <input value="{{old('name', $gacha->name )}}"
-                name="name"
-                type="text" class="form-control">
- --}}
                 <encodedーinputtext-component
                 id="name" name="name"
                 style_class="form-control"
@@ -92,28 +81,28 @@
                 @endif
             </label>
 
+            @if( config('app.event_gacha') )
+                <!--説明文(resume)-->
+                <label class="d-block mb-4">
+                    <div class="form-label">
+                        説明文
+                        {{-- <span class="text-danger">＊</span> --}}
+                    </div>
 
-            <!--説明文(resume)-->
-            <label class="d-block mb-4">
-                <div class="form-label">
-                    説明文
-                    {{-- <span class="text-danger">＊</span> --}}
-                </div>
-
-                <encodedーtextarea-component
-                name="resume" id="resume"
-                style_class="form-control" rows="6"
-                placeholder="ガチャの説明文を入力してください。"
-                default_body="{{ $errors->all() ? urldecode( old('resume') ) : $gacha->resume_text }}"
-                ></encodedーtextarea-component>
+                    <encodedーtextarea-component
+                    name="resume" id="resume"
+                    style_class="form-control" rows="6"
+                    placeholder="ガチャの説明文を入力してください。"
+                    default_body="{{ $errors->all() ? urldecode( old('resume') ) : $gacha->resume_text }}"
+                    ></encodedーtextarea-component>
 
 
-                <!--error message-->
-                @if ( $errors->has('resume') )
-                    <div class="text-danger"> {{$errors->first('resume')}} </div>
-                @endif
-            </label>
-
+                    <!--error message-->
+                    @if ( $errors->has('resume') )
+                        <div class="text-danger"> {{$errors->first('resume')}} </div>
+                    @endif
+                </label>
+            @endif
 
 
         </div>

@@ -6,8 +6,7 @@
 
 @section('meta') @php
 $active_key = 'purchase';
-$active_submenu = !config('store.admin');
-$active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
+$active_submenu = true;
 @endphp @endsection
 
 
