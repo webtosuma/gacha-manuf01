@@ -13,7 +13,7 @@
 <script>
 import { valueToNode } from '@babel/types';
 
-    export default {
+    export default { 
         props: {
             //最初に表示する画像のパス
             // disabled: { type: Boolean, default: false, },

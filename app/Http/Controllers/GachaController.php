@@ -391,6 +391,8 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
+        // dd($gacha->btn_settings);
+
         # キーのチェック
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 

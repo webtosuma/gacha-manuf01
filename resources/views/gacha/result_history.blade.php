@@ -160,5 +160,9 @@
     </section>
 
 
+    <!--ポップアップモーダル-->
+    @include('gacha.common.play_modal')
+
+
 
 @endsection

@@ -69,7 +69,6 @@ class StripeController extends Controller
         ? Auth::user()->now_rank->point_sail_ratio : 1 ;
 
 
-
         return view('point_sail.index',compact('point_sails', 'rank_ratio','payment_type' ));
     }
 
@@ -404,7 +403,8 @@ class StripeController extends Controller
 
             $point_history = new PointHistory([
                 'user_id'   => $user->id,          //ユーザー　リレーション
-                'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
+                // 'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
+                'value'     => ( $point_sail->value * $rank_ratio ),//ポイント数
                 'price'     => $point_sail->price, //販売価格(税込み)
                 'reason_id' => 11, //入出理由ID
 

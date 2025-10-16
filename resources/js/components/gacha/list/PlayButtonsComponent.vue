@@ -1,12 +1,26 @@
 <template>
     <div class="">
 
-
         <div v-if="show_play_bottons && !r_prize_history" class="row g-2 mt-1">
 
             <!--1回ボタン-->
             <div class="col">
-                <form :action="r_action" method="post">
+
+                <!--POPUP BTN(1)-->
+                <u-gacha-btn v-if="is_popup_btn"
+                :label      ="one_play_label"
+                :point      ="one_play_point.toLocaleString()+'pt'"
+                :disabled   ="is_disabled_oneplay_btn==0 ?0:1"
+                :style_class="one_play_style_class"
+                :data-bs-toggle="is_disabled_oneplay_btn==0 ? 'modal' : ''"
+                :data-bs-target="'#'+'gachaPlayModal'+gacha_id+'-'+'1'"
+                />
+
+
+                <!--NO POPUP BTN(1)-->
+                <form v-else
+                :action="r_action" method="post">
+
                     <input type="hidden" name="_token" :value="token">
 
                     <u-gacha-btn
@@ -20,9 +34,24 @@
                 </form>
             </div>
 
+
             <!--10連ボタン-->
             <div class="col" v-if="is_disabled_tenplay_btn>-1" >
-                <form :action="r_action" method="post">
+
+                <!--POPUP BTN(10)-->
+                <u-gacha-btn v-if="is_popup_btn"
+                :label      ="ten_play_label"
+                :point      ="(one_play_point*10).toLocaleString()+'pt'"
+                :disabled   ="is_disabled_tenplay_btn==0 ?0:1"
+                :style_class="ten_play_style_class"
+                :data-bs-toggle="is_disabled_oneplay_btn==0 ? 'modal' : ''"
+                :data-bs-target="'#'+'gachaPlayModal'+gacha_id+'-'+'10'"
+                />
+
+
+                <!--NO POPUP BTN(10)-->
+                <form v-else
+                :action="r_action" method="post">
                     <input type="hidden" name="_token" :value="token">
 
                     <u-gacha-btn
@@ -36,9 +65,23 @@
                 </form>
             </div>
 
+
             <!--100連ボタン-->
-            <div class="col-12" v-if="is_disabled_hundredplay_btn>-1 && is_disabled_custom_btn>-1" >
-                <form :action="r_action" method="post">
+            <div class="col-12" v-if="is_disabled_hundredplay_btn>-1" >
+
+                <!--POPUP BTN(100)-->
+                <u-gacha-btn v-if="is_popup_btn"
+                :label      ="hundred_play_label"
+                :point      ="(one_play_point*100).toLocaleString()+'pt'"
+                :disabled   ="is_disabled_hundredplay_btn==0 ?0:1"
+                :style_class="hundred_play_style_class"
+                :data-bs-toggle="is_disabled_oneplay_btn==0 ? 'modal' : ''"
+                :data-bs-target="'#'+'gachaPlayModal'+gacha_id+'-'+'100'"
+                />
+
+                <!--NO POPUP BTN(100)-->
+                <form v-else
+                :action="r_action" method="post">
                     <input type="hidden" name="_token" :value="token">
 
                     <u-gacha-btn
@@ -58,6 +101,14 @@
                 :class    ="coustom_style_class"
                 >{{ custom_label }}</a>
             </div> -->
+            <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
+                <button type="button"
+                :class    ="coustom_style_class"
+                data-bs-toggle="modal"
+                :data-bs-target="'#'+'gachaCustomModal'+gacha_id"
+                >{{ custom_label }}</button>
+            </div>
+
 
         </div>
 
@@ -95,6 +146,9 @@
             dont_auth_user_rank     : { type: [String,Number,Boolean],  default: false,},  //会員ランクのユーザーではないとき
             sub_auth_user           : { type: [String,Number,Boolean],  default: true,},   //サブスクプランに該当
             sm_card                 : { type: [String,Number,Boolean],  default: 0, },//カードの表示サイズ
+
+            gacha_id:     { type: [String,  Number],  default: 0, },//ガチャID
+            is_popup_btn: { type: [String,Number,Boolean],  default: false,},//ポップアップボタン
         },
         mounted() {
 
@@ -251,7 +305,7 @@
             `,
             /* 百連ガチャる　スタイル(売り切れ) */
             soldout_hundred_play_style_class: `
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
+            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-danger
             rounded-pill border-secondary border-0 shadow-sm
             `,
             /* カスタムボタン　スタイル */

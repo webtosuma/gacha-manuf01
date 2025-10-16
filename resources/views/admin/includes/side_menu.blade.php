@@ -139,9 +139,14 @@
 
     /* レポートメニュー */
     $report_array = [
+        // [
+        //     'route' => route('admin.point_history'),
+        //     'key'   => 'point_history',
+        //     'label' => 'ポイント売上',
+        // ],
         [
-            'route' => route('admin.point_history'),
-            'key'   => 'point_history',
+            'route' => route('admin.point_sales_report'),
+            'key'   => 'point_sales_report',
             'label' => 'ポイント売上',
         ],
         // [

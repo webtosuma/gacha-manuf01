@@ -78,7 +78,7 @@
                                 <th scope="col"><a
                                 @click.prevent="changeOrder( 'order_price' )"
                                 href="#" class="btn btn-sm w-100 fw-bold fs-6 p-0">
-                                    <span>販売価格(税込)</span>
+                                    <span>買取価格(税込)</span>
                                     <i v-if="inputs['order_price']!='asc'"  class="bi bi-caret-up-fill"></i>
                                     <i v-if="inputs['order_price']!='desc'" class="bi bi-caret-down-fill"></i>
                                 </a></th>
@@ -159,7 +159,7 @@
 
                                 </td>
 
-                                <!--販売価格-->
+                                <!--買取価格-->
                                 <td>
                                     <div class="row g-1 align-items-center justify-content-center">
                                         <div class="col" v-if="edit"  style="width:6rem;" >

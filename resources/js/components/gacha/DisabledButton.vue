@@ -46,7 +46,11 @@
         },
         methods:{
             /* ボタンをクリックしたとき */
-            click: function(){ this.disabled_data=1; },
+            click: function(){
+                if(this.name==''){return;}//name指定がなければ、disabledなし
+
+                this.disabled_data=1;
+            },
         }
     }
 </script>

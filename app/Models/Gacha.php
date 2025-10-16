@@ -64,6 +64,7 @@ class Gacha extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
+        'remaining_count', //残りのプレイできる回数
         'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
         'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
@@ -72,6 +73,8 @@ class Gacha extends Model
         'resume_text',   //ストレージ保存された文章を含む'説明文'
         'r_event_show',  //[ルーティング]イベント詳細
         'r_event_play',  //[ルーティング]イベントガチャカで遊ぶ
+
+        'is_popup_btn',  //ポップアップボタン設定　
     ];
 
 
@@ -803,6 +806,11 @@ class Gacha extends Model
         */
         public function getIsDisabledHundredplayBtnAttribute()
         {
+            # config設定
+            if( ! config('gacha.btn_settings.hundredplay') ){ return -1; }
+            # 利用不可
+            if( !in_array( $this->type, ['nomal'] ) ){ return -1; }
+            # 非表示
             return $this->isDisabledBtnMethod($this,100);
         }
 
@@ -814,6 +822,9 @@ class Gacha extends Model
         */
         public function getIsDisabledCustomBtnAttribute()
         {
+            # config設定
+            if( ! config('gacha.btn_settings.custom') ){ return -1; }
+
             # 終了
             if( in_array( $this->type, ['nomal','max_custom']) && $this->remaining_count == 0 ){ return 1; }
             # 利用可
@@ -891,6 +902,17 @@ class Gacha extends Model
             }
 
 
+        /**
+         * ポップアップボタン設定　is_popup_btn
+         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+         * @return Integer
+        */
+        public function getIsPopupBtnAttribute()
+        {
+            return config('gacha.btn_settings.popup',false) ? 1 : 0;
+        }
+
+
         /* */
     /*
     |--------------------------------------------------------------------------
@@ -939,12 +961,6 @@ class Gacha extends Model
          */
         public function getResumeTextAttribute()
         {
-            // return <<<__
-            // テキストテキスト
-            // テキストテキストテキスト
-            // テキストテキスト
-            // https://www.google.com/
-            // __;
 
             $text = $this->resume;
             $path = str_replace(["\r\n", "\r", "\n"], '', $text);

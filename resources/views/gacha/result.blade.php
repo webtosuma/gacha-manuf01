@@ -145,5 +145,8 @@
         </div>
     </div>
 
+    <!--ポップアップモーダル-->
+    @include('gacha.common.play_modal')
 
+    
 @endsection

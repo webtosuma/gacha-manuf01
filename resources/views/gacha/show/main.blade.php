@@ -36,3 +36,7 @@
         @endforeach
     </div>
 </section>
+
+
+<!--ポップアップモーダル-->
+@include('gacha.common.play_modal')

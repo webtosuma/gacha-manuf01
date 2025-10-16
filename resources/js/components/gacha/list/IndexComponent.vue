@@ -4,6 +4,73 @@
         <loading-cover-component :loading="loading" />
 
 
+        <!--カスタムボタン　モーダル-->
+        <u-gacha-custom-modal
+        v-for="( gacha, key ) in gachas" :key="key+'custom-modal'"
+        :one_play_point="gacha.one_play_point"
+        :token="token"
+        :r_action="gacha.r_action"
+        :gacha_id="gacha.id"
+        :max_count="gacha.remaining_count"
+        >
+            <u-gacha-image
+            :gacha_name            ="gacha.name"
+            :gacha_ratio           ="gacha.ratio"
+            :gacha_image_path      ="gacha.image_path"
+
+            :initial_time          ="gacha.i_time"
+            :limitted_i_time       ="gacha.limitted_i_time"
+            :published_at_format   ="gacha.published_at_format"
+            :remaining_count       ="gacha.remaining_count"
+            :add_chance_image_path ="gacha.add_chance_image_path"
+            :add_chance_count      ="gacha.add_chance_count"
+            :have_user_rank        ="gacha.have_user_rank"
+            :user_played_count     ="gacha.user_played_count"
+
+            :img_path_one_chance   ="gacha.img_path_one_chance "
+            :img_path_one_time     ="gacha.img_path_one_time"
+            :img_path_only_oneday  ="gacha.img_path_only_oneday"
+            :img_path_only_new_user="gacha.img_path_only_new_user"
+            :img_path_user_rank    ="gacha.img_path_user_rank"
+            />
+        </u-gacha-custom-modal>
+
+
+
+
+        <!--POPUPモーダル-->
+        <u-gacha-modal
+        v-for="( gacha, key ) in gachas" :key="key+'pupup-modal'"
+        :one_play_point="gacha.one_play_point"
+        :token="token"
+        :r_action="gacha.r_action"
+        :is_popup_btn="gacha.is_popup_btn"
+        :gacha_id="gacha.id"
+        >
+            <u-gacha-image
+            :gacha_name            ="gacha.name"
+            :gacha_ratio           ="gacha.ratio"
+            :gacha_image_path      ="gacha.image_path"
+
+            :initial_time          ="gacha.i_time"
+            :limitted_i_time       ="gacha.limitted_i_time"
+            :published_at_format   ="gacha.published_at_format"
+            :remaining_count       ="gacha.remaining_count"
+            :add_chance_image_path ="gacha.add_chance_image_path"
+            :add_chance_count      ="gacha.add_chance_count"
+            :have_user_rank        ="gacha.have_user_rank"
+            :user_played_count     ="gacha.user_played_count"
+
+            :img_path_one_chance   ="gacha.img_path_one_chance "
+            :img_path_one_time     ="gacha.img_path_one_time"
+            :img_path_only_oneday  ="gacha.img_path_only_oneday"
+            :img_path_only_new_user="gacha.img_path_only_new_user"
+            :img_path_user_rank    ="gacha.img_path_user_rank"
+            />
+        </u-gacha-modal>
+
+
+
         <!--絞り込み-->
         <div  v-if="!reading_data" class="row g-2 align-items-center justify-content-end mb-3   px-1">
             <div class="col col-lg-auto">

@@ -86,7 +86,7 @@
             @foreach ($point_sails as $point_sail)
                 <li class="list-group-item bg-white py-3">
                     {{-- 会員ランク還元 --}}
-                    @php $reduction_point =  floor( $point_sail->value*($rank_ratio-1) ); /* 還元ポイント */ @endphp
+                    @php $reduction_point =  ( $point_sail->value * ($rank_ratio-1) );  /* 還元ポイント */ @endphp
                     @if( $rank_ratio > 1  &&  $reduction_point >=1 )
                         <div class="d-flex align-items-center gap-2 flex-wrap">
 
@@ -94,7 +94,7 @@
                                 <span class="text-dark fs-6">{{ number_format($point_sail->value) }}</span>
                                 <span class="text-dark">pt</span>
                                 <i class="bi bi-plus-lg"></i>
-                                <span class=" fs-6">{{ $reduction_point }}</span>
+                                <span class=" fs-6">{{ number_format($reduction_point) }}</span>
                                 <span class="">pt 還元！</span>
                             </div>
                         </div>
@@ -115,17 +115,45 @@
                             </div>
                         </div>
 
-                        <!--購入ボタン-->
-                        <a href="{{ $point_sail->r_payment }}"
-                        class="btn btn-lg btn-warning text-white rounded-pill shadow   hover_anime  py-1 " style="width:8rem;">
-                            <div class="d-flex align-items-center justify-content-between w-100">
-                                <span>¥</span>
-                                <h5 class="m-0 fw-bold">
-                                    <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
-                                </h5>
-                            </div>
-                        </a>
+                        @if( env('STRIPE_KEY') )
+
+                            <!--購入ボタン(stripe)-->
+                            <a href="{{ $point_sail->r_payment }}"
+                            class="btn btn-lg btn-warning text-white rounded-pill shadow   hover_anime  py-1 " style="width:8rem;">
+                                <div class="d-flex align-items-center justify-content-between w-100">
+                                    <span>¥</span>
+                                    <h5 class="m-0 fw-bold">
+                                        <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
+                                    </h5>
+                                </div>
+                            </a>
+
+
+                        @elseif( env('FINCODE_KEY') )
+
+                            <!-- 購入ボタン(fincode) -->
+                            <button type="button"
+                            class="btn btn-lg btn-warning text-white rounded-pill shadow   hover_anime  py-1 "
+                            style="width:8rem;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#pointModal{{$point_sail->id}}">
+                                <div class="d-flex align-items-center justify-content-between w-100">
+                                    <span>¥</span>
+                                    <h5 class="m-0 fw-bold">
+                                        <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
+                                    </h5>
+                                </div>
+                            </button>
+
+                        @endif
+
                     </div>
+
+
+                    <!-- Modal -->
+                    @include('point_sail._modal')
+
+
                     <div class="d-flex flex-colum flex-wrap gap-1 mt-1" style="font-size:11px;">
 
                         {{-- 会員ランク還元 --}}
@@ -176,7 +204,14 @@
 
                 <div class="form-text text-end mb-3">*価格は全て税込み価格です。</div>
 
+                <div class="col-md-8 mx-auto mb-3">
+                    <a class="btn border rounded-pill w-100 "
+                    href="{{ route('tradelaw') }}">特定商取引法に基づく表記</a>
+                </div>
+
             </li>
+
+
         </ul>
 
         <div class="mt-5">

@@ -46,6 +46,15 @@ import Vue from 'vue'
     Vue.component('u-gacha-btn',
     require('./components/gacha/DisabledButton.vue').default);
 
+    /* モーダルガチャボタンコンポーネント */
+    Vue.component('u-gacha-modal',
+    require('./components/gacha/ModalComponent.vue').default);
+
+    /* モーダルカスタムボタンコンポーネント */
+    Vue.component('u-gacha-custom-modal',
+    require('./components/gacha/CustomModalComponent.vue').default);
+
+
     /* ガチャ結果フォーム */
     Vue.component('u-gacha-result-form',
     require('./components/gacha/ResultFormComponent.vue').default);

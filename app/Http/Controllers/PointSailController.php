@@ -42,6 +42,7 @@ class PointSailController extends Controller
             $point_sails = PointSail::where('is_published',1)//公開ずみのみ
             ->orderBy('value','asc')->get();//ポイントが低い順
 
+
             return view('point_sail.index',compact('point_sails'));
         }
 

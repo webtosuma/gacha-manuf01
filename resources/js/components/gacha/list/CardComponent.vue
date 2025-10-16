@@ -2,7 +2,6 @@
     <div>
         <div :class="card_style_class">
 
-
             <!--image-->
             <a :href="gacha.route"  :class="href_class"  style="opacity:1 !important;">
 
@@ -102,7 +101,8 @@
             :dont_auth_user_rank    ="gacha.dont_auth_user_rank ?true :false"
             :sub_auth_user          ="gacha.sub_auth_user       ?true :false"
             :sm_card="sm_card"
-
+            :gacha_id="gacha.id"
+            :is_popup_btn="gacha.is_popup_btn"
             />
         </div>
 

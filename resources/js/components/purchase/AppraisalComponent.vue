@@ -64,7 +64,7 @@
 
 
                         <div class="row g-0">
-                            <div class="col-4 col-lg-12">
+                            <div class="col-4 col-lg-12"> 
 
                                 <!--商品画像-->
                                 <ratio-image-component

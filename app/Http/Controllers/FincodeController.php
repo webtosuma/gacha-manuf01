@@ -361,7 +361,8 @@ class FincodeController extends Controller
         # ポイント履歴の登録
         $point_history = new PointHistory([
             'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
+            // 'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
+            'value'     => ( $point_sail->value * $rank_ratio ),//ポイント数
             'price'     => $point_sail->price, //販売価格(税込み)
             'reason_id' => 11, //入出理由ID
 

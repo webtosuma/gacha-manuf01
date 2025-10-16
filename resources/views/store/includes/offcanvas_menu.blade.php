@@ -89,9 +89,10 @@ style="max-width:90vw; min-width:30vw;">
                         <div class="col-3 text-center">
                             <div class="position-relative">
 
+                                @php $img_url = isset($store_keep->store_item->image_paths[0]) ? $store_keep->store_item->image_paths[0] : ''; @endphp
                                 <ratio-image-component
                                 style_class="ratio {{$store_keep->store_item->ration}} "
-                                url="{{$store_keep->store_item->image_paths[0]}}"
+                                url="{{$img_url}}"
                                 ></ratio-image-component>
 
                                 <div class="position-absolute top-0 start-0" style="z-index:2;">
