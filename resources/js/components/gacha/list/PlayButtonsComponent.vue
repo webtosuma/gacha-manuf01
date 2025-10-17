@@ -7,7 +7,7 @@
             <div class="col">
 
                 <!--POPUP BTN(1)-->
-                <u-gacha-btn v-if="is_popup_btn"
+                <u-gacha-btn v-if="is_popup_btn!=0"
                 :label      ="one_play_label"
                 :point      ="one_play_point.toLocaleString()+'pt'"
                 :disabled   ="is_disabled_oneplay_btn==0 ?0:1"
@@ -39,12 +39,12 @@
             <div class="col" v-if="is_disabled_tenplay_btn>-1" >
 
                 <!--POPUP BTN(10)-->
-                <u-gacha-btn v-if="is_popup_btn"
+                <u-gacha-btn v-if="is_popup_btn!=0"
                 :label      ="ten_play_label"
                 :point      ="(one_play_point*10).toLocaleString()+'pt'"
                 :disabled   ="is_disabled_tenplay_btn==0 ?0:1"
                 :style_class="ten_play_style_class"
-                :data-bs-toggle="is_disabled_oneplay_btn==0 ? 'modal' : ''"
+                :data-bs-toggle="is_disabled_tenplay_btn==0 ? 'modal' : ''"
                 :data-bs-target="'#'+'gachaPlayModal'+gacha_id+'-'+'10'"
                 />
 
@@ -70,12 +70,12 @@
             <div class="col-12" v-if="is_disabled_hundredplay_btn>-1" >
 
                 <!--POPUP BTN(100)-->
-                <u-gacha-btn v-if="is_popup_btn"
+                <u-gacha-btn v-if="is_popup_btn!=0"
                 :label      ="hundred_play_label"
                 :point      ="(one_play_point*100).toLocaleString()+'pt'"
                 :disabled   ="is_disabled_hundredplay_btn==0 ?0:1"
                 :style_class="hundred_play_style_class"
-                :data-bs-toggle="is_disabled_oneplay_btn==0 ? 'modal' : ''"
+                :data-bs-toggle="is_disabled_hundredplay_btn==0 ? 'modal' : ''"
                 :data-bs-target="'#'+'gachaPlayModal'+gacha_id+'-'+'100'"
                 />
 
@@ -305,7 +305,7 @@
             `,
             /* 百連ガチャる　スタイル(売り切れ) */
             soldout_hundred_play_style_class: `
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-danger
+            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
             rounded-pill border-secondary border-0 shadow-sm
             `,
             /* カスタムボタン　スタイル */

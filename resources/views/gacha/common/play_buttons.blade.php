@@ -21,6 +21,6 @@ dont_auth_user_rank ="{{$gacha->dont_auth_user_rank ? 1 : null }}"
 gacha_id    ="{{ $gacha->id }}"
 is_popup_btn="{{$gacha->is_popup_btn}}"
 
-></u-gacha-play-buttons>
+></u-gacha-play-buttons> 
 
 

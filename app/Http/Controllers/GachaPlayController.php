@@ -150,11 +150,11 @@ class GachaPlayController extends Controller
     {
         # 変数
         $user = Auth::user(); //ログインユーザー取得
-        $now_play_count = (int) $request->play_count;   //プレイ回数
-        $play_point = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
+        $now_play_count   = (int) $request->play_count;   //プレイ回数
+        $play_point       = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
         $total_play_point = $now_play_count*$play_point;//合計使用ポイント
         $remaining_count  = (int) $gacha->remaining_count; //残りのプレイできる回数
-        $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
+        $is_sold_out      = (bool) $gacha->remaining_count < 1; //売り切れかどうか
 
 
         // dd($gacha->published_at->toDateTimeString());
@@ -188,33 +188,40 @@ class GachaPlayController extends Controller
         # [会員ランク限定]
         else if(
             $gacha->dont_auth_user_rank
-            // $gacha->user_rank_id != null
-            // && $gacha->user_rank_id != ($user && $user->now_rank ? $user->now_rank->rank_id : null)
         ){
             return 'この会員ランクガチャを利用することはできません。';
         }
         # [限定ガチャ]1回or10回限定
         else if(
-            $gacha->type=='one_chance' && $gacha->played_one_time
+            $gacha->type=='one_chance' &&  (
+                $gacha->played_one_time || ! ($now_play_count==1 || $now_play_count==10)
+            )
         ){
             return '現在、このガチャを利用することはできません。';
         }
         # [限定ガチャ]１回限定ガチャ
         else if(
-            $gacha->type=='one_time' && $gacha->played_one_time
+            $gacha->type=='one_time' && (
+                $gacha->played_one_time || $now_play_count >1
+            )
         ){
             return '現在、このガチャを利用することはできません。';
         }
         # [限定ガチャ]一日一回限定限定ガチャ
         else if(
-            $gacha->type=='only_oneday' && $gacha->played_only_oneday
+            $gacha->type=='only_oneday' && (
+                $gacha->played_only_oneday || $now_play_count >1
+            )
         ){
             return '本日既に、このガチャは利用済みです。';
         }
         # [限定ガチャ]新規登録ユーザー定限定ガチャ
         else if(
-            ( $gacha->type=='only_new_user' && Auth::user()->sevendays_affter_registar )or
-            ( $gacha->type=='only_new_user' && $gacha->played_one_time )
+            $gacha->type=='only_new_user' && (
+                Auth::user()->sevendays_affter_registar || $gacha->played_one_time || $now_play_count >1
+            )
+            // ( $gacha->type=='only_new_user' && Auth::user()->sevendays_affter_registar )or
+            // ( $gacha->type=='only_new_user' && $gacha->played_one_time )
         ){
             return 'このガチャを利用することはできません。';
         }

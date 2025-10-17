@@ -36,7 +36,7 @@ class GachaApiController extends Controller
 
             ## カテゴリー名（ページタイトル）
             $category_name = $category ? $category->name : 'すべて';
-            // $first_category = GachaCategory::first();
+            // $first_category = GachaCategory::userList()->first();
             // if($first_category){
             //     $category_name = $category ? $category->name : $first_category->name;
             //     $category_code = $category ? $category->code_name : $first_category->code_name;

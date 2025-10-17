@@ -6,7 +6,7 @@
 
 @else
 
-    <script src="{{ asset('js/20251003121708app.js') }}" defer></script>
+    <script src="{{ asset('js/20251016213906app.js') }}" defer></script>
 
 @endif
 

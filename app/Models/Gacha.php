@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル
+|  ガチャ　モデル played_one_time
 | =============================================
 */
 class Gacha extends Model
@@ -64,7 +64,7 @@ class Gacha extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
-        'remaining_count', //残りのプレイできる回数
+        'remaining_count',     //残りのプレイできる回数
         'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
         'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
@@ -834,6 +834,17 @@ class Gacha extends Model
         }
 
 
+        /**
+         * ポップアップボタン設定　is_popup_btn
+         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
+         * @return Integer
+        */
+        public function getIsPopupBtnAttribute()
+        {
+            return config('gacha.btn_settings.popup',false) ? 1 : 0;
+        }
+
+
             /**
              * プレイボタンのdisabled条件　
              *
@@ -901,19 +912,8 @@ class Gacha extends Model
                 return $remaining_count >= $n ? 0 : 1 ;
             }
 
-
-        /**
-         * ポップアップボタン設定　is_popup_btn
-         * (-1:非表示, 0:利用可, 1:終了, 2:本日は終了, )
-         * @return Integer
-        */
-        public function getIsPopupBtnAttribute()
-        {
-            return config('gacha.btn_settings.popup',false) ? 1 : 0;
-        }
-
-
         /* */
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー(サブスク)

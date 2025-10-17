@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendEmailInfomationJob;
 /*
 | =============================================
-|  サイト管理者　お知らせ コントローラー 
+|  サイト管理者　お知らせ コントローラー
 | =============================================
 */
 class AdminInfomationController extends Controller
@@ -205,7 +205,7 @@ class AdminInfomationController extends Controller
             where('infomation_id', $infomation->id)
             ->where('user_id', $user->id)->first();
 
-            if( !$sent_email )
+            if( !$sent_email && $user->get_email )
             {
                 ## メールの送信
                 Mail::mailer('info_smtp')

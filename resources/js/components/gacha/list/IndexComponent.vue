@@ -244,6 +244,7 @@
             route === props.r_api_gacha_list ? paginate.data : [...gachas.value, ...paginate.data];
 
             searchs.value = response.data.searchs;
+            loading.value = false;
 
             // 次のデータの読み込み
             const { current_page, last_page, next_page_url } = paginate;
@@ -258,10 +259,12 @@
 
         } catch (error) {
 
-            console.error(error.response?.data);
-            if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
-            location.reload();
-            }
+            // console.error(error.response?.data);
+            // if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+            //     location.reload();
+            // }
+            loading.value = true;
+            alert('データ読み込みに失敗しました。');
 
         }
     };
@@ -282,17 +285,8 @@
     /* 初期データのセット */
     const setInitialData = () => {
 
-        // const storedData = localStorage.getItem( localStorageKey.value ) || null ;
-        // const storageInput = storedData._token ? JSON.parse(storedData) : {};
-
-        // Object.assign( inputs.value , {
-        //     _token: props.token,
-        //     category_code: props.category_code,
-        //     search_key: props.search_key || storageInput.search_key || 'desc_created',
-        //     card_size: props.card_size || storageInput.card_size || '',
-        // });
-
         list_col_class.value = inputs.card_size === 'sm' ? list_sm_col_class : list_md_col_class;
+
     };
 
 

@@ -64,7 +64,7 @@
                                     <!-- +3 -->
                                     <button type="button" class="form-control btn btn-dark"
                                     @click="countUpdate( max_count )"
-                                    >+MAX</button>
+                                    >MAX</button>
 
                                     <!-- リセット -->
                                     <button type="button" class="form-control btn btn-dark"
