@@ -197,7 +197,7 @@ class AdminStoreSalesReportController extends Controller
         /**
          * [メソッド] 売上集計(sales)
         */
-        private function aggSales( $start_day, $last_day)
+        public static function aggSales( $start_day, $last_day)
         {
             $days = [];
             $total = 0;

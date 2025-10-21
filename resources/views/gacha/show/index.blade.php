@@ -112,44 +112,5 @@
     </div>
 
 
-    <!--注意事項ー-->
-    {{-- <section class="py-5">
-        <div class="container px-2 overflow-auto mx-auto" style="max-width:600px;">
-            <div class="p-3" style="border-radius:1rem; background:rgb(255, 255, 255, .9);">
-
-                <h6 class="border border-danger border-2 p-2 text-danger text-center">
-                    お買い求め前に必ずお読み下さい。
-                </h6>
-
-
-                <!--注意事項-->
-                @include('includes.notes')
-
-
-            </div>
-        </div>
-    </section> --}}
-
-
-    {{-- @if( env('SHARE_BTNS') )
-        <section class="list-group-item mb-5">
-            <div class="fw-bold text-center mb-2">このガチャをシェアする</div>
-
-            @php
-            $sns_url  = request()->url();
-            $sns_text = $gacha->name;
-            @endphp
-            @include('includes.sns_btn')
-        </section>
-    @endif
-
-
-
-    <!-- その他のガチャ情報 -->
-    <div class="container my-5 mx-auto" style="max-width:600px;">
-
-        @include('gacha.common.result_gachas')
-
-    </div> --}}
 
 @endsection

@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\AdminPointHistoryMonthly as Monthly;
+use App\Http\Controllers\AdminPointHistoryMonthly as GachaMonthly;
+use App\Http\Controllers\AdminPointHistoryMonthly as StoreMonthly;
+use App\Http\Controllers\GachaApiController;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Admin;
 use App\Models\User;
 use App\Models\Gacha;
 use App\Models\PointHistory;
-use App\Models\Admin;
+use App\Models\StoreItem;
+use App\Models\StoreHistory;
 /*
 | =============================================
 |  ストアーAdmin ページトップ(Home) コントローラー
@@ -18,40 +22,51 @@ use App\Models\Admin;
 */
 class AdminHomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         # 登録ユーザー
         $users_count = User::count();
 
 
-        # 公開中ガチャ
-        // $gachas = GachaController::getPublishedGachas( $category_code='all' );
-        $gachas = Gacha::orderBy('is_sold_out')//売り切れは下
-        ->where('published_at', '<=', now())//公開中のみ
-        ->has('category')//カテゴリーが存在するもののみ
-        ->orderByDesc('published_at')
-        ->orderByDesc('created_at')
-        ->paginate( 20 );//ページネーション
+        # ガチャ
+            $gacha_query = GachaApiController::getPublishedGachas( '' );
+            $month = Carbon::parse( now()->format('Y-m-01') );
 
-        # 月間売上
-        $month = Carbon::parse( now()->format('Y-m-01') );
-        $sales = \App\Http\Controllers\AdminPointHistoryMonthly::Sales($month);
+            $gacha_data = [
 
-        # 発送待ち
-        $waiting_shippeds_count = Auth()->user()->admin->waiting_shippeds->count();
+                ## 公開ガチャ数
+                'published_count' => $gacha_query->count(),
 
-        # 月間売上
-        $month = Carbon::parse( now()->format('Y-m-01') );
-        $store_sales = Monthly::Sales($month);
+                ## 月間売上
+                'sales' => GachaMonthly::Sales($month),
 
-        # 発送待ち
-        $store_waiting_shippeds_count = Auth()->user()->admin->waiting_shippeds->count();
+                ## 発送待ち
+                'waiting_shippeds_count' => Auth()->user()->admin->waiting_shippeds->count(),
+            ];
+
+
+        # EC販売
+            $start_day = Carbon::now()->startOfMonth(); // 今月の1日（00:00:00）
+            $last_day  = Carbon::now()->endOfMonth();   // 今月の末日（23:59:59）
+
+            $store_data = [
+                ## 公開ガチャ数
+                'published_count' => StoreItem::searchQuery($request)->paginate(20)->count(),
+
+                ## 月間売上
+                'sales' => AdminStoreSalesReportController::aggSales( $start_day, $last_day)[0],
+
+                ## 発送待ち
+                'waiting_shippeds_count' => StoreHistory::forUserAdmin($request)
+                ->where('state_id',11)
+                ->count(),
+            ];
+
+
 
         return view('store_admin.home',compact(
             'users_count',
-            'gachas','sales','waiting_shippeds_count',
-
-            // 'users_count','sales','waiting_shippeds_count','unresponsed_contacts_count',
+            'gacha_data','store_data',
         ));
     }
 }
