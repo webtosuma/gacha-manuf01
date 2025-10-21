@@ -278,6 +278,7 @@ class GachaController extends Controller
             // お知らせ
             $slide_infos = InfomationController::GetInfomationsQuery()
             ->where('is_slide',1)
+            ->whereNotIn( 'type', ['ec'] )
             ->limit(10)
             ->get();
 

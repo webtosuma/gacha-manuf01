@@ -28,11 +28,23 @@
                     <select
                     v-model="month_stamp"
                     class="form-select">
-                        <option value="">公開日絞り込み</option>
+                        <option value="">公開日</option>
 
                         <option v-for="( month, key ) in months" :key="key"
                         :value="month.date_stanp"
                         selected>{{month.format}}</option>
+                    </select>
+                </div>
+
+                <div v-if="types" class="col">
+                    <select
+                    v-model="type"
+                    class="form-select">
+                        <option value="">お知らせの種類</option>
+
+                        <option v-for="( label, key ) in types" :key="key"
+                        :value="key"
+                        selected>{{label}}</option>
                     </select>
                 </div>
             </div>
@@ -78,20 +90,31 @@
                             class="d-inline-block px-2 py-1 bg-light form-text">スライド {{ info.slide }}</div>
                         </div>
                         <div class="col">
+
+                            <!--公開日・公開状況-->
                             <div class="">
                                 {{info.published_at_format??'--.--.--'}}
-
                                 <!--未公開-->
                                 <span v-if="!info.published_at_format" class="badge rounded-pill bg-danger" >{{ '未公開' }}</span>
                                 <!--公開予約-->
                                 <span v-else-if="!info.is_published"   class="badge rounded-pill bg-warning">{{ '予約中' }}</span>
                                 <!--公開-->
                                 <span v-else class="badge rounded-pill bg-success">{{ '公開中' }}</span>
-
                             </div>
+
+                            <!--種類ラベル-->
+                            <div v-if="info.is_use_types">
+                                <div
+                                class="px-2 bg-dark text-white d-inline-block"
+                                style="font-size:11px;"
+                                >{{info.type_label}}</div>
+                            </div>
+
+                            <!--タイトル-->
                             <a :href="info.r_show"
                             class="text-truncate overflow-hidden" style="width:10rem;"
                             >{{ info.title }}</a>
+
                         </div>
                         <!--サムネ画像-->
                         <div class="col-auto pe-2" style="width:4rem;">
@@ -169,21 +192,24 @@
     });
 
     /* データの状態 */
-    const r_create = ref('');     /* 新規作成ページURL */
-    const loading = ref(true);    /* 読み込み中 */
-    const infomations = ref([]);  /* 一覧 */
-    const months = ref([]);       /* 年月絞り込み */
-    const nextPageUrl = ref('');  /* 次のデータの読み込みURL */
+    const r_create    = ref('');   /* 新規作成ページURL */
+    const loading     = ref(true); /* 読み込み中 */
+    const infomations = ref([]);   /* 一覧 */
+    const months      = ref([]);   /* 年月絞り込み 選択肢 */
+    const types       = ref([]);   /* お知らせの種類 選択肢 */
+    const nextPageUrl = ref('');   /* 次のデータの読み込みURL */
 
 
-    const published = ref(props.is_published);/* 公開状態 */ //2:予約中 1:公開 0:未公開
-    const month_stamp = ref('');  /* 月の絞り込み */
+    const published     = ref(props.is_published);/* 公開状態 */ //2:予約中 1:公開 0:未公開
+    const month_stamp   = ref('');/* 月の絞り込み */
     const title_keyword = ref('');/* タイトルキーワード */
+    const type          = ref('');/*お知らせの種類*/
 
 
     /* 監視 */
     watch(title_keyword, () => getData());
-    watch(month_stamp, () => changePublished(1, month_stamp.value));
+    watch(month_stamp,   () => changePublished(1, month_stamp.value));
+    watch(type,          () => getData());
 
 
     /* 初回データ取得 */
@@ -197,10 +223,11 @@
     const getData = async (route = props.r_api_list) => {
 
         const inputs = {
-            _token: props.token,
-            published: published.value,
-            month: month_stamp.value,
+            _token:        props.token,
+            published:     published.value,
+            month:         month_stamp.value,
             title_keyword: title_keyword.value,
+            type:          type.value,
             admin: true, //サイト管理者データの受信
         };
 
@@ -211,9 +238,10 @@
             infomations.value =
             route === props.r_api_list ? paginate.data : [...infomations.value, ...paginate.data];
 
-            months.value = response.data.months;
+            months.value   = response.data.months;
+            types.value    = response.data.types;
             r_create.value = response.data.r_create;
-            loading.value = false;
+            loading.value  = false;
 
             const { current_page, last_page, next_page_url } = paginate;
             nextPageUrl.value = current_page !== last_page ? next_page_url : null;

@@ -147,7 +147,7 @@ style="max-width:90vw; min-width:30vw;">
                 </div>
                 <!--お知らせ-->
                 <div class="col-4">
-                    <a href="{{ route('infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
+                    <a href="{{ route('store.infomation') }}" class="btn rounded-3 text-dark shadow-sm fw-bold p-2 px-1 w-100" style="font-size:11px;">
                         <i class="bi bi-bell fs-3"></i>
                         <div class="text-secondary mt-" style="font-size:10px; line-height:18px;">お知らせ</div>
                     </a>

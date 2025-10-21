@@ -44,5 +44,10 @@ Route::middleware([ /* ミドルウェアー */
     # ポイント購入履歴
     include('web/point_history.php');
 
+    # お知らせ(news)
+    Route::get('store/infomation',
+    [App\Http\Controllers\InfomationController::class,'store_index'])
+    ->name('store.infomation');
+
 
 });//end middleware

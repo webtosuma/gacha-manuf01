@@ -7,16 +7,28 @@
 
 
                     <!--image-->
-                    <div class="ratio {{config('store.item_ratio')}}  position-relative
-                    overflow-hidden rounded-
-                    ">
+                    @if( $slide['type'] == 'info' )
+
                         <div style="z-index:1;">
                             <ratio-image-component
-                            style_class="ratio {{config('store.item_ratio')}} "
+                            style_class="ratio {{config('app.gacha_card_ratio')}} "
                             url="{{ $slide['image'] }}"
                             ></ratio-image-component>
                         </div>
-                    </div>
+
+                    @else
+                        @php
+                        $splide_img_bool = config('app.gacha_card_ratio')=='ratio-3x4' ? true : false;
+                        $splide_img_w = $splide_img_bool ? 'w-50' : 'w-75';
+                        $splide_img_w = config('app.gacha_card_ratio')==config('store.item_ratio') ? 'w-100' : $splide_img_w;
+                        @endphp
+                        <div class="h-100 d-flex align-items-center justify-content-center" style="z-index:1;">
+                            <ratio-image-component
+                            style_class="ratio {{config('store.item_ratio')}} {{$splide_img_w}} mx-auto"
+                            url="{{ $slide['image'] }}"
+                            ></ratio-image-component>
+                        </div>
+                    @endif
 
 
                 </a>

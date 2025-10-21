@@ -13,7 +13,7 @@
         @endforeach
 
 
-        <div class="col-6 col-md-3">
+        {{-- <div class="col-6 col-md-3">
             <a href="{{route('gacha_category')}}"  target="_blank">
 
 
@@ -27,7 +27,7 @@
 
 
             </a>
-        </div>
+        </div> --}}
 
     </div>
 </div>

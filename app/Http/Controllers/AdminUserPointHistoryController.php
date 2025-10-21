@@ -216,12 +216,20 @@ class AdminUserPointHistoryController extends Controller
         /** 21.ガチャ履歴の削除 */
         public function DeleteGachaHistory($point_history)
         {
-            if( $point_history->user_gacha_history )
+            $user_gacha_history = $point_history->user_gacha_history;
+            $gacha_id = $user_gacha_history->gacha_id;
+
+
+            if( $user_gacha_history )
             {
                 ## ガチャで取得した「ユーザー商品」を削除
-                $user_prizes = $point_history->user_gacha_history->user_prizes;
+                $user_prizes = $user_gacha_history->user_prizes;
                 foreach ($user_prizes as $user_prize) {
 
+                    # ガチャ商品
+                    $gacha_prize = GachaPrize::where('gacha_id',$gacha_id)
+                    ->where('prize_id', $user_prize->prize_id)
+                    ->first();
 
                     # ポイント交換積みの商品があるとき
                     if($user_prize->point_history_id)
@@ -236,6 +244,8 @@ class AdminUserPointHistoryController extends Controller
 
                         # ユーザー商品を削除
                         $user_prize->delete();
+                        $gacha_prize->remaining_count ++;//ガチャ商品残数を戻す
+                        $gacha_prize->save();
                     }
 
 
@@ -250,7 +260,9 @@ class AdminUserPointHistoryController extends Controller
                             $bool = self::DeletePrizeShippedHistory($shipped_point_history);
 
                             # ユーザー商品を削除(商品が発送済みの場合を除く)
-                            if($bool){ $user_prize->delete(); }
+                            if($bool){
+                                $user_prize->delete();
+                            }
 
                         }
                     }
@@ -260,12 +272,13 @@ class AdminUserPointHistoryController extends Controller
                     else
                     {
                         $user_prize->delete();
+                        $gacha_prize->remaining_count ++;//ガチャ商品残数を戻す
+                        $gacha_prize->save();
                     }
                 }
 
 
                 ## ガチャ履歴を削除
-                $user_gacha_history = $point_history->user_gacha_history;
                 $user_gacha_history->delete();
 
 

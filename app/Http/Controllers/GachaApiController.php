@@ -67,6 +67,7 @@ class GachaApiController extends Controller
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
+            ->whereNotIn( 'type', ['ec'] )
             ->limit(3)->get();
 
             ## スライド

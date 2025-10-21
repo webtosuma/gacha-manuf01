@@ -26,7 +26,7 @@
 @section('content')
 
     <!--スライド-->
-    @if(count($slides)>1)
+    @if( count($slides)>0 )
         <section class="bg- pt-3" style="background:rgb(0, 0, 0,.0);">
 
             <!-- PC -->
@@ -97,7 +97,14 @@
         <!--mobile-->
         <section class="d-md-none">
             <div class="container py-4">
-                <h5 class="fs- fw-bold">{{$line_label}}</h5>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fs- fw-bold">{{$line_label}}</h5>
+
+                    <a href="{{$line_r_more}}"
+                    class="btn btn-sm text-primary"
+                    >もっと見る</a>
+                </div>
 
                 <div class="row g-3">
                     @include('store.section.common.card')
@@ -112,7 +119,15 @@
     @if($gachas->count()>0)
         <section>
             <div class="container py-4 rounded-4">
-                <h5 class="fs- fw-bold">{{'ガチャ'}}</h5>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fs- fw-bold">{{'ガチャ'}}</h5>
+
+                    <a href="{{$line_r_more}}"
+                    class="btn btn-sm text-primary"
+                    >もっと見る</a>
+                </div>
+
 
                 @include('store.section.common.gachas')
 

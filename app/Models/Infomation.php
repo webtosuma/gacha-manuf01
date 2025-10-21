@@ -23,6 +23,7 @@ class Infomation extends Model
         'is_slide',    //スライドの表示有無
         'published_at',//公開日時
         'send_email_at',//メール送信日時
+        'type',         //お知らせの種類  2025/10/20.追加
     ];
 
     /** Carbonオブジェクトとして利用 */
@@ -31,6 +32,14 @@ class Infomation extends Model
         'send_email_at' => 'datetime',//メール送信日時
     ];
 
+
+    /** アクセサーをJSONに含める */
+    protected $appends = [
+        'image_path',
+        'is_published',
+        'type_label',   //お知らせの種類　ラベル
+        'is_use_types', //お知らせの種類の利用の有無
+    ];
 
 
 
@@ -89,5 +98,52 @@ class Infomation extends Model
             else
             { return 0; }
         }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー お知らせの種類
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * お知らせの種類　一覧 types
+         * @return Array
+        */
+        public function getTypesAttribute()
+        {
+            return [
+                'all'   => 'サイト共通',
+                'gacha' => 'ガチャ',
+                'ec'    => 'ショップ',
+            ];
+        }
+
+
+        /**
+         * お知らせの種類　ラベル type_label
+         * @return Array
+        */
+        public function getTypeLabelAttribute()
+        {
+            $array = $this->types;
+            $key   = $this->type;
+            return array_key_exists($key, $array) ? $array[$key] : '***';
+        }
+
+
+        /**
+         * お知らせの種類の利用の有無 is_use_types
+         * @return Array
+        */
+        public function getIsUseTypesAttribute()
+        {
+            /*.設定は。config.appに記述 */
+            return config('app.infomation_use_types', false);
+        }
+
     //
+
 }

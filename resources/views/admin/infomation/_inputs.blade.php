@@ -79,6 +79,37 @@
     </div>
     <div class="col-lg-4">
 
+        @if( $infomation->is_use_types )
+            <!--お知らせの種類(type)-->
+            <div class="d-block mb-4">
+                <div class="form-label">
+                    お知らせの種類
+                    <span class="text-danger">＊</span>
+                </div>
+
+                <div class="px-4">
+                    <div class="card p-2 mx-2">
+                        <div class="form-text">お知らせの種類を選択してください。</div>
+                        <div class="d-flex flex-column gap-3 ps-3">
+                            @foreach ($infomation->types as $value => $lable)
+                                <label class="form-check">
+                                    <input name="type" value="{{$value}}"
+                                    @if( $value == $infomation->type ) checked @endif
+                                    class="form-check-input" type="radio">
+                                    <div class="form-check-div">{{ $lable }}</div>
+                                </label>
+                            @endforeach
+                        </div>
+
+                        <!--error message-->
+                        @if ( $errors->has('type') )
+                            <div class="text-danger"> {{$errors->first('type')}} </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+
 
         <!--公開設定(is_published)-->
         <div class="d-block mb-5">

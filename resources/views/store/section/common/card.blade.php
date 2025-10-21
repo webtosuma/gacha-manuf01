@@ -22,7 +22,7 @@
 @endforeach
 
 
-<div class="col-6">
+{{-- <div class="col-6">
     <a href="{{ $line_r_more }}">
 
 
@@ -36,4 +36,4 @@
 
 
     </a>
-</div>
+</div> --}}

@@ -40,10 +40,8 @@ class GachaPlayController extends Controller
         $user = Auth::user(); //ログインユーザー取得
         $now_play_count = (int) $request->play_count;   //プレイ回数
         $now_play_count = $gacha->sponsor_ad ? 1 : (int) $now_play_count;//(広告ガチャのとき）プレイ回数=>1
-        // $played_count     = $gacha->played_count;       //済み口数(処理中に加算あり)
         $play_point = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
         $total_play_point = $now_play_count*$play_point;//合計使用ポイント
-        // $remaining_count  = (int) $gacha->remaining_count; //残りのプレイできる回数
         $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
 
         # キー認証
@@ -112,13 +110,17 @@ class GachaPlayController extends Controller
 
         # ユーザーランク:昇格の評価
         $rank_up = false;
-        if( $user->now_rank && env('NEW_TICKET_SISTEM',false) )
+        if( $user->now_rank && config('u_rank_ticket.user_rank',false) )
+        // if( $user->now_rank && env('NEW_TICKET_SISTEM',false) )
         {
             $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
 
             ## ランクアップ時のボーナス付与
-            // $desc_first_rank = $user->desc_first_rank;//更新された直近の会員ランク履歴
-            // UserRankHistoryController::CreateBonusHistory( $user, now(), $desc_first_rank );
+            if( $rank_up ){
+                $desc_first_rank = $user->desc_first_rank;//更新された直近の会員ランク履歴
+                UserRankHistoryController::CreateBonusHistory( $user, now(), $desc_first_rank );
+            }
+
         }
 
 

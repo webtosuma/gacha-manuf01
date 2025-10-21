@@ -31,9 +31,7 @@ class StoreController extends Controller
         // dd($slides);
 
         # カテゴリー 一覧
-        $categories = GachaCategory::where('is_published',1) //公開中
-        ->orderBy('created_at')
-        ->get();
+        $categories =GachaCategory::userList()->get();
 
         # 商品
         $store_items = StoreItem::
@@ -43,6 +41,7 @@ class StoreController extends Controller
         ## お知らせ
         $infomations =
         InfomationController::GetInfomationsQuery()
+        ->whereNotIn( 'type', ['gacha'] )
         ->limit(3)
         ->get();
 
@@ -74,6 +73,7 @@ class StoreController extends Controller
             // お知らせ
             $infos = InfomationController::GetInfomationsQuery()
             ->where('is_slide',1)
+            ->whereNotIn( 'type', ['gacha'] )
             ->limit(10)
             ->get();
 

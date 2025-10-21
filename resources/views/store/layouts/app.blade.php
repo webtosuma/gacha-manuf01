@@ -63,6 +63,8 @@
 
         @include('store.includes.header')
 
+        @include('store.includes.offcanvas_search')
+
 
         @if(Auth::check())
 

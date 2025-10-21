@@ -60,7 +60,7 @@ class AdminGachaController extends Controller
 
 
     /**
-     * 新規作成 
+     * 新規作成
      *
      * @param String $category_code
      * @return \Illuminate\Http\Response

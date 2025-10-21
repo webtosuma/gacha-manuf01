@@ -80,6 +80,10 @@
         @endif
 
 
+        <!--search-->
+        @include('store.includes.offcanvas_search')
+
+
 
         @if ( isset( $message ) )
             <section class="bg-dark text-warning text-center">{{$message}}</section>

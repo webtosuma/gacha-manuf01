@@ -50,11 +50,19 @@
                         <div class="d-flex align-items-center">
                             <div class="col py-2">
 
-                                <div class="">
-                                    {{info.published_at_format??'--.--.--'}}                                </div>
-                                <div class="">
-                                    {{ info.title }}
+                                <!--公開日-->
+                                <div>{{info.published_at_format??'--.--.--'}}</div>
+
+                                <!--種類ラベル-->
+                                <div v-if="info.is_use_types">
+                                    <div
+                                    class="px-2 bg-dark text-white d-inline-block"
+                                    style="font-size:11px;"
+                                    >{{info.type_label}}</div>
                                 </div>
+
+                                <!--タイトル-->
+                                <div class="">{{ info.title }}</div>
 
                             </div>
                             <!--サムネ画像-->
@@ -93,11 +101,11 @@
 
     const props = defineProps({
 
-        token: { type: String, default: '' },
-        r_api_list: { type: String, default: '' }, // カテゴリーcode
-        use_mail: { type: String, default: null }, // メールの利用
-        is_published: { type: [String, Number], default: 1 }, // ページ読み込み時の公開状態
-
+        token:           { type: String, default: '' },
+        r_api_list:      { type: String, default: '' },   // カテゴリーcode
+        use_mail:        { type: String, default: null }, // メールの利用
+        is_published:    { type: [String, Number], default: 1 }, // ページ読み込み時の公開状態
+        no_types_string: { type: String, default: null }, //非表示にするお知らせの種類(文字列)
     });
 
     /* データの状態 */
@@ -129,9 +137,10 @@
     const getData = async (route = props.r_api_list) => {
         const inputs = {
             _token: props.token,
-            published: published.value,
-            month: month_stamp.value,
-            title_keyword: title_keyword.value,
+            published:      published.value,
+            month:          month_stamp.value,
+            title_keyword:  title_keyword.value,
+            no_types_array: props.no_types_string ? props.no_types_string.split(',') : null,
         };
 
         try {

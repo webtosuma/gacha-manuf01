@@ -36,13 +36,18 @@ class InfomationController extends Controller
     public function index()
     {
         return view('footer_menu.infomation.index');
-
-        // # ユーザーページのお知らせモデルを取得
-        // $infomations = self::GetInfomationsQuery()
-        // ->paginate(20);
-        // return view('footer_menu.infomation.index', compact('infomations'));
     }
 
+
+    /**
+     * 一覧(STORE用)
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store_index()
+    {
+        return view('store.infomation.index');
+    }
 
 
     /**
@@ -88,6 +93,11 @@ class InfomationController extends Controller
         });
 
 
+        # お知らせの種類
+        $new_infomation = new Infomation();
+        $types = $new_infomation->is_use_types ? $new_infomation->types : null;
+
+
         # お知らせ
         $query = Infomation::query();
 
@@ -131,13 +141,25 @@ class InfomationController extends Controller
             }
 
 
+            # お知らせの種類
+            if( $request->type )
+            {
+                $query->where( 'type',$request->type );
+            }
+
+            # 非表示にするお知らせの種類(配列)
+            if( $request->no_types_array )
+            {
+                $query->whereNotIn( 'type', $request->no_types_array );
+            }
+
             # 並び順
             $query->orderByDesc('published_at')->orderByDesc('created_at');
 
         $infomations = $query->paginate(20);
 
-        foreach ($infomations as $infomation) {
-
+        foreach ($infomations as $infomation)
+        {
             if( $request->admin )
             {
                 $infomation->r_show       = route('admin.infomation.show',  $infomation);//route 詳細ページ
@@ -147,16 +169,12 @@ class InfomationController extends Controller
             }else{
                 $infomation->r_show       = route('infomation.show',  $infomation);//route 詳細ページ
             }
-            $infomation->title        = $infomation->title;
-            $infomation->image_path   = $infomation->image_path;
-            $infomation->is_slide     = $infomation->is_slide;
-            $infomation->is_published = $infomation->is_published;
             $infomation->created_at_format    = $infomation->created_at->format('Y.m.d') ;
             $infomation->published_at_format  = $infomation->published_at? $infomation->published_at->format('Y.m.d') : null ;
             $infomation->send_email_at_format = $infomation->send_email_at? $infomation->send_email_at->format('Y.m.d') : null ;
         }
 
-        return response()->json( compact('r_create','months','infomations') );
+        return response()->json( compact('r_create','months','infomations','types') );
     }
 
 

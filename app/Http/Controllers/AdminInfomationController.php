@@ -52,10 +52,9 @@ class AdminInfomationController extends Controller
      */
     public function create()
     {
-        $infomation = new Infomation([
-            'is_slide' => 0,
-        ]);
-
+        $infomation = new Infomation();
+        $infomation->is_slide = 0;
+        $infomation->type = 'all';
 
         return view('admin.infomation.create', compact('infomation'));
     }
@@ -269,10 +268,11 @@ class AdminInfomationController extends Controller
             'image',       //画像
             'is_slide',    //スライドの表示有無
             'published_at',//公開日時
+            'type',        //お知らせの種類
         );
 
         # スライドの表示有無
-            $inputs['is_slide'] = $request->is_slide==true ;
+        $inputs['is_slide'] = $request->is_slide==true ;
 
 
         # エンコードコンポーネント入力情報のデコード処理（絵文字対策）

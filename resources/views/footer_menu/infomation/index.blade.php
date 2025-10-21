@@ -36,59 +36,11 @@
             <u-infomation-list
             token="{{ csrf_token() }}"
             r_api_list="{{route('infomation.api.list')}}"
+            no_types_string="ec"
             ></u-infomation-list>
 
         </div>
 
 
-        {{-- <div class="mx-auto my-5" style="max-width:900px;">
-
-            <div class="list-group rounded-4"
-            style="background:rgb(255, 255, 255, .7);">
-                @forelse ($infomations as $infomation)
-
-                    <div class="list-group-item list-group-item-action pozition-relative">
-                        <a href="{{ route('infomation.show',$infomation) }}" class="text-dark">
-                            <div class="d-flex align-items-center">
-                                <div class="col">
-
-                                    <div class="">
-                                        {{ $infomation->created_at->format('Y.m.d') }}
-                                    </div>
-                                    <div class="">
-                                        {{ $infomation->title }}
-                                    </div>
-
-                                </div>
-                                @if( $infomation->image_path )
-                                    <div class="col-auto" style="width:3rem;">
-                                        <ratio-image-component
-                                        url="{{ $infomation->image_path }}" style_class="ratio ratio-1x1 w-100 rounded"
-                                        ></ratio-image-component>
-                                    </div>
-                                @endif
-                                <div class="col-auto text-dark ps-3">
-                                    <i class="bi bi-chevron-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                @empty
-                    <div class="list-group-item border-0 pozition-relative">
-                        <div class="">
-                            * お知らせはありません
-                        </div>
-                    </div>
-                @endforelse
-            </div>
-
-
-            <!-- ページネーション -->
-            <div class="d-flex justify-content-start mt-3">
-                {{ $infomations->links('vendor.pagination.bootstrap-4') }}
-            </div>
-
-        </div> --}}
     </div>
 @endsection

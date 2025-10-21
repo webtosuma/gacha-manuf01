@@ -33,9 +33,7 @@ $categories = \App\Models\GachaCategory::userList()->get();
 <div class="col-auto">
     <ul class="list-unstyled m-0">
         <li class="mb-2"><a class="link-secondary text-decoration-none"
-        href="{{ route('infomation') }}">お知らせ</a></li>
-        {{-- <li class="mb-2"><a class="link-secondary text-decoration-none"
-        href="{{ route('timeline') }}">タイムライン</a></li> --}}
+        href="{{ route('store.infomation') }}">お知らせ</a></li>
         <li class="mb-2"><a class="link-secondary text-decoration-none"
         href="{{ route('contact') }}">お問い合わせ</a></li>
         <li class="mb-2"><a class="link-secondary text-decoration-none" target="_blank"

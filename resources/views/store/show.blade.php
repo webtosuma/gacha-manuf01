@@ -58,7 +58,7 @@
 @section('content')
 
     <!--ボトムメニュー-->
-    {{-- @include('ticket_store.common.bottom_menu') --}}
+    @include('store.includes.bottom_menu')
 
 
 

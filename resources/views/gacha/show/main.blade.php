@@ -38,5 +38,6 @@
 </section>
 
 
-<!--ポップアップモーダル-->
-@include('gacha.common.play_modal')
+    <!--ポップアップモーダル-->
+    @include('gacha.common.play_modal')
+
