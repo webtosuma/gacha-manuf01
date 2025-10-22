@@ -69,5 +69,7 @@ class Kernel extends HttpKernel
         'user_plize_deadline' => \App\Http\Middleware\UserPrizeDeadLineMiddleware::class,//ユーザー商品期限切れ対応
         'user_point_deadline' => \App\Http\Middleware\UserPointDeadlineMiddleware::class,//ユーザーポイント期限切れ対応
         'maintenance' => \App\Http\Middleware\MaintenanceMiddleware::class,//メンテナンス
+        'check.user.age' => \App\Http\Middleware\CheckUserBirthdayAndAge::class,//年齢確認
+
     ];
 }

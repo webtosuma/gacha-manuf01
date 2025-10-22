@@ -1,6 +1,6 @@
 <div class="form-text mb-3">
     <span class="text-danger">＊</span>入力必須
-</div> 
+</div>
 
 <div class="row">
     <div class="col">
@@ -76,9 +76,23 @@
         </label>
 
 
+        @if( config('app.min_age') )
+            <!--誕生日(birthday)-->
+            <div class="d-block mb-4">
+                <div class="form-label">
+                    誕生日
+                    <span class="text-danger">＊</span>
+                </div>
+
+                @include('settings.age._input_birthday')
+
+
+            </div>
+        @endif
+
 
         <!--二段階認証の利用-->
-        <label class="d-block mb-4">
+        <label class="d-block mb-4 mt-5">
             <div class="form-label mb-0">二段階認証の利用</div>
 
             <div class="d-flex align-items-end px-3">

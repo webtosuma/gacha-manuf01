@@ -67,4 +67,29 @@ Route::middleware(['auth','user_rank'])->group(function () {
         [Controllers\SettingsController::class, 'email_reception_update'])
         ->name('settings.email_reception.update');
 
+
+    /* ユーザー誕生日登録 */
+
+        # 誕生日入力フォーム
+        Route::get('/settings/age/birthday',
+        function () { return  view('settings.age.birthday'); })
+        ->name('settings.age.birthday');
+
+        # 誕生日更新
+        Route::patch('/settings/age/birthday/update',
+        [Controllers\SettingsController::class, 'birthday_update'])
+        ->name('settings.age.birthday.update');
+
+        # 誕生日入力フォーム完了
+        Route::get('/settings/age/birthday/comp',
+        function () { return  view('settings.age.birthday_comp'); })
+        ->name('settings.age.birthday.comp');
+
+        # 年齢制限があります
+        Route::get('/settings/age/restrictedy',
+        function () { return  view('settings.age.restrictedy'); })
+        ->name('settings.age.restrictedy');
+
+
+    /**/
 });

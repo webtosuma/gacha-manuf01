@@ -33,6 +33,15 @@ class SettingsController extends Controller
             'twitter_id',//X(旧twitter)ID
         );
 
+        # 誕生日
+        if( config('app.min_age') )
+        {
+            $inputs['birthday'] = isset($request->birthday_y) && isset($request->birthday_m) && isset($request->birthday_d)
+            ? $request->birthday_y.'-'.$request->birthday_m.'-'.$request->birthday_d
+            : null ;//年齢設定なしのとき
+        }
+
+
         # ストレージ画像ファイルの更新（イメージ画像）
             $dir = 'upload/user/image/';             //保存先ディレクトリ
             $request_file    = $request->file('image');     //画像のリクエスト
@@ -97,6 +106,43 @@ class SettingsController extends Controller
 
             return redirect()->route('settings')
             ->with(['alert-warning'=>'メール受信設定を更新しました']);
+        }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 誕生日登録
+    |--------------------------------------------------------------------------
+    */
+        /**
+         * 誕生日変更
+         *
+         * @param \App\Http\Requests\UpdateUserRequest $request
+         * @return \Illuminate\Http\Response
+         */
+        public function birthday_update( UpdateUserRequest $request )
+        {
+            $user = Auth::user();
+
+            # 入力値の編集
+            $inputs = [];
+            $inputs['birthday'] = isset($request->birthday_y) && isset($request->birthday_m) && isset($request->birthday_d)
+            ? $request->birthday_y.'-'.$request->birthday_m.'-'.$request->birthday_d
+            : null ;
+
+
+            # 更新情報
+            $user->update($inputs);
+            $request->session()->regenerateToken();// 二重送信防止
+
+
+            # 年齢チェック NG
+            if( $user->age < config('app.min_age') ){
+                return redirect()->route('settings.age.restrictedy');
+            }
+
+            # 年齢チェック OK
+            return redirect()->route('settings.age.birthday.comp');
         }
     //
 }

@@ -11,6 +11,7 @@ use App\Models\UserPrize;
 use App\Models\UserShipped;
 use App\Models\PointHistory;
 use App\Models\CanpaingIntroductory;
+use App\Models\GachaPrize;
 /*
 | =============================================
 |  サイト管理者 登録ユーザー [ポイント履歴] コントローラー

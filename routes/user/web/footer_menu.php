@@ -68,6 +68,11 @@ use App\Http\Controllers;
         return view('footer_menu.about_pwa.index', compact('revision_date'));
     })->name('about_pwa');
 
+    # 会員ランクとは(about_user_rank)
+    Route::get('/about_user_rank',
+    function () {
+        return view('footer_menu.about_user_rank.index');
+    })->name('about_user_rank');
 
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {

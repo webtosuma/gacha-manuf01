@@ -16,6 +16,7 @@ use App\Http\Controllers;
         # ポイント一覧
         Route::get('purchase_point/',
         [Controllers\StripeController::class, 'index'])
+        ->middleware(['check.user.age'])//誕生日入力・年齢チェク
         ->name('point_sail');
 
 

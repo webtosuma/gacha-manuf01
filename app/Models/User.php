@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable; //決済　
-
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -44,6 +44,7 @@ class User extends Authenticatable
         'tfa_failures_at'   ,//二段階認証の失敗日時    　2025/9/24追加
         'is_tfa'            ,//二段階認証を利用するか否か 2025/9/24追加
 
+        'birthday', //誕生日.2025/10/22追加
     ];
 
 
@@ -83,7 +84,9 @@ class User extends Authenticatable
 
     /** アクセサーをJSONに含める */
     protected $appends = [
-        'image_path',//画像ファイルパス
+        'image_path',     //画像ファイルパス
+        'age',            //年齢
+        'birthday_format',//誕生日フォーマット
     ];
 
 
@@ -525,6 +528,87 @@ class User extends Authenticatable
             }
             return $array;
         }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー(誕生日)
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 年齢 age
+         *
+         * @return int|null
+         */
+        public function getAgeAttribute(): ?int
+        {
+            if ( empty($this->birthday) ) { return null; }
+
+            return Carbon::parse($this->birthday)->age;
+        }
+
+
+        /**
+         * 誕生日フォーマット birthday_format
+         *
+         * @return string|null
+         */
+        public function getBirthdayFormatAttribute(): ?string
+        {
+            return $this->birthday ? Carbon::parse($this->birthday)->format('Y-m-d') : '' ;
+        }
+
+        /**
+         * 誕生日フォーマット(年) birthday_format_y
+         *
+         * @return string|null
+         */
+        public function getBirthdayFormatYAttribute(): ?string
+        {
+            return $this->birthday ? Carbon::parse($this->birthday)->format('Y') : '' ;
+        }
+
+        /**
+         * 誕生日フォーマット(月) birthday_format_m
+         *
+         * @return string|null
+         */
+        public function getBirthdayFormatMAttribute(): ?string
+        {
+            return $this->birthday ? Carbon::parse($this->birthday)->format('m') : '' ;
+        }
+
+        /**
+         * 誕生日フォーマット(日) birthday_format_d
+         *
+         * @return string|null
+         */
+        public function getBirthdayFormatDAttribute(): ?string
+        {
+            return $this->birthday ? Carbon::parse($this->birthday)->format('d') : '' ;
+        }
+
+
+
+        /**
+         * 今日が誕生日か判定するアクセサ is_birthday_today
+         *
+         * @return bool
+         */
+        public function getIsBirthdayTodayAttribute(): bool
+        {
+            # 未入力
+            if (empty($this->birthday)) { return false; }
+
+            $today    = Carbon::now();
+            $birthday = Carbon::parse($this->birthday);
+
+            # 月日が今日と一致するか
+            return $today->isSameDay($birthday->setYear($today->year));
+        }
+
 
     /* ~ */
 }
