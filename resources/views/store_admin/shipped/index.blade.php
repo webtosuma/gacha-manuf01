@@ -29,7 +29,8 @@ $active_store_menu = true;
         <a-store-shipped-list
         token="{{ csrf_token() }}"
         r_api_list="{{ route('admin.api.store.shipped') }}"
-        r_csv="{{route('admin.store.shipped.waiting.dl_csv')}}"
+        r_csv     ="{{route('admin.store.shipped.waiting.dl_csv')}}"
+        r_update  ="{{ config('app.is_bulk_shipping',false) ? route('admin.store.shipped.waiting.update') : '' }}"
         ></a-store-shipped-list>
 
     </div>

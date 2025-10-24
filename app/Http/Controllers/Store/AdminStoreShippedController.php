@@ -47,21 +47,25 @@ class AdminStoreShippedController extends Controller
     /**
      * 発送処理
      *
-     * @param  StoreHistory $store_history
+     * @param Request $request　
      * @return \Illuminate\Http\Response
      */
-    public function update( StoreHistory $store_history )
+    public function update( Request $request)
     {
-        # 発送情報の更新
-        $store_history->update([
-            'state_id' => 21,//発送状況:'発送済み'
-            'shipment_at'=>now(), //発送日時
-        ]);
+        $ids = $request->ids;
+        $store_histories = StoreHistory::find($ids);
 
+        # 発送情報の更新
+        foreach ( $store_histories as $store_history )
+        {
+            $store_history->update([
+                'state_id' => 21,//発送状況:'発送済み'
+                'shipment_at'=>now(), //発送日時
+            ]);
+        }
 
         # ユーザーへのメール送信
         self::SendEmail($store_history);
-
 
         return redirect()->route('admin.store.shipped')
         ->with(['alert-success'=>'発送通知を送信しました']);

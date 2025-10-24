@@ -69,9 +69,11 @@ $active_store_menu = true;
                     </p>
 
                     <div class="col-md-8 mx-auto my-3">
-                        <form action="{{ route('admin.store.shipped.waiting.update', $store_history ) }}" method="POST">
+                        <form action="{{ route('admin.store.shipped.waiting.update' ) }}" method="POST">
                             @csrf
                             @method('PATCH')
+
+                            <input type="hidden" name="ids[]" value="{{$store_history->id}}">
 
                             <button type="button" data-bs-toggle="modal"
                             data-bs-target="#deleteModal{{'send'}}"

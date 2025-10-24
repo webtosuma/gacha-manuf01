@@ -21,7 +21,7 @@ Route::middleware(['admin_auth'])->group(function () {
         ->name('admin.store.shipped.show');
 
         # 発送待ち 発送処理
-        Route::patch('/admin/store/shipped/update/{store_history}',
+        Route::patch('/admin/store/shipped/update/{store_history?}',
         [Store\AdminStoreShippedController ::class, 'update'])
         ->name('admin.store.shipped.waiting.update');
 

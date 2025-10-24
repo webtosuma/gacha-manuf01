@@ -88,6 +88,9 @@ import Vue from 'vue'
     Vue.component('pwa-install-btn',
     require('./components/Items/PwaInstallBtn.vue').default);
 
+    /* ページネーション */
+    Vue.component('pagenation-component',
+    require('./components/Items/PagenationComponent.vue').default);
 
 
 

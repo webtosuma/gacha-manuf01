@@ -2,7 +2,7 @@
     <div class="col-12 col-md">
 
 
-        <div class="row align-items-center">
+        <div class="row align-items-top">
             <div class="col-auto" style="width:4rem;">
                 <!-- アカウント画像 -->
                 <ratio-image-component
@@ -11,12 +11,20 @@
                 ></ratio-image-component>
             </div>
             <div class="col">
+
+
                 ID：{{ $user->id }}
                 <a href="{{ route('admin.user.show',$user) }}" class="ms-3">{{ $user->name }}</a>
+
+
+                <div class="my-2">年齢：{{ $user->age }}歳</div>
+
 
                 @if($user->deleted_at)
                     <span class="text-danger ms-3">*退会済</span>
                 @endif
+
+
             </div>
         </div>
         <!-- 会員ランク -->

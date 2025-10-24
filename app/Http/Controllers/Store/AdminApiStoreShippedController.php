@@ -23,11 +23,14 @@ class AdminApiStoreShippedController extends Controller
     */
     public function index(Request $request)
     {
+        # 表示ページ
+        $page_count = $request->page_count ?? 20;
+
         # 購入済み商品(store_histories)
         $user = Auth::user();
         $store_histories  = StoreHistory::forUserAdmin($request)
         // ->where('user_id',$user->id)
-        ->paginate(10);
+        ->paginate($page_count);
 
         foreach ($store_histories as $store_history) {
             $store_history->sumItemsCount = $store_history->sumItemsCount();  //購入するカート商品の還元ポイント
