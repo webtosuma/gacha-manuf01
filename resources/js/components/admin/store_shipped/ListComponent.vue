@@ -86,6 +86,8 @@
                                 <input v-for="(store_history_id,key) in inputs.store_history_ids" :key="key"
                                 type="hidden" name="ids[]" :value="store_history_id">
 
+                                <input type="hidden" name="state_id" v-model="inputs.state_id">
+
                                 <button class="btn btn-sm btn-light border"
                                 :disabled="!inputs.store_history_ids.length"
                                 ><i class="bi bi-filetype-csv fs-5"></i>ダウンロード</button>
@@ -104,9 +106,6 @@
 
                 </div>
             </div>
-
-
-
 
 
 

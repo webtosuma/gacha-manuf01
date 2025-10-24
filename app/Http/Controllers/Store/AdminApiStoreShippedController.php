@@ -12,7 +12,6 @@ use App\Models\StoreHistory;
 |  ストアーAdmin API 発送受付 コントローラー
 | =============================================
 */
-
 class AdminApiStoreShippedController extends Controller
 {
     /**

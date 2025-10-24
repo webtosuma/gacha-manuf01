@@ -9,7 +9,7 @@ use App\Models\Prize;
 use Illuminate\Support\Facades\Mail;
 /*
 | =============================================
-|  サイト管理者 発送待ち コントローラー
+|  サイト管理者 発送待ち コントローラー 
 | =============================================
 */
 class AdminShippedWaitingController extends Controller

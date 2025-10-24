@@ -77,6 +77,7 @@ use \App\Http\Controllers;
 
     # 発送受付
     include('web/shipped.php');
+    include('web/shipped02.php');
 
     #登録ユーザー
     include('web/user/index.php');//一覧

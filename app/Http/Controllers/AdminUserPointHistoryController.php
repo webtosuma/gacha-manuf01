@@ -185,7 +185,7 @@ class AdminUserPointHistoryController extends Controller
 
 
         /** 22.商品発送履歴の削除 */
-        public function DeletePrizeShippedHistory($point_history)
+        public static function DeletePrizeShippedHistory($point_history)
         {
             $bool = false;
 

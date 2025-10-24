@@ -100,6 +100,11 @@ import Vue from 'vue'
         Vue.component('u-userprize-list',
         require('./components/shipped/UserPrizes.vue').default);
 
+    /* 発送履歴 */
+    Vue.component('u-shipped-list',
+    require('./components/shipped/ListComponent').default);
+
+
     /* クーポン完了 */
     Vue.component('u-coupon-comp',
     require('./components/coupon/CompComponent.vue').default);

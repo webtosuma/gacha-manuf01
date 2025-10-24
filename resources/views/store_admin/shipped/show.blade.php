@@ -73,7 +73,8 @@ $active_store_menu = true;
                             @csrf
                             @method('PATCH')
 
-                            <input type="hidden" name="ids[]" value="{{$store_history->id}}">
+                            <input type="hidden" name="ids[]"    value="{{$store_history->id}}">
+                            <input type="hidden" name="state_id" value="{{$store_history->state_id}}">
 
                             <button type="button" data-bs-toggle="modal"
                             data-bs-target="#deleteModal{{'send'}}"

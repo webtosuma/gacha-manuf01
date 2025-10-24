@@ -126,6 +126,7 @@ Route::middleware([ /* ミドルウェアー */
 
     # 発送申請履歴
     include('web/shipped_history.php');
+    include('web/shipped_history02.php');
 
     # ユーザー設定
     // include('web/settings.php');

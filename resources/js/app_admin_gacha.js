@@ -55,6 +55,11 @@ import Vue from 'vue'
         Vue.component('a-gacha-prize-history',
         require('./components/admin/gacha/PrizeHistoryComponent.vue').default);
 
+
+    /* 発送履歴 */
+    Vue.component('a-shipped-list',
+    require('./components/admin/shipped/ListComponent').default);
+
     /* ポイント売上 */
 
         // 年月選択
