@@ -58,14 +58,14 @@ use App\Http\Controllers;
 
     # メールが届かないとき(not_receiving_email)
     Route::get('/not_receiving_email/{revision_date?}',
-    function ($revision_date='2024-08-01') {
-        return view('footer_menu.not_receiving_email.index', compact('revision_date'));
+    function () {
+        return view('footer_menu.not_receiving_email.index');
     })->name('not_receiving_email');
 
     # PWAとは(about_pwa)
     Route::get('/about_pwa/{revision_date?}',
-    function ($revision_date='2024-08-01') {
-        return view('footer_menu.about_pwa.index', compact('revision_date'));
+    function () {
+        return view('footer_menu.about_pwa.index');
     })->name('about_pwa');
 
     # 会員ランクとは(about_user_rank)

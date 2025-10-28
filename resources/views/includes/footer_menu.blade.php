@@ -49,6 +49,12 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
 </div>
 <div class="col-auto">
     <ul class="list-unstyled m-0"> --}}
+        @if( config('u_rank_ticket.user_rank',false) && Auth::check() && Auth::user()->now_rank )
+            <li class="mb-2"><a class="link-secondary text-decoration-none"
+            href="{{ route('about_user_rank') }}">会員ランク</a></li>
+        @endif
+        <li class="mb-2"><a class="link-secondary text-decoration-none"
+        href="{{ route('about_pwa') }}">PWAについて</a></li>
         <li class="mb-2"><a class="link-secondary text-decoration-none"
         href="{{ route('infomation') }}">お知らせ</a></li>
         {{-- <li class="mb-2"><a class="link-secondary text-decoration-none"

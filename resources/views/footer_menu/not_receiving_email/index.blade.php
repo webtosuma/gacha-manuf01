@@ -35,7 +35,7 @@
 
         <!-- [ 本文 ] -->
         <section id="articleBody" class="my-5">
-            @include('footer_menu.not_receiving_email.'.$revision_date)
+            @include('footer_menu.not_receiving_email.'.'body')
         </section>
 
 

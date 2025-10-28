@@ -36,7 +36,7 @@
 
         <!-- [ 本文 ] -->
         <section id="articleBody" class="my-5">
-            @include('footer_menu.about_pwa.'.$revision_date)
+            @include('footer_menu.about_pwa.'.'body')
         </section>
 
 

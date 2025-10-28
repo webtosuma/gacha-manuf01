@@ -65,7 +65,7 @@ class StripeController extends Controller
         }
 
         # ランクごとのポイント還元率
-        $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
+        $rank_ratio = Auth::check() && Auth::user()->now_rank && config('u_rank_ticket.user_rank',false)
         ? Auth::user()->now_rank->point_sail_ratio : 1 ;
 
 
