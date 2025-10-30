@@ -54,6 +54,27 @@
 
         <div class="row g-3 gy-">
 
+
+            <!--top-->
+            <div class="col-12">
+                <div class="d-flex flex-wrap gap-3">
+                    <button
+                    @click="changeCategory('')"
+                    type="button"
+                    class="btn rounded-pill shadow px-4"
+                    :class="inputs.category_id==''?'btn-light':'btn-dark'"
+                    >すべて</button>
+
+                    <button v-for="(category,key) in categories" :key="key"
+                    @click="changeCategory(category.id)"
+                    type="button"
+                    class="btn rounded-pill shadow px-4"
+                    :class="inputs.category_id==category.id?'btn-light':'btn-dark'"
+                    >{{ category.name }}</button>
+                </div>
+            </div>
+
+
             <!-- side -->
             <div class="col-12 col-lg-auto order-lg-2">
                 <div class="position-sticky" style="top: 2rem; ">
@@ -74,7 +95,7 @@
 
 
                     <!--カテゴリー選択-->
-                    <div class="mb-2">
+                    <div class="d-none d-md-block mb-2">
                         <div class="form-text">カテゴリー選択</div>
                         <select
                         v-model="inputs.category_id"
@@ -87,6 +108,22 @@
                         </select>
                     </div>
 
+                    <!--並び替え-->
+                    <div class="mb-2">
+                        <div class="form-text">並び替え</div>
+                        <select
+                        v-model="inputs.order_price"
+                        class="form-select form-select-"
+                        >
+                            <option v-for="( order, key ) in select_order_price" :key="key"
+                            :value="order.key">{{ order.label }}</option>
+                        </select>
+                    </div>
+
+                    <a v-if="r_other_link"
+                    :href="r_other_link"
+                    class="btn btn-lg btn-light runded-pill shadow align-items-center w-100  mt-5"
+                    ><i class="bi bi-envelope fs-4 me-2"></i>郵送買取はこちら</a>
 
                 </div>
             </div>
@@ -98,112 +135,147 @@
 
 
                 <div class="row gy-3 gx-1">
-                    <div v-for="(purchase, key) in purchases" :key="key"
-                    class="col-3 col-md-3 col-lg-3">
-                    <!-- class="col-4 col-md-3 col-lg-2" -->
 
 
-                        <!--商品画像-->
-                        <div class="p-2">
-                            <div class="position-relative">
+                    <label v-for="(purchase, key) in purchases" :key="key"
+                    class="col-4 col-md-3 col-lg-3">
+                        <div class="d-flex flex-column h-100">
 
-                                <!--商品画像-->
-                                <ratio-image-component
-                                style_class="ratio ratio-3x4 rounded shiny"
-                                :url=" purchase.prize.image_path " />
+                            <!--商品画像-->
+                            <div class="col-auto">
+                                <div class="p-2">
+                                    <div class="position-relative">
 
-                                <!--チェックボックス-->
-                                <div class=" p-1
-                                position-absolute top-0 start-0"
-                                style="z-index:5">
+                                        <!--商品画像-->
+                                        <ratio-image-component
+                                        style_class="ratio ratio-3x4 rounded shiny"
+                                        :url=" purchase.prize.image_path " />
 
-                                    <!--mobile-->
-                                    <input @change="changeChildren()"
-                                    v-model="ids" :value="purchase.id"
-                                    class=" d-md-none
-                                    form-check-input float-xl-none m-0 rounded-pill"
-                                    style="width:1.6em; height:1.6em;"
-                                    type="checkbox">
+                                        <!--チェックボックス-->
+                                        <div class=" p-1
+                                        position-absolute top-0 start-0"
+                                        style="z-index:5">
 
-                                    <!--PC-->
-                                    <input @change="changeChildren()"
-                                    v-model="ids" :value="purchase.id"
-                                    class=" d-none d-md-block
-                                    form-check-input float-xl-none m-0 rounded-pill"
-                                    style="width:2em; height:2em;"
-                                    type="checkbox" >
+                                            <!--mobile-->
+                                            <input @change="changeChildren()"
+                                            v-model="ids" :value="purchase.id"
+                                            class=" d-md-none
+                                            form-check-input float-xl-none m-0 rounded-pill"
+                                            style="width:1.6em; height:1.6em;"
+                                            type="checkbox">
+
+                                            <!--PC-->
+                                            <input @change="changeChildren()"
+                                            v-model="ids" :value="purchase.id"
+                                            class=" d-none d-md-block
+                                            form-check-input float-xl-none m-0 rounded-pill"
+                                            style="width:2em; height:2em;"
+                                            type="checkbox" >
+
+                                        </div>
+
+
+                                        <!--説明モーダル　ボタン-->
+                                        <div v-if="purchase.prize.discription_text"
+                                        class=" p-1
+                                        position-absolute top-0 end-0"
+                                        style="z-index:6;">
+
+                                            <!--mobile-->
+                                            <img :src="purchase.prize.discription_icon_path"
+                                            alt="商品説明ボタン"
+                                            class=" d-md-none
+                                            btn btn-dark p-0 rounded-circle shadow"
+                                            style="width:1.6rem;"
+                                            data-bs-toggle="modal"
+                                            :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
+                                            >
+
+                                            <!--PC-->
+                                            <img :src="purchase.prize.discription_icon_path"
+                                            alt="商品説明ボタン"
+                                            class=" d-none d-md-block
+                                            btn btn-dark p-0 rounded-circle shadow"
+                                            style="width:2rem;"
+                                            data-bs-toggle="modal"
+                                            :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--商品説明モーダル-->
+                            <div class="col-auto">
+                                <div v-if="purchase.prize.discription_text">
+                                    <u-prize-discription
+                                    :id         ="purchase.id"
+                                    :name       ="purchase.prize.name"
+                                    :image_path ="purchase.prize.image_path"
+                                    :discription="purchase.prize.discription_text"
+                                    size       ="2rem"
+                                    :src_icon   ="purchase.prize.discription_icon_path"
+                                    no_btn     ="1"
+                                    ></u-prize-discription>
+                                </div>
+                            </div>
+
+                            <!--商品名・価格-->
+                            <div class="col">
+                                <div class="bg-dark text-white h-100">
+
+                                    <div class="d-flex flex-column h-100">
+
+
+                                        <!--商品名-->
+                                        <div class="col">
+
+                                            <!--mobile-->
+                                            <div class="px-2  d-md-none"
+                                            style="font-size:10px;">
+                                                {{ purchase.prize.name}}
+                                            </div>
+                                            <!--PC-->
+                                            <div class="px-2  d-none d-md-block">
+                                                {{ purchase.prize.name}}
+                                            </div>
+
+                                        </div>
+
+
+                                        <!--買取価格-->
+                                        <div class="col-auto">
+
+                                            <!--mobile-->
+                                            <div class="d-md-none px-2  fs-">
+                                                <div class="row g-1 align-items-center justify-content-end"
+                                                style="font-size:13px;">
+                                                    <span class="col-12" style="font-size:10px;">買取価格</span>
+                                                    <span class="col-auto">¥</span>
+                                                    <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
+                                                </div>
+                                            </div>
+                                            <!--pc-->
+                                            <div class="d-none d-md-block px-2  fs-5">
+                                                <div class="row g-1 align-items-center justify-content-end">
+                                                    <span class="col-12" style="font-size:14px;">買取価格</span>
+                                                    <span class="col-auto">¥</span>
+                                                    <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
 
                                 </div>
-
-
-                                <!--説明モーダル　ボタン-->
-                                <div v-if="purchase.prize.discription_text"
-                                class=" p-1
-                                position-absolute top-0 end-0"
-                                style="z-index:6;">
-
-                                    <!--mobile-->
-                                    <img :src="purchase.prize.discription_icon_path"
-                                    alt="商品説明ボタン"
-                                    class=" d-md-none
-                                    btn btn-dark p-0 rounded-circle shadow"
-                                    style="width:1.6rem;"
-                                    data-bs-toggle="modal"
-                                    :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
-                                    >
-
-                                    <!--PC-->
-                                    <img :src="purchase.prize.discription_icon_path"
-                                    alt="商品説明ボタン"
-                                    class=" d-none d-md-block
-                                    btn btn-dark p-0 rounded-circle shadow"
-                                    style="width:2rem;"
-                                    data-bs-toggle="modal"
-                                    :data-bs-target="'#PrizeDiscriptionModal'+purchase.id"
-                                    >
-                                </div>
                             </div>
+
                         </div>
-
-                        <!--商品説明モーダル-->
-                        <div v-if="purchase.prize.discription_text">
-                            <u-prize-discription
-                            :id         ="purchase.id"
-                            :name       ="purchase.prize.name"
-                            :image_path ="purchase.prize.image_path"
-                            :discription="purchase.prize.discription_text"
-                            size       ="2rem"
-                            :src_icon   ="purchase.prize.discription_icon_path"
-                            no_btn     ="1"
-                            ></u-prize-discription>
-                        </div>
+                    </label>
 
 
-
-                        <div class="bg-dark text-white px-2  d-none d-md-block">
-                            {{ purchase.prize.name}}
-                        </div>
-
-
-                        <!--買取価格 mobile-->
-                        <div class="d-md-none bg-dark text-white px-2  fs-">
-                            <div class="row g-1 align-items-center justify-content-end"
-                            style="font-size:14px;">
-                                <span class="col-12" style="font-size:11px;">買取価格</span>
-                                <span class="col-auto">¥</span>
-                                <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
-                            </div>
-                        </div>
-                        <!--買取価格 pc-->
-                        <div class="d-none d-md-block bg-dark text-white px-2  fs-5">
-                            <div class="row g-1 align-items-center justify-content-end">
-                                <span class="col-12" style="font-size:14px;">買取価格</span>
-                                <span class="col-auto">¥</span>
-                                <span class="col-auto">{{ purchase.price.toLocaleString() }}</span>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
 
 
@@ -270,6 +342,7 @@
         r_create:       { type: String, default: '' }, // 新規登録
         category_id:    { type: String, default: '' }, // カテゴリーID
         props_ids:      { type: String, default: '' }, // カテゴリーID
+        r_other_link:   { type: String, default: null }, // その他のリンク
     });
 
 
@@ -312,6 +385,13 @@
 
     });
 
+    /* 並び替え select */
+    const select_order_price = ref([
+        { key:'',     label:'選択してください'},
+        { key:'desc', label:'高い順'},
+        { key:'asc',  label:'安い順'},
+    ]);
+
 
 
     const selectBlucks = ref({ /* 一括処理セレクト */
@@ -342,6 +422,7 @@
     watch(() => inputs.value.published_status, () => getData());
     watch(() => inputs.value.order,            () => getData());
     watch(() => inputs.value.bulk,             () => getData());//一括処理
+    watch(() => inputs.value.order_price,      () => getData());
 
 
     /* 初回データ取得 */
@@ -362,7 +443,7 @@
 
             const paginate = response.data['purchases'];
 
-            console.log(paginate);
+            // console.log(paginate);
             purchases.value =
             route === props.r_api_list ? paginate.data : [...purchases.value, ...paginate.data];
 
@@ -383,7 +464,7 @@
 
         })
         .catch(error => {
-            console.error(error.response?.data);
+            // console.error(error.response?.data);
             if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
             }
@@ -414,7 +495,10 @@
         disabled.value = !( ids.value.length > 0 );//選択なしのときは、disabled
     };
 
-
+    /* カテゴリー変更 */
+    const changeCategory = (id)=>{
+        inputs.value.category_id = id;
+    }
 
 </script>
 <!-- <style scoped>

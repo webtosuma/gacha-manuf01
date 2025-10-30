@@ -21,10 +21,9 @@
             // 'nomal'        => '100連ボタンあり',
             // 'no_custom'    => '100連ボタンなし',
 
-
+            'only_new_user'=> '新規会員限定',
             'one_time'     => '一回限定',
             'only_oneday'  => '1日1回限定',
-            'only_new_user'=> '新規会員限定',
             'one_chance'   => '1回or10回限定',
 
         ];
@@ -36,7 +35,7 @@
     /**
      * ガチャランク　一覧
      */
-        $ranks = [ 
+        $ranks = [
 
             100 => 'RankSS',
             200 => 'RankS',

@@ -30,7 +30,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
         <a-shipped-list
         token="{{ csrf_token() }}"
-        mount_state_id={{ $state_id }}
+        mount_state_id="{{ $state_id }}"
         r_api_list="{{ route('admin.api.shipped') }}"
         r_csv     ="{{route('admin.shipped.dl_csv')}}"
         r_update  ="{{ config('app.is_bulk_shipping',false) ? route('admin.shipped.update') : '' }}"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Purchase;
+use App\Models\PurchaseCategory;
 use App\Models\GachaCategory;
 /*
 |--------------------------------------------------------------------------
@@ -62,11 +63,11 @@ class PurchaseController extends Controller
         # 交換商品情報の取得・検索
         $purchases = Purchase::searchQuery($request)
         ->forUserPublished()
-        ->paginate(20);
+        ->paginate(48);
 
 
         # カテゴリー一覧
-        $categories = GachaCategory::orderBy('created_at')->get();
+        $categories = PurchaseCategory::userList()->get();
 
         # 公開状態選択肢
         $published_statuses = [

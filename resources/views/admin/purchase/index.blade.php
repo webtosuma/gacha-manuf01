@@ -32,6 +32,7 @@ $active_submenu = true;
         r_api_list    ="{{ route('admin.api.purchase') }}"
         r_api_update  ="{{ route('admin.api.purchase.update') }}"
         r_create      ="{{ route('admin.purchase.create') }}"
+        r_category    ="{{ route('admin.purchase.category') }}"
         category_id   ="{{ $category_id }}"
         ></a-purchase-list>
 

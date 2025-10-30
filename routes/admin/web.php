@@ -50,6 +50,7 @@ use \App\Http\Controllers;
 
     # 買取表
     include('web/purchase.php');
+    include('web/purchase_category.php');
 
     # アンケート
     include('web/survey.php');

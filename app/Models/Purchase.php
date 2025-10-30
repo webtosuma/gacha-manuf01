@@ -20,6 +20,7 @@ class Purchase extends Model
         'price',         //買取価格
         'published_at',  //公開日
         'is_recommend',  //お勧め中か否か
+        'category_id',//カテゴリーID
     ];
 
 
@@ -32,8 +33,10 @@ class Purchase extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
-        'is_published',//公開中かどうか
-        'count',       //査定用数量
+        'is_published', //公開中かどうか
+        'count',        //査定用数量
+        'category_name',//カテゴリー名
+        'category_is_published',//カテゴリー公開状態
     ];
 
 
@@ -60,6 +63,13 @@ class Purchase extends Model
     |
     |
     */
+        /**
+         * PurchaseCategoryモデル リレーション
+         * @return \App\Models\PurchaseCategory
+        */
+        public function category(){
+            return $this->belongsTo(PurchaseCategory::class, 'category_id');
+        }
 
 
         /**
@@ -98,6 +108,24 @@ class Purchase extends Model
         public function getCountAttribute(){ return 1; }
 
 
+        /**
+         * カテゴリー名 category_name
+         * @return Boolean
+        */
+        public function getCategoryNameAttribute()
+        {
+            return $this->category ? $this->category->name : null ;
+        }
+
+
+        /**
+         * カテゴリー公開状態 category_is_published
+         * @return Boolean
+        */
+        public function getCategoryIsPublishedAttribute()
+        {
+            return $this->category ? $this->category->is_published : false ;
+        }
 
 
     /*
@@ -112,13 +140,13 @@ class Purchase extends Model
         */
         public function scopeForUserPublished($query)
         {
-            # 公開中
-            $query->where('published_at','<>',null)->where('published_at','<=',now());//公開中
-
-            # カテゴリーが公開中
-            $query->whereHas('prize.category', function ($query){
-                $query->where('is_published', 1);
+            # カテゴリー公開中
+            $query->whereHas('category', function ($query){
+                $query->where('is_published' , true );
             });
+
+            # 商品公開中
+            $query->where('published_at','<>',null)->where('published_at','<=',now());//公開中
         }
 
 
@@ -129,7 +157,7 @@ class Purchase extends Model
         public function scopeSearchQuery($query,$request)
         {
 
-            # カテゴリー・ガチャ用商品とのリレーションがあること
+            # 商品とのリレーションがあること
             $query->has('prize.category');
 
 
@@ -152,17 +180,26 @@ class Purchase extends Model
 
 
 
-            # カテゴリーの選択
-            if(  $request->category_id )
+            # 買取カテゴリーの選択
+            if(  $request->category_id==999 )
+            {
+                $query->where('category_id' , null );//未登録のみ
+            }
+            elseif(  $request->category_id )
+            {
+                $query->where('category_id' , $request->category_id );
+            }
+
+
+            # ガチャ商品カテゴリーの選択
+            if($request->gacha_category_id)
             {
                 $query->whereHas('prize', function ($query) use ($request)
                 {
                     ## prizeモデル内の処理
-                    $query->where('category_id' , $request->category_id );
-
+                    $query->where('category_id' , $request->gacha_category_id );
                 });
             }
-
 
 
             # 公開状態

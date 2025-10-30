@@ -156,7 +156,7 @@ class StripeController extends Controller
 
 
         # ランクごとのポイント還元率
-        $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
+        $rank_ratio = $user->now_rank && config('u_rank_ticket.user_rank',false)
         ? $user->now_rank->point_sail_ratio : 1 ;
 
         # 購入ポイント
@@ -251,7 +251,7 @@ class StripeController extends Controller
         // dd($point_sail);
 
         # ランクごとのポイント還元率
-        $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
+        $rank_ratio = Auth::check() && Auth::user()->now_rank && config('u_rank_ticket.user_rank',false)
         ? Auth::user()->now_rank->point_sail_ratio : 1 ;
 
 
@@ -395,7 +395,7 @@ class StripeController extends Controller
 
         # ランクごとのポイント還元率
 
-            $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
+            $rank_ratio = $user->now_rank && config('u_rank_ticket.user_rank',false)
             ? $user->now_rank->point_sail_ratio : 1 ;
 
 
@@ -458,7 +458,7 @@ class StripeController extends Controller
 
             # ランクごとのポイント還元率
 
-                $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
+                $rank_ratio = $user->now_rank && config('u_rank_ticket.user_rank',false)
                 ? $user->now_rank->point_sail_ratio : 1 ;
 
 

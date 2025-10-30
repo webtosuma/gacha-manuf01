@@ -24,8 +24,8 @@
 
         <u-shipped-list
         token="{{ csrf_token() }}"
-        mount_state_id={{ $state_id }}
-        r_api_list="   {{ route('shipped.api') }}"
+        mount_state_id="{{ $state_id }}"
+        r_api_list="{{ route('shipped.api') }}"
         ></u-shipped-list>
 
     </div>

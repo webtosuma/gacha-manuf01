@@ -64,7 +64,7 @@
 
 
                         <div class="row g-0">
-                            <div class="col-4 col-lg-12"> 
+                            <div class="col-4 col-lg-12">
 
                                 <!--商品画像-->
                                 <ratio-image-component
@@ -287,7 +287,7 @@
 
             const paginate = response.data['purchases'];
 
-            console.log(paginate);
+            // console.log(paginate);
             purchases.value =
             route === props.r_api_list ? paginate.data : [...purchases.value, ...paginate.data];
 
@@ -316,7 +316,7 @@
 
         })
         .catch(error => {
-            console.error(error.response?.data);
+            // console.error(error.response?.data);
             if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
                 location.reload();
             }

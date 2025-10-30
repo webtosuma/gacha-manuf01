@@ -99,7 +99,7 @@ $active_submenu = true;
                         <th scope="row">
                             @if( $gacha_category->is_published )
                                 <!--公開-->
-                                <span class="badge rounded-pill bg-primary">{{ '公開中' }}</span>
+                                <span class="badge rounded-pill bg-success">{{ '公開中' }}</span>
                             @else
                                 <!--非公開-->
                                 <span class="badge rounded-pill bg-danger">{{ '非公開' }}</span>
@@ -124,7 +124,7 @@ $active_submenu = true;
                                 class="btn btn-sm btn-light border "
                                 ><i class="bi bi-pencil-fill"></i></a>
                             </div>
-                            <div class="col-auto"> 
+                            <div class="col-auto">
                                 <!--削除モーダル-->
                                 <form action="{{ route('admin.category.destroy', $gacha_category) }}" method="post">
                                     @csrf

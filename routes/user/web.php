@@ -140,9 +140,6 @@ Route::middleware([ /* ミドルウェアー */
     # クーポン
     include('web/coupon.php');
 
-    # 買取表
-    include('web/purchase.php');
-
     # アンケート
     include('web/survey.php');
 
@@ -172,5 +169,8 @@ Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
 
     # フッターメニュー
     include('web/footer_menu.php');
+
+    # 買取表
+    include('web/purchase.php');
 
 });//end middleware

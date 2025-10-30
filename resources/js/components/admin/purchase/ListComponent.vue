@@ -16,7 +16,7 @@
 
 
 
-        
+
         <div class="row g-3 gy-">
 
 
@@ -43,10 +43,22 @@
                             <div class="input-group">
                                 <select v-model="inputs.bulk"
                                 class="form-select form-select-sm">
-                                    <option value="">選択してください</option>
+                                    <option value="">公開設定</option>
                                     <option v-for="(label, value) in selectBlucks" :key="value"
                                     :value="value"
                                     >{{ label }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--一括 カテゴリー変更-->
+                        <div v-if="inputs.purchase_ids.length" class="col-auto">
+                            <div class="input-group">
+                                <select v-model="inputs.bulk_category_id"
+                                class="form-select form-select-sm">
+                                    <option :value="null">カテゴリー</option>
+                                    <option v-for="(category, value) in categories" :key="value"
+                                    :value="category.id"
+                                    >「{{ category.name }}」に変更</option>
                                 </select>
                             </div>
                         </div>
@@ -74,6 +86,8 @@
                                 <th scope="col" colspan="1"></th>
 
                                 <th scope="col" colspan="1" class="text-start">商品</th>
+
+                                <th scope="col" colspan="1" >カテゴリー</th>
 
                                 <th scope="col"><a
                                 @click.prevent="changeOrder( 'order_price' )"
@@ -105,7 +119,7 @@
                                     <div v-if="edit"
                                     class="form-check form-switch ms-4">
                                         <input v-model="purchase.is_published"
-                                        @change="update(purchase)"
+                                        @change="update(key)"
                                         class="form-check-input" type="checkbox">
                                     </div>
 
@@ -113,25 +127,20 @@
 
                                         <span v-if="purchase.is_published"
                                         class="badge rounded-pill bg-success">{{ '公開中' }}</span>
-                                        <span v-else-if="!purchase.is_published && purchase.published_at"
-                                        class="badge rounded-pill bg-warning">{{ '公開予約' }}</span>
                                         <span v-else
                                         class="badge rounded-pill bg-danger">{{ '非公開' }}</span>
+
+                                        <div v-if="!purchase.category_is_published"
+                                        class="text-danger"
+                                        style="font-size:12px;"
+                                        >*カテゴリー非公開</div>
+
 
                                         <!-- 公開日 -->
                                         <div class="form-text">{{ formatAt(purchase.published_at) }}</div>
 
-                                        <!-- 購入数 -->
-                                        <!-- <div class="form-text">
-                                            <i class="bi bi-bag-check me-2"></i>{{ purchase.purchased_count.toLocaleString() }}
-                                        </div> -->
-
-                                        <!-- 表示数 -->
-                                        <!-- <div class="form-text">
-                                            <i class="bi bi-eye me-2"></i>{{ purchase.showed_count.toLocaleString() }}
-                                        </div> -->
-
                                     </div>
+
 
 
                                 </td>
@@ -139,14 +148,19 @@
                                 <td style="width:6rem;">
 
                                     <ratio-image-component
+                                    v-if="purchase.prize"
                                     style_class="ratio ratio-3x4 rounded"
                                     :url=" purchase.prize.image_path " />
 
                                 </td>
                                 <!--商品名-->
                                 <td class="text-start">
-                                    <div class="border rounded-pill form-text d-inline-block px-2">{{ purchase.prize.category.name }}</div>
-                                    <div class="fw-bold mt-2">{{ purchase.prize.name }}</div>
+
+                                    <div class="border rounded-pill form-text d-inline-block px-2"
+                                    >{{ purchase.category_name || '*未登録' }}</div>
+
+                                    <div v-if="purchase.prize"
+                                    class="fw-bold mt-2">{{ purchase.prize.name }}</div>
 
                                     <movie-modal-component
                                     v-if="purchase.movie_path"
@@ -159,12 +173,35 @@
 
                                 </td>
 
+                                <!--カテゴリー-->
+                                <td>
+                                    <div class="row g-1 align-items-center justify-content-center">
+                                        <div class="col" v-if="edit"  style="width:6rem;" >
+                                            <select
+                                            v-model="purchase.category_id"
+                                            @change="update(key)"
+                                            class="form-select"
+                                            >
+                                                <option :value="null">未登録</option>
+
+                                                <option v-for="( category, key ) in categories" :key="key"
+                                                :value="category.id">{{ category.name }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-auto" v-else>
+                                            <div class="border rounded-pill form-text d-inline-block px-2"
+                                            >{{ purchase.category_name || '*未登録' }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+
+
                                 <!--買取価格-->
                                 <td>
                                     <div class="row g-1 align-items-center justify-content-center">
                                         <div class="col" v-if="edit"  style="width:6rem;" >
                                             <input v-model="purchase.price"
-                                            @input="update(purchase)"
+                                            @input="update(key)"
                                             type="number" class="form-control text-end" min="0">
                                         </div>
                                         <div class="col-auto" v-else>{{ purchase.price.toLocaleString() }}</div>
@@ -194,12 +231,18 @@
                 <div class="position-sticky" style="top: 2rem; ">
 
 
-                    <!--新規登録-->
                     <div class="d-flex flex-md-column gap-3 mb-3 px-3">
+                        <!--新規登録-->
                         <a :href="r_create+'?category_id='+inputs.category_id"
                         class="btn btn-primary text-white"
                         ><i class="bi bi-plus-lg me-2 "></i>ガチャ商品から登録</a>
 
+                        <!--カテゴリー-->
+                        <a :href="r_category"
+                        class="btn btn-light border"
+                        >カテゴリー編集</a>
+
+                        <!--編集-->
                         <button
                         @click="cahngeEdit"
                         :class="edit ? 'btn-warning' : 'btn-outline-warning'"
@@ -223,16 +266,33 @@
                     </div>
 
 
-                    <!--カテゴリー選択-->
+                    <!--買取カテゴリー選択-->
                     <div class="mb-2">
-                        <div class="form-text">カテゴリー選択</div>
+                        <div class="form-text">買取カテゴリー選択</div>
                         <select
                         v-model="inputs.category_id"
                         class="form-select"
                         >
                             <option value="">すべて</option>
 
+                            <option value="999">未登録</option>
+
                             <option v-for="( category, key ) in categories" :key="key"
+                            :value="category.id">{{ category.name }}</option>
+                        </select>
+                    </div>
+
+
+                    <!--ガチャ商品カテゴリー選択-->
+                    <div class="mb-2">
+                        <div class="form-text">ガチャ商品カテゴリー選択</div>
+                        <select
+                        v-model="inputs.gacha_category_id"
+                        class="form-select"
+                        >
+                            <option value="">すべて</option>
+
+                            <option v-for="( category, key ) in gacha_categories" :key="key"
                             :value="category.id">{{ category.name }}</option>
                         </select>
                     </div>
@@ -312,19 +372,21 @@
         r_api_list:     { type: String, default: '' }, // 一覧表示
         r_api_update:   { type: String, default: '' }, // 非同期更新
         r_create:       { type: String, default: '' }, // 新規登録
+        r_category:     { type: String, default: '' }, // 買取カテゴリー
         category_id:    { type: String, default: '' }, // カテゴリーID
     });
 
 
-    const loading       = ref(true);
-    const purchases   = ref([]); /* ECストアー商品 */
+    const loading   = ref(true);
+    const purchases = ref([]); /* ECストアー商品 */
 
-    const categories  = ref([]);   /* カテゴリー一覧 */
-    const published_statuses = ref([]);/* 公開状態選択肢 */
-    const orders      = ref([]);   /* 並び替え */
-    const nextPageUrl = ref('');   /* 次のデータの読み込みURL */
-    const messages    = ref([]);   /* ポップアップメッセージ */
-    const edit        = ref(false);/* 編集中 */
+    const categories         = ref([]);   /* 買取カテゴリー一覧 */
+    const gacha_categories   = ref([]);   /* ガチャ商品カテゴリ */
+    const published_statuses = ref([]);   /* 公開状態選択肢 */
+    const orders             = ref([]);   /* 並び替え */
+    const nextPageUrl        = ref('');   /* 次のデータの読み込みURL */
+    const messages           = ref([]);   /* ポップアップメッセージ */
+    const edit               = ref(false);/* 編集中 */
 
 
     const inputs   = ref({
@@ -332,13 +394,15 @@
 
         keyword: '',
         category_id: props.category_id,
-        published_status: '',
+        gacha_category_id: '',
+        published_status:  '',
         order: '',
 
         /* 一括処理 */
         purchase_ids: [],
 
         bulk: 'bulr', //一括削除
+        bulk_category_id: null,//一括変更カテゴリーID
 
         /* 並び替え */
         order_points_redemption: '',
@@ -373,9 +437,11 @@
     /* 監視 */
     watch(() => inputs.value.keyword,          () => getData());
     watch(() => inputs.value.category_id,      () => getData());
+    watch(() => inputs.value.gacha_category_id,() => getData());
     watch(() => inputs.value.published_status, () => getData());
     watch(() => inputs.value.order,            () => getData());
     watch(() => inputs.value.bulk,             () => getData());//一括処理
+    watch(() => inputs.value.bulk_category_id, () => getData());//一括処理
 
 
     /* 初回データ取得 */
@@ -396,12 +462,15 @@
 
             const paginate = response.data['purchases'];
 
-            console.log(paginate);
+            console.log(response.data);
             purchases.value =
             route === props.r_api_list ? paginate.data : [...purchases.value, ...paginate.data];
 
             /*カテゴリーデータの保存*/
             categories.value          = response.data['categories'] ;
+
+            /* ガチャ商品カテゴリーの保存 */
+            gacha_categories.value    = response.data['gacha_categories'] ;
 
             /* 公開状態選択肢の保存 */
             published_statuses.value  = response.data['published_statuses'] ;
@@ -429,14 +498,17 @@
 
     /* 非同期更新 */
     const cahngeEdit = ()=>{ edit.value = !edit.value };
-    const update = (purchase) => {
 
-        console.log(purchase);
+    const update = (key) => {
 
+        const purchase = purchases.value[key];
         const route = props.r_api_update
+
         axios.patch(route, purchase)
         .then(response => {
-            console.log(response);
+            // console.log(response.data.purchase);
+
+            purchases.value[key]['category_name'] = response.data.purchase['category_name'];
         })
         .catch(error => {
             console.error(error.response?.data);
@@ -471,17 +543,15 @@
         if(inputs.value.bulk=='published_false'){
             messages.value.push('選択した商品を、すべて非公開に変更しました。');
         }
-        // スライド表示に変更
-        if(inputs.value.bulk=='slide_true'){
-            messages.value.push('選択した商品を、すべてスライド表示に変更しました。');
-        }
-        // スライド非表示に変更
-        if(inputs.value.bulk=='slide_false'){
-            messages.value.push('選択した商品を、すべてスライド非表示に変更しました。');
+        // カテゴリー変更
+        if(inputs.value.bulk_category_id!==null){
+            messages.value.push('選択した商品のカテゴリーを変更しました。');
         }
 
 
         inputs.value.bulk = '';//一括パラメータのリセット
+        inputs.value.bulk_category_id = null;
+
     };
 
 

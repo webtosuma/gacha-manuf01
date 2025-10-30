@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\GachaCategory;
 use App\Models\Purchase;
+use App\Models\PurchaseCategory;
 use App\Models\Prize;
 use App\Models\PrizeRank;
 use App\Models\StoreItem;//
@@ -31,8 +32,11 @@ class AdminApiPurchaseController extends Controller
         $purchases = Purchase::searchQuery($request)->paginate(20);
 
 
-        # カテゴリー一覧
-        $categories = GachaCategory::orderBy('created_at')->get();
+        # 買取カテゴリー一覧
+        $categories = PurchaseCategory::adminList()->get();
+
+        # ガチャ商品カテゴリー一覧
+        $gacha_categories = GachaCategory::adminList()->get();
 
         # 公開状態選択肢
         $published_statuses = [
@@ -49,7 +53,8 @@ class AdminApiPurchaseController extends Controller
 
 
         return response()->json( compact(
-            'purchases','categories', 'published_statuses','orders','inputs'
+            'purchases','categories','gacha_categories',
+            'published_statuses','orders','inputs'
         ) );
     }
 
@@ -73,6 +78,11 @@ class AdminApiPurchaseController extends Controller
             if( $request->bulk ==='published_false' ){
                 foreach ($purchases as $purchase) { $purchase->update(['published_at'=>null]); }
             }
+
+            # カテゴリー一括変更(bulk_category_id)
+            if( $request->bulk_category_id ){
+                foreach ($purchases as $purchase) { $purchase->update(['category_id'=>$request->bulk_category_id]); }
+            }
         }
 
 
@@ -90,12 +100,12 @@ class AdminApiPurchaseController extends Controller
 
         # 入力データの加工
         $inputs = $request->only([
-            'price'            ,//販売価格
-            // 'published_at'     ,//公開日時
+            'price',//販売価格
+            'published_at',
+            'category_id' ,//買取カテゴリーID
         ]);
         # 公開設定
         $inputs['published_at'] = self::processingPublished( $request, $purchase );
-
 
 
         # DBデータの更新
