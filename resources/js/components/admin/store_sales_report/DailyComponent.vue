@@ -44,6 +44,9 @@
                         <th scope="col" style="max-width:3rem;">
                             還元pt
                         </th>
+                        <th scope="col" style="max-width:3rem;">
+                            受付時間
+                        </th>
                         <th scope="col" style="max-width:3rem;"></th>
                     </tr>
                 </thead>
@@ -69,6 +72,10 @@
 
                         <!-- 還元ポイント(pt) -->
                         <td scope="col">{{ data.sum_points_redemption.toLocaleString()+'pt' }}</td>
+
+                        <!-- 受付時間 -->
+                        <td scope="col">{{ data.done_at.substring(11, 16) }}</td>
+
 
                         <!-- 注文詳細リンク -->
                         <td>

@@ -27,6 +27,9 @@
             /* 本文の表示変換 */
             replaceBody : function( body ){
 
+                if(!body){ return ''; }
+
+
                 //[文字列のエスケープ処理]
                     body = this.escapeHTML( body );
 

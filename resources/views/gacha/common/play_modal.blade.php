@@ -21,6 +21,7 @@ token    ="{{csrf_token()}}"
 r_action ="{{route( 'gacha.play', $params )}}"
 gacha_id ="{{$gacha->id}}"
 max_count="{{$gacha->remaining_count}}"
+max_custom_type_count="{{$gacha->max_custom_type_count}}"
 >
 
     @include('gacha.common.top_image')

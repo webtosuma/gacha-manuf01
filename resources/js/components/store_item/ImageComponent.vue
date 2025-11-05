@@ -8,7 +8,8 @@
 
         <!--ガチャ用商品画像-->
         <div v-if="is_prize==1"
-        class="w-50 position-absolute top-50 start-50 translate-middle">
+        :class="ration=='ratio-3x4'?'w-100':'w-50'"
+        class="position-absolute top-50 start-50 translate-middle">
 
             <ratio-image-component
             :url="image_path"

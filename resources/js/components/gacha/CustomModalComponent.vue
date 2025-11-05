@@ -33,10 +33,13 @@
                         <div class="text-center">
                             <!--数量変更-->
                             <div class="p-3">
-                                    <div class="my-3 fs-4">
-                                        <div>{{ count.toLocaleString() + '回ガチャる' }}</div>
-                                        <div>{{ ( one_play_point*count ).toLocaleString() + 'pt' }}</div>
-                                    </div>
+                                <div class="my-3 fs-4">
+                                    <div>{{ count.toLocaleString() + '回ガチャる' }}</div>
+                                    <div>{{ ( one_play_point*count ).toLocaleString() + 'pt' }}</div>
+
+                                    <div v-if="max_custom_type_count"
+                                    class="badge fs-6 bg-danger">最大上限 {{max_custom_type_count}}回まで</div>
+                                </div>
 
                                 <div class="input-group rounded-pill mb-3">
                                     <!-- +1 -->
@@ -163,8 +166,9 @@
         r_action:      { type: String, default: '', },//ルート:ガチャる
         one_play_point:{ type: [String, Number], default: '', },
         btn_class:     { type: String, default: 'btn-primary', },
-        max_count:      { type: [String, Number], default: 10, },
         gacha_id:      { type: [String, Number], default: '1', },
+        max_count:            { type: [String, Number], default: 10, },
+        max_custom_type_count:{ type: [String, Number], default: null, },
     });
 
 
@@ -196,9 +200,17 @@
      * @return Void
      */
     const countUpdate = ( add ) => {
-        count.value += add;//加算・減算
+        count.value += Number(add);//加算・減算
 
-        count.value = count.value > props.max_count ? props.max_count : count.value;
+        const most_max_count = Number(props.max_custom_type_count)>0
+        && Number(props.max_custom_type_count) < Number(props.max_count)
+        ? Number(props.max_custom_type_count) : Number(props.max_count) ;
+
+        count.value = count.value < most_max_count ? count.value : most_max_count ;
+
+        // count.value =  Number(props.max_custom_type_count) ;
+
+        // count.value = count.value > props.max_count ? props.max_count : count.value;
     }
 
 

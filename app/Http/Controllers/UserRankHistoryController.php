@@ -17,7 +17,7 @@ use App\Models\TicketHistory;
 class UserRankHistoryController extends Controller
 {
     /** 制度開始日 */
-    public static function StartDate(){ return Carbon::parse('2024-03-01'); }
+    public static function StartDate(){ return Carbon::parse('2025-11-01'); }
 
 
 
@@ -51,7 +51,6 @@ class UserRankHistoryController extends Controller
         {
             self::CreateBignnerRankHistory($user);
         }
-
 
         # 月初(1日)の会員ランクが未更新のとき(月初・未更新など)
         if( !$user->now_rank )

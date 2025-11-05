@@ -8,7 +8,7 @@
         <ul class="row g-3 rounded-3 p-0 m-0" style="list-style:none;">
 
             <li v-for="(userPrize, key) in user_prizes" :key="key"
-            class="col-3 col-md-2">
+            class="col-6 col-md-2">
 
                 <div class="row g-0" v-if="userPrize.prize">
                     <div class="col-4 px-0 position-relative pe-2"  style="cursor: pointer;">

@@ -61,7 +61,7 @@
 
 
                 @if ($gacha->type=='max_custom')
-                    <!--上限ありのとき-->
+                    <!--上限ありのとき--> 
                     <div class="badge fs-6 bg-danger">最大上限{{number_format( $gacha->max_custom_count() )}}回まで一括で回すことができます。</div>
                 @endif
             </h5>

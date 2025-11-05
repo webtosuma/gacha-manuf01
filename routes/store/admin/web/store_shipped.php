@@ -20,12 +20,12 @@ Route::middleware(['admin_auth'])->group(function () {
         [Store\AdminStoreShippedController::class, 'show'])
         ->name('admin.store.shipped.show');
 
-        # 発送待ち 発送処理
+        # 発送処理
         Route::patch('/admin/store/shipped/update/{store_history?}',
         [Store\AdminStoreShippedController ::class, 'update'])
         ->name('admin.store.shipped.waiting.update');
 
-        # 発送待ち　CSVファイルのダウンロード
+        # CSVファイルのダウンロード
         Route::get('/admin/store/shipped/waiting/dl_csv',
         [Store\AdminStoreShippedController::class, 'dl_csv'])
         ->name('admin.store.shipped.waiting.dl_csv');

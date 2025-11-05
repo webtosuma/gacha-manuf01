@@ -74,7 +74,8 @@ class Gacha extends Model
         'r_event_show',  //[ルーティング]イベント詳細
         'r_event_play',  //[ルーティング]イベントガチャカで遊ぶ
 
-        'is_popup_btn',  //ポップアップボタン設定　
+        'is_popup_btn',          //ポップアップボタン設定　
+        'max_custom_type_count', //上限カスタムボタンの上限回数
     ];
 
 
@@ -660,6 +661,15 @@ class Gacha extends Model
         }
 
 
+        /**
+         * 上限カスタムボタンの上限回数 max_custom_type_count
+         * @return String
+        */
+        public function getMaxCustomTypeCountAttribute()
+        {
+            /*.設定は。config.gachaに記述 */
+            return $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : false ;
+        }
 
     /*
     |--------------------------------------------------------------------------

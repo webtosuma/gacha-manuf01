@@ -12,6 +12,7 @@
         :r_action="gacha.r_action"
         :gacha_id="gacha.id"
         :max_count="gacha.remaining_count"
+        :max_custom_type_count="gacha.max_custom_type_count"
         >
             <u-gacha-image
             :gacha_name            ="gacha.name"
@@ -34,7 +35,6 @@
             :img_path_user_rank    ="gacha.img_path_user_rank"
             />
         </u-gacha-custom-modal>
-
 
 
 
