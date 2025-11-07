@@ -17,7 +17,7 @@ use App\Models\UserAddress;
 */
 class PurchaseController extends Controller
 {
-    /** 発送ポイントの計算 */
+    /** 発送料金の計算 */
     public static function shippedPrice($request=null)
     {
         /*.設定は。config.storeに記述*/
@@ -51,7 +51,7 @@ class PurchaseController extends Controller
             $store_item = StoreItem::find($request->store_item_id);
 
             ## エラーメッセージ
-            if ( $message = $store_item->ErrCheckMessage($request) )
+            if ( $message = $store_item->ErrCheckMessage($request->count) )
             {
                 return redirect()->back()
                 ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-triangle']);
@@ -132,8 +132,9 @@ class PurchaseController extends Controller
             foreach ($store_keeps as $store_keep)
             {
                 $store_item = $store_keep->store_item;
+                // dd($store_keep->count);
 
-                $message = $store_item->ErrCheckMessage($request);
+                $message = $store_item->ErrCheckMessage($store_keep->count);
 
                 # エラーがあれば、メッセージを返す
                 if($message){ return $message; }

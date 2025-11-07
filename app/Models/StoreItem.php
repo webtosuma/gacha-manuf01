@@ -53,6 +53,7 @@ class StoreItem extends Model
         'is_sold_out',       //売り切れか否か
         'is_published',      //公開中かどうか
         'new_label_path',    //Newラベル(新規公開のみ)
+        'pending_count',     //チェックアウト待機中の数量
 
         'r_show',            //[ルーティング]詳細
         'r_admin_edit',      //[ルーティング]Admin編集
@@ -295,6 +296,21 @@ class StoreItem extends Model
             $new_start_at = now()->subday(7)->toDateTimeString();//減算
             $bool = $new_start_at < $published_at;
             return $bool ? asset( $image_path ) : '';
+        }
+
+
+        /**
+         * チェックアウト待機中の数量 pending_count
+         * @return Integer
+        */
+        public function getPendingCountAttribute()
+        {
+            return $this->store_keeps()
+            ->whereHas('store_history', function ($query) {
+                $query->whereNull('done_at')//購入完了を除く
+                ->where('created_at', '>=', now()->subMinutes(5));//5分前まで
+            })
+            ->sum('count');
         }
 
 
@@ -546,9 +562,9 @@ class StoreItem extends Model
     |
     */
         /**
-         * エラーメッセージ $store_item->ErrCheckMessage($request)
+         * エラーメッセージ $store_item->ErrCheckMessage($count)
          */
-        public function ErrCheckMessage($request)
+        public function ErrCheckMessage($count)
         {
             # ログインユーザー
             $user = Auth::user();
@@ -567,9 +583,15 @@ class StoreItem extends Model
             }
 
             # 在庫数より購入数の方が大きいとき
-            if($this->count < $request->count){
+            if($this->count < $count){
                 $message = '在庫数より多い数量を購入することはできません。';
             }
+
+            # Stripeチェックアウトの待機中(pending_count)あり && 在庫不足のとき
+            if( $this->count - $this->pending_count - $count < 0 ){
+                $message = '在庫不足により、指定の数量で購入することはできません。';
+            }
+            // dd($this->pending_count);
 
             # 販売停止(非公開)のとき
             if( $this->published_at>now() || $this->published_at==null )

@@ -55,6 +55,7 @@ class StripeController extends Controller
         # すぐに購入商品ページのURL(キャンセル用)
         $r_buynow_item = $request->r_buynow_item;
 
+
         # テスト用完了メソッド *後で消す！
         $test = env('APP_DEBUG');
         if( $test ){

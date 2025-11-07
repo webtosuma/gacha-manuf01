@@ -73,7 +73,7 @@ class StoreKeepApiController extends Controller
         $user = Auth::user();
 
         # エラーメッセージ
-        if ( $message = $store_item->ErrCheckMessage($request)  )
+        if ( $message = $store_item->ErrCheckMessage($request->count)  )
         {
             return response()->json( compact( 'message' ) );
         }
