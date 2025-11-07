@@ -49,6 +49,10 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         @include('admin.gacha.common.tab')
 
 
+        @if( isset($gacha->category) && !$gacha->category->is_published )
+            <div class="text-danger mb-3">＊カテゴリー非公開中</div>
+        @endif
+
         <form action="{{ route('admin.gacha.published.update', $gacha) }}"
         method="POST" onsubmit="stopOnbeforeunload()" novalidate>
             @csrf

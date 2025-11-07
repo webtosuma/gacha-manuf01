@@ -30,12 +30,12 @@ class AdminHomeController extends Controller
         $waiting_shippeds_count = Auth()->user()->admin->waiting_shippeds->count();
 
         # 公開中ガチャ
-        // $gachas = GachaController::getPublishedGachas( $category_code='all' );
-        $gachas = Gacha::orderBy('is_sold_out')//売り切れは下
-        ->where('published_at', '<=', now())//公開中のみ
-        ->has('category')//カテゴリーが存在するもののみ
-        ->orderByDesc('published_at')
-        ->orderByDesc('created_at')
+        $gachas = GachaApiController::getPublishedGachas( '' )
+        // $gachas = Gacha::orderBy('is_sold_out')//売り切れは下
+        // ->where('published_at', '<=', now())//公開中のみ
+        // ->has('category')//カテゴリーが存在するもののみ
+        // ->orderByDesc('published_at')
+        // ->orderByDesc('created_at')
         ->paginate( 10 );//ページネーション
 
 
