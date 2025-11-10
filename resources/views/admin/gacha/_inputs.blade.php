@@ -137,7 +137,7 @@
 
 
         <!--会員ランクの指定(user_rank_id)-->
-        @if( env('NEW_TICKET_SISTEM',false) )
+        @if( config('u_rank_ticket.user_rank',false) )
             <div class="d-block mb-4">
                 <div class="form-label">会員ランクの指定</div>
 

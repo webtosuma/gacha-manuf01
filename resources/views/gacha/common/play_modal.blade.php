@@ -12,7 +12,7 @@ gacha_id      ="{{$gacha->id}}"
     @include('gacha.common.top_image')
 
 </u-gacha-modal>
-
+ 
 
 <!--カスタムボタン　モーダル-->
 <u-gacha-custom-modal

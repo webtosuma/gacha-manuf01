@@ -24,7 +24,7 @@ class UserRankMiddleware
     {
 
         # ログイン中 && チケットシステム導入時のみ
-        if( Auth::check() && config('u_rank_ticket.user_rank',false) )
+        if( Auth::check() && config('u_rank_ticket.user_rank',false) ) 
         {
             $user = Auth::user();
             UserRankHistoryController::CreateUserRankHistory( $user );

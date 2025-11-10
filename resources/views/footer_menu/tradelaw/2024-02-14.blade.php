@@ -1,7 +1,7 @@
 @php
-$body =  <<<__
+$body = <<<__EOT__
 
-__;
+__EOT__;
 @endphp
 
 

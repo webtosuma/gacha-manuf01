@@ -671,6 +671,7 @@ class Gacha extends Model
             return $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : false ;
         }
 
+        
     /*
     |--------------------------------------------------------------------------
     | アクセサー(画像パス)
