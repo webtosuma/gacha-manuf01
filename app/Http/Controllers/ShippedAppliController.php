@@ -23,10 +23,12 @@ use App\Models\Prize;
 class ShippedAppliController extends Controller
 {
     /** 発送ポイント */
-    public function shippedPoint()
+    public function shippedPoint( $item_count )
     {
         /*.設定は。config.gachaに記述 */
-        return config('gacha.shipped_point',0);
+        $basic_point = config('gacha.shipped_point',0);
+        return $basic_point;
+        // return ceil( $item_count / 20 ) * $basic_point;//20枚は、Npt
     }
 
 
@@ -58,7 +60,7 @@ class ShippedAppliController extends Controller
 
 
         # 発送ポイント
-        $shipped_point = self::shippedPoint();
+        $shipped_point = self::shippedPoint( count($id_array) );
         // 発送ポイントが足りていないとき
         if( $user->point < $shipped_point ){
             $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
@@ -132,7 +134,7 @@ class ShippedAppliController extends Controller
 
 
         # 発送ポイント
-        $shipped_point = self::shippedPoint();
+        $shipped_point = self::shippedPoint( count($id_array) );
         // 発送ポイントが足りていないとき
         if( $user->point < $shipped_point ){
             $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
@@ -183,7 +185,7 @@ class ShippedAppliController extends Controller
 
 
         # 発送ポイント
-        $shipped_point = self::shippedPoint();
+        $shipped_point = self::shippedPoint( count($id_array) );
         // 発送ポイントが足りていないとき
         if( $user->point < $shipped_point ){
             $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';

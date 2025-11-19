@@ -68,11 +68,15 @@ class Gacha extends Model
         'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
         'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
-        'r_prize_history',     //[ルーティング]ガチャ商品履歴
-
         'resume_text',   //ストレージ保存された文章を含む'説明文'
-        'r_event_show',  //[ルーティング]イベント詳細
-        'r_event_play',  //[ルーティング]イベントガチャカで遊ぶ
+
+        'route',          //[ルーティング]ガチャ詳細ページ
+        'r_prize_history',//[ルーティング]ガチャ商品履歴
+        'r_action',       //[ルーティング]ガチャPLAY
+        'r_costom',       //[ルーティング]カスタム回数
+
+        'r_event_show',   //[ルーティング]イベント詳細
+        'r_event_play',   //[ルーティング]イベントガチャカで遊ぶ
 
         'is_popup_btn',          //ポップアップボタン設定　
         'max_custom_type_count', //上限カスタムボタンの上限回数
@@ -232,30 +236,30 @@ class Gacha extends Model
         }
 
 
-        /**
-         * [ルーティング]ガチャ詳細ページ route
-         * @return String
-        */
-        public function getRouteAttribute()
-        {
-            $params = ['category_code'=>$this->category_code_name, 'gacha'=>$this, 'key'=>$this->key];
-            return route('gacha',$params);
-        }
+        // /**
+        //  * [ルーティング]ガチャ詳細ページ route
+        //  * @return String
+        // */
+        // public function getRouteAttribute()
+        // {
+        //     $params = ['category_code'=>$this->category_code_name, 'gacha'=>$this, 'key'=>$this->key];
+        //     return route('gacha',$params);
+        // }
 
 
 
-        /**
-         * [ルーティング]ガチャ商品履歴 r_prize_history
-         * 商品履歴の表示許可があるとき&&売り切れのとき
-         * @return String
-        */
-        public function getRPrizeHistoryAttribute()
-        {
-            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
+        // /**
+        //  * [ルーティング]ガチャ商品履歴 r_prize_history
+        //  * 商品履歴の表示許可があるとき&&売り切れのとき
+        //  * @return String
+        // */
+        // public function getRPrizeHistoryAttribute()
+        // {
+        //     $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
 
-            return config('app.gacha_prize_history') && $this->is_sold_out
-            ? route('gacha.prize_history',$params) : null;
-        }
+        //     return config('app.gacha_prize_history') && $this->is_sold_out
+        //     ? route('gacha.prize_history',$params) : null;
+        // }
 
 
 
@@ -671,7 +675,7 @@ class Gacha extends Model
             return $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : false ;
         }
 
-        
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー(画像パス)
@@ -924,6 +928,65 @@ class Gacha extends Model
             }
 
         /* */
+    /*
+    |--------------------------------------------------------------------------
+    | ルーティング
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * [ルーティング]ガチャ詳細ページ route
+         * @return String
+        */
+        public function getRouteAttribute()
+        {
+            $params = ['category_code'=>$this->category_code_name, 'gacha'=>$this, 'key'=>$this->key];
+            return route('gacha',$params);
+        }
+
+
+        /**
+         * [ルーティング]ガチャ商品履歴 r_prize_history
+         * 商品履歴の表示許可があるとき&&売り切れのとき
+         * @return String
+        */
+        public function getRPrizeHistoryAttribute()
+        {
+            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
+
+            return config('app.gacha_prize_history') && $this->is_sold_out
+            ? route('gacha.prize_history',$params) : null;
+        }
+
+
+        /**
+         * [ルーティング]ガチャPLAY r_action
+         * @return String
+        */
+        public function getRActionAttribute()
+        {
+            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
+
+            # アンケートあり
+            if(config('app.event_gacha')){
+                return route('survey.answering',$params);
+            }
+
+            return route('gacha.play',$params);
+        }
+
+
+        /**
+         * [ルーティング]カスタム回数 r_costom
+         * @return String
+        */
+        public function getRCostomAttribute()
+        {
+            $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
+            return route('gacha.custom_count',$params);
+        }
+
 
     /*
     |--------------------------------------------------------------------------

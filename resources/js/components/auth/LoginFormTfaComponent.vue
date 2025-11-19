@@ -1,4 +1,4 @@
-<template>
+<template> 
     <form method="POST" :action="r_action"
     class="w-100 text-center" style="min-height:12rem;">
 

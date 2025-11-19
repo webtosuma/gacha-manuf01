@@ -242,7 +242,7 @@ class GachaApiController extends Controller
             foreach ($gachas as $gacha)
             {
                 /* 画像 */
-                $gacha->route      = $gacha->route;                  //
+                // $gacha->route      = $gacha->route;                  //
                 $gacha->ratio      = config('app.gacha_card_ratio'); //画像比率
                 $gacha->image_path = $gacha->image_path;             //
                 $gacha->type       = $gacha->type;                   //ガチャの種類
@@ -280,8 +280,8 @@ class GachaApiController extends Controller
 
                 /* Playボタン */
                 $params = [ 'category_code'=>$gacha->category->code_name, 'gacha'=>$gacha, 'key'=>$gacha->key ];
-                $gacha->r_action = route( 'gacha.play', $params ) ;                //ルート:play
-                $gacha->r_costom = route( 'gacha.custom_count', $params ) ;        //ルート:カスタム
+                // $gacha->r_action = route( 'gacha.play', $params ) ;                //ルート:play
+                // $gacha->r_costom = route( 'gacha.custom_count', $params ) ;        //ルート:カスタム
                 $gacha->is_disabled_oneplay_btn = $gacha->is_disabled_oneplay_btn; //1回ガチャるボタンのdisabled
                 $gacha->is_disabled_tenplay_btn = $gacha->is_disabled_tenplay_btn; //10連ガチャるボタンのdisabled
                 $gacha->is_disabled_custom_btn  = $gacha->is_disabled_custom_btn;  //カスタムボタンのdisabled

@@ -12,7 +12,7 @@ require('./components/ExampleComponent.vue').default);
 | ユーザーページ　コンポーネント
 |=============================================
 */
-    /* ログインフォーム TFA User・Admin共用 */
+    /* ログインフォーム TFA User・Admin共用 */ 
     Vue.component('login-form-tfa',
     require('./components/auth/LoginFormTfaComponent.vue').default);
 

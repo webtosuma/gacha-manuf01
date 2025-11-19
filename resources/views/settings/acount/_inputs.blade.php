@@ -6,7 +6,7 @@
     <div class="col">
 
 
-            <!--アカウント画像(image)-->
+        <!--アカウント画像(image)-->
         <label class="d-block mb-4">
             <div class="form-label">アカウント画像</div>
 

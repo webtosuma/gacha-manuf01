@@ -56,7 +56,7 @@
                 <div class="p-3 mb-5" style="border-radius:1rem; background:rgb(255, 255, 255, .9);">
 
                     <h6 class="border border-danger border-2 p-2 text-danger text-center">
-                        お買い求め前に必ずお読み下さい。
+                        必ずお読み下さい。
                     </h6>
 
 

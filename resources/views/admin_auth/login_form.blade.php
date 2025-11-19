@@ -2,7 +2,7 @@
 @extends('layouts.simple')
 
 <!----- title ----->
-@section('title','管理者ログイン')
+@section('title','管理者ログイン') 
 
 
 @section('content')

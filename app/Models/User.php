@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable; //決済　
 use Illuminate\Support\Carbon;
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes; //論理削除の利用

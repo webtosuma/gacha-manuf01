@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 /**
  * =========================================
- *  会員情報設定　コントローラー
+ *  会員情報設定　コントローラー 
  * =========================================
 */
 class SettingsController extends Controller

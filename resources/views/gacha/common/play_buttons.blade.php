@@ -1,10 +1,7 @@
 <!--BTN-->
-@php
-$params = [ 'category_code'=>$gacha->category_code_name, 'gacha'=>$gacha, 'key'=>$gacha->key ];
-@endphp
 <u-gacha-play-buttons
-r_action="{{ route( 'gacha.play', $params )         }}"
-r_costom="{{ route( 'gacha.custom_count', $params ) }}"
+r_action="{{ $gacha->r_action }}"
+r_costom="{{ $gacha->r_costom }}"
 r_prize_history="{{ $gacha->r_prize_history }}"
 
 one_play_point             ="{{$gacha->one_play_point   }}"
@@ -21,6 +18,6 @@ dont_auth_user_rank ="{{$gacha->dont_auth_user_rank ? 1 : null }}"
 gacha_id    ="{{ $gacha->id }}"
 is_popup_btn="{{$gacha->is_popup_btn}}"
 
-></u-gacha-play-buttons> 
+></u-gacha-play-buttons>
 
 

@@ -162,7 +162,7 @@ Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
     include('web/auth-tfa.php');
 
     # (Stripe・webhook)
-    include('web/stripe.php');
+    include('web/stripe.php'); 
 
     # ユーザー設定
     include('web/settings.php');

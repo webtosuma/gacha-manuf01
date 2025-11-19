@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 /*
 |--------------------------------------------------------------------------
-| 会員登録・メル認証用メール
+| 会員登録・メル認証用メール 
 |--------------------------------------------------------------------------
 */
 class RegisterAuthMailable extends Mailable

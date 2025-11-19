@@ -34,7 +34,6 @@ use App\Http\Controllers;
         [App\Http\Controllers\GachaController::class, 'result_history'])
         ->name('gacha.result_history');
 
-
         # ガチャ回数のカスタム
         Route::get('/g/custom_count/{category_code}/{gacha}/{key}',
         [App\Http\Controllers\GachaController::class, 'custom_count'])

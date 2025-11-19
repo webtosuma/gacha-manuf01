@@ -11,9 +11,14 @@ use App\Http\Controllers;
 Route::middleware(['auth','user_rank'])->group(function () {
 
     # 回答ページ
-    Route::get('survey/answering/{code}',
+    Route::post('survey/answering/{category_code}/{gacha}/{key}',
     [Controllers\SurveyController::class, 'answering'])
     ->name('survey.answering');
+
+    # 戻るページ用
+    Route::get('survey/answering/{category_code}/{gacha}/{key}',
+    [Controllers\SurveyController::class, 'answering'])
+    ->name('survey.answering.get');
 
 });
 

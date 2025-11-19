@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use App\Models\Admin;
+use App\Models\Admin; 
 use App\Models\User;
 /*
 |--------------------------------------------------------------------------
