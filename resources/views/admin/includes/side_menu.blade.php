@@ -127,12 +127,25 @@
     }
 
 
-
+    # 操作履歴
     if( \App\Http\Controllers\AdminLogController::logStartupSetting() && Auth::user()->admin->master ){
         $ragistation_array[] = [
             'route' => route('admin.log'),
             'key'   => 'log',
             'label' => '操作履歴',
+        ];
+    }
+
+    # アクセスログ
+    if(
+        \App\Http\Controllers\AdminAccessLogController::logStartupSetting()
+        && in_array( Auth::user()->email, config('app.fobees_emails'))//システム運営者のみ
+        && Auth::user()->admin->master//管理権限者のみ
+    ){
+        $ragistation_array[] = [
+            'route' => route('admin.access_log'),
+            'key'   => 'access_log',
+            'label' => 'アクセスログ',
         ];
     }
 

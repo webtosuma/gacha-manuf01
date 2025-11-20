@@ -59,7 +59,7 @@ import Vue from 'vue'
         Vue.component('a-shipped-list',
         require('./components/admin/shipped/ListComponent').default);
 
-        
+
     /* ポイント売上 */
 
         // 年月選択

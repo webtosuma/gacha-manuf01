@@ -60,6 +60,16 @@
         ];
     }
 
+    # 買取表の追加
+    if( config('app.purchase') )
+    {
+        $ragistation_array[] = [
+            'route' => route('admin.purchase'),
+            'key'   => 'purchase',
+            'label' => '買取表管理',
+        ];
+    }
+
     # 操作履歴
     if(
         \App\Http\Controllers\AdminLogController::logStartupSetting()
@@ -72,15 +82,19 @@
         ];
     }
 
-    # 買取表の追加
-    if( config('app.purchase') )
-    {
+    # アクセスログ
+    if(
+        \App\Http\Controllers\AdminAccessLogController::logStartupSetting()
+        && in_array( Auth::user()->email, config('app.fobees_emails'))//システム運営者のみ
+        && Auth::user()->admin->master//管理権限者のみ
+    ){
         $ragistation_array[] = [
-            'route' => route('admin.purchase'),
-            'key'   => 'purchase',
-            'label' => '買取表管理',
+            'route' => route('admin.access_log'),
+            'key'   => 'access_log',
+            'label' => 'アクセスログ',
         ];
     }
+
 
 
 

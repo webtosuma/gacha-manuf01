@@ -58,6 +58,8 @@ use \App\Http\Controllers;
     # 操作履歴
     include('web/log.php');
 
+    # アクセスログ
+    include('web/access_log.php');
 
 
     # ポイント売上

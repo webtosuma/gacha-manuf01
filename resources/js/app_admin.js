@@ -19,6 +19,10 @@ import Vue from 'vue'
     Vue.component('a-log-list',
     require('./components/admin/log/Index.vue').default);
 
+    /* アクセスログ */
+    Vue.component('a-access-log-list',
+    require('./components/admin/access_log/Index.vue').default);
+
 
     /* 登録ユーザー一覧 */
     Vue.component('a-user-list',
