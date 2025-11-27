@@ -8,7 +8,7 @@
             class="page-item"
             :class="{
                 active: link.active,
-                disabled: !link.url
+                disabled: !link.url 
             }"
             >
                 <a

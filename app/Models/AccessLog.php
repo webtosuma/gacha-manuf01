@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
-|  アクセスログ　モデル
+|  アクセスログ　モデル　
 | =============================================
 */
 class AccessLog extends Model

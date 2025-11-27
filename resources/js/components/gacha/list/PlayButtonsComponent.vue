@@ -278,13 +278,13 @@
             /* 1回ガチャる　スタイル */
             one_play_style_class: `
             btn btn-sm btn-light bg-gradient fw-bold w-100 py-2
-            rounded-pill border-secondary border-0 shadow-sm
+            rounded-pill border-secondary border-1 shadow-sm
             position-relative shiny overflow-hidden
             `,
             /* 1回ガチャる　スタイル(売り切れ) */
             soldout_one_play_style_class: `
             btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-danger
-            rounded-pill border-secondary border-0 shadow-sm
+            rounded-pill border-secondary border-1 shadow-sm
             `,
             /* 10連ガチャる　スタイル */
             ten_play_style_class: `
@@ -295,7 +295,7 @@
             /* 10連ガチャる　スタイル(売り切れ) */
             soldout_ten_play_style_class: `
             btn btn-sm btn-dark bg-gradient text- fw-bold w-100 py-2 text-danger
-            rounded-pill border-secondary border-0 shadow-sm
+            rounded-pill border-danger border-0 shadow-sm
             `,
             /* 百連ガチャる　スタイル */
             hundred_play_style_class: `

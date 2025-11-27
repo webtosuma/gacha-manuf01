@@ -123,7 +123,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h5 class="fs- fw-bold">{{'ガチャ'}}</h5>
 
-                    <a href="{{$line_r_more}}"
+                    <a href="{{route('gacha_category')}}"
                     class="btn btn-sm text-primary"
                     >もっと見る</a>
                 </div>

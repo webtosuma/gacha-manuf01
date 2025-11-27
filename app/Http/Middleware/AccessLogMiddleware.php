@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Accesslog;
+use App\Models\AccessLog;
 use App\Http\Controllers\Method;
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ class AccessLogMiddleware
         $bool = \App\Http\Controllers\AdminAccessLogController::logStartupSetting();
 
         # ログイン中のみ、ログの保存
-        if (Auth::check()&&$bool)
+        if ( Auth::check() && !str_contains($request->fullUrl(),'api') && $bool )
         {
 
             # ユーザーエージェント

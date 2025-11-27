@@ -57,7 +57,7 @@
                     :sm_card="sm_card"
                     :new_label_path="gacha.new_label_path"
                     :img_path_point="gacha.img_path_point"
-                    :bg_color="gacha.type=='only_new_user' ? 'bg-success-subtle text-dark' : 'bg- bg-rainbow-index'"
+                    :bg_color="gacha.type=='only_new_user' ? 'bg-success-subtle text-dark' : 'bg-body bg-rainbow-index'"
                     :gacha_type="gacha.type"
                     :sponsor_ad="gacha.sponsor_ad"
                     :gacha_play_point="gacha.one_play_point"
@@ -126,11 +126,11 @@
 
             /*ガチャカード　クラス*/
             card_style_class: `
-                card border-0 shadow bg-transparent
+                card border-0 bg-transparent
                 text-dark text-center overflow-hidden text-decoration-none
                 position-relative rounded-4
                 shiny hover_anime
-                border-white border-5 shadow
+                border-white border-5 shadoww
             `,
 
 

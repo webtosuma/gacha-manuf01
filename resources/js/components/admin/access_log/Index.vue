@@ -67,7 +67,7 @@
 
                             <!--ユーザー名-->
                             <div class="">
-                                <a href="#" @click.prevent="inputs.user_id=access_log.user.id"
+                                アカウント：<a href="#" @click.prevent="inputs.user_id=access_log.user.id"
                                 >{{ access_log.user.name}}</a>
                             </div>
 
@@ -75,6 +75,13 @@
                             <div class="">
                                 IP：<a href="#" @click.prevent="inputs.ip=access_log.ip"
                                 >{{ access_log.ip}}</a>
+                            </div>
+
+                            <!--URL-->
+                            <div class="">
+                                URL：{{ access_log.path}}
+                                <a :href="access_log.path" target="_blank"
+                                ><i class="bi bi-box-arrow-up-right"></i></a>
                             </div>
 
                             <!--ユーザーエージェント-->

@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 
-@section('title','アクセスログ')
+@section('title','アクセスログ') 
 
 
 @section('meta') @php
