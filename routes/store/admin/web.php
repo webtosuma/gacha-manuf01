@@ -32,3 +32,7 @@ use App\Http\Controllers\Store;
 
     # EC売上レポート 一覧
     include('web/sales_report.php');
+
+
+
+//

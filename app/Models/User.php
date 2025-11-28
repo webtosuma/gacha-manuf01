@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable; //決済　
 use Illuminate\Support\Carbon;
 
-class User extends Authenticatable 
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes; //論理削除の利用
@@ -39,12 +39,13 @@ class User extends Authenticatable
         'line_id'    ,//[snsログイン]LINE 　  2025/8/26追加
         'facebook_id',//[snsログイン]facebook 2025/8/26追加
 
-        'tfa_key'           ,//二段階認証キー　2025/9/24追加
+        'tfa_key'           ,//二段階認証キー　         2025/9/24追加
         'tfa_failures_count',//二段階認証の失敗数　      2025/9/24追加
         'tfa_failures_at'   ,//二段階認証の失敗日時    　2025/9/24追加
         'is_tfa'            ,//二段階認証を利用するか否か 2025/9/24追加
 
         'birthday', //誕生日.2025/10/22追加
+        'current_session_id',//ログイン中ディバイスのセッションID 2025/11/28追加
     ];
 
 

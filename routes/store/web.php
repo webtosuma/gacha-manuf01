@@ -1,8 +1,13 @@
 <?php
 
 # ストアー
-include('admin/web.php');
-include('admin/api.php');
+Route::middleware([
+    'user_session_validate', //1アカウント1ログイン(セッションIDチェック)
+])->group(function () {
 
-include('user/web.php');
+    include('admin/web.php');
+    include('admin/api.php');
 
+    include('user/web.php');
+
+});

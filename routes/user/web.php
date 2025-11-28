@@ -22,9 +22,10 @@ Route::get('maintenance',
 
 
 Route::middleware([ /* ミドルウェアー */
-    'maintenance',        //メンテナンス
-    'user_plize_deadline',//ユーザー商品期限切れ対応
-    'user_point_deadline',//ユーザーポイント期限切れ対応
+    'maintenance',           //メンテナンス
+    'user_plize_deadline',   //ユーザー商品期限切れ対応
+    'user_point_deadline',   //ユーザーポイント期限切れ対応
+    'user_session_validate', //1アカウント1ログイン(セッションIDチェック)
 ])->group(function () {
 
 
@@ -162,7 +163,7 @@ Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
     include('web/auth-tfa.php');
 
     # (Stripe・webhook)
-    include('web/stripe.php'); 
+    include('web/stripe.php');
 
     # ユーザー設定
     include('web/settings.php');

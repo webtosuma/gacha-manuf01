@@ -8,6 +8,10 @@ use \App\Http\Controllers;
  * *********************************************************************
  */
 
+Route::middleware([
+    'user_session_validate', //1アカウント1ログイン(セッションIDチェック)
+])->group(function () {
+
     # ホーム(home)
     Route::get('/admin',
     [Controllers\AdminHomeController::class,'index'])
@@ -100,5 +104,5 @@ use \App\Http\Controllers;
     include('web/register.php');
 
 
-
+});
 //

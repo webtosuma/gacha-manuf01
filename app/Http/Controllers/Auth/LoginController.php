@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use App\Models\User;
- 
+
 class LoginController extends Controller
 {
     /*
@@ -129,6 +129,13 @@ class LoginController extends Controller
             # ログイン成功処理（求職者のアカウントが照合された時）
             // ユーザー情報をセッションに保存
             $request->session()->regenerate();
+
+
+            # セッションIDの保存
+            $user = Auth::user();
+            $user->current_session_id = session()->getId();
+            $user->save();
+
 
             # ログイン前に訪れたページがある場合、前のページに戻る
             if($before_url)

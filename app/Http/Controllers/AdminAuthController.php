@@ -65,6 +65,13 @@ class AdminAuthController extends Controller
                 # ユーザー情報をセッションに保存
                 $request->session()->regenerate();
 
+
+                # セッションIDの保存
+                $user = Auth::user();
+                $user->current_session_id = session()->getId();
+                $user->save();
+
+
                 # ログイン前に訪れたページがある場合、前のページに戻る
                 if(session('before_admin_url'))
                 {
@@ -132,6 +139,12 @@ class AdminAuthController extends Controller
             $admin = Admin::first();
             $email = $admin->email;
             Auth::attempt( compact('email','password'), false);
+
+
+            # セッションIDの保存
+            $user = Auth::user();
+            $user->current_session_id = session()->getId();
+            $user->save();
 
 
             # マイページTOPへリダイレクト
