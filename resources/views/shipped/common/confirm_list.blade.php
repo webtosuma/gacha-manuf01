@@ -67,4 +67,44 @@
         </div>
 
     </li>
+
+    @if($user_shipped->shipping_company)
+    <li class="list-group-item p-3">
+        <h5>荷物を追跡する</h5>
+
+        <div class="row gy-5">
+            <div class="col-12 col-md-6">
+                <div class="mb-3">
+                    <span class="form-text">追跡番号</span>
+                    <coppy-button-component copy_word="{{$user_shipped->tracking_code}}"></coppy-button-component>
+                </div>
+                <div class="mb-3">
+                    <span class="form-text">発送業者</span>
+                    <div class="">{{$user_shipped->shipping_company->name}}</div>
+                </div>
+
+                <a href="{{$user_shipped->shipping_company->url}}"
+                class="btn btn-dark border rounded-pill w-100 px-3 mt-4"
+                target="_blank"
+                >荷物を追跡する<i class="bi bi-box-arrow-up-right ms-2"></i></a>
+
+            </div>
+            <div class="col">
+                <div class="alert alert-primary border-0" role="alert">
+                    <h6 class="fw-bold"
+                    ><i class="bi bi-exclamation-circle-fill me-2"
+                    ></i>発送業社によって「追跡番号」の表現が異なります</h6>
+                    <p class="m-0">
+                        ヤマト運輸：「送り状番号」<br>
+                        佐川急便：「お問い合せ送り状No.」<br>
+                        日本郵便：「お問い合わせ番号」<br>
+                        <br>
+                        上記の表現と「追跡番号」を確認の上、発送業社サイトへお問い合わせください。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </li>
+    @endif
 </ul>

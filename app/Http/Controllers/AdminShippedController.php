@@ -53,8 +53,13 @@ class AdminShippedController extends Controller
             $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
         }
 
+        # 発送企業情報の配列
+        $shipping_companies = $user_shipped->shipping_companies;
+
+
         return view('admin.shipped.show',compact(
-            'user_shipped','shipped_point','user_address','user_prizes','shipped_prizes'
+            'user_shipped','shipped_point','user_address','user_prizes','shipped_prizes',
+            'shipping_companies',
         ));
     }
 
@@ -75,6 +80,14 @@ class AdminShippedController extends Controller
         # 発送情報の更新
         foreach ( $user_shippeds as $user_shipped )
         {
+            # 追跡コードの登録
+            if( ! ($request->tracking_code && $request->shipping_company_id) )
+            {
+                $traking_columns = ['tracking_code', 'shipping_company_id'];
+                $user_shipped->update( $request->only($traking_columns) );
+            }
+
+            # 発送完了の登録
             $user_shipped->update([
                 'state_id' => 21,//発送状況:'発送済み'
                 'shipment_at'=>now(), //発送日時
@@ -115,6 +128,35 @@ class AdminShippedController extends Controller
                 'subject' => 'ご注文の商品が発送されました', //件名
             ]) );
         }
+
+
+
+    /**
+     * 追跡コードの更新
+     *
+     * @param Request $request　
+     * @param  UserShipped $user_shipped
+     * @return \Illuminate\Http\Response
+    */
+    public function update_trackingcode(Request $request, UserShipped $user_shipped)
+    {
+        # パラメーターの確認
+        if( ! ($request->tracking_code && $request->shipping_company_id) )
+        {
+            return back()->with([
+                'alert-danger'=>'追跡コード・発送企業の両方の入力が必要です。',
+                'icon'=>'bi-exclamation-circle'
+            ]);
+        }
+
+        # 追跡コードの登録
+        $traking_columns = ['tracking_code', 'shipping_company_id'];
+        $user_shipped->update( $request->only($traking_columns) );
+
+        return redirect()->route('admin.shipped.show',$user_shipped)
+        ->with(['alert-warning'=>'追跡コードを更新しました']);
+    }
+
 
 
     /**

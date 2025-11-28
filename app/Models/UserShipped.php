@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;//オブジェクト化
 /*
 | =============================================
 |  景品発送履歴　テーブル
@@ -17,13 +18,17 @@ class UserShipped extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'user_id',         //ユーザー　リレーション
-        'user_address_id', //ユーザーアドレス
-        'point_history_id',//ポイント収支履歴リレーション
-        'state_id',        //発送状況
-        'shipment_at',     //発送日時
-        'shipment_read',   //ユーザーの発送確認
-        'arrival_at' ,     //到着日時
+        'user_id',             //ユーザー　リレーション
+        'user_address_id',     //ユーザーアドレス
+        'point_history_id',    //ポイント収支履歴リレーション
+        'state_id',            //発送状況
+        'shipment_at',         //発送日時
+        'shipment_read',       //ユーザーの発送確認
+        'arrival_at' ,         //到着日時
+
+        'shipping_company_id', //発送企業ID 2025/11/28追加
+        'tracking_code'      , //追跡コード　2025/11/28追加
+
     ];
 
 
@@ -158,6 +163,52 @@ class UserShipped extends Model
             return $this->shipment_at ? $this->shipment_at->format('発送日：Y年m月d日 H:i'): null;
         }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー 発送企業
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 発送企業情報の配列 shipping_companies
+         * @return String
+        */
+        public function getShippingCompaniesAttribute()
+        {
+            return [
+
+                #01 ヤマト運輸
+                [ 'id'=>1, 'name'=>'ヤマト運輸', 'url'=>'https://toi.kuronekoyamato.co.jp/cgi-bin/tneko'],
+
+                #02 佐川急便
+                [ 'id'=>2, 'name'=>'佐川急便',   'url'=>'https://www.sagawa-exp.co.jp/send/howto-search.html'],
+
+                #03 日本郵便
+                [ 'id'=>3, 'name'=>'日本郵便',   'url'=>'https://trackings.post.japanpost.jp/services/srv/search/input'],
+
+            ];
+        }
+
+
+        /**
+         * 発送企業情報 shipping_company
+         * @return String
+        */
+        public function getShippingCompanyAttribute()
+        {
+            foreach ($this->shipping_companies as $shipping_company)
+            {
+                if (isset($shipping_company['id']) && $shipping_company['id'] == $this->shipping_company_id)
+                {
+                    // return $shipping_company;   // 見つかった場合、連想配列を返す
+                    return new \ArrayObject($shipping_company, \ArrayObject::ARRAY_AS_PROPS);
+                }
+            }
+
+            return null; // 見つからない場合
+        }
 
     /*
     |--------------------------------------------------------------------------

@@ -62,10 +62,12 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                 <div class="mb-2">{{ $user_shipped->shipment_at_format }}</div>
 
                 @include('shipped.common.confirm_list')
+
             </section>
 
 
             @if($user_shipped->state_id==11)
+
                 <section class="card card-body bg-white my-4 text-center">
 
                     <h5 class="text-warning">
@@ -83,6 +85,11 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                             <input type="hidden" name="ids[]"    value="{{$user_shipped->id}}">
                             <input type="hidden" name="state_id" value="{{$user_shipped->state_id}}">
 
+
+                            <!--追跡コード-->
+                            <div class="mb-5">
+                                @include('admin.shipped._input_tracking_code')
+                            </div>
 
                             <button type="button" data-bs-toggle="modal"
                             data-bs-target="#deleteModal{{'send'}}"
@@ -108,6 +115,49 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
                         </form>
                     </div>
+
+                </section>
+
+            @else
+                <!--発送コードの更新-->
+                <section class="card card-body bg-white my-4 text-center">
+
+                    <div class="col-md-8 mx-auto my-3">
+                        <form action="{{ route('admin.shipped.update_trackingcode',$user_shipped) }}"
+                        method="POST">
+                            @csrf
+                            @method('PATCH')
+
+                            <h5 class="mb-3">追跡コードの更新</h5>
+
+                            <!--追跡コード-->
+                            <div class="mb-3">
+                                @include('admin.shipped._input_tracking_code')
+                            </div>
+
+
+                            <button type="button" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal{{'updateTrackkingCode'}}"
+                            class="btn btn-lg btn-warning text-white w-100"
+                            >{{ '更新' }}</button>
+
+
+                            <delete-modal-component
+                            index_key="updateTrackkingCode"
+                            icon="bi-truck"
+                            color="warning"
+                            func_btn_type="submit"
+                            button_class="invisible">
+                                <div>
+                                    <p class="form-text">
+                                        追跡コードを更新します。よろしいですか？
+                                    </p>
+                                </div>
+                            </delete-modal-component>
+
+                        </form>
+                    </div>
+
 
                 </section>
             @endif

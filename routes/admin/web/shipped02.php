@@ -25,6 +25,11 @@ Route::middleware(['admin_auth'])->group(function () {
         [Controllers\AdminShippedController ::class, 'update'])
         ->name('admin.shipped.update');
 
+        # 追跡コードの更新
+        Route::patch('/admin/shipped/update_trackingcode/{user_shipped}',
+        [Controllers\AdminShippedController ::class, 'update_trackingcode'])
+        ->name('admin.shipped.update_trackingcode');
+
         # 発送取消し
         Route::patch('/admin/shipped/cancell}',
         [Controllers\AdminShippedController ::class, 'cancell'])
