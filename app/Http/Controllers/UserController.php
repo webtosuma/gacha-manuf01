@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Contact;
+use App\Models\UserChangePwHistory;
 /*
 | =============================================
 |  認証情報(User) コントローラー
@@ -16,9 +17,23 @@ use App\Models\Contact;
 */
 class UserController extends Controller
 {
+    /**
+     * パスワード変更
+     * @return \Illuminate\View\View
+    */
+    public function password_reset()
+    {
+
+        $email = Auth::user()->email;
+        $bool = UserChangePwHistory::hasTodayCount($email);
+
+        return view('auth.passwords.email');
+    }
+
+
     /*
     |--------------------------------------------------------------------------
-    | パスワード変更API 
+    | パスワード変更API
     |--------------------------------------------------------------------------
     */
 
@@ -41,6 +56,18 @@ class UserController extends Controller
                     'errors' => ['email' => 'このメールアドレスは登録されておりません。']
                 ],422);
             }
+
+
+            /* パスワード変更上限チェック */
+            $bool = UserChangePwHistory::hasTodayCount($request->email);//上限を超えているか
+            if( $bool  ){
+                # エラーJSONデータを返す
+                return response()->json([
+                    'errors' => ['email' => 'このメールアドレスは、1日のパスワード変更回数上限を超えています。']
+                ],422);
+            }
+
+
 
             # 認証番号メールの送信(メール送信は1回のみ)
             $verification_code = SendMailController::SendUpdatePassworVerifEmail( $request );
@@ -101,6 +128,11 @@ class UserController extends Controller
 
             # (バリデーション成功なら)パスワードを保存
             $user->update([ 'password' => Hash::make( $request->password ) ]);
+
+
+            # パスワード変更履歴の保存
+            $history = new UserChangePwHistory(['user_id'=>Auth::user()->id]);
+            $history->save();
 
 
             # 完了メールの送信

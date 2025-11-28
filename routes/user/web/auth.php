@@ -36,6 +36,11 @@ Route::get('register/comp',
 Route::get('/require_login', function () { return view('auth.require_login'); })
 ->name('require_login');
 
+# パスワード変更
+Route::get('/password/reset',
+[Controllers\UserController::class, 'password_reset'])
+->name('password.request');
+
 # パスワード変更API ステップ01(reset_pass_step01)
 Route::post('reset_pass_step01',
 [Controllers\UserController::class, 'reset_pass_step01'])
