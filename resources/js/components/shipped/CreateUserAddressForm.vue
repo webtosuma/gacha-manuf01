@@ -45,6 +45,15 @@
                         </label>
 
                         <label class="mb-3 d-block">
+                            <div class="form-label">メールアドレス</div>
+                            <input v-model="inputs.email" name="email"
+                            :disabled="loading"
+                            type="email" class="form-control" placeholder="例：example@email.co.com">
+                            <!-- error message -->
+                            <div v-if="errors.email" class="text-danger" role="alert">※{{ errors.email[0] }}</div>
+                        </label>
+
+                        <label class="mb-3 d-block">
                             <div class="form-label">電話番号（半角数字のみ）</div>
                             <input v-model="inputs.tell" name="tell"
                             :disabled="loading"
@@ -96,6 +105,20 @@
                             <div v-if="errors.number" class="text-danger" role="alert">※{{ errors.number[0] }}</div>
                         </label>
 
+
+
+                        <label class="mb-3 d-block">
+                            <div class="form-label">備考欄</div>
+                            <textarea  v-model="inputs.remarks"
+                            name="remarks"
+                            class="form-control"
+                            id="input_body" style="height:6rem;"></textarea>
+
+                            <!-- error message -->
+                            <div v-if="errors.remarks" class="text-danger" role="alert">※{{ errors.remarks[0] }}</div>
+                        </label>
+
+
                         <div class="col-md-8 mx-auto mt-5">
                             <disabled-button-component @btn-click="store()"
                             style_class="btn btn-lg btn-primary text-white w-100"
@@ -136,19 +159,22 @@
     export default {
         props: {
             token:{ type: String,  default: '', },
-            r_store: { type: [String,Number], default: null },
-            use_size:{ type: [String,Number], default: 0 },
+            r_store: { type: [String, Number], default: null },
+            use_size:{ type: [String, Number], default: '0' },
+            // user_email:{ type: String, default: '' },
         },
         data() { return {
 
             inputs: {
-                name        :'えみっと',//宛名
-                tell        :'09011112222',//電話番号
-                postal_code :'1234567',//郵便番号
-                todohuken   :'北海道',//住所-都道府県
-                shikuchoson :'まち',//住所-市町村
-                number      :'１２３',//住所-番地
-                size        :'',
+                name        :'',//宛名
+                size        :'',//靴のサイズ
+                email       :'',//メールアドレス
+                tell        :'',//電話番号
+                postal_code :'',//郵便番号
+                todohuken   :'',//住所-都道府県
+                shikuchoson :'',//住所-市町村
+                number      :'',//住所-番地
+                remarks     :'',//備考欄
             },
 
             errors : {},/* エラー内容 */
@@ -193,7 +219,15 @@
                 this.loading = true;// 通信中
 
                 const route = this.r_store; //新規作成
-                axios.post( route, this.inputs )
+
+                //エンコード処理
+                const post_inputs = Object.assign({}, this.inputs);
+                const encode_list = ['name','remarks'];
+                encode_list.forEach(encode_param => {
+                    post_inputs[encode_param] = this.uriEncoded(post_inputs[encode_param]);
+                });
+
+                axios.post( route, post_inputs )
                 .then(json => {
                     console.log( json.data );
                     this.comp = true;
@@ -227,17 +261,23 @@
             /** デフォルトデータ */
             default() { return {
                 name        :'',//宛名
+                size        :'',//靴のサイズ
+                email       :'',//メールアドレス
                 tell        :'',//電話番号
                 postal_code :'',//郵便番号
                 todohuken   :'',//住所-都道府県
                 shikuchoson :'',//住所-市町村
                 number      :'',//住所-番地
+                remarks     :'',//備考欄
             }; },
 
 
             /** お届け先一覧の更新 */
             getList(){ this.$emit('my-created'); },
 
+
+            /* デフォルト文字列のエンコード処理 */
+            uriEncoded(body){ return encodeURIComponent(body); },
         },
     }
 </script>

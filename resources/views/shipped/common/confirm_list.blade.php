@@ -14,10 +14,20 @@
         <h5 class="mt-3">ご連絡先電話番号</h5>
         <div class="">{{ $user_address->tell }}</div>
 
+        @if( $user_address->email )
+            <h5 class="mt-3">ご連絡先メールアドレス</h5>
+            <div class="">{{ $user_address->email }}</div>
+        @endif
         @if($user_address->size)
             <h5 class="fs-6 mb-0 mt-3">希望の靴サイズ</h5>
             <div class="">
                 <span class="fs-4">{{ $user_address->size }}</span>
+            </div>
+        @endif
+        @if($user_address->remarks_text)
+            <h5 class="fs-6 mb-0 mt-3">備考欄</h5>
+            <div class="">
+                {!! nl2br(preg_replace('/\b(https?:\/\/\S+)/i', '<a href="$1">$1</a>', $user_address->remarks_text) )!!}
             </div>
         @endif
 
@@ -68,7 +78,7 @@
 
     </li>
 
-    @if($user_shipped->shipping_company)
+    @if( isset($user_shipped) && $user_shipped->shipping_company )
     <li class="list-group-item p-3">
         <h5>荷物を追跡する</h5>
 
@@ -93,13 +103,13 @@
                 <div class="alert alert-primary border-0" role="alert">
                     <h6 class="fw-bold"
                     ><i class="bi bi-exclamation-circle-fill me-2"
-                    ></i>発送業社によって「追跡番号」の表現が異なります</h6>
+                    ></i>発送業者によって「追跡番号」の表現が異なります</h6>
                     <p class="m-0">
                         ヤマト運輸：「送り状番号」<br>
                         佐川急便：「お問い合せ送り状No.」<br>
                         日本郵便：「お問い合わせ番号」<br>
                         <br>
-                        上記の表現と「追跡番号」を確認の上、発送業社サイトへお問い合わせください。
+                        上記の表現と「追跡番号」を確認の上、発送業者サイトへお問い合わせください。
                     </p>
                 </div>
             </div>

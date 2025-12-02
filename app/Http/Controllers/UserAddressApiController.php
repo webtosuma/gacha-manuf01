@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\UserAddressApiRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserAddressApiRequest;
 use App\Models\UserAddress;
 /*
 | =============================================
@@ -37,8 +37,8 @@ class UserAddressApiController extends Controller
         $user = Auth::user();
 
 
-        # 新規登録
-        $address = new UserAddress([
+        # パラメーター
+        $inputs = [
             'user_id'     =>$user->id,//リレーションID
             'name'        =>$request->name,       //宛名
             'tell'        =>$request->tell,       //電話番号
@@ -48,7 +48,24 @@ class UserAddressApiController extends Controller
             'number'      =>$request->number,     //'住所-番地'
             'is_default'  => 1,//デフォルトの送信先か否か
             'size'        =>$request->size,       //靴のサイズ
-        ]);
+            'email'       =>$request->email,      //メールアドレス 2025/12/02追加
+            'remarks'     =>$request->remarks,    //備考欄 2025/12/02追加,
+        ];
+
+
+        # エンコード入力情報のデコード処理（絵文字対策）
+        $inputs['name']    = urldecode($inputs['name']) ;
+        $inputs['remarks'] = urldecode($inputs['remarks']) ;
+
+
+        # text入力値が150文字以上の時、ストレージへファイル保存する
+        $dir = 'upload/user/address';      //保存先ディレクトリ
+        $new_text = $inputs['remarks'];  //新しい入力テキスト
+        $inputs['remarks'] = Method::uploadStorageText($dir, $new_text);
+
+
+        #新規登録
+        $address = new UserAddress($inputs);
         $address->save();
 
 

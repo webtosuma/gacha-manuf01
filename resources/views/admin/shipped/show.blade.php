@@ -87,9 +87,11 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
                             <!--追跡コード-->
-                            <div class="mb-5">
-                                @include('admin.shipped._input_tracking_code')
-                            </div>
+                            @if( config('app.shipped_tracking_code') )
+                                <div class="mb-5">
+                                    @include('admin.shipped._input_tracking_code')
+                                </div>
+                            @endif
 
                             <button type="button" data-bs-toggle="modal"
                             data-bs-target="#deleteModal{{'send'}}"
@@ -118,7 +120,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
                 </section>
 
-            @else
+            @elseif( config('app.shipped_tracking_code',false) )
                 <!--発送コードの更新-->
                 <section class="card card-body bg-white my-4 text-center">
 

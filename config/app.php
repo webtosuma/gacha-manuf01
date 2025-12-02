@@ -83,7 +83,8 @@ return [
         # パスワード変更の１日の上限回数
         'change_password_limit'    => 2,
 
-        
+        # 発送商品の追跡番号登録
+        'shipped_tracking_code'    => false,
     /*
     |--------------------------------------------------------------------------
     | Application Environment

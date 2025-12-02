@@ -33,8 +33,15 @@
                             <div class="fw-bold">
                                 <span>{{ address.tell }}</span>
                             </div>
+                            <div v-if="address.email" class="fw-bold">
+                                <span>{{ address.email }}</span>
+                            </div>
                             <div v-if="address.size" class="fw-bold">
                                 <span>靴のサイズ：{{ address.size }}</span>
+                            </div>
+
+                            <div v-if="address.remarks_text" class="fw-bold">
+                                <span>備考欄：{{ address.remarks_text.substring(0, 16) + (address.remarks_text.length>16?'...':'') }}</span>
                             </div>
                         </div>
                         <div class="col-auto">

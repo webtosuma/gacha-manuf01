@@ -29,6 +29,7 @@ class UserAddressApiRequest extends FormRequest
     {
         return [
             'name' => ['required','max:140'],
+            // 'email' => ['required','max:140'],
             'tell' => ['regex:/^0([0-9]{9,10})$/'],
             'postal_code' => ['required','regex:/^^\d{7}$/'],
             'todohuken'   => ['required','max:140'],
@@ -47,6 +48,7 @@ class UserAddressApiRequest extends FormRequest
     {
         return [
             'name' => '宛名',
+            'email' => 'メールアドレス',
             'tell' => '電話番号',
 
             'postal_code' => '郵便番号',
