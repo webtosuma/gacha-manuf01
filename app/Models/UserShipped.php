@@ -25,10 +25,8 @@ class UserShipped extends Model
         'shipment_at',         //発送日時
         'shipment_read',       //ユーザーの発送確認
         'arrival_at' ,         //到着日時
-
         'shipping_company_id', //発送企業ID 2025/11/28追加
         'tracking_code'      , //追跡コード　2025/11/28追加
-
     ];
 
 

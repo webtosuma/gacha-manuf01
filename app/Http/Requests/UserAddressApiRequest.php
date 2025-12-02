@@ -47,10 +47,9 @@ class UserAddressApiRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => '宛名',
-            'email' => 'メールアドレス',
-            'tell' => '電話番号',
-
+            'name'        => '宛名',
+            'email'       => 'メールアドレス',//
+            'tell'        => '電話番号',
             'postal_code' => '郵便番号',
             'todohuken'   => '都道府県',
             'shikuchoson' => '市町村',

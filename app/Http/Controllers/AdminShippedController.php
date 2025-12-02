@@ -81,7 +81,7 @@ class AdminShippedController extends Controller
         foreach ( $user_shippeds as $user_shipped )
         {
             # 追跡コードの登録
-            if( ! ($request->tracking_code && $request->shipping_company_id) )
+            if( $request->tracking_code && $request->shipping_company_id )
             {
                 $traking_columns = ['tracking_code', 'shipping_company_id'];
                 $user_shipped->update( $request->only($traking_columns) );

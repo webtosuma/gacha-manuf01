@@ -73,5 +73,7 @@ class Kernel extends HttpKernel
         'check.user.age'        => \App\Http\Middleware\CheckUserBirthdayAndAge::class,     //年齢確認
         'user_session_validate' => \App\Http\Middleware\UserSessionValidate::class,         //1アカウント1ログイン(セッションIDチェック)
 
+        
+        // 'admin_master_auth' => \App\Http\Middleware\AdminMaster::class,//サイト管理権限者のみ認証(cardfestaのみ)
     ];
 }

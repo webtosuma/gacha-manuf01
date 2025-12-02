@@ -44,14 +44,14 @@
                             <div v-if="errors.size" class="text-danger" role="alert">※{{ errors.size[0] }}</div>
                         </label>
 
-                        <label class="mb-3 d-block">
+                        <!-- <label class="mb-3 d-block">
                             <div class="form-label">メールアドレス</div>
                             <input v-model="inputs.email" name="email"
                             :disabled="loading"
                             type="email" class="form-control" placeholder="例：example@email.co.com">
-                            <!-- error message -->
+
                             <div v-if="errors.email" class="text-danger" role="alert">※{{ errors.email[0] }}</div>
-                        </label>
+                        </label> -->
 
                         <label class="mb-3 d-block">
                             <div class="form-label">電話番号（半角数字のみ）</div>
