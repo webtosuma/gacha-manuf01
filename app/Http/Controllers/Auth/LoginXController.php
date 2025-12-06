@@ -57,6 +57,10 @@ class LoginXController extends Controller
             # ログイン
             Auth::login($user);
 
+            # セッションIDの保存
+            $user->current_session_id = session()->getId();
+            $user->save();
+
             #twitter_idの更新
             $user->twitter_id = $twitter_id;
             $user->save();
@@ -85,6 +89,10 @@ class LoginXController extends Controller
 
             # ログイン
             Auth::login($user);
+
+            # セッションIDの保存
+            $user->current_session_id = session()->getId();
+            $user->save();
 
             # リダイレクト
             return redirect()->route('register.comp')

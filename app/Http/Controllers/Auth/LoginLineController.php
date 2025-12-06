@@ -87,6 +87,10 @@ class LoginLineController extends Controller
             # ログイン
             Auth::login($user);
 
+            # セッションIDの保存
+            $user->current_session_id = session()->getId();
+            $user->save();
+
             # マイページTOPへリダイレクト
             return
             redirect()->route('gacha_category')
@@ -111,6 +115,10 @@ class LoginLineController extends Controller
 
             # ログイン
             Auth::login($user);
+
+            # セッションIDの保存
+            $user->current_session_id = session()->getId();
+            $user->save();
 
             # リダイレクト
             return redirect()->route('register.comp')
