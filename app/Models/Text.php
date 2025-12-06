@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 /*
 | =============================================
 |  サイト内テキスト保存 モデル
@@ -21,7 +22,7 @@ class Text extends Model
     protected $fillable = [
         'type',          //種類
         'body',          //本文
-        'enactmented_at',//制定日
+        'enactmented_at',//制定日・改訂日
     ];
 
     /** Carbonオブジェクトとして利用 */
@@ -45,7 +46,7 @@ class Text extends Model
     |
     */
         /**
-         * ストレージ保存された文章（本文） body_text　
+         * ストレージ保存された文章（本文） body_text
          * @return String
          */
         public function getBodyTextAttribute()
@@ -55,5 +56,15 @@ class Text extends Model
             $path = str_replace(["\r\n", "\r", "\n"], '', $text);
 
             return Storage::exists($path) ? Storage::get($path) : $text;
+        }
+
+
+        /**
+         * 制定日・改訂日フォーマット enactmented_at_format　
+         * @return String
+         */
+        public function getEnactmentedAtFormatAttribute()
+        {
+            return Carbon::parse($this->enactmented_at)->format('Y年m月d日');
         }
 }

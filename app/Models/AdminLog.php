@@ -62,6 +62,23 @@ class AdminLog extends Model
         [ 'id' => 'user.delete',      'label' => '登録ユーザー/退会処理', ],
         [ 'id' => 'user.revival',     'label' => '登録ユーザー/退会解除', ],
 
+        /* 文書設定 */
+        [ 'id' => 'text.trems.create',          'label' => '利用規約/新規登録', ],
+        [ 'id' => 'text.trems.update',          'label' => '利用規約/更新', ],
+        [ 'id' => 'text.trems.delete',          'label' => '利用規約/削除', ],
+        [ 'id' => 'text.privacy_policy.create', 'label' => 'プライバシポリシー/新規登録', ],
+        [ 'id' => 'text.privacy_policy.update', 'label' => 'プライバシポリシー/更新', ],
+        [ 'id' => 'text.privacy_policy.delete', 'label' => 'プライバシポリシー/削除', ],
+        [ 'id' => 'text.tradelaw.create',       'label' => '特定商取引法に基づく表記/新規登録', ],
+        [ 'id' => 'text.tradelaw.update',       'label' => '特定商取引法に基づく表記/更新', ],
+        [ 'id' => 'text.tradelaw.delete',       'label' => '特定商取引法に基づく表記/削除', ],
+
+        [ 'id' => 'text.guide.update',          'label' => '利用ガイド/更新', ],
+        [ 'id' => 'text.sbg_license.update',    'label' => '古物商営業許可/更新', ],
+        [ 'id' => 'text.meta.update',           'label' => 'メタ情報/更新', ],
+        [ 'id' => 'text.note.update',           'label' => '商品購入に関する注意文/更新', ],
+        [ 'id' => 'text.email_signature.update','label' => 'メール署名/更新', ],
+
         /* その他 */
         [ 'id' => 'back_ground.edit',  'label' => 'サイト背景/編集', ],
         [ 'id' => 'maintenance.edit',  'label' => 'メンテナンス設定/編集', ],

@@ -12,7 +12,7 @@ Route::middleware(['admin_auth'])->group(function () {
 
     Route::get('/admin/point_sales_report',
     [Controllers\AdminPointSalesReportController::class,'index'])
-    ->name('admin.point_sales_report');
+    ->name('admin.point_sales_report'); 
 
         # 日別レポート
         Route::get('/admin/point_sales_report/daily/{date_format}',

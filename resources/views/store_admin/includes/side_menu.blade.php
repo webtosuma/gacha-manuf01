@@ -43,6 +43,11 @@
             'label' => 'サイト背景',
         ],
         [
+            'route' => route('admin.text'),
+            'key'   => 'text',
+            'label' => '規約等・文書設定',
+        ],
+        [
             'route' => route('admin.maintenance'),
             'key'   => 'maintenance',
             'label' => 'メンテナンス設定',

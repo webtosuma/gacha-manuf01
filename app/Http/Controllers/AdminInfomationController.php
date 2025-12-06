@@ -275,7 +275,7 @@ class AdminInfomationController extends Controller
         $inputs['is_slide'] = $request->is_slide==true ;
 
 
-        # エンコードコンポーネント入力情報のデコード処理（絵文字対策）
+        # エンコードコンポーネント入力情報のデコード処理（絵文字対策） 
             $inputs['title'] = urldecode($inputs['title']);
             $inputs['body']  = urldecode($inputs['body']) ;
 

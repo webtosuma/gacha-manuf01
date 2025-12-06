@@ -1,7 +1,13 @@
 <template>
     <div class="col">
-        <input type="text" :class="style_class" class="h-100" @change="emitSendInput( body )"
-        :id="id"  v-model="body" :placeholder="placeholder" :required="required!=0?true:false"
+        <input type="text" v-model="body"
+        :name="'default_'+name"
+        @change="emitSendInput( body )"
+        :class="style_class" class="h-100"
+        :id="id"
+        :placeholder="placeholder"
+        :required="required!=0?true:false"
+        :maxlength="maxlength"
         >
 
         <input type="hidden" :name="name" :value="urlEncoded(body)">
@@ -20,6 +26,7 @@
             maxlength:   { type: String, default: '140', },
             default_body:{ type: String, default: '', },
             required:    { type: [String,Number], default: 0, },
+            maxlength:{ type: String, default: '', },
         },
 
         data : function() {

@@ -27,7 +27,7 @@ class AdminGachaCategoryController extends Controller
 
 
     /**
-     * 新規作成
+     * 新規作成 
      *
      * @return \Illuminate\Http\Response
      */

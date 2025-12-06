@@ -68,7 +68,6 @@ class UserController extends Controller
             }
 
 
-
             # 認証番号メールの送信(メール送信は1回のみ)
             $verification_code = SendMailController::SendUpdatePassworVerifEmail( $request );
 

@@ -7,10 +7,10 @@ use \App\Http\Controllers;
  *   管理者(Admin) webルーティング
  * *********************************************************************
  */
-
 Route::middleware([
     'user_session_validate', //1アカウント1ログイン(セッションIDチェック)
 ])->group(function () {
+
 
     # ホーム(home)
     Route::get('/admin',
@@ -42,6 +42,9 @@ Route::middleware([
 
     # サイト背景の管理
     include('web/back_ground.php');
+
+    # 文書設定
+    include('web/text.php');
 
     # メンテナンス表示
     include('web/maintenance.php');

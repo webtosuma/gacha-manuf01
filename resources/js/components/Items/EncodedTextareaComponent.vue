@@ -1,7 +1,12 @@
 <template>
     <div>
-        <textarea :class="style_class" :required="required!=0?true:false"
-        :id="id" :rows="rows"  v-model="body" :placeholder="placeholder"
+        <textarea v-model="body"
+        :name="'default_'+name"
+        :class="style_class"
+        :required="required!=0?true:false"
+        :id="id" :rows="rows"
+        :placeholder="placeholder"
+        :maxlength="maxlength"
         ></textarea>
 
         <input type="hidden" :name="name" :value="urlEncoded(body)">
@@ -19,6 +24,7 @@
             rows:        { type: String, default: '6', },
             default_body:{ type: String, default: '', },
             required:    { type: [String,Number], default: 0, },
+            maxlength:{ type: String, default: '', },
         },
         data : function() {
             return{
