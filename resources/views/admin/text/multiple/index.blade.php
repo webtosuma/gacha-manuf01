@@ -59,7 +59,9 @@ $active_submenu = true;
                     @foreach ($texts as $text)
                     <tr>
                         <!-- 制定日・改訂日 -->
-                        <td><a href="">{{ $text->enactmented_at_format }}</a></td>
+                        <td><a href="{{route($text->type,$text->enactmented_at)}}"
+                        target="_blank"
+                        >{{ $text->enactmented_at_format }}<i class="bi bi-box-arrow-up-right ms-2"></i></a></td>
 
                         <td style="width:8rem;"><div class="row justify-content-end g-2">
                             @php

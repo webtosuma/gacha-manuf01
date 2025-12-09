@@ -99,14 +99,16 @@ class AdminTextController extends Controller
         /* メタ情報編集 */
         public function edit_meta($text_type)
         {
-            $text_bodys = [];
+            $types = ['meta_title','meta_description','meta_keyword'];
 
-            $types = ['meta_title','meta_discription','meta_keyword'];
-            foreach ($types as $type) {
-                $text = Text::where('type',$type)->orderByDesc('id')->first();
-                $text_bodys[$type] = $text ? $text->body : '';
+
+            # データ取得
+            $metas = \App\Models\Text::getMeta();
+            $text_bodys = [];
+            foreach ($metas as $key => $body) {
+                $text_bodys['meta_'.$key] = $body;
             }
-            // dd($text_bodys);
+
 
             return view('admin.text.edit', compact('text_bodys','text_type') );
         }
@@ -116,7 +118,7 @@ class AdminTextController extends Controller
         /* 古物営業許可 */
         public function edit_sbg_license($text_type)
         {
-            $types = ['license_name','license_number','license_commission'];
+            $types = ['license_number','license_commission','license_name',];
             foreach ($types as $type) {
                 $text = Text::where('type',$type)->orderByDesc('id')->first();
                 $text_bodys[$type] = $text ? $text->body : '';
@@ -213,7 +215,7 @@ class AdminTextController extends Controller
         // dd($request->all());
         # 更新パラメーター
         $bodys = $request->only(
-            'meta_title','meta_discription','meta_keyword'
+            'meta_title','meta_description','meta_keyword'
         );
 
         foreach ($bodys as $type => $body)
@@ -271,7 +273,7 @@ class AdminTextController extends Controller
 
         # 更新パラメーター
         $bodys = $request->only(
-            'license_name','license_number','license_commission'
+            'license_number','license_commission','license_name',
         );
 
         foreach ($bodys as $type => $body)

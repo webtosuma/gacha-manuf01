@@ -37,8 +37,10 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
 
 <div class="col-auto">
     <ul class="list-unstyled m-0 gap-3">
-        {{-- <li class="mb-2"><a class="link-secondary text-decoration-none"
-        href="{{ route('guide') }}">利用ガイド</a></li> --}}
+        @if( \App\Models\Text::getGuide() )
+            <li class="mb-2"><a class="link-secondary text-decoration-none"
+            href="{{ route('guide') }}">利用ガイド</a></li>
+        @endif
         <li class="mb-2"><a class="link-secondary text-decoration-none"
         href="{{ route('trems') }}">利用規約</a></li>
         <li class="mb-2"><a class="link-secondary text-decoration-none"
@@ -65,11 +67,23 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
         href="{{ route('operating_company') }}">運営会社</a></li> --}}
     </ul>
 </div>
-<div class="col-auto">
-    <div class="my-3">
+
+
+@php
+$sgb_license = \App\Models\Text::getSbgLicense();
+@endphp
+
+@if ( $sgb_license )
+    <div class="col-auto text-secondary">
+
+        <replace-text-component text="{{ $sgb_license }}"></replace-text-component>
+
+    </div>
+@else
+    <div class="col-auto text-secondary">
         古物商営業許可<br>
         第 000010000000 号<br>
         ○○県公安委員会<br>
         (株)会社名<br>
     </div>
-</div>
+@endif

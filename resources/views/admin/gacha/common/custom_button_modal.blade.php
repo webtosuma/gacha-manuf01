@@ -1,4 +1,22 @@
-<div class="modal fade" id="gachaModal" tabindex="-1" aria-labelledby="gachaModalLabel" aria-hidden="true">
+<!--カスタムボタン　モーダル-->
+@php $params = ['category_code'=>$gacha->category_code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+
+<u-gacha-custom-modal
+one_play_point="{{$gacha->one_play_point}}"
+token    ="{{csrf_token()}}"
+r_action ="{{ route('admin.gacha.play', $params) }}"
+gacha_id ="{{$gacha->id}}"
+max_count="{{$gacha->remaining_count}}"
+max_custom_type_count="{{$gacha->max_custom_type_count}}"
+>
+
+    @include('gacha.common.top_image')
+
+</u-gacha-custom-modal>
+
+
+ 
+{{-- <div class="modal fade" id="gachaModal" tabindex="-1" aria-labelledby="gachaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -37,9 +55,6 @@
                             >キャンセル</button>
                         </div>
                         <div class="col-6">
-                            {{-- <button type="submit"
-                            class="btn btn-info text-white rounded-pill w-100"
-                            >ガチャる</button> --}}
 
                             <disabled-cover-button
                             btn_text="ガチャる"
@@ -51,4 +66,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

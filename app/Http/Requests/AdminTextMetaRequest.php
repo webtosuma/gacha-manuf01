@@ -29,7 +29,7 @@ class AdminTextMetaRequest extends FormRequest
     {
         return [
             'default_meta_title'       => ['required','max:140'],
-            'default_meta_discription' => ['required','max:140'],
+            'default_meta_description' => ['required','max:140'],
             'default_meta_keyword'     => ['required','max:140'],
         ];
     }
@@ -44,7 +44,7 @@ class AdminTextMetaRequest extends FormRequest
     {
         return [
             'default_meta_title'       => 'タイトル',
-            'default_meta_discription' => 'サイト説明文',
+            'default_meta_description' => 'サイト説明文',
             'default_meta_keyword'     => 'キーワード',
         ];
     }

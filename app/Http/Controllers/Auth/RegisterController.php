@@ -88,6 +88,11 @@ class RegisterController extends Controller
         $request->session()->regenerate();
 
 
+        # セッションIDの保存
+        $user->current_session_id = session()->getId();
+        $user->save();
+
+        
         # リダイレクト
         return redirect()->route('register.comp')
         ->with(['alert_register'=>'会員登録が完了しました。']);

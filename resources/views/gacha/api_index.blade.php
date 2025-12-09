@@ -3,8 +3,8 @@
 <!--title-->
 @section('title')
     @php
-    $title = config('app.name')."|オンラインガチャを24時間365日楽しめる！ ";
-    $title = $category_code=='all' || !isset($category_name) ? $title : $category_name.'のガチャ一覧';
+    $metas = \App\Models\Text::getMeta();//DB登録情報
+    $title = $category_code=='all' || !isset($category_name) ? $metas['title'] : $category_name.'のガチャ一覧';
     @endphp
 
     {{$title}}

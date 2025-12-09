@@ -29,7 +29,7 @@ enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
 
 
 
-    <!--サイト説明文(meta_discription)-->
+    <!--サイト説明文(meta_description)-->
     <label class="d-block mb-4">
         <div class="form-label">
             サイト説明文
@@ -39,17 +39,17 @@ enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
         <div class="form-text">＊改行や空白文字は、更新後反映されません。</div>
 
         <!--error message-->
-        @if ( $errors->has('default_meta_discription') )
-            <div class="text-danger"> {{$errors->first('default_meta_discription')}} </div>
+        @if ( $errors->has('default_meta_description') )
+            <div class="text-danger"> {{$errors->first('default_meta_description')}} </div>
         @endif
 
         <encodedーtextarea-component
-        name="meta_discription" id="meta_discription"
+        name="meta_description" id="meta_description"
         style_class="form-control"
         rows="6"
         maxlength="140"
         placeholder="サイト説明文を入力してください。"
-        default_body="{{ $errors->all() ? urldecode( old('meta_discription') ) : $text_bodys['meta_discription'] }}"
+        default_body="{{ $errors->all() ? urldecode( old('meta_description') ) : $text_bodys['meta_description'] }}"
         ></encodedーtextarea-component>
 
     </label>

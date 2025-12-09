@@ -233,16 +233,18 @@ style="max-width:90vw; min-width:30vw;">
                 ><i class="bi bi-chevron-right"></i></div>
             </a>
 
-            {{-- <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
-            >利用ガイド
+            @if( \App\Models\Text::getGuide() )
+                <a href="{{ route('guide') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
+                >利用ガイド
 
-                <div class="position-absolute top-50 start-0 translate-middle-y p-3"
-                ><i class="bi bi-book fs-5"></i></div>
+                    <div class="position-absolute top-50 start-0 translate-middle-y p-3"
+                    ><i class="bi bi-book fs-5"></i></div>
 
-                <div class="position-absolute top-50 end-0 translate-middle-y p-3"
-                ><i class="bi bi-chevron-right"></i></div>
-            </a> --}}
-
+                    <div class="position-absolute top-50 end-0 translate-middle-y p-3"
+                    ><i class="bi bi-chevron-right"></i></div>
+                </a>
+            @endif
+            
             <a href="{{ route('infomation') }}" class="list-group-item list-group-item-action py-3 px-5 position-relative"
             >お知らせ
 

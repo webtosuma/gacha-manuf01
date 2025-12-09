@@ -4,9 +4,9 @@
 ーーーーーーーーーーーーーー
 --}}
 <div class="row g-2 mt-1">
-    @php $params = ['category_code'=>$gacha->category_code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp
+    {{-- @php $params = ['category_code'=>$gacha->category_code_name, 'gacha'=>$gacha, 'key'=>$gacha->key]; @endphp --}}
 
-    <div class="col">
+    {{-- <div class="col">
         <form action="{{ route('admin.gacha.play', $params) }}" method="post">
             @csrf
             @if ($gacha->remaining_count >=1)
@@ -28,10 +28,10 @@
                 </button>
             @endif
         </form>
-    </div>
+    </div> --}}
 
 
-    <div class="col">
+    {{-- <div class="col">
         <form action="{{ route('admin.gacha.play', $params) }}" method="post">
             @csrf
 
@@ -56,8 +56,10 @@
             @endif
 
         </form>
-    </div>
-    <div class="col-12">
+    </div> --}}
+
+
+    {{-- <div class="col-12">
         <button type="button"
         data-bs-toggle="modal" data-bs-target="#gachaModal"
         class="btn btn-info bg-gradient text-white fw-bold w-100 pb-0
@@ -67,6 +69,30 @@
             <div class="">回数をカスタム</div>
             <div class="text-white">{{'？？？pt'}}</div>
         </button>
+    </div> --}}
+
+
+    <div class="col-12">
+        <button type="button"
+        class="btn btn-info bg-gradient text-white fw-bold w-100
+        rounded-pill border-danger border-0 shadow
+        position-relative shiny overflow-hidden
+        py-2
+        "
+        data-bs-toggle="modal"
+        data-bs-target="{{'#'.'gachaCustomModal'.$gacha->id}}"
+        >{{ '回数をカスタム' }}</button>
+
+
+        {{-- <button type="button"
+        data-bs-toggle="modal" data-bs-target="#gachaModal"
+        class="btn btn-info bg-gradient text-white fw-bold w-100 pb-0
+        rounded-pill border-danger border-0 shadow
+        position-relative shiny overflow-hidden
+        ">
+            <div class="">回数をカスタム</div>
+            <div class="text-white">{{'？？？pt'}}</div>
+        </button> --}}
     </div>
 
 
@@ -88,3 +114,6 @@
     </div>
 
 </div>
+
+
+

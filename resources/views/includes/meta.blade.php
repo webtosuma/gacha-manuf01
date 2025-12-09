@@ -6,31 +6,34 @@
 
 @endif
 
-@if ( false )
+{{-- @if ( false ) --}}
+@if ( true )
 {{-- @if ( env('APP_DEBUG') === false  ) --}}
 
 
     @php
+        # DB登録情報
+        $metas = \App\Models\Text::getMeta();
+
         # 最新のガチャ
         $meta_gachas =
         \App\Http\Controllers\GachaController::getPublishedGachas( $category_code='all' );
 
         # メタのデフォルト画像
         $meta_default_image = $meta_gachas->count() > 0
-        ? $meta_gachas[0]->image_path : asset('storage/site/image/logo.png');
+        ? $meta_gachas[0]->image_path : $metas['image'];
+
+        $meta_image = isset( $meta_image ) ? $meta_image : $meta_default_image;//メタのデフォルト画像
+
 
         # metaタイトル (gacha.index.bladeは手動修正)
-        $meta_title = isset( $meta_title ) ? $meta_title.'-'.config('app.name') :
-        config('app.name')."|オンラインガチャを24時間365日楽しめる！ ";
+        $meta_title = isset( $meta_title ) ? $meta_title.'-'.config('app.name') : $metas['title'];
 
         # meta説明文
-        $meta_description = isset( $meta_description ) ? $meta_description :
-        "オンラインガチャなら".config('app.name')."! 高確率、爆アドガチャを多数ご用意。24時間365日楽しめます。 ";
-        $meta_image = isset( $meta_image ) ? $meta_image :
-        $meta_default_image;//メタのデフォルト画像
+        $meta_description = isset( $meta_description ) ? $meta_description : $metas['description'];
 
         #metaキーワード
-        $meta_keyword = "オンラインガチャ,ガチャ, ";
+        $meta_keyword = $metas['keyword'];
 
     @endphp
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Casts\Attribute;//オブジェクト化
 use App\Http\Requests\AdminTextMultipleRequest;
 use App\Models\Text;
 /*

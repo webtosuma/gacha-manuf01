@@ -30,6 +30,34 @@ use App\Http\Controllers;
         return view('footer_menu.tradelaw.index', compact('revision_date'));
     })->name('tradelaw');
 
+
+
+    /* 規約類のDB利用 */
+    if( true )
+    {
+        # ガイド(guide)
+        Route::get('guide',
+        [App\Http\Controllers\FooterMenuController::class,'guide'])
+        ->name('guide');
+
+        # 利用規約(trems)
+        Route::get('/trems/{revision_date?}',
+        [App\Http\Controllers\FooterMenuController::class,'trems'])
+        ->name('trems');
+
+        # プライバシーポリシー(privacy_policy)
+        Route::get('/privacy_policy/{revision_date?}',
+        [App\Http\Controllers\FooterMenuController::class,'privacy_policy'])
+        ->name('privacy_policy');
+
+        # 特定商取引法に基づく表記(tradelaw)
+        Route::get('tradelaw/{revision_date?}',
+        [App\Http\Controllers\FooterMenuController::class,'tradelaw'])
+        ->name('tradelaw');
+    }
+
+
+
     # お知らせ(news)
     Route::get('infomation',
     [App\Http\Controllers\InfomationController::class,'index'])
