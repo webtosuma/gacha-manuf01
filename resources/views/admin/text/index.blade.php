@@ -32,6 +32,7 @@ $active_submenu = true;
 
         <section class="mb-5">
             <div class="row g-3">
+
                 @foreach ($text_types as $text_type)
                     <div class="col-12 col-md-4">
                         <a href="{{
@@ -43,6 +44,18 @@ $active_submenu = true;
                         >{{$text_type['label']}}</a>
                     </div>
                 @endforeach
+
+
+                <!--会員ランク-->
+                @if( config('u_rank_ticket.user_rank',false) )
+                    <div class="col-12 col-md-4">
+                        <a href="{{route('admin.text.user_rank.edit')}}"
+                        class="btn btn-light py-3 border w-100"
+                        >{{'会員ランク'}}</a>
+                    </div>
+                @endif
+
+
             </div>
         </section>
 

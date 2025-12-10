@@ -12,6 +12,19 @@ Route::get('/admin/text',
 [Controllers\AdminTextController ::class, 'index'])
 ->name('admin.text');
 
+
+    # 会員ランク編集
+    Route::get('/admin/text/user_rank/edit',
+    [Controllers\AdminTextUserRankController ::class, 'edit'])
+    ->name('admin.text.user_rank.edit');
+
+    # 会員ランク 更新
+    Route::patch('/admin/text/user_rank/update',
+    [Controllers\AdminTextUserRankController ::class, 'update'])
+    ->name('admin.text.user_rank.update');
+
+
+
     # 編集
     Route::get('/admin/text/{type}/edit',
     [Controllers\AdminTextController ::class, 'edit'])
@@ -32,6 +45,7 @@ Route::get('/admin/text',
     Route::patch('/admin/text/{type}/update',
     [Controllers\AdminTextController ::class, 'update'])
     ->name('admin.text.update');
+
 
 
 # 複数登録　一覧　(multiple)

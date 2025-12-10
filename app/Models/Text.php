@@ -46,6 +46,21 @@ class Text extends Model
     |
     */
         /**
+         * 画像ファイルパス image_path
+         * @return String
+        */
+        public function getImagePathAttribute()
+        {
+            $text = $this->body;
+            $path = str_replace(["\r\n", "\r", "\n"], '', $text);
+
+            return $path && Storage::exists($path) ?
+            asset( 'storage/'.$path ) :  null;
+        }
+
+
+
+        /**
          * ストレージ保存された文章（本文） body_text
          * @return String
          */
@@ -184,7 +199,8 @@ class Text extends Model
 
 
             $key = 'note';
-            return Text::where('type',$key)->pluck('body')->first() ?? $default;
+            $text = Text::where('type',$key)->first();
+            return $text ? $text->body_text : $default;
         }
 
 
@@ -196,7 +212,8 @@ class Text extends Model
         public static function getEmailSignature()
         {
             $key = 'email_signature';
-            return Text::where('type',$key)->pluck('body')->first() ?? null;
+            $text = Text::where('type',$key)->first();
+            return $text ? $text->body_text : null;
         }
 
 
@@ -223,6 +240,43 @@ class Text extends Model
 
             __EOT__;
         }
+
+
+
+        /**
+         * 会員ランク　getUserRank()
+         * @return String
+         */
+        public static function getUserRank()
+        {
+            # デフォルト値
+            $defaults = [
+                'user_rank_title'  => '会員ランク制度',
+                'user_rank_img01'  => Null,
+                'user_rank_body01' => Null,
+                'user_rank_img02'  => Null,
+                'user_rank_body02' => Null,
+            ];
+
+            # データ取得
+            $data = [];
+            foreach ($defaults as $key => $default )
+            {
+                $text = Text::where('type',$key)->first() ?? null;
+
+                if (str_contains($key, 'img')){
+                    $data[$key] = $text ? $text->image_path : $defaults[$key];
+                }else{
+                    $data[$key] = $text ? $text->body_text : $defaults[$key];
+                }
+            }
+
+
+            return $data ;
+        }
+
+
+
 
     /*
     |--------------------------------------------------------------------------

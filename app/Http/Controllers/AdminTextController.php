@@ -28,8 +28,8 @@ class AdminTextController extends Controller
         ['type'=>'meta'           ,'multiple'=>false,'textarea_rows'=>null, 'label'=>'メタ情報'],
         ['type'=>'note'           ,'multiple'=>false,'textarea_rows'=>20,   'label'=>'商品購入に関する注意文'],
         ['type'=>'email_signature','multiple'=>false,'textarea_rows'=>6,    'label'=>'メール署名'],
-
     ];
+
 
 
 
@@ -315,4 +315,6 @@ class AdminTextController extends Controller
         ->with(['alert-warning'=> $type_label.'を更新しました。']);
 
     }
+
+    
 }

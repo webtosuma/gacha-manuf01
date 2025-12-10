@@ -101,4 +101,24 @@ class FooterMenuController extends Controller
 
 
 
+    /**
+     * ユーザーランクとは(about_user_rank)
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function about_user_rank( )
+    {
+        # タイプキー
+        $type = 'about_user_rank';
+
+        # データ取得
+        $text_bodys = \App\Models\Text::getUserRank();
+
+        return view('footer_menu.'.$type.'.db_index',compact(
+            'text_bodys',
+        ));
+    }
+
+
+
 }

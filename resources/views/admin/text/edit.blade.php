@@ -63,6 +63,16 @@ $active_submenu = true;
                     @break
 
 
+                @case('user_rank')
+                    <!--ユーザーランク(user_rank)-->
+                    <div class="form-text mb-3">
+                        <span class="text-danger">＊</span>入力必須
+                    </div>
+
+                    @include('admin.text.forms.user_rank')
+                    @break
+
+
                 @default
                     <!--通常-->
 

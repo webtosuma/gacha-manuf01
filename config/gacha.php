@@ -28,9 +28,6 @@
 
         ];
 
-        # イベント用
-        if( config('app.event_gacha') ){ $types['event'] ='イベント用'; }
-
 
     /**
      * ガチャランク　一覧

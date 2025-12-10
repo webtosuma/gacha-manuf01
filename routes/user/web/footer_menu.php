@@ -54,6 +54,11 @@ use App\Http\Controllers;
         Route::get('tradelaw/{revision_date?}',
         [App\Http\Controllers\FooterMenuController::class,'tradelaw'])
         ->name('tradelaw');
+
+        # 会員ランクとは(about_user_rank)
+        Route::get('/about_user_rank',
+        [App\Http\Controllers\FooterMenuController::class,'about_user_rank'])
+        ->name('about_user_rank');
     }
 
 
@@ -96,11 +101,11 @@ use App\Http\Controllers;
         return view('footer_menu.about_pwa.index');
     })->name('about_pwa');
 
-    # 会員ランクとは(about_user_rank)
-    Route::get('/about_user_rank',
-    function () {
-        return view('footer_menu.about_user_rank.index');
-    })->name('about_user_rank');
+    // # 会員ランクとは(about_user_rank)
+    // Route::get('/about_user_rank',
+    // function () {
+    //     return view('footer_menu.about_user_rank.index');
+    // })->name('about_user_rank');
 
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {
