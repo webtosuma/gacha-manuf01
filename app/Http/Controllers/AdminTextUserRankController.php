@@ -36,7 +36,7 @@ class AdminTextUserRankController extends Controller
 
 
     /**
-     * メタ情報 更新
+     * 更新
      *
      * @param  Request $request
      * @return \Illuminate\Http\Response
