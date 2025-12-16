@@ -74,14 +74,14 @@ return [
         # お知らせの種類分け有無
         'infomation_use_types'     => true,
 
-        # ポイント購入制限年齢
-        'min_age' => 18,
+        # ポイント購入制限年齢(年齢入力)
+        'min_age' => false,
 
         # Admin一括発送処理の許可
         'is_bulk_shipping'         => true,
 
         # 発送商品の追跡番号登録
-        'shipped_tracking_code'    => false,
+        'shipped_tracking_code'    => true,
 
         # パスワード変更の１日の上限回数
         'change_password_limit'    => 2,

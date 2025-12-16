@@ -78,6 +78,7 @@ class AdminLog extends Model
         [ 'id' => 'text.meta.update',           'label' => 'メタ情報/更新', ],
         [ 'id' => 'text.note.update',           'label' => '商品購入に関する注意文/更新', ],
         [ 'id' => 'text.email_signature.update','label' => 'メール署名/更新', ],
+        [ 'id' => 'text.user_rank.update'      ,'label' => '会員ランク/更新', ],
 
         /* その他 */
         [ 'id' => 'back_ground.edit',  'label' => 'サイト背景/編集', ],

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 /*
 | =============================================
-|  ユーザーアドレス レクエスト
+|  ユーザーアドレス レクエスト 
 | =============================================
 */
 class UserAddressApiRequest extends FormRequest

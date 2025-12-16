@@ -672,7 +672,7 @@ class Gacha extends Model
         public function getMaxCustomTypeCountAttribute()
         {
             /*.設定は。config.gachaに記述 */
-            return $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : false ;
+            return $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : null ;
         }
 
 

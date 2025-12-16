@@ -9,7 +9,7 @@ use App\Models\Prize;
 use Illuminate\Support\Facades\Mail;
 /*
 | =============================================
-|  Admin 発送受付 コントローラー
+|  Admin 発送受付 コントローラー 
 | =============================================
 */
 class AdminShippedController extends Controller

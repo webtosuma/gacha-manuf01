@@ -10,7 +10,7 @@
     @if ( $texts->count()>1 )
         @foreach ($texts as $num => $text)
 
-        <a href="{{route('trems',$text->enactmented_at)}}"
+        <a href="{{route( $type, $text->enactmented_at )}}"
         >{{$text->enactmented_at_format.( $num==$texts->count()-1 ? ' 制定' : ' 改訂' )}}</a><br>
 
         @endforeach

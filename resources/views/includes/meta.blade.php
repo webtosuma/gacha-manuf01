@@ -1,5 +1,5 @@
-@if ( true )
-{{-- @if ( env('APP_DEBUG') === true ) --}}
+{{-- @if ( true ) --}}
+@if ( env('APP_DEBUG') === true )
 
     <!--検索結果に非表示-->
     <meta name="robots" content="noindex" />
@@ -7,8 +7,8 @@
 @endif
 
 {{-- @if ( false ) --}}
-@if ( true )
-{{-- @if ( env('APP_DEBUG') === false  ) --}}
+{{-- @if ( true ) --}}
+@if ( env('APP_DEBUG') === false  )
 
 
     @php

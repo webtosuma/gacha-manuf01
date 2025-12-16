@@ -31,6 +31,11 @@ use App\Http\Controllers;
     })->name('tradelaw');
 
 
+    # 会員ランクとは(about_user_rank)
+    Route::get('/about_user_rank',
+    function () {
+        return view('footer_menu.about_user_rank.index');
+    })->name('about_user_rank');
 
     /* 規約類のDB利用 */
     if( true )
@@ -100,12 +105,6 @@ use App\Http\Controllers;
     function () {
         return view('footer_menu.about_pwa.index');
     })->name('about_pwa');
-
-    // # 会員ランクとは(about_user_rank)
-    // Route::get('/about_user_rank',
-    // function () {
-    //     return view('footer_menu.about_user_rank.index');
-    // })->name('about_user_rank');
 
     # 運営会社(operating_company)
     Route::get('/operating_company', function () {

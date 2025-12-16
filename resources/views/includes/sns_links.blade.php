@@ -27,4 +27,19 @@
             alt="tiktokロゴ" class="d-block p-1"  style=" width:2.6rem; height:2.6rem;">
         </a>
     @endif
+    @if( config('sns.line') )
+        <a href="https://lin.ee/{{config('sns.line')}}"
+        rel="nofollow" target="_blank" class="col-auto">
+            <img src="{{asset('storage/site/image/line-logo/success.png')}}"
+            alt="lineロゴ" class="d-block p-1"  style=" width:2.6rem; height:2.6rem;">
+        </a>
+    @endif
+    @if( config('sns.youtube') )
+        <a href="https://www.youtube.com/{{config('sns.youtube')}}"
+        rel="nofollow" target="_blank" class="col-auto">
+            <img src="{{asset('storage/site/image/icon/youtube-dark.png')}}"
+            alt="youtubeロゴ" class="d-block p-1"  style=" width:2.6rem; height:2.6rem;">
+        </a>
+    @endif
+
 </div>

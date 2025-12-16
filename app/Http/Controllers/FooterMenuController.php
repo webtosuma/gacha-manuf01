@@ -28,7 +28,7 @@ class FooterMenuController extends Controller
 
 
         return view('footer_menu.'.$type.'.db_index',compact(
-            'texts','body','enactmented_at_format',
+            'texts','body','enactmented_at_format','type'
         ));
     }
 

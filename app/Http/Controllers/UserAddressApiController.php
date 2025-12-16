@@ -8,7 +8,7 @@ use App\Http\Requests\UserAddressApiRequest;
 use App\Models\UserAddress;
 /*
 | =============================================
-|  ユーザーアドレス コントローラー
+|  ユーザーアドレス コントローラー 
 | =============================================
 */
 class UserAddressApiController extends Controller

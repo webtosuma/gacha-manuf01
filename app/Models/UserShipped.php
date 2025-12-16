@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;//オブジェクト化
 /*
 | =============================================
-|  景品発送履歴　テーブル
+|  景品発送履歴　テーブル 
 | =============================================
 */
 class UserShipped extends Model

@@ -211,9 +211,14 @@ class Text extends Model
          */
         public static function getEmailSignature()
         {
+            $default = null;
+            // $default = <<<__EOT__
+
+            // __EOT__;
+
             $key = 'email_signature';
             $text = Text::where('type',$key)->first();
-            return $text ? $text->body_text : null;
+            return $text ? $text->body_text : $default;
         }
 
 

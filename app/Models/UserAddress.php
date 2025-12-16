@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
-|  ユーザーアドレス テーブル
+|  ユーザーアドレス テーブル 
 | =============================================
 */
 class UserAddress extends Model
