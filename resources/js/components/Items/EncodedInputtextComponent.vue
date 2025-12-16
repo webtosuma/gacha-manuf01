@@ -15,7 +15,7 @@
     </div>
 </template>
 
-<script>
+<script> 
     export default {
         props: {
             //最初に表示する画像のパス
