@@ -33,10 +33,7 @@ class StoreItemApiController extends Controller
         ->paginate(20);
 
         # カテゴリー一覧
-        $categories = GachaCategory::where('is_published',1) //公開中
-        ->orderBy('created_at')
-        ->get();
-
+        $categories =GachaCategory::ecUserList()->get();
 
         #　キーワード検索履歴の保存
         if( $keyword = $request->keyword )

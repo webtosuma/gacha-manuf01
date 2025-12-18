@@ -38,7 +38,7 @@ use App\Http\Controllers;
     })->name('about_user_rank');
 
     /* 規約類のDB利用 */
-    if( true )
+    if ( env('APP_DEBUG') === false )
     {
         # ガイド(guide)
         Route::get('guide',

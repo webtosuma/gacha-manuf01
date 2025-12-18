@@ -31,7 +31,7 @@ class StoreController extends Controller
         // dd($slides);
 
         # カテゴリー 一覧
-        $categories =GachaCategory::userList()->get();
+        $categories =GachaCategory::ecUserList()->get();
 
         # 商品
         $store_items = StoreItem::

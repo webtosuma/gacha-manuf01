@@ -1,6 +1,5 @@
 @php
-$categories = \App\Models\GachaCategory::where('is_published',1)
-->orderBy('created_at')->get();
+$categories = \App\Models\GachaCategory::ecUserList()->get();
 @endphp
 <ul class="row g-3 px-0" style="list-style:none;">
 

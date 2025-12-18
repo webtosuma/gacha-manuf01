@@ -69,10 +69,10 @@ return [
         'event_gacha'              => env('EVENT_GACHA', false),
 
         # 基本レイアウト
-        'layout_app' => env('APP_LAYOUT', ''),
+        'layout_app'               => env('APP_LAYOUT', ''),
 
         # お知らせの種類分け有無
-        'infomation_use_types'     => true,
+        'infomation_use_types'     => false,
 
         # ポイント購入制限年齢(年齢入力)
         'min_age' => false,

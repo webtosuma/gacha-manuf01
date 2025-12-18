@@ -1,5 +1,5 @@
 @php
-$categories = \App\Models\GachaCategory::userList()->get();
+$categories = \App\Models\GachaCategory::ecUserList()->get();
 @endphp
 @if($categories->count()>1)
     <div class="col-auto">

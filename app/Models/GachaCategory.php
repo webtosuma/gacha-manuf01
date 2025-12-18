@@ -170,6 +170,20 @@ class GachaCategory extends Model
 
 
         /**
+         * ユーザー用一覧 EC スコープ GachaCategory::ecUserList()->get();
+         *
+         * @return $query
+        */
+        public function scopeEcUserList($query)
+        {
+            $query->where('is_published',1)
+            ->whereHas('store_items')//EC商品
+            ->orderBy('order')
+            ->orderBy('created_at');
+        }
+
+
+        /**
          * Admin用一覧 スコープ GachaCategory::adminList()->get();
          *
          * @return $query
