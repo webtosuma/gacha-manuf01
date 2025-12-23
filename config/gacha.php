@@ -101,4 +101,14 @@ return [
         'popup'       => true,
 
     ],
+
+
+    /* カテゴリー画像表示 */
+    'category_image' => [
+
+        'pc'     => true,
+        'mobile' => false,
+        'footer' => true,
+
+    ],
 ];

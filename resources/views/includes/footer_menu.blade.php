@@ -11,19 +11,23 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
                     <div class="d-flex align-items-center gap-2 mb-2">
 
 
-                        <div class="position-relative overflow-hidden h-100 rounded-pill" style="width:3rem;">
-                            <ratio-image-component
-                            url="{{ $gacha_category->top_prize_image_path }}" style_class="ratio ratio-1x1 bg-body w-100"
-                            ></ratio-image-component>
+                        @if( config('gacha.category_image.footer', true ) )
+                            <!--カテゴリーimg-->
+                            <div class="position-relative overflow-hidden h-100 rounded-pill" style="width:3rem;">
+                                <ratio-image-component
+                                url="{{ $gacha_category->top_prize_image_path }}" style_class="ratio ratio-1x1 bg-body w-100"
+                                ></ratio-image-component>
 
-                            <div class=" d-flex align-items-center justify-content-center
-                            position-absolute top-0 start-0 w-100 h-100 fw-bold
-                            @if(isset($category_code) && $category_code==$gacha_category->code_name) bg-primary text-white @else text-white @endif"
-                            style="background:rgba(0, 0, 0, .8); opacity:.7;"
-                            ></div>
-                        </div>
+                                <div class=" d-flex align-items-center justify-content-center
+                                position-absolute top-0 start-0 w-100 h-100 fw-bold
+                                @if(isset($category_code) && $category_code==$gacha_category->code_name) bg-primary text-white @else text-white @endif"
+                                style="background:rgba(0, 0, 0, .8); opacity:.7;"
+                                ></div>
+                            </div>
+                        @endif
 
 
+                        <!--カテゴリー name-->
                         <span>{{ $gacha_category->name }}</span>
 
 
