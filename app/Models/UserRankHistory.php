@@ -26,92 +26,19 @@ class UserRankHistory extends Model
 
 
     /** 最高ランクのID (600:レジェンド) */
-    public static function MaxRankId(){ return 600; }
+    public static function MaxRankId()
+    {
+        # config.u_rank_ticketにて設定
+        $array = config('u_rank_ticket.u_rank_settings.user_ranks',[]);
+        return array_key_last( $array );
+    }
 
 
     /** 会員ランク　一覧 */
     public static function UserRanks()
     {
-        return [
-
-            # ビギナー
-            0 => [
-                'label' => 'ビギナー',
-                'code'  => 'beginner',
-                'image' => 'site/image/user_rank/beginner.jpg',
-                'rankup_ptcount'  => 0,
-                'point_bonus'     => 0,
-                'ticket_bonus'    => 0,
-                'point_sail_ratio'=> 0,
-            ],
-
-            # ブロンズ
-            100 => [
-                'label' => 'ブロンズ',
-                'code'  => 'bronze',
-                'image' => 'site/image/user_rank/bronze.jpg',
-                'rankup_ptcount'  => 10*1000,
-                'point_bonus'     => 1*1000,
-                'ticket_bonus'    => 10,
-                'point_sail_ratio'=> 1,
-            ],
-
-            # シルバー
-            200 => [
-                'label' => 'シルバー',
-                'code'  => 'silver',
-                'image' => 'site/image/user_rank/silver.jpg',
-                'rankup_ptcount'  => 50*1000,
-                'point_bonus'     => 3*1000,
-                'ticket_bonus'    => 50,
-                'point_sail_ratio'=> 3,
-            ],
-
-            # ゴールド
-            300 => [
-                'label' => 'ゴールド',
-                'code'  => 'gold',
-                'image' => 'site/image/user_rank/gold.jpg',
-                'rankup_ptcount'  => 200*1000,
-                'point_bonus'     => 5*1000,
-                'ticket_bonus'    => 200,
-                'point_sail_ratio'=> 5,
-            ],
-
-            # ダイヤモンド
-            400 => [
-                'label' => 'ダイヤモンド',
-                'code'  => 'diamond',
-                'image' => 'site/image/user_rank/diamond.jpg',
-                'rankup_ptcount'  => 500*1000,
-                'point_bonus'     => 10*1000,
-                'ticket_bonus'    => 500,
-                'point_sail_ratio'=> 7,
-            ],
-
-            # マスター
-            500 => [
-                'label' => 'マスター',
-                'code'  => 'master',
-                'image' => 'site/image/user_rank/master.jpg',
-                'rankup_ptcount'  => 1000*1000,
-                'point_bonus'     => 30*1000,
-                'ticket_bonus'    => 1*1000,
-                'point_sail_ratio'=> 10,
-            ],
-
-            # レジェンド
-            600 => [
-                'label' => 'レジェンド',
-                'code'  => 'legend',
-                'image' => 'site/image/user_rank/legend.jpg',
-                'rankup_ptcount'  => 3000*1000,
-                'point_bonus'     => 50*1000,
-                'ticket_bonus'    => 3*1000,
-                'point_sail_ratio'=> 15,
-            ],
-
-        ];
+        # config.u_rank_ticketにて設定
+        return config('u_rank_ticket.u_rank_settings.user_ranks',[]);
     }
 
 
@@ -256,12 +183,15 @@ class UserRankHistory extends Model
         {
             $user = $this->user;
 
+            # [ランクアップ基準ID(ポイント履歴)]config.u_rank_ticketにて設定
+            $reason_id = (int) config('u_rank_ticket.u_rank_settings.point_history_id', 21 );
+
             $query = PointHistory::query();
 
                 $query->where('user_id',$user->id)
                 ->whereYear( 'created_at',now())
                 ->whereMonth('created_at',now())
-                ->where('reason_id',21);//入出理由:ガチャPLAY
+                ->where('reason_id', $reason_id );//入出理由:ガチャPLAY
 
             return abs( $query->sum('value') );
         }

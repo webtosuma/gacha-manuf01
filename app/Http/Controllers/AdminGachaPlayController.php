@@ -98,7 +98,7 @@ class AdminGachaPlayController extends Controller
         }
 
 
-        
+
         # 売り切れ登録
         $new_remaining_count = Gacha::find($gacha->id)->remaining_count;
         if( $new_remaining_count < 1 ){
@@ -111,8 +111,16 @@ class AdminGachaPlayController extends Controller
 
         # ユーザーランク:昇格の評価
         $rank_up = false;
-        if( $user->now_rank && env('NEW_TICKET_SISTEM',false) )
-        {
+        if(
+            $user->now_rank
+
+            //[会員ランクの利用]config.u_rank_ticketにて設定
+            && (bool) config('u_rank_ticket.user_rank',false)
+
+            //[即時ボーナスの有無]config.u_rank_ticketにて設定
+            && (bool) config('u_rank_ticket.u_rank_settings.instant_bonuses', true )
+
+        ){
            $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
         }
 

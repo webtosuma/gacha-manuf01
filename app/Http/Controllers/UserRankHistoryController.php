@@ -82,7 +82,12 @@ class UserRankHistoryController extends Controller
 
                 ## ボーナス付与
                 $desc_first_rank = $user->desc_first_rank;//更新された直近の会員ランク履歴
-                self::CreateBonusHistory( $user, $month, $desc_first_rank );
+
+                if( (bool) config('u_rank_ticket.u_rank_settings.monthly_bonuses', true ) )//[毎月ボーナスの有無]config.u_rank_ticketにて設定
+                {
+                    self::CreateBonusHistory( $user, $month, $desc_first_rank );
+                }
+
 
 
                 $month->addMonth();//翌月に更新
@@ -177,13 +182,15 @@ class UserRankHistoryController extends Controller
          */
         public static function GetMonthPtCount($user, $month)
         {
+            # [ランクアップ基準ID(ポイント履歴)]config.u_rank_ticketにて設定
+            $reason_id = (int) config('u_rank_ticket.u_rank_settings.point_history_id', 21 );
 
             $query = PointHistory::query();
 
                 $query->where('user_id',$user->id)
                 ->whereYear( 'created_at',$month)
                 ->whereMonth('created_at',$month)
-                ->where('reason_id',21);//入出理由:ガチャPLAY
+                ->where('reason_id', $reason_id );//入出理由:ガチャPLAY
 
             return abs( $query->sum('value') );
         }

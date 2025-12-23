@@ -1,3 +1,16 @@
+@php
+/* ランクアップ基準ラベル */
+$total_ptcount_labels = [
+    11 => '購入pt数/月',
+    21 => 'pt消費数/月',
+    22 => '発送pt数/月',
+];
+
+$reason_id = (int) config('u_rank_ticket.u_rank_settings.point_history_id', 21 );
+$total_ptcount_label = array_key_exists($reason_id,$total_ptcount_labels) ? $total_ptcount_labels[$reason_id] : 'undifind'
+@endphp
+
+
 <div class="">
 
     <h6 class="fw-bold mb-2">{{$now_rank->label}}</h6>
@@ -13,11 +26,12 @@
         aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div class="text-end" style="font-size:11px;">
-        pt消費数/月
+        {{$total_ptcount_label}}
         <span style="font-size:14px;">{{ number_format($now_rank->total_play_ptcount) }}</span>
         pt
     </div>
 
+    
     @if($now_rank->next_rank)
         <div class="text-end mt-2" style="font-size:11px;">『{{$now_rank->next_rank->label}}』まであと、</div>
         <div class="text-end" style="font-size:14px;"
