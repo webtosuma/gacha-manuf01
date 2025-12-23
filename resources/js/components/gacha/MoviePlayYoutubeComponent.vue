@@ -47,7 +47,17 @@
             </div>
 
             <!-- 音声コンフォーム -->
-            <confirm-modal-component @click-ok="autoPlay(false)" @click-no="autoPlay(true)" body="音声が出ます。よろしいですか？" icon="" />
+            <!-- <confirm-modal-component
+            @click-ok="autoPlay(false)"
+            @click-no="autoPlay(true)"
+            body="音声が出ます。よろしいですか？" icon="" /> -->
+
+
+            <!--音声コンフォーム-->
+            <u-movie-confirm-modal-component
+            @click-ok="autoPlay(false)"
+            @click-no="autoPlay(true)"/>
+
         </div>
     </div>
   </template>

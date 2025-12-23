@@ -12,6 +12,9 @@
 .env_heteml_fobees
 .env_heteml_linkseed
 .env_heteml_event
+.env_heteml_linkseed_sample
+.env_heteml_cardfesta
+.env_ec_sample
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml

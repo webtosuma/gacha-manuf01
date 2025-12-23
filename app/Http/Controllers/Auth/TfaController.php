@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use App\Models\Admin; 
+use App\Models\Admin;
 use App\Models\User;
 /*
 |--------------------------------------------------------------------------
@@ -87,19 +87,21 @@ class TfaController extends Controller
             ], 200);
         }
 
-
-        # TFA認証キーの保存
-        $tfa_key = '';
-        while (!preg_match('/\d/', $tfa_key)){ $tfa_key = Str::random(8); }; // 数字が含まれているかチェック
-        $user->tfa_key = $tfa_key;
-        $user->save();
-
-
-        # TFA認証キーの送信
-        self::sendTFAKeyMail($user);
-
         # 2段階認証を利用するか否か
         $not_tfa = $user->is_tfa || $user->admin ? false : true;
+        $not_tfa = config('app.login_tfa',true)  ? $not_tfa : true;//config設定
+
+        # TFA認証キーの保存
+        if(!$not_tfa)
+        {
+            $tfa_key = '';
+            while (!preg_match('/\d/', $tfa_key)){ $tfa_key = Str::random(8); }; // 数字が含まれているかチェック
+            $user->tfa_key = $tfa_key;
+            $user->save();
+
+            self::sendTFAKeyMail($user);//TFA認証キーの送信
+        }
+
 
         # 成功レスポンスを返す
         return response()->json([

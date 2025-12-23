@@ -1,4 +1,4 @@
-@extends('layouts.simple') 
+@extends('layouts.simple')
 {{-- @extends('layouts.small') --}}
 
 <!----- title ----->

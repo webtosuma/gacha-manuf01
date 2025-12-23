@@ -44,6 +44,9 @@ class LoginController extends Controller
     */
     public function index()
     {
+        // dd( config('app.login_tfa',false) );
+
+
         # ログイン中の時は、トップへリダイレクト
         if(Auth::check()){
             return redirect()->route('home');
@@ -131,7 +134,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
 
-            # セッションIDの保存 
+            # セッションIDの保存
             $user = Auth::user();
             $user->current_session_id = session()->getId();
             $user->save();

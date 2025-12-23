@@ -24,7 +24,8 @@ class UserController extends Controller
     public function password_reset()
     {
 
-        $email = Auth::user()->email;
+        $user  = Auth::user();
+        $email = $user ? $user->email : '';
         $bool = UserChangePwHistory::hasTodayCount($email);
 
         return view('auth.passwords.email');
@@ -130,7 +131,7 @@ class UserController extends Controller
 
 
             # パスワード変更履歴の保存
-            $history = new UserChangePwHistory(['user_id'=>Auth::user()->id]);
+            $history = new UserChangePwHistory(['user_id'=>$user->id]);
             $history->save();
 
 

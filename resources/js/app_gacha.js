@@ -42,6 +42,10 @@ import Vue from 'vue'
     Vue.component('u-movie-play-youtube',
     require('./components/gacha/MoviePlayYoutubeComponent.vue').default);
 
+    /* 動画自動再生確認モーダル */
+    Vue.component('u-movie-confirm-modal-component',
+    require('./components/gacha/ConfirmeModalComponent').default);
+
     /* ガチャボタンコンポーネント */
     Vue.component('u-gacha-btn',
     require('./components/gacha/DisabledButton.vue').default);

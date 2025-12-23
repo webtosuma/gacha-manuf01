@@ -68,7 +68,8 @@ class Store extends Model
          * @return \App\Models\Prize
         */
         public function prize(){
-            return $this->belongsTo(Prize::class);
+            return $this->belongsTo(Prize::class)
+            ->withTrashed(); // withTrashed() メソッドを追加
         }
 
 }

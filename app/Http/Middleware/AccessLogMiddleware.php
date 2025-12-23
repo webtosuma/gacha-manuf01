@@ -33,8 +33,7 @@ class AccessLogMiddleware
 
             # ユーザーエージェント
             $new_text = $request->header('User-Agent');//新しい入力テキスト
-            $dir = 'upload/admin/access_log';      //保存先ディレクトリ
-            $user_agent = Method::uploadStorageText($dir, $new_text, null);
+            $user_agent = substr($new_text, 0, 140);
 
             # ログの保存
             $accessLog = new AccessLog([

@@ -37,7 +37,7 @@
     @if( config('sns.youtube') )
         <a href="https://www.youtube.com/{{config('sns.youtube')}}"
         rel="nofollow" target="_blank" class="col-auto">
-            <img src="{{asset('storage/site/image/icon/youtube-dark.png')}}"
+            <img src="{{asset('storage/site/image/icon/youtube-black.png')}}"
             alt="youtubeロゴ" class="d-block p-1"  style=" width:2.6rem; height:2.6rem;">
         </a>
     @endif

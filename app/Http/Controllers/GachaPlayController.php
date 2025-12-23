@@ -35,6 +35,11 @@ class GachaPlayController extends Controller
      */
     public function play(Request $request, $category_code, Gacha $gacha, $key)
     {
+        # ガチャ情報取得(他のリクエストを待機)
+        $gacha = Gacha::where('id',$gacha->id)
+        ->lockForUpdate()//他のリクエストを待機
+        ->first();
+
         # 変数
         $user = Auth::user(); //ログインユーザー取得
         $now_play_count = (int) $request->play_count;   //プレイ回数
