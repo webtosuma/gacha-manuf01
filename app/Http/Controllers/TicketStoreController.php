@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\Store;
 use App\Models\UserPrize;
 use App\Models\TicketHistory;
@@ -56,56 +58,75 @@ class TicketStoreController extends Controller
     public function post( Request $request, Store $store )
     {
 
-        # 変数・チェック
+        # 変数
+        $user = Auth::user();
+        $item_count = $request->item_count; //交換商品の数量
+        $total_ticket_count = $store->ticket_count * $item_count; //合計チケット利用数
 
-            ## 変数
-            $user = Auth::user();
-            $item_count = $request->item_count; //交換商品の数量
-            $total_ticket_count = $store->ticket_count * $item_count; //合計チケット利用数
+        #＃ 所持チケットが不足
+        if( $user->ticket < $total_ticket_count ){
+            $message = '所持チケットが不足しています。';
+            return redirect()->back()
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+        }
 
-            #＃ 所持チケットが不足
-            if( $user->ticket < $total_ticket_count ){
-                $message = '所持チケットが不足しています。';
-                return redirect()->back()
-                ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
-            }
-
-            #＃ 在庫が不足
-            if( $store->count < $item_count ){
-                $message = '指定された数量、在庫が存在しません。';
-                return redirect()->back()
-                ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
-            }
-
-
-        # チケット履歴の保存
-        $ticket_history = new TicketHistory([
-            'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => - $total_ticket_count,//チケット利用数
-            'reason_id' => 22,// '商品のチケット交換',
-            'store_id'  => $store->id
-        ]);
-        $ticket_history->save();
-
-
-        // dd($store->prize->id);
-        # ユーザー商品の登録
-        for ($nom =0; $nom  < $item_count; $nom ++)
-        {
-            $user_prize = new UserPrize([
-                'user_id'    => $user->id,//ユーザー　リレーション
-                'prize_id'   => $store->prize->id,    //商品リレーション
-                'point'      => $store->point_count, //(商品取得時の)交換ポイント値
-                'gacha_history_id' => 1,//入手したガチャのID (仮登録)
-                'ticket_history_id'=> $ticket_history->id,//チケット収支履歴リレーション(チッケトと交換て入手した時のみ)
-            ]);
-            $user_prize->save();
+        #＃ 在庫が不足
+        if( $store->count < $item_count ){
+            $message = '指定された数量、在庫が存在しません。';
+            return redirect()->back()
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
         }
 
 
-        # 在庫の減産
-        $store->count -= $item_count;
-        $store->save();
+        DB::beginTransaction();
+        try {
+
+            # 交換商品(他のリクエストを待機)
+            $store = Store::where('id',$store->id)
+            ->lockForUpdate()//他のリクエストを待機
+            ->first();
+
+            # チケット履歴の保存
+            $ticket_history = new TicketHistory([
+                'user_id'   => $user->id,          //ユーザー　リレーション
+                'value'     => - $total_ticket_count,//チケット利用数
+                'reason_id' => 22,// '商品のチケット交換',
+                'store_id'  => $store->id
+            ]);
+            $ticket_history->save();
+
+
+            # ユーザー商品の登録
+            for ($nom =0; $nom  < $item_count; $nom ++)
+            {
+                $user_prize = new UserPrize([
+                    'user_id'    => $user->id,//ユーザー　リレーション
+                    'prize_id'   => $store->prize->id,    //商品リレーション
+                    'point'      => $store->point_count, //(商品取得時の)交換ポイント値
+                    'gacha_history_id' => 1,//入手したガチャのID (仮登録)
+                    'ticket_history_id'=> $ticket_history->id,//チケット収支履歴リレーション(チッケトと交換て入手した時のみ)
+                ]);
+                $user_prize->save();
+            }
+
+
+            # 在庫の減産
+            $store->count -= $item_count;
+            $store->save();
+
+
+            DB::commit();
+
+
+        } catch (\Exception $e) {
+
+            Log::error($e);
+            DB::rollback();
+            $message = 'エラーが発生しました。';
+            return redirect()->back()
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+
+        }
 
 
         // 二重送信防止

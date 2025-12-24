@@ -157,16 +157,18 @@ class UserPrizeApiController extends Controller
         $user =Auth::user();
         $user_prize_ids = $request->user_prize_ids;
 
-        # ポイント交換するユーザー商品を取得(発送済み以外)
-        $user_prizes = UserPrize::where('user_id',$user->id)
-        // ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
-        ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
-        ->whereIn('id',$user_prize_ids )
-        ->paginate(20);
-
 
         DB::beginTransaction();
         try {
+
+            # ポイント交換するユーザー商品を取得(発送済み以外)
+            $user_prizes = UserPrize::where('user_id',$user->id)
+            ->lockForUpdate()//他のリクエストを待機
+            // ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
+            ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
+            ->whereIn('id',$user_prize_ids )
+            ->paginate(20);
+
 
             foreach ($user_prizes as $user_prize)
             {
@@ -214,16 +216,18 @@ class UserPrizeApiController extends Controller
         $user =Auth::user();
         $user_prize_ids = $request->user_prize_ids;
 
-        # チケット交換するユーザー商品を取得(発送済み以外)
-        $user_prizes = UserPrize::where('user_id',$user->id)
-        // ->where('point_history_id',NULL)//チケット収支履歴（未交換のみ）
-        ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
-        ->whereIn('id',$user_prize_ids )
-        ->paginate(20);
-
 
         DB::beginTransaction();
         try {
+
+            # チケット交換するユーザー商品を取得(発送済み以外)
+            $user_prizes = UserPrize::where('user_id',$user->id)
+            ->lockForUpdate()//他のリクエストを待機
+            // ->where('point_history_id',NULL)//チケット収支履歴（未交換のみ）
+            ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
+            ->whereIn('id',$user_prize_ids )
+            ->paginate(20);
+
 
             foreach ($user_prizes as $user_prize)
             {

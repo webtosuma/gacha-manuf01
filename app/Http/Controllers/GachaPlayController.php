@@ -35,40 +35,40 @@ class GachaPlayController extends Controller
      */
     public function play(Request $request, $category_code, Gacha $gacha, $key)
     {
-        # ガチャ情報取得(他のリクエストを待機)
-        $gacha = Gacha::where('id',$gacha->id)
-        ->lockForUpdate()//他のリクエストを待機
-        ->first();
-
-        # 変数
-        $user = Auth::user(); //ログインユーザー取得
-        $now_play_count = (int) $request->play_count;   //プレイ回数
-        $now_play_count = $gacha->sponsor_ad ? 1 : (int) $now_play_count;//(広告ガチャのとき）プレイ回数=>1
-        $play_point = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
-        $total_play_point = $now_play_count*$play_point;//合計使用ポイント
-        $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
-
-        # キー認証
-        if( $gacha->key!=$key ){ return \App::abort(404); }
-
-
-        # ポイントが不足しているとき
-        if( $total_play_point > $user->point ){
-            $params = ['gacha_id'=>$gacha->id,'play_count'=>$now_play_count];
-            return redirect()->route('point_sail.shortage',$params);
-        }
-
-        # ガチャ開始前チェック
-        $message =  self::StartCheckMessage( $request, $gacha );
-        if( $message ){
-            return redirect()->back()
-            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
-        }
-
-
 
         DB::beginTransaction();
         try {
+
+            # ガチャ情報取得(他のリクエストを待機)
+            $gacha = Gacha::where('id',$gacha->id)
+            ->lockForUpdate()//他のリクエストを待機
+            ->first();
+
+            # 変数
+            $user = Auth::user(); //ログインユーザー取得
+            $now_play_count = (int) $request->play_count;   //プレイ回数
+            $now_play_count = $gacha->sponsor_ad ? 1 : (int) $now_play_count;//(広告ガチャのとき）プレイ回数=>1
+            $play_point = (int) $gacha->one_play_point; //ガチャの1回プレー使用ポイント
+            $total_play_point = $now_play_count*$play_point;//合計使用ポイント
+            $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
+
+            # キー認証
+            if( $gacha->key!=$key ){ return \App::abort(404); }
+
+
+            # ポイントが不足しているとき
+            if( $total_play_point > $user->point ){
+                $params = ['gacha_id'=>$gacha->id,'play_count'=>$now_play_count];
+                return redirect()->route('point_sail.shortage',$params);
+            }
+
+            # ガチャ開始前チェック
+            $message =  self::StartCheckMessage( $request, $gacha );
+            if( $message ){
+                return redirect()->back()
+                ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+            }
+
 
             # ポイント履歴の登録
             $point_history = self::CreatePointHistory( $total_play_point );
@@ -122,10 +122,8 @@ class GachaPlayController extends Controller
 
             //[即時ボーナスの有無]config.u_rank_ticketにて設定
             && (bool) config('u_rank_ticket.u_rank_settings.instant_bonuses', true )
-            
-        )
-        // if( $user->now_rank && env('NEW_TICKET_SISTEM',false) )
-        {
+
+        ){
             $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
 
             ## ランクアップ時のボーナス付与

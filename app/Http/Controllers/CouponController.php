@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\Coupon;
 use App\Models\CouponChild;
 use App\Models\CouponHistory;
@@ -89,6 +91,9 @@ class CouponController extends Controller
         # コード
         $code = $request->code;
 
+        # ユーザー情報
+        $user = Auth::user();
+
         # クーポン情報
         $coupon = Coupon::forUserPublished()
         ->where('code',$code)->first();
@@ -110,58 +115,73 @@ class CouponController extends Controller
             ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-circle']);
         }
 
-        # ユーザー情報
-        $user = Auth::user();
+
+        DB::beginTransaction();
+        try {
+
+            # クーポン情報(lockForUpdate)
+            $coupon = Coupon::forUserPublished()
+            ->lockForUpdate()
+            ->where('code',$code)->first();
+
+            # サービス(商品orポイント)による分岐
+            switch ($coupon->service)
+            {
+                /* 商品提供 */
+                case 'prize':
+
+                    // dd('hoge');
+                    $user_prize = new UserPrize([
+                        'user_id'   => $user ->id,        //ユーザーリレーション
+                        'prize_id'  => $coupon->prize_id, //商品リレーション
+                    ]);
+                    $user_prize->save();
+                    break;
 
 
-        # サービス(商品orポイント)による分岐
-        switch ($coupon->service)
-        {
-            /* 商品提供 */
-            case 'prize':
+                /* ポイント提供 */
+                case 'point':
 
-                // dd('hoge');
-                $user_prize = new UserPrize([
-                    'user_id'   => $user ->id,        //ユーザーリレーション
-                    'prize_id'  => $coupon->prize_id, //商品リレーション
-                ]);
-                $user_prize->save();
-                break;
+                    $point_history = new PointHistory([
+                        'user_id'   => $user ->id,     //ユーザーリレーション
+                        'value'     => $coupon->point, //ポイント数
+                        'reason_id' => 17,             //入出理由ID
+                    ]);
+                    $point_history->save();
+                    break;
+
+                /* */
+            }
+
+            # クーポン履歴の保存
+            $coupon_history = new CouponHistory([
+                'user_id'         => $user ->id,//ユーザーリレーション
+                'coupon_id'       => $coupon->id,//クーポンリレーション
+                'user_prize_id'   => isset($user_prize)    ? $user_prize->id    : null ,
+                'point_history_id'=> isset($point_history) ? $point_history->id : null ,
+            ]);
+            $coupon_history->save();
 
 
-            /* ポイント提供 */
-            case 'point':
+            # 回数制限に達したか否か(is_done)
+            $coupon = CouponController::isDoneFanc( $coupon );
 
-                $point_history = new PointHistory([
-                    'user_id'   => $user ->id,     //ユーザーリレーション
-                    'value'     => $coupon->point, //ポイント数
-                    'reason_id' => 17,             //入出理由ID
-                ]);
-                $point_history->save();
-                break;
+            # 一回限定で複数発行のクーポンを利用のとき
+            if($coupon_child){ $coupon_child->update(['is_done'=>1]); };
 
-            /* */
+            # 二重送信防止
+            $request->session()->regenerateToken();
+
+            DB::commit();
+
+
+        } catch (\Exception $e) {
+
+            Log::error($e);
+            DB::rollback();
+            return redirect()->json(['message'=>'エラーが発生しました。'],500);
+
         }
-
-        # クーポン履歴の保存
-        $coupon_history = new CouponHistory([
-            'user_id'         => $user ->id,//ユーザーリレーション
-            'coupon_id'       => $coupon->id,//クーポンリレーション
-            'user_prize_id'   => isset($user_prize)    ? $user_prize->id    : null ,
-            'point_history_id'=> isset($point_history) ? $point_history->id : null ,
-        ]);
-        $coupon_history->save();
-
-
-        # 回数制限に達したか否か(is_done)
-        $coupon = CouponController::isDoneFanc( $coupon );
-
-        # 一回限定で複数発行のクーポンを利用のとき
-        if($coupon_child){ $coupon_child->update(['is_done'=>1]); };
-
-        # 二重送信防止
-        $request->session()->regenerateToken();
-
 
         #
         return redirect()->route('coupon.comp',$coupon_history);
