@@ -56,7 +56,7 @@ class TicketStoreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function post( Request $request, Store $store )
-    {
+    { 
 
         # 変数
         $user = Auth::user();

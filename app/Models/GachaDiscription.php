@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
-|  ガチャの詳細説明情報　モデル
+|  ガチャの詳細説明情報　モデル hit_nums
 | =============================================
 */
 class GachaDiscription extends Model
@@ -251,6 +251,24 @@ class GachaDiscription extends Model
                     $array = GPCUPMethod::KiriHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdSecretKiri() );
                 }
 
+
+                ## RankSS ピタリの当選
+                else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSspita() )
+                {
+                    $array = GPCUPMethod::PitaHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdSspita() );
+                }
+                ## RankS ピタリの当選
+                else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSpita() )
+                {
+                    $array = GPCUPMethod::PitaHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdSpita() );
+                }
+                ## RankA ピタリの当選
+                else if(  $this->gacha_rank_id == GPCUPMethod::GachaRankIdApita() )
+                {
+                    $array = GPCUPMethod::PitaHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdApita() );
+                }
+
+
                 ## 通常の当選
                 else {
                     $array = [];
@@ -329,6 +347,24 @@ class GachaDiscription extends Model
                 $value = count( $array );
             }
 
+            ## RankSS ピタリの当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSspita() )
+            {
+                $array = GPCUPMethod::PitaHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdSspita() );
+                $value = count( $array );
+            }
+            ## RankS ピタリの当選
+            else if( $this->gacha_rank_id == GPCUPMethod::GachaRankIdSpita() )
+            {
+                $array = GPCUPMethod::PitaHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdSpita() );
+                $value = count( $array );
+            }
+            ## RankA ピタリの当選
+            else if(  $this->gacha_rank_id == GPCUPMethod::GachaRankIdApita() )
+            {
+                $array = GPCUPMethod::PitaHitPlayCountArray( $gacha, GPCUPMethod::GachaRankIdApita() );
+                $value = count( $array );
+            }
 
             ## 通常の当選
             else {

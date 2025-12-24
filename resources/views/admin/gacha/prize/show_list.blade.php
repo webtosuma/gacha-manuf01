@@ -42,15 +42,13 @@
 
             <!-- 登録商品 -->
             <div class="collapse my-3
-            @if($discription->gacha_rank_id>300 && $discription->gacha_rank_id<400 && $discription->g_prizes->count()>0 ) showww @endif 
+            @if($discription->gacha_rank_id>300 && $discription->gacha_rank_id<400 && $discription->g_prizes->count()>0 ) showww @endif
             "
             id="collapse{{$discription->id}}">
 
-            @if( $discription->g_prizes->count()>0 &&
-                (
-                    ($discription->gacha_rank_id>300 && $discription->gacha_rank_id<400) ||
-                    ($discription->gacha_rank_id>900 && $discription->gacha_rank_id<1000)
-                )
+            @if(
+                $discription->g_prizes->count()>0
+                && in_array($discription->gacha_rank_id,['901','903', '173','273','373',  '310','320','330',  '361','362','363'])
             )
                 <div class="rounded bg-light p-2 mb-2">
                     当選番号：{{ $discription->hit_nums }}

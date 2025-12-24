@@ -179,7 +179,9 @@ class CouponController extends Controller
 
             Log::error($e);
             DB::rollback();
-            return redirect()->json(['message'=>'エラーが発生しました。'],500);
+            $message = 'エラーが発生しました。';
+            return redirect()->back()
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
 
         }
 

@@ -59,11 +59,14 @@
                                 url="{{$gacha_prize->prize->image_path}}"
                                 ></ratio-image-component>
 
-                                @if( $discription->gacha_rank_id <= 300 && $discription->gacha_rank_id!=10 )
+                                @if(
+                                    $discription->gacha_rank_id <= 399
+                                    && $discription->gacha_rank_id!=10
+                                )
                                     <!--登録枚数-->
                                     <div class="position-absolute bottom-0 end-0 p-1">
                                         <div class="bg-dark text-white px-2 rounded {{$fs}}"
-                                        >{{'×'.$gacha_prize->max_count}}</div>
+                                        >{{'×'.($gacha_prize->max_count>0 ? $gacha_prize->max_count : 1) }}</div>
                                     </div>
                                 @endif
 

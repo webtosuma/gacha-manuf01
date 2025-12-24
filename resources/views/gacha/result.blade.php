@@ -138,6 +138,10 @@
 
             </div>
 
+            <!--metter-->
+            @php $metter_bg_color = ''; @endphp
+            @include('gacha.common.metter')
+
             <!--play_buttons-->
             @include('gacha.common.play_buttons')
 
@@ -148,5 +152,5 @@
     <!--ポップアップモーダル-->
     @include('gacha.common.play_modal')
 
-    
+
 @endsection

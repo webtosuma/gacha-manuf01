@@ -116,6 +116,28 @@ class GachaPlayCreateUserPrizeMethod extends Controller
                 $gacha_prize_id = self::WinnerKiri( $user_gacha_history, self::GachaRankIdSecretKiri()/*ランクID*/ );
             }
 
+
+            ## RankSS ピタリの当選
+            else if(
+                in_array( $played_count+1, self::PitaHitPlayCountArray( $gacha, self::GachaRankIdSspita()/*ランクID*/ ) )
+            ){
+                $gacha_prize_id = self::WinnerPita( $user_gacha_history, $played_count+1, self::GachaRankIdSspita()/*ランクID*/ );
+            }
+            ## RankS ピタリの当選
+            else if(
+                in_array( $played_count+1, self::PitaHitPlayCountArray( $gacha, self::GachaRankIdSpita()/*ランクID*/ ) )
+            ){
+                $gacha_prize_id = self::WinnerPita( $user_gacha_history, $played_count+1, self::GachaRankIdSpita()/*ランクID*/ );
+            }
+            ## RankA ピタリの当選
+            else if(
+                in_array( $played_count+1, self::PitaHitPlayCountArray( $gacha, self::GachaRankIdApita()/*ランクID*/ ) )
+            ){
+                $gacha_prize_id = self::WinnerPita( $user_gacha_history, $played_count+1, self::GachaRankIdApita()/*ランクID*/ );
+            }
+
+
+
             ## 通常の当選
             else {
                 $gacha_prize_id = self::WinnerNomal( $user_gacha_history );
@@ -137,6 +159,13 @@ class GachaPlayCreateUserPrizeMethod extends Controller
 
     /** ガチャランクID ラストワン */
     public static function GachaRankIdLastone()  {   return 10; }
+
+    /** ガチャランクID RankSS ピタリ */
+    public static function GachaRankIdSspita()   {   return 173; }
+    /** ガチャランクID RankS ピタリ */
+    public static function GachaRankIdSpita()    {   return 273; }
+    /** ガチャランクID RankA ピタリ */
+    public static function GachaRankIdApita()    {   return 373; }
 
     /** ガチャランクID キリ番 */
     public static function GachaRankIdKiri()     {   return 310; }

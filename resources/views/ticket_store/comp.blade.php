@@ -43,7 +43,7 @@
     </div>
 
     <div class="container py-md-4 pb-5 mb-5">
-        <div class="col-md-8 card card-body rounded-3 border-0 shadow-sm bg-white mb-5 mx-auto">
+        <div class="col-md-8 card card-body rounded-3 border-0 shadow-sm bg-white text-dark mb-5 mx-auto">
 
             <h3 class="text-center my-3 mb-5 ">チケット交換が完了しました</h3>
 

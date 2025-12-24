@@ -48,7 +48,7 @@
 
             </div>
             <div class="col-12 col-md-8">
-                <div class="card card-body rounded-3 border-0 shadow-sm bg-white mb-5">
+                <div class="card card-body rounded-3 border-0 shadow-sm bg-white text-dark mb-5">
 
                     <!--discription-->
                     @include('ticket_store.common.prize_discription')
@@ -70,7 +70,7 @@
 
                             <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-content text-dark">
                                         <div class="modal-body text-center">
                                             <h5 class="modal-title" id="exchangeModalLabel">
                                                 <p>チケットと交換します。<br>よろしいですか？</p>

@@ -89,15 +89,20 @@
                         >
                             <div class="px-3">
 
-                                <div
+                                <!-- <div
                                 v-if="
                                 (discription.gacha_rank_id>300 && discription.gacha_rank_id<400 && discription.gacha_prizes_count>0)
                                 ||
                                 (discription.gacha_rank_id>900 && discription.gacha_rank_id<910)
                                 "
+                                class="rounded bg-light p-2 mb-2"> -->
+                                <div
+                                v-if="['901','903', '173','273','373',  '310','320','330',  '361','362','363'].includes(discription.gacha_rank_id)"
                                 class="rounded bg-light p-2 mb-2">
+
                                     当選番号：{{ discription.hit_nums }}
                                 </div>
+
 
                                 <!--スペシャルランク-->
                                 <a-gachaprize-gacharank-container
@@ -141,7 +146,7 @@
 
                                 <!--ピタリ賞-->
                                 <a-gachaprize-gacharank-pita-container
-                                v-else-if="['330','363','903'].includes(discription.gacha_rank_id)"
+                                v-else-if="['173','273','373', '330','363','903',].includes(discription.gacha_rank_id)"
                                 @send-delete-gp-id="addDeleteGachaPrizeId"
                                 :token="token"
                                 :category_id="category_id"

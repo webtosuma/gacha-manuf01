@@ -101,6 +101,10 @@ class AdminGachaPrizeController extends Controller
 
                 // 口数が0でも可な特別なランク
                 $is_special_rank = in_array( $gacha_rank_id, [
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdSspita(),//RankSS ピタリ
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdSpita(), //RankS  ピタリ
+                    GachaPlayCreateUserPrizeMethod::GachaRankIdApita(), //RankA  ピタリ
+
                     GachaPlayCreateUserPrizeMethod::GachaRankIdSecretKiri(),//シークレット・キリID
                     GachaPlayCreateUserPrizeMethod::GachaRankIdSecretPita(),//シークレット・ピタリID
                     GachaPlayCreateUserPrizeMethod::GachaRankIdKiri(),//キリ番ID
@@ -206,27 +210,30 @@ class AdminGachaPrizeController extends Controller
             # ラストワン
             case 10:  $count = 1; break;
             //
+            # RankSS ピタリ
+            case 173: $count = 0; break;
+            # RankS ピタリ
+            case 273: $count = 0; break;
+            # RankA ピタリ
+            case 373: $count = 0; break;
+
+            //
             # キリ番
             case 310: $count = 0; break;
-            //
             # ゾロ目
             case 320: $count = 0; break;
-            //
             # ピタリ賞
             case 330: $count = 0; break;
             //
             # 個人キリ番
             case 361: $count = 0; break;
-            //
             # 個人ゾロ目
             case 362: $count = 0; break;
-            //
             # 個人ピタリ賞
             case 363: $count = 0; break;
             //
             #シークレット・キリ
             case 901: $count = 0; break;
-            //
             #シークレット・ピタリ
             case 903: $count = 0; break;
             //
