@@ -135,7 +135,12 @@
                         <div class="col-auto">
 
                             <!--購入日・発送日-->
-                            <div>{{ user_shipped.created_at_format }}</div>
+                            <div v-if="user_shipped.shipment_at_format"
+                            >{{ user_shipped.shipment_at_format }}</div>
+                            <div v-else
+                            >{{ user_shipped.created_at_format }}</div>
+
+
 
 
                             <!--発送コード-->

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;//オブジェクト化
 /*
 | =============================================
-|  景品発送履歴　テーブル 
+|  景品発送履歴　テーブル
 | =============================================
 */
 class UserShipped extends Model
@@ -158,7 +158,7 @@ class UserShipped extends Model
         */
         public function getShipmentAtFormatAttribute()
         {
-            return $this->shipment_at ? $this->shipment_at->format('発送日：Y年m月d日 H:i'): null;
+            return $this->shipment_at ? $this->shipment_at->format('発送日：Y年m月d日'): null;
         }
 
 
