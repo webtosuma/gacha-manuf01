@@ -33,8 +33,14 @@ class UserSessionValidate
             && $user->current_session_id !== session()->getId() //セッションIDが一致しない
 
             && env('APP_DEBUG') === false//テストモードを除外
+
+            && (bool) config('app.user_session_validate') //1アカ1ログイン利用のenv・config管理
+
         ){
             Auth::logout();//ログアウト
+
+            # 管理者ログインページへリダイレクト
+            return redirect()->route('require_login');
         }
 
 
