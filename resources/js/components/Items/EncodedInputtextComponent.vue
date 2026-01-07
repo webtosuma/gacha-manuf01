@@ -13,7 +13,7 @@
         <input type="hidden" :name="name" :value="urlEncoded(body)">
 
     </div>
-</template>
+</template> 
 
 <script>
     export default {

@@ -67,7 +67,7 @@ use App\Http\Controllers;
     }
 
 
-
+ 
     # お知らせ(news)
     Route::get('infomation',
     [App\Http\Controllers\InfomationController::class,'index'])

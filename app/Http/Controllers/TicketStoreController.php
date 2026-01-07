@@ -56,7 +56,7 @@ class TicketStoreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function post( Request $request, Store $store )
-    { 
+    {
 
         # 変数
         $user = Auth::user();
@@ -137,6 +137,7 @@ class TicketStoreController extends Controller
         return redirect()->route('ticket_store.comp', compact('ticket_history','key'));
     }
 
+    
 
     /**
      * 交換完了

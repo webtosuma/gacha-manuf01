@@ -211,10 +211,12 @@ class Text extends Model
          */
         public static function getEmailSignature()
         {
-            $default = null;
-            // $default = <<<__EOT__
-
-            // __EOT__;
+            $company_name = config('app.company_name');
+            
+            $default = <<<__EOT__
+            発行・配信元
+            {$company_name}
+            __EOT__;
 
             $key = 'email_signature';
             $text = Text::where('type',$key)->first();
@@ -238,9 +240,6 @@ class Text extends Model
             このメールに心当たりのない場合や、ご不明な点がある場合は、下記お問い合わせ先へご連絡ください。
             {$r_contact}
             （このメールへの返信はできません）
-
-            発行・配信元
-            {$company_name}
 
 
             __EOT__;

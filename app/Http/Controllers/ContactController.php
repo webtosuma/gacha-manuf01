@@ -61,6 +61,10 @@ class ContactController extends Controller
         $inputs['body'] = urldecode($inputs['body']) ;
 
 
+        # 顧客へメールの自動送信
+        SendMailController::ContactCompletion( $inputs );
+
+
         # text入力値が150文字以上の時、ストレージへファイル保存する
         $dir = 'upload/contact/';      //保存先ディレクトリ
         $new_text = $inputs['body'];  //新しい入力テキスト
@@ -70,12 +74,8 @@ class ContactController extends Controller
         # DB保存
         $contact = new Contact( $inputs );
         $contact->save();
-        // 二重送信防止
-        $request->session()->regenerateToken();
+        $request->session()->regenerateToken();// 二重送信防止
 
-
-        # 顧客へメールの自動送信
-        SendMailController::ContactCompletion( $inputs );
 
         # JSONを返す
         return response()->json(['comment'=>'ok']);

@@ -44,7 +44,7 @@ Route::middleware([
     include('web/back_ground.php');
 
     # 文書設定
-    include('web/text.php');
+    include('web/text.php'); 
 
     # メンテナンス表示
     include('web/maintenance.php');
