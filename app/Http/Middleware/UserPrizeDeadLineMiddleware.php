@@ -39,8 +39,8 @@ class UserPrizeDeadLineMiddleware
         # 期限切れのユーザー商品
         $user_prizes = UserPrize::where('created_at','<=',$deadLine_created_at)//期限切れ
         ->where('user_id',$user->id)    //ログインユーザーの取得商品
-        ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
-        ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
+        ->where('point_history_id'    ,NULL)//ポイント収支履歴（未交換のみ）
+        ->where('shipped_id'          ,NULL)//発送履歴（未交換のみ）
         ->get();
 
         # ポイント交換メソッド
@@ -61,8 +61,9 @@ class UserPrizeDeadLineMiddleware
     {
         foreach ($user_prizes as $user_prize)
         {
-            # ポイント交換済みはスキップ
-            if( $user_prize->point_history_id ){ continue; }
+            # 処理済の時はスキップ
+            if($user_prize->point_history_id    ){ continue; }//商品->ポイント交換履歴
+            if($user_prize->to_ticket_history_id){ continue; }//商品->チケット交換履歴
 
             #期限前はスキップ
             if( $user_prize->deadline_at>now() ){ continue; }

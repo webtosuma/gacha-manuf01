@@ -173,8 +173,8 @@ class UserPrizeApiController extends Controller
             foreach ($user_prizes as $user_prize)
             {
                 # 処理済の時はスキップ
-                if($user_prize->point_history_id){  continue; }
-                if($user_prize->ticket_history_id){ continue; }
+                if($user_prize->point_history_id    ){ continue; }//商品->ポイント交換履歴
+                if($user_prize->to_ticket_history_id){ continue; }//商品->チケット交換履歴
 
                 # ポイント履歴の登録
                 $point_history = new PointHistory([
@@ -232,8 +232,8 @@ class UserPrizeApiController extends Controller
             foreach ($user_prizes as $user_prize)
             {
                 # 処理済の時はスキップ
-                if($user_prize->point_history_id){  continue; }
-                if($user_prize->to_ticket_history_id){ continue; }
+                if($user_prize->point_history_id    ){ continue; }//商品->ポイント交換履歴
+                if($user_prize->to_ticket_history_id){ continue; }//商品->チケット交換履歴
 
                 # チケット交換の値が0のときはスキップ
                 if( !$user_prize->ticket ){  continue; }
