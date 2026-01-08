@@ -51,6 +51,10 @@ import Vue from 'vue'
         Vue.component('a-gachaprize-prize-list',
         require('./components/admin/gacha/prize/edit/PrizeList.vue').default);
 
+        // 商品リスト ピタリ賞
+        Vue.component('a-gachaprize-prize-list-pita',
+        require('./components/admin/gacha/prize/edit/PrizeListPita.vue').default);
+
         // 商品履歴
         Vue.component('a-gacha-prize-history',
         require('./components/admin/gacha/PrizeHistoryComponent.vue').default);

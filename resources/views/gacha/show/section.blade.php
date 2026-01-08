@@ -23,7 +23,7 @@
 
                     <div class="text-center  text-white"
                     style="margin-bottom:{{$margin_bottom}}px; font-size:3rem;"
-                    >{{$discription->rank_label }}</div>
+                    >{{$discription->rank_label }}</div> 
 
                 @endif
             @endif

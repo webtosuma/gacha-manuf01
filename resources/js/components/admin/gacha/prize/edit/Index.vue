@@ -38,7 +38,6 @@
 
 
 
-
         <div class="row g-0">
             <!--flex-c2-->
             <div class="col mb-5">
@@ -89,13 +88,6 @@
                         >
                             <div class="px-3">
 
-                                <!-- <div
-                                v-if="
-                                (discription.gacha_rank_id>300 && discription.gacha_rank_id<400 && discription.gacha_prizes_count>0)
-                                ||
-                                (discription.gacha_rank_id>900 && discription.gacha_rank_id<910)
-                                "
-                                class="rounded bg-light p-2 mb-2"> -->
                                 <div
                                 v-if="['901','903', '173','273','373',  '310','320','330',  '361','362','363'].includes(discription.gacha_rank_id)"
                                 class="rounded bg-light p-2 mb-2">

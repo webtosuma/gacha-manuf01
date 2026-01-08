@@ -144,7 +144,7 @@
         <div class="col">
 
             <!--商品リスト-->
-            <a-gachaprize-prize-list
+            <a-gachaprize-prize-list-pita
             @send-prize-id="addGachaPrize"
             :parent_prize_ids="prize_ids"
             :gacha_rank_id="gacha_rank_id"
@@ -156,7 +156,6 @@
             :test="test"
             />
 
-            <!-- :is_special_rank="is_special_rank" -->
 
         </div>
 

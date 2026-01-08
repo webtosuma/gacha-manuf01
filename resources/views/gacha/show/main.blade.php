@@ -30,7 +30,7 @@
         @foreach ($gacha->discriptions as $discription)
 
 
-            @include('gacha.show.section')
+            @include('gacha.show.section') 
 
 
         @endforeach
