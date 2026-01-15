@@ -20,7 +20,7 @@ class GachaPrize extends Model
         'gacha_id', //ガチャの種類リレーション
         'prize_id', //商品リレーション
 
-        'gacha_rank_id',  //ランクID
+        'gacha_rank_id',  //ランクID 
         'max_count',      //商品総数
         'remaining_count',//商品残数
         'special_count', //特別なランク専用数 2024/12/23追加　//default(NULL)

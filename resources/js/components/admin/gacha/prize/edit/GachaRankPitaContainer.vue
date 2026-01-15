@@ -2,7 +2,12 @@
     <div class="row g-1">
         <div class="col">
 
+
             <!-- {{ prize_ids }}{{ new_prizes_ids }} -->
+
+
+
+
             <div class="card bg-white overflow-auto" style="height: 90vh">
 
                 <div v-if="is_special_rank" class="bg-danger-subtle p-2 form-text m-0">
@@ -31,7 +36,7 @@
 
                     <!--登録ずみガチャ商品-->
                     <tbody v-for="(g_prize, key) in g_prizes" :key="key">
-                        <tr  v-show=" g_prize.show ">
+                        <tr  v-show=" g_prize.show "  class="position-relative">
 
                             <td scope="row" style="width:3rem;">
                                 <!-- 画像 -->
@@ -48,10 +53,16 @@
                                 <!--special_counts(キリ番が当選する間隔[更新])-->
                                 <input
                                 type="number"
-                                v-model="g_prize.special_count"
+                                v-model.number="g_prize.special_count"
                                 :name="'gri'+gacha_rank_id+'-special_counts[]'"
                                 :disabled="false"
                                 class="form-control form-control-sm text-end" min="1">
+
+                                <!--input err-->
+                                <div v-if="g_prize.input_err"
+                                class="position-absolute top-0 start-50 translate-middle w-100 text-end px-2">
+                                    <div class="badge text-bg-danger text-white shadow">{{ g_prize.input_err }}</div>
+                                </div>
 
                             </td>
 
@@ -87,7 +98,8 @@
                     </tbody>
                     <!--新規登録商品-->
                     <tbody>
-                        <tr v-for="(prize, p_key) in new_prizes" :key="p_key">
+                        <tr v-for="(prize, p_key) in new_prizes" :key="p_key"
+                        class="position-relative">
                             <td class="bg-success-subtle" scope="row" style="width:3rem;">
                                 <!-- 画像 -->
                                 <ratio-image-component
@@ -106,6 +118,7 @@
                                 <input
                                 type="number"
                                 value="1"
+                                v-model.number="prize.special_count"
                                 :name="'gri'+gacha_rank_id+'-new_special_counts[]'"
                                 :disabled="false"
                                 class="form-control form-control-sm text-end" min="1">
@@ -114,11 +127,18 @@
                                 <input type="hidden" :value="prize.id"
                                 :name="'gri'+gacha_rank_id+'-new_prize_ids[]'"
                                 >
+
+                                <!--input err-->
+                                <div v-if="prize.input_err"
+                                class="position-absolute top-0 start-50 translate-middle w-100 text-end px-2">
+                                    <div class="badge text-bg-danger text-white shadow">{{ prize.input_err }}</div>
+                                </div>
+
                             </td>
 
                             <td class="bg-success-subtle"  style="width:2rem;">
                                 <!-- 削除 -->
-                                <button @click="removeGachaPrize(prize.id)"
+                                <button @click="removeGachaPrize(p_key)"
                                 class="btn btn-sm border text-danger" type="button"
                                 ><i class="bi bi-trash3"></i></button>
 
@@ -148,7 +168,6 @@
             @send-prize-id="addGachaPrize"
             :parent_prize_ids="prize_ids"
             :gacha_rank_id="gacha_rank_id"
-
             :token="token"
             :category_id="category_id"
             :r_api_prize="r_api_prize"
@@ -190,12 +209,86 @@
             test: false,
 
         } },
+        watch: {
+            // g_prizes: {
+            //     deep: true,
+            //     handler() {
+            //         // special_count のみ抽出（未入力・nullは除外）
+            //         const counts = this.g_prizes
+            //             .map(p => p.special_count)
+            //             .filter(v => v !== null && v !== '' && v !== undefined);
+
+            //         // 重複している値を抽出
+            //         const duplicatedValues = counts.filter(
+            //             (v, i, arr) => arr.indexOf(v) !== i
+            //         );
+
+            //         // 各 g_prize にエラーフラグを設定
+            //         this.g_prizes.forEach(p => {
+            //             p.input_err =
+            //                 p.special_count &&
+            //                 duplicatedValues.includes(p.special_count);
+            //         });
+            //     }
+            // }
+            g_prizes: {
+                deep: true,
+                handler() {
+                    this.checkSpecialCount();
+                }
+            },
+            new_prizes: {
+                deep: true,
+                handler() {
+                    this.checkSpecialCount();
+                }
+            },
+        },
         mounted() {
 
             this.getData();
 
         },
         methods: {
+
+            /** 重複防止チェック */
+            checkSpecialCount() {
+                const allPrizes = [
+                    ...this.g_prizes,
+                    ...this.new_prizes
+                ];
+
+                // 数値（1以上）のみ抽出
+                const validCounts = allPrizes
+                    .map(p => p.special_count)
+                    .filter(v => typeof v === 'number' && v >= 1);
+
+                // 重複値抽出
+                const duplicatedValues = validCounts.filter(
+                    (v, i, arr) => arr.indexOf(v) !== i
+                );
+
+                allPrizes.forEach(p => {
+                    // 初期化
+                    p.input_err = null;
+
+                    // 未入力 or 0
+                    if (
+                        p.special_count === null ||
+                        p.special_count === undefined ||
+                        p.special_count === '' ||
+                        p.special_count === 0
+                    ) {
+                        p.input_err = '1以上の数値入力が必要です';
+                        return;
+                    }
+
+                    // 重複チェック
+                    if (duplicatedValues.includes(p.special_count)) {
+                        p.input_err = '他の商品と同じ値は設定できません';
+                    }
+                });
+            },
 
             /** ガチャ商品 */
             getData() {
@@ -236,39 +329,21 @@
                 //  新規登録　商品ID
                 this.new_prizes_ids = [...this.new_prizes_ids, ...prize_ids];
 
-                this.getPrizeData();/* 新規商品データ取得 */
+                // this.getPrizeData();/* 新規商品データ取得 */
+                this.getPrizeData( this.r_api_prize, prize_ids );/* 新規商品データ取得 */
+
             },
 
 
             /** 新しいガチャ商品の種類を削除 */
-            removeGachaPrize(id) {
-                // 右を非表示にするIDから該当IDを削除
-                this.prize_ids = this.prize_ids.filter( p_id => {
-                    return id != p_id;
-                } );
-
-                //  新規登録-商品IDから該当IDを削除
-                this.new_prizes_ids = this.new_prizes_ids.filter( p_id => {
-                    return id != p_id;
-                } );
-
-                if( this.new_prizes_ids.length>0 ){
-                    this.getPrizeData();
-                }else{
-                    this.new_prizes = [];
-                }
+            removeGachaPrize(n) {
+                this.new_prizes_ids.splice(n, 1);
+                this.new_prizes.splice(n, 1);
             },
 
 
             /** 登録ずみ商品を削除 */
             removeGachaPrizeIds( g_prize ){
-
-                // g_prize.delete = true;
-                // console.log(g_prize);
-                // this.$emit('send-delete-gp-id',g_prize.id);//削除対象のガチャ商品IDを送信
-                // return
-
-
 
                 // 商品ID配列の更新
                 const new_prize_ids = this.prize_ids.filter( prize_id => {
@@ -278,38 +353,35 @@
 
                 // ガチャ商品の非表示
                 g_prize.show = false;
-                // console.log( this.g_prizes );
             },
 
 
+
+
             /** 新規商品データ取得 */
-            getPrizeData( route = this.r_api_prize ) {
+            getPrizeData( route, prize_ids ) {
 
                 this.loading = true;//読み込み中
 
                 // パラメーター
                 const inputs = {
                     _token : this.token,
-                    ids: this.new_prizes_ids
+                    ids: prize_ids
                 };
 
-                // const route = this.r_api_prize;
                 axios.post( route , inputs )
                 .then(json => {
-                    // console.log(json.data);
 
                     //ページネーションデータ
                     const paginate = json.data.prizes;
 
-                    // console.log(paginate.data);
-                    // return
-
-
+                    //
+                    paginate.data.forEach(prize => {
+                        prize.special_count = 1;
+                    });
 
                     // 商品情報の登録（新規登録・ページネーション追加）
-                    this.new_prizes = route == this.r_api_prize ? paginate.data
-                    : [ ...this.new_prizes, ...paginate.data];
-                    // return
+                    this.new_prizes = [ ...this.new_prizes, ...paginate.data];
 
                     this.loading = false;//読み込み中
 
@@ -319,25 +391,49 @@
                     const last_page    = paginate.last_page;   //最終ページ
                     if( current_page != last_page ){
                         const nextPageUrl = paginate.next_page_url;     //URLの更新
-                        this.getPrizeData( nextPageUrl );
+                        this.getPrizeData( nextPageUrl, prize_ids );
                     }
                 })
                 .catch(error => {
                     alert('通信エラーが発生しました。')
-                    // console.log( error.response.data );
+                    console.log( error.response.data );
 
                 });
 
             },
 
-            /** 特殊商品が否かの保存 */
-            // isSpecialGachaRank() {
-            //     const array = ['10','310','320'];
-            //     this.is_special_rank = array.includes(this.gacha_rank_id);
-            // },
-
         }
     }
 </script>
+<style scoped>
+/* 吹き出し本体 */
+.bubble-error {
+  display: block;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 6px;
 
+  background: #dc3545; /* Bootstrap danger */
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* 吹き出しの三角 */
+.bubble-error::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #dc3545 transparent transparent transparent;
+}
+</style>
 

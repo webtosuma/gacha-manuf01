@@ -23,7 +23,7 @@
 
                     <div class="text-center  text-white"
                     style="margin-bottom:{{$margin_bottom}}px; font-size:3rem;"
-                    >{{$discription->rank_label }}</div> 
+                    >{{$discription->rank_label }}</div>
 
                 @endif
             @endif
@@ -38,16 +38,16 @@
             @else
 
                 @php
-                $col     = $discription->g_prizes->count()==1 ? 'col-8' : ($discription->gacha_rank_id < 400 ? 'col-6' : 'col-3') ;
-                $rounded = $discription->g_prizes->count()==1 ? 'rounded-4' : 'rounded-2' ;
+                $col     = $discription->g_prizes_show_section->count()==1 ? 'col-8' : ($discription->gacha_rank_id < 400 ? 'col-6' : 'col-3') ;
+                $rounded = $discription->g_prizes_show_section->count()==1 ? 'rounded-4' : 'rounded-2' ;
                 $fs      = $discription->gacha_rank_id < 400 ? 'fs-1' : '' ;
 
-                $mdal_btn_size = $discription->g_prizes->count()==1 ? '4rem'//説明文モーダルボタンサイズ
+                $mdal_btn_size = $discription->g_prizes_show_section->count()==1 ? '4rem'//説明文モーダルボタンサイズ
                 : ($discription->gacha_rank_id < 400 ? '3rem' : '2rem')
                 @endphp
 
                 <div class="row g-2 px- justify-content-center">
-                    @foreach ($discription->g_prizes as $gacha_prize)
+                    @foreach ($discription->g_prizes_show_section as $gacha_prize)
 
                         @php $prize = $gacha_prize->prize; @endphp
 
@@ -66,7 +66,7 @@
                                     <!--登録枚数-->
                                     <div class="position-absolute bottom-0 end-0 p-1">
                                         <div class="bg-dark text-white px-2 rounded {{$fs}}"
-                                        >{{'×'.($gacha_prize->max_count>0 ? $gacha_prize->max_count : 1) }}</div>
+                                        >{{'×'.($gacha_prize->sum_max_count) }}</div>
                                     </div>
                                 @endif
 
@@ -114,7 +114,7 @@
 
     <!--商品説明モーダル-->
     <div class="overflow-hidden" style="height:0;">
-        @foreach ($discription->g_prizes as $gacha_prize)
+        @foreach ($discription->g_prizes_show_section as $gacha_prize)
             @php $prize = $gacha_prize->prize; @endphp
             <u-prize-discription
             id         ="{{$prize->id}}"

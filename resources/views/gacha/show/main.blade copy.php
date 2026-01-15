@@ -1,6 +1,6 @@
 <!--トップー-->
 <section class="overflow-hidden px-1">
-    <div class="container mx-auto px-0" style="max-width:600px;">
+    <div class="containerr mx-auto px-0">
 
         <div class="overflow-hidden rounded-4"
         data-aos="zoom-out"
@@ -11,7 +11,7 @@
         </div>
 
         @if( env('SHARE_BTNS') )
-            <div class="d-flex justify-content-end mt-3">
+            <div class="d-flex justify-content-end mt-3 d-lg-none">
                 @php
                 $sns_url  = request()->url();
                 $sns_text = $gacha->name;
@@ -36,3 +36,8 @@
         @endforeach
     </div>
 </section>
+
+
+    <!--ポップアップモーダル-->
+    @include('gacha.common.play_modal')
+

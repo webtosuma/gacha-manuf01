@@ -54,7 +54,11 @@ class AdminGachaController extends Controller
      */
     public function show(Gacha $gacha)
     {
-        // dd($gacha->discriptions[1]->g_prizes);
+        $discription = $gacha->discriptions[1];
+        // dd($discription->g_prizes_show_section->toArray());
+        // dd($discription->gacha->max_count);
+
+
         return view('admin.gacha.show', compact('gacha'));
     }
 

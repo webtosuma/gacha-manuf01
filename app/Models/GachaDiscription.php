@@ -4,6 +4,7 @@ namespace App\Models;
 use \App\Http\Controllers\GachaPlayCreateUserPrizeMethod as GPCUPMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
@@ -75,6 +76,38 @@ class GachaDiscription extends Model
             ->where('gacha_id',$this->gacha->id)
             ->where('gacha_rank_id', $this->gacha_rank_id)
             ->get();
+        }
+
+
+        /**
+         * GachaPrizeモデル リレーション:ラインナップ表示用 (g_prizes_show_section)
+         * @return \App\Models\GachaPrize
+        */
+        public function getGPrizesShowSectionAttribute()
+        {
+            $max_special_count = $this->gacha->max_count;
+
+            $gacha_prizes = GachaPrize::query()
+            ->select([
+                'gacha_prizes.prize_id',
+                \Illuminate\Support\Facades\DB::raw('COUNT(*) as prize_count'),
+                \Illuminate\Support\Facades\DB::raw('SUM(gacha_prizes.max_count) as sum_max_count'),
+            ])
+            ->where('gacha_id',      $this->gacha_id)
+            ->where('gacha_rank_id', $this->gacha_rank_id)
+            ->where(function ($q) use ($max_special_count) {/* 口数以上の当選位置の商品を除く */
+                $q->where('special_count', '<=', $max_special_count)
+                ->orWhereNull('special_count');
+            })
+            ->groupBy('gacha_prizes.prize_id')
+            ->with('prize')
+            ->get();
+
+            foreach ($gacha_prizes as $gacha_prize) {
+                $gacha_prize->sum_max_count = $gacha_prize->sum_max_count>0 ? $gacha_prize->sum_max_count : $gacha_prize->prize_count;
+            }
+
+            return $gacha_prizes;
         }
 
 

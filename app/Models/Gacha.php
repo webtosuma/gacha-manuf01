@@ -234,33 +234,7 @@ class Gacha extends Model
         {
             return $this->published_at && $this->published_at <= now()->format('Y-m-d H:i:s') ;
         }
-
-
-        // /**
-        //  * [ルーティング]ガチャ詳細ページ route
-        //  * @return String
-        // */
-        // public function getRouteAttribute()
-        // {
-        //     $params = ['category_code'=>$this->category_code_name, 'gacha'=>$this, 'key'=>$this->key];
-        //     return route('gacha',$params);
-        // }
-
-
-
-        // /**
-        //  * [ルーティング]ガチャ商品履歴 r_prize_history
-        //  * 商品履歴の表示許可があるとき&&売り切れのとき
-        //  * @return String
-        // */
-        // public function getRPrizeHistoryAttribute()
-        // {
-        //     $params = ['category_code'=>$this->category->code_name, 'gacha'=>$this, 'key'=>$this->key];
-
-        //     return config('app.gacha_prize_history') && $this->is_sold_out
-        //     ? route('gacha.prize_history',$params) : null;
-        // }
-
+        
 
 
         /** 画像なしの時の画像 */

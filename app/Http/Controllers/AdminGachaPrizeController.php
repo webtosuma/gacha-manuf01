@@ -40,7 +40,6 @@ class AdminGachaPrizeController extends Controller
      */
     public function update(Request $request, Gacha $gacha)
     {
-
         # ランク別詳細情報
         DB::beginTransaction();
         try {

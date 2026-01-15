@@ -15,6 +15,7 @@
 .env_heteml_linkseed_sample
 .env_heteml_cardfesta
 .env_ec_sample
+.env_na
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml

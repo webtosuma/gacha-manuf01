@@ -83,16 +83,6 @@
         data-bs-target="{{'#'.'gachaCustomModal'.$gacha->id}}"
         >{{ '回数をカスタム' }}</button>
 
-
-        {{-- <button type="button"
-        data-bs-toggle="modal" data-bs-target="#gachaModal"
-        class="btn btn-info bg-gradient text-white fw-bold w-100 pb-0
-        rounded-pill border-danger border-0 shadow
-        position-relative shiny overflow-hidden
-        ">
-            <div class="">回数をカスタム</div>
-            <div class="text-white">{{'？？？pt'}}</div>
-        </button> --}}
     </div>
 
 
