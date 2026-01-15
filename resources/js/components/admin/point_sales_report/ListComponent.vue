@@ -34,6 +34,12 @@
                         <label for="lastDayInput">終了日</label>
                     </div>
                 </div>
+                <div class="col-auto h-100">
+                    <button v-if="inputs.days_type=='custom'"
+                    @click="getData()"
+                    class="btn btn-light border"
+                    type="button"><i class="bi bi-arrow-clockwise"></i>更新</button>
+                </div>
             </div>
         </section>
 
@@ -284,9 +290,9 @@
         if( inputs.value.days_type!='custom' ){ getData(); }
     });
     /* 監視：開始日 */
-    watch(() => inputs.value.start_day, () => getData());
+    //watch(() => inputs.value.start_day, () => getData());
     /* 監視：終了日 */
-    watch(() => inputs.value.last_day,  () => getData());
+    // watch(() => inputs.value.last_day,  () => getData());
     /* 監視：テーブルの切り替え */
     watch(() => active_table_type.value, () => {
 
