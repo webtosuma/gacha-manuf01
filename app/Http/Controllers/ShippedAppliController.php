@@ -63,12 +63,18 @@ class ShippedAppliController extends Controller
         $shipped_point = self::shippedPoint( count($id_array) );
         // 発送ポイントが足りていないとき
         if( $user->point < $shipped_point ){
-            $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
+            $message =  '発送ポイント'. number_format($shipped_point) .'ptが不足しています。';
             return redirect()->route('user_prize')
-            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+            ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-triangle']);
         }
 
-
+        # 発送商品の合計ポイント上限
+        $limit_prize_point = (Int) config('gacha.shipped.limit_prize_point',0);
+        if( $limit_prize_point>0 ){
+            $message =  '発送申請には、合計'. number_format($limit_prize_point) .'pt以上の商品選択が必要です。';
+            return redirect()->route('user_prize')
+            ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-triangle']);
+        }
 
 
         # 発送するユーザー商品を取得/データチェック

@@ -23,6 +23,27 @@
     <div class="container py-md-4 pb-5 mb-5">
         <h3 class="d-none d-md-block">取得した商品</h3>
 
+        @php
+        $shipped_point     = (Int) config('gacha.shipped_point',0);
+        $limit_prize_point = (Int) config('gacha.shipped.limit_prize_point',0);
+        @endphp
+        @if( $shipped_point>0 || $limit_prize_point>0 )
+            <div class="alert alert-primary">
+                <div class="fw-bold"><i class="bi bi-exclamation-triangle"></i>ご確認ください</div>
+
+                @if( $shipped_point>0 )
+                    <div>発送申請には、合計{{ number_format($shipped_point) }}pt以上の消費が必要です。</div>
+                @endif
+
+
+                @if( $limit_prize_point>0 )
+                    <div>発送申請には、合計{{ number_format($limit_prize_point) }}pt以上の商品選択が必要です。</div>
+                @endif
+            </div>
+        @endif
+
+
+
         <u-user-prize-form
         token="{{ csrf_token() }}"
         no_exchange_point="{{ config('app.no_exchange_point') ?1:0 }}"
