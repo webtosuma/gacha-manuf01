@@ -36,7 +36,7 @@
 
                     <!--登録ずみガチャ商品-->
                     <tbody v-for="(g_prize, key) in g_prizes" :key="key">
-                        <tr  v-show=" g_prize.show "  class="position-relative">
+                        <tr  v-show=" g_prize.show ">
 
                             <td scope="row" style="width:3rem;">
                                 <!-- 画像 -->
@@ -48,7 +48,7 @@
                             <td>{{ g_prize.prize.name }}</td>
                             <td>{{ g_prize.prize.rank.name }}</td>
                             <td>{{ g_prize.prize.point }} pt</td>
-                            <td style="width:6rem;">
+                            <td style="width:6rem;" class="position-relative">
 
                                 <!--special_counts(キリ番が当選する間隔[更新])-->
                                 <input
@@ -60,9 +60,10 @@
 
                                 <!--input err-->
                                 <div v-if="g_prize.input_err"
-                                class="position-absolute top-0 start-50 translate-middle w-100 text-end px-2">
+                                class="position-absolute top-0 end-0 translate-middle px-2">
                                     <div class="badge text-bg-danger text-white shadow">{{ g_prize.input_err }}</div>
                                 </div>
+
 
                             </td>
 
@@ -98,8 +99,7 @@
                     </tbody>
                     <!--新規登録商品-->
                     <tbody>
-                        <tr v-for="(prize, p_key) in new_prizes" :key="p_key"
-                        class="position-relative">
+                        <tr v-for="(prize, p_key) in new_prizes" :key="p_key" >
                             <td class="bg-success-subtle" scope="row" style="width:3rem;">
                                 <!-- 画像 -->
                                 <ratio-image-component
@@ -112,7 +112,7 @@
                             <td class="bg-success-subtle">{{ prize.rank.name }}</td>
                             <td class="bg-success-subtle">{{ prize.point }} pt</td>
 
-                            <td class="bg-success-subtle"  style="width:6rem;">
+                            <td class="bg-success-subtle position-relative"  style="width:6rem;">
 
                                 <!--new_special_counts(キリ番が当選する間隔[新規])-->
                                 <input
@@ -130,7 +130,7 @@
 
                                 <!--input err-->
                                 <div v-if="prize.input_err"
-                                class="position-absolute top-0 start-50 translate-middle w-100 text-end px-2">
+                                class="position-absolute top-0 end-0 translate-middle px-2">
                                     <div class="badge text-bg-danger text-white shadow">{{ prize.input_err }}</div>
                                 </div>
 

@@ -95,7 +95,7 @@ return [
     'shipped' => [
 
         # 発送商品の合計ポイント上限(数値)
-        'limit_prize_point' => 0,
+        'limit_prize_point' => 1000,
 
     ],
 

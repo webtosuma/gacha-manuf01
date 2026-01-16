@@ -18,3 +18,7 @@
         font-family: 'Roboto', sans-serif; /* フォントを適用 */
     }
 </style>
+
+<!-- img pass -->
+<meta name="img-gacha-mashīn-head" content="{{ asset('storage/site/image/gacha_mashīn/head.png') }}">
+<meta name="img-gacha-mashīn-body" content="{{ asset('storage/site/image/gacha_mashīn/body.png') }}">
