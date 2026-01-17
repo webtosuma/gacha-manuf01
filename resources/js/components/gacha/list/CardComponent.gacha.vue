@@ -6,7 +6,8 @@
 
 
             <!--image-->
-            <a :href="gacha.route"  :class="href_class"  style="opacity:1 !important;">
+            <a :href="gacha.route"  :class="href_class" class="p-2"
+            style="opacity:1 !important; background:#000;">
 
                 <u-gacha-image
                 :gacha_name            ="gacha.name"
