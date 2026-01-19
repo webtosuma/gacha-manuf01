@@ -21,6 +21,8 @@
             // 'nomal'        => '100連ボタンあり',
             // 'no_custom'    => '100連ボタンなし',
 
+
+
             'only_new_user'=> '新規会員限定',
             'one_time'     => '一回限定',
             'only_oneday'  => '1日1回限定',
@@ -95,7 +97,7 @@ return [
     'shipped' => [
 
         # 発送商品の合計ポイント上限(数値)
-        'limit_prize_point' => 1000,
+        'limit_prize_point' => 0,
 
     ],
 
@@ -124,4 +126,6 @@ return [
         'footer' => true,
 
     ],
+
+
 ];

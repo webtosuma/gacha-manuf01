@@ -78,7 +78,7 @@ class ShippedAppliController extends Controller
         $limit_prize_point = (Int) config('gacha.shipped.limit_prize_point',0);
         $total_prize_point = 0;
         foreach ($user_prizes as $user_prize) {//カードの重複枚数保存
-            $total_prize_point += $user_prize->prize->point;
+            $total_prize_point += $user_prize->point;
         }
         if( $total_prize_point < $limit_prize_point ){
             $message =  '発送申請には、合計'. number_format($limit_prize_point) .'pt以上の商品選択が必要です。';
