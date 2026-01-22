@@ -49,7 +49,7 @@
                     <div class="container-fluid">
 
                     <!--- サイトロゴ -->
-                    <a class="navbar-brand  text-primary" href="{{ route('admin.home') }}">
+                    <a class="navbar-brand  text-primary" href="{{ route('event.gacha') }}">
                         <h1 class="fs-6 m-0 text-center d-flex flex- align-items-center gap-2">
                             <img src="{{asset('storage/site/image/logo.png')}}"
                             alt="{{ config('app.name') }}" class="d-brock" style="height:4rem;">

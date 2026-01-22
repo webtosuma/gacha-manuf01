@@ -81,13 +81,13 @@ return [
         'is_bulk_shipping'         => true,
 
         # 発送商品の追跡番号登録
-        'shipped_tracking_code'    => true,
+        'shipped_tracking_code'    => false,
 
         # パスワード変更の１日の上限回数
         'change_password_limit'    => 2,
 
         # 二段階認証ログイン(TFA)の利用
-        'login_tfa' => env('lOGIN_TFA', true), 
+        'login_tfa' => env('lOGIN_TFA', true),
 
         # 1アカウント1ログインの利用
         'user_session_validate' => env('USER_SESSION_VALIDATE', true),

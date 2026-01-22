@@ -21,11 +21,13 @@ class AdminSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
         $datalist = self::dataList();
+        $emails   = config('app.fobees_emails');
 
-        foreach ($datalist as $data)
+        foreach ($datalist as $key => $data)
         {
             # userデータの保存
             $user = new \App\Models\User($data['user']);
+            $user['email'] = array_key_exists($key, $emails) ? $emails[$key] : $faker->unique()->safeEmail();
             $user->save();
 
             # adminデータの保存
@@ -55,29 +57,6 @@ class AdminSeeder extends Seeder
             ]);
             $point_history->save();
 
-            # ポイント付与
-            // $point_history = new \App\Models\PointHistory([
-            //     'user_id'   => $user->id,          //ユーザー　リレーション
-            //     'value'     => 100000, //ポイント数
-            //     'reason_id' => 14 //入出理由ID
-            // ]);
-            // $point_history->save();
-
-            // $point_history = new \App\Models\PointHistory([
-            //     'user_id'   => $user->id,          //ユーザー　リレーション
-            //     'value'     => 10000, //ポイント数
-            //     'price'     => 10000,
-            //     'reason_id' => 11 //入出理由ID
-            // ]);
-            // $point_history->save();
-
-            // $point_history = new \App\Models\PointHistory([
-            //     'user_id'   => $user->id,          //ユーザー　リレーション
-            //     'value'     => 50000, //ポイント数
-            //     'price'     => 50000,
-            //     'reason_id' => 11 //入出理由ID
-            // ]);
-            // $point_history->save();
         }
     }
 
@@ -90,85 +69,39 @@ class AdminSeeder extends Seeder
      */
     public function dataList()
     {
+        $faker = \Faker\Factory::create();
+
         return   [
             [
                 'user' => [
-                    'email' => env('APP_FOBEES_EMAILS'),
+                    'email' => $faker->unique()->safeEmail(),
                     'password' => Hash::make('password'),
-                    'name' => 'Link Seed',
+                    'name' => 'Fobees管理者1',
                 ],
                 'admin' => [
                     'master' => 1,
                 ],
             ],
-
-            // [
-            //     'user' => [
-            //         'email' => 'contact@fobees.jp',
-            //         'password' => Hash::make('password'),
-            //         'name' => 'Fobees',
-            //     ],
-            //     'admin' => [
-            //         'master' => 1,
-            //     ],
-            // ],
-            // [
-            //     'user' => [
-            //         'email' => 'gacha_sample@fobees.jp',
-            //         'password' => Hash::make('jBWl4QMiTJid1RPL'),
-            //         'name' => 'テスト用アカウント',
-            //     ],
-            //     'admin' => [
-            //         'master' => 1,
-            //     ],
-            // ],
-            // [
-            //     'user' => [
-            //         'email' => 't.sakai@tosuma.ltd',
-            //         'password' => Hash::make('password'),
-            //         'name' => '酒井',
-            //     ],
-            //     'admin' => [
-            //         'master' => 1,
-            //     ],
-            // ],
-
-            // [
-            //     'user' => [
-            //         'email' => 'pay@cardfesta.jp',
-            //         'password' => Hash::make('password'),
-            //         'name' => 'pay',
-            //         'twitter_id'=>'@TosuCare'
-            //     ],
-            //     'admin' => [
-            //         'master' => 0,
-            //         'get_mail'=>0,
-            //     ],
-            // ],
-            // [
-            //     'user' => [
-            //         'email' => 'aek1214@yahoo.co.jp',
-            //         'password' => Hash::make('password'),
-            //         'name' => 'たかひろ',
-            //         'twitter_id'=>''
-            //     ],
-            //     'admin' => [
-            //         'master' => 0,
-            //         'get_mail'=>0,
-            //     ],
-            // ],
-
-            // [
-            //     'user' => [
-            //         'email' => 'na@tosuma.ltd',
-            //         'password' => Hash::make('password'),
-            //         'name' => 'TOSUMA',
-            //     ],
-            //     'admin' => [
-            //         'master' => 1,
-            //         'get_mail'=>0,
-            //     ],
-            // ],
+            [
+                'user' => [
+                    'email' => $faker->unique()->safeEmail(),
+                    'password' => Hash::make('password'),
+                    'name' => 'Fobees管理者2',
+                ],
+                'admin' => [
+                    'master' => 1,
+                ],
+            ],
+            [
+                'user' => [
+                    'email' => $faker->unique()->safeEmail(),
+                    'password' => Hash::make('password'),
+                    'name' => 'システム管理者',
+                ],
+                'admin' => [
+                    'master' => 1,
+                ],
+            ],
 
 
         ];

@@ -29,13 +29,14 @@ class AuthServiceProvider extends ServiceProvider
 
         /* Yahooログイン サービスプロバイダー */
         Socialite::extend('yahoo', function ($app) {
-        $config = $app['config']['services.yahoo'];
-        dd($config);
-        return new YahooJpProvider(
-            $app['request'],
-            $config['client_id'],
-            $config['client_secret'],
-            $config['redirect']
-        );
-    });    }
+            $config = $app['config']['services.yahoo'];
+
+            return new YahooJpProvider(
+                $app['request'],
+                $config['client_id'],
+                $config['client_secret'],
+                $config['redirect']
+            );
+        });
+    }
 }

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
-|  ガチャの詳細説明情報　モデル hit_nums
+|  ガチャの詳細説明情報　モデル
 | =============================================
 */
 class GachaDiscription extends Model
