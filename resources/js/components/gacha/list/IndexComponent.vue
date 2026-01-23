@@ -168,10 +168,10 @@
                 </div>
 
 
-                <div v-if="gachas.length<1"
-                class="col-12 text-secondary bg-light-subtle
-                p-3 fs-5 rounded-3 shadow
-                ">*該当するガチャがありません。</div>
+                <div v-if="gachas.length<1"  class="col-12 p-3">
+                    <div class="text-secondary bg-light-subtle p-3 fs-5 rounded-3 shadow"
+                    >*該当するガチャがありません。</div>
+                </div>
 
             </div>
 

@@ -27,7 +27,7 @@ class AdminGachaCategoryController extends Controller
 
 
     /**
-     * 新規作成 
+     * 新規作成
      *
      * @return \Illuminate\Http\Response
      */
@@ -44,12 +44,14 @@ class AdminGachaCategoryController extends Controller
         ->get()->count();
 
         #公開制限[カテゴリー制限]
-        $limit = 2;
-        $restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;
+        $limit = env('LIMIT_CATEGORY_COUNT');
+        $restriction = $limit ? $published_count>=$limit : false;
         $restriction = $gacha_category->is_published ? false : $restriction;//公開中のカテゴリは、公開ボタン制限なし
+        // dd($restriction);
 
-
-        return view('admin.category.create', compact('gacha_category','restriction'));
+        return view('admin.category.create', compact(
+            'gacha_category','restriction','limit'
+        ));
     }
 
 
@@ -99,9 +101,11 @@ class AdminGachaCategoryController extends Controller
         $limit = env('LIMIT_CATEGORY_COUNT');
         $restriction = $limit ? $published_count>=$limit : false;
         $restriction = $gacha_category->is_published ? false : $restriction;//公開中のカテゴリは、公開ボタン制限なし
+        // dd($restriction);
 
-
-        return view('admin.category.edit', compact('gacha_category','restriction'));
+        return view('admin.category.edit', compact(
+            'gacha_category','restriction','limit'
+        ));
     }
 
 
