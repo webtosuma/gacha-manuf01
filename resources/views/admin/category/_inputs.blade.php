@@ -81,7 +81,7 @@
                     <!--カテゴリー数制限あり-->
                     <div class="alert alert-success border-0" role="alert">
                         <h6 class="fw-bold text-success">カテゴリー数数の制限あり</h6>
-                        <span class="fw-bold">公開</span>できるカテゴリー数は、合わせて<span class="fw-bold">2件</span>以内です。(「すべて」は含まれません。)
+                        <span class="fw-bold">公開</span>できるカテゴリー数は、合わせて<span class="fw-bold">{{$limit}}件</span>以内です。(「すべて」は含まれません。)
                     </div>
                 @endif
 
