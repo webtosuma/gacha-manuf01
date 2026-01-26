@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル played_one_time
+|  ガチャ　モデル
 | =============================================
 */
 class Gacha extends Model
@@ -234,7 +234,7 @@ class Gacha extends Model
         {
             return $this->published_at && $this->published_at <= now()->format('Y-m-d H:i:s') ;
         }
-        
+
 
 
         /** 画像なしの時の画像 */
