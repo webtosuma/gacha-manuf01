@@ -3,7 +3,7 @@
     <div class="containerr mx-auto px-0">
 
         <div class="overflow-hidden rounded-4"
-        data-aos="zoom-out"
+        data-aos="zoom-inin"
         >
 
             @include('gacha.common.top_image')
@@ -25,7 +25,9 @@
 </section>
 <!--各賞-->
 <section class="overflow-hidden">
-    <div class="row justify-content-center mx-auto" style="max-width:600px; margin-top:20vh;">
+    <div
+    data-aos="zoom-inin"
+    class="row justify-content-center mx-auto" style="max-width:600px; margin-top:20vh;">
 
         @foreach ($gacha->discriptions as $discription)
 

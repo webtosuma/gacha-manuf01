@@ -17,6 +17,9 @@
     header,main {
         font-family: 'Roboto', sans-serif; /* フォントを適用 */
     }
+
+    /* ガチャ販売機　頭部 */
+    .ratio-6x1{ --bs-aspect-ratio:16.67%; }
 </style>
 
 <!-- img pass -->

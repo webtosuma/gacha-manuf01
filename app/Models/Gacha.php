@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル
+|  ガチャ　モデル type_text
 | =============================================
 */
 class Gacha extends Model
@@ -36,10 +36,11 @@ class Gacha extends Model
         'min_time',// 表示時間下限　2024/04/17追加
         'max_time',// 表示時間上限　2024/04/17追加
         'is_over_date',// 日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
-        'updated_prizes_at',// 登録商品更新日時 2025/02/04追加
+        'updated_prizes_at',// 登録商品更新日時           2025/02/04追加
         'subscription_id',  //サブスクプランID(PointSail) 2025/03/23追加
-        'resume',           //説明文 　　　　　　2025/10/09追加
-        'end_published_at', //公開終了日時　　　 2025/10/09追加
+        'resume',           //説明文 　　　　　　          2025/10/09追加
+        'end_published_at', //公開終了日時　　　           2025/10/09追加
+        'type_n_count',     // 限定回数(n回限定ガチャ用)   2026/01/27追加
     ];
 
 
@@ -64,19 +65,47 @@ class Gacha extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
+        'is_published',     //公開中かどうか
+        'image_path',       //画像ファイルパス
+        'type_label',       //ガチャの種類ラベル
+        'type_label_admin', //ガチャの種類ラベル
+
         'remaining_count',     //残りのプレイできる回数
         'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
         'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
-        'resume_text',   //ストレージ保存された文章を含む'説明文'
+        'resume_text',         //ストレージ保存された文章を含む'説明文'
+
+        'add_chance_image_path', //アド確定予告画像パス
+        'add_chance_count',      //天井系ガチャのアド確定までの回転数
+        'have_user_rank',        //個人のプレイ数の商品登録
+        'user_played_count',     //ログインユーザー個人のプレイ数
+
+        'img_path_one_chance',   //[限定ガチャ画像パス]ワンチャンス限定
+        'img_path_one_time',     //[限定ガチャ画像パス]一回限定
+        'img_path_only_oneday',  //[限定ガチャ画像パス]1日一回限定
+        'img_path_only_new_user',//[限定ガチャ画像パス]新規会委員限定
+        'img_path_user_rank',    //[限定ガチャ画像パス]会員ランク限定
+
+        'remaining_ratio',//[メーター]残数比率
+        'remaining_count',//[メーター]残数
+        'max_count',      //[メーター]総口数
+        'new_label_path', //[メーター]NEW ラベル
+        'img_path_point', //[メーター]ポイントアイコン
 
         'route',          //[ルーティング]ガチャ詳細ページ
         'r_prize_history',//[ルーティング]ガチャ商品履歴
         'r_action',       //[ルーティング]ガチャPLAY
         'r_costom',       //[ルーティング]カスタム回数
+        'r_admin_show',   //[ルーティング Admin]
+        'r_admin_edit',   //[ルーティング Admin]
+        'r_admin_copy',   //[ルーティング Admin]
+        'r_admin_destroy',//[ルーティング Admin]
 
         'r_event_show',   //[ルーティング]イベント詳細
         'r_event_play',   //[ルーティング]イベントガチャカで遊ぶ
+
+
 
         'is_popup_btn',          //ポップアップボタン設定　
         'max_custom_type_count', //上限カスタムボタンの上限回数
@@ -377,6 +406,42 @@ class Gacha extends Model
         }
 
 
+        /**
+         * ガチャの種類ラベル type_label
+         * @return String
+        */
+        public function getTypeLabelAttribute()
+        {
+            # n回限定
+            switch ($this->type) {
+                case 'n_time':
+                return $this->type_n_count.'回限定'; break;
+
+                case 'n_oneday':
+                return '1日'.$this->type_n_count.'回限定'; break;
+            }
+
+            # 通常・カスタムボタンを含まない
+            return !in_array( $this->type, ['nomal','no_custom'] )
+            ? $this->types()[$this->type] : null;
+        }
+
+
+        /**
+         * ガチャの種類ラベル(Admin用) type_label_admin
+         * @return String
+        */
+        public function getTypeLabelAdminAttribute()
+        {
+            switch ($this->type) {
+                case 'n_time':   return $this->type_n_count.'回限定'; break;
+
+                case 'n_oneday': return '1日'.$this->type_n_count.'回限定'; break;
+            }
+
+            return $this->types()[$this->type];//ガチャの種類;
+        }
+
 
         /**
          * 1日1回をプレイしたか？ played_only_oneday
@@ -406,7 +471,6 @@ class Gacha extends Model
         */
         public function getUserRankAttribute()
         {
-            // dd(new UserRankHistory(['rank_id'=>$this->user_rank_id]));
             return new UserRankHistory(['rank_id'=>$this->user_rank_id]);
         }
 
@@ -961,6 +1025,18 @@ class Gacha extends Model
             return route('gacha.custom_count',$params);
         }
 
+
+        /** [ルーティング Admin]詳細 r_admin_show */
+        public function getRAdminShowAttribute(){ return route('admin.gacha.show',$this->id); }
+
+        /** [ルーティング Admin]編集 r_admin_edit */
+        public function getRAdminEditAttribute(){ return route('admin.gacha.edit',$this->id); }
+
+        /** [ルーティング Admin]コピー r_admin_copy */
+        public function getRAdminCopyAttribute(){ return route('admin.gacha.copy',$this->id); }
+
+        /** [ルーティング Admin]削除 r_admin_destroy */
+        public function getRAdminDestroyAttribute(){ return route('admin.gacha.destroy',$this->id); }
 
     /*
     |--------------------------------------------------------------------------

@@ -42,6 +42,12 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         @endif
 
 
+        <div class="d-flex gap-3 mb-3">
+            <a href="{{route('admin.gacha.settings.edit_list')}}" class="btn btn-light rounded-pill shadow py-1">
+                <div class="d-flex align-items-center gap-2"><i class="bi bi-gear fs-3"></i>設定</div>
+            </a>
+        </div>
+
 
         <section class="mb-5">
             <a-gacha-list

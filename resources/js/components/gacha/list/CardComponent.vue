@@ -1,5 +1,12 @@
 <template>
     <div>
+        <!--限定ガチャラベル-->
+        <!-- <div class="p-1 ratio" style="--bs-aspect-ratio:16.67%;">
+            <div class="d-flex align-items-end justify-content-start p-2">
+                <span v-if="gacha.type_label" class="bg-body border px-2 rounded-pill">{{ gacha.type_label }}</span>
+            </div>
+        </div> -->
+
         <div :class="card_style_class">
 
             <!--image-->
@@ -53,11 +60,13 @@
             <a :href="gacha.route"  :class="href_class">
                 <div class="position-relative">
 
+
+
                     <u-gacha-metter
                     :sm_card="sm_card"
                     :new_label_path="gacha.new_label_path"
                     :img_path_point="gacha.img_path_point"
-                    :bg_color="gacha.type=='only_new_user' ? 'bg-success-subtle text-dark' : 'bg-body bg-rainbow-index'"
+                    :bg_color="gacha.type=='only_new_user' ? 'bg-success-subtle text-dark' : 'bg-white bg-rainbow-index'"
                     :gacha_type="gacha.type"
                     :sponsor_ad="gacha.sponsor_ad"
                     :gacha_play_point="gacha.one_play_point"
@@ -135,7 +144,7 @@
 
 
             /*リンク　クラス*/
-            href_class:'d-block text-dark bg-white',
+            href_class:'d-block text-dark bg-body',
             href_disabled_class:'d-block btn p-0 border-0 disabled',
 
 

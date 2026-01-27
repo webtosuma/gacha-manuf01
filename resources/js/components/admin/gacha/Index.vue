@@ -83,8 +83,8 @@
                             <!--広告-->
                             <div v-if="gacha.sponsor_ad"
                             class="border border-danger text-danger px-3 rounded-pill"> 広告</div>
-                            <!--ガチャの種類-->
-                            <span class="border px-3 rounded-pill">{{ gacha.type_text }}</span>
+                            <!--ガチャの種類ラベル(Admin用)-->
+                            <span class="border px-3 rounded-pill">{{ gacha.type_label_admin }}</span>
                             <!--ランクの指定-->
                             <span v-if="gacha.user_rank_label"
                             class="border px-3 rounded-pill">{{ gacha.user_rank_label }}会員</span>
@@ -256,7 +256,7 @@
         _token: props.token,
         category_code:   props.category_code, //カテゴリーコード
         title:           '', //タイトル
-        order:           'desc.published_at', //並び替え
+        order:           'desc_published_at', //並び替え
         published_status:'', //公開状態
     });
 

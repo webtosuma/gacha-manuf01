@@ -51,8 +51,8 @@
                     <!-- ログイン中 -->
                     <a href="{{route('point_sail')}}"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="ポイントを購入する"
-                    class="d-block text-decoration-none text-dark ms-2">
-                        <div class="d-flex align-items-center gap-1">
+                    class="d-block text-decoration-none text-dark ms-3">
+                        {{-- <div class="d-flex align-items-center gap-1">
 
                             @include('includes.point_icon')
 
@@ -62,7 +62,28 @@
                                 <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
                                 <span>pt</span>
                             </div>
+                        </div> --}}
+                            <div class="position-relative">
+
+                                <div class="position-absolute top-50 start-0 translate-middle">
+                                    @include('includes.point_icon')
+                                </div>
+
+
+                                <div class="rounded-pill bg-white text- fw-bold border
+                                d-flex align-items-center justify-content-end px-3
+                                " style="width:6rem; height:1.6rem;">
+                                <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
+                                <span>pt</span>
+
+
+                                <div class="position-absolute top-50 start-100 translate-middle">
+                                    <i class="bi bi-plus-circle-fill fs-5"></i>
+                                </div>
+
+                            </div>
                         </div>
+
                     </a>
 
                     <!-- ハンバーガーボタン -->

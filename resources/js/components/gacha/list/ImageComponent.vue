@@ -56,38 +56,38 @@
 
 
         <!-- ワンチャンス限定 -->
-        <div v-if="img_path_one_chance"
+        <!-- <div v-if="img_path_one_chance"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_one_chance" style="width:30%;">
-        </div>
+        </div> -->
 
         <!-- 1回限定 -->
-        <div v-if="img_path_one_time"
+        <!-- <div v-if="img_path_one_time"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_one_time" style="width:30%;">
-        </div>
+        </div> -->
 
         <!-- 1日限定 -->
-        <div v-if="img_path_only_oneday"
+        <!-- <div v-if="img_path_only_oneday"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_only_oneday" style="width:30%;">
-        </div>
+        </div>-->
 
         <!-- 新規会委員限定 -->
-        <div v-if="img_path_only_new_user"
+        <!-- <div v-if="img_path_only_new_user"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_only_new_user" style="width:30%;">
-        </div>
+        </div> -->
 
         <!-- 会員ランク限定 -->
-        <div v-if="img_path_user_rank"
+        <!-- <div v-if="img_path_user_rank"
         class="position-absolute p-2 top-0 end-0 text-start w-100">
             <img :src="img_path_user_rank" style="width:30%;">
-        </div>
+        </div> -->
 
 
         <!--アド確定予告-->
-        <div v-if="add_chance_image_path"
+        <!-- <div v-if="add_chance_image_path"
         class="position-absolute top-0 start-0 w-100 h-100 gacha_chance"
         style="z-index:9;">
             <div class="position-relative">
@@ -98,11 +98,11 @@
                 ></ratio-image-component>
 
             </div>
-        </div>
+        </div> -->
 
 
         <!-- アド確定予告メーター -->
-        <div v-if="add_chance_image_path"
+        <!-- <div v-if="add_chance_image_path"
         class="position-absolute bottom-0 start-0 w-100 px-5 py-1"
         style="z-index:10; opacity:.8;">
             <div class="progress bg-danger-subtle text-danger fw-bold">
@@ -111,7 +111,7 @@
                 >{{add_chance_ration>50 ? add_count_down_label : '' }}</div>
                 {{ add_chance_ration>50 ? '' : add_count_down_label }}
             </div>
-        </div>
+        </div> -->
 
     </div>
 </template>

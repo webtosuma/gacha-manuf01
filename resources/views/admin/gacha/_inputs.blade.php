@@ -45,7 +45,7 @@
                 @endif
             </label>
 
-            <!--ガチャ名(name)-->
+            <!--ガチャ名(name・default_name)-->
             <label class="d-block mb-4">
                 <div class="form-label">ガチャ名</div>
 
@@ -56,9 +56,9 @@
                 ></encodedーinputtext-component>
 
 
-                <!--error message-->
-                @if ( $errors->has('name') )
-                    <div class="text-danger"> {{$errors->first('name')}} </div>
+                <!--error message(default_name)-->
+                @if ( $errors->has('default_name') )
+                    <div class="text-danger"> {{$errors->first('default_name')}} </div>
                 @endif
             </label>
 
@@ -121,7 +121,7 @@
                     @foreach ($gacha->types() as $value => $lable)
                         <label class="form-check">
                             <input name="type" value="{{$value}}"
-                            @if( $value == $gacha->type ) checked @endif
+                            @if( $value == old('type', $gacha->type ) ) checked @endif
                             class="form-check-input" type="radio">
                             <div class="form-check-div">{{ $lable }}</div>
                         </label>
@@ -134,6 +134,30 @@
                 @endif
             </div>
         </div>
+
+
+        @if( !empty(array_intersect( ['n_time','n_oneday'], array_keys( $gacha->types() ) ) ) )
+
+            <!--⚪︎回限定ガチャ限定回数(type_n_count)-->
+            <label class="d-block mb-4">
+                <div class="form-label">⚪︎回限定ガチャ限定回数(⚪︎回限定を指定している時)</div>
+
+                <div class=" col-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <input value="{{old('type_n_count', $gacha->type_n_count ?? 0 )}}"
+                        name="type_n_count"
+                        type="number" class="form-control" min="1">
+                        <span>pt</span>
+                    </div>
+                </div>
+
+                <!--error message-->
+                @if ( $errors->has('type_n_count') )
+                    <div class="text-danger"> {{$errors->first('type_n_count')}} </div>
+                @endif
+            </label>
+
+        @endif
 
 
         <!--会員ランクの指定(user_rank_id)-->

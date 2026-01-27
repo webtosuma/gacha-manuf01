@@ -314,10 +314,10 @@ class GachaController extends Controller
         {
             # 基本ソート
             $array = [
-                ['key'=>'desc_created',    'label'=>'新着順'],
-                ['key'=>'desc_popularity', 'label'=>'人気順'],
-                ['key'=>'desc_point',      'label'=>'高額ポイント順'],
-                ['key'=>'asc_point',       'label'=>'低額ポイント順'],
+                ['key'=>'desc_published_at', 'label'=>'新着順'],
+                ['key'=>'desc_popularity',   'label'=>'人気順'],
+                ['key'=>'desc_point',        'label'=>'高額ポイント順'],
+                ['key'=>'asc_point',         'label'=>'低額ポイント順'],
             ];
 
             # ガチャの種類の追加( Gacha::types() )

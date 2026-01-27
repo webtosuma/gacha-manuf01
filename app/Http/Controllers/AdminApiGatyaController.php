@@ -99,51 +99,19 @@ class AdminApiGatyaController extends Controller
         # 追加情報
         foreach ($gachas as $gacha)
         {
-
-            $gacha->is_published = $gacha->is_published;//公開中
-            $gacha->published_at = $gacha->published_at;//公開・公開予約中
             $gacha->published_at_format = $gacha->published_at ? $gacha->published_at->format('Y/m/d H:i') : '--/--/-- --:--';
-            $gacha->type_text           = $gacha->types()[$gacha->type];//ガチャの種類
             $gacha->user_rank_label     = env('NEW_TICKET_SISTEM',false) ? ( $gacha->user_rank_id!==null ? $gacha->user_rank->label : '全ての' ) : null ;
 
 
             /* 画像 */
             $gacha->ratio      = config('app.gacha_card_ratio'); //画像比率
-            $gacha->image_path = $gacha->image_path;             //
-            $gacha->type       = $gacha->type;                   //ガチャの種類
 
             $gacha->i_time                 = $gacha->initial_time; //カウントダウン時間
             $gacha->limitted_i_time        = $gacha->initial_timezone;//時間帯限定
-            // $gacha->published_at_format    = $gacha->published_at > now()
-            // ? $gacha->published_at->format('Y/m/d H:i:s') : null;//(新作ガチャ)カウントダウン用日時
-            $gacha->add_chance_image_path  = $gacha->add_chance_image_path;//アド確定予告画像パス
-            $gacha->add_chance_count       = $gacha->add_chance_count;     //天井系ガチャのアド確定までの回転数
-            $gacha->have_user_rank         = $gacha->have_user_rank;       //個人のプレイ数の商品登録
-            $gacha->user_played_count      = $gacha->user_played_count;    //ログインユーザー個人のプレイ数
-
-            $gacha->img_path_one_chance    = $gacha->img_path_one_chance;   //ワンチャンス限定
-            $gacha->img_path_one_time      = $gacha->img_path_one_time;     //一回限定
-            $gacha->img_path_only_oneday   = $gacha->img_path_only_oneday;  //1日一回限定
-            $gacha->img_path_only_new_user = $gacha->img_path_only_new_user;//新規会委員限定
-            $gacha->img_path_user_rank     = $gacha->img_path_user_rank;    //会員ランク限定
 
             /* メーター */
             $gacha->user_rank_id    = $gacha->user_rank_id;    //
-            $gacha->remaining_ratio = $gacha->remaining_ratio; //残数比率
-            $gacha->remaining_count = $gacha->remaining_count; //残数
-            $gacha->max_count       = $gacha->max_count;       //総口数
             $gacha->sponsor_ad      = $gacha->sponsor_ad;      //スポンサー
-            $gacha->new_label_path  = $gacha->new_label_path;  //NEW ラベル
-            $gacha->img_path_point  = $gacha->img_path_point;  //ポイントアイコン
-
-
-            /* ルーティング */
-            $gacha->r_admin_show    = route('admin.gacha.show',$gacha);
-            $gacha->r_admin_edit    = route('admin.gacha.edit',$gacha);
-            $gacha->r_admin_copy    = route('admin.gacha.copy',$gacha);
-            $gacha->r_admin_destroy = route('admin.gacha.destroy',$gacha);
-
-
 
         }
 

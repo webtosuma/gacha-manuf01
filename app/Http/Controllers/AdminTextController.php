@@ -316,5 +316,5 @@ class AdminTextController extends Controller
 
     }
 
-    
+
 }

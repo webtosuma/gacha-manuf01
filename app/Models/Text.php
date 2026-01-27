@@ -212,7 +212,7 @@ class Text extends Model
         public static function getEmailSignature()
         {
             $company_name = config('app.company_name');
-            
+
             $default = <<<__EOT__
             発行・配信元
             {$company_name}
@@ -279,6 +279,154 @@ class Text extends Model
             return $data ;
         }
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー(ガチャ設定)
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * 限定ガチャのラベル表示　gacha_settings_type_label_image
+         * @return String
+         */
+        public function getGachaSettingsTypeLabelImageAttribute()
+        {
+            $type    = 'gacha_settings_type_label_image';//キー
+            $default = false;//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+
+
+
+        /**
+         * 限定ガチャのテキスト表示　gacha_settings_type_label_text
+         * @return String
+         */
+        public function getGachaSettingsTypeLabelTextAttribute()
+        {
+            $type    = 'gacha_settings_type_label_text';//キー
+            $default = true;//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+
+
+
+        /**
+         * デフォルトの表示サイズ　gacha_settings_size
+         * @return String
+         */
+        public function getGachaSettingsSizeAttribute()
+        {
+            $type    = 'gacha_settings_size';//キー
+            $default = 'lg';//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+
+
+
+        /**
+         * ガチャ販売機の画像を利用する　gacha_settings_card_image
+         * @return String
+         */
+        public function getGachaSettingsCardImageAttribute()
+        {
+            $type    = 'gacha_settings_card_image';//キー
+            $default = false;//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+
+
+
+        /**
+         * ガチャ販売機の頭部画像　gacha_settings_card_image_head
+         * @return String
+         */
+        public function getGachaSettingsCardImageHeadAttribute()
+        {
+            $type    = 'gacha_settings_card_image_head';//キー
+            $default = $this->gacha_settings_card_image_head_default;//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+        /**
+         * ガチャ販売機の頭部画像(デフォルト)　gacha_settings_card_image_head_default
+         * @return String
+         */
+        public function getGachaSettingsCardImageHeadDefaultAttribute()
+        {
+            return  asset('storage/site/image/gacha_mashīn/head.png');
+        }
+
+
+
+        /**
+         * ガチャ販売機の本体画像　gacha_settings_card_image_body
+         * @return String
+         */
+        public function getGachaSettingsCardImageBodyAttribute()
+        {
+            $type    = 'gacha_settings_card_image_body';//キー
+            $default = $this->gacha_settings_card_image_body_default;//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+        /**
+         * ガチャ販売機の本体画像(デフォルト)　gacha_settings_card_image_body_default
+         * @return String
+         */
+        public function getGachaSettingsCardImageBodyDefaultAttribute()
+        {
+            return  asset('storage/site/image/gacha_mashīn/body.png');
+        }
+
+
+        /**
+         * ガチャの読み込み中動画の利用　gacha_settings_loading_movie
+         * @return String
+         */
+        public function getGachaSettingsLoadingMovieAttribute()
+        {
+            $type    = 'gacha_settings_loading_movie';//キー
+            $default = false;//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+
+
+        /**
+         * ガチャの読み込み中動画パス　gacha_settings_loading_movie_path
+         * @return String
+         */
+        public function getGachaSettingsLoadingMoviePathAttribute()
+        {
+            $type    = 'gacha_settings_loading_movie_path';//キー
+            $default = $this->gacha_settings_loading_movie_path_default;//デフォルト値
+
+            $text    = Text::where('type',$type)->orderByDesc('id')->first();
+            return  $text ? $text->body : $default;
+        }
+        /**
+         * ガチャの読み込み中動画パス(デフォルト)　gacha_settings_loading_movie_path_default
+         * @return String
+         */
+        public function getGachaSettingsLoadingMoviePathDefaultAttribute()
+        {
+            return  asset('storage/site/movie/gacha_loading.mp4');
+        }
 
 
 

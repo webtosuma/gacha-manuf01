@@ -141,24 +141,56 @@
         <div v-else>
 
 
-            <div class="row overflow-hidden gy-5  gx-md-5 mx-1 pb-4 gy-y"
+            <div
+            data-aos="zoom-inin"
+            class="row overflow-hidden gy-4  gx-md-5 mx-1 pb-4 gy-y"
             :class="inputs.card_size=='sm'?' gx-3 ':' gx-0 '"
             >
                 <div v-for="(gacha, key) in gachas" :key="key"
-                :class="list_col_class" >
+                :class="list_col_class"
+                >
 
                     <!--人気順位-->
-                    <div v-if="inputs.search_key=='desc_popularity'"
+                    <!-- <div v-if="inputs.search_key=='desc_popularity'"
                     :class="{'invisible': gacha.is_sold_out}"
-                    class="text-center text-white  mb-1">
+                    class="text-center text-white  mb-1"
+                    style="z-index:10;"
+                    >
                         <div class="bg-dark d-inline-block px-2">
                             第<span class="fs-3 px-1">{{ key+1 }}</span>位
                         </div>
+                    </div> -->
+
+
+                    <div class="p-1 ratio" style="--bs-aspect-ratio:16.67%;">
+
+                        <div class="d-flex align-items-end justify-content-start gap-2 p-2">
+
+                            <div v-if="inputs.search_key=='desc_popularity'"
+                            :class="{'invisible': gacha.is_sold_out}"
+                            class="text-center text-white"
+                            style="z-index:10;"
+                            >
+                                <div class="bg-dark d-inline-block px-2">
+                                    第<span class="fs-3 px-1">{{ key+1 }}</span>位
+                                </div>
+                            </div>
+
+                            <!--新着-->
+                            <span v-if="gacha.new_label_path"
+                            class="bg-danger text-white px-2 rounded-pill"
+                            style="font-size:11px;"
+                            >{{ 'NEW!!' }}</span>
+
+                            <!--限定ガチャラベル-->
+                            <span v-if="gacha.type_label"
+                            class="bg-body border text-dark px-2 rounded-pill"
+                            style="font-size:11px;"
+                            >{{ gacha.type_label }}</span>
+                        </div>
                     </div>
 
-
                     <u-gacha-card
-                    data-aos="zoom-inin"
                     :gacha="gacha"
                     :sm_card="inputs.card_size=='sm'?1:0"
                     />
@@ -187,7 +219,7 @@
     const props = defineProps({
         token:              { type: String, default: '' },
         category_code:      { type: String, default: '' }, // カテゴリーcode
-        search_key:         { type: String, default: 'desc_crated' }, // 検索キーワード
+        search_key:         { type: String, default: 'desc_published_at' }, // 検索キーワード
         card_size:          { type: String, default: '' },
         order:              { type: String, default: '' }, // 並び順
         r_api_gacha_list:   { type: String, default: '' },

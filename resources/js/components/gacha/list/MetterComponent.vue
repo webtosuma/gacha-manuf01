@@ -1,20 +1,23 @@
 <template>
-    <div class="card-body py-0 px-2 px-md-3" :class="bg_color">
+    <div class="position-relative card-body py-0 pb-3 px-2 px-md-3" :class="bg_color">
 
 
         <div class="row align-items-center justify-content-between g-1">
 
             <div class="col text-start">
-                <!--左-->
-                <div v-if="new_label_path"
-                class="d-inline-block"  :style="icon_height">
-                    <img :src=" new_label_path " class="h-100" alt="NEW">
-                </div>
+                <!-- 左 -->
+                <!-- <div v-if="new_label_path"
+                :style="icon_height"
+                class="d-inline-block position-relative">
+                    <img
+                    class="position-absolute top-50 start-0 translate-middle-y"
+                    :src=" new_label_path " :style="icon_height" alt="NEW">
+                </div> -->
             </div>
 
             <div class="col-auto">
                 <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
-                    <div class="d-flex align-items-center justify-content-center"  :style="icon_height">
+                    <div class="d-flex align-items-center justify-content-center"  style="height:1.4rem;">
                         <img :src=" img_path_point " class="h-100">
                     </div>
 
@@ -38,15 +41,22 @@
 
 
         <!-- 新規会委員限定 -->
-        <div v-if="gacha_type=='only_new_user'"
+        <!-- <div v-if="gacha_type=='only_new_user'"
         class="text-center text-success" style="line-height:2rem">
             ＊一週間限定・一回限定で利用できます
-        </div>
+        </div> -->
+
+
+
 
         <!-- 通常メーター -->
-        <div v-else-if="is_meter!=0">
-            <div class="progress" :style="merter_height">
-                <div :class=" progress_style_class " role="progressbar"
+        <div v-if="gacha_type!='only_new_user' && is_meter!=0" class="position-relative">
+
+
+
+            <!-- メーター -->
+            <div class="progress rounded-pill bg-secondary" :style="merter_height" >
+                <div :class=" progress_style_class" role="progressbar"
                 :style="'width:'+remaining_ratio+'%'"
                 :aria-valuenow="remaining_ratio" aria-valuemin="0"
                 :aria-valuemax="remaining_ratio"
@@ -54,18 +64,21 @@
             </div>
 
 
-            <p class="text-center m-0" style="font-size:.8rem;">
+            <!-- 残数 -->
+            <div v-if="sm_card==0"
+            class="position-absolute top-100 start-50 translate-middle
+            px-2 text-light bg-dark rounded-pill mx-2"
+            style="font-size:11px;">
                 残り
                 <number-comma-component :number=" remaining_count "></number-comma-component>
                 /
                 <number-comma-component :number=" max_count "></number-comma-component>
-            </p>
+            </div>
         </div>
 
 
         <!-- メーター表示なし -->
-        <div v-else style="height:2rem"><!--  --></div>
-
+        <!-- <div v-else style="height:2rem"></div> -->
 
 
     </div>
@@ -92,8 +105,8 @@
 
 
             /*メーターの高さ*/
-            merter_height:   '',
-            merter_sm_height:'height:.5rem;',
+            merter_height:   'height:1.2rem;',
+            merter_sm_height:'height:.8rem;',
 
             /*ポイント表示の文字サイズ*/
             point_fs:    'fs-3',
@@ -110,7 +123,7 @@
             this.point_fs      = this.sm_card!=0 ? this.point_sm_fs      : this.point_fs;
 
             /*アイコンの高さ*/
-            this.icon_height = this.sm_card!=0 ?  'height:.8rem;' : 'height: 1.6rem;'  ,
+            this.icon_height = this.sm_card!=0 ?  'height:1.2rem;' : 'height: 2.0rem;'  ,
 
 
             //メーターの表示クラスを指定
@@ -124,7 +137,7 @@
             /* メーターの表示クラスを指定 */
             setprogressStyleClass :function(){
                 const bg_color = this.remaining_ratio>70 ? 'bg-success' : ( this.remaining_ratio>40 ? 'bg-warning' : 'bg-danger' );
-                this.progress_style_class = 'progress-bar progress-bar-striped rounded-2 '+bg_color;
+                this.progress_style_class = 'progress-bar progress-bar-striped rounded-0 '+bg_color;
             },
 
 

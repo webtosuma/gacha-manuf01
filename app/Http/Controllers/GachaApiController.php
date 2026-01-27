@@ -58,7 +58,7 @@ class GachaApiController extends Controller
             $card_size = $request->card_size ? $request->card_size : null;
 
             ## 絞り込みキー
-            $search_key = $request->search_key ? $request->search_key : 'desc_created';
+            $search_key = $request->search_key ? $request->search_key : 'desc_published_at';
 
             ## 検索キーワード
             $searchs = GachaController::getsearchs();
