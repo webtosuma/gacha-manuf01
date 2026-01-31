@@ -6,13 +6,13 @@
 
 
 
-    <div class="card-body">
+    {{-- <div class="card-body">
         <h2 class="text-center fs-3 mb-3 fw-bold text-warning">ご友人紹介キャンペーン</h2>
         <p class="text-secondary text-center mb-0 form-text">
             ご友人の「会員登録」と「初回ポイント購入完了」後、紹介ユーザー様とご友人お二人にそれぞれ
             <strong class="fw-bold fs-5 text-warning">{{number_format($point)}}pt</strong>プレゼントいたします。
         </p>
-    </div>
+    </div> --}}
 
 
     @if (Auth::check())

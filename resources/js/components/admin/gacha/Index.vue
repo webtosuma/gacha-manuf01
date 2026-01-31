@@ -85,9 +85,9 @@
                             class="border border-danger text-danger px-3 rounded-pill"> 広告</div>
                             <!--ガチャの種類ラベル(Admin用)-->
                             <span class="border px-3 rounded-pill">{{ gacha.type_label_admin }}</span>
-                            <!--ランクの指定-->
+                            <!--会員ランク限定-->
                             <span v-if="gacha.user_rank_label"
-                            class="border px-3 rounded-pill">{{ gacha.user_rank_label }}会員</span>
+                            class="border px-3 rounded-pill">{{ gacha.user_rank_label }}</span>
                             <!--時間帯-->
                             <span class="border px-3 rounded-pill">{{ gacha.min_time +'〜'+ gacha.max_time }}</span>
                         </div>

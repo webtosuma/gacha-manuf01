@@ -228,13 +228,25 @@ class GachaPlayController extends Controller
         ){
             return '本日既に、このガチャは利用済みです。';
         }
+        # [限定ガチャ] n回限定
+        else if(
+            $gacha->type=='n_time' && ($gacha->type_n_remaining_count < $now_play_count)
+        ){
+            return '指定の回数は、上限回数をオーバーしています。';
+        }
+        # [限定ガチャ] 1日n回限定
+        else if(
+            $gacha->type=='n_oneday' && ($gacha->type_n_remaining_count < $now_play_count)
+        ){
+            return '指定の回数は、一日の上限回数をオーバーしています。';
+        }
+
+
         # [限定ガチャ]新規登録ユーザー定限定ガチャ
         else if(
             $gacha->type=='only_new_user' && (
                 Auth::user()->sevendays_affter_registar || $gacha->played_one_time || $now_play_count >1
             )
-            // ( $gacha->type=='only_new_user' && Auth::user()->sevendays_affter_registar )or
-            // ( $gacha->type=='only_new_user' && $gacha->played_one_time )
         ){
             return 'このガチャを利用することはできません。';
         }

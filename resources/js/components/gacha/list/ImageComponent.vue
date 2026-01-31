@@ -56,34 +56,34 @@
 
 
         <!-- ワンチャンス限定 -->
-        <!-- <div v-if="img_path_one_chance"
+        <div v-if="img_path_one_chance"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_one_chance" style="width:30%;">
-        </div> -->
+        </div>
 
         <!-- 1回限定 -->
-        <!-- <div v-if="img_path_one_time"
+        <div v-if="img_path_one_time"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_one_time" style="width:30%;">
-        </div> -->
+        </div>
 
         <!-- 1日限定 -->
-        <!-- <div v-if="img_path_only_oneday"
+        <div v-if="img_path_only_oneday"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_only_oneday" style="width:30%;">
-        </div>-->
+        </div>
 
         <!-- 新規会委員限定 -->
-        <!-- <div v-if="img_path_only_new_user"
+        <div v-if="img_path_only_new_user"
         class="position-absolute p-2 top-0 end-0 text-end w-100">
             <img :src="img_path_only_new_user" style="width:30%;">
-        </div> -->
+        </div>
 
         <!-- 会員ランク限定 -->
-        <!-- <div v-if="img_path_user_rank"
+        <div v-if="img_path_user_rank"
         class="position-absolute p-2 top-0 end-0 text-start w-100">
             <img :src="img_path_user_rank" style="width:30%;">
-        </div> -->
+        </div>
 
 
         <!--アド確定予告-->

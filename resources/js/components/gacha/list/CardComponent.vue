@@ -1,11 +1,5 @@
 <template>
     <div>
-        <!--限定ガチャラベル-->
-        <!-- <div class="p-1 ratio" style="--bs-aspect-ratio:16.67%;">
-            <div class="d-flex align-items-end justify-content-start p-2">
-                <span v-if="gacha.type_label" class="bg-body border px-2 rounded-pill">{{ gacha.type_label }}</span>
-            </div>
-        </div> -->
 
         <div :class="card_style_class">
 
@@ -74,6 +68,7 @@
                     :remaining_ratio="gacha.remaining_ratio"
                     :remaining_count="gacha.remaining_count"
                     :max_count      ="gacha.max_count"
+                    :type_n_remaining_count_label="gacha.type_n_remaining_count_label"
                     />
 
                     <!-- カウントダウンがあるとき -->
@@ -138,8 +133,7 @@
                 card border-0 bg-transparent
                 text-dark text-center overflow-hidden text-decoration-none
                 position-relative rounded-4
-                shiny hover_anime
-                border-white border-5 shadoww
+                shiny
             `,
 
 

@@ -49,11 +49,15 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                         ガチャ販売機の画像利用設定
                     </h5>
 
-                    <form method="post" action="{{ route('admin.gacha.settings.update_list') }}" class="needs-validation" novalidate>
+                    <form method="post"
+                    action="{{ route('admin.gacha.settings.update_card_image') }}"
+                    onsubmit="stopOnbeforeunload()"
+                    enctype="multipart/form-data"
+                    class="needs-validation" novalidate>
                         @csrf
                         @method('PATCH')
 
-                        <div class="card-body row g-2">
+                        <div class="card-body">
 
 
                             <!-- ガチャ販売機の画像を利用する(gacha_settings_card_image) -->
@@ -84,9 +88,9 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
                                     <read-image-file-100k-component
                                     img_path=  "{{$data['gacha_settings_card_image_head']}}"
-                                    noimg_path="{{$data['gacha_settings_card_image_head_default']}}"
+                                    noimg_path="{{$data['gacha_settings_card_image_head']}}"
                                     style_class="ratio ratio-6x1 border rounded-3"
-                                    name="image"
+                                    name="gacha_settings_card_image_head"
                                     ></read-image-file-100k-component>
 
                                     <!--error message-->
@@ -109,9 +113,9 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
                                     <read-image-file-100k-component
                                     img_path  ="{{$data['gacha_settings_card_image_body']}}"
-                                    noimg_path="{{$data['gacha_settings_card_image_body_default']}}"
+                                    noimg_path="{{$data['gacha_settings_card_image_body']}}"
                                     style_class="ratio ratio-16x9 border rounded-3"
-                                    name="image"
+                                    name="gacha_settings_card_image_body"
                                     ></read-image-file-100k-component>
 
                                     <!--error message-->
@@ -123,8 +127,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                             </div>
 
 
-                            <div class="col-12">
-                                <button class="btn btn-primary text-white" type="submit">更新</button>
+                            <div class="col-md-4 mt-5">
+                                <button class="btn btn-warning text-white shadow w-100" type="submit">更新する</button>
                             </div>
 
 
@@ -137,7 +141,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         </section>
 
 
-
+        @if(false)
         <section>
             <div class="mx-auto my-5" style="max-width:900px;">
 
@@ -146,7 +150,11 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                         ガチャの読み込み中動画の利用設定
                     </h5>
 
-                    <form method="post" action="{{ route('admin.gacha.settings.update_list') }}" class="needs-validation" novalidate>
+                    <form method="post"
+                    action="{{ route('admin.gacha.settings.update_loading_movie') }}"
+                    onsubmit="stopOnbeforeunload()"
+                    enctype="multipart/form-data"
+                    class="needs-validation" novalidate>
                         @csrf
                         @method('PATCH')
 
@@ -178,7 +186,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                                 <div class="col-md-6">
                                     <read-movie-file-component
                                     name="gacha_settings_loading_movie_path"
-                                    video_path="{{ $data['gacha_settings_loading_movie_path'] }}"
+                                    video_path.  ="{{ $data['gacha_settings_loading_movie_path'] }}"
+                                    no_video_path="{{ $data['gacha_settings_loading_movie_path'] }}"
                                     ></read-movie-file-component>
                                 </div>
 
@@ -191,8 +200,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
 
-                            <div class="col-12">
-                                <button class="btn btn-primary text-white" type="submit">更新</button>
+                            <div class="col-md-4 mt-5">
+                                <button class="btn btn-warning text-white shadow w-100" type="submit">更新する</button>
                             </div>
 
 
@@ -203,7 +212,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
             </div>
         </section>
-
+        @endif
 
 
         <section>
@@ -214,11 +223,13 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                         その他設定
                     </h5>
 
-                    <form method="post" action="{{ route('admin.gacha.settings.update_list') }}" class="needs-validation" novalidate>
+                    <form method="post"
+                    action="{{ route('admin.gacha.settings.update_other') }}"
+                    onsubmit="stopOnbeforeunload()"
+                    class="needs-validation" novalidate>
                         @csrf
                         @method('PATCH')
-                        {{-- <input type="hidden" name="admin_id" value="{{$edit_admin->id}}">
-                        <input type="hidden" name="form-switch" value="その他設定変更フォーム"> --}}
+
                         <div class="card-body row g-2">
 
 
@@ -263,6 +274,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                             </div>
 
 
+
                             <!-- ガチャの表示サイズ(gacha_settings_size) -->
                             <div class="col-12">
                                 <label class="form-check-label fw-bold fs-5" for="gacha_settings_size"
@@ -274,7 +286,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                                     @php $selects = [ 'lg'=>'大きく表示','sm'=>'小さく表示',] @endphp
                                     @foreach ( $selects as $value => $label)
                                         <label class="form-check border p-3 rounded-pill">
-                                            <input name="type" value="{{$value}}"
+                                            <input name="gacha_settings_size" value="{{$value}}"
                                             @if( $value == old('gacha_settings_size', $data['gacha_settings_size'] ) ) checked @endif
                                             class="form-check-input" type="radio">
                                             <div class="form-check-div">{{ $label }}</div>
@@ -287,8 +299,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
 
-                            <div class="col-12">
-                                <button class="btn btn-primary text-white" type="submit">更新</button>
+                            <div class="col-md-4 mt-5">
+                                <button class="btn btn-warning text-white shadow w-100" type="submit">更新する</button>
                             </div>
 
 

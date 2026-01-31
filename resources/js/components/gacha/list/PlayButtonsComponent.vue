@@ -1,10 +1,10 @@
 <template>
     <div class="">
 
-        <div v-if="show_play_bottons && !r_prize_history" class="row g-2 mt-1">
+        <div v-if="show_play_bottons && !r_prize_history" class="row justify-content-center g-2 mt-1">
 
             <!--1回ボタン-->
-            <div class="col">
+            <div class="col-6">
 
                 <!--POPUP BTN(1)-->
                 <u-gacha-btn v-if="is_popup_btn!=0"
@@ -36,7 +36,7 @@
 
 
             <!--10連ボタン-->
-            <div class="col" v-if="is_disabled_tenplay_btn>-1" >
+            <div class="col-6" v-if="is_disabled_tenplay_btn>-1" >
 
                 <!--POPUP BTN(10)-->
                 <u-gacha-btn v-if="is_popup_btn!=0"

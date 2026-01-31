@@ -298,7 +298,7 @@ class Text extends Model
             $default = false;//デフォルト値
 
             $text    = Text::where('type',$type)->orderByDesc('id')->first();
-            return  $text ? $text->body : $default;
+            return $text ? ($text->body ? true : false) : $default;
         }
 
 
@@ -313,7 +313,8 @@ class Text extends Model
             $default = true;//デフォルト値
 
             $text    = Text::where('type',$type)->orderByDesc('id')->first();
-            return  $text ? $text->body : $default;
+
+            return $text ? ($text->body ? true : false) : $default;
         }
 
 
@@ -343,7 +344,7 @@ class Text extends Model
             $default = false;//デフォルト値
 
             $text    = Text::where('type',$type)->orderByDesc('id')->first();
-            return  $text ? $text->body : $default;
+            return $text ? ($text->body ? true : false) : $default;
         }
 
 
@@ -358,7 +359,7 @@ class Text extends Model
             $default = $this->gacha_settings_card_image_head_default;//デフォルト値
 
             $text    = Text::where('type',$type)->orderByDesc('id')->first();
-            return  $text ? $text->body : $default;
+            return  ( isset($text) && $text->body ) ? asset('storage/'.$text->body) : $default;
         }
         /**
          * ガチャ販売機の頭部画像(デフォルト)　gacha_settings_card_image_head_default
@@ -381,7 +382,7 @@ class Text extends Model
             $default = $this->gacha_settings_card_image_body_default;//デフォルト値
 
             $text    = Text::where('type',$type)->orderByDesc('id')->first();
-            return  $text ? $text->body : $default;
+            return  ( isset($text) && $text->body ) ? asset('storage/'.$text->body) : $default;
         }
         /**
          * ガチャ販売機の本体画像(デフォルト)　gacha_settings_card_image_body_default
@@ -403,7 +404,7 @@ class Text extends Model
             $default = false;//デフォルト値
 
             $text    = Text::where('type',$type)->orderByDesc('id')->first();
-            return  $text ? $text->body : $default;
+            return $text ? ($text->body ? true : false) : $default;
         }
 
 
@@ -417,7 +418,7 @@ class Text extends Model
             $default = $this->gacha_settings_loading_movie_path_default;//デフォルト値
 
             $text    = Text::where('type',$type)->orderByDesc('id')->first();
-            return  $text ? $text->body : $default;
+            return  ( isset($text) && $text->body ) ? asset('storage/'.$text->body) : $default;
         }
         /**
          * ガチャの読み込み中動画パス(デフォルト)　gacha_settings_loading_movie_path_default

@@ -11,6 +11,7 @@ use App\Models\UserGachaHistory;
 use App\Models\UserPrize;
 use App\Models\PointHistory;
 use App\Models\Infomation;
+use App\Models\Text;
 /*
 | =============================================
 |  ガチャ テスト Apiを利用したガチャ一覧 コントローラー
@@ -55,7 +56,8 @@ class GachaApiController extends Controller
             $categories = GachaCategory::userList()->get();
 
             ## カードサイズ
-            $card_size = $request->card_size ? $request->card_size : null;
+            $text_model = new Text();
+            $card_size = $request->card_size ? $request->card_size : $text_model->gacha_settings_size;
 
             ## 絞り込みキー
             $search_key = $request->search_key ? $request->search_key : 'desc_published_at';

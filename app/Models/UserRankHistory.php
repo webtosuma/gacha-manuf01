@@ -73,7 +73,10 @@ class UserRankHistory extends Model
         */
         public function getThisRankAttribute()
         {
-            return $this->UserRanks()[ $this->rank_id ];
+            $array = $this->UserRanks();
+            return array_key_exists( $this->rank_id, $array )
+            ? $array[$this->rank_id] : null;
+            // return $this->UserRanks()[ $this->rank_id ];
         }
 
 
@@ -90,7 +93,7 @@ class UserRankHistory extends Model
         }
 
         /** ラベル label　*/
-        public function getLabelAttribute(){ return $this->this_rank['label'];}
+        public function getLabelAttribute(){ return $this->this_rank ? $this->this_rank['label'] : null;}
 
         /** コード code　*/
         public function getCodeAttribute(){ return $this->this_rank['code'];}

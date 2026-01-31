@@ -13,6 +13,10 @@ import Vue from 'vue'
         Vue.component('u-gacha-card',
         require('./components/gacha/list/CardComponent.vue').default);
 
+        /* ガチャ マシーン */
+        Vue.component('u-gacha-machine',
+        require('./components/gacha/list/MachineComponent.vue').default);
+
         /* ガチャ 画像 */
         Vue.component('u-gacha-image',
         require('./components/gacha/list/ImageComponent.vue').default);

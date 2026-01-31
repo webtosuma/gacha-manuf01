@@ -70,7 +70,8 @@
                     <div class="d-flex align-items-center gap-2">
                         <input value="{{old('one_play_point', $gacha->one_play_point ?? 0 )}}"
                         name="one_play_point"
-                        type="number" class="form-control" min="0">
+                        style="width:8rem;"
+                        type="number" class="form-control text-end" min="0">
                         <span>pt</span>
                     </div>
                 </div>
@@ -142,12 +143,13 @@
             <label class="d-block mb-4">
                 <div class="form-label">⚪︎回限定ガチャ限定回数(⚪︎回限定を指定している時)</div>
 
-                <div class=" col-4">
+                <div class="">
                     <div class="d-flex align-items-center gap-2">
                         <input value="{{old('type_n_count', $gacha->type_n_count ?? 0 )}}"
                         name="type_n_count"
-                        type="number" class="form-control" min="1">
-                        <span>pt</span>
+                        style="width:8rem;"
+                        type="number" class="form-control text-end" min="1">
+                        <span>回限定</span>
                     </div>
                 </div>
 

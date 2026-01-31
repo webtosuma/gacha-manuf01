@@ -1,18 +1,18 @@
 <template>
-    <div class="position-relative card-body py-0 pb-3 px-2 px-md-3" :class="bg_color">
+    <div class="position-relative card-body py-0 pb- px-2 px-md-3" :class="bg_color">
 
 
         <div class="row align-items-center justify-content-between g-1">
 
             <div class="col text-start">
                 <!-- 左 -->
-                <!-- <div v-if="new_label_path"
+                <div v-if="new_label_path"
                 :style="icon_height"
                 class="d-inline-block position-relative">
                     <img
                     class="position-absolute top-50 start-0 translate-middle-y"
                     :src=" new_label_path " :style="icon_height" alt="NEW">
-                </div> -->
+                </div>
             </div>
 
             <div class="col-auto">
@@ -50,12 +50,13 @@
 
 
         <!-- 通常メーター -->
-        <div v-if="gacha_type!='only_new_user' && is_meter!=0" class="position-relative">
+        <div v-if="gacha_type!='only_new_user' && is_meter!=0"
+        class="position-relative text-center">
 
 
 
             <!-- メーター -->
-            <div class="progress rounded-pill bg-secondary" :style="merter_height" >
+            <div class="progress rounded-pill bg- " :style="merter_height" >
                 <div :class=" progress_style_class" role="progressbar"
                 :style="'width:'+remaining_ratio+'%'"
                 :aria-valuenow="remaining_ratio" aria-valuemin="0"
@@ -65,20 +66,43 @@
 
 
             <!-- 残数 -->
-            <div v-if="sm_card==0"
-            class="position-absolute top-100 start-50 translate-middle
-            px-2 text-light bg-dark rounded-pill mx-2"
+            <div class=""
             style="font-size:11px;">
-                残り
+                <span v-if="sm_card==0">残り</span>
+
                 <number-comma-component :number=" remaining_count "></number-comma-component>
                 /
                 <number-comma-component :number=" max_count "></number-comma-component>
             </div>
+
+            <!-- 限定n回 残数 -->
+            <div v-if="sm_card==0 && type_n_remaining_count_label"
+            class="position-absolute top-0 start-50 translate-middle w-100 text-end "
+            style="font-size:11px;">
+                <div class="px-3 text-light bg-dark rounded-pill d-inline-block">{{ type_n_remaining_count_label }}</div>
+            </div>
+
+
         </div>
 
 
-        <!-- メーター表示なし -->
+
+
+            <!-- メーター表示なし -->
         <!-- <div v-else style="height:2rem"></div> -->
+
+
+        <!-- 限定n回 残数 -->
+        <!-- <div v-if="sm_card==0"
+        class="position-absolute top-0 start-50 translate-middle w-100 text-end pe-3"
+        style="font-size:11px;">
+            <div class="px-3 text-light bg-dark rounded-pill d-inline-block">
+                限定回数 残り
+                <number-comma-component :number=" remaining_count "></number-comma-component>
+                /
+                <number-comma-component :number=" max_count "></number-comma-component>
+            </div>
+        </div> -->
 
 
     </div>
@@ -98,6 +122,8 @@
             remaining_ratio: { type: [String, Number],  default: 0, },//残割合
             remaining_count: { type: [String, Number],  default: 0, },//残数
             max_count:       { type: [String, Number],  default: 0, },//総口数
+            type_n_remaining_count_label:{ type: [String, Number],  default: 0, },//[n回限定・1日n回限定] 残り回数ラベル
+
         },
         data() { return {
 

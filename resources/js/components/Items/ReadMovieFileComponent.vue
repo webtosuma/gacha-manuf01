@@ -1,9 +1,11 @@
 <template>
     <div class="">
 
-        <!-- 画像 -->
+        <!-- 動画 -->
         <div v-if="src" class="mb-2">
-            <video class="bg_video"
+            <video
+            :key="src"
+            class="bg_video"
             playsinline
             controls
             width="100%"
@@ -28,8 +30,12 @@
 
         <!-- delete(hidden) -->
         <div class="form-check d-none">
-            <input class="form-check-input" type="radio" :name="name+'_dalete'" :id="name+'_dalete'"
-            value="delete" v-model="delete_radio"  @change="delete_image">
+            <input
+            v-model="delete_radio"
+            @change="delete_image"
+            class="form-check-input" type="radio"
+            :name="name+'_dalete'" :id="name+'_dalete'"
+            value="delete" >
         </div>
 
         <!-- message -->
@@ -44,7 +50,7 @@
         props: {
 
             video_path:   { type: String, default: '', }, //表示動画のパス
-            novideo_path: { type: String, default: '', }, //動画無しのパス
+            no_video_path: { type: String, default: '', }, //動画無しのパス
             name:       { type: String, default: 'image', }, //インプット要素のname名
 
         },
@@ -97,7 +103,8 @@
 
             delete_image: function(){
 
-                this.src = this.noimg_path;
+                this.src = this.no_video_path;
+                this.delete_radio = 'delete';
 
                 const input_file = document.getElementById('file_input'+ this.name);
                 input_file.value = ''; //インプット要素内を空にする。

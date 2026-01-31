@@ -75,6 +75,8 @@ class Gacha extends Model
         'dont_auth_user_rank', //利用できるユーザーランクガチャではない
         'is_disabled_hundredplay_btn', //百連ガチャるボタンのdisabled
         'resume_text',         //ストレージ保存された文章を含む'説明文'
+        'user_rank_label',     //ユーザーランク限定ガチャラベル
+        'is_type_label_text',  //ガチャの種類等のレベルテキスト表示有無
 
         'add_chance_image_path', //アド確定予告画像パス
         'add_chance_count',      //天井系ガチャのアド確定までの回転数
@@ -86,12 +88,19 @@ class Gacha extends Model
         'img_path_only_oneday',  //[限定ガチャ画像パス]1日一回限定
         'img_path_only_new_user',//[限定ガチャ画像パス]新規会委員限定
         'img_path_user_rank',    //[限定ガチャ画像パス]会員ランク限定
+        'img_path_card_head',    //[画像パス]ガチャマシーンHead
+        'img_path_card_body',    //[画像パス]ガチャマシーンBody
 
         'remaining_ratio',//[メーター]残数比率
         'remaining_count',//[メーター]残数
         'max_count',      //[メーター]総口数
         'new_label_path', //[メーター]NEW ラベル
+        'new_label',        //newか否か
         'img_path_point', //[メーター]ポイントアイコン
+
+        'type_n_played_count',          //[n回限定・1日n回限定]ログインユーザーがガチャを回した数
+        'type_n_remaining_count',       //[n回限定・1日n回限定] 残り回数
+        'type_n_remaining_count_label', //[n回限定・1日n回限定] 残り回数ラベル
 
         'route',          //[ルーティング]ガチャ詳細ページ
         'r_prize_history',//[ルーティング]ガチャ商品履歴
@@ -694,6 +703,18 @@ class Gacha extends Model
 
 
         /**
+         * ユーザーランク限定ガチャラベル user_rank_label
+         * @return String
+        */
+        public function getUserRankLabelAttribute()
+        {
+            return $this->user_rank && $this->user_rank->label
+            ? $this->user_rank->label.'会員' : null;
+        }
+
+
+
+        /**
          * カテゴリーコードネーム(カテゴリー削除対応) category_code_name
          * @return String
         */
@@ -714,6 +735,31 @@ class Gacha extends Model
         }
 
 
+        /**
+         * newか否か new_label
+         * @return String
+        */
+        public function getNewLabelAttribute()
+        {
+            $published_at = $this->published_at ? $this->published_at->toDateTimeString() : '';
+            $new_start_at = now()->subday(7)->toDateTimeString();//減算
+            $bool = $new_start_at < $published_at;
+
+            return $bool ? 'new' : null;
+        }
+
+
+        /**
+         * ガチャの種類等のレベルテキスト表示有無 is_type_label_text
+         * @return Bool
+        */
+        public function getIsTypeLabelTextAttribute() : Bool
+        {
+            $text_model = new Text();
+            return $text_model->gacha_settings_type_label_text;
+        }
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー(画像パス)
@@ -722,7 +768,7 @@ class Gacha extends Model
     |
     */
         /**
-         * Newラベル(新規公開のみ) new_lavel_path
+         * Newラベル(新規公開のみ) new_label_path
          * @return String
         */
         public function getNewLabelPathAttribute()
@@ -732,7 +778,12 @@ class Gacha extends Model
             $published_at = $this->published_at ? $this->published_at->toDateTimeString() : '';
             $new_start_at = now()->subday(7)->toDateTimeString();//減算
             $bool = $new_start_at < $published_at;
-            return $bool ? asset( $image_path ) : '';
+
+            $text_model = new Text();
+
+            return $bool
+            && $text_model->gacha_settings_type_label_image//限定ガチャのラベル表示設定
+            ? asset( $image_path ) : '';
         }
 
 
@@ -752,8 +803,10 @@ class Gacha extends Model
         */
         public function getImgPathOneChanceAttribute()
         {
+            $text_model = new Text();
+
             return $this->type=='one_chance'
-            // && $this->is_published
+            && $text_model->gacha_settings_type_label_image//限定ガチャのラベル表示設定
             ? asset( 'storage/site/image/gacha_type/one_chance.png' ) : null;
         }
 
@@ -763,8 +816,10 @@ class Gacha extends Model
         */
         public function getImgPathOneTimeAttribute()
         {
+            $text_model = new Text();
+
             return $this->type=='one_time'
-            // && $this->is_published
+            && $text_model->gacha_settings_type_label_image//限定ガチャのラベル表示設定
             ? asset( 'storage/site/image/gacha_type/one_time.png' ) : null;
         }
 
@@ -774,8 +829,10 @@ class Gacha extends Model
         */
         public function getImgPathOnlyOnedayAttribute()
         {
+            $text_model = new Text();
+
             return $this->type=='only_oneday'
-            // && $this->is_published
+            && $text_model->gacha_settings_type_label_image//限定ガチャのラベル表示設定
             ? asset( 'storage/site/image/gacha_type/only_oneday.png' ) : null;
         }
 
@@ -785,19 +842,23 @@ class Gacha extends Model
         */
         public function getImgPathOnlyNewUserAttribute()
         {
+            $text_model = new Text();
+
             return $this->type=='only_new_user'
-            // && $this->is_published
+            && $text_model->gacha_settings_type_label_image//限定ガチャのラベル表示設定
             ? asset( 'storage/site/image/gacha_type/only_new_user.png' ) : null;
         }
 
         /**
-         * 会員ランク限定　新規会委員限定 img_path_user_rank
+         * 会員ランク限定 img_path_user_rank
          * @return String
         */
         public function getImgPathUserRankAttribute()
         {
+            $text_model = new Text();
+
             return $this->user_rank_id!=''
-            // && $this->is_published
+            && $text_model->gacha_settings_type_label_image//限定ガチャのラベル表示設定
             ? $this->user_rank->image_path : null;
         }
 
@@ -821,6 +882,114 @@ class Gacha extends Model
             foreach ($g_prizes as $g_prize) { $array[] = $g_prize->prize->image_path; }
             return $array;
         }
+
+
+
+        /**
+         * [画像パス]ガチャマシーンHead img_path_card_head
+         * @return String
+        */
+        public function getImgPathCardHeadAttribute()
+        {
+
+            $text_model = new Text();
+
+            return $text_model->gacha_settings_card_image
+            ? $text_model->gacha_settings_card_image_head : null;
+        }
+
+
+
+        /**
+         * [画像パス]ガチャマシーンBody img_path_card_body
+         * @return String
+        */
+        public function getImgPathCardBodyAttribute()
+        {
+
+            $text_model = new Text();
+
+            return $text_model->gacha_settings_card_image
+            ? $text_model->gacha_settings_card_image_body : null;
+        }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー(n回限定・1日n回限定)
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * [n回限定・1日n回限定] ログインユーザーがガチャを回した数 type_n_played_count
+         * @return Integer
+        */
+        public function getTypeNPlayedCountAttribute() : Int
+        {
+            # n回限定ガチャ
+            $bool = !in_array( $this->type,[ 'n_time', 'n_oneday' ]);
+            if($bool){ return 0; }
+
+            $today   = today();
+            $user_id = Auth::check() ? Auth::user()->id : 0 ;
+
+
+            $query = UserGachaHistory::query();
+
+                $query->where('user_id', $user_id);
+                $query->where('gacha_id',$this->id);
+                if( $this->type == 'n_oneday' ){
+                    $query->whereDate('created_at',$today);
+                }
+
+            return $query->count();
+        }
+
+
+
+
+        /**
+         * [n回限定・1日n回限定] 残り回数 type_n_remaining_count
+         * @return String
+        */
+        public function getTypeNRemainingCountAttribute() : Int
+        {
+            # n回限定ガチャ
+            $bool = !in_array( $this->type,[ 'n_time', 'n_oneday' ]);
+            if($bool){ return 0; }
+
+            # 最大値（限定回数 or ガチャの残数）
+            $max_count = $this->type_n_count<$this->remaining_count ? $this->type_n_count : $this->remaining_count;
+
+
+            return $max_count > $this->type_n_played_count ? $max_count - $this->type_n_played_count : 0;
+        }
+
+
+
+        /**
+         * [n回限定・1日n回限定] 残り回数ラベル type_n_remaining_count_label
+         * @return String
+        */
+        public function getTypeNRemainingCountLabelAttribute() : ? String
+        {
+            # n回限定ガチャ
+            $bool = !in_array( $this->type,[ 'n_time', 'n_oneday' ]);
+            if($bool){ return null; }
+
+            # 最大値（限定回数）
+            $max_count = $this->type_n_count;
+
+            $l_head = $this->type=='n_oneday' ? '本日残り ' : '限定残り ';
+            $text = $l_head . (string)$this->type_n_remaining_count . '/' . (string)$max_count ;
+
+
+            return $text;
+        }
+
+
 
     /*
     |--------------------------------------------------------------------------

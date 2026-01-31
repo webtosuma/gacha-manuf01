@@ -41,6 +41,10 @@
             @endif
             <!--ガチャの種類-->
             <span class="border px-3 rounded-pill">{{ $gacha->types()[$gacha->type] }}</span>
+            <!--会員ランク限定ガチャの種類-->
+            @if( $gacha->user_rank_label )
+                <span class="border px-3 rounded-pill">{{ $gacha->user_rank_label }}</span>
+            @endif
             <!--サブスクガチャの種類-->
             @if( $gacha->subscription_id )
                 <span class="border px-3 rounded-pill">{{ $gacha->subscription->sub_label }}</span>
