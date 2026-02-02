@@ -35,7 +35,7 @@
 
         # イベント用
         if( config('app.event_gacha') ){ $types['event'] ='イベント用'; }
-        
+
 
     /**
      * ガチャランク　一覧
@@ -116,7 +116,7 @@ return [
         'custom'     => true,
 
         # 100連ボタン
-        'hundredplay' => false,
+        'hundredplay' => true,
 
         #　ポップアップボタン
         'popup'       => true,

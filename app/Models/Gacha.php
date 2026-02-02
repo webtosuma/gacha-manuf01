@@ -731,7 +731,12 @@ class Gacha extends Model
         public function getMaxCustomTypeCountAttribute()
         {
             /*.設定は。config.gachaに記述 */
-            return $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : null ;
+            $max = $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : null ;
+
+            /* n回限定,1日n回限定終了 */
+            if( in_array( $this->type, ['n_time', 'n_oneday']) ){ $max = $this->type_n_remaining_count; }
+
+            return $max;
         }
 
 
@@ -944,7 +949,7 @@ class Gacha extends Model
                     $query->whereDate('created_at',$today);
                 }
 
-            return $query->count();
+            return $query->sum('play_count');
         }
 
 
@@ -1030,8 +1035,10 @@ class Gacha extends Model
         {
             # config設定
             if( ! config('gacha.btn_settings.hundredplay') ){ return -1; }
-            # 利用不可
-            if( !in_array( $this->type, ['nomal'] ) ){ return -1; }
+
+            # 利用不可(ノーマル,n回限定,1日n回限定 以外)
+            if( !in_array( $this->type, ['nomal','n_time', 'n_oneday'] ) ){ return -1; }
+
             # 非表示
             return $this->isDisabledBtnMethod($this,100);
         }
@@ -1049,8 +1056,13 @@ class Gacha extends Model
 
             # 終了
             if( in_array( $this->type, ['nomal','max_custom']) && $this->remaining_count == 0 ){ return 1; }
-            # 利用可
-            if( in_array( $this->type, ['nomal','max_custom'] ) ){ return 0; }
+
+            # n回限定,1日n回限定終了　
+            if( in_array( $this->type, ['n_time', 'n_oneday']) && $this->type_n_remaining_count == 0 ){ return 1; }
+
+            # 利用可(ノーマル,最大回数,n回限定,1日n回限定 以外)
+            if( in_array( $this->type, ['nomal','max_custom','n_time', 'n_oneday'] ) ){ return 0; }
+
             # 非表示
             return -1;
         }
@@ -1096,14 +1108,12 @@ class Gacha extends Model
                     /* 1回限定 */
                     case 'one_time':
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
-                        // if( $n!=1 ){ return 1; }//終了
                         return ($remaining_count >= $n) && !($gacha->played_one_time) ? 0 : 1 ;
                         break;
 
                     /* 一日一回限定 */
                     case 'only_oneday':
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
-                        // if( $n!=1 ){ return 1; }//終了
                         if( $remaining_count < $n      ){ return 1; }//終了
                         if( $gacha->played_only_oneday ){ return 2; }//本日は終了
                         return 0;//利用可能
@@ -1112,11 +1122,22 @@ class Gacha extends Model
                     /* 新規会員限定 */
                     case 'only_new_user':
                         if( $n!=1 ){ return -1; }//1回ボタン以外非表示
-                        // if( $n!=1 ){ return 1; }//終了
                         return ( Auth::check() && !Auth::user()->sevendays_affter_registar )//1週間以内
                         && ($remaining_count >= $n)
                         && !($gacha->played_one_time) //1回のみ
                         ? 0 : 1 ;
+                        break;
+
+                    /* n回限定 */
+                    case 'n_time':
+                        return !($remaining_count < $n) && !($gacha->type_n_remaining_count < $n) ? 0 : 1 ;
+                        break;
+
+                    /* 1日n回限定 */
+                    case 'n_oneday':
+                        if( $remaining_count < $n               ){ return 1; }//終了
+                        if( $gacha->type_n_remaining_count < $n ){ return 2; }//本日は終了
+                        return 0;//利用可能
                         break;
 
                     /* */
