@@ -63,6 +63,9 @@ import Vue from 'vue'
         Vue.component('a-shipped-list',
         require('./components/admin/shipped/ListComponent').default);
 
+        Vue.component('a-shipped-table',
+        require('./components/admin/shipped/TableComponent').default);
+
 
     /* ポイント売上 */
 

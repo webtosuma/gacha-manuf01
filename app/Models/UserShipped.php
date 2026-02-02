@@ -39,9 +39,10 @@ class UserShipped extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
-        'code',               //発送コード 0000-0000
+        'code',              //発送コード 0000-0000
         'created_at_format', //申請日フォーマット created_at_format
         'shipment_at_format',//発送日フォーマット
+        'prizes_string',     //発送商品情報
         'r_show',            //[ルーティング]詳細
         'r_admin_show',      //[ルーティング]Admin詳細
         'r_admin_user',      //[ルーティング]Adminユーザー
@@ -159,6 +160,24 @@ class UserShipped extends Model
         public function getShipmentAtFormatAttribute()
         {
             return $this->shipment_at ? $this->shipment_at->format('発送日：Y年m月d日'): null;
+        }
+
+
+        /**
+         * 発送商品情報 prizes_string
+         * @return String
+         */
+        public function getPrizesStringAttribute()
+        {
+            $prizes_string = '';
+            $user_prizes = $this->user_prizes;
+            $id_array = $user_prizes->pluck('prize_id')->toArray();
+            $shipped_prizes = Prize::find( $id_array );//カードの重複除去
+            foreach ($shipped_prizes as $shipped_prize) {
+                $count = array_count_values($id_array)[$shipped_prize->id] ?? 0;
+                $prizes_string .= "[{$shipped_prize->code}]{$shipped_prize->name} ×{$count}点　";
+            }
+            return $prizes_string;
         }
 
 

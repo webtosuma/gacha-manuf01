@@ -33,13 +33,28 @@
                         </label>
                     </div>
 
+                    <!--表示切り替え-->
                     <div class="col-auto">
+                        <button v-if="table==0"
+                        @click="table=1;"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="テーブル表示"
+                        type="button" class="btn border py-0"
+                        ><i class="bi bi-table fs-5"></i></button>
+
+                        <button v-else
+                        @click="table=0;"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="リスト表示"
+                        type="button" class="btn border py-0"
+                        ><i class="bi bi-list-task fs-5"></i></button>
+                    </div>
+
+                    <!-- <div class="col-auto">
                         <form :action="routes.dl_csv">
                             <input type="hidden" name="user_ids" :value="users.map(user => user.id).join(',')">
                             <button class="btn border py-0" type="submit"
                             ><i class="bi bi-filetype-csv fs-5"></i>ダウンロード</button>
                         </form>
-                    </div>
+                    </div> -->
 
                     <div v-if="routes.other_menu" class="col-auto h-100">
                         <a :href="routes.other_menu" class="btn border py-1 h-100"
@@ -81,8 +96,9 @@
             </nav>
 
 
-
-            <table class="table bg-white mb-3" style="min-width:680px;">
+            <!-- リスト表示 -->
+            <table v-if="table==0"
+            class="table bg-white mb-3" style="min-width:680px;">
                 <!--ヘッド（並べ替えボタン）-->
                 <thead>
                     <tr class="bg-white text-center">
@@ -170,6 +186,9 @@
             </table>
 
 
+            <!-- テーブル表示 -->
+            <a-user-table v-else :users="users"/>
+
 
             <!-- ページネーション -->
             <nav v-if="pagenate.links.length > 3" aria-label="Pagination">
@@ -237,7 +256,8 @@
 
     const users = ref([ ]);  /* データリスト */
 
-    // const selected_column_name = ref('name');//選択中の検索絞り込みカラム
+
+    const table = ref(0);/* 表示切り替え */
 
 
 

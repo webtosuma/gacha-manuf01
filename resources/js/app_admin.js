@@ -28,6 +28,10 @@ import Vue from 'vue'
     Vue.component('a-user-list',
     require('./components/admin/user/ListComponent.vue').default);
 
+        // 印刷用テーブル表示
+        Vue.component('a-user-table',
+        require('./components/admin/user/TableComponent.vue').default);
+
         // 期限切れポイントのリセット
         Vue.component('a-user-deadlin-point-reset',
         require('./components/admin/user/point/DeadlinePointResetComponent.vue').default);
