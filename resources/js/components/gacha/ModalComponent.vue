@@ -41,18 +41,23 @@
                                 ポイントを消費してガチャを開始します。<br>
                                 よろしいですか？
                             </div>
-                            <div v-else
-                            class="d-flex align-items-center gap-3 justify-content-center h-100">
+                            <div v-else class="mt-4">
 
 
-                                <div class="spinner-grow text-dark" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                <div class="d-flex align-items-center gap-3 justify-content-center">
+                                    <div class="spinner-grow text-dark" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-dark" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-dark" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </div>
-                                <div class="spinner-grow text-dark" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                                <div class="spinner-grow text-dark" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+
+                                <div class="fw-bold text-danger py-4">
+                                    ガチャを開始します。そのままお待ちください。
                                 </div>
 
 

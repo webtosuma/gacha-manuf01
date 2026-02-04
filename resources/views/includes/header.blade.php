@@ -72,7 +72,7 @@
 
                                 <div class="rounded-pill bg-white text- fw-bold border
                                 d-flex align-items-center justify-content-end px-3
-                                " style="width:6rem; height:1.6rem;">
+                                " style="width:7.4rem; height:1.6rem;">
                                 <number-comma-component number="{{ Auth::user()->point }}"></number-comma-component>
                                 <span>pt</span>
 

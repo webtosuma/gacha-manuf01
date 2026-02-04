@@ -1,23 +1,11 @@
 <template>
     <div class="text-dark">
-
-        <!-- button key -->
-        <!-- <div>{{ '#'+'gachaCustomModal'+gacha_id }}</div> -->
-
-        <!-- button -->
-        <!-- <div class="d-flex gap-3 mb-3">
-            <button
-            data-bs-toggle="modal"
-            :data-bs-target="'#'+'gachaCustomModal'+gacha_id"
-            >カスタム</button>
-        </div> -->
-
-
         <!--modal-->
         <div
         class="modal fade"
         :id="'gachaCustomModal'+ gacha_id"
         :aria-labelledby="'gachaCustomModal'+gacha_id+'Label'"
+        style="background: rgba(0, 0, 0, 0.7);"
         data-bs-backdrop="static" tabindex="-1"
         data-bs-keyboard="false"
         aria-hidden="true">
@@ -31,8 +19,9 @@
                             <slot><!--ガチャ画像--></slot>
                         </div>
                         <div class="text-center">
+
                             <!--数量変更-->
-                            <div class="p-3">
+                            <div v-if="!disabled"  class="p-3">
                                 <div class="my-3 fs-4">
                                     <div>{{ count.toLocaleString() + '回ガチャる' }}</div>
                                     <div>{{ ( one_play_point*count ).toLocaleString() + 'pt' }}</div>
@@ -83,18 +72,23 @@
                                 ポイントを消費してガチャを開始します。<br>
                                 よろしいですか？
                             </div>
-                            <div v-else
-                            class="d-flex align-items-center gap-3 justify-content-center h-100">
+                            <div v-else class="mt-4">
 
 
-                                <div class="spinner-grow text-dark" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                <div class="d-flex align-items-center gap-3 justify-content-center">
+                                    <div class="spinner-grow text-dark" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-dark" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-dark" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </div>
-                                <div class="spinner-grow text-dark" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                                <div class="spinner-grow text-dark" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+
+                                <div class="fw-bold text-danger py-4">
+                                    ガチャを開始します。そのままお待ちください。
                                 </div>
 
 

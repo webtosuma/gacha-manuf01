@@ -1,6 +1,10 @@
 <template>
     <div class="text-dark">
 
+        <!--読み込み中-->
+        <loading-cover-component :loading="loading" />
+
+
         <!--ボトムメニュー-->
         <div v-if="bottom_menu == 'true'"
         class="position-fixed bottom-0 end-0 w-100 pb-3 bg-white border"
@@ -140,16 +144,6 @@
 
         <!--商品一覧-->
         <ul class="row px-3 bg-white text-dark rounded-3 mx-2 gy-3 mt-0" style="list-style:none;">
-
-            <!--読み込み中-->
-            <li v-if="loading"
-            class="list-group-item bg-white text-dark py-5 fs-5 text-secondary">
-                <div class="d-flex justify-content-center align-items-center">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </li>
 
             <li v-for="(userPrize, key) in userPrizes" :key="key"
             class="col-12 col-sm-6 col-lg-4">
@@ -346,6 +340,9 @@
         </div>
 
 
+
+
+
     </div>
 </template>
 <script setup>
@@ -425,7 +422,6 @@
             : [ ...userPrizes.value ,...paginate.data];
 
             total.value        = paginate.total;
-            loading.value      = false;
             ids.value          = [];
             allCheck.value     = false;
             totalPoint.value   = 0;
@@ -434,6 +430,10 @@
             /* 次のデータの読み込み */
             if (paginate.current_page !== paginate.last_page) {
                 getData(paginate.next_page_url);
+
+                loading.value      = false;
+            }else{
+                loading.value = false;
             }
         }
         catch (error) {

@@ -5,140 +5,135 @@
 
 
         <!--カード一覧-->
-        <div class="row justify-content-center align-items-center g-3 gy-4 mb-4"
-        style="min-height: 50vh;" >
+        <div style="min-height: 50vh;">
 
-            <div v-if="loading"
-            class="d-flex justify-content-center align-items-center">
-                <div class="spinner-border text-light" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
+            <div v-if="!loading"
+            class="row justify-content-center align-items-center g-3 gy-4 mb-4"
+            >
+                <div v-if="userPrizes.length==0 && !loading"
+                class="text-center fs-5">*表示できる商品はありません</div>
 
-            <div v-if="userPrizes.length==0 && !loading"
-            class="text-center fs-5">*表示できる商品はありません</div>
-
-            <div v-for="(userPrize, key) in userPrizes" :key="key"
-            :class="userPrizes.length==1 ? 'col-6' : 'col-4 col-md-3'">
-                <div class="d-flex align-items-center justify-content-center h-100">
+                <div v-for="(userPrize, key) in userPrizes" :key="key"
+                :class="userPrizes.length==1 ? 'col-6' : 'col-4 col-md-3'">
+                    <div class="d-flex align-items-center justify-content-center h-100">
 
 
-                    <div class="w-100" data-aos="zoom-in">
-                        <!-- <label class="w-100" > -->
+                        <div class="w-100" data-aos="zoom-in">
+                            <!-- <label class="w-100" > -->
 
-                            <label class="d-block position-relative" style="cursor: pointer;">
-                                <!--チェックボックス-->
-                                <div v-if="show_change_btn!=0"
-                                class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
-                                    <input v-model="ids" @change="changeChildren()"
-                                    class="form-check-input float-xl-none m-0 rounded-pill"
-                                    style="width:2em; height:2em;"
-                                    type="checkbox" name="user_prize_ids[]" :value="userPrize.id">
+                                <label class="d-block position-relative" style="cursor: pointer;">
+                                    <!--チェックボックス-->
+                                    <div v-if="show_change_btn!=0"
+                                    class="position-absolute top-0 start-0 translate-middle" style="z-index:3">
+                                        <input v-model="ids" @change="changeChildren()"
+                                        class="form-check-input float-xl-none m-0 rounded-pill"
+                                        style="width:2em; height:2em;"
+                                        type="checkbox" name="user_prize_ids[]" :value="userPrize.id">
+                                    </div>
+
+                                    <!--カード画像-->
+                                    <ratio-image-component
+                                    style_class="ratio ratio-3x4 rounded-3"
+                                    :url="userPrize.prize.image_path"
+                                    ></ratio-image-component>
+
+
+
+                                    <!-- ポイント交換済み -->
+                                    <div v-if="userPrize.point_history_id"
+                                    style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
+                                    class="d-flex justify-content-center align-items-center flex-column
+                                    fw-bold rounded  text-warning
+                                    position-absolute top-0 start-0 h-100 w-100 ">
+                                        <i class="bi bi-check-circle-fill fs-1 "></i>
+                                        <span >ポイント<br>交換済み</span>
+                                    </div>
+
+                                    <!-- チケット交換済み -->
+                                    <div v-if="userPrize.to_ticket_history_id"
+                                    style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
+                                    class="d-flex justify-content-center align-items-center flex-column
+                                    fw-bold rounded  text-success
+                                    position-absolute top-0 start-0 h-100 w-100 ">
+                                        <i class="bi bi-check-circle-fill fs-1 "></i>
+                                        <span >チケット<br>交換済み</span>
+                                    </div>
+
+                                    <!-- 発送済み -->
+                                    <div v-if="userPrize.shipped_id"
+                                    style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
+                                    class="d-flex justify-content-center align-items-center flex-column
+                                    fw-bold rounded  text-primary
+                                    position-absolute top-0 start-0 h-100 w-100 ">
+                                        <i class="bi bi-check-circle-fill fs-1 "></i>
+                                        <span >発送申請済み</span>
+                                    </div>
+
+
+                                </label>
+
+                                <!--ポイント表示-->
+                                <div v-if="no_exchange_point==0"
+                                class="bg-warning text-end text-dark
+                                mt-1 px-2 rounded-pill position-relative
+                                position-relative">
+
+                                    <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
+                                        <i class="bi bi-p-circle  fs-5 text-"></i>
+                                    </div>
+
+
+                                    {{ userPrize.point.toLocaleString()+' pt' }}
                                 </div>
 
-                                <!--カード画像-->
-                                <ratio-image-component
-                                style_class="ratio ratio-3x4 rounded-3"
-                                :url="userPrize.prize.image_path"
-                                ></ratio-image-component>
+                                <!--交換チケット-->
+                                <div v-if="change_ticket!=0"
+                                class="bg-success text-end text-dark
+                                mt-1 px-2 rounded-pill position-relative
+                                position-relative">
+
+                                    <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
+                                        <i class="bi bi-ticket-perforated-fill fs-5 text-"></i>
+                                    </div>
 
 
-
-                                <!-- ポイント交換済み -->
-                                <div v-if="userPrize.point_history_id"
-                                style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
-                                class="d-flex justify-content-center align-items-center flex-column
-                                fw-bold rounded  text-warning
-                                position-absolute top-0 start-0 h-100 w-100 ">
-                                    <i class="bi bi-check-circle-fill fs-1 "></i>
-                                    <span >ポイント<br>交換済み</span>
+                                    <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+' 枚'}}</span>
+                                    <span v-else style="font-size:11px;">交換なし</span>
                                 </div>
 
-                                <!-- チケット交換済み -->
-                                <div v-if="userPrize.to_ticket_history_id"
-                                style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
-                                class="d-flex justify-content-center align-items-center flex-column
-                                fw-bold rounded  text-success
-                                position-absolute top-0 start-0 h-100 w-100 ">
-                                    <i class="bi bi-check-circle-fill fs-1 "></i>
-                                    <span >チケット<br>交換済み</span>
-                                </div>
+                                <!--商品説明モーダル-->
+                                <button v-if="userPrize.prize.discription_text"
+                                class="btn btn-sm btn-dark rounded-pill w-100 my-1"
+                                type="button"
+                                data-bs-toggle="modal"
+                                :data-bs-target="'#PrizeDiscriptionModal'+userPrize.id"
+                                ><i class="bi bi-search me-2"></i>商品説明</button>
+                                <div v-else style="height: 2rem;"></div>
 
-                                <!-- 発送済み -->
-                                <div v-if="userPrize.shipped_id"
-                                style="z-index:5; font-size:14px; background:rgb(0, 0, 0, .5);"
-                                class="d-flex justify-content-center align-items-center flex-column
-                                fw-bold rounded  text-primary
-                                position-absolute top-0 start-0 h-100 w-100 ">
-                                    <i class="bi bi-check-circle-fill fs-1 "></i>
-                                    <span >発送申請済み</span>
-                                </div>
+                            <!-- </label> -->
+                        </div>
 
 
-                            </label>
-
-                            <!--ポイント表示-->
-                            <div v-if="no_exchange_point==0"
-                            class="bg-warning text-end text-dark
-                            mt-1 px-2 rounded-pill position-relative
-                            position-relative">
-
-                                <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
-                                    <i class="bi bi-p-circle  fs-5 text-"></i>
-                                </div>
-
-
-                                {{ userPrize.point.toLocaleString()+' pt' }}
-                            </div>
-
-                            <!--交換チケット-->
-                            <div v-if="change_ticket!=0"
-                            class="bg-success text-end text-dark
-                            mt-1 px-2 rounded-pill position-relative
-                            position-relative">
-
-                                <div class="position-absolute top-50 start-0 translate-middle-y px-1" style="padding-top:2px;">
-                                    <i class="bi bi-ticket-perforated-fill fs-5 text-"></i>
-                                </div>
-
-
-                                <span v-if="userPrize.prize.ticket" class="fs-6">{{userPrize.ticket.toLocaleString()+' 枚'}}</span>
-                                <span v-else style="font-size:11px;">交換なし</span>
-                            </div>
-
-                            <!--商品説明モーダル-->
-                            <button v-if="userPrize.prize.discription_text"
-                            class="btn btn-sm btn-dark rounded-pill w-100 my-1"
-                            type="button"
-                            data-bs-toggle="modal"
-                            :data-bs-target="'#PrizeDiscriptionModal'+userPrize.id"
-                            ><i class="bi bi-search me-2"></i>商品説明</button>
-                            <div v-else style="height: 2rem;"></div>
-
-                        <!-- </label> -->
                     </div>
-
-
                 </div>
-            </div>
 
-
-            <!--商品の説明モーダル-->
-            <div class="h-0 overflow-hidden">
-                <div v-for="(userPrize, key) in userPrizes" :key="key">
-                    <u-prize-discription
-                    v-if="userPrize.prize.discription_text"
-                    :id         ="userPrize.id"
-                    :name       ="userPrize.prize.name"
-                    :image_path ="userPrize.prize.image_path"
-                    :discription="userPrize.prize.discription_text"
-                    size       ="2rem"
-                    :src_icon   ="userPrize.prize.discription_icon_path"
-                    no_btn     ="1"
-                    ></u-prize-discription>
+                <!--商品の説明モーダル-->
+                <div class="h-0 overflow-hidden">
+                    <div v-for="(userPrize, key) in userPrizes" :key="key">
+                        <u-prize-discription
+                        v-if="userPrize.prize.discription_text"
+                        :id         ="userPrize.id"
+                        :name       ="userPrize.prize.name"
+                        :image_path ="userPrize.prize.image_path"
+                        :discription="userPrize.prize.discription_text"
+                        size       ="2rem"
+                        :src_icon   ="userPrize.prize.discription_icon_path"
+                        no_btn     ="1"
+                        ></u-prize-discription>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
 
         <!-- ポイント交換 or 商品発送 ボタン -->
@@ -230,22 +225,6 @@
 
             </div>
         </div>
-        <!-- <div v-else>
-            <div class="d-flex flex-wrap justify-content-center gap-3 fw-bold" style="font-size:14px; text-shadow: #fff 0px 0 5px;">
-                <div  v-if="no_exchange_point==0">
-                    <span class="text-warning">●</span>
-                    <span>ポイント交換済み</span>
-                </div>
-                <div v-if="change_ticket!=0">
-                    <span class="text-success">●</span>
-                    <span>チケット交換済み</span>
-                </div>
-                <div>
-                    <span class="text-primary">●</span>
-                    <span>発送申請済み</span>
-                </div>
-            </div>
-        </div> -->
 
 
 
@@ -421,17 +400,21 @@
             const { current_page, last_page, next_page_url } = paginate;
             nextPageUrl.value = current_page !== last_page ? next_page_url : null;
 
-            loading.value = false;
 
             /* 次のデータの読み込み */
             if( current_page != last_page ){
                 const nextPageUrl = paginate.next_page_url;     //URLの更新
                 getData( nextPageUrl );
+
+                loading.value = false;
+            }else{
+                loading.value = false;
             }
 
 
         } catch (error) {
             alert('通信エラーが発生しました。');
+            // console.log( error.response.data );
         }
     };
 

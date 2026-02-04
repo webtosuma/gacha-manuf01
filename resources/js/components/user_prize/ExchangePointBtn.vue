@@ -114,41 +114,6 @@
             },
 
 
-            // async post() {
-            //     // 送信中カバーの表示
-            //     this.loading = true;
-            //     let count    = 0;
-
-            //     try {
-            //         for (const id of this.user_prize_ids)
-            //         {
-            //             const route = this.postUrl;
-            //             await axios.post(route, {
-            //                 _token: this.token,
-            //                 user_prize_ids: [id],
-            //             });
-            //             count++;
-            //             this.progress = Math.ceil( count/this.user_prize_ids.length *100 );
-            //         }
-
-            //         // すべてのPOSTが完了後にリダイレクト
-            //         setTimeout(() => {
-            //             window.location.href = this.r_redirect;
-            //         }, 2*1000);
-            //         return;
-
-            //     } catch (error) {
-            //         if (error.response && error.response.status === 450) {
-            //             alert('通信エラーが発生しました');
-            //             console.log(error.response.data);
-            //         } else {
-            //             alert('通信エラーが発生しました');
-            //             console.log(error);
-            //         }
-            //     } finally {
-            //         // this.loading = false;
-            //     }
-            // }
         }
     }
 </script>
