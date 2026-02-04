@@ -693,9 +693,26 @@ class Gacha extends Model
         */
         public function getDontAuthUserRankAttribute()
         {
+            # ログインアカウント
             $user = Auth::check() ? Auth::user() : null;
+
+            # 会員ランクID
             $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-            if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return true; }
+
+            # 会員ランク限定ガチャの利用設定
+            $play_gacha_settings =  config('u_rank_ticket.u_rank_settings.play_gacha',false);
+            switch ($play_gacha_settings)
+            {
+                case 'only_rank':  //会員ランクガチャのみ利用可能
+                    if( isset($this->user_rank_id) && $this->user_rank_id!=$user_rank_id){ return true; }
+                    break;
+
+                case 'under_rank': //会員ランク以下のガチャ全て利用可能
+                    if( isset($this->user_rank_id) && $this->user_rank_id>$user_rank_id){ return true; }
+                    break;
+
+            }
+
 
             return false;
         }
