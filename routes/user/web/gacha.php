@@ -50,7 +50,7 @@ use App\Http\Controllers;
 
 
         # ガチャの演出動画表示
-        Route::get('/movie',
+        Route::get('/movie/{user_gacha_history}',
         [App\Http\Controllers\GachaController::class, 'movie'])
         ->name('gacha.movie');
 

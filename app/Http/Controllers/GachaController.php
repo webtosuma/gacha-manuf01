@@ -459,17 +459,19 @@ class GachaController extends Controller
     * 演出動画
     *
     * @param Request $request
+    * @param UserGachaHistory $user_gacha_history
     * @return \Illuminate\Http\Response
     */
-    public function movie(Request $request)
+    public function movie( Request $request, UserGachaHistory $user_gacha_history )
     {
+        # ユーザの結果のみを表示
+        $user = Auth::user();
+        if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
+
         # 変数定義
-        $ugh_id   = $request->input('user_gacha_history');
-        $movie_id = $request->input('movie');
+        $movie_id = $request->input('movie') ?? $user_gacha_history->movie_id;
         $rank_up  = $request->input('rank_up');
 
-        # ユーザーガチャ履歴
-        $user_gacha_history = UserGachaHistory::find($ugh_id );
 
         # 動画パス
         $movie = Movie::find($movie_id);

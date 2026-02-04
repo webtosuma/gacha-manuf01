@@ -85,7 +85,8 @@ class GachaPlayController extends Controller
 
             # 動画パスの取得
             $movie = self::MoviePath($gacha, $max_rank);
-
+            $user_gacha_history->movie_id = $movie->id;
+            $user_gacha_history->save();
 
             DB::commit();
 
@@ -147,8 +148,10 @@ class GachaPlayController extends Controller
 
 
 
-        # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
-        return redirect()->route('gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
+        # viewの表示 ($user_gacha_history:ガチャ履歴 )
+        $params = $rank_up ? compact('user_gacha_history', 'rank_up' ) : compact('user_gacha_history');
+        return redirect()->route('gacha.movie', $params);
+        // return redirect()->route('gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
     }
 
 
