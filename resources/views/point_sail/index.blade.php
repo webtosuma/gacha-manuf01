@@ -241,12 +241,14 @@
                         <div class="">クレジットカード</div>
                         <i class="bi bi-credit-card-fill fs-4"></i>
                         <div class="">
-                            <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
-                            {{-- <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;"> --}}
+                            @if (config('stripe.payment_method_types.jcb'))
+                                <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            @else
+                                <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            @endif
                         </div>
                     </a>
                 </div>
-
                 {{-- <div class="col-12 col-md-4">
                     <a href="{{ route( 'point_sail', ['payment_type'=>'クレジットカード(JCB)'] ) }}"
                     class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
@@ -256,53 +258,57 @@
                         <div class="">JCB</div>
                     </a>
                 </div> --}}
+                @if (config('stripe.payment_method_types.applepay'))
+                    <div class="col-12 col-md-4">
+                        <a href="{{ route( 'point_sail', ['payment_type'=>'Apple Pay'] ) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">Apple Pay</div>
+                            <div class=""><i class="bi bi-apple fs-4"></i></div>
+                        </a>
+                    </div>
+                @endif
+                @if (config('stripe.payment_method_types.googlepay'))
+                    <div class="col-12 col-md-4">
+                        <a href="{{ route( 'point_sail', ['payment_type'=>'Google Pay'] ) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">Google Pay</div>
+                            <div class=""><i class="bi bi-google fs-4"></i></div>
+                        </a>
+                    </div>
+                @endif
+                @if (config('stripe.payment_method_types.paypay'))
+                    <div class="col-12 col-md-4">
+                        <a href="{{ route( 'point_sail', ['payment_type'=>'PayPay'] ) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">PayPay</div>
+                            <div class=""><i class="bi bi-phone fs-4"></i></div>
+                        </a>
+                    </div>
+                @endif
+                @if (config('stripe.payment_method_types.konbini'))
+                    <div class="col-12 col-md-4">
+                        <a href="{{ route( 'point_sail', ['payment_type'=>'コンビニ支払い'] ) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">コンビニ支払い</div>
 
-                <div class="col-12 col-md-4">
-                    <a href="{{ route( 'point_sail', ['payment_type'=>'Apple Pay'] ) }}"
-                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
-                        <div class="">Apple Pay</div>
-                        <div class=""><i class="bi bi-apple fs-4"></i></div>
-                    </a>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <a href="{{ route( 'point_sail', ['payment_type'=>'Google Pay'] ) }}"
-                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
-                        <div class="">Google Pay</div>
-                        <div class=""><i class="bi bi-google fs-4"></i></div>
-                    </a>
-                </div>
-
-                {{-- <div class="col-12 col-md-4">
-                    <a href="{{ route( 'point_sail', ['payment_type'=>'PayPay'] ) }}"
-                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
-                        <div class="">PayPay</div>
-                        <div class=""><i class="bi bi-phone fs-4"></i></div>
-                    </a>
-                </div> --}}
-
-                <div class="col-12 col-md-4">
-                    <a href="{{ route( 'point_sail', ['payment_type'=>'銀行振込'] ) }}"
-                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
-                        <div class="">銀行振込</div>
-                        <div class=""><i class="bi bi-bank2 fs-4"></i></div>
-                    </a>
-                </div>
-
-                {{-- <div class="col-12 col-md-4">
-                    <a href="{{ route( 'point_sail', ['payment_type'=>'コンビニ支払い'] ) }}"
-                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
-                        <div class="">コンビニ支払い</div>
-
-                        <div class=""><i class="bi bi-shop fs-4"></i></div>
-                    </a>
-                </div> --}}
-
+                            <div class=""><i class="bi bi-shop fs-4"></i></div>
+                        </a>
+                    </div>
+                @endif
+                @if (config('stripe.payment_method_types.customer_balance'))
+                    <div class="col-12 col-md-4">
+                        <a href="{{ route( 'point_sail', ['payment_type'=>'銀行振込'] ) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">銀行振込</div>
+                            <div class=""><i class="bi bi-bank2 fs-4"></i></div>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
 

@@ -51,6 +51,12 @@ class StripeController extends Controller
 
         # 支払いタイプ別支払いページURL
         switch ($payment_type) {
+            case 'クレジットカード' :
+                foreach ($point_sails as $point_sail) {
+                    $point_sail->r_payment = route('point_sail.fc.payment', $point_sail);
+                }
+                break;
+
             case 'PayPay':
                 foreach ($point_sails as $point_sail) {
                     $point_sail->r_payment = route('point_sail.paypay.payment', $point_sail);
@@ -138,7 +144,6 @@ class StripeController extends Controller
         Stripe::setApiKey( config('stripe.secret_key') );
 
 
-
         # 顧客情報
         $user = Auth::user();
         $customer = $user->createOrGetStripeCustomer();
@@ -165,17 +170,20 @@ class StripeController extends Controller
         # 決済名
         $productName = number_format($point).'pt購入';      //
 
+        # 決済の種類($payment_method_types)
+        $payment_method_types = [];
+        $payment_types_settings =  config('stripe.payment_method_types');
+        $payment_keys = [ 'card','konbini','customer_balance' ];
+        foreach ( $payment_keys as $key) {
+            if( (bool) $payment_types_settings[$key] ){ $payment_method_types[] = $key; }
+        }
 
         $checkout_session = Session::create([
 
             'customer' => $customer->id, //顧客ID
             'customer_update'=>['address'=> 'auto'],
 
-            'payment_method_types' => [
-                'card',
-                // 'konbini',
-                // 'customer_balance'
-            ],
+            'payment_method_types' => $payment_method_types,
 
             'payment_method_options' => [
                 'customer_balance'=> [

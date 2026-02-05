@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル type_text
+|  ガチャ　モデル no_custom
 | =============================================
 */
 class Gacha extends Model
@@ -426,7 +426,13 @@ class Gacha extends Model
                 case 'n_time':
                 return $this->type_n_count.'回限定'; break;
 
+                case 'n_time_no_custom':
+                return $this->type_n_count.'回限定'; break;
+
                 case 'n_oneday':
+                return '1日'.$this->type_n_count.'回限定'; break;
+
+                case 'n_oneday_no_custom':
                 return '1日'.$this->type_n_count.'回限定'; break;
             }
 
@@ -443,9 +449,17 @@ class Gacha extends Model
         public function getTypeLabelAdminAttribute()
         {
             switch ($this->type) {
-                case 'n_time':   return $this->type_n_count.'回限定'; break;
+                case 'n_time':
+                return $this->type_n_count.'回限定'; break;
 
-                case 'n_oneday': return '1日'.$this->type_n_count.'回限定'; break;
+                case 'n_time_no_custom':
+                return $this->type_n_count.'回限定(カスタム・100連ボタンなし)'; break;
+
+                case 'n_oneday':
+                return '1日'.$this->type_n_count.'回限定'; break;
+
+                case 'n_oneday_no_custom':
+                return '1日'.$this->type_n_count.'回限定(カスタム・100連ボタンなし)'; break;
             }
 
             return $this->types()[$this->type];//ガチャの種類;
@@ -951,7 +965,10 @@ class Gacha extends Model
         public function getTypeNPlayedCountAttribute() : Int
         {
             # n回限定ガチャ
-            $bool = !in_array( $this->type,[ 'n_time', 'n_oneday' ]);
+            $bool = !in_array( $this->type,[
+                'n_time', 'n_oneday',
+                'n_time_no_custom','n_oneday_no_custom',
+            ]);
             if($bool){ return 0; }
 
             $today   = today();
@@ -962,7 +979,9 @@ class Gacha extends Model
 
                 $query->where('user_id', $user_id);
                 $query->where('gacha_id',$this->id);
-                if( $this->type == 'n_oneday' ){
+                ## 1日⚪︎回限定
+                if( in_array( $this->type,[ 'n_oneday', 'n_oneday_no_custom', ]) )
+                {
                     $query->whereDate('created_at',$today);
                 }
 
@@ -979,7 +998,10 @@ class Gacha extends Model
         public function getTypeNRemainingCountAttribute() : Int
         {
             # n回限定ガチャ
-            $bool = !in_array( $this->type,[ 'n_time', 'n_oneday' ]);
+            $bool = !in_array( $this->type,[
+                'n_time', 'n_oneday',
+                'n_time_no_custom','n_oneday_no_custom',
+            ]);
             if($bool){ return 0; }
 
             # 最大値（限定回数 or ガチャの残数）
@@ -998,13 +1020,17 @@ class Gacha extends Model
         public function getTypeNRemainingCountLabelAttribute() : ? String
         {
             # n回限定ガチャ
-            $bool = !in_array( $this->type,[ 'n_time', 'n_oneday' ]);
+            $bool = !in_array( $this->type,[
+                'n_time', 'n_oneday',
+                'n_time_no_custom','n_oneday_no_custom',
+            ]);
             if($bool){ return null; }
 
             # 最大値（限定回数）
             $max_count = $this->type_n_count;
 
-            $l_head = $this->type=='n_oneday' ? '本日残り ' : '限定残り ';
+            $l_head = in_array( $this->type,[ 'n_oneday', 'n_oneday_no_custom', ])
+            ? '本日残り ' : '限定残り ';
             $text = $l_head . (string)$this->type_n_remaining_count . '/' . (string)$max_count ;
 
 

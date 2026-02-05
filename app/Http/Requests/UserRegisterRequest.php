@@ -31,7 +31,10 @@ class UserRegisterRequest extends FormRequest
 
         $rules = [
             'name'     => ['required', 'string', 'max:140'],
-            'email'    => ['required', 'email', 'unique:users'],
+            'email'    => [
+                'required', 'email', 'unique:users',
+                'not_regex:' . $this->emailBlockRegex(),//指定メールアドレスの拒否
+            ],
             'password' => ['required', 'regex:/^[a-zA-Z0-9]{8,20}$/', 'confirmed'],
         ];
 
@@ -52,5 +55,43 @@ class UserRegisterRequest extends FormRequest
             'password' => 'パスワード',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'email.not_regex' => 'このメールアドレスは利用できません。',
+        ];
+    }
+    /**
+     * メール登録拒否する文字列の配列を返す
+     */
+    protected function blockedEmailPatterns(): array
+    {
+        return [
+            '@nanana.uk',
+            '@teml.net',
+            '@drmail.in',
+            '@dakaka.org',
+            '@pngk.uk',
+            '@momoi.uk',
+            '@boxfi.uk',
+            '@addrin.uk',
+            '@mama3.org',
+
+        ];
+    }
+
+    /**
+     * メール登録拒否するパターンを regex 文字列に変換して返す
+     */
+    protected function emailBlockRegex(): string
+    {
+        $escaped = array_map(function ($str) {
+            return preg_quote($str, '/');
+        }, $this->blockedEmailPatterns());
+
+        return '/(' . implode('|', $escaped) . ')/i';
+    }
+
 
 }

@@ -116,7 +116,24 @@
         <div class="d-block mb-4">
             <div class="form-label">ガチャの種類</div>
 
-            <div class="card p-2 mx-2">
+            <div class="px-2">
+                <select class="form-select" name="type">
+
+                    @foreach ($gacha->types() as $value => $lable)
+                        <option value="{{$value}}"
+                        @if(  old('type',$gacha->type) == $value ) selected @endif
+                        >{{ $lable }}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <!--error message-->
+            @if ( $errors->has('type') )
+                <div class="text-danger"> {{$errors->first('type')}} </div>
+            @endif
+
+            {{-- <div class="card p-2 mx-2">
                 <div class="form-text">ガチャの種類を選択してください。</div>
                 <div class="d-flex flex-column gap-3 ps-3">
                     @foreach ($gacha->types() as $value => $lable)
@@ -128,19 +145,14 @@
                         </label>
                     @endforeach
                 </div>
-
-                <!--error message-->
-                @if ( $errors->has('type') )
-                    <div class="text-danger"> {{$errors->first('type')}} </div>
-                @endif
-            </div>
+            </div> --}}
         </div>
 
 
         @if( !empty(array_intersect( ['n_time','n_oneday'], array_keys( $gacha->types() ) ) ) )
 
             <!--⚪︎回限定ガチャ限定回数(type_n_count)-->
-            <label class="d-block mb-4">
+            <label class="d-block mb-4 ms-4">
                 <div class="form-label">⚪︎回限定ガチャ限定回数(⚪︎回限定を指定している時)</div>
 
                 <div class="">
@@ -172,13 +184,17 @@
                     <select class="form-select" name="user_rank_id">
 
                         <option value=""
-                        @if( $gacha->user_rank_id === null ) selected @endif
+                        @if( old('user_rank_id',$gacha->user_rank_id) === null ) selected @endif
                         >{{ '全ての会員' }}</option>
 
 
                         @foreach ($user_ranks as $id => $user_rank)
                             <option value="{{$id}}"
-                            @if( $gacha->user_rank_id !=='' && $gacha->user_rank_id === $id  ) selected @endif
+                            @if(
+                                old('user_rank_id',$gacha->user_rank_id) !==''
+                                && old('user_rank_id',$gacha->user_rank_id) !==null
+                                && old('user_rank_id',$gacha->user_rank_id) == $id
+                            ) selected @endif
                             >{{ $user_rank['label'] }}</option>
                         @endforeach
 
@@ -207,8 +223,9 @@
                     <select class="form-select text-center" name="{{'min_time'}}">
                         @foreach ($gacha->times() as $time)
                             <option value="{{$time}}"
-                            @if( $gacha->min_time === $time  ) selected @endif
+                            @if( old('min_time',$gacha->min_time) == $time  ) selected @endif
                             >{{ $time }}</option>
+
                         @endforeach
                     </select>
 
@@ -217,7 +234,7 @@
                     <select class="form-select text-center" name="{{'max_time'}}">
                         @foreach ($gacha->times() as $time)
                             <option value="{{$time}}"
-                            @if( $gacha->max_time === $time  ) selected @endif
+                            @if( old('max_time',$gacha->max_time) == $time  ) selected @endif
                             >{{ $time }}</option>
                         @endforeach
                     </select>
@@ -246,8 +263,9 @@
 
                         @foreach ($subscriptions as $id => $subscription)
                             <option value="{{ $subscription->id }}"
-                            @if( $gacha->subscription_id === $subscription->id ) selected @endif
+                            @if( old( 'subscription_id', $gacha->subscription_id) == $subscription->id ) selected @endif
                             >{{ $subscription->sub_label.($subscription->is_published?'':'(非公開)') }}</option>
+
                         @endforeach
 
                     </select>

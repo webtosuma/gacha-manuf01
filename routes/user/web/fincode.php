@@ -9,22 +9,19 @@ use App\Http\Controllers;
 */
 
     # ポイント一覧
-    Route::get('point_sail/fc',
-    [Controllers\FincodeController::class, 'index'])
-    ->name('point_sail');
+    // Route::get('point_sail/fc',
+    // [Controllers\FincodeController::class, 'index'])
+    // ->name('point_sail');
 
     Route::post('point_sail/fc/post', function(){
         return redirect()->route('point_sail');
     })->name('point_sail.post');
 
 
-    # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook
-    Route::post('fincode/webhook',
-    [Controllers\FincodeController::class, 'webhook'])
-    ->name('fincode.webhook');
-    # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook
-    // Route::get('fincode/webhook',
-    // [Controllers\FincodeController::class, 'webhook']);
+    // # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook
+    // Route::post('fincode/webhook',
+    // [Controllers\FincodeController::class, 'webhook'])
+    // ->name('fincode.webhook');
 
 
     # ポイント購入完了受け取り
@@ -44,23 +41,20 @@ use App\Http\Controllers;
 Route::middleware(['auth','user_rank'])->group(function () {
 
     # 購入手続き
-    Route::get('point_sail/payment/{point_sail}',
+    Route::get('point_sail/fc/payment/{point_sail}',
     [Controllers\FincodeController::class, 'payment'])
-    ->name('point_sail.payment');
+    ->name('point_sail.fc.payment');
 
 
-    # ポイントが不足しています(FincodeController)
-    Route::get('point_sail/shortage',
-    [Controllers\FincodeController::class, 'shortage'])
-    ->name('point_sail.shortage');
+    // # ポイントが不足しています(FincodeController)
+    // Route::get('point_sail/shortage',
+    // [Controllers\FincodeController::class, 'shortage'])
+    // ->name('point_sail.shortage');
 
-
-
-
-    # ポイント購入履歴
-    Route::get('point_history/{month?}',
-    [Controllers\PointHistoryController::class, 'index'])
-    ->name('point_history');
+    // # ポイント購入履歴
+    // Route::get('point_history/{month?}',
+    // [Controllers\PointHistoryController::class, 'index'])
+    // ->name('point_history');
 
 });
 
