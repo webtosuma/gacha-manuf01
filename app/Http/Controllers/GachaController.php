@@ -321,12 +321,12 @@ class GachaController extends Controller
             ];
 
             # ガチャの種類の追加( Gacha::types() )
-            $add_keys=['one_chance','one_time','only_oneday','only_new_user'];
+            $not_keys=[ 'nomal' ,'max_custom','no_custom'];
             $gacha_types = Gacha::types();
-            foreach ($add_keys as $add_key) {
-                if(array_key_exists( $add_key, $gacha_types ))
+            foreach ($gacha_types as $key => $label) {
+                if( ! in_array( $key, $not_keys ) )
                 {
-                    $array[] = [ 'key'=>$add_key, 'label'=>$gacha_types[$add_key] ];
+                    $array[] = [ 'key'=>$key, 'label'=>$label ];
                 }
             }
 

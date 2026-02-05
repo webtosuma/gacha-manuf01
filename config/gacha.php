@@ -14,12 +14,12 @@
         $types = [
             // 'no_custom'    => '通常',//カスタムボタンなし
 
-            'nomal'        => 'カスタムボタン',
-            'max_custom'   => 'カスタムボタン(上限付き)',
-            'no_custom'    => 'カスタムボタンなし',
+            // 'nomal'        => 'カスタムボタン',
+            // 'max_custom'   => 'カスタムボタン(上限付き)',
+            // 'no_custom'    => 'カスタムボタンなし',
 
-            // 'nomal'        => '100連ボタンあり',
-            // 'no_custom'    => '100連ボタンなし',
+            'nomal'        => '100連ボタンあり',
+            'no_custom'    => '100連ボタンなし',
 
 
 
@@ -29,9 +29,9 @@
             'one_chance'   => '1回or10回限定',
 
             'n_time'             => '⚪︎回限定',
-            'n_time_no_custom'   => '⚪︎回限定(カスタム・100連ボタンなし)',
+            'n_time_no_custom'   => '⚪︎回限定(100連ボタンなし)',
             'n_oneday'           => '1日⚪︎回限定',
-            'n_oneday_no_custom' => '1日⚪︎回限定(カスタム・100連ボタンなし)',
+            'n_oneday_no_custom' => '1日⚪︎回限定(100連ボタンなし)',
 
         ];
 
@@ -115,7 +115,7 @@ return [
     'btn_settings' => [
 
         # カスタムボタン
-        'custom'     => true,
+        'custom'     => false,
 
         # 100連ボタン
         'hundredplay' => true,
