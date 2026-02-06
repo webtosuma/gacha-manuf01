@@ -67,7 +67,7 @@
 
 
             <!--100連ボタン-->
-            <div class="col-12" v-if="is_disabled_hundredplay_btn>-1" >
+            <div class="col" v-if="is_disabled_hundredplay_btn>-1" >
 
                 <!--POPUP BTN(100)-->
                 <u-gacha-btn v-if="is_popup_btn!=0"
@@ -96,14 +96,9 @@
             </div>
 
             <!--カスタムボタン-->
-            <!-- <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
-                <a :href="r_costom"
-                :class    ="coustom_style_class"
-                >{{ custom_label }}</a>
-            </div> -->
-            <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
+            <div class="col"  v-if="is_disabled_custom_btn>-1" >
                 <button type="button"
-                :class    ="coustom_style_class"
+                :class="coustom_style_class"
                 data-bs-toggle="modal"
                 :data-bs-target="'#'+'gachaCustomModal'+gacha_id"
                 >{{ custom_label }}</button>
