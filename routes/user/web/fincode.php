@@ -15,7 +15,7 @@ use App\Http\Controllers;
 
     Route::post('point_sail/fc/post', function(){
         return redirect()->route('point_sail');
-    })->name('point_sail.post');
+    })->name('point_sail.fc.post');
 
 
     // # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook
@@ -28,12 +28,12 @@ use App\Http\Controllers;
     Route::post('point_sail/comp_post/{stripe_id}',
     /* ! * App\Http\Middleware\VerifyCsrfTokenにて、CSRF除外処理を行うこと！ * ! */
     [Controllers\FincodeController::class, 'comp_post'])
-    ->name('point_sail.comp_post');
+    ->name('point_sail.fc.comp_post');
 
     # ポイント購入完了
-    Route::get('point_sail/comp/{stripe_id}',
-    [Controllers\FincodeController::class, 'comp'])
-    ->name('point_sail.comp');
+    // Route::get('point_sail/comp/{stripe_id}',
+    // [Controllers\FincodeController::class, 'comp'])
+    // ->name('point_sail.comp');
 
 
 

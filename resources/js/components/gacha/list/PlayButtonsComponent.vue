@@ -300,7 +300,7 @@
             `,
             /* 百連ガチャる　スタイル(売り切れ) */
             soldout_hundred_play_style_class: `
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
+            btn btn-sm btn-info bg-gradient text-danger fw-bold w-100 py-2 text-white
             rounded-pill border-secondary border-0 shadow-sm
             `,
             /* カスタムボタン　スタイル */

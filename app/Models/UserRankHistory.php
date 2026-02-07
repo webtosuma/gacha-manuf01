@@ -76,7 +76,6 @@ class UserRankHistory extends Model
             $array = $this->UserRanks();
             return array_key_exists( $this->rank_id, $array )
             ? $array[$this->rank_id] : null;
-            // return $this->UserRanks()[ $this->rank_id ];
         }
 
 

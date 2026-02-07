@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 /*
 | =============================================
-|  ガチャ　モデル no_custom
+|  ガチャ　モデル
 | =============================================
 */
 class Gacha extends Model

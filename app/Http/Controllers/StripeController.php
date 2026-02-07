@@ -38,9 +38,13 @@ class StripeController extends Controller
     */
     public function index(Request $request)
     {
-        # 支払いタイプテキスト
-        $payment_type = $request->payment_type;
+        # 支払いタイプ
+        $payment_type_key   = env('FINCODE_KEY') ? 'fincode.card' : null ;
+        $payment_type_key   = env('STRIPE_KEY')  ? 'stripe.card'  : $payment_type_key ;
+        $payment_type_key   = $request->payment_type_key ?? $payment_type_key;
 
+        $payment_type_label = $request->payment_type_label;
+        $test = config('app.debug');
 
         # 販売用ポイント情報取得
         $point_sails = PointSail::where('is_subscription',false)//サブスク以外
@@ -48,16 +52,26 @@ class StripeController extends Controller
         ->orderBy('value','asc')//ポイントが低い順
         ->get();
 
+        // env('STRIPE_KEY')
+        // env('FINCODE_KEY')
 
         # 支払いタイプ別支払いページURL
-        switch ($payment_type) {
-            case 'クレジットカード' :
+        switch ( $payment_type_key ) {
+            case 'fincode.card' : //fincode クレジットカード
                 foreach ($point_sails as $point_sail) {
                     $point_sail->r_payment = route('point_sail.fc.payment', $point_sail);
+                    $point_sail->fincode   = true;//fincodeボタン
                 }
                 break;
 
-            case 'PayPay':
+            case 'fincode.card.jcb' : //fincode クレジットカード JCB
+                foreach ($point_sails as $point_sail) {
+                    $point_sail->r_payment = route('point_sail.fc.payment', $point_sail);
+                    $point_sail->fincode   = true;//fincodeボタン
+                }
+                break;
+
+            case 'paypay.paypay': //PayPay PayPay
                 foreach ($point_sails as $point_sail) {
                     $point_sail->r_payment = route('point_sail.paypay.payment', $point_sail);
                 }
@@ -75,7 +89,9 @@ class StripeController extends Controller
         ? Auth::user()->now_rank->point_sail_ratio : 1 ;
 
 
-        return view('point_sail.index',compact('point_sails', 'rank_ratio','payment_type' ));
+        return view('point_sail.index',compact(
+            'point_sails', 'rank_ratio','payment_type_key','payment_type_label','test',
+        ));
     }
 
 
@@ -149,15 +165,15 @@ class StripeController extends Controller
         $customer = $user->createOrGetStripeCustomer();
 
 
-        # テスト用完了メソッド *後で消す！
-        $test = env('APP_DEBUG');
-        if( $test ){
-            # 決済完了のDB情報の登録メソッド
-            $session_id = 'stripe_checkout_session_id';
-            self::completedMethod( $point_sail, $user, $session_id );
+        // # テスト用完了メソッド *後で消す！
+        // $test = env('APP_DEBUG');
+        // if( $test ){
+        //     # 決済完了のDB情報の登録メソッド
+        //     $session_id = 'stripe_checkout_session_id';
+        //     self::completedMethod( $point_sail, $user, $session_id );
 
-            return redirect()->route('point_sail.comp',$point_sail->stripe_id);
-        }
+        //     return redirect()->route('point_sail.comp',$point_sail->stripe_id);
+        // }
 
 
         # ランクごとのポイント還元率

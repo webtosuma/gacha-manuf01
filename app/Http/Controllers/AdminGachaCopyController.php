@@ -83,8 +83,8 @@ class AdminGachaCopyController extends Controller
             'min_time'       => $gacha['min_time'],       // 表示時間下限　2024/04/17追加
             'max_time'       => $gacha['max_time'],       // 表示時間上限　2024/04/17追加
             'is_over_date'   => $gacha['is_over_date'],   //日付を跨ぐか否か（min_time<=max_time:0）2024/04/17追加
-            'subscription_id'=> $gacha['subscription_id'],  //サブスクプランID(PointSail) 2025/03/23追加
-            'type_n_count'   => $gacha['type_n_count'],     // 限定回数(n回限定ガチャ用)   2026/01/27追加
+            'subscription_id'=> $gacha['subscription_id'],//サブスクプランID(PointSail) 2025/03/23追加
+            'type_n_count'   => $gacha['type_n_count'],   // 限定回数(n回限定ガチャ用)   2026/01/27追加
 
             'published_at'   => NULL,                        //公開設定(非公開)
             'key'            => \Illuminate\Support\Str::random(16), //認証キー

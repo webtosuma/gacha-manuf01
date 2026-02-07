@@ -233,13 +233,15 @@ class GachaPlayController extends Controller
         }
         # [限定ガチャ] n回限定
         else if(
-            $gacha->type=='n_time' && ($gacha->type_n_remaining_count < $now_play_count)
+            in_array( $gacha->type,[ 'n_time', 'n_time_no_custom', ] )
+            && ($gacha->type_n_remaining_count < $now_play_count)
         ){
             return '指定の回数は、上限回数をオーバーしています。';
         }
         # [限定ガチャ] 1日n回限定
         else if(
-            $gacha->type=='n_oneday' && ($gacha->type_n_remaining_count < $now_play_count)
+            in_array( $gacha->type,[ 'n_oneday', 'n_oneday_no_custom', ] )
+            && ($gacha->type_n_remaining_count < $now_play_count)
         ){
             return '指定の回数は、一日の上限回数をオーバーしています。';
         }

@@ -34,18 +34,8 @@
     <div class="container py-md-4 mb-5">
         <h3 class="d-none d-md-block">
             ポイント購入
-            @if($payment_type){{'（'.$payment_type.'）'}}@endif
+            @if($payment_type_label) <span class="ms-3">{{ $payment_type_label }}</span> @endif
         </h3>
-
-        {{-- <p class="border border-danger bg-danger-subtle border-3 p-3">
-            現在、決済システムにエラーが発生しており、ポイントをご購入いただくことができません。<br>
-            お客様にはご迷惑をおかけしておりますことを深くお詫び申し上げます。<br>
-            当サイトでは現在、早急にエラーの修正作業を進め、サービスの正常化を図るため、全力で修正対応を行っております。<br>
-            お客様には、これに伴い一時的にポイント購入が制限され、また復旧までしばらくお時間
-            をいただくかもしれませんが、お客様のご理解とご協力を賜りますようお願い申し上げま
-            す。
-        </p> --}}
-
 
 
         <ul class="list-group list-group-flush">
@@ -115,21 +105,8 @@
                             </div>
                         </div>
 
-                        @if( env('STRIPE_KEY') )
 
-                            <!--購入ボタン(stripe)-->
-                            <a href="{{ $point_sail->r_payment }}"
-                            class="btn btn-lg btn-warning text-white rounded-pill shadow   hover_anime  py-1 " style="width:8rem;">
-                                <div class="d-flex align-items-center justify-content-between w-100">
-                                    <span>¥</span>
-                                    <h5 class="m-0 fw-bold">
-                                        <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
-                                    </h5>
-                                </div>
-                            </a>
-
-
-                        @elseif( env('FINCODE_KEY') )
+                        @if( env('FINCODE_KEY') && isset($point_sail->fincode) )
 
                             <!-- 購入ボタン(fincode) -->
                             <button type="button"
@@ -144,6 +121,21 @@
                                     </h5>
                                 </div>
                             </button>
+
+                        @elseif( env('STRIPE_KEY') )
+
+                            <!--購入ボタン(stripe)-->
+                            <a href="{{ $point_sail->r_payment }}"
+                            class="btn btn-lg btn-warning text-white rounded-pill shadow   hover_anime  py-1 " style="width:8rem;">
+                                <div class="d-flex align-items-center justify-content-between w-100">
+                                    <span>¥</span>
+                                    <h5 class="m-0 fw-bold">
+                                        <number-comma-component number="{{ $point_sail->price }}"></number-comma-component>
+                                    </h5>
+                                </div>
+                            </a>
+
+
 
                         @endif
 
@@ -234,33 +226,99 @@
                     </div>
                 @endif
 
-                <div class="col-12 col-md-4">
-                    <a href="{{ route( 'point_sail',['payment_type'=>'クレジットカード'] ) }}"
-                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
-                        <div class="">クレジットカード</div>
-                        <i class="bi bi-credit-card-fill fs-4"></i>
-                        <div class="">
-                            @if (config('stripe.payment_method_types.jcb'))
+
+                @if( !env('FINCODE_KEY') && config('stripe.payment_method_types.jcb'))
+                    <div class="col-12 col-md-4">
+                        <!--クレジットカード Stripe-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'stripe.card',
+                            'payment_type_label' => 'クレジットカード',
+                        ]) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">クレジットカード</div>
+                            <i class="bi bi-credit-card-fill fs-4"></i>
+                            <div class="">
                                 <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
-                            @else
-                                <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            </div>
+                            @if($test)
+                                <div class="text-danger"><--クレジットカード Stripe--></div>
                             @endif
-                        </div>
-                    </a>
-                </div>
-                {{-- <div class="col-12 col-md-4">
-                    <a href="{{ route( 'point_sail', ['payment_type'=>'クレジットカード(JCB)'] ) }}"
-                    class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
-                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
-                        <div class="">クレジットカード(JCB)</div>
-                        <i class="bi bi-credit-card-fill fs-4"></i>
-                        <div class="">JCB</div>
-                    </a>
-                </div> --}}
+                        </a>
+                    </div>
+                @endif
+
+                @if(
+                    env('STRIPE_KEY') &&
+                    ( env('FINCODE_KEY') || !config('stripe.payment_method_types.jcb') )
+                )
+                    <div class="col-12 col-md-4">
+                        <!--クレジットカード(JCBなし) Stripe -->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'stripe.card.no_jcb',
+                            'payment_type_label' => 'クレジットカード',
+                        ]) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">クレジットカード</div>
+                            <i class="bi bi-credit-card-fill fs-4"></i>
+                            <div class="">
+                                <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            </div>
+                            @if($test)
+                                <div class="text-danger"><--クレジットカード(JCBなし) Stripe--></div>
+                            @endif
+                        </a>
+                    </div>
+                @endif
+
+                @if(env('FINCODE_KEY') && !env('STRIPE_KEY') )
+                    <div class="col-12 col-md-4">
+                        <!--クレジットカード fincode-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'fincode.card',
+                            'payment_type_label' => 'クレジットカード',
+                        ]) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">クレジットカード</div>
+                            <i class="bi bi-credit-card-fill fs-4"></i>
+                            <div class="">
+                                <img src="{{asset('storage/site/image/credit/01.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            </div>
+                            @if($test)
+                                <div class="text-danger"><--クレジットカード fincode--></div>
+                            @endif
+                        </a>
+                    </div>
+                @endif
+
+                @if( env('FINCODE_KEY') && env('STRIPE_KEY') )
+                    <div class="col-12 col-md-4">
+                        <!--クレジットカード(JCB) fincode-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'fincode.card.jcb',
+                            'payment_type_label' => 'クレジットカード(JCB)',
+                        ]) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">クレジットカード(JCB)</div>
+                            <i class="bi bi-credit-card-fill fs-4"></i>
+                            <div class="">JCB</div>
+                            @if($test)
+                                <div class="text-danger"><--クレジットカード(JCB) fincode--></div>
+                            @endif
+                        </a>
+                    </div>
+                @endif
+
                 @if (config('stripe.payment_method_types.applepay'))
                     <div class="col-12 col-md-4">
-                        <a href="{{ route( 'point_sail', ['payment_type'=>'Apple Pay'] ) }}"
+                        <!--ApplePay Stripe-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'stripe.apple_pay',
+                            'payment_type_label' => 'Apple Pay',
+                        ]) }}"
                         class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                             <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                             <div class="">Apple Pay</div>
@@ -270,7 +328,11 @@
                 @endif
                 @if (config('stripe.payment_method_types.googlepay'))
                     <div class="col-12 col-md-4">
-                        <a href="{{ route( 'point_sail', ['payment_type'=>'Google Pay'] ) }}"
+                        <!--GooglePay Stripe-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'stripe.google_pay',
+                            'payment_type_label' => 'Google Pay',
+                        ]) }}"
                         class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                             <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                             <div class="">Google Pay</div>
@@ -280,7 +342,11 @@
                 @endif
                 @if (config('stripe.payment_method_types.paypay'))
                     <div class="col-12 col-md-4">
-                        <a href="{{ route( 'point_sail', ['payment_type'=>'PayPay'] ) }}"
+                        <!--payPay Stripe-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'stripe.paypay',
+                            'payment_type_label' => 'PayPay',
+                        ]) }}"
                         class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                             <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                             <div class="">PayPay</div>
@@ -290,7 +356,11 @@
                 @endif
                 @if (config('stripe.payment_method_types.konbini'))
                     <div class="col-12 col-md-4">
-                        <a href="{{ route( 'point_sail', ['payment_type'=>'コンビニ支払い'] ) }}"
+                        <!--コンビニ支払い Stripe-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'stripe.konbini',
+                            'payment_type_label' => 'コンビニ支払い',
+                        ]) }}"
                         class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                             <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                             <div class="">コンビニ支払い</div>
@@ -301,7 +371,11 @@
                 @endif
                 @if (config('stripe.payment_method_types.customer_balance'))
                     <div class="col-12 col-md-4">
-                        <a href="{{ route( 'point_sail', ['payment_type'=>'銀行振込'] ) }}"
+                        <!--銀行振込 Stripe-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'stripe.bank',
+                            'payment_type_label' => '銀行振込',
+                        ]) }}"
                         class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
                             <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
                             <div class="">銀行振込</div>
@@ -311,6 +385,7 @@
                 @endif
             </div>
         </div>
+
 
         <p class="d-block mt-5">
             <h6 class="fw-bold ">クレジットカード決済のセキュリティ対策について</h6>

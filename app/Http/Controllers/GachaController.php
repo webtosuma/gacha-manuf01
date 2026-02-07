@@ -475,15 +475,19 @@ class GachaController extends Controller
 
         # 動画パス
         $movie = Movie::find($movie_id);
-        $movie_path = [
+        $movie_path = $movie ? [
             'pc'      => $movie->pc,
             'mobile'  => $movie->mobile,
             'youtube' => $movie->youtube_url,
+        ] : [
+            'pc'      => null,
+            'mobile'  => null,
+            'youtube' => '',
         ];
 
 
         # youtube動画
-        if( $movie->youtube_url ){
+        if( $movie && $movie->youtube_url ){
             return view('gacha.movie.youtube', compact('user_gacha_history', 'movie_path', 'rank_up' ) );
         }
 
