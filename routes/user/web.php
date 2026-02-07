@@ -31,8 +31,8 @@ Route::middleware([ /* ミドルウェアー */
 
     # トップページ
     Route::get('/',
-    // [App\Http\Controllers\GachaController::class, 'index']
-    [App\Http\Controllers\GachaApiController::class, 'index']//非同期
+    [App\Http\Controllers\GachaController::class, 'index']
+    // [App\Http\Controllers\GachaApiController::class, 'index']//非同期
     )->middleware(['user_rank'])
     ->name('home');
 

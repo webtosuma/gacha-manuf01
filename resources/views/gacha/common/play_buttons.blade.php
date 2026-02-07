@@ -18,6 +18,15 @@ dont_auth_user_rank ="{{$gacha->dont_auth_user_rank ? 1 : null }}"
 gacha_id    ="{{ $gacha->id }}"
 is_popup_btn="{{$gacha->is_popup_btn}}"
 
-></u-gacha-play-buttons>
 
+btn_style_one_play_active      ="{{$gacha->btn_styles['one_play'    ]['active']}}"
+btn_style_one_play_soldout     ="{{$gacha->btn_styles['one_play'    ]['soldout']}}"
+btn_style_ten_play_active      ="{{$gacha->btn_styles['ten_play'    ]['active']}}"
+btn_style_ten_play_soldout     ="{{$gacha->btn_styles['ten_play'    ]['soldout']}}"
+btn_style_hundred_play_active  ="{{$gacha->btn_styles['hundred_play']['active']}}"
+btn_style_hundred_play_soldout ="{{$gacha->btn_styles['hundred_play']['soldout']}}"
+btn_style_coustom_active       ="{{$gacha->btn_styles['coustom'     ]['active']}}"
+btn_style_coustom_soldout      ="{{$gacha->btn_styles['coustom'     ]['soldout']}}"
+
+></u-gacha-play-buttons>
 

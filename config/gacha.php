@@ -151,4 +151,85 @@ return [
     ],
 
 
+
+
+    /* ガチャボタン CSSクラス */
+    'btn_styles' => [
+
+        # 1回ガチャる
+        'one_play' => [
+
+            ## 販売中
+            'active' => <<<__EOT__
+            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-
+            rounded-pill border-secondary border-1 shadow-sm
+            position-relative shiny overflow-hidden
+            __EOT__,
+
+            ## 終了
+            'soldout' => <<<__EOT__
+            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-danger
+            rounded-pill border-secondary border-1 shadow-sm
+            __EOT__,
+
+        ],
+
+        # 10回ガチャる
+        'ten_play' => [
+
+            ## 販売中
+            'active' => <<<__EOT__
+            btn btn-sm btn-dark bg-gradient fw-bold w-100 py-2 text-white
+            rounded-pill shadow-sm
+            position-relative shiny overflow-hidden
+            __EOT__,
+
+            ## 終了
+            'soldout' => <<<__EOT__
+            btn btn-sm btn-dark bg-gradient fw-bold w-100 py-2 text-danger
+            rounded-pill shadow-sm
+            __EOT__,
+
+        ],
+
+        # 百回ガチャる
+        'hundred_play' => [
+
+            ## 販売中
+            'active' => <<<__EOT__
+            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
+            rounded-pill shadow-sm
+            position-relative shiny overflow-hidden
+            __EOT__,
+
+            ## 終了
+            'soldout' => <<<__EOT__
+            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-danger
+            rounded-pill shadow-sm
+            __EOT__,
+
+        ],
+
+        # カスタムボタン
+        'coustom' => [
+
+            ## 販売中
+            'active' => <<<__EOT__
+            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
+            rounded-pill shadow-sm h-100
+            position-relative shiny overflow-hidden
+            __EOT__,
+
+            ## 終了
+            'soldout' => <<<__EOT__
+            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-danger
+            rounded-pill shadow-sm h-100
+            disabled
+            __EOT__,
+
+        ],
+
+    ],
+
+
 ];

@@ -20,8 +20,8 @@ use App\Http\Controllers;
 
         # ガチャのカテゴリー選択
         Route::get('/g/{category_code?}',
-        // [App\Http\Controllers\GachaController::class, 'index'])
-        [App\Http\Controllers\GachaApiController::class, 'index'])//(非同期)
+        [App\Http\Controllers\GachaController::class, 'index'])
+        // [App\Http\Controllers\GachaApiController::class, 'index'])//(非同期)
         ->name('gacha_category');
 
         # ガチャの詳細表示

@@ -77,6 +77,7 @@ class Gacha extends Model
         'resume_text',         //ストレージ保存された文章を含む'説明文'
         'user_rank_label',     //ユーザーランク限定ガチャラベル
         'is_type_label_text',  //ガチャの種類等のレベルテキスト表示有無
+        'btn_styles',// ガチャるボタンのCSSクラス
 
         'add_chance_image_path', //アド確定予告画像パス
         'add_chance_count',      //天井系ガチャのアド確定までの回転数
@@ -1198,7 +1199,23 @@ class Gacha extends Model
                 return $remaining_count >= $n ? 0 : 1 ;
             }
 
-        /* */
+
+
+        /**
+         * ガチャるボタンのCSSクラス btn_styles
+         * @return Array
+        */
+        public function getBtnStylesAttribute()
+        {
+            # ヒアドキュメントを一列の文字列に変換
+            $styles = [];
+            $texts = config('gacha.btn_styles');
+            foreach ( $texts as $key => $text) {
+                $styles[$key] = str_replace(["\r\n", "\r", "\n"], ' ', $text);
+            }
+            return $styles;
+        }
+
     /*
     |--------------------------------------------------------------------------
     | ルーティング
