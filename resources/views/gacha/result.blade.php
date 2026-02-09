@@ -98,7 +98,6 @@
                 r_redirect_exchange_tickets="{{ route('user_prize.exchange_tickets')}}"
                 ></u-gacha-result-form>
 
-
             </form>
 
 

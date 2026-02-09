@@ -85,7 +85,8 @@ class GachaPlayController extends Controller
 
             # 動画パスの取得
             $movie = self::MoviePath($gacha, $max_rank);
-
+            $user_gacha_history->movie_id = $movie->id;
+            $user_gacha_history->save();
 
             DB::commit();
 
@@ -147,8 +148,10 @@ class GachaPlayController extends Controller
 
 
 
-        # viewの表示 ($user_gacha_history:ガチャ履歴, $movie_path:動画パス )
-        return redirect()->route('gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
+        # viewの表示 ($user_gacha_history:ガチャ履歴 )
+        $params = $rank_up ? compact('user_gacha_history', 'rank_up' ) : compact('user_gacha_history');
+        return redirect()->route('gacha.movie', $params);
+        // return redirect()->route('gacha.movie', compact('user_gacha_history', 'movie', 'rank_up' ));
     }
 
 
@@ -228,13 +231,27 @@ class GachaPlayController extends Controller
         ){
             return '本日既に、このガチャは利用済みです。';
         }
+        # [限定ガチャ] n回限定
+        else if(
+            in_array( $gacha->type,[ 'n_time', 'n_time_no_custom', ] )
+            && ($gacha->type_n_remaining_count < $now_play_count)
+        ){
+            return '指定の回数は、上限回数をオーバーしています。';
+        }
+        # [限定ガチャ] 1日n回限定
+        else if(
+            in_array( $gacha->type,[ 'n_oneday', 'n_oneday_no_custom', ] )
+            && ($gacha->type_n_remaining_count < $now_play_count)
+        ){
+            return '指定の回数は、一日の上限回数をオーバーしています。';
+        }
+
+
         # [限定ガチャ]新規登録ユーザー定限定ガチャ
         else if(
             $gacha->type=='only_new_user' && (
                 Auth::user()->sevendays_affter_registar || $gacha->played_one_time || $now_play_count >1
             )
-            // ( $gacha->type=='only_new_user' && Auth::user()->sevendays_affter_registar )or
-            // ( $gacha->type=='only_new_user' && $gacha->played_one_time )
         ){
             return 'このガチャを利用することはできません。';
         }

@@ -8,7 +8,7 @@ use App\Models\UserShipped;
 use App\Models\Prize;
 /*
 | =============================================
-|  Admin API 発送受付 コントローラー 
+|  Admin API 発送受付 コントローラー
 | =============================================
 */
 class AdminApiShippedController extends Controller

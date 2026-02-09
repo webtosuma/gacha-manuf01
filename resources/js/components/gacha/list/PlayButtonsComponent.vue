@@ -1,10 +1,10 @@
 <template>
     <div class="">
 
-        <div v-if="show_play_bottons && !r_prize_history" class="row g-2 mt-1">
+        <div v-if="show_play_bottons && !r_prize_history" class="row justify-content-center g-2 mt-1">
 
             <!--1回ボタン-->
-            <div class="col">
+            <div class="col-6">
 
                 <!--POPUP BTN(1)-->
                 <u-gacha-btn v-if="is_popup_btn!=0"
@@ -36,7 +36,7 @@
 
 
             <!--10連ボタン-->
-            <div class="col" v-if="is_disabled_tenplay_btn>-1" >
+            <div class="col-6" v-if="is_disabled_tenplay_btn>-1" >
 
                 <!--POPUP BTN(10)-->
                 <u-gacha-btn v-if="is_popup_btn!=0"
@@ -67,7 +67,7 @@
 
 
             <!--100連ボタン-->
-            <div class="col-12" v-if="is_disabled_hundredplay_btn>-1" >
+            <div class="col" v-if="is_disabled_hundredplay_btn>-1" >
 
                 <!--POPUP BTN(100)-->
                 <u-gacha-btn v-if="is_popup_btn!=0"
@@ -96,14 +96,9 @@
             </div>
 
             <!--カスタムボタン-->
-            <!-- <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
-                <a :href="r_costom"
-                :class    ="coustom_style_class"
-                >{{ custom_label }}</a>
-            </div> -->
-            <div class="col-12"  v-if="is_disabled_custom_btn>-1" >
+            <div class="col"  v-if="is_disabled_custom_btn>-1" >
                 <button type="button"
-                :class    ="coustom_style_class"
+                :class="coustom_style_class"
                 data-bs-toggle="modal"
                 :data-bs-target="'#'+'gachaCustomModal'+gacha_id"
                 >{{ custom_label }}</button>
@@ -149,6 +144,16 @@
 
             gacha_id:     { type: [String,  Number],  default: 0, },//ガチャID
             is_popup_btn: { type: [String,Number,Boolean],  default: false,},//ポップアップボタン
+
+            btn_style_one_play_active      :{ type: [String],  default: '',},
+            btn_style_one_play_soldout     :{ type: [String],  default: '',},
+            btn_style_ten_play_active      :{ type: [String],  default: '',},
+            btn_style_ten_play_soldout     :{ type: [String],  default: '',},
+            btn_style_hundred_play_active  :{ type: [String],  default: '',},
+            btn_style_hundred_play_soldout :{ type: [String],  default: '',},
+            btn_style_coustom_active       :{ type: [String],  default: '',},
+            btn_style_coustom_soldout      :{ type: [String],  default: '',},
+
         },
         mounted() {
 
@@ -156,50 +161,60 @@
             this.custom_label = Number( this.is_disabled_custom_btn )==0
             ? this.custom_label : this.soldout_label ;
 
+            this.coustom_style_class = this.btn_style_coustom_active;
             this.coustom_style_class = Number( this.is_disabled_custom_btn )==0
-            ? this.coustom_style_class : this.soldout_coustom_style_class ;
+            ? this.coustom_style_class : this.btn_style_coustom_soldout ;
 
 
             /* 1回ガチャる */
             switch ( Number( this.is_disabled_oneplay_btn ) ) {
                 case 2://本日終了
                     this.one_play_label       = this.ends_today_label;
-                    this.one_play_style_class = this.soldout_one_play_style_class;
+                    this.one_play_style_class = this.btn_style_one_play_soldout;
                     break;
 
                 case 1://
                     this.one_play_label       = this.soldout_label;
-                    this.one_play_style_class = this.soldout_one_play_style_class;
+                    this.one_play_style_class = this.btn_style_one_play_soldout;
                     break;
 
+                default:
+                    this.one_play_style_class = this.btn_style_one_play_active;
+                    break;
                 //
             }
             /* 10連ガチャる */
             switch ( Number( this.is_disabled_tenplay_btn ) ) {
                 case 2://本日終了
                     this.ten_play_label       = this.ends_today_label;
-                    this.ten_play_style_class = this.soldout_ten_play_style_class;
+                    this.ten_play_style_class = this.btn_style_ten_play_soldout;
                     break;
 
                 case 1://
                     this.ten_play_label       = this.soldout_label;
-                    this.ten_play_style_class = this.soldout_ten_play_style_class;
+                    this.ten_play_style_class = this.btn_style_ten_play_soldout;
                     break;
 
+                default:
+                    this.ten_play_style_class = this.btn_style_ten_play_active;
+                    break;
                 //
             }
             /* 百連ガチャる */
             switch ( Number( this.is_disabled_hundredplay_btn ) ) {
                 case 2://本日終了
                     this.hundred_play_label       = this.ends_today_label;
-                    this.hundred_play_style_class = this.soldout_hundred_play_style_class;
+                    this.hundred_play_style_class = this.btn_style_hundred_play_soldout;
                     break;
 
                 case 1://
                     this.hundred_play_label       = this.soldout_label;
-                    this.hundred_play_style_class = this.soldout_hundred_play_style_class;
+                    this.hundred_play_style_class = this.btn_style_hundred_play_soldout;
                     break;
 
+                default:
+                    this.hundred_play_style_class = this.btn_style_hundred_play_active;
+                    break;
                 //
             }
             /*　プレイボタンの非表示表示　*/
@@ -241,7 +256,6 @@
 
             }
 
-
         },
         data() { return {
 
@@ -276,51 +290,13 @@
 
 
             /* 1回ガチャる　スタイル */
-            one_play_style_class: `
-            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2
-            rounded-pill border-secondary border-1 shadow-sm
-            position-relative shiny overflow-hidden
-            `,
-            /* 1回ガチャる　スタイル(売り切れ) */
-            soldout_one_play_style_class: `
-            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-danger
-            rounded-pill border-secondary border-1 shadow-sm
-            `,
+            one_play_style_class: ``,
             /* 10連ガチャる　スタイル */
-            ten_play_style_class: `
-            btn btn-sm btn-dark bg-gradient text- fw-bold w-100 py-2
-            rounded-pill border-danger border-0 shadow-sm
-            position-relative shiny overflow-hidden
-            `,
-            /* 10連ガチャる　スタイル(売り切れ) */
-            soldout_ten_play_style_class: `
-            btn btn-sm btn-dark bg-gradient text- fw-bold w-100 py-2 text-danger
-            rounded-pill border-danger border-0 shadow-sm
-            `,
+            ten_play_style_class: ``,
             /* 百連ガチャる　スタイル */
-            hundred_play_style_class: `
-            btn btn-sm btn-info bg-gradient text-white fw-bold w-100 py-2
-            rounded-pill border-danger border-0 shadow-sm
-            position-relative shiny overflow-hidden
-            `,
-            /* 百連ガチャる　スタイル(売り切れ) */
-            soldout_hundred_play_style_class: `
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
-            rounded-pill border-secondary border-0 shadow-sm
-            `,
+            hundred_play_style_class: ``,
             /* カスタムボタン　スタイル */
-            coustom_style_class: `
-            btn btn-  btn-info bg-gradient text-white fw-bold w-100 pb-
-            rounded-pill border-danger border-0 shadow-sm
-            position-relative shiny overflow-hidden h-100
-            `,
-            /* カスタムボタン　スタイル(売り切れ) */
-            soldout_coustom_style_class: `
-            btn btn-  btn-info bg-gradient text-danger fw-bold w-100 pb-
-            rounded-pill border-secondary border-0 shadow-sm
-            position-relative shiny overflow-hidden h-100
-            disabled
-            `,
+            coustom_style_class: ``,
 
         } },
     }

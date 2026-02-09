@@ -55,8 +55,10 @@ class UserGachaHistoryApiContloller extends Controller
             }]);
 
             # ポイント順、商品ID順
-            $query->orderByDesc('point')
-            ->orderByDesc('prize_id');
+            $query->orderByDesc('point');
+            $query->orderByDesc('prize_id');
+            $query->orderByDesc('id');
+            $query->orderByDesc('created_at');
 
 
             # 指定した『ガチャ履歴』に該当する商品のみ

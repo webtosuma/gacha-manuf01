@@ -54,10 +54,7 @@ class AdminGachaController extends Controller
      */
     public function show(Gacha $gacha)
     {
-        $discription = $gacha->discriptions[1];
-        // dd($discription->g_prizes_show_section->toArray());
-        // dd($discription->gacha->max_count);
-
+        // dd($gacha->type_n_remaining_count_label);
 
         return view('admin.gacha.show', compact('gacha'));
     }
@@ -370,7 +367,8 @@ class AdminGachaController extends Controller
 
             $inputs[$param] = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete, $copy_image_puth);
 
-        #
+        # 限定回数の登録(ガチャの種類が'n_time','n_oneday'のとき)
+            $inputs['type_n_count'] = $request->type_n_count ?? 1;
 
 
         # イベントガチャ

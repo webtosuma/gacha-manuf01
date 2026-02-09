@@ -12,6 +12,7 @@ use App\Models\UserPrize;
 use App\Models\PointHistory;
 use App\Models\Infomation;
 use App\Models\Movie;
+use App\Models\Text;
 /*
 | =============================================
 |  ガチャ コントローラー
@@ -37,46 +38,59 @@ class GachaController extends Controller
 
             ## カテゴリー名（ページタイトル）
             $category_name = $category ? $category->name : 'すべて';
+            // $first_category = GachaCategory::userList()->first();
+            // if($first_category){
+            //     $category_name = $category ? $category->name : $first_category->name;
+            //     $category_code = $category ? $category->code_name : $first_category->code_name;
+            // }
+            // else{
+            //     $category_name = null;
+            //     $category_code = null;
+            // }
 
             ## 背景画像
-            $bg_image = $category ? $category->bg_image_path : GachaCategory::noImage();
+            // $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
+            $bg_image = $category && $category->bg_image_path
+            ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
             ## ガチャのカテゴリーグループ一覧
-            $categories = GachaCategory::where('is_published',1) //公開中
-            ->orderBy('created_at')
-            ->get();
-
+            $categories = GachaCategory::userList()->get();
 
             ## カードサイズ
-            $card_size = $request->card_size ? $request->card_size : null;
+            $text_model = new Text();
+            $card_size = $request->card_size ? $request->card_size : $text_model->gacha_settings_size;
 
             ## 絞り込みキー
-            $search_key = $request->search_key ? $request->search_key : null;
+            $search_key = $request->search_key ? $request->search_key : 'desc_published_at';
 
             ## 検索キーワード
-            $searchs = self::getsearchs();
+            $searchs = GachaController::getsearchs();
 
-            ## 表示できるガチャ一覧
-            $gachas = self::getPublishedGachas( $category_code, $search_key );
-
-            ## カウントダウンガチャ
-            $countdown_gachas = self::getCountdownGachas($category_code);
 
             ## お知らせ
             $infomations =
             InfomationController::GetInfomationsQuery()
-            ->limit(3)
-            ->get();
+            ->whereNotIn( 'type', ['ec'] )
+            ->limit(3)->get();
 
             ## スライド
-            $slides = self::getSlides($gachas);
+            $query = GachaApiController::getPublishedGachas( $category_code, $search_key );
+            $gachas = $query->where('is_slide',1)//スライドのみ
+            ->where('is_sold_out',0)             //売り切れを除く
+            ->where('published_at','<',now())    //予告を除く
+            ->limit(10)->get();
+            $slides = GachaController::getSlides($gachas);
 
+            // ## フィーバー
+            // $is_rainbow = AdminRainbowController::isPublished();
         //
 
+
         # viewの表示
-        return view('gacha.index', compact(
+        return view('top.index', compact(
             'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
-            'search_key', 'searchs', 'gachas', 'countdown_gachas', 'infomations',
+            'search_key', 'searchs',
+            'infomations',
             'slides',
          ) );
 
@@ -314,19 +328,19 @@ class GachaController extends Controller
         {
             # 基本ソート
             $array = [
-                ['key'=>'desc_created',    'label'=>'新着順'],
-                ['key'=>'desc_popularity', 'label'=>'人気順'],
-                ['key'=>'desc_point',      'label'=>'高額ポイント順'],
-                ['key'=>'asc_point',       'label'=>'低額ポイント順'],
+                ['key'=>'desc_published_at', 'label'=>'新着順'],
+                ['key'=>'desc_popularity',   'label'=>'人気順'],
+                ['key'=>'desc_point',        'label'=>'高額ポイント順'],
+                ['key'=>'asc_point',         'label'=>'低額ポイント順'],
             ];
 
             # ガチャの種類の追加( Gacha::types() )
-            $add_keys=['one_chance','one_time','only_oneday','only_new_user'];
+            $not_keys=[ 'nomal' ,'max_custom','no_custom'];
             $gacha_types = Gacha::types();
-            foreach ($add_keys as $add_key) {
-                if(array_key_exists( $add_key, $gacha_types ))
+            foreach ($gacha_types as $key => $label) {
+                if( ! in_array( $key, $not_keys ) )
                 {
-                    $array[] = [ 'key'=>$add_key, 'label'=>$gacha_types[$add_key] ];
+                    $array[] = [ 'key'=>$key, 'label'=>$label ];
                 }
             }
 
@@ -392,7 +406,6 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
-        // dd($gacha->btn_settings);
 
         # キーのチェック
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
@@ -459,29 +472,35 @@ class GachaController extends Controller
     * 演出動画
     *
     * @param Request $request
+    * @param UserGachaHistory $user_gacha_history
     * @return \Illuminate\Http\Response
     */
-    public function movie(Request $request)
+    public function movie( Request $request, UserGachaHistory $user_gacha_history )
     {
+        # ユーザの結果のみを表示
+        $user = Auth::user();
+        if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
+
         # 変数定義
-        $ugh_id   = $request->input('user_gacha_history');
-        $movie_id = $request->input('movie');
+        $movie_id = $request->input('movie') ?? $user_gacha_history->movie_id;
         $rank_up  = $request->input('rank_up');
 
-        # ユーザーガチャ履歴
-        $user_gacha_history = UserGachaHistory::find($ugh_id );
 
         # 動画パス
         $movie = Movie::find($movie_id);
-        $movie_path = [
+        $movie_path = $movie ? [
             'pc'      => $movie->pc,
             'mobile'  => $movie->mobile,
             'youtube' => $movie->youtube_url,
+        ] : [
+            'pc'      => null,
+            'mobile'  => null,
+            'youtube' => '',
         ];
 
 
         # youtube動画
-        if( $movie->youtube_url ){
+        if( $movie && $movie->youtube_url ){
             return view('gacha.movie.youtube', compact('user_gacha_history', 'movie_path', 'rank_up' ) );
         }
 

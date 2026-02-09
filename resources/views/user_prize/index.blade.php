@@ -59,7 +59,5 @@
         r_redirect_exchange_tickets="{{ route('user_prize.exchange_tickets')}}"
         ></u-user-prize-form>
 
-        {{-- r_exchange_points="{{ route('user_prize.exchange_points') }}" --}}
-
     </div>
 @endsection

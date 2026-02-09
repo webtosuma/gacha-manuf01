@@ -51,6 +51,21 @@
                         >{{page_count+'件表示'}}</option>
                     </select>
                 </div>
+                <!--表示切り替え-->
+                <div class="col-auto">
+                    <button v-if="table==0"
+                    @click="table=1;"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="テーブル表示"
+                    type="button" class="btn btn-light border py-1"
+                    ><i class="bi bi-table fs-5"></i></button>
+
+                    <button v-else
+                    @click="table=0;"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="リスト表示"
+                    type="button" class="btn btn-light border py-1"
+                    ><i class="bi bi-list-task fs-5"></i></button>
+                </div>
+
                 <!--合計数-->
                 <div class="col text-end">
                     <span>合計</span>
@@ -86,9 +101,9 @@
                         <input type="hidden" name="state_id" v-model="inputs.state_id">
 
 
-                        <button class="btn btn-sm btn-light border"
+                        <!-- <button class="btn btn-sm btn-light border"
                         :disabled="!inputs.user_shipped_ids.length"
-                        ><i class="bi bi-filetype-csv fs-5"></i>ダウンロード</button>
+                        ><i class="bi bi-filetype-csv fs-5"></i>ダウンロード</button> -->
                     </form>
                 </div>
                 <!--一括発送処理-->
@@ -113,8 +128,8 @@
         </div>
 
 
-        <!--一覧-->
-        <ul class="row p-0" style="list-style:none;">
+        <!--一覧(リスト)-->
+        <ul v-if="table==0" class="row p-0" style="list-style:none;">
 
 
             <li v-for="(user_shipped, key) in user_shippeds" :key="key"
@@ -199,6 +214,7 @@
             </li>
 
 
+
             <li v-if="!loading && user_shippeds.length==0"
             class="py-3">*発送の履歴はありません。</li>
 
@@ -214,6 +230,20 @@
 
 
         </ul>
+
+        <!--一覧(テーブル)-->
+        <div v-else>
+            <a-shipped-table
+            :user_shippeds="user_shippeds"
+            />
+
+            <!-- ページネーション -->
+            <pagenation-component
+            :pagenate="pagenate"
+            :data="user_shippeds"
+            @cahnge-data="getData"
+            />
+        </div>
 
 
         <!--一括発送通知モーダル-->
@@ -331,6 +361,8 @@
     const page_counts = ref([20,50,100]);
     // const orders = ref([]);/* 並び替え選択 */
 
+    /* 表示切り替え */
+    const table = ref(0);
 
     /* [コンピューティッド]すべてチェック */
     const allChecked = computed({

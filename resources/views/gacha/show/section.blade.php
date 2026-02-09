@@ -6,7 +6,6 @@
     style="margin-bottom:{{$margin_bottom*2}}px;"
     >
         <div class="container overflow-hidden px-3"
-        data-aos="zoom-out"
         >
 
 

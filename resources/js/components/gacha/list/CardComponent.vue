@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <div :class="card_style_class">
 
             <!--image-->
@@ -53,11 +54,13 @@
             <a :href="gacha.route"  :class="href_class">
                 <div class="position-relative">
 
+
+
                     <u-gacha-metter
                     :sm_card="sm_card"
                     :new_label_path="gacha.new_label_path"
                     :img_path_point="gacha.img_path_point"
-                    :bg_color="gacha.type=='only_new_user' ? 'bg-success-subtle text-dark' : 'bg-body bg-rainbow-index'"
+                    :bg_color="gacha.type=='only_new_user' ? 'bg-success-subtle text-dark' : 'bg-white bg-rainbow-index'"
                     :gacha_type="gacha.type"
                     :sponsor_ad="gacha.sponsor_ad"
                     :gacha_play_point="gacha.one_play_point"
@@ -65,6 +68,7 @@
                     :remaining_ratio="gacha.remaining_ratio"
                     :remaining_count="gacha.remaining_count"
                     :max_count      ="gacha.max_count"
+                    :type_n_remaining_count_label="gacha.type_n_remaining_count_label"
                     />
 
                     <!-- カウントダウンがあるとき -->
@@ -103,6 +107,15 @@
             :sm_card="sm_card"
             :gacha_id="gacha.id"
             :is_popup_btn="gacha.is_popup_btn"
+
+            :btn_style_one_play_active      ="gacha.btn_styles['one_play'    ]['active']"
+            :btn_style_one_play_soldout     ="gacha.btn_styles['one_play'    ]['soldout']"
+            :btn_style_ten_play_active      ="gacha.btn_styles['ten_play'    ]['active']"
+            :btn_style_ten_play_soldout     ="gacha.btn_styles['ten_play'    ]['soldout']"
+            :btn_style_hundred_play_active  ="gacha.btn_styles['hundred_play']['active']"
+            :btn_style_hundred_play_soldout ="gacha.btn_styles['hundred_play']['soldout']"
+            :btn_style_coustom_active       ="gacha.btn_styles['coustom'     ]['active']"
+            :btn_style_coustom_soldout      ="gacha.btn_styles['coustom'     ]['soldout']"
             />
         </div>
 
@@ -129,13 +142,12 @@
                 card border-0 bg-transparent
                 text-dark text-center overflow-hidden text-decoration-none
                 position-relative rounded-4
-                shiny hover_anime
-                border-white border-5 shadoww
+                shiny
             `,
 
 
             /*リンク　クラス*/
-            href_class:'d-block text-dark bg-white',
+            href_class:'d-block text-dark bg-body',
             href_disabled_class:'d-block btn p-0 border-0 disabled',
 
 

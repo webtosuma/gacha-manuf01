@@ -17,10 +17,11 @@ class UserGachaHistory extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'user_id',    //ユーザー　リレーション
-        'gacha_id',   //ガチャリレーション
+        'user_id',         //ユーザー　リレーション
+        'gacha_id',        //ガチャリレーション
         'point_history_id',//ポイント収支履歴リレーション
-        'play_count', //ガチャプレイ数
+        'play_count',      //ガチャプレイ数
+        'movie_id',        //動画 リレーション
     ];
 
 
@@ -84,7 +85,18 @@ class UserGachaHistory extends Model
         }
 
 
-    /*
+
+        /**
+         * PointHistoryモデル リレーション
+         * @return \App\Models\Movie
+        */
+        public function movie(){
+            return $this->belongsTo(Movie::class);
+        }
+
+
+
+        /*
     |--------------------------------------------------------------------------
     | アクセサー
     |--------------------------------------------------------------------------

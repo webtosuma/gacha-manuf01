@@ -11,6 +11,7 @@ use App\Models\UserGachaHistory;
 use App\Models\UserPrize;
 use App\Models\PointHistory;
 use App\Models\Infomation;
+use App\Models\Text;
 /*
 | =============================================
 |  ガチャ テスト Apiを利用したガチャ一覧 コントローラー
@@ -25,74 +26,74 @@ class GachaApiController extends Controller
      * @param String $category_code
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $category_code='all' )
-    {
-        # 表示できないページの処理
-        $category = GachaCategory::where('code_name', $category_code)->first();
-        if( $category_code!='all' && !$category ){ return \App::abort(404); }
+    // public function index(Request $request, $category_code='all' )
+    // {
+    //     # 表示できないページの処理
+    //     $category = GachaCategory::where('code_name', $category_code)->first();
+    //     if( $category_code!='all' && !$category ){ return \App::abort(404); }
 
 
-        # 変数
+    //     # 変数
 
-            ## カテゴリー名（ページタイトル）
-            $category_name = $category ? $category->name : 'すべて';
-            // $first_category = GachaCategory::userList()->first();
-            // if($first_category){
-            //     $category_name = $category ? $category->name : $first_category->name;
-            //     $category_code = $category ? $category->code_name : $first_category->code_name;
-            // }
-            // else{
-            //     $category_name = null;
-            //     $category_code = null;
-            // }
+    //         ## カテゴリー名（ページタイトル）
+    //         $category_name = $category ? $category->name : 'すべて';
+    //         // $first_category = GachaCategory::userList()->first();
+    //         // if($first_category){
+    //         //     $category_name = $category ? $category->name : $first_category->name;
+    //         //     $category_code = $category ? $category->code_name : $first_category->code_name;
+    //         // }
+    //         // else{
+    //         //     $category_name = null;
+    //         //     $category_code = null;
+    //         // }
 
-            ## 背景画像
-            // $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
-            $bg_image = $category && $category->bg_image_path
-            ? $category->bg_image_path : AdminBackGroundController::getBgTop();
+    //         ## 背景画像
+    //         // $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
+    //         $bg_image = $category && $category->bg_image_path
+    //         ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
-            ## ガチャのカテゴリーグループ一覧
-            $categories = GachaCategory::userList()->get();
+    //         ## ガチャのカテゴリーグループ一覧
+    //         $categories = GachaCategory::userList()->get();
 
-            ## カードサイズ
-            $card_size = $request->card_size ? $request->card_size : null;
+    //         ## カードサイズ
+    //         $text_model = new Text();
+    //         $card_size = $request->card_size ? $request->card_size : $text_model->gacha_settings_size;
 
-            ## 絞り込みキー
-            $search_key = $request->search_key ? $request->search_key : 'desc_created';
+    //         ## 絞り込みキー
+    //         $search_key = $request->search_key ? $request->search_key : 'desc_published_at';
 
-            ## 検索キーワード
-            $searchs = GachaController::getsearchs();
-
-
-            ## お知らせ
-            $infomations =
-            InfomationController::GetInfomationsQuery()
-            ->whereNotIn( 'type', ['ec'] )
-            ->limit(3)->get();
-
-            ## スライド
-            $query = self::getPublishedGachas( $category_code, $search_key );
-            $gachas = $query->where('is_slide',1)//スライドのみ
-            ->where('is_sold_out',0)             //売り切れを除く
-            ->where('published_at','<',now())    //予告を除く
-            ->limit(10)->get();
-            $slides = GachaController::getSlides($gachas);
-
-            // ## フィーバー
-            // $is_rainbow = AdminRainbowController::isPublished();
-        //
+    //         ## 検索キーワード
+    //         $searchs = GachaController::getsearchs();
 
 
+    //         ## お知らせ
+    //         $infomations =
+    //         InfomationController::GetInfomationsQuery()
+    //         ->whereNotIn( 'type', ['ec'] )
+    //         ->limit(3)->get();
 
-        # viewの表示
-        return view('gacha.api_index', compact(
-            'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
-            'search_key', 'searchs',
-            'infomations',
-            'slides',
-         ) );
+    //         ## スライド
+    //         $query = GachaApiController::getPublishedGachas( $category_code, $search_key );
+    //         $gachas = $query->where('is_slide',1)//スライドのみ
+    //         ->where('is_sold_out',0)             //売り切れを除く
+    //         ->where('published_at','<',now())    //予告を除く
+    //         ->limit(10)->get();
+    //         $slides = GachaController::getSlides($gachas);
 
-    }
+    //         // ## フィーバー
+    //         // $is_rainbow = AdminRainbowController::isPublished();
+    //     //
+
+
+    //     # viewの表示
+    //     return view('gacha.api_index', compact(
+    //         'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
+    //         'search_key', 'searchs',
+    //         'infomations',
+    //         'slides',
+    //      ) );
+
+    // }
 
 
 

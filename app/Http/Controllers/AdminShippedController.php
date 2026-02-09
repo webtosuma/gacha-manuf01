@@ -224,7 +224,7 @@ class AdminShippedController extends Controller
 
             $data = [
                 $user_address->postal_code, //お届け先郵便番号
-                $user_address->name.'　様',  //お届け先氏名
+                $user_address->name,        //お届け先氏名
                 $user_address->name.'　様',  //お届け先敬称
                 $user_address->todohuken,   //お届け先住所1行目
                 $user_address->shikuchoson, //お届け先住所2行目
