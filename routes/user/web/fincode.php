@@ -15,7 +15,7 @@ use App\Http\Controllers;
 
     Route::post('point_sail/fc/post', function(){
         return redirect()->route('point_sail');
-    })->name('point_sail.fc.post');
+    })->name('point_sail.fc.post');  
 
 
     // # 決済完了ウェブホック //https://cardfesta.jp/fincode/webhook

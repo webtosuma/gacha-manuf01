@@ -163,7 +163,7 @@ class FincodeController extends Controller
             $bool = $this->handleCheckoutSessionCompleted($request);
 
             // 二重送信防止
-            $request->session()->regenerateToken();
+            $request->session()->regenerateToken(); 
 
             return $bool
             ? redirect()->route('point_sail.comp', $stripe_id )
@@ -253,9 +253,6 @@ class FincodeController extends Controller
      */
     private function handleCheckoutSessionCompleted($request)
     {
-        // dd($request->all());
-        // dd($request->client_field_3 == config('app.key'));
-
 
         # 客の情報
         $user = User::find($request->client_field_1);
@@ -278,7 +275,6 @@ class FincodeController extends Controller
         # ポイント履歴の登録
         $point_history = new PointHistory([
             'user_id'   => $user->id,          //ユーザー　リレーション
-            // 'value'     => floor( $point_sail->value * $rank_ratio ),//ポイント数
             'value'     => ( $point_sail->value * $rank_ratio ),//ポイント数
             'price'     => $point_sail->price, //販売価格(税込み)
             'reason_id' => 11, //入出理由ID
