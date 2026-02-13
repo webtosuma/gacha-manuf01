@@ -78,7 +78,6 @@ class Gacha extends Model
         'user_rank_label',     //ユーザーランク限定ガチャラベル
         'is_type_label_text',  //ガチャの種類等のレベルテキスト表示有無
         'btn_styles',// ガチャるボタンのCSSクラス
-
         'add_chance_image_path', //アド確定予告画像パス
         'add_chance_count',      //天井系ガチャのアド確定までの回転数
         'have_user_rank',        //個人のプレイ数の商品登録
@@ -766,7 +765,10 @@ class Gacha extends Model
             $max = $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : null ;
 
             /* n回限定,1日n回限定終了 */
-            if( in_array( $this->type, ['n_time', 'n_oneday']) ){ $max = $this->type_n_remaining_count; }
+            if( in_array( $this->type, [
+                'n_time', 'n_oneday',
+                'n_time_no_custom','n_oneday_no_custom',
+            ]) ){ $max = $this->type_n_remaining_count; }
 
             return $max;
         }
@@ -1005,11 +1007,12 @@ class Gacha extends Model
             ]);
             if($bool){ return 0; }
 
-            # 最大値（限定回数 or ガチャの残数）
-            $max_count = $this->type_n_count<$this->remaining_count ? $this->type_n_count : $this->remaining_count;
+            # n回限定の残数
+            $type_n_remaining_count = $this->type_n_count - $this->type_n_played_count;
 
 
-            return $max_count > $this->type_n_played_count ? $max_count - $this->type_n_played_count : 0;
+            # n回限定の残数 or ガチャの残数
+            return ($type_n_remaining_count < $this->remaining_count) ? $type_n_remaining_count : $this->remaining_count;
         }
 
 
@@ -1179,6 +1182,18 @@ class Gacha extends Model
 
                     /* 1日n回限定 */
                     case 'n_oneday':
+                        if( $remaining_count < $n               ){ return 1; }//終了
+                        if( $gacha->type_n_remaining_count < $n ){ return 2; }//本日は終了
+                        return 0;//利用可能
+                        break;
+
+                    /* n回限定(カスタムボタンなし) */
+                    case 'n_time_no_custom':
+                        return !($remaining_count < $n) && !($gacha->type_n_remaining_count < $n) ? 0 : 1 ;
+                        break;
+
+                    /* 1日n回限定(カスタムボタンなし) */
+                    case 'n_oneday_no_custom':
                         if( $remaining_count < $n               ){ return 1; }//終了
                         if( $gacha->type_n_remaining_count < $n ){ return 2; }//本日は終了
                         return 0;//利用可能

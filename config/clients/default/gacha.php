@@ -99,13 +99,21 @@ return [
 
 
     /* 発送ポイント */
-    'shipped_point' => 0,
+    // 'shipped_point' => 0,
+
 
     /* 発送設定 */
     'shipped' => [
 
-        # 発送商品の合計ポイント上限(数値)
-        'limit_prize_point' => 0,
+        # 発送ポイント(数値)
+        'point' => (int)  100,
+
+        # 商品数n個ごとに発送数を加算(数値)
+        'item_count_unit'   => (int) 0,
+
+
+        # 最低限発送に必要な、発送商品の合計ポイント上限(数値)
+        'limit_prize_point' => (int) 0,
 
     ],
 
@@ -118,7 +126,7 @@ return [
         'custom'     => true,
 
         # 100連ボタン
-        'hundredplay' => true,
+        'hundredplay' => false,
 
         #　ポップアップボタン
         'popup'       => true,
