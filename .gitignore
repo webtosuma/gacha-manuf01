@@ -14,6 +14,8 @@
 .env_het_gachasample
 .env_het_samplegacha
 .env_na
+/xx_env
+
 
 .env.backup
 .phpunit.result.cache
