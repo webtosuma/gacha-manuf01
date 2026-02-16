@@ -117,8 +117,8 @@ return [
         ],
 
         ## 会員ランク限定ガチャの利用
-        // 'play_gacha' => 'only_rank', //会員ランクガチャのみ利用可能
-        'play_gacha' => 'under_rank',//会員ランク以下のガチャ全て利用可能
+        'play_gacha' => 'only_rank', //会員ランクガチャのみ利用可能
+        // 'play_gacha' => 'under_rank',//会員ランク以下のガチャ全て利用可能
 
     ],
 

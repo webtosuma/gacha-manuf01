@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         $this->loadAllClientViews();
 
         /* [クライアント別Method] ストレージをクライアント別に自動ロード */
-        $this->configureClientStorage();
+        // $this->loadAllClientStorage();
     }
 
 
@@ -118,7 +118,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * [クライアント別Method] ストレージをクライアント別に自動ロード
      */
-    private function configureClientStorage(): void
+    private function loadAllClientStorage(): void
     {
         $client = config('app.client');
 

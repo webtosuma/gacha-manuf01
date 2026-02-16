@@ -74,7 +74,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                     @include('admin.gacha.movie._inputs')
 
                 </div>
-                <aside class="d-none d-lg-block col-3 ">
+                <aside class="col-12 col-md-3 ">
                     <div class="position-sticky p-3" style="top: 2rem; ">
                         <disabled-button style_class="btn btn-warning text-white w-100 shadow"
                         btn_text="更新する"></disabled-button>

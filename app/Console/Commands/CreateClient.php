@@ -31,49 +31,60 @@ class CreateClient extends Command
 
         $this->info("クライアント用ディレクトリを作成します。: {$name}");
 
-        # paths
-        $configBase   = config_path('clients/default');
-        $configTarget = config_path("clients/{$name}");
-
-        $viewBase     = resource_path('views_clients/default');
-        $viewTarget   = resource_path("views_clients/{$name}");
-
-        $storageBase  = storage_path("app/public/clients/{$name}/site/image");
-
-        $cssBase      = public_path('css/app.css');
-        $cssTarget    = public_path("css/clients/{$name}.css");;
-
-        # 4. css dir create
-        if (!File::exists($cssTarget)) {
-            File::copy($cssBase, $cssTarget);
-            $this->info("✔ css created: {$cssTarget}");
-        } else {
-            $this->warn("⚠ css already exists");
-        }
 
         # 1. config copy
-        if (!File::exists($configTarget)) {
-            File::copyDirectory($configBase, $configTarget);
-            $this->info("✔ config created: {$configTarget}");
-        } else {
-            $this->warn("⚠ config already exists");
-        }
+
+            $configBase   = config_path('clients/default');
+            $configTarget = config_path("clients/{$name}");
+
+            if (!File::exists($configTarget)) {
+                File::copyDirectory($configBase, $configTarget);
+                $this->info("✔ config created: {$configTarget}");
+            } else {
+                $this->warn("⚠ config already exists");
+            }
+
 
         # 2. view copy
-        if (!File::exists($viewTarget)) {
-            File::copyDirectory($viewBase, $viewTarget);
-            $this->info("✔ views created: {$viewTarget}");
-        } else {
-            $this->warn("⚠ views already exists");
-        }
+
+            $viewBase     = resource_path('views_clients/default');
+            $viewTarget   = resource_path("views_clients/{$name}");
+
+            if (!File::exists($viewTarget)) {
+                File::copyDirectory($viewBase, $viewTarget);
+                $this->info("✔ views created: {$viewTarget}");
+            } else {
+                $this->warn("⚠ views already exists");
+            }
 
         # 3. storage dir create
-        if (!File::exists($storageBase)) {
-            File::makeDirectory($storageBase, 0755, true);
-            $this->info("✔ storage created: {$storageBase}");
-        } else {
-            $this->warn("⚠ storage already exists");
-        }
+
+            $storageDir = storage_path("app/clients");
+            if (!File::exists($storageDir)) {
+                File::makeDirectory($storageDir, 0755, true);
+            }
+
+            $storageBase  = storage_path("app/clients/{$name}/public");
+            if (!File::exists($storageBase)) {
+                File::makeDirectory($storageBase, 0755, true);
+                $this->info("✔ storage created: {$storageBase}");
+            } else {
+                $this->warn("⚠ storage already exists");
+            }
+
+
+        # 4. css dir create
+
+            $cssBase      = public_path('css/app.css');
+            $cssTarget    = public_path("css/clients/{$name}.css");;
+
+            if (!File::exists($cssTarget)) {
+                File::copy($cssBase, $cssTarget);
+                $this->info("✔ css created: {$cssTarget}");
+            } else {
+                $this->warn("⚠ css already exists");
+            }
+
 
         $this->info("🎉 Client '{$name}'：クライアント用ディレクトリ作成が完了しました！");
     }

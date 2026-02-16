@@ -45,30 +45,30 @@
         $ranks = [
 
             100 => 'RankSS',
-            // 173 => 'RankSS P',
+            173 => 'RankSS P',
             200 => 'RankS',
-            // 273 => 'RankS P',
+            273 => 'RankS P',
             300 => 'RankA',
-            // 373 => 'RankA P',
+            373 => 'RankA P',
 
-            // 400 => 'RankB',
-            // 500 => 'RankC',
-            // 600 => 'RankD',
+            400 => 'RankB',
+            500 => 'RankC',
+            600 => 'RankD',
 
-            // 901 => 'シークレット・キリ',
-            // 903 => 'シークレット・ピタリ',
+            901 => 'シークレット・キリ',
+            903 => 'シークレット・ピタリ',
 
-            // 320 => 'ゾロ目',
-            // 310 => 'キリ番',
-            // 330 => 'ピタリ賞',
+            320 => 'ゾロ目',
+            310 => 'キリ番',
+            330 => 'ピタリ賞',
 
-            // 362 => '個人ゾロ目',
-            // 361 => '個人キリ番',
-            // 363 => '個人ピタリ賞',
+            362 => '個人ゾロ目',
+            361 => '個人キリ番',
+            363 => '個人ピタリ賞',
 
-            // 10  => 'ラストワン',
+            10  => 'ラストワン',
 
-            // 1001  => 'スライド表示',
+            1001  => 'スライド表示',
 
         ];
 
@@ -85,8 +85,8 @@ return [
 
 
     /* がチャのデフォルトタイプ */
-    // 'defaults_type' => 'nomal',    //カスタムボタンあり
-    'defaults_type' => 'no_custom',//カスタムボタンなし
+    'defaults_type' => 'nomal',    //カスタムボタンあり
+    // 'defaults_type' => 'no_custom',//カスタムボタンなし
 
 
     /* カスタムボタンの上限 */
@@ -97,15 +97,23 @@ return [
     'ranks' => $ranks,
 
 
+
     /* 発送ポイント */
-    'shipped_point' => 0,
-    
+    // 'shipped_point' => 0,
+
 
     /* 発送設定 */
     'shipped' => [
 
-        # 発送商品の合計ポイント上限(数値)
-        'limit_prize_point' => 0,
+        # 発送ポイント(数値)
+        'point' => (int)  100,
+
+        # 商品数n個ごとに発送数を加算(数値)
+        'item_count_unit'   => (int) 0,
+
+
+        # 最低限発送に必要な、発送商品の合計ポイント上限(数値)
+        'limit_prize_point' => (int) 1000,
 
     ],
 
@@ -118,7 +126,7 @@ return [
         'custom'     => true,
 
         # 100連ボタン
-        'hundredplay' => true,
+        'hundredplay' => false,
 
         #　ポップアップボタン
         'popup'       => true,
@@ -133,7 +141,7 @@ return [
         'pc'     => true,
 
         # モバイル用カテゴリー
-        'mobile' => false,
+        'mobile' => true,
 
         # フッターカテゴリー
         'footer' => true,
@@ -161,15 +169,15 @@ return [
 
             ## 販売中
             'active' => <<<__EOT__
-            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-
-            rounded-pill border-secondary border-1 shadow-sm
+            btn btn-light bg-gradient fw-bold w-100 pb-0
+            rounded-pill border-secondary border-3
             position-relative shiny overflow-hidden
             __EOT__,
 
             ## 終了
             'soldout' => <<<__EOT__
-            btn btn-sm btn-light bg-gradient fw-bold w-100 py-2 text-danger
-            rounded-pill border-secondary border-1 shadow-sm
+            btn btn-light bg-gradient fw-bold w-100 pb-0 text-danger
+            rounded-pill border-secondary border-3"
             __EOT__,
 
         ],
@@ -179,15 +187,15 @@ return [
 
             ## 販売中
             'active' => <<<__EOT__
-            btn btn-sm btn-dark bg-gradient fw-bold w-100 py-2 text-white
-            rounded-pill shadow-sm
+            btn btn-dark bg-gradient text- fw-bold w-100 pb-0
+            rounded-pill border-danger border-3
             position-relative shiny overflow-hidden
             __EOT__,
 
             ## 終了
             'soldout' => <<<__EOT__
-            btn btn-sm btn-dark bg-gradient fw-bold w-100 py-2 text-danger
-            rounded-pill shadow-sm
+            btn btn-dark bg-gradient text- fw-bold w-100 pb-0 text-danger
+            rounded-pill border-secondary border-3"
             __EOT__,
 
         ],
@@ -197,15 +205,17 @@ return [
 
             ## 販売中
             'active' => <<<__EOT__
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
-            rounded-pill shadow-sm
+            btn btn-info bg-gradient text-white fw-bold w-100 pb-
+            rounded-pill border-danger border-3
             position-relative shiny overflow-hidden
             __EOT__,
 
             ## 終了
             'soldout' => <<<__EOT__
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-danger
-            rounded-pill shadow-sm
+            btn btn-info bg-gradient text-danger fw-bold w-100 pb-
+            rounded-pill border-danger border-3
+            position-relative shiny overflow-hidden
+            disabled
             __EOT__,
 
         ],
@@ -215,15 +225,16 @@ return [
 
             ## 販売中
             'active' => <<<__EOT__
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-white
-            rounded-pill shadow-sm h-100
+            btn btn-info bg-gradient text-white fw-bold w-100 pb-
+            rounded-pill border-danger border-3
             position-relative shiny overflow-hidden
             __EOT__,
 
             ## 終了
             'soldout' => <<<__EOT__
-            btn btn-sm btn-info bg-gradient fw-bold w-100 py-2 text-danger
-            rounded-pill shadow-sm h-100
+            btn btn-info bg-gradient text-danger fw-bold w-100 pb-
+            rounded-pill border-danger border-3
+            position-relative shiny overflow-hidden
             disabled
             __EOT__,
 
