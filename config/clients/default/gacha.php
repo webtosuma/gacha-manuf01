@@ -122,11 +122,18 @@ return [
     /* ガチャボタン設定 */
     'btn_settings' => [
 
-        # カスタムボタン
-        'custom'     => true,
+        # 1回ガチャる
+        'oneplay'     => true,
+
+        # 10回ガチャる
+        'tenplay'     => true,
 
         # 100連ボタン
         'hundredplay' => false,
+
+        # カスタムボタン
+        'custom'     => true,
+
 
         #　ポップアップボタン
         'popup'       => true,

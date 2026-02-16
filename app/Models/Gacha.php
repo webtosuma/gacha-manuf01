@@ -1058,6 +1058,9 @@ class Gacha extends Model
         */
         public function getIsDisabledOneplayBtnAttribute()
         {
+            # config設定
+            if( ! config('gacha.btn_settings.oneplay',true) ){ return -1; }
+
             return $this->isDisabledBtnMethod($this,1);
         }
 
@@ -1069,6 +1072,9 @@ class Gacha extends Model
         */
         public function getIsDisabledTenplayBtnAttribute()
         {
+            # config設定
+            if( ! config('gacha.btn_settings.tenplay',true) ){ return -1; }
+
             return $this->isDisabledBtnMethod($this,10);
         }
 
