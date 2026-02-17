@@ -6,10 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 /*
 | =============================================
-|  クライアント ディレクトリ作成　コマンド client:create
+|  クライアント ディレクトリ作成　コマンド
 | =============================================
 */
-class CreateClient extends Command
+class ClientCreate extends Command
 {
     protected $signature   = 'client:create';
     protected $description = 'Create client directories using APP_CLIENT';
@@ -86,6 +86,74 @@ class CreateClient extends Command
             }
 
 
+        # 5. xx_env にクライアント用ディレクトリと .env を作成
+        $this->createClientEnvDirectory($name);
+
+
+        # 6. ストレージリンクのセット(＊ClientStorageLinkコマンドのメソッドを利用)
+        ClientStorageLink::setStorageLink($this);
+
+
+        # 7. manifestファイル　を作成
+
+            $manifestBase      = public_path('manifests/default.json');
+            $manifestTarget    = public_path("manifests/{$name}.json");;
+
+            if (!File::exists($manifestTarget)) {
+                File::copy($manifestBase, $manifestTarget);
+                $this->info("✔ manifest created: {$manifestTarget}");
+            } else {
+                $this->warn("⚠ manifest already exists");
+            }
+
+
+
         $this->info("🎉 Client '{$name}'：クライアント用ディレクトリ作成が完了しました！");
     }
+
+
+
+
+
+
+    /**
+     * xx_env にクライアント用ディレクトリと .env を作成
+     */
+    private function createClientEnvDirectory(string $client): void
+    {
+        $basePath = base_path('xx_env');
+        $clientPath = $basePath . '/' . $client;
+        $envPath = $clientPath . '/.env';
+
+        // xx_env が無ければ作成
+        if (!File::exists($basePath)) {
+            File::makeDirectory($basePath, 0755, true);
+            $this->info("✔ Created directory: xx_env");
+            return;
+        }
+
+        // クライアントディレクトリが既に存在する場合
+        if (File::exists($clientPath)) {
+            $this->error("Client environment directory already exists: {$client}");
+            return;
+        }
+
+        // クライアントディレクトリ作成
+        File::makeDirectory($clientPath, 0755, true);
+
+        // 現在の .env をコピー
+        $sourceEnv = base_path('.env');
+
+        if (!File::exists($sourceEnv)) {
+            $this->warn("Base .env not found. Empty .env created.");
+            File::put($envPath, '');
+        } else {
+            File::copy($sourceEnv, $envPath);
+        }
+
+        $this->info("✔ Client env directory created:");
+        $this->line("   {$clientPath}");
+    }
+
+
 }
