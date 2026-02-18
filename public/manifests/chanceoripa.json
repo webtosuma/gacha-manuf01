@@ -1,0 +1,33 @@
+{
+    "name": "CHANCE ORIPA",
+    "short_name": "",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "form_factor": "wide",
+    "icons": [
+        {
+            "src": "storage/site/image/manifest/logo48.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "storage/site/image/manifest/logo96.png",
+            "type": "image/png",
+            "sizes": "96x96"
+        },
+        {
+            "purpose": "any maskable",
+            "src": "storage/site/image/manifest/logo192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "purpose": "any maskable",
+            "src": "storage/site/image/manifest/logo512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

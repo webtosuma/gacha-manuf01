@@ -12,26 +12,26 @@
      * ガチャの種類（限定がチャの設定）
      */
         $types = [
-            // 'no_custom'    => '通常',//カスタムボタンなし
+            'no_custom'    => '通常',//カスタムボタンなし
 
-            'nomal'        => 'カスタムボタン',
-            'max_custom'   => 'カスタムボタン(上限付き)',
-            'no_custom'    => 'カスタムボタンなし',
+            // 'nomal'        => 'カスタムボタン',
+            // 'max_custom'   => 'カスタムボタン(上限付き)',
+            // 'no_custom'    => 'カスタムボタンなし',
 
             // 'nomal'        => '100連ボタンあり',
             // 'no_custom'    => '100連ボタンなし',
 
 
 
-            'only_new_user'=> '新規会員限定',
+            // 'only_new_user'=> '新規会員限定',
             'one_time'     => '1回限定',
-            'only_oneday'  => '1日1回限定',
-            'one_chance'   => '1回or10回限定',
+            // 'only_oneday'  => '1日1回限定',
+            // 'one_chance'   => '1回or10回限定',
 
-            'n_time'             => '⚪︎回限定',
-            'n_time_no_custom'   => '⚪︎回限定(カスタムボタンなし)',
-            'n_oneday'           => '1日⚪︎回限定',
-            'n_oneday_no_custom' => '1日⚪︎回限定(カスタムボタンなし)',
+            // 'n_time'             => '⚪︎回限定',
+            // 'n_time_no_custom'   => '⚪︎回限定(カスタムボタンなし)',
+            // 'n_oneday'           => '1日⚪︎回限定',
+            // 'n_oneday_no_custom' => '1日⚪︎回限定(カスタムボタンなし)',
 
         ];
 
@@ -45,11 +45,11 @@
         $ranks = [
 
             100 => 'RankSS',
-            // 173 => 'RankSS P',
+            173 => 'RankSS P',
             200 => 'RankS',
-            // 273 => 'RankS P',
+            273 => 'RankS P',
             300 => 'RankA',
-            // 373 => 'RankA P',
+            373 => 'RankA P',
 
             400 => 'RankB',
             500 => 'RankC',
@@ -58,8 +58,8 @@
             // 901 => 'シークレット・キリ',
             // 903 => 'シークレット・ピタリ',
 
-            // 320 => 'ゾロ目',
-            // 310 => 'キリ番',
+            320 => 'ゾロ目',
+            310 => 'キリ番',
             // 330 => 'ピタリ賞',
 
             // 362 => '個人ゾロ目',
@@ -85,8 +85,8 @@ return [
 
 
     /* がチャのデフォルトタイプ */
-    'defaults_type' => 'nomal',    //カスタムボタンあり
-    // 'defaults_type' => 'no_custom',//カスタムボタンなし
+    // 'defaults_type' => 'nomal',    //カスタムボタンあり
+    'defaults_type' => 'no_custom',//カスタムボタンなし
 
 
     /* カスタムボタンの上限 */
@@ -102,14 +102,14 @@ return [
     'shipped' => [
 
         # 発送ポイント(数値)
-        'point' => (int)  100,
+        'point' => (int)  0,
 
         # 商品数n個ごとに発送数を加算(数値)
         'item_count_unit'   => (int) 0,
 
 
         # 最低限発送に必要な、発送商品の合計ポイント上限(数値)
-        'limit_prize_point' => (int) 0,
+        'limit_prize_point' => (int) 1000,
 
     ],
 
@@ -128,7 +128,7 @@ return [
         'hundredplay' => false,
 
         # カスタムボタン
-        'custom'     => true,
+        'custom'      => false,
 
 
         #　ポップアップボタン
@@ -157,7 +157,7 @@ return [
     'admin' => [
 
         # 管理者ページよりガチャ一覧設定の利用( フルパッケージよりtrue )
-        'settings'   => true,
+        'settings'   => false,
 
     ],
 
