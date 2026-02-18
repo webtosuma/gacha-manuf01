@@ -35,6 +35,7 @@ return [
             'root' => storage_path('app'),
         ],
 
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -51,6 +52,15 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+        ],
+
+
+        'client_public' => [
+            'driver' => 'local',
+            'root'   => storage_path('app/clients/' . env('APP_CLIENT') . '/public'),
+            'url'    => env('APP_URL') . '/storage/clients/' . env('APP_CLIENT'),
+
+            'visibility' => 'public',
         ],
 
     ],

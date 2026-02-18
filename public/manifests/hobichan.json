@@ -1,0 +1,34 @@
+{
+    "name": "ホビチャン",
+    "short_name": "ホビチャン",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "form_factor": "wide",
+    "icons": [
+        {
+            "src": "storage/site/image/manifest/48.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "storage/site/image/manifest/96.png",
+            "type": "image/png",
+            "sizes": "96x96"
+        },
+        {
+            "purpose": "any maskable",
+            "src": "storage/site/image/manifest/192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "purpose": "any maskable",
+            "src": "storage/site/image/manifest/512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+
+    ]
+}

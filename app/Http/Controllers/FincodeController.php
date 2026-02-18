@@ -7,14 +7,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use GuzzleHttp\Client;
+// use GuzzleHttp\Client;
+use App\Services\FincodeService;
 
-use App\Models\User;
-use App\Models\Admin;
-use App\Models\Gacha;
+// use App\Models\User;
+// use App\Models\Admin;
+// use App\Models\Gacha;
 use App\Models\PointSail;
 use App\Models\PointHistory;
 use App\Models\TicketHistory;
+use App\Models\FincodePaymentOrder;
 
 use App\Http\Controllers\CanpaingIntroductoryController;//お友達紹介キャンペーン
 use App\Http\Controllers\CanpaingFirstPointSailController;//初回ポイント購入キャンペーン
@@ -29,45 +31,40 @@ class FincodeController extends Controller
     /**
      * 購入　手続き
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\PointSail $point_sail
+     * @param PointSail $point_sail
+     * @param FincodeService $fincode
      * @return \Illuminate\Http\Response
     */
-    public function payment(Request $request, PointSail $point_sail)
+    public function payment(PointSail $point_sail, FincodeService $fincode)
     {
-        $API_KEY  = 'Bearer '.config('fincode.secret_key','');
-        $BASE_URL = config('fincode.base_url','');
-        $endpoint = "/v1/sessions";
+        # 購入ユーザー
         $user = Auth::user();
 
 
-        $DATA = [
-            //成功リダイレクトパス
-            'success_url' => route('point_sail.fc.comp_post', [
-                'stripe_id' => $point_sail->stripe_id,
-                'client_field_1'=>(String) $user->id,
-                'client_field_2'=>(String) $point_sail->id,
-                'client_field_3'=>(String) config('app.key'),
-            ] ),
+        # 仮注文作成
+        $order = FincodePaymentOrder::create([
+            'user_id' => $user->id,
+            'point_sail_id' => $point_sail->id,
+            'status' => 'pending',
+        ]);
 
-            //失敗リダイレクトパス
+
+        $data = [
+
             'cancel_url'  => route('point_sail.fc.post'),
 
+            'success_url' => route('point_sail.fc.callback', [
+                'stripe_id' => (String) $point_sail->stripe_id,
+                'order_id'  => (String) $order->id,
+            ]),
 
             'transaction' => [
-
-                # 支払いの種類
-                "pay_type" => ["Card"],// "Card", "Applepay", "Konbini", "Paypay",
-
-                # 支払い金額
-                'amount'    => (String) $point_sail->price,
-
-                # 任意の文字列
-                'client_field_1'=>(String) $user->id,
-                'client_field_2'=>(String) $point_sail->id
+                'pay_type'       => ['Card'],
+                'amount'         => (string)$point_sail->price,
+                'client_field_1' => (string)$order->id,
             ],
 
-
+            # ★ 3Dセキュア必須設定
             "card" => [
                 "job_code"   => "CAPTURE",//売上確定
                 "tds_type"   => "2",//3Dセキュア利用種別 2-3Dセキュア2.0を利用
@@ -75,243 +72,108 @@ class FincodeController extends Controller
                 "tds2_email" => $user->email,
             ],
         ];
+        $result = $fincode->createSession($data);
 
-        $client = new Client();
 
-        try {
-            $response = $client->post($BASE_URL . $endpoint, [
-                'headers' => [
-                    'Content-Type' => 'application/json; charset=utf-8',
-                    'Authorization' => $API_KEY,
-                ],
-                'json' => $DATA,
+
+        return redirect($result['link_url']);
+    }
+
+
+
+    /**
+     * 購入　手続き
+     *
+     * @param PointSail $point_sail
+     * @param FincodeService $fincode
+     * @return \Illuminate\Http\Response
+    */
+    public function callback(Request $request, FincodeService $fincode)
+    {
+        $orderId       = $request->order_id;
+        $transactionId = $request->requestorTransId;
+        $stripe_id     = $request->stripe_id;
+
+
+        # 仮注文取得
+        $order = FincodePaymentOrder::with(['user', 'pointSail'])
+        ->findOrFail($orderId);
+
+
+        # 販売ポイントIDのチェック
+        if ( (string)$order->pointSail->stripe_id !== (string)$stripe_id ) { abort(403);}
+
+
+        # 既に完了している場合（二重決済防止）
+        if ($order->isCompleted()) { abort(403); }
+
+
+        DB::transaction(function () use ($order, $transactionId) {
+
+            $user       = $order->user;
+            $point_sail = $order->pointSail;
+
+
+            $rank_ratio = $user->now_rank
+                ? $user->now_rank->point_sail_ratio
+                : 1;
+
+
+            # ポイント付与
+            PointHistory::create([
+                'user_id' => $user->id,
+                'value'   => $point_sail->value * $rank_ratio,
+                'price'   => $point_sail->price,
+                'reason_id' => 11,
+                'stripe_checkout_session_id' => $transactionId,
             ]);
 
-            $body     = json_decode($response->getBody(), true);
-            $link_url = $body['link_url'];
 
-
-            return redirect()->to($link_url);
-
-        } catch (\Exception $e) {
-
-            // テスト中の時
-
-            if(  config('app.debug') )
-            {
-                return $e->getMessage();
-            }
-            else
-            {
-                // 本番環境のとき
-                return \App::abort(404);
+            # チケット付与
+            if ($point_sail->ticket > 0) {
+                TicketHistory::create([
+                    'user_id' => $user->id,
+                    'value'   => $point_sail->ticket,
+                    'reason_id' => 16,
+                ]);
             }
 
 
-
-            return response()->json([
-                'error' => 'Error creating payment URL', 'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-
-
-
-
-    /**
-     * ポイント購入　完了
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param User $user
-     * @param String $stripe_id
-     * @return \Illuminate\View\View
-    */
-    public function comp(Request $request, $stripe_id )
-    {
-        # 購入ポイント情報
-        $point_sail = PointSail::where('stripe_id',$stripe_id)->first();
-
-        $user =  Auth::user();
-
-        # ランクごとのポイント還元率
-        $rank_ratio = Auth::check() && Auth::user()->now_rank && env('NEW_TICKET_SISTEM',false)
-        ? Auth::user()->now_rank->point_sail_ratio : 1 ;
-
-
-        # 表示するガチャ情報
-        $before_gacha_id = $request->session()->get('before_gacha_id') ;
-        $before_gacha = Gacha::find($before_gacha_id);
-
-
-        # カテゴリーコード
-        $category_code = $before_gacha ? $before_gacha->category->code_name : 'all';
-
-        # おすすめガチャ
-        $gachas = GachaController::getPublishedGachas( $category_code, null );
-        // return  view('point_sail.subscription.comp', compact('subscription', 'before_gacha', 'gachas','category_code'));
-
-        return $point_sail
-        ? view('point_sail.comp', compact(
-            // 'point_sail', 'rank_ratio', 'before_gacha', 'gachas'
-            'point_sail', 'rank_ratio', 'before_gacha', 'gachas','category_code','user',
-        )) : \App::abort(404);
-    }
-        /* 決済完了後のPOST受け取り */
-        public function comp_post(Request $request, $stripe_id)
-        {
-            $bool = $this->handleCheckoutSessionCompleted($request);
-
-            // 二重送信防止
-            $request->session()->regenerateToken(); 
-
-            return $bool
-            ? redirect()->route('point_sail.comp', $stripe_id )
-            : \App::abort(404);
-        }
-
-
-    /**
-     * 決済完了webhook
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\View\View
-    */
-    public function webhook(Request $request)
-    {
-        # サイト管理者へ送信
-        $email   = 't.sakai@tosuma.ltd';
-        Mail::to( $email ) //宛先
-        ->send(new \App\Mail\SendHtmlMailMailable([
-            'inputs'  => ['json'=>json_encode($request->all())], //入力変数
-            'view'    => 'emails.payment.webhook' , //テンプレート
-            'subject' => 'ポイント購入webhookの送信' , //件名
-        ]) );
-
-        return response(['message'=>'test'], 200);
-
-
-
-        $payload = json_decode($request->getContent(), true);
-
-        // シークレットキーを使ってStripeの署名を検証する
-        $sigHeader = $request->header('Stripe-Signature');
-        $endpointSecret = config('stripe.endpoint_secret'); // Stripeダッシュボードで生成されたシークレットキー
-        $event = null;
-
-        try {
-
-            $event = Event::constructFrom($payload, $sigHeader, $endpointSecret);
-
-
-            // イベントタイプごとに処理を実行
-            switch ($event->type) {
-
-                ## クレジット・ウォレットで支払いが成功した場合の処理
-                case 'checkout.session.completed':
-                    $session = $event->data->object;
-
-                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
-
-                    return response(compact('point_history'), 200);
-                    break;
-
-
-                ## 銀行振込などの非同期型決済での、発送業務等のシステム連携処理
-                case 'checkout.session.async_payment_succeeded':
-                    $session = $event->data->object;
-
-                    $point_history = $this->handleCheckoutSessionCompleted($request,$session);
-
-                    return response(compact('point_history'), 200);
-                    break;
-
-
-                default:
-                    // 未知のイベントに対する処理
-                    break;
-            }
-
-
-        } catch (\UnexpectedValueException $e) {
-            // 署名が無効な場合、またはその他のエラーが発生した場合の処理
-            Log::error($e);
-            return response(['Error parsing payload: ' => $e->getMessage()], 403);
-
-        } catch(\Stripe\Exception\SignatureVerificationException $e) {
-            // 署名が無効な場合、またはその他のエラーが発生した場合の処理
-            Log::error($e);
-            return response(['Error verifying webhook signature: ' => $e->getMessage()], 403);
-        }
-    }
-
-
-    /**
-     * 注文のフルフィルメントを実行するためのコード
-     *
-     * @param  Object $session //Stripe Checkout Session オブジェクト
-     * @return Void
-     */
-    private function handleCheckoutSessionCompleted($request)
-    {
-
-        # 客の情報
-        $user = User::find($request->client_field_1);
-
-        # 購入アイテムの情報
-        $point_sail = PointSail::find($request->client_field_2);
-
-        # APPキーチェック
-        $app_key_bool = $request->client_field_3 == config('app.key');
-
-
-        if( !( $user && $point_sail && $app_key_bool ) ){ return false; }
-
-
-        # ランクごとのポイント還元率
-        $rank_ratio = $user->now_rank && env('NEW_TICKET_SISTEM',false)
-        ? $user->now_rank->point_sail_ratio : 1 ;
-
-
-        # ポイント履歴の登録
-        $point_history = new PointHistory([
-            'user_id'   => $user->id,          //ユーザー　リレーション
-            'value'     => ( $point_sail->value * $rank_ratio ),//ポイント数
-            'price'     => $point_sail->price, //販売価格(税込み)
-            'reason_id' => 11, //入出理由ID
-
-            'stripe_checkout_session_id' => 'fincode',//CheckoutSession
-        ]);
-        $point_history->save();
-
-
-        #チケットの付与
-        if( $point_sail->ticket > 0 )
-        {
-            $ticket_history = new TicketHistory([
-                'user_id'   => $user->id,
-                'value'     => $point_sail->ticket,
-                'reason_id' => 16, //ポイント購入時プレゼント
+            # 注文完了更新
+            $order->update([
+                'status' => 'completed',
+                'fincode_transaction_id' => $transactionId,
             ]);
-            $ticket_history->save();
-        }
 
 
-        # [紹介キャンペーン]ポイント付与
-        CanpaingIntroductoryController::grant($user);
+            # [紹介キャンペーン]ポイント付与
+            CanpaingIntroductoryController::grant($user);
 
-        # [キャンペーン]初回ポイント購入
-        CanpaingFirstPointSailController::grant($user);
-
-
-        # ポイント購入完了メールの送信
-        $request->user       = $user;
-        $request->point_sail = $point_sail;
-        $request->email      = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : 't.sakai@tosuma.ltd';//ローカルではメール送信しない
-        SendMailController::PaymentComp( $request );
+            # [キャンペーン]初回ポイント購入
+            CanpaingFirstPointSailController::grant($user);
 
 
+            # サイト管理者へ送信
+            $subject = 'ID:'.$user->id.' '.$user->name.'様が、'.$point_sail->value.'pt購入しました';
+            $email   = !config('app.debug') ? env('PAYMENT_COMP_EMAIL') : 't.sakai@tosuma.ltd';//ローカルではメール送信しない
+            $inputs  = compact('user','point_sail','email');
+            Mail::to( $email ) //宛先
+            ->send(new \App\Mail\SendHtmlMailMailable([
+                'inputs'  => $inputs, //入力変数
+                'view'    => 'emails.payment_comp.admin' , //テンプレート
+                'subject' => $subject , //件名
+            ]) );
 
-        return true;
+
+        });
+
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
+
+        return redirect()->route('point_sail.comp', $stripe_id );
     }
+
 
 }

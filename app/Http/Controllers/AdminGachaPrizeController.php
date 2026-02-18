@@ -25,6 +25,10 @@ class AdminGachaPrizeController extends Controller
      */
     public function edit(Gacha $gacha)
     {
+        // dd(
+        //     config('app')
+        //     // config('settings.bg_dark')
+        // );
         return view('admin.gacha.prize.edit', compact('gacha'));
     }
 

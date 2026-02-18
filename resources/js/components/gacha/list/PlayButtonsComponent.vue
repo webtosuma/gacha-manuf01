@@ -4,7 +4,7 @@
         <div v-if="show_play_bottons && !r_prize_history" class="row justify-content-center g-2 mt-1">
 
             <!--1回ボタン-->
-            <div class="col-6">
+            <div class="col-6" v-if="is_disabled_oneplay_btn>-1">
 
                 <!--POPUP BTN(1)-->
                 <u-gacha-btn v-if="is_popup_btn!=0"

@@ -87,7 +87,7 @@ class GachaController extends Controller
 
 
         # viewの表示
-        return view('top.index', compact(
+        return view('gacha.index', compact(
             'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
             'search_key', 'searchs',
             'infomations',

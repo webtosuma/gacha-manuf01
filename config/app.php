@@ -2,32 +2,43 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Name
-    |--------------------------------------------------------------------------
-    |
-    | This value is the name of your application. This value is used when the
-    | framework needs to place the application's name in a notification or
-    | any other location as required by the application or its packages.
-    |
-    */
+    # ---------------------------
+    #  アプリケーション　基本設定
+    # ---------------------------
 
         # サイト名
         'name' => env('APP_NAME', 'サイト名'),
 
+
+        # クライアントキー
+        'client'       => env('APP_CLIENT', null),
+
+        # クライアント企業名
+        'company_name' => env('APP_COMPANY_NAME', null),
+
+        # クライアント企業サイトURL
+        'company_url'  => env('APP_COMPANY_URL', null),
+
         # PWAマニフェスト
-        'manifest' => env('APP_MANIFEST', false),
+        'manifest'     => env('APP_MANIFEST', false),
 
-        # オーナーコード
-        'owner_code'   => env('APP_OWNER_CODE', 'oner_code'),
 
-        # オーナー企業名
-        'company_name' => env('APP_COMPANY_NAME', 'オーナー企業名'),
+        # システム運営アカウントメールアドレス
+        'fobees_emails' =>  explode( ',', env('APP_FOBEES_EMAILS', '') ),
 
-        # オーナー企業サイトURL
-        'company_url'  => env('APP_COMPANY_URL', 'https://www.google.co.jp/'),
 
+
+    # ---------------------------
+    #  サイト表示設定
+    # ---------------------------
+
+        # 基本レイアウト
+        'layout_app'               => env('APP_LAYOUT', ''),
+
+
+
+        # ダーク背景
+        'bg_dark' =>  (bool) env('APP_BG_DARK', false),
 
         # ガチャ画像比率
         'gacha_card_ratio'         => env('GACHA_CARD_RATIO', 'ratio-4x3'),
@@ -38,59 +49,61 @@ return [
         # ユーザーポイントの利用可能期限(日,数値)
         'user_point_deadline_date' => (int) env('USER_POINT_DEADLINE_DATE', 0),
 
-        # Fobeesアカウントemail
-        'fobees_emails'            =>  explode( ',', env('APP_FOBEES_EMAILS', '') ),
-
-        # 背景ダーク
-        'bg_dark'                  => (boolean) env('APP_BG_DARK', false),
-
-        # クーポン機能
-        'coupon'                   => (boolean) env('COUPON', false),
-
-        # ポイント交換なし
-        'no_exchange_point'        => (boolean) env('NO_EXCHANGE_POINT', false),
-
-        # カウントダウン時間
-        'countdown_minute'         => env('COUNTDOWN_HOUR', 30), //env('COUNTDOWN_HOUR', 24*60),
-
-        # ガチャの商品履歴の表示
-        'gacha_prize_history'      => env('GACHA_PRIZE_HISTORY', false),
-
-        # 住所入力に靴の入力を指定する
-        'address_use_size'         => env('ADDRESS_USE_SIZE', false) ? 1 : 0,
-
-        # 買取表の表示
-        'purchase'                 => env('PURCHASE', false),
-
-        # アンケート機能
-        'survey'                   => env('SURVEY', false),
-
-        # イベントガチャ
-        'event_gacha'              => env('EVENT_GACHA', false),
-
-        # 基本レイアウト
-        'layout_app'               => env('APP_LAYOUT', ''),
-
-        # お知らせの種類分け有無
-        'infomation_use_types'     => false,
-
-        # ポイント購入制限年齢(年齢入力)
-        'min_age' => false,
-
-        # Admin一括発送処理の許可
-        'is_bulk_shipping'         => true,
-
-        # 発送商品の追跡番号登録
-        'shipped_tracking_code'    => false,
-
-        # パスワード変更の１日の上限回数
-        'change_password_limit'    => 2,
-
         # 二段階認証ログイン(TFA)の利用
         'login_tfa' => env('lOGIN_TFA', true),
 
         # 1アカウント1ログインの利用
         'user_session_validate' => env('USER_SESSION_VALIDATE', true),
+
+        # カウントダウン時間
+        'countdown_minute' => (int) env('COUNTDOWN_MINUTE', 30), //env('COUNTDOWN_MINUTE', 24*60),
+
+
+
+    # ---------------------------
+    #  オプション設定
+    # ---------------------------
+
+
+        # ポイント交換なし
+        'no_exchange_point'        => (bool) env('NO_EXCHANGE_POINT', false),
+
+        # ガチャの商品履歴の表示
+        'gacha_prize_history'      => (bool) env('GACHA_PRIZE_HISTORY', false),
+
+        # クーポン機能
+        'coupon'                   => (bool) env('COUPON', false),
+
+        # 住所入力に靴の入力を指定する
+        'address_use_size'         => (bool) env('ADDRESS_USE_SIZE', false),
+
+        # 買取表の表示
+        'purchase'                 => (bool) env('PURCHASE', false),
+
+        # ポイント購入制限年齢(年齢入力)
+        'min_age'                  => (bool) env('MIN_AGE', false),
+
+        # Admin一括発送処理の許可
+        'is_bulk_shipping'         => (bool) env('IS_BULK_SHIPPING', false),
+
+        # 発送商品の追跡番号登録
+        'shipped_tracking_code'    => (bool) env('SHIPPED_TRACKING_CODE', false),
+
+        # パスワード変更の１日の上限回数
+        'change_password_limit'    => (int) env('CHANGE_PASSWORD_LIMIT', 2),
+
+
+        # お知らせの種類分け有無
+        'infomation_use_types'     => (bool) env('INFOMATION_USER_TYPES', false),
+
+        # アンケート機能
+        'survey'                   => (bool) env('SURVEY', false),
+
+        # イベントガチャ
+        'event_gacha'              => (bool) env('EVENT_GACHA', false),
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

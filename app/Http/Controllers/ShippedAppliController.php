@@ -26,11 +26,14 @@ class ShippedAppliController extends Controller
     public function shippedPoint( $item_count )
     {
         /*.設定は。config.gachaに記述 */
-        $basic_point = config('gacha.shipped_point',0);
-        return $basic_point;
-        // return ceil( $item_count / 20 ) * $basic_point;//20枚は、Npt
-    }
+        $basic_point     = config('gacha.shipped.point',0);    //発送商品の合計ポイント上限(数値)
+        $item_count_unit = config('gacha.shipped.item_count_unit', null); //商品数n個ごとに発送数を加算(数値)
 
+        return  $item_count_unit
+         ? ceil( $item_count / $item_count_unit ) * $basic_point
+         : $basic_point
+        ;
+    }
 
 
     /**

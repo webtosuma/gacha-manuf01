@@ -78,7 +78,6 @@ class Gacha extends Model
         'user_rank_label',     //ユーザーランク限定ガチャラベル
         'is_type_label_text',  //ガチャの種類等のレベルテキスト表示有無
         'btn_styles',// ガチャるボタンのCSSクラス
-
         'add_chance_image_path', //アド確定予告画像パス
         'add_chance_count',      //天井系ガチャのアド確定までの回転数
         'have_user_rank',        //個人のプレイ数の商品登録
@@ -766,7 +765,10 @@ class Gacha extends Model
             $max = $this->type=='max_custom' ? config('gacha.max_custom_count', 99) : null ;
 
             /* n回限定,1日n回限定終了 */
-            if( in_array( $this->type, ['n_time', 'n_oneday']) ){ $max = $this->type_n_remaining_count; }
+            if( in_array( $this->type, [
+                'n_time', 'n_oneday',
+                'n_time_no_custom','n_oneday_no_custom',
+            ]) ){ $max = $this->type_n_remaining_count; }
 
             return $max;
         }
@@ -1056,6 +1058,9 @@ class Gacha extends Model
         */
         public function getIsDisabledOneplayBtnAttribute()
         {
+            # config設定
+            if( ! config('gacha.btn_settings.oneplay',true) ){ return -1; }
+
             return $this->isDisabledBtnMethod($this,1);
         }
 
@@ -1067,6 +1072,9 @@ class Gacha extends Model
         */
         public function getIsDisabledTenplayBtnAttribute()
         {
+            # config設定
+            if( ! config('gacha.btn_settings.tenplay',true) ){ return -1; }
+
             return $this->isDisabledBtnMethod($this,10);
         }
 
