@@ -35,7 +35,7 @@
         </h2>
 
         <!-- [ 本文 ] -->
-        <section id="articleBody" class="my-5">
+        <section id="articleBody" class="my-5 text-break">
             @include('footer_menu.about_pwa.'.'body')
         </section>
 

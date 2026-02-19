@@ -1,4 +1,4 @@
-<footer class="bg-info-subtle bg-gradient text-dark px-3 pt-5" style="padding-bottom:14rem;">
+<footer class="bg-  bg-gradient text-dark px-3 pt-5" style="padding-bottom:14rem; background:#000;">
     <div class="container">
         <div class="row flex-column flex-md-row justify-content-between mx-0 gy-0">
 
@@ -15,7 +15,7 @@
 
 
                 <!--SNS Links-->
-                @include('includes.sns_links')
+                @include('includes.sns_links_white')
             </div>
 
 
