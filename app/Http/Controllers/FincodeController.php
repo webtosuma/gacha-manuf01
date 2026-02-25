@@ -171,6 +171,8 @@ class FincodeController extends Controller
         # 二重送信防止
         $request->session()->regenerateToken();
 
+        Auth::login($order->user);
+        // dd(Auth::user());
 
         return redirect()->route('point_sail.comp', $stripe_id );
     }

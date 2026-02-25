@@ -15,6 +15,7 @@ Route::get('test', function(){
 } );
 
 
+
 # メンテナンス中
 Route::get('maintenance',
 [App\Http\Controllers\MaintenanceController::class, 'index']
@@ -70,36 +71,17 @@ Route::middleware([ /* ミドルウェアー */
 
     # ポイント購入・履歴
 
-
-        ## (Stripe・プロジェクト内で購入処理の実行)
-        // include('web/stripe_inner.php');
-
-        ## (Stripe・React)
-        // include('web/stripe_react.php');
-
         ##(Stripe・webhook)
         include('web/stripe.php');
 
         ##(Stripe　サブスクプラン)
         include('web/stripe_subscription.php');
 
-        # Stripe 証明URL
-        Route::get('.well-known/apple-developer-merchantid-domain-association', function(){
-            #jp
-            // return view('point_sail.stripe.apple-developer-merchantid-domain-association.jp');
-            #online
-            // return view('point_sail.stripe.apple-developer-merchantid-domain-association.online');
-        });
-
         ## PayPay
         include('web/paypay.php');
 
         ## (fincode)
         include('web/fincode.php');
-
-        // include('web/fincode_js.php');
-
-        // include('web/fincode_card.php');
 
     //
 
@@ -164,6 +146,9 @@ Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
 
     # (Stripe・webhook)
     include('web/stripe.php');
+
+    # (fincode)
+    include('web/fincode.php');
 
     # ユーザー設定
     include('web/settings.php');
