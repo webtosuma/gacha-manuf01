@@ -7,6 +7,7 @@
 
 
 <!-- Styles -->
+{{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 <link href="{{ asset('css/default.css') }}" rel="stylesheet">
 <link href="{{ asset('css/animation.css') }}" rel="stylesheet">
 
@@ -14,7 +15,6 @@
 @if($client && $client !== 'default')
     <link href="{{ asset("css/clients/{$client}.css") }}" rel="stylesheet">
 @endif
-{{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
 
 

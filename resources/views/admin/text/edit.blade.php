@@ -63,6 +63,12 @@ $active_submenu = true;
                     @break
 
 
+                @case('rainbow')
+                    <!--レインボー(rainbow)-->
+                    @include('admin.text.forms.rainbow')
+                    @break
+
+
                 @case('user_rank')
                     <!--ユーザーランク(user_rank)-->
                     <div class="form-text mb-3">

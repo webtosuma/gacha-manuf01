@@ -387,7 +387,7 @@ class StripeController extends Controller
 
             $session_id = $session['id'];
             $column = 'stripe_checkout_session_id';
-            $previous_point_history = PointHistory::where($column,$session_id)->first();
+            $previous_point_history = PointHistory::where($column,$session_id)->first(); 
 
             $response = ['message' => '購入内容は処理済みです。'];
             if( $previous_point_history ){ return response()->json( $response, 200 );}

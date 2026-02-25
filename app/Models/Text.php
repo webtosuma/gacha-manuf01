@@ -280,6 +280,72 @@ class Text extends Model
         }
 
 
+        /**
+         * レインボー　getRainbow()
+         * @return Array
+         */
+        public static function getRainbow()
+        {
+            # デフォルト値
+            $defaults = [
+                'rainbow_start_at' => null,
+                'rainbow_end_at'   => null,
+            ];
+
+            # データ取得
+            $data = [];
+            foreach ($defaults as $key => $default ) {
+                $data[$key] = Text::where('type',$key)->pluck('body')->first() ?? null;
+            }
+
+            # 公開中判定
+            $published_status = self::checkPublishedStatus(
+                $data['rainbow_start_at'], $data['rainbow_end_at']
+            );
+            $data['rainbow_published_status'] = $published_status;
+
+            return $data ;
+        }
+
+
+
+        /**
+         * レインボーの公開判定
+         *
+         * @param string|null $start_at 'Y-m-d H:i:s' 形式 または null
+         * @param string|null $end_at   'Y-m-d H:i:s' 形式 または null
+         * @return int
+         *   1 : 現在有効（期間内、または片方nullで条件を満たす）
+         *   2 : まだ開始していない（start_at が未来）
+         *   0 : 期間外・終了済み・その他
+         */
+        public static function checkPublishedStatus(?string $start_at, ?string $end_at): int
+        {
+            $now = Carbon::now();
+
+            # start_at を Carbon に変換（null なら変換しない）
+            $start = $start_at ? Carbon::parse($start_at) : null;
+            $end   = $end_at   ? Carbon::parse($end_at)   : null;
+
+            # 不正な日付文字列が来た場合は安全に 0 を返す
+            if (($start_at !== null && !$start) || ($end_at !== null && !$end)) { return (Int) 0; }
+
+            # start_at,end_at があって、end_atの方が小さい値になってしまっているとき
+            if ($start && $end && $start > $end) { return (Int) 0; }
+
+            # 未入力
+            if (!$start && !$end) { return (Int) 0; }
+
+            # end_at があって、すでに終わっている場合 → 0
+            if ($end && $now > $end) { return (Int) 0; }
+
+            # start_at があって、まだ始まっていない場合 → 2
+            if ($start && $now < $start) { return (Int) 2; }
+
+
+            # ここまで来たら有効期間内（または片方nullで条件を満たす）
+            return (Int) 1;
+        }
 
     /*
     |--------------------------------------------------------------------------

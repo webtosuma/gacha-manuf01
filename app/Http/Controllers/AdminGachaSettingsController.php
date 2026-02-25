@@ -48,9 +48,14 @@ class AdminGachaSettingsController extends Controller
             $text = new Text();
             $data[$type] = $text[$type];
         }
-        // dd($data['gacha_settings_type_label_text']);
 
-        return view('admin.gacha.settings.edit_list', compact('data'));
+
+        # レインボー設定データ取得
+        $rainbows = in_array( config('app.client'), ['cardfesta'] )
+        ? \App\Models\Text::getRainbow() : null;
+
+
+        return view('admin.gacha.settings.edit_list', compact('data','rainbows'));
     }
 
 
@@ -216,5 +221,93 @@ class AdminGachaSettingsController extends Controller
         return redirect()->route('admin.gacha.settings.edit_list')
         ->with(['alert-warning'=>'ガチャのその他設定を更新しました']);
     }
+
+
+
+    /**
+     * レインボー 更新
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update_rainbow( Request $request )
+    {
+
+        $now = now()->format('Y-m-d\TH:i');
+
+
+        # 更新パラメーター
+        switch ($request['type'])
+        {
+            # すぐに開始
+            case 'start_now':
+                $bodys = [
+                    'rainbow_start_at' => $now,
+                    'rainbow_end_at'   => null,
+                ];
+                break;
+
+            # すぐに終了
+            case 'end_now':
+                $bodys = [
+                    'rainbow_start_at' => $request['rainbow_start_at'],
+                    'rainbow_end_at'   => $now,
+                ];
+                break;
+
+            # 予約
+            default:
+                $bodys = [
+                    'rainbow_start_at' => $request['rainbow_start_at'],
+                    'rainbow_end_at'   => $request['rainbow_end_at'],
+                ];
+                break;
+            /* */
+        }
+
+        foreach ($bodys as $type => $body)
+        {
+            # 型チェック
+            $body =  preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $body) ? $body : null;
+
+            # 保存データ
+            $inputs = compact( 'type', 'body' );
+
+            # 文書データの取得
+            $text = Text::where('type',$type)->orderByDesc('id')->first();
+
+            # DBデータの削除・更新・新規登録
+            if( $text && !$body ){
+
+                $text->delete();
+
+            }else if( $text ){
+
+                $text->update( $inputs );
+
+            }else if( $body ){
+
+                $text = new Text($inputs);
+                $text->save();
+
+            }
+        }
+
+        # 更新キーワード
+        $type='rainbow_update';
+        $type_label='レインボー設定';
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'text.'. $type .'.update' );
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
+
+        # リダイレクト
+        return redirect()->route('admin.gacha.settings.edit_list')
+        ->with(['alert-warning'=> $type_label.'を更新しました。']);
+    }
+
 
 }

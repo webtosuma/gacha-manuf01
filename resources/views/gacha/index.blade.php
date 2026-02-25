@@ -49,11 +49,17 @@
         }
     </style>
 
+
+    <!-- rainbow-css-->
+    @include('gacha.common.rainbow-css')
+
+
     <!-- splide css-->
     <link href="
     https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css
     " rel="stylesheet">
 
+    
 @endsection
 
 
@@ -79,7 +85,7 @@
     ></section>
 
 
-    <section class="overflow-hidden bg-" style="background:rgb(0, 0, 0,.0);"
+    <section class="overflow-hidden bg-rainbow-index"
     data-aos="fade-in"
     >
 

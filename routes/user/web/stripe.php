@@ -57,3 +57,17 @@ use App\Http\Controllers;
         ->name('point_history');
 
     });
+
+
+
+    # StripeIDのリセット
+    Route::get('/stripe-users-id-reset', function () {
+
+        $users = User::whereNotNull('stripe_id')->get();
+        foreach ($users as $key => $user) {
+            $user->stripe_id = null;
+            $user->save();
+        }
+
+        dd($users);
+    });

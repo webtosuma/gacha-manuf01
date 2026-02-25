@@ -13,6 +13,12 @@ Route::middleware(['admin_auth'])->group(function () {
     [App\Http\Controllers\AdminGachaSettingsController::class, 'edit_list'])
     ->name('admin.gacha.settings.edit_list');
 
+
+    # レインボー 更新
+    Route::patch('/admin/gacha/settings/update_rainbow',
+    [Controllers\AdminGachaSettingsController ::class, 'update_rainbow'])
+    ->name('admin.text.update_rainbow');
+
     # ガチャ販売機の画像設定 更新
     Route::patch('/admin/gacha/settings/update_card_image',
     [App\Http\Controllers\AdminGachaSettingsController::class, 'update_card_image'])
