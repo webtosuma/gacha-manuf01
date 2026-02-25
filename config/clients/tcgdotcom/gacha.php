@@ -157,7 +157,7 @@ return [
     'admin' => [
 
         # 管理者ページよりガチャ一覧設定の利用( フルパッケージよりtrue )
-        'settings'   => true,
+        'settings'   => false,
 
     ],
 
