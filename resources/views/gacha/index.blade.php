@@ -59,7 +59,7 @@
     https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css
     " rel="stylesheet">
 
-    
+
 @endsection
 
 
@@ -80,9 +80,9 @@
 @section('content')
 
 
-    <section class="bg- " style="height:4.2rem;"
+    {{-- <section class="bg- " style="height:4.2rem;"
     data-aos="fade-in"
-    ></section>
+    ></section> --}}
 
 
     <section class="overflow-hidden bg-rainbow-index"

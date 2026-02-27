@@ -21,3 +21,8 @@ if( config('store.admin') )
 }
 
 
+# ストアー
+if( true )
+{
+    include('manuf/web.php');
+}

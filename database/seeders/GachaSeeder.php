@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
 use App\Models\GachaDiscription;
+use App\Http\Controllers\AdminGachaController;
 /*
 | =============================================
 |  ガチャ　シーダー　
@@ -31,7 +32,7 @@ class GachaSeeder extends Seeder
             {
                 $data['category_id'] = $category->id;
                 $data['key']  = Str::random(16);
-                $data['type'] = config('gacha.defaults_type','');
+                $data['type'] = AdminGachaController::defaults_type();
 
                 # ガチャの登録
                 $gacha = new Gacha($data);
