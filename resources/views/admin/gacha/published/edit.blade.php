@@ -83,9 +83,35 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
                     <div class="position-sticky p-3" style="top: 2rem; ">
-                        <disabled-button style_class="btn btn-warning text-white w-100 shadow"
-                        btn_text="更新する"></bdisabled-button>
+                        {{-- <disabled-button style_class="btn btn-warning text-white w-100 shadow"
+                        btn_text="更新する"></bdisabled-button> --}}
+
+
+                        <div class="row g-3 align-items-center">
+
+                            <div class="col-6 col-md-12">
+                                <disabled-button style_class="btn btn-light border w-100
+                                @if(false) disabled @endif
+                                "
+                                name="type"
+                                value="start_now"
+                                btn_text="今すぐ公開"></disabled-button>
+                            </div>
+
+                            <div class="col-6 col-md-12">
+                                <disabled-button style_class="btn btn-dark text-white w-100
+                                @if(false) disabled @endif
+                                "
+                                name="type"
+                                value="end_now"
+                                btn_text="今すぐ停止"></disabled-button>
+                            </div>
+
+                        </div>
                     </div>
+
+
+
                 </aside>
             </div>
 

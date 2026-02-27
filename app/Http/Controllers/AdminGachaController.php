@@ -24,7 +24,8 @@ class AdminGachaController extends Controller
      * .設定は。config.gachaに記述
      */
     public static function defaults_type(){
-        return config('gacha.defaults_type','');
+        // return config('gacha.defaults_type','no_custom');
+        return config( 'gacha.defaults.type'/*新設定*/, config('gacha.defaults_type'/*旧設定*/, 'no_custom' ) );
     }
 
 
@@ -76,14 +77,16 @@ class AdminGachaController extends Controller
 
         # 新規作成モデル
         $gacha = new Gacha([
+            
             'category_id' => $gacha_category ? $gacha_category->id : null,
-            'point'=>0,
-            'type' => self::defaults_type(),  //ガチャの種類
-            'is_meter'=>1,//残数メーターの表示有無
-            'is_slide'=>1,//スライドの表示有無
+            'point'    => 0,
+            'type'     => self::defaults_type(),  //ガチャの種類
+            'is_meter' => config( 'gacha.defaults.is_meter', 1), //残数メーターの表示有無
+            'is_slide' => config( 'gacha.defaults.is_slide', 1), //スライドの表示有無
 
-            'min_time'=>'00:00',// 表示時間下限　2024/04/17追加
-            'max_time'=>'24:00',// 表示時間上限　2024/04/17追加
+            'min_time' => config( 'gacha.defaults.min_time', '00:00'),// 表示時間下限　2024/04/17追加
+            'max_time' => config( 'gacha.defaults.max_time', '24:00'),// 表示時間上限　2024/04/17追加
+
         ]);
 
 
@@ -244,24 +247,55 @@ class AdminGachaController extends Controller
         // dd( $request->all() );
         # 公開日変数
 
-            $published_at = $gacha->published_at;
+            // $published_at = $gacha->published_at;
 
-            // 公開[1](前回が「公開」でないとき)
-            if( $request->is_published==1 && !$gacha->is_published ){
-                $published_at = now()->format('Y-m-d H:i:s');
-            }
-            // 公開予約[2]
-            else if( $request->is_published==2 ){
-                $published_at = str_replace('T',' ', $request->published_at );
-            }
-            // 非公開[0]
-            else if( $request->is_published==0 ){
-                $published_at = NULL;
-            }
+            // // 公開[1](前回が「公開」でないとき)
+            // if( $request->is_published==1 && !$gacha->is_published ){
+            //     $published_at = now()->format('Y-m-d H:i:s');
+            // }
+            // // 公開予約[2]
+            // else if( $request->is_published==2 ){
+            //     $published_at = str_replace('T',' ', $request->published_at );
+            // }
+            // // 非公開[0]
+            // else if( $request->is_published==0 ){
+            //     $published_at = NULL;
+            // }
+
+
+        $now = now();
+        switch ($request['type'])
+        {
+            # すぐに開始
+            case 'start_now':
+                $params = [
+                    'published_at'    => $now,
+                    'end_published_at'=> null,
+                ];
+                break;
+
+            # すぐに終了
+            case 'end_now':
+                $params = [
+                    'published_at'    => $request['published_at'],
+                    'end_published_at'=> $now,
+                ];
+                break;
+
+            # 予約
+            default:
+                $params = [
+                    'published_at'     => $request['published_at'],
+                    'end_published_at' => $request['end_published_at'],
+                ];
+                break;
+            /* */
+        }
+
 
 
         # 更新情報の保存
-        $gacha->update( compact('published_at') );
+        $gacha->update( $params );
 
         # 操作ログの更新
         AdminLogController::createLog( 'gacha.published', $gacha->id );

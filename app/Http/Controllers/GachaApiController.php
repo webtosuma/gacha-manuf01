@@ -20,84 +20,6 @@ use App\Models\Text;
 class GachaApiController extends Controller
 {
     /**
-     * カテゴリー選択・一覧表示
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param String $category_code
-     * @return \Illuminate\Http\Response
-     */
-    // public function index(Request $request, $category_code='all' )
-    // {
-    //     # 表示できないページの処理
-    //     $category = GachaCategory::where('code_name', $category_code)->first();
-    //     if( $category_code!='all' && !$category ){ return \App::abort(404); }
-
-
-    //     # 変数
-
-    //         ## カテゴリー名（ページタイトル）
-    //         $category_name = $category ? $category->name : 'すべて';
-    //         // $first_category = GachaCategory::userList()->first();
-    //         // if($first_category){
-    //         //     $category_name = $category ? $category->name : $first_category->name;
-    //         //     $category_code = $category ? $category->code_name : $first_category->code_name;
-    //         // }
-    //         // else{
-    //         //     $category_name = null;
-    //         //     $category_code = null;
-    //         // }
-
-    //         ## 背景画像
-    //         // $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
-    //         $bg_image = $category && $category->bg_image_path
-    //         ? $category->bg_image_path : AdminBackGroundController::getBgTop();
-
-    //         ## ガチャのカテゴリーグループ一覧
-    //         $categories = GachaCategory::userList()->get();
-
-    //         ## カードサイズ
-    //         $text_model = new Text();
-    //         $card_size = $request->card_size ? $request->card_size : $text_model->gacha_settings_size;
-
-    //         ## 絞り込みキー
-    //         $search_key = $request->search_key ? $request->search_key : 'desc_published_at';
-
-    //         ## 検索キーワード
-    //         $searchs = GachaController::getsearchs();
-
-
-    //         ## お知らせ
-    //         $infomations =
-    //         InfomationController::GetInfomationsQuery()
-    //         ->whereNotIn( 'type', ['ec'] )
-    //         ->limit(3)->get();
-
-    //         ## スライド
-    //         $query = GachaApiController::getPublishedGachas( $category_code, $search_key );
-    //         $gachas = $query->where('is_slide',1)//スライドのみ
-    //         ->where('is_sold_out',0)             //売り切れを除く
-    //         ->where('published_at','<',now())    //予告を除く
-    //         ->limit(10)->get();
-    //         $slides = GachaController::getSlides($gachas);
-
-    //         // ## フィーバー
-    //         // $is_rainbow = AdminRainbowController::isPublished();
-    //     //
-
-
-    //     # viewの表示
-    //     return view('gacha.api_index', compact(
-    //         'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
-    //         'search_key', 'searchs',
-    //         'infomations',
-    //         'slides',
-    //      ) );
-
-    // }
-
-
-
-    /**
      * API・一覧表示
      *
      * @param Request $request
@@ -161,47 +83,6 @@ class GachaApiController extends Controller
                 $query->orderBy('is_sold_out');
 
 
-                ## 時間帯の指定(時間外のに表示)
-                if( false )
-                {
-                    $before_time = now()->copy()->addMinutes(30)->format('H:i');//表示予告時間(30分前)
-                    $now_time    = now()->format('H:i');//現在時刻
-
-                    $query->where(function ($query) use ($now_time, $before_time ) {
-                        $query->where('is_over_date', 1)//日を跨ぐ時間帯
-                        ->where(function ($query) use ($now_time, $before_time) {
-                            $query->where('min_time', '<=', $before_time)
-                            ->orwhere('max_time', '>', $now_time)
-                            ;
-                        })
-                        ;
-
-                    })
-                    ->orWhere(function ($query) use ($now_time, $before_time ) {
-                        $query->where('is_over_date', 0)//日中の時間帯
-                        ->where(function ($query) use ($now_time, $before_time) {
-                            $query->where('min_time', '<=', $before_time)
-                            ->where('max_time', '>', $now_time)
-                            ;
-                        });
-                    });
-                }
-
-
-                ## 会員ランク限定ガチャ（ログインユーザーの会員ランク以外、非表示）
-                if( false )
-                {
-                    $query->where( function($query) use($user_rank_id)
-                    {
-                        $query->where('user_rank_id',null); //全ての会員
-                        if( $user_rank_id!==null ){
-                            $query->orWhere('user_rank_id', $user_rank_id ); //ログインユーザーの会員ランク
-                        }
-                    });
-                }
-
-
-
                 ## 新規会委員のみ表示のガチャ(それ以外は非表示)
                 if( !(Auth::check() && !Auth::user()->sevendays_affter_registar) )
                 {
@@ -219,14 +100,14 @@ class GachaApiController extends Controller
                 }
 
                 ## 公開中のみ
-                $query->where('published_at','<',now()->copy()->addMinutes( config('app.countdown_minute',30) ) );//30分前 新規カウントダウン
-                // $query->where('published_at','<',now()->copy()->addDays(3));//3日前　新規カウントダウン
-                $query->where('published_at', '<>', null);
+                GachaApiController::onlyPublished($query);
+                // $query->where('published_at','<',now()->copy()->addMinutes( config('app.countdown_minute',30) ) );//30分前 新規カウントダウン
+                // $query->where('published_at', '<>', null);
 
-                ## 公開中のカテゴリーのみ
-                $category_ids = GachaCategory::where('is_published',1) //公開中
-                ->get()->pluck('id')->toArray();
-                $query->whereIn('category_id',$category_ids);
+                // ## 公開中のカテゴリーのみ
+                // $category_ids = GachaCategory::where('is_published',1) //公開中
+                // ->get()->pluck('id')->toArray();
+                // $query->whereIn('category_id',$category_ids);
 
                 ## サブスクリプション
                 $query->with('subscription');
@@ -355,6 +236,33 @@ class GachaApiController extends Controller
                     $query->orderByDesc('published_at');
                     break;
 
+                //* ⚪︎回限定 */
+                case 'n_time':
+                    $query->where('type','n_time');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* ⚪︎回限定(カスタムボタンなし)' */
+                case 'n_time_no_custom':
+                    $query->where('type','n_time_no_custom');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 1日⚪︎回限定 */
+                case 'n_oneday':
+                    $query->where('type','n_oneday');
+                    $query->orderByDesc('published_at');
+                    break;
+
+                //* 1日⚪︎回限定(カスタムボタンなし) */
+                case 'n_oneday_no_custom':
+                    $query->where('type','n_oneday_no_custom');
+                    $query->orderByDesc('published_at');
+                    break;
+
+
+
+
                 //* 新規会員限定 */
                 case 'only_new_user':
                     $query->where('type','only_new_user');
@@ -403,4 +311,56 @@ class GachaApiController extends Controller
                     break;
             }
         }
+
+
+
+
+        /**
+         * 公開中のみ
+        */
+        public static function onlyPublished($query)
+        {
+            $now = now();
+
+            # start と end が両方 null は除外
+            $query->where(function ($q) {
+                $q->whereNotNull('published_at')
+                ->orWhereNotNull('end_published_at');
+            });
+
+            # start > end の異常データ除外
+            $query->where(function ($q) {
+                $q->whereNull('published_at')
+                ->orWhereNull('end_published_at')
+                ->orWhereColumn('published_at', '<=', 'end_published_at');
+            });
+
+            # 終了していない
+            $query->where(function ($q) use ($now) {
+                $q->whereNull('end_published_at')
+                ->orWhere('end_published_at', '>=', $now);
+            });
+
+            # すでに開始している
+            // $query->where(function ($q) use ($now) {
+            //     $q->whereNull('published_at')
+            //     ->orWhere('published_at', '<=', $now);
+            // });
+
+
+            # カウントダウン優先条件
+            $query->where(function ($q) use ($now) {
+                $limit = now()->copy()->addMinutes(config('app.countdown_minute', 30));
+                $q->whereNull('published_at')
+                ->orWhere('published_at', '<', $limit);
+            });
+
+
+            ## 公開中のカテゴリーのみ
+            $category_ids = GachaCategory::where('is_published',1) //公開中
+            ->get()->pluck('id')->toArray();
+            $query->whereIn('category_id',$category_ids);
+
+        }
+
 }

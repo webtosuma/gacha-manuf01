@@ -121,7 +121,7 @@
 
                         <!--metter-->
                         <div class="">
-                            <u-gacha-metter v-if="gacha.is_published && gacha.category.is_published"
+                            <u-gacha-metter v-if="gacha.published_status===1 && gacha.category.is_published"
                             :new_label_path="gacha.new_label_path"
                             :img_path_point="gacha.img_path_point"
                             :bg_color="gacha.type=='only_new_user' ? 'bg-success-subtle' : 'bg-white'"
@@ -135,7 +135,7 @@
                             />
 
 
-                            <div v-else-if="gacha.published_at && gacha.category.is_published"
+                            <div v-else-if="gacha.published_status===2 && gacha.category.is_published"
                             class="card-body bg-warning text-center text-white">
                                 <h5 class="m-0">公開予約中</h5>
                                 <div >{{gacha.published_at_format+'公開予定'}}</div>

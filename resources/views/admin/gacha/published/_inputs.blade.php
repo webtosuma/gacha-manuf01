@@ -1,7 +1,55 @@
 <div class="px-3 mb-5">
 
+    <!--公開ステータス-->
+    @include('admin.gacha.common.published_statuse')
+
+    
+    <!-- 公開予約 -->
+    <div class="card card-body mb-3"
+    @if ( $gacha_restriction ) style="opacity: .5;" @endif
+    >
+        <h5 class="mb-0">公開予約</h5>
+
+        <ul class="form-text">
+            <li>ガチャを公開予約します。</li>
+            <li>「公開予約日時」を設定すると、指定日時にガチャを自動公開にすることができます。</li>
+            <li>「停止予約日時」を設定すると、指定日時にガチャを自動非公開にすることができます。</li>
+        </ul>
+
+        <!-- 公開予約日時 published_at -->
+        <div class="input-group mb-3">
+            <span class="input-group-text" >公開 予約日時</span>
+            <input name="published_at"
+            type="datetime-local" class="form-control"
+            value="{{old( 'published_at',
+            $gacha['published_at'] ? $gacha['published_at']->format('Y-m-d\TH:i') : null )}}"
+            min="{{ now()->format('Y-m-d\T00:00') }}">
+        </div>
+
+
+        <!-- 停止予約日時 end_published_at -->
+        <div class="input-group mb-3">
+            <span class="input-group-text" >停止 予約日時</span>
+            <input
+            name="end_published_at"
+            type="datetime-local" class="form-control"
+            value="{{old( 'end_published_at',
+            $gacha['end_published_at'] ? $gacha['end_published_at']->format('Y-m-d\TH:i') : null )}}"
+            min="{{ now()->format('Y-m-d\T00:00') }}">
+        </div>
+
+
+
+        <div class="col-12 col-md-6 mt-4">
+            <disabled-button style_class="btn btn-warning text-white w-100 shadow"
+            btn_text="予約日時を更新"></disabled-button>
+        </div>
+
+    </div>
+
+
     <!-- 公開 -->
-    <label class="card card-body mb-3 disabled"
+    {{-- <label class="card card-body mb-3 disabled"
     @if ( $gacha_restriction ) style="opacity: .5;" @endif
     >
         <div class="form-check w-100">
@@ -19,11 +67,11 @@
         @if( $gacha->is_published ) <div class="form-text">
             {{\Carbon\Carbon::parse($gacha->published_at)->format('公開日：Y年m月d日 H:i')}}
         </div> @endif
-    </label>
+    </label> --}}
 
 
     <!-- 公開予約 -->
-    <label class="card card-body mb-3"
+    {{-- <label class="card card-body mb-3"
     @if ( $gacha_restriction ) style="opacity: .5;" @endif
     >
         <div class="form-check w-100">
@@ -45,11 +93,11 @@
             value="{{ $gacha->published_at ? $gacha->published_at->format('Y-m-d\TH:i') : now()->format('Y-m-d\T00:00') }}"
             min="{{ now()->format('Y-m-d\T00:00') }}">
         </div>
-    </label>
+    </label> --}}
 
 
     <!-- 非公開 -->
-    <label for="publishedType3" class="card card-body mb-3">
+    {{-- <label for="publishedType3" class="card card-body mb-3">
         <div class="form-check w-100">
             <input name="is_published" value="0"
             type="radio" id="publishedType3" class="form-check-input"
@@ -62,5 +110,6 @@
             <li>非公開後はガチャ一覧にガチャが表示されなくなります。</li>
             <li>商品の残数はそのままです。</li>
         </ul>
-    </label>
+    </label> --}}
+
 </div>

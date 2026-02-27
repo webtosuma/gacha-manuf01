@@ -58,6 +58,7 @@ class Gacha extends Model
     /** Carbonオブジェクトとして利用 */
     protected $dates = [
         'published_at',//公開設定(利用しない->非公開*消さない)
+        'end_published_at',//公開設定(利用しない->非公開*消さない)
         'sold_out_at', //売り切れ日時
         'updated_prizes_at',// 登録商品更新日時 2025/02/04追加
     ];
@@ -65,10 +66,11 @@ class Gacha extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
-        'is_published',     //公開中かどうか
-        'image_path',       //画像ファイルパス
-        'type_label',       //ガチャの種類ラベル
-        'type_label_admin', //ガチャの種類ラベル
+        'is_published',      //公開中かどうか
+        'published_status', //公開判定
+        'image_path',        //画像ファイルパス
+        'type_label',        //ガチャの種類ラベル
+        'type_label_admin',  //ガチャの種類ラベル
 
         'remaining_count',     //残りのプレイできる回数
         'sub_auth_user',       //ログインユーザーがサブスクガチャを利用できるか
@@ -270,7 +272,47 @@ class Gacha extends Model
         */
         public function getIsPublishedAttribute()
         {
-            return $this->published_at && $this->published_at <= now()->format('Y-m-d H:i:s') ;
+            return $this->published_status===1;
+            // return $this->published_at && $this->published_at <= now()->format('Y-m-d H:i:s') ;
+        }
+
+
+
+        /**
+         * 公開判定 published_status
+         *
+         * @return Int
+         *   1 : 公開中
+         *   2 : 公開予約中
+         *   0 : 非公開
+         */
+        public function getPublishedStatusAttribute(): int
+        {
+            $now = now();
+
+            # 開始・終了　日時
+            $start = $this->published_at;
+            $end   = $this->end_published_at;
+
+
+            # start_at,end_at があって、end_atの方が小さい値になってしまっているとき
+            if ($start && $end && $start > $end) { return (Int) 0; }
+
+            # 未入力
+            if (!$start && !$end) { return (Int) 0; }
+
+            # startが未入力
+            if (!$start) { return (Int) 0; }
+
+            # end_at があって、すでに終わっている場合 → 0
+            if ($end && $now > $end) { return (Int) 0; }
+
+            # start_at があって、まだ始まっていない場合 → 2
+            if ($start && $now < $start) { return (Int) 2; }
+
+
+            # ここまで来たら有効期間内（または片方nullで条件を満たす）
+            return (Int) 1;
         }
 
 

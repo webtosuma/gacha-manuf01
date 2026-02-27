@@ -150,8 +150,10 @@ class Prize extends Model
         */
         public function getImagePathAttribute()
         {
-            return $this->image && Storage::exists($this->image) ?
+            $url = $this->image && Storage::exists($this->image) ?
             asset( 'storage/'.$this->image ) :  self::noImage();
+
+            return $url.'?v='.config('app.version');//バージョン管理
         }
 
 

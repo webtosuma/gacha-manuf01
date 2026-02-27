@@ -1,3 +1,7 @@
+<!--公開ステータス-->
+@include('admin.gacha.common.published_statuse')
+
+
 <div class="p-3 bg-light rounded-3 mb-3">
     <div class="mb-">
         <h5 class="border-bottom ">{{ $gacha->name }}</h5>
@@ -59,23 +63,6 @@
     </div>
 </div>
 
-
-{{-- <div class="p-3 bg-light rounded-3 mb-3">
-    @if ( $gacha->is_published )
-        <div class="text-success border-bottom">公開中</div>
-    @else
-        <div class="text-danger border-bottom">非公開</div>
-        <div class="">{{
-        $gacha->published_at ?
-        '公開予定日：'.\Carbon\Carbon::parse($gacha->published_at)->format('Y年m月d日')
-        : ''
-        }}</div>
-    @endif
-    <div class="mt-3">
-        <a href="{{ route('admin.gacha.published', $gacha) }}"
-        class="btn btn-sm btn-light border">公開設定</a>
-    </div>
-</div> --}}
 
 
 <div class="p-3 bg-light rounded-3 mb-3">

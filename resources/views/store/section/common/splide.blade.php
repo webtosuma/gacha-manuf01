@@ -2,7 +2,7 @@
     <ul class="splide__list">
         @foreach ($slides as $si => $slide)
 
-            <li class="splide__slide px-1 ">
+            <li class="splide__slide px-1 bg-white">
                 <a href="{{ $slide['href'] }}">
 
 
