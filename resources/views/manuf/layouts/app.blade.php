@@ -49,7 +49,7 @@
 
 
 </head>
-@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-body';  @endphp
+@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-white';  @endphp
 <body class="{{ $class_bg_dark }}">
     <div id="app">
 
@@ -104,7 +104,7 @@
                 <!-- Content -->
                 <div  style="min-height:100vh;">
 
-                    <section class="bg- " style="height:4.2rem;"></section>
+                    <section class="d-lg-none" style="height:4.2rem;"></section>
 
                     @yield('content')
 

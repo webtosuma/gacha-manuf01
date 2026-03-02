@@ -98,7 +98,7 @@
     data-aos="fade-in"
     ></section> --}}
 
-    <section class="overflow-hidden bg-rainbow-index"
+    <section class="overflow-hidden bg-rainbow-index mt-3"
     data-aos="fade-in"
     >
 
@@ -126,16 +126,14 @@
     <!--ガチャ-->
     <section class="py-3 pb-5" style="min-height:80vh;">
 
-        <u-gacha-list
+        <u-manuf-gacha-list
         token=        "{{ csrf_token() }}"
         category_code="{{ $category_code }}"
         search_key   ="{{ $search_key }}"
         r_api_gacha_list="{{ route('gacha.api.list') }}"
         sm_card="{{$card_size=='sm'?1:0}}"
         card_size ="{{$card_size}}"
-
-        ></u-gacha-list>
-        {{-- is_desc_popularity="{{$search_key=='desc_popularity'?1:0}}" --}}
+        ></u-manuf-gacha-list>
 
     </section>
 

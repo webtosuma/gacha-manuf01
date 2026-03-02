@@ -107,7 +107,9 @@ class ManufGachaController extends Controller
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 
         # 追加情報
-        $gacha;
+        $gacha->price = 500;      //価格(税込)
+        $gacha->waiting_count = 3;//購入待機数
+        $gacha->resume = "テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト ";
 
 
 

@@ -1,14 +1,13 @@
-@extends('layouts.app')
+@extends('manuf.layouts.app')
 
 <!--title-->
-@section('title',$gacha->name.'-'.$gacha->category->name.'のガチャ')
+@section('title',$gacha->name)
 
 
 <!--meta-->
 @section('meta')
     @php
-    $meta_title = $gacha->name.'-'.$gacha->category->name.'のガチャ';
-    // $meta_description = "オンラインオリパ引くならcardFesta（カードフェスタ）! 高確率、爆アドガチャを多数ご用意しています。ポケカ・ワンピースなど人気オリパを24時間365日楽しめます。国内送料無料で、低コストガチャからハイリスクハイリターンなガチャなど楽しみ方は自由自在！ ";
+    $meta_title = $gacha->name;
     $meta_image = $gacha->image_path;
     @endphp
 @endsection
@@ -22,38 +21,54 @@
     #bgWindow{
         background-image: url({{ $bg_image }});
     }
+
+
+    /* ホバーすると回転する */
+    /* .rotate-hover:hover, */
+    .rotate-hover:focus {
+        animation: rotate .4s linear infinite;
+    }
+
+
+    @keyframes rotate {
+        from {
+            transform: scale(1.1) rotate(0deg) ;
+        }
+        to {
+            transform: scale(1.1) rotate(360deg) ;
+        }
+    }
 </style>
 @endsection
 
 
 @section('content')
 
-
-    <!--ボトムメニュー-->
-    <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white d-lg-none"
-    style="z-index:50; background:rgb(0, 0, 0, .7);">
-        <div class="container mx-auto" style="max-width:600px;">
-
-            <!--metter-->
-            @php $metter_bg_color = ''; @endphp
-            @include('gacha.common.metter')
-
-            <!--play_buttons-->
-            @include('gacha.common.play_buttons')
-
-        </div>
+    <!--breadcrumb-->
+    <div class="container mt-md-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('manuf') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{$gacha->name}}</li>
+            </ol>
+        </nav>
     </div>
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg ">
+    <div class="container px-0">
 
-                @include('gacha.show.main')
+        @include('manuf.gacha.show.main')
+
+    </div>
+
+
+    <div class="container px-0">
+        <div class="row justify-content-center g-3 mx-0">
+            <div class="col-12 col-lg-10 ">
 
 
                 <!--注意事項-->
-                <div class="p-3 mb-5" style="border-radius:1rem; background:rgb(255, 255, 255, .9);">
+                <div class="p-3 rounded-4 border mb-5" style="background:rgb(255, 255, 255, .9);">
 
                     <h6 class="border border-danger border-2 p-2 text-danger text-center">
                         必ずお読み下さい。
@@ -64,48 +79,113 @@
 
                 </div>
 
+                @if( env('SHARE_BTNS') )
+                    <section class="list-group-item mb-5">
+                        <div class="fw-bold text-center mb-2">このガチャをシェアする</div>
+
+                        @php
+                        $sns_url  = request()->url();
+                        $sns_text = $gacha->name;
+                        @endphp
+                        @include('includes.sns_btn')
+                    </section>
+                @endif
+
+
+
+                <!-- その他のガチャ情報 -->
+                <div class="container my-5 mx-auto" style="max-width:600px;">
+
+                    @include('gacha.common.result_gachas')
+
+                </div>
+
 
             </div>
-            <div class="col-12 col-lg-4"  style="min-width: 360px;">
-                <div class="position-sticky ps-2 mb-5" style="top: 4rem; ">
+        </div>
+    </div>
 
 
-                    <div class="p-4 text-white rounded-4 mb-5  d-none d-lg-block "
-                    style="z-index:50; background:rgb(0, 0, 0, .7);">
-                        <!--metter-->
-                        @php $metter_bg_color = ''; @endphp
-                        @include('gacha.common.metter')
 
-                        <!--play_buttons-->
-                        @include('gacha.common.play_buttons')
+
+
+    <!--ボトムメニュー-->
+    <div class="position-fixed bottom-0 end-0
+    w-100 pt-2 text- border-top d-lg-none "
+    style="z-index:50; background:rgb(255, 255, 255, .8);">
+        <div class="container mx-auto" style="max-width:600px;">
+
+            {{-- <!--metter-->
+            @php $metter_bg_color = ''; @endphp
+            @include('gacha.common.metter')
+
+            <!--play_buttons-->
+            @include('gacha.common.play_buttons')
+            --}}
+
+            <!--在庫・価格-->
+            <div id="discription-price"
+            class="row align-items-center justify-content-center  g-3">
+
+                <div class="col-auto ">
+                    <button type="button"
+                    onclick="history.back()"
+                    style="width:2.2rem; height:2.2rem;"
+                    class="btn btn-outline-secondary border-0 rounded-pill fs-5
+                    d-flex align-items-center justify-content-center
+                    "><i class="bi bi-chevron-left"></i><!--戻るボタン--></button>
+
+                    <div class="text-secondary text-center fw-bold" style="font-size:11px;">戻る</div>
+                </div>
+
+                <!--価格・在庫-->
+                <div class="col-auto">
+                    <div class="d-flex gap-3 justify-content-center" style="font-size:11px;">
+
+                        <!--在庫-->
+                        <div class=" bg-light border text-dark px-2 rounded-pill">
+                            <span class="">残り</span>
+                            {{number_format($gacha->remaining_count)}}
+                        </div>
+
+                        <!--待機中-->
+                        <div class=" bg-warning px-2 rounded-pill">
+                            <span class="">待機中</span>
+                            {{number_format($gacha->waiting_count)}}
+                        </div>
+
                     </div>
 
-
-
-                    @if( env('SHARE_BTNS') )
-                        <section class="list-group-item mb-5">
-                            <div class="fw-bold text-center mb-2">このガチャをシェアする</div>
-
-                            @php
-                            $sns_url  = request()->url();
-                            $sns_text = $gacha->name;
-                            @endphp
-                            @include('includes.sns_btn')
-                        </section>
-                    @endif
-
-
-
-                    <!-- その他のガチャ情報 -->
-                    <div class="container my-5 mx-auto" style="max-width:600px;">
-
-                        @include('gacha.common.result_gachas')
-
+                    <!--価格-->
+                    <div class="text-center">
+                        <span class="fs-6">１回</span>
+                        <span class="fs-4 text-danger">¥</span>
+                        <span class="fs-1 text-danger"> {{number_format($gacha->price)}}</span>
+                        <span class="fs-6">(税込)</span>
                     </div>
 
+                </div>
+
+
+
+
+                <div class="col">
+
+
+                    <!--ガチャボタン-->
+                    <button class="btn btn-lg btn-info text-white shadow rounded-pill
+                    w-100
+                    d-flex align-items-center justify-content-center gap-2 mx-auto"
+                    data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
+                    type="submit">
+                        <i class="bi bi-arrow-repeat fs-3" style="line-height:.8rem;"></i>
+                        ガチャを回す
+                    </button>
 
 
                 </div>
+
+
             </div>
 
         </div>

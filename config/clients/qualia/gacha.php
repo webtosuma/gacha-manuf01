@@ -140,16 +140,16 @@ return [
     'btn_settings' => [
 
         # 1回ガチャる
-        'oneplay'     => true,
+        'oneplay'     => false,
 
         # 10回ガチャる
-        'tenplay'     => true,
+        'tenplay'     => false,
 
         # 100連ボタン
         'hundredplay' => false,
 
         # カスタムボタン
-        'custom'     => true,
+        'custom'     => false,
 
 
         #　ポップアップボタン
