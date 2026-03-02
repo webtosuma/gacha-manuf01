@@ -24,8 +24,10 @@
 
 
     /* ホバーすると回転する */
-    /* .rotate-hover:hover, */
-    .rotate-hover:focus {
+    .rotate-hover:hover
+    /* ,
+    .rotate-hover:focus */
+    {
         animation: rotate .4s linear infinite;
     }
 
@@ -111,17 +113,10 @@
 
     <!--ボトムメニュー-->
     <div class="position-fixed bottom-0 end-0
-    w-100 pt-2 text- border-top d-lg-none "
+    w-100 pt-1 pb-3 text- border-top d-lg-none "
     style="z-index:50; background:rgb(255, 255, 255, .8);">
         <div class="container mx-auto" style="max-width:600px;">
 
-            {{-- <!--metter-->
-            @php $metter_bg_color = ''; @endphp
-            @include('gacha.common.metter')
-
-            <!--play_buttons-->
-            @include('gacha.common.play_buttons')
-            --}}
 
             <!--在庫・価格-->
             <div id="discription-price"
@@ -138,9 +133,10 @@
                     <div class="text-secondary text-center fw-bold" style="font-size:11px;">戻る</div>
                 </div>
 
-                <!--価格・在庫-->
-                <div class="col-auto">
-                    <div class="d-flex gap-3 justify-content-center" style="font-size:11px;">
+
+
+                <div class="col ">
+                    <div class="d-flex gap-2 justify-content-end mb-1" style="font-size:11px;">
 
                         <!--在庫-->
                         <div class=" bg-light border text-dark px-2 rounded-pill">
@@ -156,24 +152,9 @@
 
                     </div>
 
-                    <!--価格-->
-                    <div class="text-center">
-                        <span class="fs-6">１回</span>
-                        <span class="fs-4 text-danger">¥</span>
-                        <span class="fs-1 text-danger"> {{number_format($gacha->price)}}</span>
-                        <span class="fs-6">(税込)</span>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="col">
-
 
                     <!--ガチャボタン-->
-                    <button class="btn btn-lg btn-info text-white shadow rounded-pill
+                    <button class="btn btn-info text-white shadow rounded-pill
                     w-100
                     d-flex align-items-center justify-content-center gap-2 mx-auto"
                     data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
@@ -183,7 +164,60 @@
                     </button>
 
 
+                    <div class="position-relative h-100 bg-danger">
+
+                        <div class="d-flex justify-content-center
+                        position-absolute top-0 end-0
+                        "
+                        style="transform: scale(.5); "
+                        >
+                            <div class="">
+                                <button class="btn btn-light p-0
+                                border-info border-2 mx-auto
+                                rounded-pill  rotate-hover
+                                d-flex align-items-center justify-content-center
+                                "
+                                style="width: 8rem; height: 8rem;"
+                                data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
+                                type="submit">
+
+                                    <div class="bg-info text-white p-1
+                                    shadow rounded-pill w-100
+                                    border border-white border-2
+                                    d-flex align-items-center justify-content-center gap-2 mx-auto"
+                                    style="line-height:.8rem;"
+                                    >
+                                        <i class="bi bi-arrow-repeat fs-2" ></i>
+                                    </div>
+
+
+                                </button>
+
+
+                                <div class="fs-6 fw-bold text-center">ガチャを回す</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
                 </div>
+
+
+
+                <div class="col-auto">
+                    <!--価格-->
+                    <div class="text-center">
+                        <span style="font-size:11px;">１回</span>
+                        <span style="font-size:11px;">(税込)</span>
+                        <div  style="line-height:18px;">
+                            <span class="fs-4 text-danger">¥</span>
+                            <span class="fs-1 text-danger"> {{number_format($gacha->price)}}</span>
+                        </div>
+                    </div>
+
+                </div>
+
 
 
             </div>

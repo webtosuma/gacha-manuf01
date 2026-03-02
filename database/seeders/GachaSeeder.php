@@ -32,7 +32,12 @@ class GachaSeeder extends Seeder
             {
                 $data['category_id'] = $category->id;
                 $data['key']  = Str::random(16);
-                $data['type'] = AdminGachaController::defaults_type();
+                $data['type']     = config( 'gacha.defaults.type', 'no_custom');
+                $data['is_meter'] = config( 'gacha.defaults.is_meter', 1); //残数メーターの表示有無
+                $data['is_slide'] = config( 'gacha.defaults.is_slide', 1); //スライドの表示有無
+
+                $data['min_time'] = config( 'gacha.defaults.min_time', '00:00'); // 表示時間下限　2024/04/17追加
+                $data['max_time'] = config( 'gacha.defaults.max_time', '24:00'); // 表示時間上限　2024/04/17追加
 
                 # ガチャの登録
                 $gacha = new Gacha($data);

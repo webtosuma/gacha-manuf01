@@ -6,13 +6,9 @@
         <div class="col-12 col-lg-5">
 
 
-            <u-store-item-image
-            ration        ="{{config('app.gacha_card_ratio')}}"
-            image_path    ="{{$gacha->image_path}}"
-            new_label_path=""
-            is_sold_out   =""
-            is_prize      =""
-            ></u-store-item-image>
+            @include('manuf.gacha.common.top_image')
+
+
 
 
             <div class="row g-2 my-3">

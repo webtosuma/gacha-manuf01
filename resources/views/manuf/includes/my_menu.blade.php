@@ -20,7 +20,7 @@
             $icon_class = $menu['icon']." text-info bi fs-3";
             @endphp
             <a href="{{ $menu['route'] }}"
-            class="btn btn-dark text-primary  w-100 fw-bold"
+            class="btn btn-dark text-info  w-100 fw-bold"
             style="border-radius: 2rem  2rem;">
                 <div class="d-flex align-items-center gap-2">
 
@@ -33,7 +33,7 @@
                     </div> --}}
 
                     <div class="d-flex align-items-center justify-content-center
-                    bg-primary rounded-pill"
+                    bg-info rounded-pill"
                     style="width:2.6rem; height:2.6rem;">
                         <i class="{{$icon_class}} text-dark"></i>
                     </div>

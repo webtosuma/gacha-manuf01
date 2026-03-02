@@ -2,12 +2,12 @@
     <div class="position-relative"
     data-bs-toggle="tooltip" data-bs-placement="bottom" :title="gacha_name">
 
-
         <!--image-->
         <div class="overflow-hidden" :class="{'mosaic_image':initial_time}">
             <ratio-image-component
             :url="gacha_image_path"
             :style_class="gacha_ratio+' ratio bg-body'"
+            bg_size="contain"
             ></ratio-image-component>
         </div>
 

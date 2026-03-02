@@ -21,9 +21,9 @@
             </div>
 
             <div class="col  bg- warning">
-                <div class="row align-items-center justify-content-end g-2">
+                <div class="row align-items-center justify-content-end g-0">
 
-                    <div class="col">
+                    <div class="col d-none d-sm-block">
                         <button class="btn btn-sm btn-outline-info rounded-pill border-2 w-100" type="button">
                             <div class="d-flex align-items-center justify-content-start">
                                 <i class="bi bi-search fs-2 " style="line-height:1rem;"></i>
@@ -32,13 +32,10 @@
                         </button>
                     </div>
 
-                    {{-- <div class="col-6 d-none d-lg-block"><!--余白--></div> --}}
-
-
-                    <!-- 検索 -->
-                    {{-- <div class="col">
+                    <!-- 検索 mobile -->
+                    <div class="col-auto d-sm-none">
                         <a href="#"
-                        class="btn text-info rounded-0 w-100
+                        class="btn text-info rounded-0 w-100  px-3
                         d-flex flex-column justify-content- center align-items-center
                         ">
 
@@ -48,16 +45,16 @@
                                 <i class="bi bi-search fs-2 " style="line-height:1rem;"></i>
                             </div>
 
-                            <div class="fw-bold mt-1" style="font-size:10px; line-height:10px;"
-                            >{{ __('検索') }}</div>
-                        </a>
-                    </div>--}}
 
+                            <div class="fw-bold mt-1" style="font-size:10px; line-height:10px;"
+                            >{{ __('検 索') }}</div>
+                        </a>
+                    </div>
 
                     <!-- 発送 -->
                     <div class="col-auto">
                         <a href="#"
-                        class="btn text-info rounded-0 w-100
+                        class="btn text-info rounded-0 w-100  px-3
                         d-flex flex-column justify-content- center align-items-center
                         ">
 
@@ -99,27 +96,24 @@
                     <!-- ログイン前 -->
 
                         <!--会員登録-->
-                        {{-- <div class="col-auto">
+                        <div class="col-auto">
                             <a href="{{ route('login') }}"
-                            class="btn btn-dark text-primary rounded-0 w-100
+                            class="btn btn-dark text-info rounded-0 w-100
                             d-flex flex-column justify-content- center align-items-center
-                            "
-                            type="button"
-                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasHumberge"
-                            aria-controls="offcanvasHumberge">
+                            " >
 
                                 <div class="d-flex align-items-center justify-content-center
-                                bg-primary rounded-pill fs-4"
+                                bg-info rounded-pill fs-4"
                                 style="width:1.4rem; height:1.4rem;">
                                     <i class="bi bi-person-fill text-dark"></i>
                                 </div>
 
                                 <div class="fw-bold mt-1" style="font-size:10px; line-height:10px;">
                                     {{ __('ログイン') }}
-                                    <span class="d-none d-md-inline">/会員登録</span>
+                                    <span class="d-none d-lg-inline">/会員登録</span>
                                 </div>
                             </a>
-                        </div> --}}
+                        </div>
 
 
                         <!--ログイン-->

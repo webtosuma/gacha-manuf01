@@ -13,7 +13,7 @@
                 px-3 py-1 text-success bg-success-subtle
                 border border-success border-1 rounded-pill
                 ">
-                    <spam class="fs-">X月</spam>頃 発送
+                    <span class="fs-">X月</span>頃 発送
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
                     <span style="font-size:11px; line-height:11px;">(税込)</span>
                         <br>
                     <span class="fs-4 text-">¥</span>
-                    <span class="fs-3 text-"> {{(price??100).toLocaleString()}}</span>
+                    <span class="fs-3 text-"> {{(100).toLocaleString()}}</span>
                 </div>
 
             </div>
@@ -91,10 +91,8 @@
         <!-- <div v-else style="height:2rem"></div> -->
 
 
-
     </div>
 </template>
-
 <script>
     export default {
         props: {

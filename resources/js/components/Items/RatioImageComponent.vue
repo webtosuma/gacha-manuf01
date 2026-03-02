@@ -2,7 +2,13 @@
     <div :class="style_class" class="ratio-image-parent-component">
 
         <div v-if="!loading"
-        class="ratio-image-component" :style="'background-image: url('+ url +');'"></div>
+        class="ratio-image-component"
+        :style="
+         'background-image: url('+ url +');'
+         +
+         'background-size:' + (bg_size=='contain'?'contain':'cover') + ';'
+        "
+        ></div>
 
 
         <div v-else
@@ -25,6 +31,8 @@
 
             //クラス
             style_class:{ type: String, default: 'ratio ratio-1x1', },
+
+            bg_size:{ type: String, default: 'cover',},
 
         },
         data() { return{
@@ -49,7 +57,7 @@
     .ratio-image-component
     {
         background-repeat  : no-repeat;
-        background-size    : cover;
+        /* background-size    : cover; */
         background-position: center center;
         width: 100%;
     }

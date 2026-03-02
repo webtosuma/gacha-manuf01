@@ -58,7 +58,7 @@
                     <!--タイトル-->
                     <h6 class="text-truncate text-start fw-bold p-3 pb-0">{{ gacha.name }}</h6>
 
-                    
+
                     <u-manuf-gacha-metter
                     :sm_card="sm_card"
                     :new_label_path="gacha.new_label_path"
