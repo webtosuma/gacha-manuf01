@@ -49,10 +49,130 @@
 
     @include('manuf.gacha.common.css')
 
+    <!-- splide css-->
+    <link href="
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css
+    " rel="stylesheet">
+    <style>
+        #thumbnail-slider .splide__slide.is-active {
+            border: 0px solid #aaa;
+            opacity:.7;
+        }
+    </style>
+
 @endsection
 
 
+@section('script')
+
+    <!-- splide js -->
+    <script src="
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js
+    "></script>
+    <script src="{{ asset('js/splide.js') }}"></script>
+
+    <script>
+        "use strict";
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            /*.メイン */
+            var main = new Splide('#main-slider', {
+
+                type       : 'fade',
+                heightRatio: 1,
+                pagination : false,
+                arrows     : false,
+                cover      : true,
+
+            });
+
+            /* メニュー */
+            var thumbnails = new Splide('#thumbnail-slider', {
+
+                rewind       : true,
+                fixedWidth   : 80,
+                fixedHeight  : 80,
+                isNavigation : true,
+                gap          : 0,//スライダーの間隔
+                focus        : 'center',
+                pagination   : false,
+                cover        : true,
+
+                breakpoints : {//スマホ対応
+                    640: {
+                        fixedWidth  : 66,
+                        fixedHeight : 66,
+                    },
+                },
+
+            });
+
+            main.sync(thumbnails);
+
+            main.mount();
+            thumbnails.mount();
+
+        });
+    </script>
+
+@endsection
+
+
+
 @section('content')
+
+    {{-- <div class="col-4">
+        @php
+        $url = 'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095777/melotabi_mejirushi_1.jpg';
+        @endphp
+
+        <div id="main-slider" class="splide mb-3" style="">
+
+            <div class="splide__track">
+                <ul class="splide__list">
+                    @for ($i = 1; $i < 6; $i++)
+                    <li class="splide__slide">
+
+                        <div class="ratio ratio-1x1 border rounded bg-white"
+                        style="
+                        background: no-repeat center center / contain;
+                        background-image: url({{$url}});
+                        "></div>
+
+                    </li>
+                    @endfor
+                </ul>
+            </div>
+
+        </div>
+
+
+        <!-- サムネイル -->
+        <div id="thumbnail-slider" class="splide">
+
+            <div class="splide__track">
+                <ul class="splide__list">
+
+                    @for ($i = 1; $i < 6; $i++)
+                    <li class="splide__slide">
+
+                        <div class="ratio ratio-1x1 border rounded bg-white"
+                        style="
+                        background: no-repeat center center / contain;
+                        background-image: url({{$url}});
+                        "></div>
+
+                    </li>
+                    @endfor
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div> --}}
+
 
     <!--breadcrumb-->
     <div class="container mt-md-3">

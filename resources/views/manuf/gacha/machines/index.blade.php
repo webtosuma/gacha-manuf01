@@ -49,6 +49,47 @@
 
     @include('manuf.gacha.common.css')
 
+    <!-- splide css-->
+    <link href="
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css
+    " rel="stylesheet">
+
+
+@endsection
+
+
+@section('script')
+
+    <!-- splide js -->
+    <script src="
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js
+    "></script>
+    {{-- <script src="{{ asset('js/splide.js') }}"></script> --}}
+    <script>
+        "use strict";
+        /**
+         * ==========================================
+         *  スライダー(splide)　JS
+         * ==========================================
+        */
+        document.addEventListener( 'DOMContentLoaded', function() {
+
+
+            /* PC */
+            var splidePc = new Splide( '#splide_mobile', {
+
+                type     : 'loop',
+                padding: '50px',
+                focus  : 'center',
+                perPage : 1, //3
+                autoplay: true,
+
+            } );
+            splidePc.mount();
+
+        } ) ;
+
+    </script>
 @endsection
 
 
@@ -66,20 +107,25 @@
     </div>
 
 
+
+
+
+
     <div class="container px-0">
         <div class="col-12 col-lg-10 mx-auto mb-5 mp-5">
 
-            <div class="row mb-5">
+            <div class="row g-1 mb-5">
                 <div class="col-3">
 
                     @include('manuf.gacha.common.top_image')
+
+
 
                 </div>
                 <div class="col">
 
 
-                    <div class="p-3 border-0 border-radius rounded-4
-                    h- mb-3 "
+                    <div class="p-3 border-0 border-radius rounded-4"
                     style="background:rgba(255, 255, 255, 1);">
 
                         <!--discription head-->
@@ -139,30 +185,46 @@
 
 
                 </div>
-            </div>
+                <div class="col-12">
+                    <button type="button"
+                    onclick="history.back()"
+                    class="
+                    btn btn-light border rounded-pill mt-3
+                    ">
+                        <i class="bi bi-chevron-left"></i><!--戻るボタン-->
+                        <span class="" style="font-size:11px;">戻る</span>
 
-
-
-
-            <h5 class="fw-bold
-            border-start border-info border-5 ps-1 fs-4
-            " >ガチャマシンを選ぶ</h5>
-
-            <div class="
-            position-relative
-            bg-body text- border rounded form-text
-            px-3 py-2 my-3">
-                <p class="m-0">
-                    XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
-                </p>
-                <div class="
-                position-absolute top-0 translate-middle
-                " style="left:2rem;">
-                    <div class="bg-body border-end border-bottom"
-                    style="width:.8rem; height:.8rem; z-index:1; transform:rotate(225deg);"
-                    ></div>
+                    </button>
                 </div>
             </div>
+
+
+
+
+            <div class="p-3">
+
+                <h5 class="fw-bold ps-1
+                border-start border-info border-5 fs-4
+                " >ガチャマシンを選ぶ</h5>
+
+                <div class="
+                position-relative
+                bg-body text- border rounded form-text
+                px-3 py-2 my-3">
+                    <p class="m-0">
+                        XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX XXXXXXXX
+                    </p>
+                    <div class="
+                    position-absolute top-0 translate-middle
+                    " style="left:2rem;">
+                        <div class="bg-body border-end border-bottom"
+                        style="width:.8rem; height:.8rem; z-index:1; transform:rotate(225deg);"
+                        ></div>
+                    </div>
+                </div>
+
+            </div>
+
 
             @php $examples= [
                 'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095777/melotabi_mejirushi_1.jpg',
@@ -170,132 +232,270 @@
                 'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095791/melotabi_mejirushi_3.jpg',
             ]; @endphp
 
-            <div class="row g-2 gy-0">
-                @for ($i = 1; $i < 6; $i++)
-                <div class="col-6 col-lg-3">
+
+            <div id="splide_mobile"  class="splide d-md-none w-100" aria-label="Splideの基本的なHTML">
+
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        @for ($i = 1; $i < 6; $i++)
+                            <li class="splide__slide px-2">
 
 
-                    <div
-                    class="p-0 w-100 text-start border-0
-                    rounded-4 overflow-hidden"
-                    >
-                        <!--head-->
-                        <div class="fw-bold mt-3 px-3 text-center fs-6">ガチャマシン09{{$i}}</div>
+                                <div class="
+                                bg-white p-3
+                                w-100 text-start border shadow-sm
+                                rounded-4 overflow-hidden "
+                                >
+                                    <!--head-->
+                                    <div class="fw-bold text-center text-info fs-6">ガチャマシン09{{$i}}</div>
 
-                        <div class="ratio ratio-6x1 px- m-0 fs-6 fw-bold"
-                        style="
-                            background: no-repeat bottom center / contain;
-                            background-image:url( {{$gacha->img_path_card_head}} );
-                        " ></div>
-
-
-                        <!--body-->
-                        <div class="col-12">
-                            <div class="bg-white border mx-2">
-                                @include('manuf.gacha.common.top_image')
-                            </div>
-                        </div>
+                                    <div class="ratio ratio-6x1 px- m-0 fs-6 fw-bold"
+                                    style="
+                                        background: no-repeat bottom center / contain;
+                                        background-image:url( {{$gacha->img_path_card_head}} );
+                                    " ></div>
 
 
-
-
-                        <!--btn-->
-                        <div class="px-3 ratio ratio-1x1"
-                        style="
-                            background:no-repeat top center / cover rgba(255, 255, 255, 1);
-                            background-image: url( {{$gacha->img_path_card_body}} );
-                        " >
-                            <div class="row g-1 px-3 pt-2 text-center " style="font-size:14px;">
-
-                                <!--在庫-->
-                                <div class="col">
-                                    <div class=" bg-dark border text-white px-2 rounded w-100 ">
-                                        <span class="">残り</span>
-                                        {{number_format($gacha->remaining_count)}}
+                                    <!--body-->
+                                    <div class="col-12">
+                                        <div class="bg-white border mx-2">
+                                            @include('manuf.gacha.common.top_image')
+                                        </div>
                                     </div>
-                                </div>
-
-                                <!--待機中-->
-                                <div class="col">
-                                    <div class=" bg-warning px-2 rounded w-100 ">
-                                        <span class="">待機中</span>
-                                        {{number_format($gacha->waiting_count)}}
-                                    </div>
-                                </div>
-
-                                <!--gachaCustomModal-->
-                                <div class="col-12">
-                                    <button class="text-center text-info bg-white border border-info fw-bold py-2
-                                    border-3 rounded-pill shadow w-100
-                                    hover_anime "
-                                    data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
-                                    type="button"
-                                    >このガチャを回す</button>
-                                </div>
-
-                                <div class="col-12 text-end">
-                                    <div class="d-flex justify-content-end">
-                                        <a
-                                        data-bs-toggle="offcanvas" href="#oc_prizes{{$i}}" role="button" aria-controls="oc_prizes{{$i}}"
-                                        class="
-                                        btn btn-sm btn-info text-white py-0
-                                        border border-3 border-white rounded-pill shadow fw-bold
-                                        d-flex align-items-center justify-content-center flex-column
-                                        " style="width:2.8rem; height:2.8rem; font-size:12px; line-height:14px;">
-                                            詳細
-                                            {{-- を<br>見る --}}
-                                            {{-- <i class="bi bi-arrow-right fs-4"></i> --}}
-                                        </a>
-
-                                    </div>
-                                </div>
 
 
-                            </div>
 
-                            {{-- <div class="mt-3">
-                                <div class="d-flex justify-content-center mb-4">
-                                    <div class="ratio ratio-1x1 " style="width:40%;">
-                                        <div class="btn btn-light p-0
-                                        border-info border-4 mx-auto
-                                        rounded-pill  rotate-hover
-                                        d-flex align-items-center justify-content-center
-                                        w-100 h-100
-                                        "
-                                        data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
-                                        type="submit">
 
-                                            <div class="bg-info text-white p-1
-                                            shadow rounded-pill w-100
-                                            border border-white border-2
-                                            d-flex align-items-center justify-content-center gap-2 mx-auto"
-                                            style="height:20%;"
-                                            >
-                                                <i class="bi bi-arrow-repeat fs-4" style="line-height:.8rem;"></i>
+                                    <!--btn-->
+                                    <div class="px-3 ratio ratio-1x1"
+                                    style="
+                                        background:no-repeat top center / cover rgba(255, 255, 255, 1);
+                                        background-image: url( {{$gacha->img_path_card_body}} );
+                                    " >
+                                        <div class="row g-1 px- pt-2 text-center " style="font-size:14px;">
+
+                                            <!--在庫-->
+                                            <div class="col col-md">
+                                                <div class=" bg-dark border text-white px-2 rounded w-100 ">
+                                                    <span class="">残り</span>
+                                                    {{number_format($gacha->remaining_count)}}
+                                                </div>
+                                            </div>
+
+                                            <!--待機中-->
+                                            <div class="col col-md">
+                                                <div class=" bg-warning px-2 rounded w-100 ">
+                                                    <span class="">待機中</span>
+                                                    {{number_format($gacha->waiting_count)}}
+                                                </div>
+                                            </div>
+
+                                            <!--gachaCustomModal-->
+                                            <div class="col-12">
+                                                <button class="text-center text-info bg-white border border-info fw-bold py-2
+                                                border-3 rounded-pill shadow w-100
+                                                hover_anime "
+                                                data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
+                                                type="button"
+                                                >ガチャを回す</button>
+                                            </div>
+
+                                            <div class="col-12 text-end">
+                                                <div class="d-flex justify-content-end">
+                                                    <a
+                                                    data-bs-toggle="offcanvas" href="#oc_prizes{{$i}}" role="button" aria-controls="oc_prizes{{$i}}"
+                                                    class="
+                                                    btn btn-sm btn-info text-white py-0
+                                                    border border-3 border-white rounded-pill shadow fw-bold
+                                                    d-flex align-items-center justify-content-center flex-column
+                                                    " style="width:3.6rem; height:3.6rem; font-size:11px; line-height:8px;">
+                                                        <i class="bi bi-info-lg fs-3"></i><br>
+                                                        詳細
+                                                        {{-- を<br>見る --}}
+                                                        {{-- <i class="bi bi-arrow-right fs-4"></i> --}}
+                                                    </a>
+
+                                                </div>
                                             </div>
 
 
                                         </div>
+
+                                        {{-- <div class="mt-3">
+                                            <div class="d-flex justify-content-center mb-4">
+                                                <div class="ratio ratio-1x1 " style="width:40%;">
+                                                    <div class="btn btn-light p-0
+                                                    border-info border-4 mx-auto
+                                                    rounded-pill  rotate-hover
+                                                    d-flex align-items-center justify-content-center
+                                                    w-100 h-100
+                                                    "
+                                                    data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
+                                                    type="submit">
+
+                                                        <div class="bg-info text-white p-1
+                                                        shadow rounded-pill w-100
+                                                        border border-white border-2
+                                                        d-flex align-items-center justify-content-center gap-2 mx-auto"
+                                                        style="height:20%;"
+                                                        >
+                                                            <i class="bi bi-arrow-repeat fs-4" style="line-height:.8rem;"></i>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+
+
                                     </div>
+
+
                                 </div>
-                            </div> --}}
+
+
+
+                            </li>
+                        @endfor
+                    </ul>
+                </div>
+
+            </div>
+
+
+
+            <div class="d-none d-md-block">
+                <div class="row g-4 ">
+                    @for ($i = 1; $i < 6; $i++)
+                    <div class="col-12 col-sm-6 col-lg-4">
+
+
+                        <div
+                        class="
+                        bg-white p-3
+                        w-100 text-start border shadow-sm
+                        rounded-4 overflow-hidden "
+                        >
+                            <!--head-->
+                            <div class="fw-bold text-center text-info fs-6">ガチャマシン09{{$i}}</div>
+
+                            <div class="ratio ratio-6x1 px- m-0 fs-6 fw-bold"
+                            style="
+                                background: no-repeat bottom center / contain;
+                                background-image:url( {{$gacha->img_path_card_head}} );
+                            " ></div>
+
+
+                            <!--body-->
+                            <div class="col-12">
+                                <div class="bg-white border mx-2">
+                                    @include('manuf.gacha.common.top_image')
+                                </div>
+                            </div>
+
+
+
+
+                            <!--btn-->
+                            <div class="px-3 ratio ratio-1x1"
+                            style="
+                                background:no-repeat top center / cover rgba(255, 255, 255, 1);
+                                background-image: url( {{$gacha->img_path_card_body}} );
+                            " >
+                                <div class="row g-1 px- pt-2 text-center " style="font-size:14px;">
+
+                                    <!--在庫-->
+                                    <div class="col col-md">
+                                        <div class=" bg-dark border text-white px-2 rounded w-100 ">
+                                            <span class="">残り</span>
+                                            {{number_format($gacha->remaining_count)}}
+                                        </div>
+                                    </div>
+
+                                    <!--待機中-->
+                                    <div class="col col-md">
+                                        <div class=" bg-warning px-2 rounded w-100 ">
+                                            <span class="">待機中</span>
+                                            {{number_format($gacha->waiting_count)}}
+                                        </div>
+                                    </div>
+
+                                    <!--gachaCustomModal-->
+                                    <div class="col-12">
+                                        <button class="text-center text-info bg-white border border-info fw-bold py-2
+                                        border-3 rounded-pill shadow w-100
+                                        hover_anime "
+                                        data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
+                                        type="button"
+                                        >ガチャを回す</button>
+                                    </div>
+
+                                    <div class="col-12 text-end">
+                                        <div class="d-flex justify-content-end">
+                                            <a
+                                            data-bs-toggle="offcanvas" href="#oc_prizes{{$i}}" role="button" aria-controls="oc_prizes{{$i}}"
+                                            class="
+                                            btn btn-sm btn-info text-white py-0
+                                            border border-3 border-white rounded-pill shadow fw-bold
+                                            d-flex align-items-center justify-content-center flex-column
+                                            " style="width:3.6rem; height:3.6rem; font-size:11px; line-height:8px;">
+                                                <i class="bi bi-info-lg fs-3"></i><br>
+                                                詳細
+                                                {{-- を<br>見る --}}
+                                                {{-- <i class="bi bi-arrow-right fs-4"></i> --}}
+                                            </a>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                {{-- <div class="mt-3">
+                                    <div class="d-flex justify-content-center mb-4">
+                                        <div class="ratio ratio-1x1 " style="width:40%;">
+                                            <div class="btn btn-light p-0
+                                            border-info border-4 mx-auto
+                                            rounded-pill  rotate-hover
+                                            d-flex align-items-center justify-content-center
+                                            w-100 h-100
+                                            "
+                                            data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
+                                            type="submit">
+
+                                                <div class="bg-info text-white p-1
+                                                shadow rounded-pill w-100
+                                                border border-white border-2
+                                                d-flex align-items-center justify-content-center gap-2 mx-auto"
+                                                style="height:20%;"
+                                                >
+                                                    <i class="bi bi-arrow-repeat fs-4" style="line-height:.8rem;"></i>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+
+                            </div>
 
 
                         </div>
 
 
+
                     </div>
-
-
-
+                    @endfor
                 </div>
-                @endfor
             </div>
 
-
+            <!--offcanvace-->
             @for ($i = 1; $i < 6; $i++)
 
-                <div class="offcanvas offcanvas-start"
+                <div class="offcanvas offcanvas-start  "
                 tabindex="-1" id="oc_prizes{{$i}}" aria-labelledby="oc_prizes{{$i}}Label"
                 style="max-width:90vw;"
                 >

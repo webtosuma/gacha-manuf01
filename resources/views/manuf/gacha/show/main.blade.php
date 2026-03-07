@@ -6,29 +6,67 @@
         <div class="col-12 col-lg-5">
 
 
-            @include('manuf.gacha.common.top_image')
+            <div class="mb-4">
 
-
-
-
-            <div class="row g-2 my-3">
-                @php $examples= [
+                @php
+                $examples= [
                     $gacha->image_path,
                     'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095777/melotabi_mejirushi_1.jpg',
                     'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095784/melotabi_mejirushi_2.jpg',
                     'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095791/melotabi_mejirushi_3.jpg',
                     'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095807/melotabi_mejirushi_4.jpg',
                     'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095814/melotabi_mejirushi_5.jpg',
-                ]; @endphp
-                @foreach ( $examples as $url)
-                    <div class="col-2">
-                        <div class="ratio ratio-1x1 border rounded bg-white"
-                        style="
-                         background: no-repeat center center / contain;
-                         background-image: url({{$url}});
-                        " ></div>
+                ];
+                @endphp
+
+
+                <!-- メイン -->
+                <div id="main-slider" class="splide mb-3">
+
+                    <div class="splide__track">
+                        <ul class="splide__list">
+
+                            @foreach ($examples as $url)
+                            <li class="splide__slide">
+
+                                <div class="ratio ratio-1x1 border rounded bg-white"
+                                style="
+                                background: no-repeat center center / contain;
+                                background-image: url({{ $url }});
+                                "></div>
+
+                            </li>
+                            @endforeach
+
+                        </ul>
                     </div>
-                @endforeach
+
+                </div>
+
+
+                <!-- サムネ -->
+                <div id="thumbnail-slider" class="splide">
+
+                    <div class="splide__track">
+                        <ul class="splide__list">
+
+                            @foreach ($examples as $url)
+                            <li class="splide__slide">
+
+                                <div class="ratio ratio-1x1 border rounded bg-white"
+                                style="
+                                background: no-repeat center center / contain;
+                                background-image: url({{ $url }});
+                                "></div>
+
+                            </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+
+                </div>
+
             </div>
 
 
