@@ -204,20 +204,6 @@ class StripeController extends Controller
                 ]);
             }
 
-
-
-            // dd(
-            //     [
-            //         '商品の合計点数'    => $store_history->sumItemsCount(),
-            //         '商品の還元ポイント' => $store_history->sumItemsPointsRedemption(),
-            //         '利用ポイント'      => $store_history->use_point,
-            //         '発送料金'         => $store_history->shipped_price,
-            //         '商品の[小計]'      => $store_history->sumItemsPrice(),
-            //         '商品の[請求金額]'  => $store_history->totalItemsPrice(),
-            //         '購入商品'=> $store_history->store_keeps->toArray(),
-            //     ]
-            // );
-
             return $store_history;
         }
 

@@ -32,7 +32,6 @@
             </div>
 
 
-
             <div class="d-lg-none">
                 <!--タイトル・説明-->
                 @include('manuf.gacha.show.title_discription')
@@ -50,7 +49,7 @@
                 ]; @endphp
                 <table class="table border text-dark m-0 rounded overflow-hidden" style="font-size:12px">
                     <tbody>
-                        @foreach ($examples as $url)
+                        @foreach ($examples as $key => $url)
                         <tr>
                             <th class="" style="width:4rem;">
                                 <div class="ratio ratio-1x1 border rounded bg-white"
@@ -63,9 +62,22 @@
                                 <div class="fw-bold">商品名syouhinmei</div>
                                 xxxxxx
                             </td>
-                            <td style="width:5rem;">
+                            {{-- <td style="width:5rem;">
                                 <div class="text-center" style="font-size:11px;">当選率</div>
                                 <div class="fs-4 text-end">25.0%</div>
+                            </td> --}}
+                            <td style="width:3rem;">
+                                <u-prize-discription
+                                id         ="{{$key}}"
+                                name       ="商品名syouhinmei"
+                                image_path ="{{$url}}"
+                                discription="xxxx xxxx xxxx xxxx"
+                                size       ="2.4rem"
+                                src_icon   ="{{asset('storage/site/image/prize_discription.png')}}"
+                                no_btn     =""
+                                bg_dark    =""
+                                ></u-prize-discription>
+
                             </td>
                         </tr>
                         @endforeach
@@ -74,8 +86,9 @@
             </div>
 
 
+
             <!--discription table-->
-            <div id="discription-table" class="border rounded oberflow-hidden mb-3">
+            {{-- <div id="discription-table" class="border rounded oberflow-hidden mb-3">
 
                 <table class="table border text-dark m-0 rounded overflow-hidden" style="font-size:12px">
                     <tbody>
@@ -114,9 +127,11 @@
 
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
 
 
+
+            <!--紹介画像-->
             <div class="row g-0 my-3">
                 @php $examples= [
                     'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/PRE_4570118183972/melotabi_mejirushi_page2_900.jpg',
@@ -132,6 +147,7 @@
                     </div>
                 @endforeach
             </div>
+
         </div>
 
 

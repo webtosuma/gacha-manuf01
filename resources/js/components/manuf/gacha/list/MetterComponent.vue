@@ -2,54 +2,6 @@
     <div class="position-relative card-body py-0 pb- px-2 px-md-3" :class="bg_color">
 
 
-        <!--在庫・価格-->
-        <div id="discription-price"
-        class="row justify-content-between">
-
-
-
-            <div class="col-auto text-start fw-bold mb-1" style="font-size:11px; line-height:14px;">
-                <div class="
-                px-3 py-1 text-success bg-success-subtle
-                border border-success border-1 rounded-pill
-                ">
-                    <span class="fs-">X月</span>頃 発送
-                </div>
-            </div>
-
-
-
-            <div class="col-auto">
-
-                <!-- <div class="d-flex gap-3 justify-content-center" style="font-size:11px;">
-                    <div class=" bg-light border text-dark px-2 rounded-pill">
-                        <span class="">残り</span>
-                        {{remaining_count.toLocaleString()}}
-                    </div>
-
-                    <div class=" bg-warning px-2 rounded-pill">
-                        <span class="">待機中</span>
-                        {{(waiting_count??0).toLocaleString()}}
-                    </div>
-                </div> -->
-
-
-                <!--価格-->
-                <div class="text-center fw-bold"  style="line-height:18px;">
-                    <span style="font-size:11px;">１回</span>
-                    <span style="font-size:11px; line-height:11px;">(税込)</span>
-                        <br>
-                    <span class="fs-4 text-">¥</span>
-                    <span class="fs-3 text-"> {{(100).toLocaleString()}}</span>
-                </div>
-
-            </div>
-
-
-
-        </div>
-
-
         <!-- 通常メーター -->
         <div v-if="gacha_type!='only_new_user' && is_meter!=0"
         class="position-relative text-center">
@@ -57,7 +9,7 @@
 
 
             <!-- メーター -->
-            <div class="progress rounded-pill bg- " :style="merter_height" >
+            <div class="progress rounded-pill bg-secondary border border-3 " :style="merter_height" >
                 <div :class=" progress_style_class" role="progressbar"
                 :style="'width:'+remaining_ratio+'%'"
                 :aria-valuenow="remaining_ratio" aria-valuemin="0"

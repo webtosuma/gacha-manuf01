@@ -39,26 +39,8 @@
             background-image: url({{ $bg_image }});
         }
     </style>
-    <style>
 
-        /* タブメニュー */
-        /* .nav-link{
-            color: rgb(33,37,41);
-            font-size: 1.25rem
-        }
-        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-            color: #fff;
-            background-color:rgb(33,37,41) !important;
-        } */
-
-        /* ガチャのホバーアニメーション */
-        .hover_anime:hover{
-            position: relative;
-            transform: scale(.97) translateY(0rem);
-            opacity: .7;
-            transition: all .2s;
-        }
-    </style>
+    @include('manuf.gacha.common.css')
 
 
     <!-- rainbow-css-->

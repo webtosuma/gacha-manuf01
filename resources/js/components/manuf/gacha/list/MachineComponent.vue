@@ -52,36 +52,69 @@
                 </div>
             </div>
 
-            <div class="rounded-under"
+            <div class="rounded-under ratio ratio-4x3"
             :style="`background-image:url(`+gacha.img_path_card_body+`);`"
             style="background: no-repeat top center / cover rgba(255, 255, 255, 1);"
-            ><div style="background:rgb(255, 255, 255, .8); " class="rounded-under">
+            ><div style="background:rgb(255, 255, 255, .7); " class="rounded-under">
                 <!--metter & price-->
                 <a :href="gacha.route"  :class="href_class">
                     <div class="position-relative">
 
-                        <!--タイトル-->
-                        <h6 class="text-truncate text-start fw-bold p-3 pb-0">{{ gacha.name }}</h6>
 
-                        <u-manuf-gacha-metter
-                        :sm_card="sm_card"
-                        :new_label_path="gacha.new_label_path"
-                        :img_path_point="gacha.img_path_point"
-                        :bg_color="'text- bg-rainbow-index'"
-                        :gacha_type="gacha.type"
-                        :sponsor_ad="gacha.sponsor_ad"
-                        :gacha_play_point="gacha.one_play_point"
-                        :is_meter       ="gacha.is_meter"
-                        :remaining_ratio="gacha.remaining_ratio"
-                        :remaining_count="gacha.remaining_count"
-                        :max_count      ="gacha.max_count"
-                        :type_n_remaining_count_label="gacha.type_n_remaining_count_label"
-                        />
+
+                        <!--タイトル-->
+                        <h6 class="text-truncate d-lg- none text-start fw-bold px-2 pt-3 pb-"
+                        >{{ gacha.name }}</h6>
+                        <!-- <h5 class="text-truncate d-none d-lg-block text-start fw-bold px-2 pt-3 pb-"
+                        >{{ gacha.name }}</h5> -->
+
+
+                        <!--価格-->
+                        <!-- <div class="text-start fw-bold px-2"  style="font-size:11px;">
+                            <span>１回/</span>
+                            <span>税込</span>
+                            <span class="fs-5 text-">¥</span>
+                            <span class="fs-5 text-"> {{(100).toLocaleString()}}</span>
+                        </div> -->
+
+
+
+                        <div class="mx-auto" style="max-width:14rem;">
+                            <div class="p-2 py-1 mx-2 my-2 fw-bold
+                            bg-success-subtle text-success rounded-pill
+                            border border-success border-3
+                            " style="font-size:14px;">
+                                <span class="fs-">XX月</span>頃 発送予定
+                            </div>
+                        </div>
+
+                        <!-- メーター -->
+                        <!-- <div class="px-4 col-lg-8 mx-auto">
+                            <u-manuf-gacha-metter
+                            :sm_card="sm_card"
+                            :new_label_path="gacha.new_label_path"
+                            :img_path_point="gacha.img_path_point"
+                            :bg_color="'text- bg-rainbow-index'"
+                            :gacha_type="gacha.type"
+                            :sponsor_ad="gacha.sponsor_ad"
+                            :gacha_play_point="gacha.one_play_point"
+                            :is_meter       ="gacha.is_meter"
+                            :remaining_ratio="gacha.remaining_ratio"
+                            :remaining_count="gacha.remaining_count"
+                            :max_count      ="gacha.max_count"
+                            :type_n_remaining_count_label="gacha.type_n_remaining_count_label"
+                            />
+                        </div> -->
+
 
                         <!-- カウントダウンがあるとき -->
                         <div v-if="gacha.i_time"
                         class="position-absolute top-0 start-0 w-100 h-100 bg-dark"
                         style="z-index:1;" ></div>
+
+
+
+
 
                     </div>
                 </a>

@@ -1,6 +1,6 @@
 <div class="p-3 border-0 border-radius rounded-4
 h- mb-3 "
-style="background:rgba(255, 255, 255, .7);">
+style="background:rgba(255, 255, 255, 1);">
 
     <!--discription head-->
     <div id="discription-head" class="mb-3">
@@ -20,20 +20,13 @@ style="background:rgba(255, 255, 255, .7);">
             style="font-size:11px;"
             >{{$gacha->category->name}}</a>
 
-            <!--ブランド名-->
-            {{-- @if( $gacha->brand_name )
-                <div class="">
-                    <a  href="{{route('manuf.search',[ 'keyword'=>$gacha->brand_name ])}}"
-                    >{{$gacha->brand_name}}</a>
-                </div>
-            @endif --}}
 
         </div>
 
 
         <!--商品名-->
-        <div class="mb-2">
-            <h5 class="fs-4 mb-0">{{$gacha->name}}</h5>
+        <div class="">
+            <h5 class="fs-5 fw-bold mb-0">{{$gacha->name}}</h5>
         </div>
 
 
@@ -43,7 +36,7 @@ style="background:rgba(255, 255, 255, .7);">
 
     <!--discription resume_text-->
     @if($gacha->resume_text)
-        <p id="discription-resume_text" class="border-top  py-3 my-3">
+        <p id="discription-resume_text" class="border-top  py-3 mt-3 mb-0 form-text">
 
             {!! str_replace(["\r\n","\r","\n"],"<br>", e( $gacha->resume_text ) )!!}<br>
 
@@ -51,12 +44,74 @@ style="background:rgba(255, 255, 255, .7);">
     @endif
 
 
+    <div class="d-flex justify-content-end">
+        <div class="text-center">
+            <span style="font-size:16px;">１回/</span>
+            <span style="font-size:16px;">税込</span>
+            <div class="d-inline-block" style="line-height:18px;">
+                <span class="fs-3 text-danger">¥</span>
+                <span class="fs-1 text-danger"> {{number_format($gacha->price)}}</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- price btn metter -->
+    <div class="py-3 d-none d-lg-block">
+        @include('manuf.gacha.show.price_metter')
+    </div>
+
+
+
+    <div id="discription-table" class="border- rounded oberflow-hidden mb-3">
+        <table class="table border-white text-dark m-0 rounded overflow-hidden" style="font-size:12px">
+            <tbody>
+                <tr>
+                    <th class="bg-body text- p-" style="width:7rem;">お届け時期</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">販売終了</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">セット内容</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">商品サイズ</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">商品素材</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">種類数</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">対手年齢</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">コピーライト</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
 
 </div>
 
 
 <!--在庫・価格-->
-<div class="overflow-hidden w-100">
+{{-- <div class="overflow-hidden w-100">
     <div id="discription-price"
     class="row align-items-center justify-content-center flex-column g-3  mb-5"
     style="transform: scale(1.2);"
@@ -126,17 +181,17 @@ style="background:rgba(255, 255, 255, .7);">
             </div>
 
 
-            {{-- <button class="btn btn-lg btn-info text-white shadow rounded-pill
+            <button class="btn btn-lg btn-info text-white shadow rounded-pill
             d-flex align-items-center justify-content-center gap-2 mx-auto"
             data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
             type="submit">
                 <i class="bi bi-arrow-repeat fs-3" style="line-height:.8rem;"></i>
                 ガチャを回す
-            </button> --}}
+            </button>
 
 
         </div>
 
 
     </div>
-</div>
+</div> --}}

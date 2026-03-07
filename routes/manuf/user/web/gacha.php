@@ -35,10 +35,10 @@ use App\Http\Controllers\Manuf;
         [Manuf\ManufGachaController::class, 'show'])
         ->name('gacha');
 
-        // # ガチャの詳細表示
-        // Route::get('/g/{category_code}/{gacha}/{key}',
-        // [App\Http\Controllers\GachaController::class, 'show'])
-        // ->name('gacha');
+        # ガチャの詳細表示
+        Route::get('/m/{category_code}/{gacha}/{key}/machines',
+        [Manuf\ManufGachaController::class, 'machines'])
+        ->name('gacha.machines');
 
 
 

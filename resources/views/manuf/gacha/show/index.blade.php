@@ -14,33 +14,41 @@
 
 
 @section('style')
-<style>
-    /* main{ padding-top: 0rem; } */
 
-    /* サイトデフォルト背景 */
-    #bgWindow{
-        background-image: url({{ $bg_image }});
-    }
+    <style>
+        /* main{ padding-top: 0rem; } */
 
-
-    /* ホバーすると回転する */
-    .rotate-hover:hover
-    /* ,
-    .rotate-hover:focus */
-    {
-        animation: rotate .4s linear infinite;
-    }
-
-
-    @keyframes rotate {
-        from {
-            transform: scale(1.1) rotate(0deg) ;
+        /* サイトデフォルト背景 */
+        #bgWindow{
+            background-image: url({{ $bg_image }});
         }
-        to {
-            transform: scale(1.1) rotate(360deg) ;
+
+
+        /* ホバーすると回転する */
+        .rotate-hover:hover
+        /* ,
+        .rotate-hover:focus */
+        {
+            animation: rotate .4s linear infinite;
         }
-    }
-</style>
+
+        .rotate-hover
+        {
+            transform: rotate(-35deg) ;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: scale(1.1) rotate(-35deg) ;
+            }
+            to {
+                transform: scale(1.1) rotate(325deg) ;
+            }
+        }
+    </style>
+
+    @include('manuf.gacha.common.css')
+
 @endsection
 
 
@@ -62,8 +70,6 @@
         @include('manuf.gacha.show.main')
 
     </div>
-
-
     <div class="container px-0">
         <div class="row justify-content-center g-3 mx-0">
             <div class="col-12 col-lg-10 ">
@@ -103,6 +109,8 @@
                 </div>
 
 
+
+
             </div>
         </div>
     </div>
@@ -113,114 +121,13 @@
 
     <!--ボトムメニュー-->
     <div class="position-fixed bottom-0 end-0
-    w-100 pt-1 pb-3 text- border-top d-lg-none "
+    w-100 pt-1 pb-1 text- border-top d-lg-none "
     style="z-index:50; background:rgb(255, 255, 255, .8);">
         <div class="container mx-auto" style="max-width:600px;">
 
 
-            <!--在庫・価格-->
-            <div id="discription-price"
-            class="row align-items-center justify-content-center  g-3">
+            @include('manuf.gacha.show.price_metter')
 
-                <div class="col-auto ">
-                    <button type="button"
-                    onclick="history.back()"
-                    style="width:2.2rem; height:2.2rem;"
-                    class="btn btn-outline-secondary border-0 rounded-pill fs-5
-                    d-flex align-items-center justify-content-center
-                    "><i class="bi bi-chevron-left"></i><!--戻るボタン--></button>
-
-                    <div class="text-secondary text-center fw-bold" style="font-size:11px;">戻る</div>
-                </div>
-
-
-
-                <div class="col ">
-                    <div class="d-flex gap-2 justify-content-end mb-1" style="font-size:11px;">
-
-                        <!--在庫-->
-                        <div class=" bg-light border text-dark px-2 rounded-pill">
-                            <span class="">残り</span>
-                            {{number_format($gacha->remaining_count)}}
-                        </div>
-
-                        <!--待機中-->
-                        <div class=" bg-warning px-2 rounded-pill">
-                            <span class="">待機中</span>
-                            {{number_format($gacha->waiting_count)}}
-                        </div>
-
-                    </div>
-
-
-                    <!--ガチャボタン-->
-                    <button class="btn btn-info text-white shadow rounded-pill
-                    w-100
-                    d-flex align-items-center justify-content-center gap-2 mx-auto"
-                    data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
-                    type="submit">
-                        <i class="bi bi-arrow-repeat fs-3" style="line-height:.8rem;"></i>
-                        ガチャを回す
-                    </button>
-
-
-                    <div class="position-relative h-100 bg-danger">
-
-                        <div class="d-flex justify-content-center
-                        position-absolute top-0 end-0
-                        "
-                        style="transform: scale(.5); "
-                        >
-                            <div class="">
-                                <button class="btn btn-light p-0
-                                border-info border-2 mx-auto
-                                rounded-pill  rotate-hover
-                                d-flex align-items-center justify-content-center
-                                "
-                                style="width: 8rem; height: 8rem;"
-                                data-bs-toggle="modal" data-bs-target="#gachaCustomModal{{$gacha->id}}"
-                                type="submit">
-
-                                    <div class="bg-info text-white p-1
-                                    shadow rounded-pill w-100
-                                    border border-white border-2
-                                    d-flex align-items-center justify-content-center gap-2 mx-auto"
-                                    style="line-height:.8rem;"
-                                    >
-                                        <i class="bi bi-arrow-repeat fs-2" ></i>
-                                    </div>
-
-
-                                </button>
-
-
-                                <div class="fs-6 fw-bold text-center">ガチャを回す</div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-
-                <div class="col-auto">
-                    <!--価格-->
-                    <div class="text-center">
-                        <span style="font-size:11px;">１回</span>
-                        <span style="font-size:11px;">(税込)</span>
-                        <div  style="line-height:18px;">
-                            <span class="fs-4 text-danger">¥</span>
-                            <span class="fs-1 text-danger"> {{number_format($gacha->price)}}</span>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-            </div>
 
         </div>
     </div>

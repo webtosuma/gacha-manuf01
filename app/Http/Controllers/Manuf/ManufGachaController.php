@@ -102,7 +102,6 @@ class ManufGachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
-
         # キーのチェック
         if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
 
@@ -136,5 +135,33 @@ class ManufGachaController extends Controller
     }
 
 
+    /**
+     * ガチャタイトルのマシーン一覧
+     * @param String $category_code      //カテゴリーコード名
+     * @param  \App\Models\Gacha  $gacha
+     * @param String $key                //ガチャモデル・キー
+     * @return \Illuminate\Http\Response
+     */
+    public function machines( $category_code, Gacha $gacha, $key)
+    {
+        # キーのチェック
+        if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
+
+        # 追加情報
+        $gacha->price = 500;      //価格(税込)
+        $gacha->waiting_count = 3;//購入待機数
+        $gacha->resume = "テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト ";
+
+        # 背景画像
+        $category = $gacha->category;
+        $bg_image = $category && $category->bg_image_path
+        ? $category->bg_image_path : AdminBackGroundController::getBgTop();
+
+
+
+        return view('manuf.gacha.machines.index', compact(
+            'gacha','bg_image'
+        ));
+    }
 
 }
