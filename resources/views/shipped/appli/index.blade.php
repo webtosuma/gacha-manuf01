@@ -38,6 +38,7 @@
             r_find="{{ route('api.user_prize.find') }}"
 
             use_size="{{config('app.address_use_size')}}"
+            default_email="{{Auth::user()->email}}"
             ></u-shipped-form>
 
 

@@ -1,51 +1,59 @@
 <ul class="list-group bg-white">
-        <li class="list-group-item p-3">
-        <h5>お届け先住所</h5>
+    <li class="list-group-item p-3">
+
+        <div class="d-flex justify-content-between ">
+
+            <h5>お届け先</h5>
+
+            @if(
+                Auth::user()->id === $user_address->user_id
+                && isset($user_shipped)
+                && $user_shipped->state_id==11//未発送
+            )
+                <a href="{{ route('settings.user_address.edit',$user_address ) }}"
+                class="">お届け先住所の変更</a>
+            @endif
+
+        </div>
+
+
         <input type="hidden" name="user_address_id" value="{{ $user_address->id }}">
-        <div class="fw-bold">
-            {{ $user_address->name }} 様
-        </div>
-        <div class="fw-bold">
-            <span>{{ '〒'.$user_address->postal_code }}</span>
-            <span>{{ $user_address->todohuken }}</span>
-            <span>{{ $user_address->shikuchoson }}</span>
-            <span>{{ $user_address->number }}</span>
-        </div>
-        <h5 class="fs-6 fw-bold mt-3">ご連絡先電話番号</h5>
-        <div class="">{{ $user_address->tell }}</div>
 
-        @if( $user_address->email )
-            <h5 class="fs-6 fw-bold mt-3">ご連絡先メールアドレス</h5>
-            <div class="">{{ $user_address->email }}</div>
-        @endif
-        @if($user_address->size)
-            <h5 class="fs-6 fw-bold mb-0 mt-3">希望の靴サイズ</h5>
-            <div class="">
-                <span class="fs-4">{{ $user_address->size }}</span>
-            </div>
-        @endif
-        @if($user_address->remarks_text)
-            <h5 class="fs-6 fw-bold mb-0 mt-3">備考欄</h5>
-            <div class="">
-                {!! nl2br(preg_replace('/\b(https?:\/\/\S+)/i', '<a href="$1">$1</a>', $user_address->remarks_text) )!!}
-            </div>
-        @endif
+        <div class="p-3 fw-bold">
 
+            <!--発送住所の変更-->
+            @if( isset($user_shipped) && $user_shipped->update_user_address_label  )
+                <div class="text-danger mb-3">{{ $user_shipped->update_user_address_label }}</div>
+            @endif
+
+
+            <!--お届け先-->
+            @include('shipped.common.user_address')
+
+
+        </div>
     </li>
     <li class="list-group-item p-3">
+
         <h5>利用ポイント</h5>
-        <div class="d-flex justify-content-between">
-            <span class="form-text">配送料・手数料：</span>
-            <span>{{$shipped_point}}pt</span>
-        </div>
-        <div class="d-flex justify-content-between fs-5 fw-bold">
-            <span class="">合計利用ポイント：</span>
-            <span class="text-danger">{{$shipped_point}}pt</span>
+
+        <div class="p-3">
+
+            <div class="d-flex justify-content-between mb-3">
+                <span class="form-text">配送料・手数料：</span>
+                <span class="form-text">{{$shipped_point}}pt</span>
+            </div>
+
+            <div class="d-flex justify-content-between fs-6 fw-bold">
+                <span class="">合計利用ポイント：</span>
+                <span class="text-danger">{{$shipped_point}}pt</span>
+            </div>
+
         </div>
     </li>
     <li class="list-group-item p-3">
 
-        <h5>発送する商品</h5>
+        <h5>発送商品</h5>
 
         @foreach ($shipped_prizes as $shipped_prize)
             <div class="row p-3">

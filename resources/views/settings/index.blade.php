@@ -64,7 +64,7 @@
                 ><i class="bi bi-chevron-right"></i></div>
             </a> @endif
 
-            <a href="{{ route('settings.shipped_address') }}"
+            <a href="{{ route('settings.user_address') }}"
             class="list-group-item list-group-item-action btn-arrow fs-51 fw-bold text-secondary py-3 position-relative"
             >
                 <div class="row align-items-center">

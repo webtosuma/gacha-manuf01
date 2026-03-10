@@ -12,7 +12,10 @@
             :r_destroy="r_destroy"
             @update-address="updateSelectedAddressId"
             :use_size="use_size"
+            :default_email="default_email"
             ></u-addressーlist-form>
+
+
         </section>
 
         <!-- 利用ポイント -->
@@ -73,6 +76,7 @@
             r_find:       { type: [String,Number], default: null },
             shipped_point:{ type: [String,Number], default: 0 },/* 発送ポイント */
             use_size:     { type: [Number], default: 0 },/* 靴サイズの利用 */
+            default_email:{ type: String, default: '' },
         },
         data() { return {
 

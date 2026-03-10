@@ -48,8 +48,31 @@ class UserAddress extends Model
      * アクセサーをJSONに含める
      */
     protected $appends = [
-        'remarks_text', //ストレージ保存された文章　
+        'remarks_text', //ストレージ保存された文章
+        'r_edit',//[ルーティング] 編集　r_edit
+        'r_shipped',//[ルーティング] 発送一覧
+        'shipped_waiting_count',//発送待ち数
     ];
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * USERモデル リレーション
+         * @return \App\Models\User
+        */
+        public function user(){
+            return $this->belongsTo(User::class)
+            ->withTrashed();
+        }
 
 
     /*
@@ -73,4 +96,34 @@ class UserAddress extends Model
         }
 
 
+        /**
+         * [ルーティング] 編集　r_edit
+         * @return String
+         */
+        public function getREditAttribute() : String
+        {
+            return route('settings.user_address.edit',$this->id);
+        }
+
+
+        /**
+         * [ルーティング] 発送一覧　
+         * @return String
+         */
+        public function getRShippedAttribute() : String
+        {
+            return route('shipped');
+        }
+
+
+        /**
+         * 発送待ち数　shipped_waiting_count
+         * @return Integer
+         */
+        public function getShippedWaitingCountAttribute() : Int
+        {
+            return (int) UserShipped::where('state_id',11)//発送待ち
+            ->where('user_address_id',$this->id)//ユーザー指定
+            ->count();
+        }
 }

@@ -107,10 +107,15 @@ use App\Http\Controllers;
     Route::middleware(['auth'])->group(function () {
 
 
-        # ユーザーアドレスの取得
+        # ユーザーアドレス一覧の取得
         Route::post('use_address/api',
         [Controllers\UserAddressApiController::class, 'index'])
         ->name('api.use_address');
+
+        # ユーザーアドレス一覧の取得
+        Route::post('use_address/api/show/{user_address}',
+        [Controllers\UserAddressApiController::class, 'show'])
+        ->name('api.use_address.show');
 
         # ユーザーアドレスの保存
         Route::post('use_address/store/api',
@@ -122,5 +127,10 @@ use App\Http\Controllers;
         [Controllers\UserAddressApiController::class, 'destroy'])
         ->name('api.use_address.destroy');
 
+
+        # ユーザーアドレスの更新
+        Route::patch('use_address/update/api/{user_address}',
+        [Controllers\UserAddressApiController::class, 'update'])
+        ->name('api.use_address.update');
     });
 

@@ -97,12 +97,30 @@ import Vue from 'vue'
     require('./components/shipped/Form.vue').default);
 
         /* お届け先一覧 */
-        Vue.component('u-addressーlist-form',
-        require('./components/shipped/AddressListForm.vue').default);
+        // Vue.component('u-addressーlist-form',
+        // require('./components/shipped/AddressListForm.vue').default);
 
         /* お届け先の新規登録 */
-        Vue.component('u-create-user-address-form',
-        require('./components/shipped/CreateUserAddressForm.vue').default);
+        // Vue.component('u-create-user-address-form',
+        // require('./components/shipped/CreateUserAddressForm.vue').default);
+
+
+        /* お届け先一覧 */
+        Vue.component('u-addressーlist-form',
+        require('./components/shipped/address_list/index.vue').default);
+
+        /* お届け先の新規登録 */
+        // Vue.component('u-create-user-address',
+        // require('./components/shipped/address_list/Create.vue').default);
+
+        /* お届け先の編集フォーム */
+        Vue.component('u-edit-user-address-form',
+        require('./components/shipped/address_list/Form.vue').default);
+
+        /* お届け先の編集コンテナー */
+        Vue.component('u-edit-user-address-container',
+        require('./components/shipped/address_list/Edit.vue').default);
+
 
         /* 発送景品リスト */
         Vue.component('u-userprize-list',

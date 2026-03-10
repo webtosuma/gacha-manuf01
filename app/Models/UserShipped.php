@@ -39,13 +39,14 @@ class UserShipped extends Model
 
     /** アクセサーをJSONに含める */
     protected $appends = [
-        'code',              //発送コード 0000-0000
-        'created_at_format', //申請日フォーマット created_at_format
-        'shipment_at_format',//発送日フォーマット
-        'prizes_string',     //発送商品情報
-        'r_show',            //[ルーティング]詳細
-        'r_admin_show',      //[ルーティング]Admin詳細
-        'r_admin_user',      //[ルーティング]Adminユーザー
+        'code',                     //発送コード 0000-0000
+        'created_at_format',        //申請日フォーマット created_at_format
+        'shipment_at_format',       //発送日フォーマット
+        'prizes_string',            //発送商品情報
+        'update_user_address_label',//発送住所更新時のラベル
+        'r_show',                   //[ルーティング]詳細
+        'r_admin_show',             //[ルーティング]Admin詳細
+        'r_admin_user',             //[ルーティング]Adminユーザー
     ];
 
 
@@ -180,6 +181,26 @@ class UserShipped extends Model
             return $prizes_string;
         }
 
+
+
+        /**
+         * 発送住所更新時のラベル update_user_address_label
+         * @return String
+         */
+        public function getUpdateUserAddressLabelAttribute()
+        {
+            # 削除されたとき
+            if($this->user_address->deleted_at){
+                return '*発送情報 削除済み。'.$this->user_address->deleted_at->format('Y/m/d H:i');
+            }
+
+
+            return (
+                $this->user_address->updated_at->gt($this->created_at)//左の方が大きい
+                && $this->state_id==11//発送待ち
+            ) ? '*発送情報の更新あり。'.$this->user_address->updated_at->format('Y/m/d H:i')
+            : null ;
+        }
 
     /*
     |--------------------------------------------------------------------------

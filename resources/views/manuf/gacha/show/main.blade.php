@@ -6,7 +6,27 @@
         <div class="col-12 col-lg-5">
 
 
-            <div class="mb-4">
+            <div class="mb-4 position-relative" style="min-height:30vh;">
+
+                <div class="
+                position-absolute top-0 start-0
+                w-100 rounded-4 p-2 overflow-hidden bg-light
+                " style="z-index:-1; height:30vh">
+                    <div class="d-flex gap-2 align-items-center justify-content-center h-100">
+
+                        <div class="spinner-grow text-secondary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-secondary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-secondary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+
+                    </div>
+                </div>
+
 
                 @php
                 $examples= [

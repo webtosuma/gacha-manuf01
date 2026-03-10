@@ -114,93 +114,79 @@
     <div class="container px-0">
         <div class="col-12 col-lg-10 mx-auto mb-5 mp-5">
 
-            <div class="row g-1 mb-5">
-                <div class="col-3">
 
-                    @include('manuf.gacha.common.top_image')
+            <div class="p-3">
+                <a href="{{$gacha->route}}"
+                class="btn btn-light d-block text-start border border-radius rounded w-100" >
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto h-100">
+                            <i class="bi bi-chevron-compact-left fs-5"></i>
+                        </div>
+                        <div class="col-4 col-lg-2">
 
+                            @include('manuf.gacha.common.top_image')
 
-
-                </div>
-                <div class="col">
-
-
-                    <div class="p-3 border-0 border-radius rounded-4"
-                    style="background:rgba(255, 255, 255, 1);">
-
-                        <!--discription head-->
-                        <div id="discription-head" class="mb-3">
-
-                            <!--badge link-->
-                            <div class="d-flex gap-2 mb-2">
-                                {{-- @if($gacha->new_label) --}}
-                                    <!--NEW-->
-                                    <div
-                                    class="py-0 text-white bg-danger px-2 rounded-pill"
-                                    style="font-size:11px;">NEW</div>
-                                {{-- @endif --}}
-
-                                <!--カテゴリー-->
-                                <a href="{{route('manuf.search',[ 'category_code_name'=>$gacha->category->code_name ])}}"
-                                class="btn btn-sm py-0 bg-white border text-secondary rounded-pill"
-                                style="font-size:11px;"
-                                >{{$gacha->category->name}}</a>
-
-
-                            </div>
-
-
-                            <!--商品名-->
-                            <div class="">
-                                <h5 class="fs-5 fw-bold mb-0">{{$gacha->name}}</h5>
-                            </div>
 
 
                         </div>
+                        <div class="col ">
+
+
+                            <div class="">
+
+                                <!--discription head-->
+                                <div id="discription-head" class="mb-3">
+
+                                    <!--badge link-->
+                                    <div class="d-flex gap-2 mb-2">
+                                        {{-- @if($gacha->new_label) --}}
+                                            <!--NEW-->
+                                            <div
+                                            class="py-0 text-white bg-danger px-2 rounded-pill"
+                                            style="font-size:11px;">NEW</div>
+                                        {{-- @endif --}}
+
+                                        <!--カテゴリー-->
+                                        <div
+                                        class="btn btn-sm py-0 bg-white border text-secondary rounded-pill"
+                                        style="font-size:11px;"
+                                        >{{$gacha->category->name}}</div>
+
+
+                                    </div>
+
+
+                                    <!--商品名-->
+                                    <div class="">
+                                        <h5 class="fs-6 fw-bold mb-0">{{$gacha->name}}</h5>
+                                    </div>
+
+
+                                </div>
 
 
 
-                        <!--discription resume_text-->
-                        @if($gacha->resume_text)
-                            <p id="discription-resume_text" class="border-top  py-3 mt-3 mb-0 form-text">
-
-                                {!! str_replace(["\r\n","\r","\n"],"<br>", e( $gacha->resume_text ) )!!}<br>
-
-                            </p>
-                        @endif
-
-
-                        <div class="d-flex justify-content-end">
-                            <div class="text-center">
-                                <span style="font-size:16px;">１回/</span>
-                                <span style="font-size:16px;">税込</span>
-                                <div class="d-inline-block" style="line-height:18px;">
-                                    <span class="fs-3 text-danger">¥</span>
-                                    <span class="fs-1 text-danger"> {{number_format($gacha->price)}}</span>
+                                <div class="d-flex justify-content-end">
+                                    <div class="text-center">
+                                        <span style="font-size:16px;">１回/</span>
+                                        <span style="font-size:16px;">税込</span>
+                                        <div class="d-inline-block" style="line-height:18px;">
+                                            <span class="fs-3 text-danger">¥</span>
+                                            <span class="fs-3 text-danger"> {{number_format($gacha->price)}}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
-
-
-
-                </div>
-                <div class="col-12">
-                    <button type="button"
-                    onclick="history.back()"
-                    class="
-                    btn btn-light border rounded-pill mt-3
-                    ">
-                        <i class="bi bi-chevron-left"></i><!--戻るボタン-->
-                        <span class="" style="font-size:11px;">戻る</span>
-
-                    </button>
-                </div>
+                </a>
             </div>
 
 
-
-
+            <!--header-->
             <div class="p-3">
 
                 <h5 class="fw-bold ps-1
@@ -231,6 +217,7 @@
                 'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095784/melotabi_mejirushi_2.jpg',
                 'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095791/melotabi_mejirushi_3.jpg',
             ]; @endphp
+
 
 
             <div id="splide_mobile"  class="splide d-md-none w-100" aria-label="Splideの基本的なHTML">
@@ -492,6 +479,11 @@
                 </div>
             </div>
 
+
+
+
+
+
             <!--offcanvace-->
             @for ($i = 1; $i < 6; $i++)
 
@@ -581,6 +573,20 @@
                 </div>
 
             @endfor
+
+
+
+            <div class="col-md-8 mx-auto my-5 px-3">
+                <button type="button"
+                onclick="history.back()"
+                class="
+                btn btn-light border rounded-pill mt-3 w-100
+                ">
+                    <span class="">タイトルに戻る</span>
+
+                </button>
+            </div>
+
 
         </div>
     </div>
