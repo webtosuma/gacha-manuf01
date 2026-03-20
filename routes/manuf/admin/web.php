@@ -19,6 +19,8 @@ use App\Http\Controllers\Manuf;
 
     }
 
+    # ガチャ
+    include('web/gacha/index.php');//(基本情報)
 
     // # ストアー商品
     // include('web/store_item.php');

@@ -21,8 +21,8 @@ if( config('store.admin') )
 }
 
 
-# ストアー
-if( true )
+# Manufガチャ
+if( config('manuf.app') )
 {
     include('manuf/web.php');
 }
