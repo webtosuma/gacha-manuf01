@@ -16,14 +16,13 @@ return new class extends Migration
             $table->id();
 
             // リレーション
-            $table->foreignId('gacha_category_id')
-            ->constrained()
-            ->cascadeOnDelete();
+            $table->foreignId('category_id')
+            ->constrained('gacha_categories')
+            ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
 
             // 基本情報
             $table->string('name');               //名称
             $table->string('image_samune');       //サムネ画像
-            $table->string('description');        //説明文
             $table->integer('price')->default(0); //価格(税込み)
 
             // 日時系
@@ -34,6 +33,7 @@ return new class extends Migration
             $table->dateTime('published_end_at'     )->nullable()->default(null);//公開終了日時
 
             // 詳細情報
+            $table->string('description'    )->nullable()->default(null);//説明文
             $table->string('set_contents'   )->nullable()->default(null);//セット内容
             $table->string('prize_size'     )->nullable()->default(null);//商品サイズ
             $table->string('prize_materials')->nullable()->default(null);//商品素材

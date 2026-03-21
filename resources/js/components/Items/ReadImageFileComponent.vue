@@ -8,7 +8,9 @@
             :for="'file_input'+name">
                 <ratio-image-component
                 :style_class="style_class"
-                :url="src" />
+                :url="src"
+                :bg_size="bg_size"
+                />
             </label>
 
             <!--取消ボタン-->
@@ -64,6 +66,7 @@
             name:       { type: String, default: 'image', }, //インプット要素のname名
             style_class:{ type: String, default: 'ratio ratio-3x4 rounded-3', },
             no_text:    { type: [Boolean,String,Number] ,default: 0, },
+            bg_size:    { type: String, default: 'cover',},
         },
         mounted() {
             //プロップの値をデータに保存 ※プロップの値は直接変更できないので、データに保存

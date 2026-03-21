@@ -13,7 +13,7 @@ class ManufGachaTitleFactory extends Factory
     public function definition(): array
     {
         return [
-            'gacha_category_id' => 1, // 固定
+            'category_id' => 1, // 固定
 
             'name' => $this->faker->words(3, true),
 

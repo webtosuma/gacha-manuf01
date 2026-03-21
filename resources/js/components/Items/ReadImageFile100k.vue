@@ -1,6 +1,5 @@
 <template>
     <div class="">
-
         <!-- 画像 -->
         <div class="mb-2 d-block position-relative">
 
@@ -8,7 +7,9 @@
             :for="'file_input'+name">
                 <ratio-image-component
                 :style_class="style_class"
-                :url="src" />
+                :url="src"
+                :bg_size="bg_size"
+                />
             </label>
 
             <!--取消ボタン-->
@@ -65,6 +66,7 @@
             style_class:{ type: String, default: 'ratio ratio-3x4 rounded-3', },
             no_text:    { type: [Boolean,String,Number] ,default: 0, },
             kbite:      { type: [String,Number] ,default: 600, },
+            bg_size:    { type: String, default: 'cover',},
         },
         mounted() {
             //プロップの値をデータに保存 ※プロップの値は直接変更できないので、データに保存

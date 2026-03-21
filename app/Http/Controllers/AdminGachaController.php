@@ -63,7 +63,7 @@ class AdminGachaController extends Controller
 
 
     /**
-     * 新規作成
+     * 新規作成 
      *
      * @param String $category_code
      * @return \Illuminate\Http\Response
@@ -77,7 +77,7 @@ class AdminGachaController extends Controller
 
         # 新規作成モデル
         $gacha = new Gacha([
-            
+
             'category_id' => $gacha_category ? $gacha_category->id : null,
             'point'    => 0,
             'type'     => self::defaults_type(),  //ガチャの種類

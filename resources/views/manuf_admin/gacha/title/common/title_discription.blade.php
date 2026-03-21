@@ -1,0 +1,120 @@
+<div class="p-3 border-0 border-radius rounded-4
+h- mb-3 "
+style="background:rgba(255, 255, 255, 1);">
+
+    <!--discription head-->
+    <div id="discription-head" class="mb-3">
+
+        <!--badge link-->
+        <div class="d-flex gap-2 mb-2">
+            {{-- @if($gacha_title->new_label) --}}
+                <!--NEW-->
+                <div
+                class="py-0 text-white bg-danger px-2 rounded-pill"
+                style="font-size:11px;">NEW</div>
+            {{-- @endif --}}
+
+            <!--カテゴリー-->
+            <a href="{{route('manuf.search',[ 'category_code_name'=>$gacha_title->category->code_name ])}}"
+            class="btn btn-sm py-0 bg-white border text-secondary rounded-pill"
+            style="font-size:11px;"
+            >{{$gacha_title->category->name}}</a>
+
+
+        </div>
+
+
+        <!--商品名-->
+        <div class="">
+            <h5 class="fs-5 fw-bold mb-0">{{$gacha_title->name}}</h5>
+        </div>
+
+
+    </div>
+
+
+    <div class="col-md-8 mx-auto">
+        <ratio-image-component
+        url="{{$gacha_title->image_samune_path}}"
+        style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
+        bg_size="contain"
+        ></ratio-image-component>
+    </div>
+
+
+    <!--discription description_text-->
+    @if($gacha_title->description_text)
+        <p id="discription-description_text" class="border-top  py-3 mt-3 mb-0 form-text">
+
+            {!! str_replace(["\r\n","\r","\n"],"<br>", e( $gacha_title->description_text ) )!!}<br>
+
+        </p>
+    @endif
+
+
+    <div class="d-flex justify-content-end">
+        <div class="text-center">
+            <span style="font-size:16px;">１回/</span>
+            <span style="font-size:16px;">税込</span>
+            <div class="d-inline-block" style="line-height:18px;">
+                <span class="fs-3 text-danger">¥</span>
+                <span class="fs-1 text-danger"> {{number_format($gacha_title->price)}}</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- price btn metter -->
+    {{-- <div class="py-3 d-none d-lg-block">
+        @include('manuf.gacha.show.price_metter')
+    </div> --}}
+
+
+
+    <div id="discription-table" class="border rounded oberflow-hidden mb-3">
+        <table class="table border-white text-dark m-0 rounded overflow-hidden" style="font-size:12px">
+            <tbody>
+                <tr>
+                    <th class="bg-body text- p-" style="width:7rem;">お届け時期</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">販売終了</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">セット内容</th>
+                    <td class="p-">{{ $gacha_title->set_contents_text }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">商品サイズ</th>
+                    <td class="p-">{{ $gacha_title->prize_size }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">商品素材</th>
+                    <td class="p-">{{ $gacha_title->prize_materials }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">種類数</th>
+                    <td class="p-">xxxxxx</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">対象年齢</th>
+                    <td class="p-">{{ $gacha_title->age_range }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-body text- p-">コピーライト</th>
+                    <td class="p-">{{ $gacha_title->copy_right }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</div>
+
+

@@ -1,4 +1,4 @@
-@extends('manuf_admin.layouts.gacha')
+@extends('manuf_admin.layouts.app')
 
 
 @section('title','ガチャタイトル')
@@ -49,6 +49,32 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                 </a>
             </div>
         @endif
+
+
+        <section>
+
+            <div class="mb-3">
+                <a href="{{route('admin.gacha.title.create')}}"
+                class="btn btn-primary text-white rounded-pill">新規登録</a>
+            </div>
+
+            <div class="row g-3">
+                @foreach ($gacha_titles as $gacha_title)
+                    <div class="col-4 col-md-3 col-lg-2">
+
+                        <a href="{{route('admin.gacha.title.show',$gacha_title)}}" class="d-block">
+                            <ratio-image-component
+                            url="{{$gacha_title->image_samune_path}}"
+                            style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
+                            bg_size="contain"
+                            ></ratio-image-component>
+                        </a>
+
+
+                    </div>
+                @endforeach
+            </div>
+        </section>
 
 
         {{-- <section class="mb-5">
