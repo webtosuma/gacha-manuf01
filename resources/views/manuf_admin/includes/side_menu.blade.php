@@ -5,8 +5,8 @@
     /* メインメニュー */
     $menu_array = [
         [
-            'route' => route('admin.gacha.title'),
-            'key'   => 'gacha',
+            'route' => route('admin.gacha_title'),
+            'key'   => 'gacha_title',
             'icon'  => 'bi-gift',
             'label' => 'ガチャタイトル',
         ],

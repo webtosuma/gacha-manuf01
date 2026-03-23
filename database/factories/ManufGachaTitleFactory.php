@@ -12,16 +12,30 @@ class ManufGachaTitleFactory extends Factory
 {
     public function definition(): array
     {
+        # ランダムな値
+        $rand = rand(0, 5);
+
+        #　タイトル名
+        $names = [
+            'ぽつんといちご大福 マスコットフィギュア',
+            'セサミストリート フラットポーチ',
+            'ケアベア ぬいぐるみバッジ',
+            'クリスタルレオパ マスコットフィギュア',
+            'こびとづかん3 スクエアポーチ',
+            '銭湯アーミー マスコットフィギュア 銭湯イエローver.',
+        ];
+
+
         return [
             'category_id' => 1, // 固定
 
-            'name' => $this->faker->words(3, true),
+            'name' => $names[$rand],
 
-            'image_samune' => $this->faker->imageUrl(640, 480, 'products', true),
+            'image_samune' => sprintf('sample/manuf/gacha_title/%02d.jpg', $rand ),
 
             'description' => $this->faker->sentence(20),
 
-            'price' => $this->faker->numberBetween(100, 1000),
+            'price' => $this->faker->numberBetween(1,18)*100,
 
             'estimated_shipping_at' => $this->faker->optional()->dateTimeBetween('+1 week', '+1 month'),
             'sales_start_at' => now(),
@@ -30,11 +44,14 @@ class ManufGachaTitleFactory extends Factory
             'published_start_at' => now(),
             'published_end_at' => $this->faker->dateTimeBetween('+1 week', '+2 months'),
 
-            'set_contents' => $this->faker->optional()->sentence(),
-            'prize_size' => $this->faker->optional()->randomElement(['S', 'M', 'L']),
-            'prize_materials' => $this->faker->optional()->word(),
-            'age_range' => $this->faker->optional()->randomElement(['3+', '7+', '12+']),
-            'copy_right' => $this->faker->optional()->company(),
+            'set_contents'    => 'マスコットフィギュア 全5種',
+            'prize_size'      => '約'. rand(0, 200).'mm',
+            'prize_materials' => $this->faker->randomElement([
+                'PVC製彩色マスコット','PVC','ABS','MABS',
+                'ガチャC',
+            ]),
+            'age_range'       => rand(0, 20).'才以上',
+            'copy_right'      => $this->faker->optional()->company(),
         ];
     }
 }

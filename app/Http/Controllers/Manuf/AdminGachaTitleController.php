@@ -16,7 +16,7 @@ use App\Models\UserRankHistory;
 use App\Models\ManufGachaTitle;
 /*
 | =============================================
-|  Manufacturer/Admin : ガチャ(タイトル) コントローラー
+|  Manufacturer/Admin : ガチャタイトル コントローラー
 | =============================================
 */
 class AdminGachaTitleController extends Controller
@@ -39,7 +39,7 @@ class AdminGachaTitleController extends Controller
         $gacha_titles = ManufGachaTitle::orderByDesc('created_at')->get();
 
 
-        return view('manuf_admin.gacha.index', compact(
+        return view('manuf_admin.gacha_title.index', compact(
             'gacha_category','category_code',
             'gacha_titles'
         ));
@@ -55,7 +55,7 @@ class AdminGachaTitleController extends Controller
      */
     public function show( ManufGachaTitle $gacha_title )
     {
-        return view('manuf_admin.gacha.title.show', compact('gacha_title'));
+        return view('manuf_admin.gacha_title.show', compact('gacha_title'));
     }
 
 
@@ -77,7 +77,7 @@ class AdminGachaTitleController extends Controller
         $user_ranks = UserRankHistory::UserRanks();
 
 
-        return view('manuf_admin.gacha.title.create', compact(
+        return view('manuf_admin.gacha_title.create', compact(
             'gacha_title','categories','user_ranks',
         ) );
     }
@@ -108,7 +108,7 @@ class AdminGachaTitleController extends Controller
 
             $gacha_title = ManufGachaTitle::first();
 
-        return redirect()->route('admin.gacha.title.show',$gacha_title)
+        return redirect()->route('admin.gacha_title.show',$gacha_title)
         ->with(['alert-success'=>'ガチャタイトルの基本情報を新規登録しました']);
     }
 
@@ -128,7 +128,7 @@ class AdminGachaTitleController extends Controller
         $user_ranks = UserRankHistory::UserRanks();
 
 
-        return view('manuf_admin.gacha.title.edit', compact(
+        return view('manuf_admin.gacha_title.edit', compact(
             'gacha_title','categories','user_ranks',
         ) );
     }
@@ -155,7 +155,7 @@ class AdminGachaTitleController extends Controller
             // $request->session()->regenerateToken();// 二重送信防止
 
 
-            return redirect()->route('admin.gacha.title.show',$gacha_title)
+            return redirect()->route('admin.gacha_title.show',$gacha_title)
             ->with(['alert-warning'=>'ガチャタイトルの基本情報を更新しました']);
         }
 

@@ -4,9 +4,14 @@
 
     <div class="p-3 bg-body rounded-4">
 
-        <button onclick="history.back()"
-        type="button"
-        class="btn btn-light border">< 戻る</button>
+
+        @if (!$gacha_title->id)
+            <a href="{{route('admin.gacha_title')}}"
+            class="btn btn-light border">< 戻る</a>
+        @else
+            <a href="{{route('admin.gacha_title.show',$gacha_title)}}"
+            class="btn btn-light border">< 戻る</a>
+        @endif
 
 
         <div class="d-flex flex-column align-items-start my-3">
@@ -60,9 +65,9 @@
 
     <div class="my-3">
         @if (!$gacha_title->id)
-        <disabled-button style_class="btn btn-success text-white w-100 shadow" btn_text="登録する"></bdisabled-button>
+            <disabled-button style_class="btn btn-success text-white w-100 shadow" btn_text="登録する"></bdisabled-button>
         @else
-        <disabled-button style_class="btn btn-warning w-100 shadow" btn_text="更新する"></bdisabled-button>
+            <disabled-button style_class="btn btn-warning w-100 shadow" btn_text="更新する"></bdisabled-button>
         @endif
     </div>
 

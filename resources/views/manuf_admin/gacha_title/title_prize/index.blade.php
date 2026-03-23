@@ -1,0 +1,35 @@
+@extends('manuf_admin.layouts.gacha_title')
+
+
+@section('title',$gacha_title->name.' タイトル商品一覧')
+
+
+@section('meta') @php
+$active_key = 'gacha_title.title_prize';
+$active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
+@endphp @endsection
+
+
+
+@section('content')
+
+
+    {{-- パンくずリスト --}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"
+            >{{ 'Top' }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title') }}"
+            >{{ 'ガチャタイトル一覧' }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.show',$gacha_title) }}"
+            >{{$gacha_title->name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{'タイトル商品一覧'}}</li>
+        </ol>
+    </nav>
+
+
+
+
+
+
+@endsection

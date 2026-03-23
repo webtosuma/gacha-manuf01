@@ -72,16 +72,23 @@ class ManufGachaTitle extends Model
     |
     */
 
-        /**
-         * GachaCategoryモデル リレーション
-         * @return \App\Models\GachaCategory
-        */
+        /** GachaCategoryモデル リレーション */
         public function category(){
             return $this->belongsTo(GachaCategory::class, 'category_id')
             ->withTrashed();
         }
 
 
+        /** ManufGachaTitlePrizeモデル リレーション */
+        public function title_prizes(){
+            return $this->hasMany(ManufGachaTitlePrize::class, 'manuf_gacha_title_id');
+        }
+
+
+        /** ManufGachaTitleMachineモデル リレーション */
+        public function machines(){
+            return $this->hasMany(ManufGachaTitleMachine::class, 'manuf_gacha_title_id');
+        }
 
     /*
     |--------------------------------------------------------------------------

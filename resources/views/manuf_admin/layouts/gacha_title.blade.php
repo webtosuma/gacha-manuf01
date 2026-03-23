@@ -46,8 +46,8 @@
 
 
 
-                    <div class="my-3 text-center">
-                        <a href="{{route('admin.gacha.title')}}" class="btn btn-sm btn-light ">< タイトル一覧に戻る</a>
+                    <div class="py-1  mb-3 text-center">
+                        <a href="{{route('admin.gacha_title')}}" class="btn btn-sm btn-light ">< タイトル一覧に戻る</a>
                     </div>
 
                     @include('manuf_admin.includes.gacha_title.side_menu')
@@ -63,35 +63,11 @@
                 </div>
 
 
-                <div class="container" >
+                <div class="container" style="min-height:90vh;">
 
-                    {{-- @yield('breadcrumb_content') --}}
 
                     @yield('content')
 
-                    {{-- <div class="row mx-0 g-0" style="min-height:90vh;">
-
-
-                        <!--flex-c2-1 -->
-                        <div class="col bg-white">
-
-                            @yield('content')
-
-                        </div>
-                        <!--flex-c2-2 -->
-                        <aside class="col-12 col-md-4 pe-0  order-1 order-md-2">
-                            <div class="position-sticky ps-2 " style="top: 0rem; ">
-                                <div class="p-3 bg-body rounded-4">
-
-                                    @yield('side_content')
-
-
-                                </div>
-                            </div>
-                        </aside>
-
-
-                    </div> --}}
 
                 </div>
 
@@ -100,7 +76,6 @@
                 <footer class="p-3 bg-white text-center">
                     <small class="d-block mb-3 text-muteddd">&copy;{{config('app.company_name')}}</small>
                 </footer>
-                {{-- @include('includes.footer') --}}
             </div>
         </main>
 

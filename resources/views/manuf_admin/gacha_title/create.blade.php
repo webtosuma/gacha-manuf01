@@ -5,7 +5,7 @@
 
 
 @section('meta') @php
-$active_key = 'gacha_title.show';
+$active_key = 'gacha_title';
 $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 @endphp @endsection
 
@@ -25,7 +25,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"
             >{{ 'Top' }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.gacha.title') }}"
+            <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title') }}"
             >{{ 'ガチャタイトル一覧' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ 'タイトル新規登録' }}</li>
         </ol>
@@ -35,7 +35,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
     <section class="container">
 
-        <form action="{{ route('admin.gacha.title.store', $gacha_title) }}" method="POST"
+        <form action="{{ route('admin.gacha_title.store', $gacha_title) }}" method="POST"
         novalidate
         enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
             @csrf
@@ -49,7 +49,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                     <div class="mx-auto" style="max-width:600px;">
 
 
-                        @include('manuf_admin.gacha.title._inputs')
+                        @include('manuf_admin.gacha_title._inputs')
 
 
 
@@ -60,7 +60,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                     <div class="position-sticky ps-2 " style="top: 0rem; ">
 
 
-                        @include('manuf_admin.gacha.title._links')
+                        @include('manuf_admin.gacha_title._links')
 
 
                     </div>
@@ -76,5 +76,5 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
     </section>
 
 
-    
+
 @endsection

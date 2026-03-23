@@ -4,7 +4,7 @@
         <div class="container-fluid">
 
             <!--- 戻る -->
-            <a href="{{route('admin.gacha.title')}}" class="btn btn-sm btn-light ">< 一覧に戻る</a>
+            <a href="{{route('admin.gacha_title')}}" class="btn btn-sm btn-light ">< 一覧に戻る</a>
 
             <div class="" id="navbarNav">
                 <ul class="d-flex align-items-center ms-auto m-0 p-0" style="list-style:none;">
@@ -25,7 +25,7 @@
         <div class="offcanvas-header bg-white border-bottom py-1">
 
             <!--- 戻る -->
-            <a href="{{route('admin.gacha.title')}}" class="btn btn-sm btn-light ">< 一覧に戻る</a>
+            <a href="{{route('admin.gacha_title')}}" class="btn btn-sm btn-light ">< 一覧に戻る</a>
 
             <button type="button" class="btn py-0 fs-3 text-dark "
             data-bs-dismiss="offcanvas" aria-label="Close"
