@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 |  Manufacturer用　ガチャタイトル ランク別動画 モデル
 | =============================================
 */
-
 class ManufGachaTitleMovie extends Model
 {
     use HasFactory;

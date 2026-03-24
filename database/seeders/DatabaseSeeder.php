@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         /* テスト用 */
         $this->call(UserSeeder::class);//テスト用ユーザー
-        $this->call(GachaCategorySeeder::class);//ガチャのカテゴリーグループ
+        // $this->call(GachaCategorySeeder::class);//ガチャのカテゴリーグループ
         $this->call(MovieSeeder::class);//演出動画
         // $this->call(PointSailSubscriptionSeeder::class);//販売用サブスクプラン
         // $this->call(GachaSeeder::class);//ガチャ
@@ -36,6 +36,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(StoreSeeder::class);//販売商品
         // $this->call(CouponSeeder::class);//クーポン
         // $this->call(StoreItemSeeder::class);//EC販売アイテム
+
+        $this->call(ManufGachaCategorySeeder::class);//Manufカテゴリー
         $this->call(ManufGachaTitleSeeder::class);//Manufガチャタイトル
 
 

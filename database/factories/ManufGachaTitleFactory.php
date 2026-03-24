@@ -48,7 +48,6 @@ class ManufGachaTitleFactory extends Factory
             'prize_size'      => '約'. rand(0, 200).'mm',
             'prize_materials' => $this->faker->randomElement([
                 'PVC製彩色マスコット','PVC','ABS','MABS',
-                'ガチャC',
             ]),
             'age_range'       => rand(0, 20).'才以上',
             'copy_right'      => $this->faker->optional()->company(),
