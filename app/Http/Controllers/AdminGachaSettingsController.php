@@ -68,6 +68,12 @@ class AdminGachaSettingsController extends Controller
      */
     public function update_card_image(Request $request)
     {
+        $text = new Text();
+        $default_data = [
+            'gacha_settings_card_image_head' => str_replace( asset('storage').'/', '', $text['gacha_settings_card_image_head'] ) ,
+            'gacha_settings_card_image_body' => str_replace( asset('storage').'/', '', $text['gacha_settings_card_image_body'] ) ,
+        ];
+
         $inputs = [
             # ガチャ販売機の画像を利用する
             'gacha_settings_card_image'      => $request->gacha_settings_card_image ?? '' ,
@@ -89,7 +95,7 @@ class AdminGachaSettingsController extends Controller
                 # ストレージ画像ファイルの更新（イメージ画像）
                 $dir = 'upload/gacha/settings/card_image';      //保存先ディレクトリ
                 $request_file    = $request->file($type);//画像のリクエスト
-                $old_image_path  = $text ? $text->body : null; //更新前の画像パス
+                $old_image_path  = $text ? $text->body : $default_data[$type] ; //更新前の画像パス
                 $image_dalete    = isset($body) ? true : false ;//画像を削除するか否か
 
                 $body = Method::uploadStorageImage( $dir, $request_file, $old_image_path, $image_dalete) ?? $old_image_path;
@@ -97,6 +103,7 @@ class AdminGachaSettingsController extends Controller
 
             # 保存データ
             $params = [ 'type' => $type, 'body' => $body ];
+
 
             # DBデータの更新・新規登録
             if( $text ){

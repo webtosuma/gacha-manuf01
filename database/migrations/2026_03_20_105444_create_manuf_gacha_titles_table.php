@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('name');               //名称
             $table->string('image_samune');       //サムネ画像
             $table->integer('price')->default(0); //価格(税込み)
+            $table->string('code');               //認証コード
 
             // 日時系
             $table->dateTime('estimated_shipping_at')->nullable()->default(null);//発送予定日時

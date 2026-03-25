@@ -10,9 +10,7 @@ use App\Http\Controllers\Manuf;
 */
 
 Route::middleware([ /* ミドルウェアー */
-    'maintenance',        //メンテナンス
-    // 'user_plize_deadline',//ユーザー商品期限切れ対応
-    // 'user_point_deadline',//ユーザーポイント期限切れ対応
+    'maintenance',           //メンテナンス
     'user_session_validate', //1アカウント1ログイン(セッションIDチェック)
 ])->group(function () {
 
@@ -26,6 +24,7 @@ Route::middleware([ /* ミドルウェアー */
     # ガチャ
     include('web/gacha.php');
 
+    
     // # 商品一覧
     // include('web/index.php');
 

@@ -84,7 +84,7 @@ class ManufGachaTitleSeeder extends Seeder
                         'gacha_id' => Gacha::factory()->create([
                             'category_id'    => $category,
                             'name'           => sprintf('SAMPLEガチャ%02d', $num ),
-                            'image'          => self::CopyImage( $gacha_title->image_samune ),
+                            'image'          => $gacha_title->image_samune,
                             'one_play_point' => 0,//1回PLAYポイント数
                         ]),
 

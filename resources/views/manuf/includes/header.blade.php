@@ -24,7 +24,10 @@
                 <div class="row align-items-center justify-content-end g-0">
 
                     <div class="col d-none d-sm-block">
-                        <button class="btn btn-sm btn-outline-info rounded-pill border-2 w-100" type="button">
+                        <button class="btn btn-sm btn-outline-info rounded-pill border-2 w-100"
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvaSearch"
+                        aria-controls="offcanvaSearch"
+                        type="button">
                             <div class="d-flex align-items-center justify-content-start">
                                 <i class="bi bi-search fs-2 " style="line-height:1rem;"></i>
                                 キーワード検索

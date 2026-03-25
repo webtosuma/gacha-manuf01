@@ -34,6 +34,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
     </nav>
 
 
+    <h5 class="fw-bold">基本情報 編集</h5>
+
 
     <form action="{{ route('admin.gacha_title.update', $gacha_title) }}" method="POST"
     novalidate
@@ -42,7 +44,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         @method('PATCH')
 
 
-        <div class="row mx-0 g-3" style="min-height:90vh;">
+        <div class="row mx-0 g-0 g-md-3" style="min-height:90vh;">
 
 
             <!--flex-c2-1 -->
@@ -73,4 +75,6 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
     </form>
+
+    
 @endsection

@@ -80,7 +80,7 @@ class Gacha extends Model
         'resume_text',         //ストレージ保存された文章を含む'説明文'
         'user_rank_label',     //ユーザーランク限定ガチャラベル
         'is_type_label_text',  //ガチャの種類等のレベルテキスト表示有無
-        'btn_styles',// ガチャるボタンのCSSクラス
+        'btn_styles', // ガチャるボタンのCSSクラス
         'add_chance_image_path', //アド確定予告画像パス
         'add_chance_count',      //天井系ガチャのアド確定までの回転数
         'have_user_rank',        //個人のプレイ数の商品登録

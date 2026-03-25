@@ -68,11 +68,13 @@
 
             @include('manuf.includes.header')
 
-
             @include('manuf.includes.offcanvas_menu')
 
         </div>
 
+
+        <!--search-->
+        @include('manuf.includes.offcanvas_search')
 
 
 

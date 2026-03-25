@@ -165,6 +165,8 @@
         $icon_class = $menu['icon']." text-info bi fs-3";
         @endphp
         <a href="{{ $menu['route'] }}"
+        data-bs-toggle="offcanvas" data-bs-target="#offcanvaSearch"
+        aria-controls="offcanvaSearch"
         class="{{$style_class}}"
         style="border-radius: 2rem  2rem;">
             <div class="d-flex align-items-center gap-2">
@@ -180,6 +182,7 @@
 
             </div>
         </a>
+
     </div>
 
 

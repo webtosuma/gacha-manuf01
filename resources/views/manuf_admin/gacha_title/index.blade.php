@@ -37,19 +37,28 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
             <div class="mb-3">
                 <a href="{{route('admin.gacha_title.create')}}"
-                class="btn btn-primary text-white rounded-pill">新規登録</a>
+                class="btn btn-primary text-white rounded-pill"
+                ><i class="bi bi-plus-lg me-2"></i>新規登録</a>
             </div>
 
             <div class="row g-3">
                 @foreach ($gacha_titles as $gacha_title)
-                    <div class="col-4 col-md-3 col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-2">
+
 
                         <a href="{{route('admin.gacha_title.show',$gacha_title)}}" class="d-block">
+
                             <ratio-image-component
                             url="{{$gacha_title->image_samune_path}}"
                             style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
                             bg_size="contain"
                             ></ratio-image-component>
+
+                            <!--公開ステータス-->
+                            <div class="px-2">
+                                @include('manuf_admin.gacha_title.common.published_statuse')
+                            </div>
+
                         </a>
 
 

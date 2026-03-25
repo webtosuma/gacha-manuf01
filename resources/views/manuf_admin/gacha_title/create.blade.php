@@ -18,6 +18,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
 @section('content')
+<div class="container">
 
 
     {{-- パンくずリスト --}}
@@ -32,6 +33,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
     </nav>
 
 
+    <h5 class="fw-bold">タイトル新規登録</h5>
+
 
     <section class="container">
 
@@ -41,7 +44,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             @csrf
 
 
-            <div class="row mx-0 g-3" style="min-height:90vh;">
+            <div class="row mx-0 g-0 g-md-3" style="min-height:90vh;">
 
 
                 <!--flex-c2-1 -->
@@ -76,5 +79,5 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
     </section>
 
 
-
+</div>
 @endsection

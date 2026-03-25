@@ -19,6 +19,8 @@ use App\Models\PointHistory;
 use App\Models\Infomation;
 use App\Models\Movie;
 use App\Models\Text;
+
+use App\Models\ManufGachaTitle;
 /*
 | =============================================
 |  Manufacturer:ガチャ コントローラー
@@ -81,12 +83,16 @@ class ManufGachaController extends Controller
         //
 
 
+        $gacha_titles = ManufGachaTitle::get();
+
+
         # viewの表示
         return view('manuf.gacha.index', compact(
             'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
             'search_key', 'searchs',
             'infomations',
             'slides',
+            'gacha_titles',
          ) );
 
     }
@@ -95,22 +101,26 @@ class ManufGachaController extends Controller
 
     /**
      * 詳細表示
-     * @param String $category_code      //カテゴリーコード名
-     * @param  \App\Models\Gacha  $gacha
-     * @param String $key                //ガチャモデル・キー
+     * @param String $category_code //カテゴリーコード名
+     * @param String $title_code    //ガチャタイトル・キー
      * @return \Illuminate\Http\Response
      */
-    public function show( $category_code, Gacha $gacha, $key)
+    public function show( $category_code, $title_code)
     {
+        # ガチャタイトル
+        $manuf_gacha_title = ManufGachaTitle::where('code',$title_code)->first();
+
         # キーのチェック
-        if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
+        if(
 
-        # 追加情報
-        $gacha->price = 500;      //価格(税込)
-        $gacha->waiting_count = 3;//購入待機数
-        $gacha->resume = "テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト ";
+            !isset($manuf_gacha_title)
+            || $manuf_gacha_title->category->code_name!=$category_code
+            || !$manuf_gacha_title->is_published//公開有無
 
+        ){ return \App::abort(404); }
 
+        $gacha = $manuf_gacha_title->machines[0]->gacha;
+        // dd($gacha);
 
         # 背景画像
         $category = $gacha->category;

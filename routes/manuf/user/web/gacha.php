@@ -31,9 +31,9 @@ use App\Http\Controllers\Manuf;
         ->name('manuf.search');
 
         # ガチャの詳細表示
-        Route::get('/m/{category_code}/{gacha}/{key}',
+        Route::get('/m/{category_code}/{title_code}',
         [Manuf\ManufGachaController::class, 'show'])
-        ->name('gacha');
+        ->name('manuf.gacha_title');
 
         # ガチャの詳細表示
         Route::get('/m/{category_code}/{gacha}/{key}/machines',

@@ -59,11 +59,12 @@
             <div class="col bg-white">
 
                 <div class="border-bottom">
-                    <h2 class="container fs-5 my-2">@yield('title')</h2>
+                    {{-- <h2 class="container fs-5 my-2">@yield('title')</h2> --}}
+                    <h2 class="container fs-5 my-2">{{ $gacha_title->name }}</h2>
                 </div>
 
 
-                <div class="container" style="min-height:90vh;">
+                <div class="container px-0 px-md-3" style="min-height:90vh;">
 
 
                     @yield('content')

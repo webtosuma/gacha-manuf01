@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\ManufGachaTitle;
 /*
 | =============================================
 |  Manufacturer用　ガチャタイトル ファクトリー
@@ -27,22 +28,20 @@ class ManufGachaTitleFactory extends Factory
 
 
         return [
-            'category_id' => 1, // 固定
-
-            'name' => $names[$rand],
-
+            'category_id'  => 1, // 固定
+            'name'         => $names[$rand],
             'image_samune' => sprintf('sample/manuf/gacha_title/%02d.jpg', $rand ),
+            'description'  => $this->faker->sentence(20),
+            'price'        => $this->faker->numberBetween(1,18)*100,
+            'code'         => ManufGachaTitle::CreateCode(),//商品コード
 
-            'description' => $this->faker->sentence(20),
-
-            'price' => $this->faker->numberBetween(1,18)*100,
 
             'estimated_shipping_at' => $this->faker->optional()->dateTimeBetween('+1 week', '+1 month'),
-            'sales_start_at' => now(),
-            'sales_end_at' => $this->faker->dateTimeBetween('+1 week', '+2 months'),
+            'sales_start_at'        => now(),
+            'sales_end_at'          => $this->faker->dateTimeBetween('+1 week', '+2 months'),
+            'published_start_at'    => now(),
+            'published_end_at'      => $this->faker->dateTimeBetween('+1 week', '+2 months'),
 
-            'published_start_at' => now(),
-            'published_end_at' => $this->faker->dateTimeBetween('+1 week', '+2 months'),
 
             'set_contents'    => 'マスコットフィギュア 全5種',
             'prize_size'      => '約'. rand(0, 200).'mm',

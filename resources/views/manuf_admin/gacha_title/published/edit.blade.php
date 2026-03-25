@@ -34,5 +34,47 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
     </nav>
 
 
+    <h5 class="fw-bold">販売・公開期間 編集</h5>
+
+
+    <form action="{{ route('admin.gacha_title.published.update', $gacha_title) }}" method="POST"
+    novalidate
+    enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+        @csrf
+        @method('PATCH')
+
+
+        <div class="row mx-0 g-0 g-md-3" style="min-height:90vh;">
+
+
+            <!--flex-c2-1 -->
+            <div class="col bg-white">
+                <div class="mx-auto" style="max-width:600px;">
+
+
+                    @include('manuf_admin.gacha_title.published._inputs')
+
+
+
+                </div>
+            </div>
+            <!--flex-c2-2 -->
+            <aside class="col-12 col-md-4 pe-0  order-1 order-md-2">
+                <div class="position-sticky ps-2 " style="top: 0rem; ">
+
+
+                    @include('manuf_admin.gacha_title.published._links')
+
+
+                </div>
+            </aside>
+
+
+        </div>
+
+
+
+    </form>
+
 
 @endsection
