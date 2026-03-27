@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Manuf;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Manuf\AdminGachaTitleRequest;
+
+// use App\Http\Resources\Admin\ManufGachaTitleResource;//リソース
+use App\Http\Resources\ManufGachaTitleResource;//リソース
+
 use App\Models\GachaCategory;
 // use App\Models\Gacha;
 // use App\Models\GachaDiscription;
@@ -37,6 +41,7 @@ class AdminGachaTitleController extends Controller
 
         # タイトル一覧
         $gacha_titles = ManufGachaTitle::orderByDesc('created_at')->get();
+
 
 
         return view('manuf_admin.gacha_title.index', compact(

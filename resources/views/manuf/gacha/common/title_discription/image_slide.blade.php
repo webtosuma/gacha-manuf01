@@ -21,17 +21,6 @@
 
 
 
-    @php
-    $examples= [
-        $gacha_title->image_samune_path,
-        'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095777/melotabi_mejirushi_1.jpg',
-        'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095784/melotabi_mejirushi_2.jpg',
-        'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095791/melotabi_mejirushi_3.jpg',
-        'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095807/melotabi_mejirushi_4.jpg',
-        'https://parks2.bandainamco-am.co.jp/client_info/BNAM_LBC_EC/itemimage/4582770095814/melotabi_mejirushi_5.jpg',
-    ];
-    @endphp
-
     <div>
 
         <!-- メイン -->
@@ -40,7 +29,7 @@
             <div class="splide__track">
                 <ul class="splide__list">
 
-                    @foreach ($examples as $url)
+                    @foreach ($gacha_title->slide_images as $url)
                     <li class="splide__slide">
 
                         <div class="ratio ratio-1x1 border rounded bg-white"
@@ -64,7 +53,7 @@
             <div class="splide__track">
                 <ul class="splide__list">
 
-                    @foreach ($examples as $url)
+                    @foreach ($gacha_title->slide_images as $url)
                     <li class="splide__slide">
 
                         <div class="ratio ratio-1x1 border rounded bg-white"

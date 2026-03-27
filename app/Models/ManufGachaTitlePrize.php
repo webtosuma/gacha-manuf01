@@ -34,7 +34,10 @@ class ManufGachaTitlePrize extends Model
      * アクセサーをJSONに含める
      */
     protected $appends = [
-
+        'category'  ,//カテゴリー
+        'code',      //商品コード
+        'name',      //名前
+        'image_path',//画像ファイルパス
     ];
 
 
@@ -67,6 +70,59 @@ class ManufGachaTitlePrize extends Model
     |
     |
     */
+        /**
+         * カテゴリー category
+         * @return int|null
+         */
+        public function getCategoryAttribute(){
+            return $this->prize->category ?? null;
+        }
 
 
+        /**
+         * 商品コード code
+         * @return string|null
+         */
+        public function getCodeAttribute(){
+            return $this->prize->code ?? null;
+        }
+
+
+        /**
+         * 名前 name
+         * @return string|null
+         */
+        public function getNameAttribute(){
+            return $this->prize->name ?? null;
+        }
+
+
+        /**
+         * 画像ファイルパス image_samune_path
+         * @return String
+        */
+        public function getImagePathAttribute(){
+            return $this->prize->image_path ?? null;
+        }
+
+
+        /**
+         * ストレージ保存された文章（説明文） discription_text
+         * @return String
+         */
+        public function getDiscriptionTextAttribute(){
+            return $this->prize->discription_text;
+        }
+
+
+
+        /**
+         * 説明文モーダルアイコン discription_icon_path
+         */
+        public function getDiscriptionIconPathAttribute()
+        {
+            return $this->prize->discription_icon_path;
+        }
 }
+
+

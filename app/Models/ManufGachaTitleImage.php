@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 /*
 | =============================================
 |  Manufacturer用　ガチャタイトル画像 モデル
@@ -43,5 +44,14 @@ class ManufGachaTitleImage extends Model
     |
     */
 
+        /**
+         * 画像ファイルパス image_path
+         * @return String
+        */
+        public function getImagePathAttribute()
+        {
+            return $this->path && Storage::exists($this->path) ?
+            asset( 'storage/'.$this->path ) :  self::noImage();
+        }
 
 }

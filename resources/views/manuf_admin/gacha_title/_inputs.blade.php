@@ -213,7 +213,7 @@
     <!--コピーライト(copy_right・default_copy_right)-->
     <label id="copy_right" class="d-block mb-4">
         <div class="form-label fw-bold">
-            コピーライト
+            コピーライト{{$gacha_title->copy_right}}
         </div>
 
         <encodedーinputtext-component

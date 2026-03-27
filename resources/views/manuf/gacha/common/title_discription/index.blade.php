@@ -7,17 +7,20 @@ style="background:rgba(255, 255, 255, 1);">
 
         <!--badge link-->
         <div class="d-flex gap-2 mb-2">
-            {{-- @if($gacha_title->new_label) --}}
+            {{-- {{$gacha_title->estimated_shipping_label}} --}}
+
+            @if($gacha_title->is_new)
                 <!--NEW-->
                 <div
                 class="py-0 text-white bg-danger px-2 rounded-pill"
                 style="font-size:11px;">NEW</div>
-            {{-- @endif --}}
+            @endif
 
             <!--カテゴリー-->
-            <a href="{{route('manuf.search',[ 'category_code_name'=>$gacha_title->category->code_name ])}}"
+            <a href="{{ $gacha_title->r_category }}"
             class="btn btn-sm py-0 bg-white border text-secondary rounded-pill"
             style="font-size:11px;"
+            target="_blank"
             >{{$gacha_title->category->name}}</a>
 
 
@@ -41,7 +44,7 @@ style="background:rgba(255, 255, 255, 1);">
     <!--discription_table-->
     @include('manuf.gacha.common.title_discription.discription_table')
 
-        <!--machines-->
+    <!--machines-->
     @include('manuf.gacha.common.title_discription.machines')
 
 

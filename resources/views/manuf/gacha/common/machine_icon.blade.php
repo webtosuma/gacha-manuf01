@@ -44,6 +44,8 @@
 
 @if( isset( $machine_text ) )
 
-    <div class="btn btn-sm btn-success w-100">SALE</div>
+    <!--発送時期-->
+    <div class="{{ $gacha_title->estimated_shipping_label_style }} w-100"
+    >{{ $gacha_title->estimated_shipping_label }}</div>
 
 @endif

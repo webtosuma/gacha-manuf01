@@ -216,7 +216,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                     </div>
 
 
-                    <!--合計販売数-->
+                    <!--販売期間-->
                     <div class="mb-2">
                         <div class="px-2">
                             <span class="form-text fw-bold">販売期間:</span>

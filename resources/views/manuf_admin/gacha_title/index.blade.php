@@ -43,10 +43,15 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
             <div class="row g-3">
                 @foreach ($gacha_titles as $gacha_title)
-                    <div class="col-6 col-md-3 col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-3">
 
 
                         <a href="{{route('admin.gacha_title.show',$gacha_title)}}" class="d-block">
+
+                            <!--公開バッジ-->
+                            <div class="px-2 mb-1">
+                                @include('manuf_admin.gacha_title.common.published_statuse_badge')
+                            </div>
 
                             <ratio-image-component
                             url="{{$gacha_title->image_samune_path}}"
@@ -54,10 +59,26 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                             bg_size="contain"
                             ></ratio-image-component>
 
-                            <!--公開ステータス-->
-                            <div class="px-2">
-                                @include('manuf_admin.gacha_title.common.published_statuse')
+                            <!--販売期間-->
+                            <div class="my-1">
+                                <div class="px-2" style="line-height:.8rem;">
+                                    <span class="form-text fw-bold">販売期間:</span>
+
+                                    <div class="form-text">
+                                        {{ $gacha_title['sales_start_at']
+                                        ?  $gacha_title['sales_start_at']->format('Y/m/d H:i')
+                                        : '----/--/-- --:--' }}
+                                        <span>~</span>
+                                        {{ $gacha_title['sales_end_at']
+                                        ? $gacha_title['sales_end_at']->format('Y/m/d H:i')
+                                        : '----/--/-- --:--' }}
+                                    </div>
+                                </div>
                             </div>
+
+                            <!--発送時期-->
+                            <div class="{{ $gacha_title->estimated_shipping_label_style }} w-100"
+                            >{{ $gacha_title->estimated_shipping_label }}</div>
 
                         </a>
 

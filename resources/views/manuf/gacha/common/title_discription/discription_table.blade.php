@@ -29,11 +29,15 @@
         <tbody>
             <tr>
                 <th class="bg-body text- p-" style="width:7rem;">お届け時期</th>
-                <td class="p-">xxxxxx</td>
+                <td class="p-">{{ $gacha_title['estimated_shipping_label']
+                ?  $gacha_title['estimated_shipping_label'].'から順次'
+                : '未定' }}</td>
             </tr>
             <tr>
                 <th class="bg-body text- p-">販売終了</th>
-                <td class="p-">xxxxxx</td>
+                <td class="p-">{{ $gacha_title->sales_end_at
+                ?  $gacha_title->estimated_shipping_at_text
+                : '未定' }}</td>
             </tr>
             <tr>
                 <th class="bg-body text- p-">セット内容</th>

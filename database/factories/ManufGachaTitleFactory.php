@@ -50,6 +50,7 @@ class ManufGachaTitleFactory extends Factory
             ]),
             'age_range'       => rand(0, 20).'才以上',
             'copy_right'      => $this->faker->optional()->company(),
+
         ];
     }
 }
