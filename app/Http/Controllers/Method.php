@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | コントローラー内で利用する　メソッドクラス

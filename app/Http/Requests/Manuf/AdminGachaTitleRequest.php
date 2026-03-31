@@ -29,7 +29,8 @@ class AdminGachaTitleRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+
+        $rules = [
 
             /* 基本情報 */
             'default_name'=> ['required','max:140',],
@@ -46,6 +47,15 @@ class AdminGachaTitleRequest extends FormRequest
             'default_copy_right'      => ['max:140',],//コピーライト
 
         ];
+
+
+        # 更新時のルール
+        if($this->_method=='PATCH'){
+            $rules['image_samune'] = ['file',]; //イメージ画像
+        }
+
+
+        return $rules;
     }
 
 

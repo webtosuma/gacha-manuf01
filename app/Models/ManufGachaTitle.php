@@ -102,6 +102,12 @@ class ManufGachaTitle extends Model
         }
 
 
+        /** ManufGachaTitleMovieモデル リレーション */
+        public function movies(){
+            return $this->hasMany(ManufGachaTitleMovie::class, 'manuf_gacha_title_id');
+        }
+
+
     /*
     |--------------------------------------------------------------------------
     | アクセサー

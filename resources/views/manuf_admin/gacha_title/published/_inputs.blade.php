@@ -32,7 +32,7 @@
             type="datetime-local" class="form-control"
             value="{{old( 'published_end_at',
             $gacha_title['published_end_at'] ? $gacha_title['published_end_at']->format('Y-m-d\TH:i') : null )}}"
-            min="{{ now()->format('Y-m-d\T00:00') }}">
+            >
         </div>
 
 
@@ -58,7 +58,7 @@
             type="datetime-local" class="form-control"
             value="{{old( 'sales_start_at',
             $gacha_title['sales_start_at'] ? $gacha_title['sales_start_at']->format('Y-m-d\TH:i') : null )}}"
-            min="{{ now()->format('Y-m-d\T00:00') }}">
+            >
         </div>
 
 
@@ -70,7 +70,7 @@
             type="datetime-local" class="form-control"
             value="{{old( 'sales_end_at',
             $gacha_title['sales_end_at'] ? $gacha_title['sales_end_at']->format('Y-m-d\TH:i') : null )}}"
-            min="{{ now()->format('Y-m-d\T00:00') }}">
+            >
         </div>
 
 
@@ -95,7 +95,7 @@
             type="datetime-local" class="form-control"
             value="{{old( 'estimated_shipping_at',
             $gacha_title['estimated_shipping_at'] ? $gacha_title['estimated_shipping_at']->format('Y-m-d\TH:i') : null )}}"
-            min="{{ now()->format('Y-m-d\T00:00') }}">
+            >
         </div>
 
 

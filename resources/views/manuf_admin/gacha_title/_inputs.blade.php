@@ -34,6 +34,7 @@
             <span class="text-danger">＊</span>
         </div>
         <select class="form-select" name="category_id">
+
             <option value="">選択してください</option>
 
             @foreach ($categories as $category)
@@ -100,6 +101,56 @@
             <div class="text-danger"> {{$errors->first('image_samune')}} </div>
         @endif
     </label>
+
+
+
+    <!--紹介画像( images image_ids )-->
+    <div class="d-block mb-4">
+        @php
+            $max = 10;
+            $images = old('images', $gacha_title->title_images ?? []);
+        @endphp
+
+        <div class="form-label fw-bold">
+            紹介画像
+        </div>
+
+        <div class="form-text">
+            ※最大10枚 / jpeg・jpg・png / 8MB以内
+        </div>
+
+        <div class="card p-2 bg-white overflow-auto w-100" style="max-width: 700px">
+            <div style="width:{{ 10 * $max }}rem">
+                <div class="row g-2">
+
+                    @for ($i = 0; $i < $max; $i++)
+                        @php
+                            $image = $images[$i] ?? null;
+                            $path = is_object($image) ? $image->image_path : null;
+                            $id   = is_object($image) ? $image->id : null;
+                        @endphp
+
+                        <div class="col">
+
+                            <!-- 画像プレビュー -->
+                            <read-image-file-component
+                                img_path="{{ $path }}"
+                                noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
+                                style_class="ratio ratio-1x1 rounded-3 border"
+                                name="images[{{ $i }}]"
+                                no_text="1"
+                            ></read-image-file-component>
+
+                            <!-- 既存ID -->
+                            <input type="hidden" name="image_ids[{{ $i }}]" value="{{ $id }}">
+
+                        </div>
+                    @endfor
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

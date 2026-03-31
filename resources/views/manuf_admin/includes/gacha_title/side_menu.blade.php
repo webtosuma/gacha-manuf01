@@ -80,6 +80,38 @@
                     <span>{{ $menu['label'] }}</span>
 
 
+                    @switch( $menu['key'] )
+                        @case('gacha_title.title_prize')
+                            <!--タイトル商品-->
+                            @if( $gacha_title->title_prizes->count()<1 )
+                                <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                            @endif
+                            @break
+
+                        @case('gacha_title.machine')
+                            <!--筺体-->
+                            @if( $gacha_title->machines->count()<1 )
+                                <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                            @endif
+                            @break
+
+                        @case('admin.gacha_title.movie')
+                            <!--演出動画-->
+                            @if( $gacha_title->movies->count()<1 )
+                                <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                            @endif
+                            @break
+
+                        @case('admin.gacha_title.published')
+                            <!--販売・公開 期間-->
+                            @if( ! $gacha_title->is_published )
+                                <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                            @endif
+                            @break
+
+                        @default
+                    @endswitch
+
                 </div>
             </a>
 

@@ -3,21 +3,13 @@
 namespace App\Http\Controllers\Manuf;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Method;
 use Illuminate\Http\Request;
 use App\Http\Requests\Manuf\AdminGachaTitleRequest;
-
-// use App\Http\Resources\Admin\ManufGachaTitleResource;//リソース
-use App\Http\Resources\ManufGachaTitleResource;//リソース
-
 use App\Models\GachaCategory;
-// use App\Models\Gacha;
-// use App\Models\GachaDiscription;
-// use App\Models\GachaPrize;
-// use App\Models\Prize;
-// use App\Models\UserGachaHistory;
 use App\Models\UserRankHistory;
-// use App\Models\PointSail;
 use App\Models\ManufGachaTitle;
+use App\Services\Manuf\GachaTitleService;//サービス
 /*
 | =============================================
 |  Manufacturer/Admin : ガチャタイトル コントローラー
@@ -25,6 +17,14 @@ use App\Models\ManufGachaTitle;
 */
 class AdminGachaTitleController extends Controller
 {
+    /** サービスの登録 */
+    protected $service;
+    public function __construct(GachaTitleService $service)
+    {
+        $this->service = $service;
+    }
+
+
     /**
      * 一覧
      *
@@ -64,6 +64,7 @@ class AdminGachaTitleController extends Controller
     }
 
 
+
     /**
      * 新規作成
      *
@@ -72,50 +73,45 @@ class AdminGachaTitleController extends Controller
      */
     public function create()
     {
-        # 新規作成モデル
-        $gacha_title = new ManufGachaTitle();
-
         # カテゴリーデータ(select要素用)
         $categories = GachaCategory::adminList()->get();
+
+        # 新規作成モデル
+        $gacha_title = new ManufGachaTitle();
+        if($categories->count()==1)//カテゴリーがひとつの時
+        {
+            $gacha_title->category_id = $categories[0]->id;
+        }
+
 
         # ユーザーランク
         $user_ranks = UserRankHistory::UserRanks();
 
 
         return view('manuf_admin.gacha_title.create', compact(
-            'gacha_title','categories','user_ranks',
+            'categories','gacha_title','user_ranks',
         ) );
     }
 
 
 
-    /**
-     * 登録
-     *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
-    */
-    public function store( Request $request)
-    {
-        // # 入力データの加工
-        // $inputs = self::processingInputs( $request );
+        /**
+         * 登録
+         *
+         * @param  AdminGachaTitleRequest $request
+         * @return \Illuminate\Http\Response
+        */
+        public function store( AdminGachaTitleRequest $request )
+        {
+            # 登録サービス
+            $gacha_title = $this->service->store($request);
 
+            $request->session()->regenerateToken();// 二重送信防止
 
-        // # DBデータの新規登録
-        // $gacha_title = new ManufGachaTitle( $inputs, $gacha_title=null );
-        // $gacha_title->save();
-
-
-        // # 操作ログの更新
-        // AdminLogController::createLog( 'gacha.create', $gacha_title->id );
-
-        // $request->session()->regenerateToken();// 二重送信防止
-
-            $gacha_title = ManufGachaTitle::first();
-
-        return redirect()->route('admin.gacha_title.show',$gacha_title)
-        ->with(['alert-success'=>'ガチャタイトルの基本情報を新規登録しました']);
-    }
+            return redirect()
+            ->route('admin.gacha_title.show', $gacha_title)
+            ->with(['alert-success' => 'ガチャタイトルの基本情報を新規登録しました']);
+        }
 
 
     /**
@@ -146,22 +142,41 @@ class AdminGachaTitleController extends Controller
          * @param  ManufGachaTitle $gacha_title
          * @return \Illuminate\Http\Response
          */
-        public function update( AdminGachaTitleRequest $request, ManufGachaTitle $gacha_title )
+        public function update(AdminGachaTitleRequest $request, ManufGachaTitle $gacha_title)
         {
-            // # 入力データの加工
-            // $inputs = self::processingInputs( $request, $gacha_title );
-
-            // # DBデータの更新
-            // $gacha->update($inputs);
-
-            // # 操作ログの更新
-            // AdminLogController::createLog( 'gacha.edit', $gacha->id );
-
-            // $request->session()->regenerateToken();// 二重送信防止
+            // dd(
+            //     $request->all()
+            // );
 
 
-            return redirect()->route('admin.gacha_title.show',$gacha_title)
-            ->with(['alert-warning'=>'ガチャタイトルの基本情報を更新しました']);
+            # 更新サービス
+            $this->service->update($request, $gacha_title);
+
+            $request->session()->regenerateToken();// 二重送信防止
+
+            return redirect()
+            ->route('admin.gacha_title.show', $gacha_title)
+            ->with(['alert-warning' => 'ガチャタイトルの基本情報を更新しました']);
         }
+
+
+    /**
+     * 削除
+     *
+     * @param  Request $request
+     * @param  ManufGachaTitle $gacha_title
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request,  ManufGachaTitle $gacha_title )
+    {
+        # DBデータの論理削除
+        $this->service->delete($request, $gacha_title);
+
+        $request->session()->regenerateToken();// 二重送信防止
+
+        return redirect()->route('admin.gacha_title')
+        ->with(['alert-danger'=>'ガチャタイトルを1件削除しました']);
+    }
+
 
 }
