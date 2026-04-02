@@ -14,12 +14,6 @@ Route::middleware(['admin_auth'])->group(function () {
     ->name('admin.gacha_title.title_prize');
 
 
-    // # 詳細
-    // Route::get('/admin/gacha_title/{gacha_title}/title_prize/show/{title_prize}',
-    // [Manuf\AdminGachaTitlePrizeController ::class, 'show'])
-    // ->name('admin.gacha_title.title_prize.show');
-
-
     # 新規登録
     Route::get('/admin/gacha_title/{gacha_title}/title_prize/create',
     [Manuf\AdminGachaTitlePrizeController ::class, 'create'])

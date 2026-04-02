@@ -24,22 +24,23 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
         </nav>
 
 
-        @if( config('gacha.admin.settings') )
-            <div class="d-flex gap-3 mb-3">
-                <a href="{{route('admin.gacha.settings.edit_list')}}" class="btn btn-light rounded-pill shadow py-1">
-                    <div class="d-flex align-items-center gap-2"><i class="bi bi-gear fs-3"></i>設定</div>
+        <div class="d-flex gap-3 mb-3">
+
+            <a href="{{route('admin.gacha_title.create')}}"
+            class="btn btn-primary text-white rounded-pill shadow "
+            ><i class="bi bi-plus-lg me-2"></i>新規登録</a>
+
+            @if( config('gacha.admin.settings') )
+                <a href="{{route('admin.gacha.settings.edit_list')}}" class="btn btn-light rounded-pill border">
+                    <div class="d-flex align-items-center gap-2"><i class="bi bi-gear me-2"></i>設定</div>
                 </a>
-            </div>
-        @endif
+            @endif
+
+        </div>
 
 
         <section>
 
-            <div class="mb-3">
-                <a href="{{route('admin.gacha_title.create')}}"
-                class="btn btn-primary text-white rounded-pill"
-                ><i class="bi bi-plus-lg me-2"></i>新規登録</a>
-            </div>
 
             <div class="row g-3">
                 @foreach ($gacha_titles as $gacha_title)

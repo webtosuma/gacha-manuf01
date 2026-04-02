@@ -39,7 +39,7 @@ class Prize extends Model
      */
     protected static function newFactory()
     {
-        return \Database\Factories\PrizeFactory::new();
+        return \Database\Factories\PrizeFactory::new(); 
     }
 
 

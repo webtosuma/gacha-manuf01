@@ -90,6 +90,13 @@ class ManufGachaTitle extends Model
         }
 
 
+        /** ManufGachaTitlePrizeモデル[公開中のみ] リレーション */
+        public function published_title_prizes(){
+            return $this->hasMany(ManufGachaTitlePrize::class, 'manuf_gacha_title_id')
+            ->whereNotNull('published_at')
+            ;
+        }
+
         /** ManufGachaTitleMachineモデル リレーション */
         public function machines(){
             return $this->hasMany(ManufGachaTitleMachine::class, 'manuf_gacha_title_id');
@@ -143,12 +150,12 @@ class ManufGachaTitle extends Model
 
 
         /**
-         * スライド画像 slide_images
+         * スライド画像(タイトル商品は公開中のみ) slide_images
          */
         public function getSlideImagesAttribute()
         {
-            $titpe_prize_images = ManufGachaTitlePrize::where('manuf_gacha_title_id',$this->id)
-            ->get()->pluck('image_path')->toArray();
+            $titpe_prize_images =
+            $this->published_title_prizes->pluck('image_path')->toArray();
 
 
             return [

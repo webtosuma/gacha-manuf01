@@ -28,8 +28,11 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
     </nav>
 
 
-    <a href="">マシーン</a>
-
+    <div class="mb-3">
+        <a href="{{ route('admin.gacha_title.machine.create',$gacha_title) }}"
+        class="btn btn-primary text-white  rounded-pill shadow"
+        ><i class="bi bi-plus-lg me-2"></i>新規登録</a>
+    </div>
 
 
 @endsection

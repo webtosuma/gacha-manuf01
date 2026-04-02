@@ -114,6 +114,7 @@ class AdminGachaTitleController extends Controller
         }
 
 
+
     /**
      * 基本情報　編集
      *
@@ -142,13 +143,10 @@ class AdminGachaTitleController extends Controller
          * @param  ManufGachaTitle $gacha_title
          * @return \Illuminate\Http\Response
          */
-        public function update(AdminGachaTitleRequest $request, ManufGachaTitle $gacha_title)
-        {
-            // dd(
-            //     $request->all()
-            // );
-
-
+        public function update(
+            AdminGachaTitleRequest $request,
+            ManufGachaTitle $gacha_title
+        ){
             # 更新サービス
             $this->service->update($request, $gacha_title);
 

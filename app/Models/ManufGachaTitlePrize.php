@@ -18,8 +18,8 @@ class ManufGachaTitlePrize extends Model
     protected $fillable = [
         'manuf_gacha_title_id',
         'prize_id',
-        'order',
         'published_at',
+        'order',
     ];
 
 
@@ -37,7 +37,15 @@ class ManufGachaTitlePrize extends Model
         'category'  ,//カテゴリー
         'code',      //商品コード
         'name',      //名前
-        'image_path',//画像ファイルパス
+        'image_path',
+        'rank_id',   //ランクID
+        'discription_text',//ストレージ保存された文章（説明文）
+        'discription_icon_path',//説明文モーダルアイコン
+
+        'r_edit',
+        'r_update',
+        'r_destroy',
+        'r_copy',
     ];
 
 
@@ -65,7 +73,7 @@ class ManufGachaTitlePrize extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | アクセサー
+    | アクセサー(Prize情報)
     |--------------------------------------------------------------------------
     |
     |
@@ -75,7 +83,7 @@ class ManufGachaTitlePrize extends Model
          * @return int|null
          */
         public function getCategoryAttribute(){
-            return $this->prize->category ?? null;
+            return $this->prize?->category ?? null;
         }
 
 
@@ -84,7 +92,7 @@ class ManufGachaTitlePrize extends Model
          * @return string|null
          */
         public function getCodeAttribute(){
-            return $this->prize->code ?? null;
+            return $this->prize?->code ?? null;
         }
 
 
@@ -93,7 +101,7 @@ class ManufGachaTitlePrize extends Model
          * @return string|null
          */
         public function getNameAttribute(){
-            return $this->prize->name ?? null;
+            return $this->prize?->name ?? null;
         }
 
 
@@ -102,8 +110,18 @@ class ManufGachaTitlePrize extends Model
          * @return String
         */
         public function getImagePathAttribute(){
-            return $this->prize->image_path ?? null;
+            return $this->prize?->image_path ?? null;
         }
+
+
+        /**
+         * ランクID rank_id
+         * @return String
+        */
+        public function getRankIdAttribute(){
+            return $this->prize?->rank_id ?? null;
+        }
+
 
 
         /**
@@ -111,7 +129,7 @@ class ManufGachaTitlePrize extends Model
          * @return String
          */
         public function getDiscriptionTextAttribute(){
-            return $this->prize->discription_text;
+            return $this->prize?->discription_text;
         }
 
 
@@ -121,8 +139,64 @@ class ManufGachaTitlePrize extends Model
          */
         public function getDiscriptionIconPathAttribute()
         {
-            return $this->prize->discription_icon_path;
+            return $this->prize?->discription_icon_path;
         }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー ルーティング
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * [ルーティング]編集 r_edit
+         */
+        public function getREditAttribute()
+        {
+            return route('admin.gacha_title.title_prize.edit', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'title_prize' => $this->id,
+            ]);
+        }
+
+        /**
+         * [ルーティング]更新 r_update
+         */
+        public function getRUpdateAttribute()
+        {
+            return route('admin.gacha_title.title_prize.update', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'title_prize' => $this->id,
+            ]);
+        }
+
+        /**
+         * [ルーティング]削除 r_destroy
+         */
+        public function getRDestroyAttribute()
+        {
+            return route('admin.gacha_title.title_prize.destroy', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'title_prize' => $this->id,
+            ]);
+        }
+
+        /**
+         * [ルーティング]コピー r_copy
+         */
+        public function getRCopyAttribute()
+        {
+            return route('admin.gacha_title.title_prize.copy', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'title_prize' => $this->id,
+            ]);
+        }
+
+
 }
 
 

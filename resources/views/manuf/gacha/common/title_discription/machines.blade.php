@@ -56,9 +56,9 @@ border-start border-info border-5
     <div class="d-md-flex justify-content-between p-3">
         <div class="fs-5 text-danger mb-2">*登録されていません</div>
 
-        <a href=""
+        <a href="{{ route('admin.gacha_title.machine.create',$gacha_title) }}"
         class="btn btn-primary text-white  rounded-pill shadow"
-        ><i class="bi bi-plus-lg me-2"></i>筐体の登録</a>
+        ><i class="bi bi-plus-lg me-2"></i>新規登録</a>
     </div>
 
 
