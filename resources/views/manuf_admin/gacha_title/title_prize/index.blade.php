@@ -89,13 +89,13 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                                 ></u-prize-discription>
 
                                 <!--編集ボタン-->
-                                <a href="{{ $title_prize->r_edit }}"
+                                <a href="{{ $title_prize->r_admin_edit }}"
                                 class="btn btn-light border"
                                 ><i class="bi bi-pencil-fill"></i></a>
 
                                 <!--コピーボタン-->
                                 <form
-                                action="{{ $title_prize->r_copy }}"
+                                action="{{ $title_prize->r_admin_copy }}"
                                 method="post"
                                 class="d-inline-block"
                                 >
@@ -118,7 +118,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
                                 <form
-                                action="{{ $title_prize->r_destroy }}"
+                                action="{{ $title_prize->r_admin_destroy }}"
                                 method="post"
                                 class="d-inline-block"
                                 >

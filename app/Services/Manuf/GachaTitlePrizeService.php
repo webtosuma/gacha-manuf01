@@ -25,7 +25,8 @@ class GachaTitlePrizeService
     /**
      * 新規登録
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
+     * @param ManufGachaTitle $gacha_title
      * @return ManufGachaTitlePrize
      */
     public function store($request, $gacha_title): ManufGachaTitlePrize
@@ -55,7 +56,7 @@ class GachaTitlePrizeService
     /**
      * 更新処理
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param ManufGachaTitlePrize $title_prize
      * @return ManufGachaTitlePrize
      */
@@ -83,11 +84,11 @@ class GachaTitlePrizeService
     /**
      * 削除処理
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param ManufGachaTitlePrize $title_prize
      * @return Void
      */
-    public function delete( $request, ManufGachaTitlePrize $title_prize ): void
+    public function delete( $request, $title_prize ): void
     {
         DB::transaction(function () use ($title_prize) {
             $title_prize->delete();

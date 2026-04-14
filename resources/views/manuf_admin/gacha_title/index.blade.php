@@ -40,8 +40,6 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
         <section>
-
-
             <div class="row g-3">
                 @foreach ($gacha_titles as $gacha_title)
                     <div class="col-6 col-md-3 col-lg-3">
@@ -89,6 +87,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             </div>
         </section>
 
+        
 
         {{-- <section class="mb-5">
             <a-gacha-list

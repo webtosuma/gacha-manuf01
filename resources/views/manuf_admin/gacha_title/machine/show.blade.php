@@ -1,19 +1,14 @@
 @extends('manuf_admin.layouts.gacha_title')
 
 
-@section('title',$gacha_title->name.' タイトル商品 編集')
+@section('title',$gacha_title->name.'/'.$machine->name)
 
 
 @section('meta') @php
-$active_key = 'gacha_title.title_prize';
+$active_key = 'gacha_title.machine';
 $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 @endphp @endsection
 
-
-@section('script')
- <!-- フォームのページ離脱防止アラート -->
- <script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
-@endsection
 
 
 
@@ -29,17 +24,17 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             >{{ 'ガチャタイトル一覧' }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.show',$gacha_title) }}"
             >{{$gacha_title->name}}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.title_prize',$gacha_title) }}"
-            >{{ 'タイトル商品' }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ '編集' }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.machine',$gacha_title) }}"
+            >{{ '筐体' }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $machine->name }}</li>
         </ol>
     </nav>
 
 
-    <h5 class="fw-bold">タイトル商品 編集</h5>
+    <h5 class="fw-bold">{{ '筐体 / '.$machine->name }}</h5>
 
 
-    <form action="{{ $title_prize->r_admin_update }}" method="POST"
+    <form action="{{ $machine->r_admin_update }}" method="POST"
     novalidate
     enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
         @csrf
@@ -53,8 +48,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             <div class="col bg-white">
                 <div class="mx-auto" style="max-width:600px;">
 
-
-                    @include('manuf_admin.gacha_title.title_prize._inputs')
+                    main
+                    {{-- @include('manuf_admin.gacha_title.machine._inputs') --}}
 
 
 
@@ -65,7 +60,18 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                 <div class="position-sticky ps-2 " style="top: 0rem; ">
 
 
-                    @include('manuf_admin.gacha_title.title_prize._links')
+                    <div class="p-3 bg-body rounded-4 mb-3">
+
+                        <a href="{{route('admin.gacha_title.machine',$gacha_title),}}"
+                        class="btn btn-light border">< 戻る</a>
+
+                    </div>
+
+
+                    商品残数<br>
+                    履歴<br>
+                    排出履歴<br>
+                    ガチャを回す<br>
 
 
                 </div>

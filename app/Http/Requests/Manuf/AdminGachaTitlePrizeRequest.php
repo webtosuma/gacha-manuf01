@@ -28,7 +28,7 @@ class AdminGachaTitlePrizeRequest extends FormRequest
         $rules = [
 
             'image' => [ 'nullable', 'image', 'max:1024', ],
-            'name'  => [ 'required', 'string', 'max:255', 'regex:/^[^\x{1F300}-\x{1FAFF}]+$/u', ],
+            'name'  => [ 'required', 'string', 'max:140', 'regex:/^[^\x{1F300}-\x{1FAFF}]+$/u', ],
 
             'code'  => [
                 'required',

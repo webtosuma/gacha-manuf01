@@ -42,10 +42,10 @@ class ManufGachaTitlePrize extends Model
         'discription_text',//ストレージ保存された文章（説明文）
         'discription_icon_path',//説明文モーダルアイコン
 
-        'r_edit',
-        'r_update',
-        'r_destroy',
-        'r_copy',
+        // 'r_admin_edit',
+        // 'r_admin_update',
+        // 'r_admin_destroy',
+        // 'r_admin_copy',
     ];
 
 
@@ -57,7 +57,7 @@ class ManufGachaTitlePrize extends Model
     |
     |
     */
-        public function gachaTitle()
+        public function gacha_title()
         {
             return $this->belongsTo(ManufGachaTitle::class, 'manuf_gacha_title_id')
             ->withTrashed();
@@ -118,7 +118,7 @@ class ManufGachaTitlePrize extends Model
          * ランクID rank_id
          * @return String
         */
-        public function getRankIdAttribute(){
+        public function getRAdminankIdAttribute(){
             return $this->prize?->rank_id ?? null;
         }
 
@@ -153,9 +153,9 @@ class ManufGachaTitlePrize extends Model
     */
 
         /**
-         * [ルーティング]編集 r_edit
+         * [ルーティング]編集 r_admin_edit
          */
-        public function getREditAttribute()
+        public function getRAdminEditAttribute()
         {
             return route('admin.gacha_title.title_prize.edit', [
                 'gacha_title' => $this->manuf_gacha_title_id,
@@ -164,9 +164,9 @@ class ManufGachaTitlePrize extends Model
         }
 
         /**
-         * [ルーティング]更新 r_update
+         * [ルーティング]更新 r_admin_update
          */
-        public function getRUpdateAttribute()
+        public function getRAdminUpdateAttribute()
         {
             return route('admin.gacha_title.title_prize.update', [
                 'gacha_title' => $this->manuf_gacha_title_id,
@@ -175,9 +175,9 @@ class ManufGachaTitlePrize extends Model
         }
 
         /**
-         * [ルーティング]削除 r_destroy
+         * [ルーティング]削除 r_admin_destroy
          */
-        public function getRDestroyAttribute()
+        public function getRAdminDestroyAttribute()
         {
             return route('admin.gacha_title.title_prize.destroy', [
                 'gacha_title' => $this->manuf_gacha_title_id,
@@ -186,9 +186,9 @@ class ManufGachaTitlePrize extends Model
         }
 
         /**
-         * [ルーティング]コピー r_copy
+         * [ルーティング]コピー r_admin_copy
          */
-        public function getRCopyAttribute()
+        public function getRAdminCopyAttribute()
         {
             return route('admin.gacha_title.title_prize.copy', [
                 'gacha_title' => $this->manuf_gacha_title_id,

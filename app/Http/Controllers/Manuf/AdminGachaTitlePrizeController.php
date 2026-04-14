@@ -157,7 +157,7 @@ class AdminGachaTitlePrizeController extends Controller
 
         return redirect()
         ->route('admin.gacha_title.title_prize', $gacha_title)
-        ->with(['alert-danger'=>'ガチャタイトルを1件削除しました']);
+        ->with(['alert-danger'=>'タイトル商品を1件削除しました']);
     }
 
 
@@ -181,7 +181,7 @@ class AdminGachaTitlePrizeController extends Controller
 
         return redirect()
         ->route('admin.gacha_title.title_prize', $gacha_title)
-        ->with(['alert-success' => 'タイトル商品をコピーしました']);
+        ->with(['alert-warning' => 'タイトル商品をコピーしました']);
     }
 
 

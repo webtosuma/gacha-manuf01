@@ -29,7 +29,7 @@ class ManufGachaTitleImage extends Model
     |
     */
 
-        public function gachaTitle()
+        public function gacha_title()
         {
             return $this->belongsTo(ManufGachaTitle::class, 'manuf_gacha_title_id')
             ->withTrashed();

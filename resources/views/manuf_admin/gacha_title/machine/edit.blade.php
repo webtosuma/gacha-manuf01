@@ -1,11 +1,11 @@
 @extends('manuf_admin.layouts.gacha_title')
 
 
-@section('title',$gacha_title->name.' タイトル商品 編集')
+@section('title',$gacha_title->name.' 筐体 編集')
 
 
 @section('meta') @php
-$active_key = 'gacha_title.title_prize';
+$active_key = 'gacha_title.machine';
 $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 @endphp @endsection
 
@@ -29,17 +29,17 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             >{{ 'ガチャタイトル一覧' }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.show',$gacha_title) }}"
             >{{$gacha_title->name}}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.title_prize',$gacha_title) }}"
-            >{{ 'タイトル商品' }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.machine',$gacha_title) }}"
+            >{{ '筐体' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ '編集' }}</li>
         </ol>
     </nav>
 
 
-    <h5 class="fw-bold">タイトル商品 編集</h5>
+    <h5 class="fw-bold">筐体 編集</h5>
 
 
-    <form action="{{ $title_prize->r_admin_update }}" method="POST"
+    <form action="{{ $machine->r_admin_update }}" method="POST"
     novalidate
     enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
         @csrf
@@ -54,7 +54,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                 <div class="mx-auto" style="max-width:600px;">
 
 
-                    @include('manuf_admin.gacha_title.title_prize._inputs')
+                    @include('manuf_admin.gacha_title.machine._inputs')
 
 
 
@@ -65,7 +65,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                 <div class="position-sticky ps-2 " style="top: 0rem; ">
 
 
-                    @include('manuf_admin.gacha_title.title_prize._links')
+                    @include('manuf_admin.gacha_title.machine._links')
 
 
                 </div>
