@@ -16,6 +16,10 @@
 
         <h5 class="fw-bold mb-4">筐体基本情報</h5>
 
+        <div class="form-text mb-4">
+            <span class="text-danger">＊</span>入力必須
+        </div>
+        
         <!--筐体名(name・default_name)-->
         <label class="d-block mb-4">
             <div class="form-label fw-bold">
@@ -169,11 +173,51 @@
 
 
     <div class="my-3">
-        @if (!$machine->id)
+    @if (!$machine->id)
+        <button class="btn btn-success text-white w-100 shadow" 
+        data-bs-toggle="modal" data-bs-target="#deleteModalupdate" 
+        type="button"
+        >登録する</bbutton>
+    @else
+        <button class="btn btn-warning w-100 shadow" 
+        data-bs-toggle="modal" data-bs-target="#deleteModalupdate" 
+        type="button"
+        >更新する</bbutton>
+    @endif
+
+        {{-- @if (!$machine->id)
             <disabled-button style_class="btn btn-success text-white w-100 shadow" btn_text="登録する"></bdisabled-button>
         @else
             <disabled-button style_class="btn btn-warning w-100 shadow" btn_text="更新する"></bdisabled-button>
-        @endif
+        @endif --}}
+
+
+        {{-- @php
+        $btn_color = !$machine->id ? 'success' : 'warning';
+        $btn_text  = !$machine->id ? '登録する' : '更新する';
+        $btn_class = (!$machine->id ? 'btn-success text-white' : 'btn-warning').' btn  w-100 shadow'
+        @endphp
+        <delete-modal-component
+        index_key="update"
+        icon="bi-exclamation-triangle"
+        func_btn_type="submit"
+        color        ="{{$btn_color}}"
+        button_text  ="{{$btn_text}}"
+        button_class ="{{$btn_class}}">
+            <div class="text-danger fs-6">
+
+                <div class="fs-5 mb-4">ご注意ください！</div>
+                <br>
+
+                <div class="mt-3">
+                    ガチャ公開中や、ガチャ商品の残量が減っている状態で登録商品を更新すると、排出商品数がズレる可能性があります。
+                </div>
+
+
+                <div class="fs-5 mt-3 text-dark">更新してもよろしいですか？</div>
+            </div>
+        </delete-modal-component>         --}}
+
     </div>
 
 

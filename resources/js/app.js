@@ -65,6 +65,7 @@ require('./components/ExampleComponent.vue').default);
 */
 
     require('./app_manuf.js');
+    require('./app_manuf_admin.js');
 
 
 
