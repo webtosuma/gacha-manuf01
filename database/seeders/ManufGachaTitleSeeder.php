@@ -74,7 +74,18 @@ class ManufGachaTitleSeeder extends Seeder
                 }
 
 
-                #4. 筐体登録
+                #4. タイトル演出動画
+                $title_movies = $gacha_title->title_movies;
+                foreach ($title_movies as $title_movie) {
+                    ManufGachaTitleMovie::create([
+                        'manuf_gacha_title_id' => $gacha_title->id,
+                        'gacha_rank_id'        => $title_movie->gacha_rank_id,
+                        'movie_id'             => 1,
+                    ]);
+                }
+
+
+                #5. 筐体登録
                 for ($num=1; $num <=5 ; $num++)
                 {
                     ### ガチャマシーン
@@ -104,22 +115,23 @@ class ManufGachaTitleSeeder extends Seeder
                         $gacha_discription->save();
 
                         ### ガチャ演出動画
-                        $gacha_rank_movie = new GachaRankMovie([
-                            'gacha_id'     => $gacha->id,
-                            'movie_id'     => 1,
-                            'gacha_rank_id'=>$gacha_rank_id,//ランクID
-                        ]);
-                        $gacha_rank_movie->save();
+                        // $gacha_rank_movie = new GachaRankMovie([
+                        //     'gacha_id'     => $gacha->id,
+                        //     'movie_id'     => 1,
+                        //     'gacha_rank_id'=>$gacha_rank_id,//ランクID
+                        // ]);
+                        // $gacha_rank_movie->save();
 
 
                         ### ガチャ商品登録
-                        $title_prizes = $gacha_title->title_prizes;
+                        $title_prizes = $gacha_title->title_prizes; 
                         foreach ($title_prizes as $title_prize)
                         {
                             $prize = $title_prize->prize;
+                            // dd($prize);
 
                             # 該当ランクでない時は、登録をスキップ
-                            if($gacha_rank_id!=$prize->rank_id){ continue; }
+                            if($gacha_rank_id!=300){ continue; }
 
                             $gacha_prize = new GachaPrize([
                                 'gacha_id'        => $gacha->id,

@@ -210,7 +210,8 @@ class ManufGachaTitle extends Model
             $text_model = new Text();
 
             return $text_model->gacha_settings_card_image
-            ? $text_model->gacha_settings_card_image_head : null;
+            ? $text_model->gacha_settings_card_image_head 
+            : asset( 'storage/site/image/machine/head.png' );
         }
 
 
@@ -225,7 +226,8 @@ class ManufGachaTitle extends Model
             $text_model = new Text();
 
             return $text_model->gacha_settings_card_image
-            ? $text_model->gacha_settings_card_image_body : null;
+            ? $text_model->gacha_settings_card_image_body 
+            : asset( 'storage/site/image/machine/body.png' );
         }
 
 

@@ -266,7 +266,7 @@ class GachaTitleService
 
 
     /**
-     * 販売・公開期間の更新
+     * 演出動画情報の更新
      *
      * @param \Illuminate\Http\Request $request
      * @param ManufGachaTitle $gacha_title
