@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /*
 ==========================================================================
  Manufacturer:ルーティング　 
@@ -11,7 +11,7 @@ Route::middleware([
 
 
     include('admin/web.php');
-    // include('admin/api.php');
+    include('admin/api.php');
 
     include('user/web.php');
 

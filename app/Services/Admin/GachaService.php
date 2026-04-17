@@ -4,8 +4,7 @@ namespace App\Services\Admin;
 
 use App\Models\Gacha;
 use App\Models\GachaPrize;
-use App\Models\ManufGachaTitle;
-use App\Models\ManufGachaTitleMachine;
+use App\Models\GachaDiscription;
 use App\Services\StorageService;
 use Illuminate\Support\Facades\DB;
 /*
@@ -28,9 +27,9 @@ class GachaService
      * 新規登録
      *
      * @param \Illuminate\Http\Request $request
-     * @return ManufGachaTitleMachine
+     * @return Gacha
      */
-    public function store($request): ManufGachaTitleMachine
+    public function store($request): Gacha
     {
         return DB::transaction(function () use ($request) {
 
@@ -85,6 +84,8 @@ class GachaService
         });
     }
 
+
+    
 
     /**
      * 入力データの加工 self::processingInputs( $request )

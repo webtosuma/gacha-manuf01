@@ -114,6 +114,28 @@ class ManufGachaTitle extends Model
             return $this->hasMany(ManufGachaTitleMovie::class, 'manuf_gacha_title_id');
         }
 
+        /** ManufGachaTitleMovie リレーション title_movies(編集用) */
+        public function getTitleMoviesAttribute()
+        {
+            # ガチャランク配列の取得
+            $discriptions_ranks = GachaDiscription::gacha_ranks();
+
+            $array = [];
+            foreach ($discriptions_ranks as $gacha_rank_id => $discriptions_rank)
+            {
+                $title_movie = 
+                ManufGachaTitleMovie::where('manuf_gacha_title_id',$this->id)
+                ->where('gacha_rank_id',$gacha_rank_id)
+                ->first();
+
+                $array[] = $title_movie ?? new ManufGachaTitleMovie([
+                    'movie_id'     =>null,
+                    'gacha_rank_id'=>$gacha_rank_id,            
+                ]);
+            }
+
+            return $array;
+        }
 
     /*
     |--------------------------------------------------------------------------

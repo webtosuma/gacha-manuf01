@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Manuf;
-
+use App\Http\Controllers\Store;
 /**
  * *********************************************************************
  *   Manufacturer:管理者(Admin) webルーティング

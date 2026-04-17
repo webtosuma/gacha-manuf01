@@ -8,6 +8,7 @@ use App\Http\Requests\Manuf\AdminGachaTitleMachineRequest;
 use App\Models\ManufGachaTitle;
 use App\Models\ManufGachaTitleMachine;
 use App\Services\Manuf\GachaTitleMachineService;
+use App\Services\Admin\GachaPrizeService;
 /*
 | =============================================
 |  Manufacturer/Admin : ガチャタイトル 筺体 コントローラー
@@ -16,9 +17,15 @@ use App\Services\Manuf\GachaTitleMachineService;
 class AdminGachaTitleMachineController extends Controller
 {
     /** サービスの登録 */
-    public function __construct(GachaTitleMachineService $service)
+    protected $service;
+    protected $gachaPrizeService;
+    public function __construct(
+        GachaTitleMachineService $service,
+        GachaPrizeService $gachaPrizeService
+    )
     {
         $this->service = $service;
+        $this->gachaPrizeService = $gachaPrizeService;
     }
 
 
@@ -89,13 +96,13 @@ class AdminGachaTitleMachineController extends Controller
             ManufGachaTitle $gacha_title
         ){
             # 登録サービス
-            $this->service->store($request, $gacha_title);
+            $machine = $this->service->store($request, $gacha_title);
+
 
             $request->session()->regenerateToken();// 二重送信防止
 
-            return redirect()
-            ->route('admin.gacha_title.machine', $gacha_title)
-            ->with(['alert-success' => '筐体を新規登録しました']);
+            return redirect($machine->r_admin_edit)
+            ->with(['alert-success' => "筐体を新規登録しました。\n口数の登録を行なってください。"]);
         }
 
 
@@ -111,7 +118,6 @@ class AdminGachaTitleMachineController extends Controller
         ManufGachaTitle $gacha_title ,
         ManufGachaTitleMachine $machine
     ){
-
         return view('manuf_admin.gacha_title.machine.edit', compact(
             'gacha_title','machine',
         ) );
@@ -133,6 +139,10 @@ class AdminGachaTitleMachineController extends Controller
         ){
             # 更新サービス
             $this->service->update($request, $machine);
+
+            # 登録商品の更新サービス
+            $gacha = $machine->gacha;
+            $this->gachaPrizeService->update($request, $gacha);
 
             $request->session()->regenerateToken();// 二重送信防止
 

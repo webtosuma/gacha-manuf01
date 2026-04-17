@@ -10,7 +10,7 @@
             class="btn btn-light border">< 戻る</a>
         @else
             <a href="{{route('admin.gacha_title.show',$gacha_title)}}"
-            class="btn btn-light border">< 基本情報</a>
+            class="btn btn-light border">< 基本情報へ 戻る</a>
         @endif
 
         <div class="my-3">

@@ -2,10 +2,13 @@
 
 namespace App\Services\Manuf;
 
-use App\Models\ManufGachaTitle;
 use App\Services\StorageService;//ストレージ保存サービス
 use Illuminate\Support\Facades\DB;//トランジクション対応
+use App\Models\ManufGachaTitle;
 use App\Models\ManufGachaTitleImage;
+use App\Models\ManufGachaTitleMovie;
+use PhpParser\Node\Expr\Cast\Void_;
+
 /*
 | =============================================
 |  Manufacturer : ガチャタイトル サービス
@@ -256,6 +259,78 @@ class GachaTitleService
             $gacha_title->update($inputs);
 
             return $gacha_title;
+
+        });
+    }
+
+
+
+    /**
+     * 販売・公開期間の更新
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param ManufGachaTitle $gacha_title
+     * @return Void
+     */
+    public function moviesUpdate( $request, ManufGachaTitle $gacha_title ): void
+    {
+        DB::transaction(function () use ($request, $gacha_title) {
+
+            # 画像配列
+            $movieIdArray = [];
+            foreach ($request->all() as $key => $value) {
+                if (str_starts_with($key, 'gacha_rank_id_')) {
+                    // 接頭辞を除去
+                    $newKey = str_replace('gacha_rank_id_', '', $key);
+                    $movieIdArray[$newKey] = $value;
+                }
+            }
+
+            
+            # 既存データ取得（このタイトルに紐づく全て）
+            $existing = ManufGachaTitleMovie::where('manuf_gacha_title_id', $gacha_title->id)
+            ->get()
+            ->keyBy('gacha_rank_id');
+
+
+            # ① 登録・更新処理
+            foreach ($movieIdArray as $gacha_rank_id => $movie_id) {
+
+                ## ガチャランクIDに該当する、タイトル動画データ
+                $title_movie = $existing->get($gacha_rank_id);
+
+                ## ガチャランクIDに該当する、画像選択があるとき
+                if ($movie_id) 
+                {
+                    ### 新規登録
+                    if ( ! $title_movie ) {
+                                            
+                        ManufGachaTitleMovie::create([
+                            'manuf_gacha_title_id' => $gacha_title->id,
+                            'gacha_rank_id'        => $gacha_rank_id,
+                            'movie_id'             => $movie_id,
+                        ]);
+                        
+                    } 
+                    ### 更新
+                    else {
+                        $title_movie->update([ 'movie_id' => $movie_id, ]);
+                    }
+                } 
+                ## ガチャランクIDに該当する、画像選択がない　→ 削除対象
+                else {
+                    if ($title_movie) { $title_movie->delete(); }
+                }
+            }
+
+
+            # ② リクエストに存在しない rank の削除
+            foreach ($existing as $gachaRankId => $title_movie) {
+                if (!array_key_exists($gachaRankId, $movieIdArray)) {
+                    $title_movie->delete();
+                }
+            }
+
 
         });
     }

@@ -19,9 +19,9 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnDelete();
 
-            $table->foreignId('gacha_id')
-            ->constrained()
-            ->cascadeOnDelete();
+            // $table->foreignId('gacha_id')
+            // ->constrained()
+            // ->cascadeOnDelete();
 
             $table->foreignId('movie_id')
             ->constrained()

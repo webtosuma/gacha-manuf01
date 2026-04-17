@@ -16,7 +16,6 @@ class ManufGachaTitleMovie extends Model
 
     protected $fillable = [
         'manuf_gacha_title_id',
-        'gacha_id',
         'movie_id',
         'gacha_rank_id',
     ];
@@ -61,6 +60,15 @@ class ManufGachaTitleMovie extends Model
     |
     |
     */
+        /**
+         * ランクのラベルテキスト rank_label
+         * @return String
+        */
+        public function getRankLabelAttribute()
+        {
+            $gacha_ranks = GachaDiscription::gacha_ranks();
+            return $gacha_ranks[ $this->gacha_rank_id ];
+        }
 
 
 }

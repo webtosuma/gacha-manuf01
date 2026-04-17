@@ -160,7 +160,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
         <!--flex-c2-1 -->
-        <div class="col order-2">
+        <div class="col">
             <div class="mx-auto" style="max-width:600px;">
 
 
@@ -180,7 +180,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             </div>
         </div>
         <!--flex-c2-2 -->
-        <aside class="col-12 col-lg-4 pe-0  order-1 order-lg-2">
+        <aside class="col-12 col-lg-4 pe-0">
             <div class="position-sticky ps-2 pb-3 border-bottom mb-3" style="top: 0rem; ">
                 <div class="p-3 bg-body rounded-4 mb-4">
                     <div class="row">

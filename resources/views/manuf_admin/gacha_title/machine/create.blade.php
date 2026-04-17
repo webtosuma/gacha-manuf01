@@ -52,7 +52,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             <div class="col bg-white">
 
 
-                @include('manuf_admin.gacha_title.machine._inputs')
+                @include('manuf_admin.gacha_title.machine._machine_inputs')
 
 
             </div>
@@ -61,8 +61,21 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                 <div class="position-sticky ps-2 " style="top: 0rem; ">
 
 
-                    @include('manuf_admin.gacha_title.machine._links')
 
+                    <div class="p-3 bg-body rounded-4">
+
+                        <a href="{{route('admin.gacha_title.machine',$gacha_title),}}"
+                        class="btn btn-light border">< 戻る</a>
+                
+                    </div>
+
+
+                    <div class="my-3">
+                        <disabled-button style_class="btn btn-success text-white w-100 shadow" 
+                        btn_text="登録する"></bdisabled-button>
+                    </div>
+                
+                
 
                 </div>
             </aside>

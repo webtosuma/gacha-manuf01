@@ -60,8 +60,9 @@ class Prize extends Model
     /** アクセサーをJSONに含める */
     protected $appends = [
         'image_path',            //画像ファイルパス
-        'discription_icon_path', //説明文モーダルアイコン
+        'is_used',               //利用中か否か 
         'discription_text',      //説明文
+        'discription_icon_path', //説明文モーダルアイコン
     ];
 
     /*

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Prize;
-use App\Models\GachaCategory;
 use App\Models\PrizeRank;
+use App\Services\Admin\ApiPrizeService;
+
 /*
 | =============================================
 |  商品情報 サイト管理者API コントローラー
@@ -13,6 +14,13 @@ use App\Models\PrizeRank;
 */
 class AdminApiPrizeController extends Controller
 {
+    /** サービスの登録 */
+    protected $service;
+    public function __construct(ApiPrizeService $service)
+    {
+        $this->service = $service;
+    }
+    
     /**
      * 一覧取得
      *
@@ -21,8 +29,10 @@ class AdminApiPrizeController extends Controller
      */
     public function index(Request $request)
     {
-        # 商品情報の取得
-        $prizes = self::getPrizes($request);
+        # 一覧
+        $per_page = $request->pre_page ?? 20;
+        $prizes = $this->service->getPrizes($request)
+        ->paginate($per_page);
 
         # その他のデータ
         $prize_ranks = PrizeRank::all();//評価ランクデータ
@@ -30,139 +40,6 @@ class AdminApiPrizeController extends Controller
         return response()->json( compact('prizes' ,'prize_ranks') );
     }
 
-
-        /**
-         * 商品情報の取得
-         * @return Prizes $prizes
-         */
-        public static function getPrizes($request)
-        {
-            $query = Prize::query();
-
-                # カテゴリーとのリレーションがあること
-                $query->has('category');
-
-                # キーワード(key_words)から検索
-                self::KeyWordSearch($request, $query);
-
-                # カテゴリーの選択
-                if(  $request->category_id ){
-                    $query->where('category_id', $request->category_id);
-                }
-
-                # 並び替え：コードネーム順
-                if( $request->order_code ){
-                    $query->orderBy('code', $request->order_code);
-                }
-
-                # 並び替え：商品名順
-                if( $request->order_name ){
-                    $query->orderBy('name', $request->order_name);
-                }
-
-                # 並び替え：ランク
-                if( $request->order_rank_id ){
-                    $query->orderBy('rank_id', $request->order_rank_id);
-                }
-
-                # 絞り込み：ランク
-                if( $request->where_rank_id ){
-                    $query->where('rank_id', $request->where_rank_id);
-                }
-
-                # 並び替え：ポイント
-                if( $request->order_point ){
-                    $query->orderBy('point', $request->order_point);
-                }
-
-                # 並び替え：チケット
-                if( $request->order_ticket ){
-                    $query->orderBy('ticket', $request->order_ticket);
-                }
-
-                # 並び替え：更新日
-                if( $request->updated_at ){
-                    $query->orderBy('updated_at', $request->updated_at);
-                }else{
-                    $query->orderByDesc('created_at');
-                }
-
-                # ポイント最大値
-                if( $request->max_point ){
-                    $query->where('point','<=', $request->max_point);
-                }
-
-                # ポイント最低値
-                if( $request->min_point ){
-                    $query->where('point','>=', $request->min_point);
-                }
-
-                # チケット最大値
-                if( $request->max_ticket ){
-                    $query->where('ticket','<=', $request->max_ticket);
-                }
-
-                # チケット最低値
-                if( $request->min_ticket ){
-                    $query->where('ticket','>=', $request->min_ticket);
-                }
-
-                # 指定したIDを含む
-                if( $request->ids ){
-                    $query->whereIn('id', $request->ids);
-                }
-
-                # 指定したIDを除く
-                if( $request->not_ids ){
-                    $query->whereNotIn('id', $request->not_ids);
-                }
-
-            // $prizes = $query->with('rank')->get();
-            $prizes = $query->with('rank')->paginate(20);
-
-            # 画像パスの登録
-            foreach ($prizes as $prize) {
-                $prize->image_path = $prize->image_path;
-                $prize->is_used = $prize->is_used;
-            }
-
-            return $prizes;
-        }
-
-
-        /**
-         * キーワード(key_words)から検索するメソッド holiday_summary
-         *
-         * @param \Illuminate\Http\Request $req
-         * @param App\Models\Recruit::query $query
-         * @return App\Models\Recruit::query
-         */
-        public static function KeyWordSearch($req, $query)
-        {
-            #検索パラメータが存在するか
-            if( !$req->has('key_words') ){ return; }
-
-
-            #文字列を配列へ変換
-            $key_words = self::ArrayConvertString( $req->key_words );
-
-
-            #検索条件の絞り込み(全ての条件に該当するデータを検索:and)
-            foreach ($key_words as $key_word) {
-
-                $query->where(function($q) use ($key_word) {
-
-                    $q->where('code', 'like', '%' . $key_word . '%')
-                    ->orWhere('name', 'like', '%' . $key_word . '%')
-                    // ->orWhere('point'        , 'like', '%' . $key_word . '%') //職種
-                    ;
-
-                });
-
-            }
-
-            // return $query;
-        }
 
 
 
@@ -268,19 +145,5 @@ class AdminApiPrizeController extends Controller
         return response()->json(['message'=>'multiple destroy OK!','inputs'=>$request->all()]);
     }
 
-
-
-    /**
-     * 文字列を配列へ変換
-     *
-     * @param  String $string
-     * @return Array
-     */
-    public static function ArrayConvertString($string)
-    {
-        $string = str_replace('　',' ',$string);
-        $array  = explode(' ',$string);
-        return $array;
-    }
 
 }

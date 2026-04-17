@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 class GachaTitleMachineService
 {
     protected $storage;
+    protected $gachaService;
 
     public function __construct(
         StorageService $storage,

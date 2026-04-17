@@ -1,7 +1,7 @@
 @extends('manuf_admin.layouts.gacha_title')
 
 
-@section('title',$gacha_title->name.' 演出動画 編集')
+@section('title',$gacha_title->name.' 演出動画 設定')
 
 
 @section('meta') @php
@@ -29,10 +29,53 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             >{{ 'ガチャタイトル一覧' }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('admin.gacha_title.show',$gacha_title) }}"
             >{{$gacha_title->name}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ '演出動画 編集' }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ '演出動画 設定' }}</li>
         </ol>
     </nav>
 
+
+    <h5 class="fw-bold">演出動画 設定</h5>
+
+
+    <form action="{{ route('admin.gacha_title.movie.update', $gacha_title) }}" 
+    method="POST"
+    novalidate
+    enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
+        @csrf
+        @method('PATCH')
+
+
+        <div class="row mx-0 g-0 g-md-3" style="min-height:90vh;">
+
+
+            <!--flex-c2-1 -->
+            <div class="col bg-white">
+                <div class="mx-auto">
+
+
+                    @include('manuf_admin.gacha_title.movie._inputs')
+
+
+
+                </div>
+            </div>
+            <!--flex-c2-2 -->
+            <aside class="col-12 col-md-4 pe-0  order-1 order-md-2">
+                <div class="position-sticky ps-2 " style="top: 0rem; ">
+
+
+                    @include('manuf_admin.gacha_title.movie._links')
+
+
+                </div>
+            </aside>
+
+
+        </div>
+
+
+
+    </form>
 
 
 @endsection

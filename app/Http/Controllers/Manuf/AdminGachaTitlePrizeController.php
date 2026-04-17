@@ -18,6 +18,7 @@ use App\Services\Manuf\GachaTitlePrizeService;
 class AdminGachaTitlePrizeController extends Controller
 {
     /** サービスの登録 */
+    protected $service;
     public function __construct(GachaTitlePrizeService $service)
     {
         $this->service = $service;

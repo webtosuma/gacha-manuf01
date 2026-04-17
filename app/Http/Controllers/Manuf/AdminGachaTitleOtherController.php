@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Manuf;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Manuf\AdminGachaTitlePublishedRequest;
-use Illuminate\Http\Request;
+use App\Models\Movie;
 use App\Models\ManufGachaTitle;
 use App\Services\Manuf\GachaTitleService;
 /*
@@ -15,7 +16,7 @@ use App\Services\Manuf\GachaTitleService;
 class AdminGachaTitleOtherController extends Controller
 {
     /** サービスの登録 */
-    protected GachaTitleService $service;
+    protected $service;
     public function __construct(GachaTitleService $service)
     {
         $this->service = $service;
@@ -31,10 +32,41 @@ class AdminGachaTitleOtherController extends Controller
      */
     public function movie_edit( ManufGachaTitle $gacha_title )
     {
+        # タイトル動画一覧
+        $title_movies = $gacha_title->title_movies;
+
+        # 演出動画一覧
+        $movies = Movie::where('mobile_storage','<>','')->get();
+
         return view('manuf_admin.gacha_title.movie.edit', compact(
-            'gacha_title'
+            'gacha_title','title_movies','movies',
         ) );
     }
+
+
+
+        /**
+         * 演出動画情報の更新
+         *
+         * @param \Illuminate\Http\Request $request
+         * @param  ManufGachaTitle $gacha_title
+         * @return \Illuminate\Http\Response
+         */
+        public function movie_update( 
+            Request $request, 
+            ManufGachaTitle $gacha_title 
+        ){
+            # 更新サービス
+            $this->service->moviesUpdate( $request, $gacha_title );
+
+            $request->session()->regenerateToken(); // 二重送信防止
+
+
+            # リダイレクト
+            return redirect()
+            ->route('admin.gacha_title.show', $gacha_title)
+            ->with(['alert-warning' => 'ガチャタイトルの演出動画設定を更新しました']);
+        }
 
 
 
@@ -54,8 +86,8 @@ class AdminGachaTitleOtherController extends Controller
         /**
          * 販売・公開期間の更新
          *
-         * @param \Illuminate\Http\Request $request
-         * @param  \App\Models\Gacha  $gacha
+         * @param AdminGachaTitlePublishedRequest $request
+         * @param ManufGachaTitle $gacha_title
          * @return \Illuminate\Http\Response
          */
         public function published_update(

@@ -21,9 +21,9 @@ Route::middleware(['admin_auth'])->group(function () {
 
 
     # API ガチャタイトル一覧の取得
-    Route::post('admin/api/gacha_title',
-    [Manuf\AdminApiGatyaTitleController::class, 'index'])
-    ->name('admin.api.gacha_title');
+    // Route::post('admin/api/gacha_title',
+    // [Manuf\AdminApiGatyaTitleController::class, 'index'])
+    // ->name('admin.api.gacha_title');
 
 
 
