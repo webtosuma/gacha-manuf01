@@ -31,13 +31,13 @@
 
     <img src="{{$gacha_title->img_path_card_body}}" alt="" class="d-block w-100">
 
-    @if( isset( $machine_text ) )
+    {{-- @if( isset( $machine_text ) )
         <!--タイトル-->
         <h6 class="
         position-absolute bottom-0 start-0 w-100
         text-truncate form-text fw-bold px-2
         " >{{ $gacha_title->name }}</h6>
-    @endif
+    @endif --}}
 
 </div>
 

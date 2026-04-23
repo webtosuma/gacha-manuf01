@@ -11,7 +11,7 @@ use App\Services\Admin\GachaService;
 use Illuminate\Support\Facades\DB;
 /*
 | =============================================
-|  Manufacturer/Admin : ガチャタイトル 筺体 サービス
+|  Manufacturer/Admin : ガチャタイトル 筺体 サービス 
 | =============================================
 */
 class GachaTitleMachineService

@@ -18,33 +18,8 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
 @section('script')
- @include('manuf.gacha.common.js')
-     <script>
-        "use strict";
-        /**
-         * ==========================================
-         *  スライダー(splide)　JS
-         * ==========================================
-        */
-        document.addEventListener( 'DOMContentLoaded', function() {
 
-
-            /* PC */
-            var splidePc = new Splide( '#splide_mobile', {
-
-                type     : 'loop',
-                padding: '50px',
-                focus  : 'center',
-                perPage : 3, //3
-                autoplay: true,
-                pagination : false,
-
-            } );
-            splidePc.mount();
-
-        } ) ;
-
-    </script>
+ @include('manuf.gacha.common.js') 
 
 @endsection
 
@@ -66,7 +41,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
     <!--マシーン詳細　offcanvace-->
-    @foreach ($gacha_title->machines as $machine)
+    {{-- @foreach ($gacha_title->machines as $machine)
 
         <div class="offcanvas offcanvas-start  "
         tabindex="-1" id="oc_prizes{{ $machine->id }}" aria-labelledby="oc_prizes{{ $machine->id }}Label"
@@ -153,14 +128,15 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             </div>
         </div>
 
-    @endforeach
+    @endforeach --}}
+    {{-- @include('manuf.gacha.common.title_discription.machine_offcanvace') --}}
 
 
     <div class="row mx-0 g-0 g-md-3" style="min-height:90vh;">
 
 
         <!--flex-c2-1 -->
-        <div class="col">
+        <div class="col-12 col-lg-8">
             <div class="mx-auto" style="max-width:600px;">
 
 
@@ -180,8 +156,10 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
             </div>
         </div>
         <!--flex-c2-2 -->
-        <aside class="col-12 col-lg-4 pe-0">
+        <aside class="col pe-0">
             <div class="position-sticky ps-2 pb-3 border-bottom mb-3" style="top: 0rem; ">
+
+
                 <div class="p-3 bg-body rounded-4 mb-4">
                     <div class="row">
                         <div class="col">
@@ -207,6 +185,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
                 </div>
+
                 <div class="p-3 bg-body rounded-4 mb-4">
 
 

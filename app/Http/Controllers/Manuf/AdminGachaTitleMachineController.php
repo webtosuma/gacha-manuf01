@@ -11,7 +11,7 @@ use App\Services\Manuf\GachaTitleMachineService;
 use App\Services\Admin\GachaPrizeService;
 /*
 | =============================================
-|  Manufacturer/Admin : ガチャタイトル 筺体 コントローラー
+|  Manufacturer/Admin : ガチャタイトル 筺体 コントローラー 
 | =============================================
 */
 class AdminGachaTitleMachineController extends Controller

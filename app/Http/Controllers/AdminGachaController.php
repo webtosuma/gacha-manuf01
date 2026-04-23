@@ -14,7 +14,7 @@ use App\Models\UserRankHistory;
 use App\Models\PointSail;
 /*
 | =============================================
-|  サイト管理者 ガチャ コントローラー
+|  サイト管理者 ガチャ コントローラー 
 | =============================================
 */
 class AdminGachaController extends Controller

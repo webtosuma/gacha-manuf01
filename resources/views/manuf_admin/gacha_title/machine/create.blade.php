@@ -49,7 +49,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
 
             <!--flex-c2-1 -->
-            <div class="col bg-white">
+            <div class="col-12 col-lg-8 bg-white">
 
 
                 @include('manuf_admin.gacha_title.machine._machine_inputs')
@@ -57,7 +57,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
 
             </div>
             <!--flex-c2-2 -->
-            <aside class="col-12 col-lg-4 pe-0  order-1 order-md-2">
+            <aside class="col pe-0  order-1 order-md-2">
                 <div class="position-sticky ps-2 " style="top: 0rem; ">
 
 

@@ -37,7 +37,7 @@ class AdminGachaTitleController extends Controller
         # カテゴリーコードの確認
         $category_code = $request->category_code;
         $gacha_category = GachaCategory::where('code_name',$category_code)->first();
-        if(!$gacha_category&&$category_code){ return \App::abort(404); }//該当なし
+        if(!$gacha_category&&$category_code){ return abort(404); }//該当なし
 
         # タイトル一覧
         $gacha_titles = ManufGachaTitle::orderByDesc('created_at')->get();
@@ -60,7 +60,11 @@ class AdminGachaTitleController extends Controller
      */
     public function show( ManufGachaTitle $gacha_title )
     {
-        return view('manuf_admin.gacha_title.show', compact('gacha_title'));
+        $machines = $gacha_title->machines;
+
+        return view('manuf_admin.gacha_title.show', compact(
+            'gacha_title','machines',
+        ));
     }
 
 

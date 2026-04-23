@@ -9,15 +9,15 @@ use App\Http\Controllers\GachaApiController;
 use App\Http\Controllers\InfomationController;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\DB;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
-use App\Models\UserGachaHistory;
-use App\Models\UserPrize;
-use App\Models\PointHistory;
-use App\Models\Infomation;
-use App\Models\Movie;
+// use App\Models\UserGachaHistory;
+// use App\Models\UserPrize;
+// use App\Models\PointHistory;
+// use App\Models\Infomation;
+// use App\Models\Movie;
 use App\Models\Text;
 
 use App\Models\ManufGachaTitle;
@@ -39,7 +39,7 @@ class ManufGachaController extends Controller
     {
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
-        if( $category_code!='all' && !$category ){ return \App::abort(404); }
+        if( $category_code!='all' && !$category ){ return abort(404); }
 
 
         # 変数
@@ -108,27 +108,27 @@ class ManufGachaController extends Controller
     public function show( $category_code, $title_code)
     {
         # ガチャタイトル
-        $manuf_gacha_title = ManufGachaTitle::where('code',$title_code)->first();
+        $gacha_title = ManufGachaTitle::where('code',$title_code)->first();
 
         # キーのチェック
         if(
 
-            !isset($manuf_gacha_title)
-            || $manuf_gacha_title->category->code_name!=$category_code
-            || !$manuf_gacha_title->is_published//公開有無
+            !isset($gacha_title)
+            || $gacha_title->category->code_name!=$category_code
+            || !$gacha_title->is_published//公開有無
 
-        ){ return \App::abort(404); }
+        ){ return abort(404); }
 
-        $gacha = $manuf_gacha_title->machines[0]->gacha;
-        // dd($gacha);
+        # 筐体
+        $machines = $gacha_title->machines;
 
         # 背景画像
-        $category = $gacha->category;
+        $category = $gacha_title->category;
         $bg_image = $category && $category->bg_image_path
         ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
         # 表示できるガチャ一覧
-        $category_code = $gacha->category->code_name;
+        $category_code = $category->code_name;
         $query = GachaApiController::getPublishedGachas( $category_code, $search_key=null );
 
             ## イベントガチャ (is_event_gacha)
@@ -137,8 +137,9 @@ class ManufGachaController extends Controller
 
         $gachas = $query->paginate(6);
 
-        return view('manuf.gacha.show.index', compact(
-            'gacha',
+        return view('manuf.gacha.show', compact(
+            'gacha_title',
+            'machines',
             'gachas','category_code',
             'bg_image'
         ));
@@ -155,7 +156,7 @@ class ManufGachaController extends Controller
     public function machines( $category_code, Gacha $gacha, $key)
     {
         # キーのチェック
-        if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
+        if( $gacha->key!=$key || !$gacha->published_at ){ return abort(404); }
 
         # 追加情報
         $gacha->price = 500;      //価格(税込)

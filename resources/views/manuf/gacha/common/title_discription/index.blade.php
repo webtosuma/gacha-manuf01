@@ -40,9 +40,9 @@ style="background:rgba(255, 255, 255, 1);">
     @include('manuf.gacha.common.title_discription.image_slide')
 
 
-
     <!--discription_table-->
     @include('manuf.gacha.common.title_discription.discription_table')
+
 
     <!--machines-->
     @include('manuf.gacha.common.title_discription.machines')
@@ -56,8 +56,8 @@ style="background:rgba(255, 255, 255, 1);">
     @include('manuf.gacha.common.title_discription.title_images')
 
 
-    <!--note-->
-    @include('manuf.gacha.common.title_discription.note')
+    {{-- <!--note-->
+    @include('manuf.gacha.common.title_discription.note') --}}
 
 
 

@@ -156,7 +156,7 @@
 
         <div class="row g-3 gy-4">
             @foreach ($gacha_titles as $gacha_title)
-                <div class="col-4 col-sm-3 col-lg-auto">
+                <div class="col-6 col-sm-3 col-lg-auto">
                     <a href="{{$gacha_title->r_show}}" class="btn p-0 w-100  hover_anime "
                     style="max-width:200px;"
                     >
