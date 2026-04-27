@@ -7,27 +7,24 @@ use App\Http\Controllers\AdminBackGroundController;
 use App\Http\Controllers\GachaController;
 use App\Http\Controllers\GachaApiController;
 use App\Http\Controllers\InfomationController;
-
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\DB;
 use App\Models\GachaCategory;
-use App\Models\Gacha;
-// use App\Models\UserGachaHistory;
-// use App\Models\UserPrize;
-// use App\Models\PointHistory;
-// use App\Models\Infomation;
-// use App\Models\Movie;
 use App\Models\Text;
-
 use App\Models\ManufGachaTitle;
+use App\Services\Manuf\GachaTitleService;
 /*
 | =============================================
-|  Manufacturer:ガチャ コントローラー
+|  Manufacturer:ガチャタイトル コントローラー
 | =============================================
 */
-class ManufGachaController extends Controller
+class GachaTitleController extends Controller
 {
+    # サービスの登録
+    public function __construct(
+        protected GachaTitleService $gachaTitleService,
+    ) {}
+
+
     /**
      * カテゴリー選択・一覧表示
      *
@@ -107,17 +104,8 @@ class ManufGachaController extends Controller
      */
     public function show( $category_code, $title_code)
     {
-        # ガチャタイトル
-        $gacha_title = ManufGachaTitle::where('code',$title_code)->first();
-
-        # キーのチェック
-        if(
-
-            !isset($gacha_title)
-            || $gacha_title->category->code_name!=$category_code
-            || !$gacha_title->is_published//公開有無
-
-        ){ return abort(404); }
+        # ガチャタイトル詳細情報の取得/カテゴリーのコードチェック
+        $gacha_title = $this->gachaTitleService->getGachaTitle($title_code, $category_code);
 
         # 筐体
         $machines = $gacha_title->machines;
@@ -127,52 +115,17 @@ class ManufGachaController extends Controller
         $bg_image = $category && $category->bg_image_path
         ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
-        # 表示できるガチャ一覧
-        $category_code = $category->code_name;
-        $query = GachaApiController::getPublishedGachas( $category_code, $search_key=null );
-
-            ## イベントガチャ (is_event_gacha)
-            $query->where('type','<>','event');
-            // $query->where('type','event');
-
-        $gachas = $query->paginate(6);
 
         return view('manuf.gacha.show', compact(
             'gacha_title',
             'machines',
-            'gachas','category_code',
+            'category_code',
             'bg_image'
         ));
+    
+
     }
 
 
-    /**
-     * ガチャタイトルのマシーン一覧
-     * @param String $category_code      //カテゴリーコード名
-     * @param  \App\Models\Gacha  $gacha
-     * @param String $key                //ガチャモデル・キー
-     * @return \Illuminate\Http\Response
-     */
-    public function machines( $category_code, Gacha $gacha, $key)
-    {
-        # キーのチェック
-        if( $gacha->key!=$key || !$gacha->published_at ){ return abort(404); }
-
-        # 追加情報
-        $gacha->price = 500;      //価格(税込)
-        $gacha->waiting_count = 3;//購入待機数
-        $gacha->resume = "テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト テキストテキスト ";
-
-        # 背景画像
-        $category = $gacha->category;
-        $bg_image = $category && $category->bg_image_path
-        ? $category->bg_image_path : AdminBackGroundController::getBgTop();
-
-
-
-        return view('manuf.gacha.machines.index', compact(
-            'gacha','bg_image'
-        ));
-    }
-
+    
 }

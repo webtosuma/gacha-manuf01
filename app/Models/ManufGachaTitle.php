@@ -524,8 +524,51 @@ class ManufGachaTitle extends Model
             ]);
         }
 
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー ルーティング 購入
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+        /**
+         * [ルーティング]筐体 購入[入力] r_purchase_appliy 
+         * @return String
+        */
+        public function getRPurchaseAppliyAttribute()
+        {
+            return route('manuf.gacha_title.purchase.appliy',[
+                'category_code' => $this->category->code_name,
+                'title_code'    => $this->code,
+            ]);
+        }
 
 
+        /**
+         * [ルーティング]筐体 購入[確認] r_purchase_confirm 
+         * @return String
+        */
+        public function getRPurchaseConfirmAttribute()
+        {
+            return route('manuf.gacha_title.purchase.confirm',[
+                'category_code' => $this->category->code_name,
+                'title_code'    => $this->code,
+            ]);
+        }
+        
+
+        /**
+         * [ルーティング]筐体 購入[チェックアウト] r_purchase_checkout 
+         * @return String
+        */
+        public function getRPurchaseCheckoutAttribute()
+        {
+            return route('manuf.gacha_title.purchase.checkout',[
+                'category_code' => $this->category->code_name,
+                'title_code'    => $this->code,
+            ]);
+        }
 
     /* ~ */
 

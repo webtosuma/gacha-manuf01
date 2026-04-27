@@ -15,31 +15,48 @@ use App\Http\Controllers\Manuf;
         // [App\Http\Controllers\GachaApiController::class, 'list'])
         // ->name('gacha.api.list');
 
-        # ガチャのカテゴリー選択
+        # ガチャタイトルのカテゴリー選択
         Route::get('/m/{category_code?}',
-        [Manuf\ManufGachaController::class, 'index'])
+        [Manuf\GachaTitleController::class, 'index'])
         ->name('manuf');
 
         # カテゴリー一覧
         Route::get('/g/{category_code?}',
-        [Manuf\ManufGachaController::class, 'index'])
+        [Manuf\GachaTitleController::class, 'index'])
         ->name('gacha_category');
 
         # 検索結果
         Route::get('/m/search',
-        [Manuf\ManufGachaController::class, 'manuf'])
+        [Manuf\GachaTitleController::class, 'search'])
         ->name('manuf.search');
 
-        # ガチャの詳細表示
+        # ガチャタイトルの詳細表示
         Route::get('/m/{category_code}/{title_code}',
-        [Manuf\ManufGachaController::class, 'show'])
+        [Manuf\GachaTitleController::class, 'show'])
         ->name('manuf.gacha_title');
 
-        # ガチャの詳細表示
-        Route::get('/m/{category_code}/{gacha}/{key}/machines',
-        [Manuf\ManufGachaController::class, 'machines'])
-        ->name('gacha.machines');
 
+
+        # ガチャタイトルの筐体 購入[入力]
+        Route::get('m/{category_code}/{title_code}/machin/purchase/appliy',
+        [Manuf\GachaTitlePurchaseController::class, 'appliy'])
+        ->name('manuf.gacha_title.purchase.appliy');
+
+        # ガチャタイトルの筐体 購入[確認]
+        Route::post('m/{category_code}/{title_code}/machin/purchase/confirm',
+        [Manuf\GachaTitlePurchaseController::class, 'confirm'])
+        ->name('manuf.gacha_title.purchase.confirm');
+
+          # ガチャタイトルの筐体 購入[決済チェックアウト]
+          Route::post('m/{category_code}/{title_code}/machin/purchase/checkout',
+          [Manuf\GachaTitlePurchaseController::class, 'checkout'])
+          ->name('manuf.gacha_title.purchase.checkout');
+        
+        # ガチャタイトルの筐体 購入[完了]
+        Route::get('m/{category_code}/{title_code}/machin/purchase/comp',
+        [Manuf\GachaTitlePurchaseController::class, 'comp'])
+        ->name('manuf.gacha_title.purchase.comp');
+        
 
 
         // # ガチャの結果履歴(SNS等の公開用)

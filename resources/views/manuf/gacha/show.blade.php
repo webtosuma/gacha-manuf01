@@ -92,7 +92,7 @@
             </div>
 
             <!--flex-c2-2 -->
-            <aside class="col p-3">
+            <aside class="col">
                 <div class="position-sticky" style="top: 2rem; ">
 
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Manuf\AdminGachaTitleMachineRequest;
 use App\Models\ManufGachaTitle;
 use App\Models\ManufGachaTitleMachine;
-use App\Services\Manuf\GachaTitleMachineService;
+use App\Services\Manuf\Admin\GachaTitleMachineService;
 use App\Services\Admin\GachaPrizeService;
 /*
 | =============================================
@@ -17,16 +17,10 @@ use App\Services\Admin\GachaPrizeService;
 class AdminGachaTitleMachineController extends Controller
 {
     /** サービスの登録 */
-    protected $service;
-    protected $gachaPrizeService;
     public function __construct(
-        GachaTitleMachineService $service,
-        GachaPrizeService $gachaPrizeService
-    )
-    {
-        $this->service = $service;
-        $this->gachaPrizeService = $gachaPrizeService;
-    }
+        protected GachaTitleMachineService $service,
+        protected GachaPrizeService $gachaPrizeService
+    ){}
 
 
     /**

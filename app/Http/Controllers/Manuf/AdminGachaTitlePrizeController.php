@@ -9,7 +9,7 @@ use App\Models\ManufGachaTitle;
 use App\Models\ManufGachaTitlePrize;
 use App\Models\Prize;
 use App\Models\PrizeRank;
-use App\Services\Manuf\GachaTitlePrizeService;
+use App\Services\Manuf\Admin\GachaTitlePrizeService;
 /*
 | =============================================
 |  Manufacturer/Admin : ガチャタイトル 商品 コントローラー
@@ -18,11 +18,9 @@ use App\Services\Manuf\GachaTitlePrizeService;
 class AdminGachaTitlePrizeController extends Controller
 {
     /** サービスの登録 */
-    protected $service;
-    public function __construct(GachaTitlePrizeService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(
+        protected GachaTitlePrizeService $service
+    ){}
 
 
 

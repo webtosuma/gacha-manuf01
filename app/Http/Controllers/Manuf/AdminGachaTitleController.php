@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Manuf;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Method;
 use Illuminate\Http\Request;
 use App\Http\Requests\Manuf\AdminGachaTitleRequest;
 use App\Models\GachaCategory;
 use App\Models\UserRankHistory;
 use App\Models\ManufGachaTitle;
-use App\Services\Manuf\GachaTitleService;//サービス
+use App\Services\Manuf\Admin\GachaTitleService;//サービス
 /*
 | =============================================
 |  Manufacturer/Admin : ガチャタイトル コントローラー
@@ -18,11 +17,9 @@ use App\Services\Manuf\GachaTitleService;//サービス
 class AdminGachaTitleController extends Controller
 {
     /** サービスの登録 */
-    protected $service;
-    public function __construct(GachaTitleService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(
+        protected GachaTitleService $service
+    ){}
 
 
     /**

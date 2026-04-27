@@ -5,16 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ShippedAppliRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use App\Models\User;
-use App\Models\Admin;
-use App\Models\UserPrize;
 use App\Models\UserAddress;
-use App\Models\PointHistory;
-use App\Models\UserShipped;
-use App\Models\Prize;
+use App\Services\ShippedAppliService;
 /*
 | =============================================
 |  発送申請 コントローラー
@@ -22,17 +15,11 @@ use App\Models\Prize;
 */
 class ShippedAppliController extends Controller
 {
-    /** 発送ポイント */
-    public function shippedPoint( $item_count )
+    /** サービスの登録 */
+    private $service;
+    public function __construct( ShippedAppliService $service)
     {
-        /*.設定は。config.gachaに記述 */
-        $basic_point     = config('gacha.shipped.point',0);    //発送商品の合計ポイント上限(数値)
-        $item_count_unit = config('gacha.shipped.item_count_unit', null); //商品数n個ごとに発送数を加算(数値)
-
-        return  $item_count_unit
-         ? ceil( $item_count / $item_count_unit ) * $basic_point
-         : $basic_point
-        ;
+        $this->service = $service;
     }
 
 
@@ -44,27 +31,25 @@ class ShippedAppliController extends Controller
      */
     public function index(Request $request)
     {
-
-
         $user = Auth::user();
-        $id_array = $request->user_prize_ids;//発送するユーザー商品ID
-        if( !$id_array ){
+
+        # 発送商品ID
+        $id_array = $request->user_prize_ids;
+        if (!$id_array) {
             $message = "発送する商品が選択されていません。";
             return back()->with('alert-warning',$message);
         }
 
 
         # ユーザー商品に期限切れがないか、チェック
-        $expired_id_array = self::checkShippedDeadline( $id_array );
+        $expired_id_array = $this->service->checkDeadline( $id_array );
         if( count( $expired_id_array ) > 0 ){
             $message = "期限切れの商品が含まれています。\n期限切れの商品を発送することはできません。";
             return back()->with('alert-warning',$message);
         }
 
-
         # 発送ポイント
-        $shipped_point = self::shippedPoint( count($id_array) );
-        // 発送ポイントが足りていないとき
+        $shipped_point = $this->service->calcShippedPoint( count($id_array) );
         if( $user->point < $shipped_point ){
             $message =  '発送ポイント'. number_format($shipped_point) .'ptが不足しています。';
             return redirect()->route('user_prize')
@@ -73,9 +58,8 @@ class ShippedAppliController extends Controller
 
 
         # 発送するユーザー商品を取得/データチェック
-        $user_prizes = self::FindUserPrizes( $id_array );
-        if( !$user_prizes->count() ){ return \App::abort(404); }//データがないとき
-
+        $user_prizes = $this->service->findUserPrizes($id_array);
+        if( !$user_prizes->count() ){ return abort(404); }//データがないとき
 
         # 発送商品の合計ポイント上限
         $limit_prize_point = (Int) config('gacha.shipped.limit_prize_point',0);
@@ -89,48 +73,14 @@ class ShippedAppliController extends Controller
             ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-triangle']);
         }
 
-
         # 発送する商品:種類別($shipped_prizes)
-        $sp_id_array = $user_prizes->pluck('prize_id')->toArray();
-        $shipped_prizes = Prize::find( $sp_id_array );//カードの重複除去
-        foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
-            $shipped_prize->count = array_count_values( $sp_id_array )[ $shipped_prize->id ] ?? 0;
-        }
+        $shipped_prizes = $this->service->buildShippedPrizes($user_prizes);
 
 
         return view('shipped.appli.index',compact(
             'id_array','shipped_point','user_prizes','shipped_prizes'
         ));
     }
-
-
-        /**
-         * ユーザー商品に期限切れがないか、チェック
-         *
-         * @param  Array $id_array
-         * @return Array expired_id_array//期限切れ
-        */
-        public static function checkShippedDeadline( $id_array )
-        {
-            $user =Auth::user();
-
-            # ポイント交換するユーザー商品を取得
-            $user_prizes = UserPrize::where('user_id',$user->id)
-            ->where('point_history_id',NULL)//ポイント収支履歴（未交換のみ）
-            ->where('shipped_id'      ,NULL)//発送履歴（未交換のみ）
-            ->find( $id_array );
-
-            # 期限切れIDのみを取得
-            $expired_id_array = [];
-            foreach ($user_prizes as $user_prize)
-            {
-                if( $user_prize->is_deadline ){
-                    $expired_id_array[] = $user_prize->id;
-                }
-            }
-
-            return $expired_id_array;
-        }
 
 
 
@@ -142,42 +92,36 @@ class ShippedAppliController extends Controller
      */
     public function confirm(ShippedAppliRequest $request)
     {
-
         $user = Auth::user();
-        $id_array = $request->user_prize_ids;//発送するユーザー商品ID
-        $default_address_id = $request->user_address_id;//ユーザーアドレスID
-        $default_address = (bool) $request->default_address;//選択のアドレスをデフォルトにする
-
+        $ids = $request->user_prize_ids;
+        $address_id = $request->user_address_id;
 
         # 発送ポイント
-        $shipped_point = self::shippedPoint( count($id_array) );
-        // 発送ポイントが足りていないとき
+        $shipped_point = $this->service->calcShippedPoint( count($ids) );
         if( $user->point < $shipped_point ){
             $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
             return redirect()->route('user_prize')
             ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
         }
 
-        # 選択のアドレスをデフォルトにする
-        if( $default_address ){
-            UserAddressApiController::UpdateDeffaultAddress( $default_address_id );
-        }
 
+        # 選択のアドレスをデフォルトにする
+        $default_address = (bool) $request->default_address;//選択のアドレスをデフォルトにする
+        if( $default_address ){
+            UserAddressApiController::UpdateDeffaultAddress( $address_id );
+        }
+        
         # お届け先アドレス
-        $user_address = UserAddress::where('user_id',$user->id)->find($default_address_id);
-        if( !$user_address ){ return \App::abort(404); }//データがないとき
+        $user_address = UserAddress::where('user_id',$user->id)->find($address_id);
+        if( !$user_address ){ return abort(404); }//データがないとき
 
         # 発送するユーザー商品を取得/データチェック
-        $user_prizes = self::FindUserPrizes( $id_array );
-        if( !$user_prizes->count() ){ return \App::abort(404); }//データがないとき
-
+        $user_prizes = $this->service->findUserPrizes($ids);
+        if( !$user_prizes->count() ){ return abort(404); }//データがないとき
 
         # 発送する商品:種類別($shipped_prizes)
-        $id_array = $user_prizes->pluck('prize_id')->toArray();
-        $shipped_prizes = Prize::find( $id_array );//カードの重複除去
-        foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
-            $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
-        }
+        $shipped_prizes = $this->service->buildShippedPrizes($user_prizes);
+
 
         return view('shipped.appli.confirm',compact(
             'shipped_point', 'user_address','user_prizes', 'shipped_prizes'
@@ -186,139 +130,26 @@ class ShippedAppliController extends Controller
 
 
 
-    # 発送申請完了comp
     /**
      * 発送申請 完了
+     * 
      * @param \App\Http\Requests\Request $request
      * @return \Illuminate\Http\Response
      */
     public function comp(Request $request)
     {
-        $user = Auth::user();
-        $id_array = $request->user_prize_ids;//発送するユーザー商品ID
-        $user_address_id = $request->user_address_id;//ユーザーアドレスID
-        $default_address = (bool) $request->default_address;//選択のアドレスをデフォルトにする
-
-
-        # 発送ポイント
-        $shipped_point = self::shippedPoint( count($id_array) );
-        // 発送ポイントが足りていないとき
-        if( $user->point < $shipped_point ){
-            $message =  '発送ポイント'.$shipped_point.'ptが不足しています。';
-            return redirect()->route('user_prize')
-            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
-        }
-
-
-        # 発送するユーザー商品を取得/データチェック
-        $user_prizes = self::FindUserPrizes( $id_array );
-        if( !$user_prizes->count() ){ return \App::abort(404); }//データがないとき
-
-        // dd($user_prizes);
-        DB::beginTransaction();
-        try {
-
-            # ポイント記録の新規登録
-            $point_history = new PointHistory([
-                'user_id'   => $user->id, //ユーザー　リレーション
-                'value'     =>  - (int) $shipped_point,  //ポイント数
-                'reason_id' => 22, //商品発送
-            ]);
-            $point_history->save();
-
-
-            # 発送履歴の新規登録
-            $user_shipped = new UserShipped([
-                'user_id'          => $user->id,         //ユーザー　リレーション
-                'user_address_id'  => $user_address_id,  //ユーザーアドレス
-                'point_history_id' => $point_history->id,//ポイント収支履歴リレーション
-                'state_id'         => 11,//発送準備中
-            ]);
-            $user_shipped->save();
-
-
-            # ユーザー商品情報の更新=>発送済み
-            foreach ($user_prizes as $user_prize) {
-                $user_prize->shipped_id = $user_shipped->id;
-                $user_prize->save();
-            }
-
-
-            DB::commit();
-            $request->session()->regenerateToken(); // 二重投稿防止
-        } catch (\Exception $e) {
-
-            Log::error($e);
-            DB::rollback();
-            return redirect()->back()->with('alert-warning', 'エラーが発生しました。');
-
-        }
+        # 発送申請処理
+        $user_shipped = $this->service->executeShipment(
+            $request->user_prize_ids,
+            $request->user_address_id
+        );
 
         # ユーザーへのメール送信
-        self::SendEmail($user_shipped);
+        $this->service->sendMail($user_shipped);
 
+        $request->session()->regenerateToken(); // 二重投稿防止
 
-        # Viewの表示
         return redirect()->route('shipped.appli.comp.get');
-    }
-
-
-
-
-    /** 発送するユーザー商品を取得 */
-    public function FindUserPrizes( $id_array )
-    {
-        $user = Auth::user();
-        $user_prizes = UserPrize::where('user_id',$user->id) //ユーザー以外のデータを除去
-        ->where('point_history_id',NULL)//ポイント交換ずみのデータを除く
-        ->where('shipped_id',Null)//発送済みデータを除く
-        ->orderByDesc('created_at')//取得が新しい順
-        ->find( $id_array );
-
-        return $user_prizes;
-    }
-
-
-
-    /** ユーザーへのメール送信 */
-    public function SendEmail($user_shipped)
-    {
-        # ユーザー情報
-        $user = $user_shipped->user;
-
-        # 発送する商品:種類別($shipped_prizes)
-        $user_prizes = $user_shipped->user_prizes;
-        $id_array = $user_prizes->pluck('prize_id')->toArray();
-        $shipped_prizes = Prize::find( $id_array );//カードの重複除去
-        foreach ($shipped_prizes as $shipped_prize) {//カードの重複枚数保存
-            $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
-        }
-
-        # 変数の保存
-        $inputs = compact('user','user_shipped','shipped_prizes');
-
-        # ユーザー宛
-        Mail::to( $user->email ) //宛先
-        ->send(new \App\Mail\SendHtmlMailMailable([
-            'inputs'  => $inputs, //入力変数
-            'view'    => 'emails.user_shipped.appli' , //テンプレート
-            'subject' => '商品の発送申請を受け付けました', //件名
-        ]) );
-
-
-        # サイト管理者へメール送信
-        $admins = Admin::where('get_mail',1)->get();// メール受取り設定の管理者ユーザーの取得
-        foreach ($admins as $admin) {
-
-            Mail::to( $admin->email ) //宛先
-            ->send(new \App\Mail\SendHtmlMailMailable([
-                'inputs'  => $inputs, //入力変数
-                'view'    => 'emails.user_shipped.admin_appli' , //テンプレート
-                'subject' => '商品の発送申請を受け付けました', //件名
-            ]) );
-        }
-
-
 
     }
 }

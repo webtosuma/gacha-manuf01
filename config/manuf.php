@@ -9,4 +9,16 @@ return [
     # Manufガチャの利用
     'app' => (bool) env('MANUF_APP', false),
 
+
+    # 発送設定
+    'shipped' => [
+
+        # 発送料金(数値)
+        'fee' => (int)  env('MANUF_SHIPPED_FEE',0),
+
+        # 商品数n個ごとに発送数を加算(数値)
+        'item_count_unit'   => (int) 0,
+
+    ],
+    
 ];

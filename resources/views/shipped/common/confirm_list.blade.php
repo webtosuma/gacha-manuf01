@@ -51,7 +51,7 @@
 
         </div>
     </li>
-    <li class="list-group-item p-3">
+    <li class="list-group-item p-3"> 
 
         <h5>発送商品</h5>
 

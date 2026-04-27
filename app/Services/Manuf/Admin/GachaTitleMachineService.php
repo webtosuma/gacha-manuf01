@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Manuf;
+namespace App\Services\Manuf\Admin;
 
 use App\Models\Gacha;
 use App\Models\GachaDiscription;

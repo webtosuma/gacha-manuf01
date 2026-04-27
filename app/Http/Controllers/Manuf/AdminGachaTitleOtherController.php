@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Manuf\AdminGachaTitlePublishedRequest;
 use App\Models\Movie;
 use App\Models\ManufGachaTitle;
-use App\Services\Manuf\GachaTitleService;
+use App\Services\Manuf\Admin\GachaTitleService;
 /*
 | =============================================
 |  Manufacturer/Admin : ガチャタイトル その他の処理 コントローラー
@@ -16,11 +16,9 @@ use App\Services\Manuf\GachaTitleService;
 class AdminGachaTitleOtherController extends Controller
 {
     /** サービスの登録 */
-    protected $service;
-    public function __construct(GachaTitleService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(
+        protected GachaTitleService $service
+    ){}
 
 
 
