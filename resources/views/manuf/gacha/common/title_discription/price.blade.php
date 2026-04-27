@@ -14,7 +14,7 @@
 
 <!--description_text-->
 @if($gacha_title->description_text)
-    <p id="discription-description_text" class="border-top bg-white p-2 my-2 form-text">
+    <p id="discription-description_text" class="border-top bg- p-2 my-2 form-text">
 
         <replace-text-component text="{{ $gacha_title->description_text  }}" ></replace-text-component>
 

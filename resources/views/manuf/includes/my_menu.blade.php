@@ -2,7 +2,7 @@
 
     @php
     $style_class = 'list-group-item border-0 p-2 px-3 w-100 fw-bold ';
-    $style_class = 'btn btn-info text-white w-100 fw-bold ';
+    $style_class = 'btn btn-info text-white w-100 fw-bold mb-1 ';
     @endphp
 
 
@@ -20,7 +20,7 @@
             $icon_class = $menu['icon']." text-info bi fs-3";
             @endphp
             <a href="{{ $menu['route'] }}"
-            class="btn btn-dark text-info  w-100 fw-bold"
+            class="btn btn-dark text-info  w-100 fw-bold mb-1"
             style="border-radius: 2rem  2rem;">
                 <div class="d-flex align-items-center gap-2">
 

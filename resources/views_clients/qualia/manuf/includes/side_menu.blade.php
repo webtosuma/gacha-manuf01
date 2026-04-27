@@ -12,13 +12,7 @@
             class=""
             style="max-width:160px"
             >
-        </a>
-
-        <div class="mt-3 mb-4">
-            <!--SNS Links-->
-            @include('includes.sns_links')
-        </div>
-        
+        </a>        
     </div>
 
 
@@ -27,12 +21,21 @@
 
 
 
-    {{-- <div class="list-group-item border-0 p-2 px-3 w-100 text-start mb-5">
-
+    <div class="list-group-item border-0 p-2 px-0 text-start">
         <!--SNS Links-->
         @include('includes.sns_links')
+    </div>
 
-    </div> --}}
+
+
+    <div class="list-group-item border-0 p-2 px-0 text-start my-5"
+    style="width:240px"
+    >
+
+        <!--SNS Links-->
+        @include('manuf.includes.sns_links')
+
+    </div>
 
 </div>
 

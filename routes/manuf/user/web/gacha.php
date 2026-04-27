@@ -36,26 +36,27 @@ use App\Http\Controllers\Manuf;
         ->name('manuf.gacha_title');
 
 
+        Route::middleware(['auth'])->group(function () {
 
-        # ガチャタイトルの筐体 購入[入力]
-        Route::get('m/{category_code}/{title_code}/machin/purchase/appliy',
-        [Manuf\GachaTitlePurchaseController::class, 'appliy'])
-        ->name('manuf.gacha_title.purchase.appliy');
+          # ガチャタイトルの筐体 購入[入力]
+          Route::get('m/{category_code}/{title_code}/machin/purchase/appliy',
+          [Manuf\GachaTitlePurchaseController::class, 'appliy'])
+          ->name('manuf.gacha_title.purchase.appliy');
 
-        # ガチャタイトルの筐体 購入[確認]
-        Route::post('m/{category_code}/{title_code}/machin/purchase/confirm',
-        [Manuf\GachaTitlePurchaseController::class, 'confirm'])
-        ->name('manuf.gacha_title.purchase.confirm');
+          # ガチャタイトルの筐体 購入[確認]
+          Route::post('m/{category_code}/{title_code}/machin/purchase/confirm',
+          [Manuf\GachaTitlePurchaseController::class, 'confirm'])
+          ->name('manuf.gacha_title.purchase.confirm');
 
-          # ガチャタイトルの筐体 購入[決済チェックアウト]
-          Route::post('m/{category_code}/{title_code}/machin/purchase/checkout',
-          [Manuf\GachaTitlePurchaseController::class, 'checkout'])
-          ->name('manuf.gacha_title.purchase.checkout');
-        
-        # ガチャタイトルの筐体 購入[完了]
-        Route::get('m/{category_code}/{title_code}/machin/purchase/comp',
-        [Manuf\GachaTitlePurchaseController::class, 'comp'])
-        ->name('manuf.gacha_title.purchase.comp');
+            # ガチャタイトルの筐体 購入[決済チェックアウト]
+            Route::post('m/{category_code}/{title_code}/machin/purchase/checkout',
+            [Manuf\GachaTitlePurchaseController::class, 'checkout'])
+            ->name('manuf.gacha_title.purchase.checkout');
+          
+          # ガチャタイトルの筐体 購入[完了]
+          Route::get('m/{category_code}/{title_code}/machin/purchase/comp',
+          [Manuf\GachaTitlePurchaseController::class, 'comp'])
+          ->name('manuf.gacha_title.purchase.comp');
         
 
 
@@ -69,7 +70,7 @@ use App\Http\Controllers\Manuf;
         // [App\Http\Controllers\GachaController::class, 'custom_count'])
         // ->name('gacha.custom_count');
 
-    // });
+      });
     // Route::middleware(['auth'])->group(function () {
 
 

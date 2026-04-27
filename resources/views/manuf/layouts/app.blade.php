@@ -49,7 +49,7 @@
 
 
 </head>
-@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-white';  @endphp
+@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : '';  @endphp
 <body class="{{ $class_bg_dark }}">
     <div id="app">
 
@@ -87,7 +87,7 @@
 
 
             <!--flex-c1-->
-            <aside class="d-none d-lg-block col-auto pe-0 bg-info text-white">
+            <aside class="d-none d-lg-block col-auto pe-0 bg-white border-end">
                 <div class="position-sticky" style="top: 0rem; ">
 
 

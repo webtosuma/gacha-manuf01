@@ -1,10 +1,10 @@
-<footer class="bg-info text- px-3 pt-5 mt-5" style="padding-bottom:16rem;">
+<footer class="bg-white border-top px-3 pt-5 mt-5" style="padding-bottom:16rem;">
     <div class="container">
         <div class="row flex-column flex-lg-row justify-content-between mx-0 gy-0">
 
 
 
-            <div class="col-12 col-md-auto">
+            <div class="col-12 col-md-auto mb-3">
                 <div class="text-center mb-3">
                     <a class="navbar-brand" href="{{ route('manuf') }}">
                         <img src="{{asset('storage/site/image/logo.png')}}"

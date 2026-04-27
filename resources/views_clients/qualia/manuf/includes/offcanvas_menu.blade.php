@@ -1,4 +1,4 @@
-<div class="offcanvas offcanvas-end  bg-info text-"
+<div class="offcanvas offcanvas-end  bg-whie text-"
 tabindex="-1" id="offcanvasHumberge" aria-labelledby="offcanvasHumbergeLabel"
 style="max-width:90vw; min-width:30vw;">
 
@@ -31,6 +31,13 @@ style="max-width:90vw; min-width:30vw;">
 
         <!--SNS Links-->
         @include('includes.sns_links')
+
+
+        <!--SNS Links-->
+        <div class="mt-5 mx-auto" style="max-width:300px">
+            @include('manuf.includes.sns_links')
+        </div>
+
 
     </div>
 

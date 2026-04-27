@@ -3,7 +3,7 @@
 @endif
 
 
-<header class="position-fixed bg-white text-info w-100" style="z-index:100;">
+<header class="position-fixed bg-white w-100" style="z-index:100;">
     <div class="container py- px-0">
 
         <nav class="row justify-content-between align-items-center g-0">
@@ -24,7 +24,7 @@
                 <div class="row align-items-center justify-content-end g-0">
 
                     <div class="col d-none d-sm-block">
-                        <button class="btn btn-sm btn-outline-info rounded-pill border-2 w-100"
+                        <button class="btn btn-sm border rounded-pill border-2 w-100"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvaSearch"
                         aria-controls="offcanvaSearch"
                         type="button">
@@ -38,7 +38,7 @@
                     <!-- 検索 mobile -->
                     <div class="col-auto d-sm-none">
                         <a href="#"
-                        class="btn text-info rounded-0 w-100  px-3
+                        class="btn text- rounded-0 w-100  px-3
                         d-flex flex-column justify-content- center align-items-center
                         ">
 
@@ -57,12 +57,12 @@
                     <!-- 発送 -->
                     <div class="col-auto">
                         <a href="#"
-                        class="btn text-info rounded-0 w-100  px-3
+                        class="btn text-secondary rounded-0 w-100  px-3
                         d-flex flex-column justify-content- center align-items-center
                         ">
 
                             <div class="d-flex align-items-center justify-content-center
-                            bg- text-info rounded-pill"
+                            bg- text-secondary rounded-pill"
                             style="width:1.4rem; height:1.4rem;">
                                 <i class="bi bi-box-seam fs-2 " style="line-height:1rem;"></i>
                             </div>

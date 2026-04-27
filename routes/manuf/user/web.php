@@ -14,15 +14,13 @@ Route::middleware([ /* ミドルウェアー */
     'user_session_validate', //1アカウント1ログイン(セッションIDチェック)
 ])->group(function () {
 
+  # トップページ(製造業者用のみのとき)
+  Route::get('/',
+  [Manuf\GachaTitleController::class, 'index'])
+  ->name('home');
 
-
-    # トップページ(製造業者用のみのとき)
-    Route::get('/',
-    [Manuf\ManufGachaController::class, 'index'])
-    ->name('home');
-
-    # ガチャ
-    include('web/gacha.php');
+  # ガチャ
+  include('web/gacha.php');
 
     
     // # 商品一覧
