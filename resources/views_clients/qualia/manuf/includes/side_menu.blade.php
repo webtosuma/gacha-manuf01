@@ -21,7 +21,7 @@
 
 
 
-    <div class="list-group-item border-0 p-2 px-0 text-start">
+    <div class="list-group-item border-0 px-0 text-start">
         <!--SNS Links-->
         @include('includes.sns_links')
     </div>

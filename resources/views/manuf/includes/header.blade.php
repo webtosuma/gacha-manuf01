@@ -1,9 +1,4 @@
-@if ( config('app.debug') )
-    <h6 class="text-danger text-center m-0 bg- position-fixed w-100"  style="z-index:101;">TEST MODE</h6>
-@endif
-
-
-<header class="position-fixed bg-white w-100" style="z-index:100;">
+<header class="position-fixed bg-white border-bottom w-100" style="z-index:100;">
     <div class="container py- px-0">
 
         <nav class="row justify-content-between align-items-center g-0">

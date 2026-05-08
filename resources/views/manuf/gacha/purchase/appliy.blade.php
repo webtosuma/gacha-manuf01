@@ -125,7 +125,7 @@
                             <h5 class="fw-bold">発送料金</h5>
 
 
-                           <div class="card card-body border text-end">
+                           <div class="card card-body bg-white border text-end">
                                 {{number_format($shipped_fee)}}円
                            </div>
 

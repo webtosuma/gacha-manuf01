@@ -30,6 +30,14 @@
 <body class="">
     <div id="app">
 
+        
+        @if ( config('app.debug') )
+            <!--TEST MODE-->
+            <h6 class="text-danger p- text-center m-0 p-1 position-fixed w-100"  
+            style="z-index:101;"
+            >TEST MODE</h6>
+        @endif
+
 
         <!--header-->
         <div class="d-lg-none">

@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Qualia Online Store",
+    "short_name": "Qualia Online Store",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",

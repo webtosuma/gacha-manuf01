@@ -44,6 +44,11 @@ class AdminApiGachaTitleController extends Controller
         ->whereIn('id', $prize_ids)
         ->paginate($per_page);
 
+        # 追加データ
+        foreach ($prizes as $prize) {
+            $prize->is_used = $prize->is_used;
+        }
+        
         # 商品ランク
         $prize_ranks = PrizeRank::all();//評価ランクデータ
 

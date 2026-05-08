@@ -15,11 +15,9 @@ use App\Services\Admin\ApiPrizeService;
 class AdminApiPrizeController extends Controller
 {
     /** サービスの登録 */
-    protected $service;
-    public function __construct(ApiPrizeService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(
+        protected ApiPrizeService $service,
+    ){}
     
     /**
      * 一覧取得

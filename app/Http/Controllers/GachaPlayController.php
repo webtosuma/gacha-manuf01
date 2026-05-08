@@ -53,7 +53,7 @@ class GachaPlayController extends Controller
             $is_sold_out = (bool) $gacha->remaining_count < 1; //売り切れかどうか
 
             # キー認証
-            if( $gacha->key!=$key ){ return \App::abort(404); }
+            if( $gacha->key!=$key ){ return abort(404); }
 
 
             # ポイントが不足しているとき

@@ -49,7 +49,7 @@
 
 
 </head>
-@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : '';  @endphp
+@php $class_bg_dark = config('app.bg_dark') ? 'bg-dark text-white m-0' : 'bg-white';  @endphp
 <body class="{{ $class_bg_dark }}">
     <div id="app">
 
@@ -57,11 +57,20 @@
 
         <!--背景画像-->
         <div id="bgWindow"
-        class="position-fixed top-0 start-0 w-100 h-100"
+        class="position-fixed top-0 start-0 w-100 h-100
+        d-none d-sm-block
+        "
         style="z-index: -1;"
         ></div>
 
 
+        @if ( config('app.debug') )
+            <!--TEST MODE-->
+            <h4 class="text-danger p-2 text-center m-0 p-1 position-fixed w-100"  
+            style="z-index:101;"
+            >TEST MODE</h4>
+        @endif
+    
 
         <!--header-->
         <div class="d-lg-none">
