@@ -68,8 +68,9 @@ class Gacha extends Model
     /** アクセサーをJSONに含める */
     protected $appends = [
         'is_published',      //公開中かどうか
-        'published_status', //公開判定
+        'published_status',  //公開判定
         'image_path',        //画像ファイルパス
+        'mosaic',            //予告時のモザイク利用の有無
         'type_label',        //ガチャの種類ラベル
         'type_label_admin',  //ガチャの種類ラベル
 
@@ -80,7 +81,7 @@ class Gacha extends Model
         'resume_text',         //ストレージ保存された文章を含む'説明文'
         'user_rank_label',     //ユーザーランク限定ガチャラベル
         'is_type_label_text',  //ガチャの種類等のレベルテキスト表示有無
-        'btn_styles', // ガチャるボタンのCSSクラス
+        'btn_styles',// ガチャるボタンのCSSクラス
         'add_chance_image_path', //アド確定予告画像パス
         'add_chance_count',      //天井系ガチャのアド確定までの回転数
         'have_user_rank',        //個人のプレイ数の商品登録
@@ -100,6 +101,7 @@ class Gacha extends Model
         'new_label_path', //[メーター]NEW ラベル
         'new_label',        //newか否か
         'img_path_point', //[メーター]ポイントアイコン
+        'metter_type',    //[メーター]メーター表示の種類
 
         'type_n_played_count',          //[n回限定・1日n回限定]ログインユーザーがガチャを回した数
         'type_n_remaining_count',       //[n回限定・1日n回限定] 残り回数

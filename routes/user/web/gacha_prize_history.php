@@ -20,5 +20,5 @@ use App\Http\Controllers;
         [Controllers\GachaPrizeHistoryController::class, 'api'])
         ->name('gacha.api.prize_history');
 
-
+ 
     });

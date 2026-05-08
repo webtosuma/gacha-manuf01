@@ -69,22 +69,6 @@ Route::middleware([ /* ミドルウェアー */
     # ガチャ商品履歴
     include('web/gacha_prize_history.php');
 
-    # ポイント購入・履歴
-
-        ##(Stripe・webhook)
-        include('web/stripe.php');
-
-        ##(Stripe　サブスクプラン)
-        include('web/stripe_subscription.php');
-
-        ## PayPay
-        include('web/paypay.php');
-
-        ## (fincode)
-        include('web/fincode.php');
-
-    //
-
     # チケット購入・履歴
     include('web/ticket_sail.php');
 
@@ -144,11 +128,21 @@ Route::middleware([ /* ミドルウェアー(メンテナンス除外) */
     # 二段階認証ログイン
     include('web/auth-tfa.php');
 
-    # (Stripe・webhook)
-    include('web/stripe.php');
+    # ポイント購入・履歴
 
-    # (fincode)
-    include('web/fincode.php');
+        ##(Stripe・webhook)
+        include('web/stripe.php');
+
+        ##(Stripe　サブスクプラン)
+        include('web/stripe_subscription.php');
+
+        ## PayPay
+        include('web/paypay.php');
+
+        ## (fincode)
+        include('web/fincode.php');
+
+    //
 
     # ユーザー設定
     include('web/settings.php');

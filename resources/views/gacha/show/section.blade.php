@@ -3,7 +3,7 @@
 {{-- 表示：登録カード数が0いじょうのとき --}}
 @if ( ($discription->g_prizes->count() || $discription->image) && $discription->gacha_rank_id<900)
     <section class="py- col-12 mb-55"
-    style="margin-bottom:{{$margin_bottom*2}}px;"
+    style="margin-bottom:{{ $margin_bottom *4 }}px;"
     >
         <div class="container overflow-hidden px-3"
         >
@@ -111,22 +111,6 @@
     </section>
 
 
-    <!--商品説明モーダル-->
-    <div class="overflow-hidden" style="height:0;">
-        @foreach ($discription->g_prizes_show_section as $gacha_prize)
-            @php $prize = $gacha_prize->prize; @endphp
-            <u-prize-discription
-            id         ="{{$prize->id}}"
-            name       ="{{$prize->name}}"
-            image_path ="{{$prize->image_path}}"
-            discription="{{ $prize->discription_text }}"
-            size       ="4rem"
-            src_icon   ="{{$prize->discription_icon_path}}"
-            no_btn     ="1"
-            bg_dark    =""
-            ></u-prize-discription>
-        @endforeach
-     </div>
 
 
 @endif

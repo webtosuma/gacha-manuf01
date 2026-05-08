@@ -20,10 +20,10 @@
 
                         @else
                                 <div style="z-index:1;">
-                                <ratio-image-component
+                                <ratio-img-tag-component
                                 style_class="ratio {{config('app.gacha_card_ratio')}} "
                                 url="{{ $slide['image'] }}"
-                                ></ratio-image-component>
+                                ></ratio-img-tag-component>
                             </div>
                         @endif
                     </div>

@@ -22,7 +22,7 @@ class PrizeFactory extends Factory
             'category_id' => 1, // 固定
             'code'        => Prize::CreateCode(),//商品コード
             'name'        => 'テスト商品',
-            'image'       => sprintf('sample/manuf/gacha_title/%02d.jpg', 1 ),
+            'image'       => sprintf('sample/pokemon/prize/1.png', 1 ),
             'rank_id'     => 3,//'a'
             'published_at'     => now(),
             'point_updated_at' => now(),

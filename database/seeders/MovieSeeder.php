@@ -38,6 +38,32 @@ class MovieSeeder extends Seeder
     public function dataList()
     {
         $path = 'sample/movie/';
+
+        return [
+            [
+                'name'           => 'dance',//動画名
+                'pc_storage'     => '',//PC用動画・保存先
+                'mobile_storage' => 'https://www.youtube.com/shorts/X28VixOlpLU',//mobile用動画・保存先
+            ],
+            [
+                'name'           => 'pokemon30',//動画名
+                'pc_storage'     => '',//PC用動画・保存先
+                'mobile_storage' => 'https://www.youtube.com/shorts/UvP1KkB3_nE',//mobile用動画・保存先
+            ],
+            [
+                'name'           => 'pokepoke',//動画名
+                'pc_storage'     => '',//PC用動画・保存先
+                'mobile_storage' => 'https://www.youtube.com/shorts/u169s8DGvgA',//mobile用動画・保存先
+            ],
+            [
+                'name'           => 'pokemon_go',//動画名
+                'pc_storage'     => '',//PC用動画・保存先
+                'mobile_storage' => 'https://www.youtube.com/shorts/-UF7wHcc2DM',//mobile用動画・保存先
+            ],
+        ];
+
+
+
         return   [
             //RankA
             [

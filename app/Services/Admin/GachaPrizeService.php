@@ -3,16 +3,24 @@
 namespace App\Services\Admin;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Models\Gacha;
 use App\Models\GachaPrize;
-use App\Http\Controllers\GachaPlayCreateUserPrizeMethod;
+use App\Services\Gacha\SpecialRankService;
 /*
 | =============================================
-|  Admin : ガチャ商品 サービス
+|  Admin : ガチャ商品 サービス 
 | =============================================
 */
 class GachaPrizeService
 {
+    /** サービスの登録 */
+    public function __construct(
+        # 特殊なガチャランク
+        protected SpecialRankService $specialRankService,
+    ){}
+
+
     /**
      * 更新
      *
@@ -45,6 +53,12 @@ class GachaPrizeService
     {
         $discriptions = $gacha->discriptions;
 
+        # 口数が0でも可な特別なランク
+        $special_rank_array = $this->specialRankService->getList();
+        unset($special_rank_array['lastone']);//ラストワンを除く
+        $special_rank_ids = array_values($special_rank_array);
+
+
         foreach ($discriptions as $discription) {
 
             $gacha_rank_id = $discription->gacha_rank_id;
@@ -61,21 +75,9 @@ class GachaPrizeService
             $delete_ids         = $request[$key . '-delete_gacha_prize_ids'] ?? []; //削除ガチャ商品ID
 
 
-            // 口数が0でも可な特別なランク
-            $is_special_rank = in_array($gacha_rank_id, [
-                GachaPlayCreateUserPrizeMethod::GachaRankIdSspita(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdSpita(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdApita(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdSecretKiri(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdSecretPita(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdKiri(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdZoro(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdPita(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdUserKiri(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdUserZoro(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdUserPita(),
-                GachaPlayCreateUserPrizeMethod::GachaRankIdSlide(),
-            ]);
+            ## 口数が0でも可な特別なランクか否か
+            $is_special_rank = in_array($gacha_rank_id, $special_rank_ids);
+
 
             ## 新規商品の登録
             foreach ($new_prize_ids as $i => $prize_id) 

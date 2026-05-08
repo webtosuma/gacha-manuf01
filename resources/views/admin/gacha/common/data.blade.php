@@ -4,36 +4,10 @@
 
 <div class="p-3 bg-light rounded-3 mb-3">
     <div class="mb-">
+
+
         <h5 class="border-bottom ">{{ $gacha->name }}</h5>
 
-        <div class="card-body">
-            <h6 class="">
-                <div class="d-flex align-items-center gap-2">
-                    @include('includes.point_icon')
-                    <div class="">
-                        1回×
-                        <span class="fs-3">
-                            <number-comma-component number="{{ $gacha->one_play_point }}"></number-comma-component>
-                        </span>pt
-                    </div>
-                </div>
-            </h6>
-            <p class="card-text m-0">
-                残り
-                <number-comma-component number="{{ $gacha->remaining_count }}"></number-comma-component>
-                /
-                <number-comma-component number="{{ $gacha->max_count }}"></number-comma-component>
-            </p>
-            <div class="progress mb-3">
-                @php
-                $ratio = $gacha->remaining_ratio;
-                $bg_color = $ratio>70 ? 'bg-primary' : ( $ratio>40 ? 'bg-warning' : 'bg-danger' );
-                $style_class = 'progress-bar progress-bar-striped '.$bg_color
-                @endphp
-                <div class="{{ $style_class }}" role="progressbar"
-                style="width: {{$ratio.'%'}}" aria-valuenow="{{ $ratio }}" aria-valuemin="0" aria-valuemax="{{ $ratio }}"></div>
-            </div>
-        </div>
 
         <div class="d-flex flex-wrap gap-1">
             <!--広告-->
@@ -60,6 +34,11 @@
             <!--時間帯-->
             <span class="border px-3 rounded-pill">{{ $gacha->min_time.'〜'.$gacha->max_time }}</span>
         </div>
+
+        
+        @include('gacha.common.metter')
+
+
     </div>
 </div>
 

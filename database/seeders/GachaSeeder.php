@@ -6,8 +6,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
-use App\Models\GachaDiscription;
-use App\Http\Controllers\AdminGachaController;
 /*
 | =============================================
 |  ガチャ　シーダー　

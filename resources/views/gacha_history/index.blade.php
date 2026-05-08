@@ -27,18 +27,15 @@
         @if( config('u_rank_ticket.user_rank',false) && Auth::user()->now_rank )
 
             @php $now_rank = Auth::user()->now_rank; @endphp
-            <div class="list-group-item bg-white py-">
-                <div class="d-flex justify-content-between gap-3">
-                    <div class="col-6 col-md-4">
+            <div class="list-group-item bg-white py- ">
+                <div class="d-flex justify-content-start gap-3">
+                    <div class="col-6 col-md-3">
                         <div style="font-size:14px;" class="mb-2">会員ランク：</div>
 
-                        <ratio-image-component
-                        style_class="ratio ratio-16x9 overflow-hidden
-                        position-relative shiny"
-                        url="{{ $now_rank->image_path }}"
-                        ></ratio-image-component>
+                        <img src="{{ $now_rank->image_path }}" class="w-100" alt="">
+
                     </div>
-                    <div class="col">
+                    <div class="col col-md-3">
                         @include('mypage.user_rank')
                     </div>
                 </div>

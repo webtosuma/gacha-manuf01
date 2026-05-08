@@ -60,6 +60,10 @@
                     <a :href="user_shipped.r_show"
                     class="card card-body bg-white text-dark">
 
+                        <!--住所変更アラート-->
+                        <div v-if="user_shipped.update_user_address_label"
+                        class="text-danger mb-1">{{ user_shipped.update_user_address_label }}</div>
+
                         <div class="row g-3 align-items-center">
 
                             <div class="col">
@@ -71,7 +75,7 @@
                                 >{{ user_shipped.created_at_format }}</div>
 
                                 <!--発送コード-->
-                                <div class="">発送コード；{{ user_shipped.code }}</div>
+                                <div class="">発送コード:{{ user_shipped.code }}</div>
 
                                 <!--発送状況-->
                                 <div v-if="user_shipped.state_id==11">

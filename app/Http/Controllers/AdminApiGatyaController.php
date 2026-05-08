@@ -59,14 +59,16 @@ class AdminApiGatyaController extends Controller
             switch ( $request->published_status ) {
                 case 'published'://公開中
                     $query->where('published_at','<>',null)->where('published_at','<=',now());
+                    $query->where('end_published_at',null)->orWhere('end_published_at','>',now());
                     break;
 
                 case 'reserv_publish'://公開予約
                     $query->where('published_at','>',now());
+                    $query->where('end_published_at',null)->orWhere('end_published_at','>',now());
                     break;
 
                 case 'an_publish'://未公開
-                    $query->where('published_at',null);
+                    $query->where('published_at',null)->orWhere('end_published_at','<=',now());
                     break;
 
                 case 'sold_out'://売り切れ

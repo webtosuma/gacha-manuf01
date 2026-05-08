@@ -16,37 +16,34 @@
         </nav>
 
 
-        <section class="row g-0 mt-5">
-            {{-- <div class="col-12"><a class="btn text-start text-secondary w-100"
-            href="{{route('admin.user')}}">
-                <div class="fw-bold">ユーザーの合計所持ポイント</div>
+        <section class="row g-2 mt-5">
 
-                <div class="fs-3">{{ number_format($total_user_point) }}</div>
-            </a></div> --}}
-
-            <div class="col-6 col-md-3"><a class="btn text-start text-secondary w-100"
+            <div class="col-6 col-md-3"><a class="btn text-start text-secondary bg-body rounded w-100"
             href="{{route('admin.gacha')}}">
-                <div class="fw-bold">公開中</div>
+                <div class="fw-bold border-bottom border-1 "
+                >公開中</div>
 
                 <div class="fs-3"><number-comma-component number="{{ $gachas->total() }}"></number-comma-component></div>
             </a></div>
 
-            <div class="col-6 col-md-3"><a class="btn text-start text-secondary w-100"
-            href="{{route('admin.point_history')}}">
-                <div class="fw-bold">月間売上</div>
+            <div class="col-6 col-md-3"><a class="btn text-start text-secondary bg-body rounded w-100"
+            href="{{route('admin.point_sales_report')}}">
+                <div class="fw-bold border-bottom border-1 "
+                >月間売上</div>
                 <div class="fs-3"><number-comma-component number="{{ $sales }}"></number-comma-component></div>
             </a></div>
 
-            <div class="col-6 col-md-3"><a class="btn text-start text-secondary w-100"
+            <div class="col-6 col-md-3"><a class="btn text-start text-secondary bg-body rounded w-100"
             href="{{route('admin.user')}}">
-                <div class="fw-bold">登録ユーザー</div>
-                {{-- <div class="fs-3"><number-comma-component number="{{ $users->count() }}"></number-comma-component></div> --}}
+                <div class="fw-bold border-bottom border-1 "
+                >登録ユーザー</div>
                 <div class="fs-3"><number-comma-component number="{{ $users_count }}"></number-comma-component></div>
             </a></div>
 
-            <div class="col-6 col-md-3"><a class="btn text-start text-secondary w-100"
+            <div class="col-6 col-md-3"><a class="btn text-start text-secondary bg-body rounded w-100"
             href="{{route('admin.shipped')}}">
-                <div class="fw-bold">発送待ち</div>
+                <div class="fw-bold border-bottom border-1 "
+                >発送待ち</div>
 
                 <div class="fs-3">
                     @if ($waiting_shippeds_count)
@@ -57,6 +54,24 @@
                 </div>
             </a></div>
 
+            @if($sum_point_lastmanth!==null)
+                <div class="col-6 col-md-auto"><a class="btn text-start text-secondary bg-body rounded w-100"
+                href="{{route('admin.user')}}">
+                    <div class="fw-bold border-bottom border-1 "
+                    >ユーザーの合計所持PT(前月)</div>
+
+                    <div class="fs-3">{{ number_format($sum_point_lastmanth) }}</div>
+                </a></div>
+            @endif
+            @if($sum_point_thismanth!==null)
+                <div class="col-6 col-md-auto"><a class="btn text-start text-secondary bg-body rounded w-100"
+                href="{{route('admin.user')}}">
+                    <div class="fw-bold border-bottom border-1 "
+                    >ユーザーの合計所持PT(今月)</div>
+
+                    <div class="fs-3">{{ number_format($sum_point_thismanth) }}</div>
+                </a></div>
+            @endif
         </section>
 
 

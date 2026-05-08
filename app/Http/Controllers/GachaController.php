@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\GachaCategory;
 use App\Models\Gacha;
 use App\Models\UserGachaHistory;
-use App\Models\UserPrize;
-use App\Models\PointHistory;
-use App\Models\Infomation;
 use App\Models\Movie;
 use App\Models\Text;
+use App\Services\Gacha\PlayService;
+use App\Services\Gacha\PlayValidationService;
+use App\Services\UserRankHistoryService;
 /*
 | =============================================
 |  ガチャ コントローラー
@@ -20,6 +20,13 @@ use App\Models\Text;
 */
 class GachaController extends Controller
 {
+    /** サービスの登録 */
+    public function __construct(
+        protected PlayService $playService,
+        protected PlayValidationService  $validationService,
+        protected UserRankHistoryService $URankHistorySerice,
+    ){}
+    
     /**
      * カテゴリー選択・一覧表示
      *
@@ -31,25 +38,15 @@ class GachaController extends Controller
     {
         # 表示できないページの処理
         $category = GachaCategory::where('code_name', $category_code)->first();
-        if( $category_code!='all' && !$category ){ return \App::abort(404); }
+        if( $category_code!='all' && !$category ){ return abort(404); }
 
 
         # 変数
 
             ## カテゴリー名（ページタイトル）
             $category_name = $category ? $category->name : 'すべて';
-            // $first_category = GachaCategory::userList()->first();
-            // if($first_category){
-            //     $category_name = $category ? $category->name : $first_category->name;
-            //     $category_code = $category ? $category->code_name : $first_category->code_name;
-            // }
-            // else{
-            //     $category_name = null;
-            //     $category_code = null;
-            // }
 
             ## 背景画像
-            // $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
             $bg_image = $category && $category->bg_image_path
             ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
@@ -81,8 +78,6 @@ class GachaController extends Controller
             ->limit(10)->get();
             $slides = GachaController::getSlides($gachas);
 
-            // ## フィーバー
-            // $is_rainbow = AdminRainbowController::isPublished();
         //
 
 
@@ -335,7 +330,11 @@ class GachaController extends Controller
             ];
 
             # ガチャの種類の追加( Gacha::types() )
-            $not_keys=[ 'nomal' ,'max_custom','no_custom'];
+            $not_keys=[
+                'nomal' ,'max_custom','no_custom',
+                'n_time','n_time_no_custom',
+                'n_oneday','n_oneday_no_custom',
+            ];
             $gacha_types = Gacha::types();
             foreach ($gacha_types as $key => $label) {
                 if( ! in_array( $key, $not_keys ) )
@@ -396,7 +395,6 @@ class GachaController extends Controller
 
 
 
-
     /**
      * 詳細表示
      * @param String $category_code      //カテゴリーコード名
@@ -406,9 +404,9 @@ class GachaController extends Controller
      */
     public function show( $category_code, Gacha $gacha, $key)
     {
-
         # キーのチェック
-        if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
+        if( $gacha->key!=$key || !$gacha->is_published ){ return abort(404); }
+
 
         ## 背景画像
         $category = $gacha->category;
@@ -436,36 +434,59 @@ class GachaController extends Controller
 
 
     /**
-     * カスタム回数
+     * ガチャカで遊ぶ
+     * @param \Illuminate\Http\Request $request
      * @param String $category_code      //カテゴリーコード名
-     * @param  \App\Models\Gacha  $gacha
+     * @param  \App\Models\Gacha  $gacha //ガチャモデル
      * @param String $key                //ガチャモデル・キー
      * @return \Illuminate\Http\Response
      */
-    public function custom_count( $category_code, Gacha $gacha, $key)
+    public function play(Request $request, $category_code, Gacha $gacha, $key)
     {
-        # キーのチェック
-        if( $gacha->key!=$key || !$gacha->published_at ){ return \App::abort(404); }
-
-        # 会員ランク専用ガチャ：ログインユーザーのランクと異なれば非表示
-        $user = Auth::check() ? Auth::user() : null;
-        $user_rank_id = $user && $user->now_rank ? $user->now_rank->rank_id : null;
-        if(
-            $gacha->user_rank_id != null
-            && $gacha->user_rank_id != $user_rank_id
-
-        ){ return \App::abort(401); }
+        # ガチャ情報取得(他のリクエストを待機)
+        $gacha = Gacha::where('id', $gacha->id)
+        ->where('key',$key)
+        ->firstOrFail();//データなしの場合、404
 
 
-        ## 表示できるガチャ一覧
-        $category_code = $gacha->category->code_name;
-        $gachas = self::getPublishedGachas( $category_code, null );
+        # バリデーション
+        $message = $this->validationService->index($request,$gacha);
+        if( $message ){
 
-        return view('gacha.custom_count', compact(
-            'gacha',
-            'gachas','category_code'
-        ));
+            $request->session()->regenerateToken();// 二重送信防止
+
+            return redirect()->back()
+            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+        }
+
+
+        # 抽選結果の取得
+        $user_gacha_history = $this->playService->index($request, $gacha, $key);
+
+
+        # ガチャ実行後の昇格の評価
+        $user    = $request->user();
+        $rank_up = $this->URankHistorySerice->EvaluationPlaied($user);
+
+
+        # 二重送信防止
+        $request->session()->regenerateToken();
+
+
+
+        # スポンサー広告ガチャのとき
+        if( $gacha->sponsor_ad ){
+            return redirect()->route('gacha.sponsor_ad.movie',compact('user_gacha_history', 'rank_up' ));
+        }
+
+
+
+        # viewの表示 ($user_gacha_history:ガチャ履歴 )
+        $params = $rank_up ? compact('user_gacha_history', 'rank_up' ) : compact('user_gacha_history');
+        return redirect()->route('gacha.movie', $params);
+
     }
+
 
 
     /**
@@ -479,10 +500,10 @@ class GachaController extends Controller
     {
         # ユーザの結果のみを表示
         $user = Auth::user();
-        if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
+        if( $user_gacha_history->user_id!=$user->id ){ return abort(404); }
 
         # 変数定義
-        $movie_id = $request->input('movie') ?? $user_gacha_history->movie_id;
+        $movie_id = $user_gacha_history->movie_id;
         $rank_up  = $request->input('rank_up');
 
 
@@ -521,7 +542,7 @@ class GachaController extends Controller
     {
         # ユーザの結果のみを表示
         $user = Auth::user();
-        if( $user_gacha_history->user_id!=$user->id ){ return \App::abort(404); }
+        if( $user_gacha_history->user_id!=$user->id ){ return abort(404); }
 
         # ガチャ
         $gacha = $user_gacha_history->gacha;
@@ -547,6 +568,7 @@ class GachaController extends Controller
 
         $gachas = $query->paginate(6);
 
+
         return view('gacha.result',compact(
             'gacha','user_gacha_history', 'page_title', 'bg_image', 'rank_up',
             'gachas','category_code'
@@ -568,7 +590,7 @@ class GachaController extends Controller
         ->where('user_id',$user_id)
         ->where('created_at',$created_at)
         ->first();
-        if( !$user_gacha_history ){ return \App::abort(404); }
+        if( !$user_gacha_history ){ return abort(404); }
 
         # ガチャ
         $gacha = $user_gacha_history->gacha;
@@ -624,50 +646,4 @@ class GachaController extends Controller
 
 
 
-    /**
-     * 景品のポイント交換
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param String $category_code      //カテゴリーコード名
-     * @param  \App\Models\UserGachaHistory $user_gacha_history
-     * @return \Illuminate\Http\Response
-     */
-    public function exchange_points(
-        Request $request, $category_code,
-        UserGachaHistory $user_gacha_history
-    ){
-        # ポイント交換できないとき
-        if( config('app.no_exchange_point') )
-        {
-            return back()->with('alert-warning','商品をポイントに変えることはできません。');
-        }
-
-
-        # 景品のポイント交換
-        $data = UserPrizeController::ExchangePoints($request);
-        $point_history = $data['point_history'];
-        $user_prizes   = $data['user_prizes'];
-
-
-        # ガチャ
-        $gacha = $user_gacha_history->gacha;
-
-
-        # メッセージ
-        if( $user_prizes->count()>0 ){
-
-            $point = number_format( $point_history->value );
-            $message = '合計'.$user_prizes->count()."点の商品を\n".$point."ptに交換しました。\n選択されなかった商品は、\n「取得した商品一覧」に移動します。";
-
-            return redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
-            ->with('alert-warning',$message);
-
-        }
-        else{
-            $message = '不正な処理を検知しました。';
-
-            return  redirect()->route('gacha.result', compact('category_code','user_gacha_history'))
-            ->with(['alert-danger'=>$message, 'icon'=>'bi-exclamation-circle' ]);
-        }
-    }
 }

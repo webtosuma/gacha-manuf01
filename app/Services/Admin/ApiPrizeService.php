@@ -87,15 +87,7 @@ class ApiPrizeService
             # リレーション
             $query->with('rank');
             
-            // ページネーション（←コントローラーから渡す）
-            // $prizes = $query->with('rank')->paginate($perPage);
-
-            // 追加処理
-            // foreach ($prizes as $prize) {
-            //     $prize->image_path = $prize->image_path;
-            //     $prize->is_used = $prize->is_used;
-            // }
-
+            
         return $query;
     }
 

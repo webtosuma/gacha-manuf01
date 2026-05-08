@@ -4,12 +4,13 @@
 
 
         <!--image-->
-        <div class="overflow-hidden" :class="{'mosaic_image':initial_time}">
-            <ratio-image-component
+        <div class="overflow-hidden"
+        :class="{'mosaic_image':initial_time&&mosaic}">
+            <ratio-img-tag-component
             :url="gacha_image_path"
             :style_class="gacha_ratio+' ratio bg-body'"
-            ></ratio-image-component>
-        </div>
+            ></ratio-img-tag-component>
+        </div> 
 
         <!--売り切れ-->
         <div v-if="remaining_count==0"
@@ -132,6 +133,7 @@
             add_chance_count       : { type: [String, Number],  default: null, },//天井系ガチャのアド確定までの回転数
             have_user_rank         : { type: [String, Number, Boolean,],  default: 0, },//個人のプレイ数の商品登録
             user_played_count      : { type: [String, Number],  default: 0, },//
+            mosaic                 : { type: [String, Number],  default: 1, },//カウントダウン時のサムネモザイク
 
             img_path_one_chance    : { type: String,  default: '', },//ワンチャンス限定
             img_path_one_time      : { type: String,  default: '', },//一回限定

@@ -115,6 +115,9 @@
                         <th scope="col" class="text-center">
                             <i class="bi bi-envelope fs-5"></i>
                         </th>
+
+                        <th  v-if="user_rank" scope="col">ランク</th><!--ユーザーランク-->
+
                         <th scope="col">
                             <a :href="routes.prize">商品</a>
                         </th>
@@ -158,6 +161,22 @@
                         <td class="d-none d-lg-table-cell">{{ user.email.length>14 ? user.email.slice(0, 12)+'...' : user.email}}</td>
                         <td class="d-none d-lg-table-cell">{{  user.twitter_id ?? '---'  }}</td>
                         <td>{{ user.get_email  ? '受取' : '---' }}</td>
+
+                        <!--会員ランク-->
+                        <td v-if="user_rank" class="text-center">
+
+                            <a :href="user.r_rank"
+                            class="btn btn-link text-decoration-none">
+                                <div v-if="user.now_rank">
+                                    <div  style="width:50px;">
+                                        <img :src="user.now_rank_image_path" alt="" class="d-block w-100">
+                                    </div>
+                                    <div class="form-text" style="font-size:8px;">{{ user.now_rank_label }}</div>
+                                </div>
+                                <span v-else class="text-danger">*未更新</span>
+                            </a>
+                        </td>
+
                         <!--商品数-->
                         <td>
                             <a :href="user.r_prize">{{ user.u_prizes_count }}</a>
@@ -241,6 +260,7 @@
 
     const routes       = ref([]);/* ルーティング */
 
+    const user_rank    = ref(false);/* ユーザーランクの利用 */
 
     const inputs  = ref({ /* 通信パラメーター */
         _token       : props.token,
@@ -289,6 +309,7 @@
 
             column_names.value = json.data['column_names'];/* 検索絞り込み用のカラム一覧の保存 */
             routes.value       = json.data['routes'];      /* ルーティングの保存 */
+            user_rank.value    = json.data['user_rank'];   /* ユーザーランクの利用 */
 
             loading.value = false;// 通信中
 

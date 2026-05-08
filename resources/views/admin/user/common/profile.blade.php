@@ -33,12 +33,9 @@
 
             <div class="d-flex justify-content-between gap-3 mt-3">
                 <div class="col-auto" style="width:140px;">
-                    <ratio-image-component
-                    style_class="ratio ratio-16x9 overflow-hidden
-                    position-relative shiny"
-                    url="{{ $now_rank->image_path }}"
-                    ></ratio-image-component>
+                    <img src="{{ $now_rank->image_path }}" class="w-100" alt="">
                 </div>
+
                 <div class="col">
                     <h6 class="fw-bold mb-">{{$now_rank->label}}</h6>
                     <div class="progress rounded-0 mb-" style="height: .6rem; transform: skew(-15deg);">

@@ -34,7 +34,7 @@
             </div>
         @else
             <div class="px-0 px-lg-3 overflow-auto">
-                <nav class="nav gap-1 flex-nowrap mx-auto" style="width:{{($categories->count()+1)*6}}rem;">
+                <nav class="nav gap-1 flex-nowrap mx-auto" style="width:{{($categories->count()+1)*8}}rem;">
 
                     @include('gacha.section.category.text')
 

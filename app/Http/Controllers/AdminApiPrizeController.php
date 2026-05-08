@@ -32,6 +32,11 @@ class AdminApiPrizeController extends Controller
         $prizes = $this->service->getPrizes($request)
         ->paginate($per_page);
 
+        # 追加データ
+        foreach ($prizes as $prize) {
+            $prize->is_used = $prize->is_used;
+        }
+
         # その他のデータ
         $prize_ranks = PrizeRank::all();//評価ランクデータ
 

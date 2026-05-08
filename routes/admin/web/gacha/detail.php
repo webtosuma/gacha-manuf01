@@ -1,11 +1,12 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers;
+use \App\Http\Controllers\Admin;
 /*
 |--------------------------------------------------------------------------
 | ガチャ(詳細情報)
-| AdminGachaDisriptionController
-| AdminGachaPrizeController
+| GachaPrizeController
+| GachaMovieController
+| GachaDisriptionController
 |--------------------------------------------------------------------------
 */
 Route::middleware(['admin_auth'])->group(function () {
@@ -17,40 +18,34 @@ Route::middleware(['admin_auth'])->group(function () {
 
     # 商品の編集
     Route::get('/admin/gacha/prize/edit/{gacha}',
-    [Controllers\AdminGachaPrizeController ::class, 'edit'])
+    [Admin\GachaPrizeController ::class, 'edit'])
     ->name('admin.gacha.prize.edit');
 
         # 商品の更新
         Route::patch('/admin/gacha/prize/update/{gacha}',
-        [Controllers\AdminGachaPrizeController ::class, 'update'])
+        [Admin\GachaPrizeController ::class, 'update'])
         ->name('admin.gacha.prize.update');
-
-    // # 商品残数の編集
-    // Route::get('/admin/gacha/prize/edit/{gacha}',
-    // [Controllers\AdminGachaPrizeController ::class, 'edit'])
-    // ->name('admin.gacha.prize.edit');
-
 
 
 
     # 演出動画情報の編集
     Route::get('/admin/gacha/movie/edit/{gacha}',
-    [Controllers\AdminGachaMovieController ::class, 'edit'])
+    [Admin\GachaMovieController ::class, 'edit'])
     ->name('admin.gacha.movie.edit');
 
         # 演出動画情報の更新
         Route::patch('/admin/gacha/movie/update/{gacha}',
-        [Controllers\AdminGachaMovieController ::class, 'update'])
+        [Admin\GachaMovieController ::class, 'update'])
         ->name('admin.gacha.movie.update');
 
     # 詳細情報の編集
     Route::get('/admin/gacha/discription/edit/{gacha}',
-    [Controllers\AdminGachaDisriptionController ::class, 'edit'])
+    [Admin\GachaDisriptionController ::class, 'edit'])
     ->name('admin.gacha.discription.edit');
 
         # 詳細情報の更新
         Route::patch('/admin/gacha/discription/update/{gacha}',
-        [Controllers\AdminGachaDisriptionController ::class, 'update'])
+        [Admin\GachaDisriptionController ::class, 'update'])
         ->name('admin.gacha.discription.update');
 
 

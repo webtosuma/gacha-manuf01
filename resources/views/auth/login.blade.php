@@ -55,7 +55,7 @@
                         <small class="text-body-secondary">新規登録はこちら</small>
 
                         <a href="{{ route('register') }}"
-                        class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
+                        class="w-100 py-2 mb-2 btn btn-info rounded-3"
                         >会員登録</a>
 
                     </div>

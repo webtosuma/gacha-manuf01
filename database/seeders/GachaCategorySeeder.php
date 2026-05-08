@@ -39,15 +39,26 @@ class GachaCategorySeeder extends Seeder
 
         return   [
             [
-                'name'         => 'ワンピース',//名前
-                'code_name'    => 'onepiece',//'コードネーム（ルーティング用）'
-                'bg_image'     => 'site/image/bg03.png',//'背景画像'
-            ],
-            [
                 'name'         => 'ポケモン',//名前
                 'code_name'    => 'pokemon',//'コードネーム（ルーティング用）'
-                'bg_image'     => 'site/image/bg01.jpg',//'背景画像'
+                'bg_image'     => '',//'背景画像'
             ],
+            [
+                'name'         => 'テスト',//名前
+                'code_name'    => 'test',//'コードネーム（ルーティング用）'
+                'bg_image'     => '',//'背景画像'
+            ],
+
+            // [
+            //     'name'         => 'ワンピース',//名前
+            //     'code_name'    => 'onepiece',//'コードネーム（ルーティング用）'
+            //     'bg_image'     => 'site/image/bg03.png',//'背景画像'
+            // ],
+            // [
+            //     'name'         => 'ポケモン',//名前
+            //     'code_name'    => 'pokemon',//'コードネーム（ルーティング用）'
+            //     'bg_image'     => 'site/image/bg01.jpg',//'背景画像'
+            // ],
             // [
             //     'name'         => '遊戯王',//名前
             //     'code_name'    => 'yugio',//'コードネーム（ルーティング用）'

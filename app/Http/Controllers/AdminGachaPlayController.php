@@ -121,7 +121,14 @@ class AdminGachaPlayController extends Controller
             && (bool) config('u_rank_ticket.u_rank_settings.instant_bonuses', true )
 
         ){
-           $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
+            $rank_up = UserRankHistoryController::CreateRankUpHistory( $user, now(), $user->now_rank );
+
+            ## ランクアップ時のボーナス付与
+            if( $rank_up ){
+                $desc_first_rank = $user->desc_first_rank;//更新された直近の会員ランク履歴
+                UserRankHistoryController::CreateBonusHistory( $user, now(), $desc_first_rank );
+            }
+
         }
 
 

@@ -81,6 +81,16 @@ trait Accessors
     }
 
 
+    /**
+     * 予告時のモザイク利用の有無 mosaic
+     * @return String
+    */
+    public function getMosaicAttribute()
+    {
+        return config('gacha.image.countdown_mosaic',true)?1:0;
+    }
+
+
 
     /**
      * 商品・総数 max_count
@@ -160,7 +170,7 @@ trait Accessors
 
 
     /**
-     * 一回プレイしたか？ played_one_time　
+     * 一回プレイしたか？ played_one_time
      * @return String
     */
     public function getPlayedOneTimeAttribute()
@@ -184,7 +194,6 @@ trait Accessors
     public function getInitialTimeAttribute()
     {
         $max = now()->copy()->addMinutes( config('app.countdown_minute',30) );
-        // $max = now()->copy()->addDays(3);//3日前　新規カウントダウン
 
         if( $this->published_at>now() && $this->published_at<$max  )
         {
@@ -279,6 +288,16 @@ trait Accessors
     }
 
 
+    /**
+     * [メーター]メーター表示の種類 metter_type
+     * @return String
+    */
+    public function getMetterTypeAttribute()
+    {
+        return  config('gacha.list_settings.metter_type');
+    }
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -289,7 +308,7 @@ trait Accessors
     */
 
         /**
-         * スポンサー広告ガチャを上限までプレイしたか？ played_ad_limit　
+         * スポンサー広告ガチャを上限までプレイしたか？ played_ad_limit
          * @return String
         */
         public function getPlayedAdLimitAttribute()

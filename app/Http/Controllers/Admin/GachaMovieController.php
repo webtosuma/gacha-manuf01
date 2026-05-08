@@ -1,0 +1,90 @@
+<?php
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\AdminLogController;//のちに、サービス化
+
+use Illuminate\Http\Request;
+use App\Models\Gacha;
+use App\Models\Movie;
+use App\Models\GachaRankMovie;
+/*
+| =============================================
+|  サイト管理者 ガチャの演出動画　コントローラー
+| =============================================
+*/
+class GachaMovieController extends Controller
+{
+    /**
+     * 編集
+     *
+     * @param  \App\Models\Gacha  $gacha
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Gacha $gacha)
+    {
+        $movies = Movie::where('mobile_storage','<>','')->get();
+
+        return view('admin.gacha.movie.edit', compact('gacha','movies'));
+    }
+
+
+
+    /**
+     * 更新
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  \App\Models\Gacha  $gacha
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Gacha $gacha)
+    {
+        # ランク別詳細情報
+        $discriptions = $gacha->discriptions;
+        foreach ($discriptions as $discription) {
+
+            $key = 'gri'.$discription->gacha_rank_id.'-movie_ids'; //識別キー gri100
+
+            $old_id_array =
+            $discription->movies->pluck('id')->toArray();//更新前、動画ID
+            $new_id_array = $request[$key];              //更新後、動画ID
+
+
+            # 値がなければスキップ
+            if( !$new_id_array ){ continue; }
+
+
+            ## ランク動画->新規登録
+            foreach ($new_id_array as $id)
+            {
+                if( !in_array( $id, $old_id_array ) )
+                {
+                    $gacha_rank_movie = new GachaRankMovie([
+                        'gacha_id'      => $gacha->id, //ガチャリレーション
+                        'movie_id'      => $id,        //演出動画リレーション
+                        'gacha_rank_id' => $discription->gacha_rank_id, //ランクID
+                    ]);
+                    $gacha_rank_movie->save();
+                }
+            }
+
+
+            ## ランク動画->削除
+            foreach ($discription->gacha_rank_movies as $gacha_rank_movie)
+            {
+                if( !in_array( $gacha_rank_movie->movie_id, $new_id_array ) )
+                {
+                    $gacha_rank_movie->delete();
+                }
+            }
+        }
+
+        # 操作ログの更新
+        AdminLogController::createLog( 'gacha.movie', $gacha->id );
+
+        $request->session()->regenerateToken();// 二重送信防止
+
+        # リダイレクト
+        return redirect()->route('admin.gacha.movie.edit',$gacha)
+        ->with(['alert-warning'=>'ガチャの演出動画を更新しました']);
+    }
+}

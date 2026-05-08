@@ -14,7 +14,7 @@ use App\Models\UserRankHistory;
 use App\Models\PointSail;
 /*
 | =============================================
-|  サイト管理者 ガチャ コントローラー 
+|  サイト管理者 ガチャ コントローラー
 | =============================================
 */
 class AdminGachaController extends Controller
@@ -63,7 +63,7 @@ class AdminGachaController extends Controller
 
 
     /**
-     * 新規作成 
+     * 新規作成
      *
      * @param String $category_code
      * @return \Illuminate\Http\Response
@@ -219,14 +219,19 @@ class AdminGachaController extends Controller
     public function published(Gacha $gacha)
     {
         # カテゴリー内での公開中ガチャ数
-        $published_count = Gacha::where('category_id',$gacha->category_id)
-        ->where('published_at','<>',null)
-        ->get()->count();
+        $query = Gacha::query();
+
+            $query->where('category_id',$gacha->category_id);//カテゴリーのみ
+            \App\Http\Controllers\GachaApiController::onlyPublished($query);//公開中のみ
+
+        $published_count = $query->count();
+
 
         #ガチャの公開制限
         $limit = env('LIMIT_GACHA_COUNT');
         $gacha_restriction = env('LIMIT_GACHA_COUNT') ? $published_count>=$limit : false;
-        $gacha_restriction = $gacha->published_at ? false : $gacha_restriction;//公開中のガチャは、公開ボタン制限なし
+        $gacha_restriction = $gacha->is_published ? false : $gacha_restriction;//公開中のガチャは、公開ボタン制限なし
+        // dd($gacha_restriction);
 
 
         return view('admin.gacha.published.edit', compact(
@@ -244,25 +249,7 @@ class AdminGachaController extends Controller
      */
     public function published_update(Request $request, Gacha $gacha)
     {
-        // dd( $request->all() );
         # 公開日変数
-
-            // $published_at = $gacha->published_at;
-
-            // // 公開[1](前回が「公開」でないとき)
-            // if( $request->is_published==1 && !$gacha->is_published ){
-            //     $published_at = now()->format('Y-m-d H:i:s');
-            // }
-            // // 公開予約[2]
-            // else if( $request->is_published==2 ){
-            //     $published_at = str_replace('T',' ', $request->published_at );
-            // }
-            // // 非公開[0]
-            // else if( $request->is_published==0 ){
-            //     $published_at = NULL;
-            // }
-
-
         $now = now();
         switch ($request['type'])
         {

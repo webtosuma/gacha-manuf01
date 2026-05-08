@@ -7,7 +7,15 @@
 
 
                     <!--image-->
-                    @if( $slide['type'] == 'info' )
+                    <div style="z-index:1;">
+                        <ratio-image-component
+                        style_class="ratio {{config('app.gacha_card_ratio')}} "
+                        url="{{ $slide['image'] }}"
+                        bg_size="contain"
+                        ></ratio-image-component>
+                    </div>
+
+                    {{-- @if( $slide['type'] == 'info' )
 
                         <div style="z-index:1;">
                             <ratio-image-component
@@ -28,7 +36,7 @@
                             url="{{ $slide['image'] }}"
                             ></ratio-image-component>
                         </div>
-                    @endif
+                    @endif --}}
 
 
                 </a>

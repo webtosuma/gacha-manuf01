@@ -26,11 +26,42 @@
 @endsection
 
 
+@section('script')
+    {{-- <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        
+        "name": "{{ $gacha->name }}",
+        
+        "image": [
+            "{{ $gacha->image_path }}"
+        ],
+        
+        "description": "{{ $gacha->name.' '.$gacha->category->name.'のガチャ'.' 1回/'.$gacha->one_play_point.'pt' }}",
+        
+        "sku": "{{ $gacha->id }}",
+        
+        "url": "{{ url()->current() }}",
+        
+        "offers": {
+            "@type": "Offer",
+            "price": "{{ $gacha->one_play_point }}",
+            "priceCurrency": "JPY",
+            "availability": "https://schema.org/InStock",
+            "url": "{{ url()->current() }}"
+        }
+    }
+    </script> --}}
+@endsection
+
+
+
 @section('content')
 
 
     <!--ボトムメニュー-->
-    <div class="position-fixed bottom-0 end-0 w-100 pb-3 text-white d-lg-none"
+    <div class="position-fixed bottom-0 end-0 w-100 pb-1 text-white d-lg-none"
     style="z-index:50; background:rgb(0, 0, 0, .7);">
         <div class="container mx-auto" style="max-width:600px;">
 
@@ -48,6 +79,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg ">
+
 
                 @include('gacha.show.main')
 
@@ -70,11 +102,13 @@
                 <div class="position-sticky ps-2 mb-5" style="top: 4rem; ">
 
 
-                    <div class="p-4 text-white rounded-4 mb-5  d-none d-lg-block "
+                    <div class="p-1 text-white rounded-4 mb-5  d-none d-lg-block "
                     style="z-index:50; background:rgb(0, 0, 0, .7);">
                         <!--metter-->
                         @php $metter_bg_color = ''; @endphp
-                        @include('gacha.common.metter')
+                        <div class="my-2">
+                            @include('gacha.common.metter')
+                        </div>
 
                         <!--play_buttons-->
                         @include('gacha.common.play_buttons')

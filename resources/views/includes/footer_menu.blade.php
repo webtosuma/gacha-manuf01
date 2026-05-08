@@ -55,20 +55,41 @@ $gacha_categories = \App\Models\GachaCategory::userList()->get();
 </div>
 <div class="col-auto">
     <ul class="list-unstyled m-0"> --}}
+
         @if( config('u_rank_ticket.user_rank',false) && Auth::check() && Auth::user()->now_rank )
             <li class="mb-2"><a class="link-secondary text-decoration-none"
             href="{{ route('about_user_rank') }}">会員ランク</a></li>
         @endif
+
         <li class="mb-2"><a class="link-secondary text-decoration-none"
         href="{{ route('about_pwa') }}">PWAについて</a></li>
-        <li class="mb-2"><a class="link-secondary text-decoration-none"
-        href="{{ route('infomation') }}">お知らせ</a></li>
-        {{-- <li class="mb-2"><a class="link-secondary text-decoration-none"
-        href="{{ route('timeline') }}">タイムライン</a></li> --}}
+
+        @if( config('app.purchase') )
+            <!--買取表-->
+            <li class="mb-2"><a class="link-secondary text-decoration-none"
+            href="{{ route('purchase') }}">買取表</a></li>
+        @endif
+
+        @php
+        $infomations_count =
+        \App\Http\Controllers\InfomationController::GetInfomationsQuery()
+        ->whereNotIn( 'type', ['ec'] )
+        ->limit(3)->count();
+        @endphp
+        @if( $infomations_count>0 )
+            <li class="mb-2"><a class="link-secondary text-decoration-none"
+            href="{{ route('infomation') }}">お知らせ</a></li>
+        @endif
+
         <li class="mb-2"><a class="link-secondary text-decoration-none"
         href="{{ route('contact') }}">お問い合わせ</a></li>
-        {{-- <li class="mb-2"><a class="link-secondary text-decoration-none"
-        href="{{ route('operating_company') }}">運営会社</a></li> --}}
+
+        @if( config('app.company_url') )
+        <li class="mb-2"><a class="link-secondary text-decoration-none"
+            href="{{ config('app.company_url') }}">運営会社</a></li>
+        @endif
+
+
     </ul>
 </div>
 

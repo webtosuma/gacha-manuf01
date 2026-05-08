@@ -2,82 +2,89 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\AdminPointSalesReportDailyController as Daily;
-use App\Http\Controllers\AdminPointSalesReportController as Report;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PointHistory;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 use App\Models\User;
-use App\Models\UserGachaHistory;
+use App\Http\Controllers\AdminPointSalesReportController as Report;
+use Carbon\Carbon;
 /*
 | =============================================
-|  ストアーAdmin　ポイント売上レポート[顧客一覧] コントローラー
+|  Admin　ポイント売上レポート[顧客一覧] コントローラー
 | =============================================
 */
 class AdminPointSalesReportVisitersController extends Controller
 {
     /**
      * API 顧客一覧
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-    */
+     */
     public function api_index(Request $request)
     {
-        # 開始日・終了日・日付ラベル
-        list( $start_day, $last_day ) = Report::aggDays($request);
+        // =========================
+        // 日付取得
+        // =========================
+        [$start_day, $last_day] = Report::aggDays($request);
 
-        # 顧客情報
+        $start = $start_day->copy()->startOfDay();
+        $end   = $last_day->copy()->endOfDay();
+
+        // =========================
+        // クエリ構築（N+1完全排除）
+        // =========================
         $query = User::query();
 
-            ## 商品購入ユーザーの絞り込み
-            $query->whereHas('point_histories', function($sh_query) use ($start_day,$last_day){
-                $sh_query->adominPointHistoryReason()
-                ->whereBetween('created_at',[$start_day->startOfDay(),$last_day->endOfDay()]);
-            });
-
-            ## 購入回数(sales_count)カラムの追加
-            $query->withCount([ 'point_histories as sales_count' => function($sh_query) use ($start_day,$last_day){
-                $sh_query->adominPointHistoryReason()
-                ->whereBetween('created_at',[$start_day->startOfDay(),$last_day->endOfDay()])
-                ;
-            }]);
-
-        $visiters = $query->get();
-
-
-
-        # 購入数(payment_count)カラムの追加
-        foreach ($visiters as $visiter)
-        {
-            ## 購入金額(total_price)
-            $visiter['total_price'] = PointHIstory::where('user_id',$visiter->id)
-            ->adominPointHistoryReason()//入出ID絞り込み スコープ
-            ->whereBetween('created_at',[$start_day->startOfDay(),$last_day->endOfDay()])
-            ->sum('price');
-
-
-            ## [Adminルーティング]ユーザー詳細
-            $visiter['ra_user_show'] = route('admin.user.show',$visiter);
-        }
-
-        # 並び替え(購入金額が高い順)
-        $key = 'total_price';//購入金額
-        $visiters = $visiters->toArray();
-        usort($visiters, function ($a, $b) use ($key) {
-            // return $a[$key] - $b[$key]; //照準
-            return $b[$key] - $a[$key];//降順
+        // 購入ユーザーのみ
+        $query->whereHas('point_histories', function ($q) use ($start, $end) {
+            $q->adominPointHistoryReason()
+              ->whereBetween('created_at', [$start, $end]);
         });
 
+        // 購入回数
+        $query->withCount([
+            'point_histories as sales_count' => function ($q) use ($start, $end) {
+                $q->adominPointHistoryReason()
+                  ->whereBetween('created_at', [$start, $end]);
+            }
+        ]);
 
-        # 入力値
-        $inputs = $request->all();
+        // 購入金額
+        $query->withSum([
+            'point_histories as total_price' => function ($q) use ($start, $end) {
+                $q->adominPointHistoryReason()
+                  ->whereBetween('created_at', [$start, $end]);
+            }
+        ], 'price');
 
-        return response()->json( compact(
-            'visiters','inputs',
-        ) );
+        // 並び順（重要）
+        $query->orderByDesc('total_price');
 
+        // =========================
+        // データ取得
+        // =========================
+        $visiters = $query->get();
+
+        // =========================
+        // フロント用整形
+        // =========================
+        $visiters->transform(function ($user) {
+
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+
+                // null対策
+                'total_price' => (int) ($user->total_price ?? 0),
+                'sales_count' => (int) ($user->sales_count ?? 0),
+
+                // ルーティング
+                'ra_user_show' => route('admin.user.show', $user),
+            ];
+        });
+
+        // =========================
+        // レスポンス
+        // =========================
+        return response()->json([
+            'visiters' => $visiters,
+            'inputs' => $request->all(),
+        ]);
     }
 }

@@ -39,7 +39,7 @@ class Prize extends Model
      */
     protected static function newFactory()
     {
-        return \Database\Factories\PrizeFactory::new(); 
+        return \Database\Factories\PrizeFactory::new();
     }
 
 
@@ -64,6 +64,8 @@ class Prize extends Model
         'discription_text',      //説明文
         'discription_icon_path', //説明文モーダルアイコン
     ];
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -159,7 +161,7 @@ class Prize extends Model
 
 
         /**
-        //  * 利用中か否か is_used
+         * 利用中か否か is_used
          * @return String
         */
         public function getIsUsedAttribute()

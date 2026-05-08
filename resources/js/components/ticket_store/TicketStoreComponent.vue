@@ -48,65 +48,61 @@
 
             <div v-for="(store, key) in stores" :key="key"
             class="col-4 col-md-3 col-lg-2">
-                <a :href="r_api_show+'/'+store.id" class="d-block text-dark btn border-0 p-0">
+                <a :href="r_api_show+'/'+store.id" class="d-block text-dark btn border-0 p-0 h-100">
 
-                    <!--image-->
-                    <div class="position-relative">
+                    <div class="row flex-column h-100">
 
-                        <!-- @include('ticket_store.common.prize_image') -->
-                        <div class="position-relative pt-0">
-                            <!--prize image-->
-                            <div class="ratio ratio-3x4"
-                            style="z-index:0;">
-                                <ratio-image-component
-                                :url="store.prize.image_path"
-                                style_class="ratio ratio-3x4 rounded-3"
-                                ></ratio-image-component>
+                        <!--image-->
+                        <div class="col">
+                            <div class="position-relative">
+
+                                <div class="position-relative pt-0">
+                                    <!--prize image-->
+                                    <ratio-image-component
+                                    :url="store.prize.image_path"
+                                    style_class="ratio ratio-3x4 rounded-3"
+                                    />
+
+
+                                    <div v-if="store.count<1"
+                                    class="position-absolute top-0 start-0 w-100 h-100"
+                                    style="z-index:3; background: rgba(0, 0, 0, .8);"
+                                    ><div class="d-flex align-items-center justify-content-center h-100 fs- text-white"
+                                    >SOLD OUT</div></div>
+                                </div>
+
+
+                                <!--登録枚数-->
+                                <div v-if="store.count>0"
+                                class="position-absolute top-0 end-0 p-" style="transform: translate(6px, -6px);">
+                                    <div class="bg-dark text-white px-1 rounded-pill fw-bold fs-"
+                                    >{{'×'+store.count}}</div>
+                                </div>
+
                             </div>
-
-
-                            <div v-if="store.count<1"
-                            class="position-absolute top-0 start-0 w-100 h-100"
-                            style="z-index:3; background: rgba(0, 0, 0, .8);"
-                            ><div class="d-flex align-items-center justify-content-center h-100 fs- text-white"
-                            >SOLD OUT</div></div>
                         </div>
 
 
-                        <!--登録枚数-->
-                        <div v-if="store.count>0"
-                        class="position-absolute top-0 end-0 p-" style="transform: translate(6px, -6px);">
-                            <div class="bg-dark text-white px-1 rounded-pill fw-bold fs-"
-                            >{{'×'+store.count}}</div>
+                        <div class="col">
+                            <div class="text-start mt-2">
+                                <div class="">
+                                    {{ store.prize.name }}
+                                </div>
+                            </div>
                         </div>
 
                         <!--チケット枚数-->
-                        <!-- <div class="position-absolute bottom-0 end-0 p- w-100">
-                            <div class="d-flex gap-0 align-items-center justify-content-center text-success
-                            px-2 rounded" style="font-size:11px; background-color: rgb(0 0 0 / 80%);">
+                        <div class="col-auto text-start">
+                            <div class="d-flex gap-0 align-items-center justify-content-start text-success" style="font-size:14px;">
                                 <i class="bi bi-ticket-perforated-fill fs-5 text-success"></i>
 
                                 <i class="bi bi-x"></i>
                                 <div class="text-success">
-                                    <span class="fs-6">{{store.ticket_count}}</span>
+                                    <span class="fs-6">{{store.ticket_count.toLocaleString()}}</span>
                                 </div>
                             </div>
-                        </div> -->
-
-                    </div>
-                    <div class="text-start mt-2">
-                        <div class="">
-                            {{ store.prize.name }}
                         </div>
-                        <!--チケット枚数-->
-                        <div class="d-flex gap-0 align-items-center justify-content-start text-success" style="font-size:14px;">
-                            <i class="bi bi-ticket-perforated-fill fs-5 text-success"></i>
 
-                            <i class="bi bi-x"></i>
-                            <div class="text-success">
-                                <span class="fs-6">{{store.ticket_count.toLocaleString()}}</span>
-                            </div>
-                        </div>
                     </div>
                 </a>
             </div>

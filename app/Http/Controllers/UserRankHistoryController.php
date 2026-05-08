@@ -17,8 +17,12 @@ use App\Models\TicketHistory;
 class UserRankHistoryController extends Controller
 {
     /** 制度開始日 */
-    public static function StartDate(){ return Carbon::parse('2025-11-01'); }
-
+    public static function StartDate()
+    {
+        return Carbon::parse(
+            config('u_rank_ticket.u_rank_settings.start_date','2026-01-01')
+        );
+    }
 
 
     /**
@@ -68,23 +72,34 @@ class UserRankHistoryController extends Controller
             {
                 ## 直近の会員ランク履歴
                 $desc_first_rank = $user->desc_first_rank;
-                // dd($desc_first_rank->created_at->format('Y-m-d'));
 
-                ##a. 昇格
+                ##a. 昇格 (ガチャによる昇格がない場合に起動)
                 self::CreateRankUpHistory( $user, $month, $desc_first_rank );
 
-                ##b. 維持
-                self::CreateNowrankHistory( $user, $month, $desc_first_rank );
 
-                ##c. 降格
-                self::CreateRankRankDownHistory( $user, $month, $desc_first_rank );
+                /* 毎月降格チェック:trueのとき */
+                if( (bool) config('u_rank_ticket.u_rank_settings.monthly_check', true ) )
+                {
+                    ##b. 維持
+                    self::CreateNowrankHistory( $user, $month, $desc_first_rank );
+
+                    ##c. 降格
+                    self::CreateRankRankDownHistory( $user, $month, $desc_first_rank );
+
+                }
+                /* 毎月降格チェック:falseのとき */
+                else
+                {
+                    ##d. 維持=>現ランクのpt消費数に関係なく、現在のランクを維持
+                    self::CreateNoMonthlyCheckRankHistory( $user, $month, $desc_first_rank );
+                }
 
 
-                ## ボーナス付与
-                $desc_first_rank = $user->desc_first_rank;//更新された直近の会員ランク履歴
 
+                ## x.ボーナス付与
                 if( (bool) config('u_rank_ticket.u_rank_settings.monthly_bonuses', true ) )//[毎月ボーナスの有無]config.u_rank_ticketにて設定
                 {
+                    $desc_first_rank = $user->desc_first_rank;//更新された直近の会員ランク履歴
                     self::CreateBonusHistory( $user, $month, $desc_first_rank );
                 }
 
@@ -96,7 +111,7 @@ class UserRankHistoryController extends Controller
 
 
         # ガチャの後にランクアップしたとき(ガチャのあと)
-        if( self::CreateRankUpHistory( $user, now(), $user->now_rank )){ /** ~ */}
+        // if( self::CreateRankUpHistory( $user, now(), $user->now_rank )){ /** ~ */}
 
     }
 
@@ -281,7 +296,34 @@ class UserRankHistoryController extends Controller
 
 
     /**
-     * d.ボーナス付与
+     * d.維持=>現ランクのpt消費数に関係なく、現在のランクを維持
+     *
+     * @param  User   $user
+     * @param  Carbon $date
+     * @param  UserRankHistory $user_rank_history
+     * @return Bool
+     */
+    public static function CreateNoMonthlyCheckRankHistory( $user, $date, $desc_first_rank )
+    {
+        # 変数の定義
+        $month_pt_count = $desc_first_rank ? self::GetMonthPtCount($user, $desc_first_rank->created_at) : 0; //指定年月のpt消費数
+
+        $user_rank_history = new UserRankHistory([
+            'user_id'  => $user->id,
+            'rank_id'  => $desc_first_rank->rank_id,
+            'pt_count' => $month_pt_count,//ポイント消費数
+        ]);
+        $user_rank_history->created_at = $date;
+        $user_rank_history->updated_at = $date;
+        $user_rank_history->save();
+
+        return true;
+    }
+
+
+
+    /**
+     * x.ボーナス付与
      *
      * @param  User   $user
      * @param  Carbon $date
@@ -317,4 +359,8 @@ class UserRankHistoryController extends Controller
             $ticket_history->save();
         }
     }
+
+
+
+
 }

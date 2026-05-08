@@ -20,6 +20,7 @@
                 :add_chance_count      ="gacha.add_chance_count"
                 :have_user_rank        ="gacha.have_user_rank"
                 :user_played_count     ="gacha.user_played_count"
+                :mosaic                ="gacha.mosaic"
 
                 :img_path_one_chance   ="gacha.img_path_one_chance "
                 :img_path_one_time     ="gacha.img_path_one_time"
@@ -33,7 +34,7 @@
 
 
             <!-- スライダー   -->
-            <div v-if="gacha.slide_imgs && !gacha.i_time "
+            <div v-if="gacha.slide_imgs && !gacha.i_time && no_slider==0 "
             :id="'splide_gacha'+gacha.id" class="splide_gacha splide"
             :class="gacha.type=='only_new_user' ? 'bg-success-subtle' : 'bg-dark'"
             >
@@ -55,29 +56,56 @@
             :style="`background-image:url(`+gacha.img_path_card_body+`);`"
             style="background: no-repeat top center / cover rgba(0, 0, 0, 1);"
             ><div style="background:rgb(0, 0, 0, .5); " class="rounded-under">
+
+
                 <!--metter & price-->
                 <a :href="gacha.route"  :class="href_class">
                     <div class="position-relative">
 
-                        <u-gacha-metter
-                        :sm_card="sm_card"
-                        :new_label_path="gacha.new_label_path"
-                        :img_path_point="gacha.img_path_point"
-                        :bg_color="'text-white bg-rainbow-index'"
-                        :gacha_type="gacha.type"
-                        :sponsor_ad="gacha.sponsor_ad"
-                        :gacha_play_point="gacha.one_play_point"
-                        :is_meter       ="gacha.is_meter"
-                        :remaining_ratio="gacha.remaining_ratio"
-                        :remaining_count="gacha.remaining_count"
-                        :max_count      ="gacha.max_count"
-                        :type_n_remaining_count_label="gacha.type_n_remaining_count_label"
-                        />
+
+                        <div v-if="gacha.metter_type=='line'">
+
+                            <u-gacha-metter-line
+                            :sm_card="sm_card"
+                            :new_label_path="gacha.new_label_path"
+                            :img_path_point="gacha.img_path_point"
+                            bg_color="text-white"
+                            :gacha_type="gacha.type"
+                            :sponsor_ad="gacha.sponsor_ad"
+                            :gacha_play_point="gacha.one_play_point"
+                            :is_meter       ="gacha.is_meter"
+                            :remaining_ratio="gacha.remaining_ratio"
+                            :remaining_count="gacha.remaining_count"
+                            :max_count      ="gacha.max_count"
+                            :type_n_remaining_count_label="gacha.type_n_remaining_count_label"
+                            />
+
+                        </div>
+                        <div v-else>
+
+                            <u-gacha-metter
+                            :sm_card="sm_card"
+                            :new_label_path="gacha.new_label_path"
+                            :img_path_point="gacha.img_path_point"
+                            bg_color="text-white"
+                            :gacha_type="gacha.type"
+                            :sponsor_ad="gacha.sponsor_ad"
+                            :gacha_play_point="gacha.one_play_point"
+                            :is_meter       ="gacha.is_meter"
+                            :remaining_ratio="gacha.remaining_ratio"
+                            :remaining_count="gacha.remaining_count"
+                            :max_count      ="gacha.max_count"
+                            :type_n_remaining_count_label="gacha.type_n_remaining_count_label"
+                            />
+
+                        </div>
+
 
                         <!-- カウントダウンがあるとき -->
                         <div v-if="gacha.i_time"
                         class="position-absolute top-0 start-0 w-100 h-100 bg-dark"
                         style="z-index:1;" ></div>
+
 
                     </div>
                 </a>
@@ -141,6 +169,7 @@
 
             gacha:         { type: [Object,Array],  default: {}, },
             sm_card:       { type: [String,Number,Boolean],  default: 0, },//カードの表示サイズ
+            no_slider:     { type: [String,Number,Boolean],  default: 0, },//スラーダーなし
 
         },
         data() { return {

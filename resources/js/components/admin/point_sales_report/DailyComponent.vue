@@ -1,180 +1,194 @@
+
 <template>
-    <div class="">
+    <div>
 
         <loading-cover-component :loading="loading" />
 
         <h3>{{ day_format }}</h3>
 
-
+        <!-- 合計 -->
         <section class="mb-3">
             <div class="row mt-3 g-0">
-                <div v-for="( total, key  ) in totals" :key="key"
-                class="col-6 col-md">
-                    <button @click="inputs.active_key=key"
-                    :class="inputs.active_key==key ? 'bg-primary-subtle' : '' "
-                    class="btn text-start w-100" type="button" >
-                        <div class="">{{ total.label }}</div>
-                        <div class="h3 fw-bold">{{ total.value.toLocaleString() }}</div>
-                    </button>
+                <div v-for="(total, key) in totals" :key="key" class="col-6 col-md">
+                    <div class="btn text-start w-100">
+                        <div>{{ total.label }}</div>
+                        <div class="h3 fw-bold">
+                            {{ (total.value ?? 0).toLocaleString() }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-
+        <!-- テーブル -->
         <section class="card card-body bg-white mb-5 overflow-auto">
-            <table class="table bg-white ">
-                <!--ヘッド-->
+            <table class="table bg-white">
+
                 <thead>
-                    <tr class="bg-white text-center">
-                        <th scope="col">アカウント名</th>
-                        <th scope="col">購入ポイント</th>
-                        <th scope="col">売上金額</th>
-                        <th scope="col"><!--サブスク--></th>
-                        <th scope="col">受付時間</th>
-                        <th scope="col" style="max-width:3rem;"></th>
+                    <tr class="text-center">
+                        <th>アカウント名</th>
+                        <th>購入ポイント</th>
+                        <th>売上金額</th>
+                        <th></th>
+                        <th>受付時間</th>
+                        <th></th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr v-for="(data, key) in data_list" :key="key"
-                    class="bg-white text-center">
-                        <!-- アカウント名 -->
-                        <td scope="col">
+                    <tr v-for="(data, key) in data_list" :key="key" class="text-center">
 
-                            <a :href=" data.ra_user_show " class="d-block mb-2"
-                            >{{ 'ID:'+data.user.id+' '+data.user.name }}</a>
-
+                        <!-- ユーザー -->
+                        <td>
+                            <a :href="data.ra_user_show" class="d-block mb-2">
+                                {{ 'ID:' + (data.user?.id ?? '-') + ' ' + (data.user?.name ?? '') }}
+                            </a>
                         </td>
 
-                        <!-- 購入ポイント -->
-                        <td scope="col">{{ data.value.toLocaleString()+'pt' }}</td>
+                        <!-- ポイント -->
+                        <td>
+                            {{ (data.value ?? 0).toLocaleString() + 'pt' }}
+                        </td>
 
-                        <!-- 購入金額 -->
-                        <td scope="col">{{ data.price.toLocaleString()+'円' }}</td>
+                        <!-- 金額 -->
+                        <td>
+                            {{ (data.price ?? 0).toLocaleString() + '円' }}
+                        </td>
 
-                            <td>
-                                <!--サブスク-->
-                                <div v-if="data.reason_id>2000" class="badge bg-info">サブスク</div>
-                            </td>
+                        <!-- サブスク -->
+                        <td>
+                            <div v-if="(data.reason_id ?? 0) >= 2000" class="badge bg-info">
+                                サブスク
+                            </div>
+                        </td>
 
-                        <!-- 受付時間 -->
-                        <td scope="col">{{ data.created_at_format }}</td>
+                        <!-- 時刻 -->
+                        <td>
+                            {{ data.created_at_format ?? '' }}
+                        </td>
 
-                        <!-- メニューリンク -->
+                        <!-- メニュー -->
                         <td>
                             <div class="dropdown">
-                                <button class="btn btn-light border rounded-pill" type="button"
-                                :id="'dropdownMenuButton'+data.id"
-                                data-bs-toggle="dropdown" aria-expanded="false"
-                                ><i class="bi bi-three-dots-vertical"></i></button>
+                                <button
+                                    class="btn btn-light border rounded-pill"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                >
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
 
-
-                                <ul class="dropdown-menu bg-white"
-                                :aria-labelledby="'dropdownMenuButton'+data.id">
-                                    <li><a  :href="data.ra_user_show"
-                                    class="dropdown-item">ユーザー情報</a></li>
-                                    <li><a :href="data.ra_user_point_history"
-                                    class="dropdown-item">ポイント購入履歴</a></li>
+                                <ul class="dropdown-menu bg-white">
+                                    <li>
+                                        <a :href="data.ra_user_show" class="dropdown-item">
+                                            ユーザー情報
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a :href="data.ra_user_point_history" class="dropdown-item">
+                                            ポイント購入履歴
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
+
                     </tr>
                 </tbody>
+
             </table>
 
-            <div v-show="nextPageUrl" class="mt-3">
-                <a @click.prevent="getData( nextPageUrl )"
-                class="btn btn-light border"
-                href="">もっと読み込む</a>
+            <!-- もっと読み込む -->
+            <div v-if="nextPageUrl" class="mt-3">
+                <a @click.prevent="getData(nextPageUrl)" class="btn btn-light border">
+                    もっと読み込む
+                </a>
             </div>
 
         </section>
+
     </div>
 </template>
-
 <script setup>
-    import { ref, watch, onMounted } from 'vue';
+    import { ref, onMounted } from 'vue';
     import axios from 'axios';
 
-
     const props = defineProps({
-        token:       { type: String, default: '' },
-        r_api_list:  { type: String, default: '' },
+        token: { type: String, default: '' },
+        r_api_list: { type: String, default: '' },
     });
-
 
     /* 読み込み中 */
-    const loading     = ref(true);
+    const loading = ref(true);
 
-    /* 次のデータの読み込みURL */
-    const nextPageUrl = ref('');
+    /* 次ページURL */
+    const nextPageUrl = ref(null);
 
-    /* データリスト */
-    const data_list = ref({}); //
+    /* データ */
+    const data_list = ref([]);
 
-    /* 日付フォーマット */
+    /* 日付 */
     const day_format = ref('');
 
-    /* 合計値 */
+    /* 合計 */
     const totals = ref({
-        sales:                 {value: 0, label: '売上'}, //売上
-        visiters_count:        {value: 0, label: '客数'}, //客数
-        reprater_count:        {value: 0, label: 'リピーター数'}, //リピーター数
-        payment_count :        {value: 0, label: '販売回数'},    //販売回数
-        sales_prodact_count:   {value: 0, label: 'ガチャ回転数'},  //ガチャ回転数
+        sales:              { value: 0, label: '売上' },
+        visiters_count:     { value: 0, label: '客数' },
+        reprater_count:     { value: 0, label: 'リピーター数' },
+        payment_count:      { value: 0, label: '販売回数' },
+        gacha_played_count: { value: 0, label: 'ガチャ回転数' },
     });
 
-
-    /* 入力値 */
+    /* 入力 */
     const inputs = ref({
-
         _token: props.token,
         order: '',
-
     });
 
-    /* 初回データ取得 */
-    onMounted(() => { getData(); });
-
+    /* 初回 */
+    onMounted(() => {
+        getData();
+    });
 
     /* データ取得 */
     const getData = async (route = props.r_api_list) => {
         loading.value = true;
-        try {
 
+        try {
             const response = await axios.post(route, inputs.value);
 
-            /*データリスト*/
-            const paginate = response.data['data_list'];
+            const paginate = response.data?.data_list ?? {};
+
+            // 配列安全取得
+            const list = paginate.data ?? [];
+
+            // 初回 or 追加
             data_list.value =
-            route === props.r_api_list ? paginate.data : [...data_list.value, ...paginate.data];
+                route === props.r_api_list
+                    ? list
+                    : [...data_list.value, ...list];
 
-            /*合計値リスト*/
-            totals.value = response.data['totals'];
+            // totals
+            totals.value = response.data?.totals ?? totals.value;
 
-            /*日付フォーマット*/
-            day_format.value = response.data['day_format'];
-            console.log(response.data)
+            // 日付
+            day_format.value = response.data?.day_format ?? '';
 
-            /* 次のデータURLの保存 */
-            const { current_page, last_page, next_page_url } = paginate;
-            nextPageUrl.value = current_page !== last_page ? next_page_url : null;
-
-            loading.value = false;
+            // ページング
+            const current = paginate.current_page ?? 1;
+            const last = paginate.last_page ?? 1;
+            nextPageUrl.value =
+                current !== last ? paginate.next_page_url : null;
 
         } catch (error) {
+            console.error(error?.response?.data ?? error);
 
-            console.error(error.response?.data);
-
-            if (confirm('通信エラーが発生しました。再読み込みを行いますか？')) {
+            if (confirm('通信エラーが発生しました。再読み込みしますか？')) {
                 location.reload();
             }
 
+        } finally {
+            loading.value = false;
         }
     };
-
-
-
-
-
-
 </script>

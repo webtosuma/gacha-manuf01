@@ -194,7 +194,7 @@ class AdminPrizeController extends Controller
 
 
         # パスワード一覧テキストのダウンロード
-        return Storage::download($path,'cardFesta登録商品一覧.csv');
+        return Storage::download($path,'登録商品一覧.csv');
     }
 
 

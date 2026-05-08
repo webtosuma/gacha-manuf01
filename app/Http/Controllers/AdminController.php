@@ -97,7 +97,7 @@ class AdminController extends Controller
         $login_admin = Auth::user()->admin;
 
         # fobeesアカウントをfobeesアカウント以外のユーザーが開くとき
-        if( $edit_admin->fobees && !$login_admin->fobees ){ return \App::abort(404); }
+        if( $edit_admin->fobees && !$login_admin->fobees ){ abort(404); }
 
 
         return view( 'admin.register.edit',compact('edit_admin') );

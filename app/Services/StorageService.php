@@ -83,7 +83,7 @@ class StorageService
     {
         $image_path = !$delete ? $old_path : null;
 
-        if ($request_file) {
+        if ( $request_file ) {
 
             $image_path = $request_file->store($dir);
 

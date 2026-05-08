@@ -19,24 +19,23 @@
         aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
-                    <div class="modal-header bg-white"
+                    <div class="modal-header"
                     :class="{'bg-dark text-white':bg_dark}" >
                         <h5 class="modal-title fs-5" :id="'PrizeDiscriptionModalLabel'+id">{{ name }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-white"
+                    <div class="modal-body"
                     :class="{'bg-dark text-white':bg_dark}" >
 
 
-
                         <!--カード画像-->
-                        <div class="mb-3">
+                        <div class="col-8  p-3 mx-auto mb-3">
                             <ratio-image-component
-                            :style_class=" ratio +' ratio '"
+                            style_class="ratio ratio-3x4 rounded-3"
                             :url="image_path"
-                            bg_size="contain"
                             ></ratio-image-component>
                         </div>
+
 
 
                         <replace-text-component :text="discription" />
@@ -72,7 +71,6 @@
         src_icon:    { type: String, default: '' },
         no_btn:      { type: [String,Number], default: 0 },
         bg_dark:     { type: [String,Number], default: 0 },
-        ratio:       { type: String, default: 'ratio-1x1' },
     });
 
 

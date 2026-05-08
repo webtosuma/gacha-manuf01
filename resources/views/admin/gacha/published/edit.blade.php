@@ -95,6 +95,7 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                                 "
                                 name="type"
                                 value="start_now"
+                                disabled="{{$gacha_restriction?'1':''}}"
                                 btn_text="今すぐ公開"></disabled-button>
                             </div>
 
@@ -108,6 +109,10 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                             </div>
 
                         </div>
+
+
+
+
                     </div>
 
 

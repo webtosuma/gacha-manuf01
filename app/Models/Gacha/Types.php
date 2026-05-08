@@ -30,7 +30,7 @@ trait types
         }
 
 
-        
+
         /**
          * ガチャの種類ラベル type_label
          * @return String
@@ -53,7 +53,7 @@ trait types
             }
 
             # 通常・カスタムボタンを含まない
-            return !in_array( $this->type, ['nomal','no_custom'] )
+            return !in_array( $this->type, ['nomal','no_custom','max_custom'] )
             ? $this->types()[$this->type] : null;
         }
 

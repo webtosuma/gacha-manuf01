@@ -147,12 +147,13 @@
             :class="inputs.card_size=='sm'?' gx-3 ':' gx-0 '"
             >
                 <div v-for="(gacha, key) in gachas" :key="key"
-                :class="list_col_class">
+                :class=" gacha.is_published ? 'hover_anime '+list_col_class : list_col_class ">
 
-                    <a :href="gacha.route"
-                    class="ratio ratio-6x1 p-1 d-block"
+                    <div
+                    class=" p-1 "
+                    :class="gacha.img_path_card_head? 'ratio ratio-6x1' :'' "
                     :style="gacha.img_path_card_head?`background-image:url(`+gacha.img_path_card_head+`);`:''"
-                    style="background: no-repeat bottom center / cover;"
+                    style="background: no-repeat bottom center / cover; min-height:1rem;"
                     >
                         <div class="row align-items-end justify-content-start gx-2 px-2">
 
@@ -174,11 +175,11 @@
                             class="col-auto">
                                 <span class="bg-danger text-white px-2 rounded-pill"
                                 style="font-size:11px;"
-                                >{{ 'NEW!!' }}</span>
+                                >{{ 'NEW' }}</span>
                             </div>
 
                             <!--会員ランク限定-->
-                            <div v-if="gacha.user_rank_label && gacha.is_type_label_text"
+                            <div v-if="gacha.user_rank_label && gacha.is_type_label_text "
                             class="col-auto">
                                 <span class="bg-info border text-light px-2 rounded-pill"
                                 style="font-size:11px;"
@@ -186,7 +187,7 @@
                             </div>
 
                             <!--限定ガチャラベル-->
-                            <div v-if="gacha.type_label && gacha.is_type_label_text"
+                            <div v-if="gacha.type_label && gacha.is_type_label_text && inputs.card_size!='sm'"
                             class="col-auto">
                                 <span class="bg-body border text-dark px-2 rounded-pill"
                                 style="font-size:11px;"
@@ -194,7 +195,7 @@
                             </div>
 
                         </div>
-                    </a>
+                    </div>
 
 
                     <!--card-->
@@ -257,8 +258,8 @@
     });
 
     const list_col_class = ref('');
-    const list_sm_col_class = ref('hover_anime col-6 col-md-4 col-lg-3'); // 小さく表示 class
-    const list_md_col_class = ref('hover_anime col-12 col-md-6 col-lg-4'); // 大きく表示 class
+    const list_sm_col_class = ref('col-6 col-md-4 col-lg-3'); // 小さく表示 class
+    const list_md_col_class = ref('col-12 col-md-6 col-lg-4'); // 大きく表示 class
     // const localStorageKey = ref('u.gacha.list.index.inputs'); // ローカルストレージキー
 
 

@@ -96,6 +96,7 @@ class AppServiceProvider extends ServiceProvider
         $targets = [
             'gacha',
             'includes',
+            'layouts',
 
             'store'
         ];

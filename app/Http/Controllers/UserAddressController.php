@@ -35,7 +35,7 @@ class UserAddressController extends Controller
     public function edit( UserAddress $user_address)
     {
         $user = Auth::user();
-        if( $user_address->user_id != $user->id ){ return \App::abort(404); }
+        if( $user_address->user_id != $user->id ){ return abort(404); }
 
 
         # 前回のURLの保存

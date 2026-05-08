@@ -41,9 +41,11 @@ class GachaApiController extends Controller
             else{ $query->where('type','<>','event'); }
 
 
-        $gachas = $query->paginate(3);
+        $gachas = $query->paginate(6);//おすすめガチャの最大値と同じ
+
         self::addApiGachaData($gachas);//API用の追加データ
 
+        
         # カウントダウンガチャ
         $countdown_gachas = GachaController::getCountdownGachas($category_code);
 
@@ -101,13 +103,6 @@ class GachaApiController extends Controller
 
                 ## 公開中のみ
                 GachaApiController::onlyPublished($query);
-                // $query->where('published_at','<',now()->copy()->addMinutes( config('app.countdown_minute',30) ) );//30分前 新規カウントダウン
-                // $query->where('published_at', '<>', null);
-
-                // ## 公開中のカテゴリーのみ
-                // $category_ids = GachaCategory::where('is_published',1) //公開中
-                // ->get()->pluck('id')->toArray();
-                // $query->whereIn('category_id',$category_ids);
 
                 ## サブスクリプション
                 $query->with('subscription');

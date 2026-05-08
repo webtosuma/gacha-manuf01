@@ -22,7 +22,7 @@ class PointHistory extends Model
         'value',     //ポイント数
         'price',     //販売価格(税込み)＊ポイント販売時
         'reason_id', //入出理由ID
-        'stripe_checkout_session_id'//Stripe チェックアウト処理ID 
+        'stripe_checkout_session_id'//Stripe チェックアウト処理ID
     ];
 
 
@@ -146,16 +146,11 @@ class PointHistory extends Model
         */
         public function scopeAdominPointHistoryReason($query)
         {
-            return $query->where( function( $q )
-            {
-                $q->where('reason_id','>=',2000)//サブスクを含む
-                ->where('reason_id','<' ,3000)
-                ->orWhere('reason_id',11)
-                ;
+            return $query->where(function ($q) {
+                $q->whereBetween('reason_id', [2000, 2999])
+                ->orWhere('reason_id', 11);
             });
-
         }
-
 
     /*
     |--------------------------------------------------------------------------

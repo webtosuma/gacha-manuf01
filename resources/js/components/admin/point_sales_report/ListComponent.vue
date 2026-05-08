@@ -91,7 +91,7 @@
 
 
             <!-- 日別データ テーブル -->
-            <table v-if=" active_table_type=='selse' "
+            <table v-if=" active_table_type=='seles' "
             class="table bg-white ">
                 <!--head-->
                 <thead>
@@ -234,7 +234,14 @@
     const loading     = ref(true);
 
     /* データリスト */
-    const data_list = ref({}); //
+    const data_list = ref({
+        sales: [],
+        visiters_count: [],
+        reprater_count: [],
+        payment_count: [],
+        gacha_played_count: [],
+    });
+
     const active_data = ref([]);
 
     /* 今日の日付フォーマット */
@@ -255,15 +262,15 @@
 
     /* テーブルの種類 */
     const table_types = ref({
-        selse:    '売上レポート',
+        seles:    '売上レポート',
         visiters: '顧客レポート',
     });
 
     /* 選択中のテーブルの種類 */
-    const active_table_type = ref('selse');
+    const active_table_type = ref('seles');
 
     /* テーブルデータリスト */
-    const data_list_visiters = ref({});//顧客データ
+    const data_list_visiters = ref([]);//顧客データ
 
     /* APIルーティング */
     const r_api_visiters = ref('');//API 顧客一覧

@@ -23,9 +23,13 @@ import Vue from 'vue'
 
 
 
-    /* 画像表示 */
+    /* 画像表示(background) */
     Vue.component('ratio-image-component',
     require('./components/Items/RatioImageComponent.vue').default);
+
+    /* 画像表示(imgタグ) */
+    Vue.component('ratio-img-tag-component',
+    require('./components/Items/RatioImgTagComponent.vue').default);
 
     /* 画像ファイル読み込み　Input */
     Vue.component('read-image-file-component',

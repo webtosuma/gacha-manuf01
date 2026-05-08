@@ -1,33 +1,89 @@
 <?php
 
 namespace App\Services\Admin;
-
+use Illuminate\Support\Facades\DB;
+use \Illuminate\Http\Request;
 use App\Models\Gacha;
+use App\Models\GachaCategory;
 use App\Models\GachaPrize;
 use App\Models\GachaDiscription;
+use App\Models\PointSail;
 use App\Services\StorageService;
-use Illuminate\Support\Facades\DB;
 /*
 | =============================================
-|  Admin : ガチャ サービス
+|  Admin : ガチャ サービス 
 | =============================================
 */
 class GachaService
 {
-    protected $storage;
-
     public function __construct(
-        StorageService $storage,
-    ){
-        $this->storage = $storage;
+        protected StorageService $storage,
+    ){}
+
+
+
+    /**
+     * カテゴリー情報の取得 / カテゴリーコードの確認
+     * @param String $category_code
+    */
+    public function getCategoryCode($category_code):? GachaCategory
+    {
+        $gacha_category = GachaCategory::where('code_name',$category_code)->first();
+        if(!$gacha_category && $category_code){ abort(404); }//該当なし
+
+        return $gacha_category;
+    }
+
+
+
+    /**
+     * サブスクプラン一覧の取得
+    */
+    public function getSubscriptions()
+    {
+        return PointSail::where('is_subscription',true)//サブスクのみ
+        ->orderByDesc('is_published')//公開中のみ上
+        ->orderByDesc('value')//ポイントが低い順
+        ->get();
     }
 
 
     /**
+     * デフォルトのガチャの種類
+     * .設定は。config.gachaに記述
+     */
+    public function defaultsType(){
+        // return config('gacha.defaults_type','no_custom');
+        return config( 'gacha.defaults.type'/*新設定*/, config('gacha.defaults_type'/*旧設定*/, 'no_custom' ) );
+    }
+
+
+    /**
+     * 新規登録用ガチャモデル
+     * @param GachaCategory $gacha_category
+    */
+    public function getNewGacha($gacha_category)
+    {
+        return new Gacha([
+
+            'category_id' => $gacha_category ? $gacha_category->id : null,
+            'point'    => 0,
+            'type'     => self::defaultsType(),  //ガチャの種類
+            'is_meter' => config( 'gacha.defaults.is_meter', 1), //残数メーターの表示有無
+            'is_slide' => config( 'gacha.defaults.is_slide', 1), //スライドの表示有無
+
+            'min_time' => config( 'gacha.defaults.min_time', '00:00'),// 表示時間下限　2024/04/17追加
+            'max_time' => config( 'gacha.defaults.max_time', '24:00'),// 表示時間上限　2024/04/17追加
+
+        ]);
+    }
+
+
+
+    /**
      * 新規登録
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return Gacha
+     * 
+     * @param Request $request
      */
     public function store($request): Gacha
     {
@@ -57,11 +113,33 @@ class GachaService
 
 
     /**
+     * 更新
+     *
+     * @param Request $request
+     * @param Gacha $gacha
+     */
+    public function update($request,$gacha): Gacha
+    {
+        return DB::transaction(function () use ($request,$gacha) {
+
+            # 入力データの加工
+            $inputs = $this->processingInputs($request,$gacha);
+
+            # 更新
+            $gacha->update($inputs);
+
+
+            return $gacha;
+
+        });
+    }
+
+
+    /**
      * 削除処理
      *
      * @param Request $request
      * @param Gacha $gacha
-     * @return Void
      */
     public function delete( $request, $gacha ): void
     {
@@ -90,9 +168,8 @@ class GachaService
     /**
      * 入力データの加工 self::processingInputs( $request )
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Gacha $gacha //新規登録のとき===null
-     * @return Array
+     * @param Request $request
+     * @param Gacha $gacha //新規登録のとき===null
      */
     public function processingInputs($request, $gacha=null ): array
     {
@@ -167,6 +244,7 @@ class GachaService
 
             $inputs = array_replace($inputs, $update);
         }
+
 
         return $inputs;
 

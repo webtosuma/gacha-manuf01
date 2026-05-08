@@ -55,7 +55,8 @@
                     </div>
 
                     <div class="col-sm-8 offset-sm-2">
-                        <button @click="subCardNum" type="button" class="btn btn-curve btn-secondary text-white w-100">
+                        <button @click="subCardNum" type="button"
+                        class="btn btn-curve btn-light w-100">
                             {{ '前のステップへ　戻る' }}
                         </button>
                     </div>

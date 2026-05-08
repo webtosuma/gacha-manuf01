@@ -7,15 +7,16 @@ use App\Http\Controllers;
 | ポイント購入・履歴 (webhook)
 |  StripSubscriptionController
 |  PointHistoryController
+|  PurchasePointController
 |
 |  2026/06/18 url表示をpoint_sail->purchase_pointに変更
 |--------------------------------------------------------------------------
 */
     Route::middleware(['user_rank'])->group(function () {
 
-        # ポイント一覧
+        # ポイント一覧(共通)
         Route::get('purchase_point/',
-        [Controllers\StripeController::class, 'index'])
+        [Controllers\PurchasePointController::class, 'index'])
         ->middleware(['check.user.age'])//誕生日入力・年齢チェク
         ->name('point_sail');
 
@@ -29,15 +30,22 @@ use App\Http\Controllers;
     });
     Route::middleware(['auth','user_rank'])->group(function () {
 
+        # ポイントが不足しています(共通)
+        Route::get('purchase_point/shortage',
+        [Controllers\PurchasePointController::class, 'shortage'])
+        ->name('point_sail.shortage');
+
+        # ポイント購入履歴
+        Route::get('point_history/{month?}',
+        [Controllers\PointHistoryController::class, 'index'])
+        ->name('point_history');
+
+
+
         # 購入手続き
         Route::get('purchase_point/payment/{point_sail}',
         [Controllers\StripeController::class, 'payment'])
         ->name('point_sail.payment');
-
-        # ポイントが不足しています(StripeController)
-        Route::get('purchase_point/shortage',
-        [Controllers\StripeController::class, 'shortage'])
-        ->name('point_sail.shortage');
 
 
         # ポイント購入完了
@@ -51,23 +59,18 @@ use App\Http\Controllers;
         [Controllers\StripeController::class, 'customer_portal'])
         ->name('point_sail.customer_portal');
 
-        # ポイント購入履歴
-        Route::get('point_history/{month?}',
-        [Controllers\PointHistoryController::class, 'index'])
-        ->name('point_history');
-
     });
 
 
 
     # StripeIDのリセット
-    Route::get('/stripe-users-id-reset', function () {
+    // Route::get('/stripe-users-id-reset', function () {
 
-        $users = User::whereNotNull('stripe_id')->get();
-        foreach ($users as $key => $user) {
-            $user->stripe_id = null;
-            $user->save();
-        }
+    //     $users = User::whereNotNull('stripe_id')->get();
+    //     foreach ($users as $key => $user) {
+    //         $user->stripe_id = null;
+    //         $user->save();
+    //     }
 
-        dd($users);
-    });
+    //     dd($users);
+    // });

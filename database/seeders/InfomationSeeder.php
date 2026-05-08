@@ -44,21 +44,21 @@ class InfomationSeeder extends Seeder
             [
                 'title'        => 'テストお知らせ',//題名
                 'body'         => "テスト\nテスト\nテスト",//本文
-                'image'        => 'sample/gachas/g01/top.png',//画像
+                'image'        => 'sample/pokemon/infomation.png',//画像
                 'published_at' => now(),//公開日時
             ],
             [
                 'title'        => 'テスト スライドお知らせ',//題名
                 'body'         => "テスト\nテスト\nテスト",//本文
-                'image'        => 'sample/gachas/g01/top.png',//画像
+                'image'        => 'sample/pokemon/infomation.png',//画像
                 'published_at' => now(),//公開日時
                 'is_slide'     => 1,    //スライドの表示有無
             ],
-            [
-                'title'        => 'テスト：非公開',//題名
-                'body'         => "テスト\nテスト\nテスト",//本文
-                'image'        => 'sample/gachas/g01/top.png',//画像
-            ],
+            // [
+            //     'title'        => 'テスト：非公開',//題名
+            //     'body'         => "テスト\nテスト\nテスト",//本文
+            //     'image'        => 'sample/gachas/g01/top.png',//画像
+            // ],
 
         ];
 

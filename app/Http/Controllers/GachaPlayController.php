@@ -13,10 +13,9 @@ use App\Models\Gacha;
 use App\Models\GachaPrize;
 use App\Models\PointHistory;
 use App\Models\UserGachaHistory;
-use App\Models\UserPrize;
-use App\Models\Prize;
 use App\Models\GachaRankMovie;
 use App\Models\Movie;
+use App\Services\Gacha\PlayDrawService;
 /*
 | =============================================
 |  ガチャ PLAY コントローラー
@@ -24,6 +23,10 @@ use App\Models\Movie;
 */
 class GachaPlayController extends Controller
 {
+    /** サービスの登録 */
+    public function __construct(
+        protected PlayDrawService $drawService,
+    ){}
 
     /**
      * ガチャカで遊ぶ
@@ -36,8 +39,8 @@ class GachaPlayController extends Controller
     public function play(Request $request, $category_code, Gacha $gacha, $key)
     {
 
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
 
             # ガチャ情報取得(他のリクエストを待機)
             $gacha = Gacha::where('id',$gacha->id)
@@ -77,7 +80,8 @@ class GachaPlayController extends Controller
             $user_gacha_history = self::CreateGachaHistory( $gacha, $point_history ,$now_play_count );
 
             # 当たりの選出・ユーザー取得商品の登録・残り商品の減算
-            $randReminingGPIdArray = CreateUserPrize::index( $user_gacha_history );
+            // $randReminingGPIdArray = CreateUserPrize::index( $user_gacha_history );
+            $randReminingGPIdArray = $this->drawService->index( $user_gacha_history );
 
 
             # ランダムで選出した、ガチャ商品の最大ランク
@@ -88,18 +92,18 @@ class GachaPlayController extends Controller
             $user_gacha_history->movie_id = $movie->id;
             $user_gacha_history->save();
 
-            DB::commit();
+        //     DB::commit();
 
 
-        } catch (\Exception $e) {
+        // } catch (\Exception $e) {
 
-            Log::error($e);
-            DB::rollback();
-            $message = 'エラーが発生しました。';
-            return redirect()->back()
-            ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
+        //     Log::error($e);
+        //     DB::rollback();
+        //     $message = 'エラーが発生しました。';
+        //     return redirect()->back()
+        //     ->with(['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']);
 
-        }
+        // }
 
 
 
@@ -196,9 +200,7 @@ class GachaPlayController extends Controller
         }
 
         # 非公開ガチャの利用不可(非公開または、公開日が現在より先のとき)
-        else if(
-            !$gacha->published_at || $gacha->published_at->toDateTimeString() > now()->toDateTimeString()
-        ){
+        else if( !$gacha->is_published ){
             return '現在、このガチャを利用することはできません。';
         }
         # [会員ランク限定]

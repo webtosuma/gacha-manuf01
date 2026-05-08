@@ -1,7 +1,7 @@
 <template>
     <div class="">
 
-        <div v-if="show_play_bottons && !r_prize_history" class="row justify-content-center g-2 mt-1">
+        <div v-if="show_play_bottons && !r_prize_history" class="row justify-content-center g-1 mt-1">
 
             <!--1回ボタン-->
             <div class="col-6" v-if="is_disabled_oneplay_btn>-1">

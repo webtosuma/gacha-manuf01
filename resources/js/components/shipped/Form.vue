@@ -12,7 +12,7 @@
             :r_destroy="r_destroy"
             @update-address="updateSelectedAddressId"
             :use_size="use_size"
-            :default_email="default_email"
+            :default_email="default_email" 
             ></u-addressーlist-form>
 
 

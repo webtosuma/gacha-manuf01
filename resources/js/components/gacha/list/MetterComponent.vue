@@ -40,14 +40,6 @@
         </div>
 
 
-        <!-- 新規会委員限定 -->
-        <!-- <div v-if="gacha_type=='only_new_user'"
-        class="text-center text-success" style="line-height:2rem">
-            ＊一週間限定・一回限定で利用できます
-        </div> -->
-
-
-
 
         <!-- 通常メーター -->
         <div v-if="gacha_type!='only_new_user' && is_meter!=0"
@@ -85,24 +77,6 @@
 
         </div>
 
-
-
-
-            <!-- メーター表示なし -->
-        <!-- <div v-else style="height:2rem"></div> -->
-
-
-        <!-- 限定n回 残数 -->
-        <!-- <div v-if="sm_card==0"
-        class="position-absolute top-0 start-50 translate-middle w-100 text-end pe-3"
-        style="font-size:11px;">
-            <div class="px-3 text-light bg-dark rounded-pill d-inline-block">
-                限定回数 残り
-                <number-comma-component :number=" remaining_count "></number-comma-component>
-                /
-                <number-comma-component :number=" max_count "></number-comma-component>
-            </div>
-        </div> -->
 
 
     </div>

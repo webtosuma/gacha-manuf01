@@ -49,6 +49,13 @@ class AdminApiUserController extends Controller
             $user->sail   = \App\Models\PointHistory::where('user_id',$user->id)
             ->where('reason_id',11)->sum('price');
 
+            /* 会員ランク */
+            $user->now_rank = $user->now_rank;
+            if($user->now_rank){
+                $user->now_rank_image_path = $user->now_rank->image_path;
+                $user->now_rank_label      = $user->now_rank->label;
+            }
+
             $user->created_at_format        = $user->created_at->format('Y/m/d H:i');        //登録日
             $user->last_access_at_format    = $user->last_access_at->format('Y/m/d H:i');    //最終アクセス
             $user->point_deadline_at_format = $user->point_deadline_at ? $user->point_deadline_text : null ; //ポイント期限
@@ -83,8 +90,11 @@ class AdminApiUserController extends Controller
             $routes['other_menu'] = route('admin.user.other_menu');
         }
 
+        # ユーザーランク
+        $user_rank = config('u_rank_ticket.user_rank',false);
 
-        return response()->json( compact('users','column_names', 'routes') );
+        
+        return response()->json( compact( 'users','column_names', 'routes', 'user_rank' ) );
     }
 
 

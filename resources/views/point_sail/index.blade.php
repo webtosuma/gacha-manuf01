@@ -38,6 +38,25 @@
         </h3>
 
 
+        <div class="mb-3">
+            @php
+            $subscriptions_count = \App\Models\PointSail::where('is_subscription',true)//サブスクのみ
+            ->where('is_published',true)//公開中のみ
+            ->count();
+            @endphp
+            @if ( env('SUBSCRIPTION',false) && $subscriptions_count>0 )
+                <!--サブスク-->
+                <div class="col-12 ">
+                    <a href="{{route('point_sail.subscription')}}"
+                    class="btn btn-lg btn-dark p-3 w-100 h-100 shadow position-relative">
+                        <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                        <div class="fw-bold">サブスクプランはこちら</div>
+                    </a>
+                </div>
+            @endif
+        </div>
+
+
         <ul class="list-group list-group-flush">
             <li class="list-group-item bg-white py-4 fs-">
 
@@ -49,11 +68,7 @@
                     @php $now_rank = Auth::user()->now_rank; @endphp
                     <div class="row g-2 mt-2 align-items-center">
                         <div class="col-auto me-2" style="width:6rem;">
-                            <ratio-image-component
-                            style_class="ratio ratio-16x9 overflow-hidden
-                            position-relative shiny"
-                            url="{{ $now_rank->image_path }}"
-                            ></ratio-image-component>
+                            <img src="{{ $now_rank->image_path }}" class="w-100" alt="">
                         </div>
                         <div class="col-auto">
                             <div class="form-text"><span class="fw-bold me-1">{{$now_rank->label}}ランク</span>ユーザー様は、</div>
@@ -210,7 +225,8 @@
             <h6 class="fs-5">ご利用可能な決済方法</h6>
 
             <div class="row g-3">
-                @php
+
+                {{-- @php
                 $subscriptions_count = \App\Models\PointSail::where('is_subscription',true)//サブスクのみ
                 ->where('is_published',true)//公開中のみ
                 ->count();
@@ -224,7 +240,7 @@
                             <div class="fw-bold">サブスクプランはこちら</div>
                         </a>
                     </div>
-                @endif
+                @endif --}}
 
 
                 @if( !env('FINCODE_KEY') && config('stripe.payment_method_types.jcb'))
@@ -272,7 +288,7 @@
                     </div>
                 @endif
 
-                @if(env('FINCODE_KEY') && !env('STRIPE_KEY') )
+                @if(env('FINCODE_KEY') && !env('STRIPE_KEY') && config('stripe.payment_method_types.jcb') )
                     <div class="col-12 col-md-4">
                         <!--クレジットカード fincode-->
                         <a href="{{ route( 'point_sail',[
@@ -288,6 +304,27 @@
                             </div>
                             @if($test)
                                 <div class="text-danger"><--クレジットカード fincode--></div>
+                            @endif
+                        </a>
+                    </div>
+                @endif
+
+                @if(env('FINCODE_KEY') && !env('STRIPE_KEY') && !config('stripe.payment_method_types.jcb') )
+                    <div class="col-12 col-md-4">
+                        <!--クレジットカード (JCBなし) fincode-->
+                        <a href="{{ route( 'point_sail',[
+                            'payment_type_key'   => 'fincode.card',
+                            'payment_type_label' => 'クレジットカード',
+                        ]) }}"
+                        class="btn btn-light hover_anime shadow p-3 text-start w-100 h-100 position-relative">
+                            <div class="position-absolute top-50 end-0 translate-middle-y p-3"><i class="bi bi-chevron-right fs-4"></i></div>
+                            <div class="">クレジットカード</div>
+                            <i class="bi bi-credit-card-fill fs-4"></i>
+                            <div class="">
+                                <img src="{{asset('storage/site/image/credit/02.png')}}" alt="ご利用可能な決済方法" style="height:2rem;">
+                            </div>
+                            @if($test)
+                                <div class="text-danger"><--クレジットカード (JCBなし) fincode--></div>
                             @endif
                         </a>
                     </div>

@@ -15,7 +15,7 @@ class ShippedController extends Controller
 {
     /**
      * 一覧
-     * 
+     *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -59,6 +59,15 @@ class ShippedController extends Controller
             $shipped_prize->count = array_count_values( $id_array )[ $shipped_prize->id ] ?? 0;
         }
 
+
+        // dd([
+        //     $user_shipped->user_address->updated_at,
+        //     $user_shipped->created_at,
+        //     $user_shipped->state_id,
+
+        //     $user_shipped->user_address->updated_at->gt($user_shipped->created_at)//左の方が大きい
+        //     && $user_shipped->state_id==11//発送待ち
+        // ]);
 
         return view('shipped.show',compact(
             'user_shipped','shipped_point','user_address','user_prizes','shipped_prizes'

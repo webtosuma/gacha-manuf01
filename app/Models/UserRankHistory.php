@@ -231,6 +231,10 @@ class UserRankHistory extends Model
             ? $this->total_play_ptcount
             : $this->maintain_rank_ptcount;
 
+            # 毎月降格チェックの有無
+            $value = (bool) config('u_rank_ticket.u_rank_settings.monthly_check', true )
+            ? $value : 0;
+
             return $value / $this->next_rankup_ptcount * 100;
         }
 
@@ -243,6 +247,13 @@ class UserRankHistory extends Model
         {
             $value = $this->maintain_rank_ptcount > $this->total_play_ptcount
             ? 0 : $this->total_play_ptcount - $this->maintain_rank_ptcount;
+
+            # 毎月降格チェックの有無
+            $value = (bool) config('u_rank_ticket.u_rank_settings.monthly_check', true )
+            ? $value : (
+                $this->maintain_rank_ptcount > $this->total_play_ptcount
+                ? 0 : $this->total_play_ptcount - 0
+            );
 
             return $value / $this->next_rankup_ptcount * 100;
         }

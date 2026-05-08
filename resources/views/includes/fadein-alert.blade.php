@@ -94,11 +94,7 @@
 
             <h3 class="fw-bold text-success mb-3">会員ランクが昇格しました！</h5>
 
-            <ratio-image-component
-            style_class="ratio ratio-16x9 rounded-3 overflow-hidden
-            position-relative shiny"
-            url="{{ $user->now_rank->image_path }}"
-            ></ratio-image-component>
+            <img src="{{ $user->now_rank->image_path }}" class="w-100" alt="">
 
         </alert-modal-comp-component>
 

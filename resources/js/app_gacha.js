@@ -25,6 +25,10 @@ import Vue from 'vue'
         Vue.component('u-gacha-metter',
         require('./components/gacha/list/MetterComponent.vue').default);
 
+        /* ガチャ メーター(横長) */
+        Vue.component('u-gacha-metter-line',
+        require('./components/gacha/list/MetterComponentLine.vue').default);
+
         /* ガチャボタン */
         Vue.component('u-gacha-play-buttons',
         require('./components/gacha/list/PlayButtonsComponent.vue').default);
@@ -62,6 +66,10 @@ import Vue from 'vue'
     Vue.component('u-gacha-custom-modal',
     require('./components/gacha/CustomModalComponent.vue').default);
 
+
+    /* おすすめガチャ一覧 */
+    Vue.component('u-gacha-recommend-list',
+    require('./components/gacha/RecommendationList.vue').default);
 
     /* ガチャ結果フォーム */
     Vue.component('u-gacha-result-form',

@@ -4,7 +4,7 @@
 
         <div v-if="!comp">
             <div class="form-text">
-                <span class="text-danger">*</span>入浴必須
+                <span class="text-danger">*</span>入力必須
             </div>
 
             <label class="mb-3 d-block">

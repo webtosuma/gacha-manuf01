@@ -1,11 +1,12 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasHumberge" aria-labelledby="offcanvasHumbergeLabel"
 style="max-width:90vw; min-width:30vw;">
 
-    <div class="offcanvas-header align-items-center py-2 ">
+    <div class="offcanvas-header align-items-center py-2 gap-3 bg-dark text-white">
         <!--閉じる-->
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        <h5 class="m-0"> マイメニュー</h5>
-        <div class=""></div>
+        <div class="col">
+            <h5 class="m-0"> マイメニュー</h5>
+        </div>
+        <button type="button" class="btn-close text-reset bg-white border" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
 

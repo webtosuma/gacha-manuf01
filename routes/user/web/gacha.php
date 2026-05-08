@@ -45,7 +45,8 @@ use App\Http\Controllers;
 
         # ガチャで遊ぶ
         Route::post('/g/play/{category_code}/{gacha}/{key}',
-        [App\Http\Controllers\GachaPlayController::class, 'play'])
+        // [App\Http\Controllers\GachaPlayController::class, 'play'])
+        [App\Http\Controllers\GachaController::class, 'play'])
         ->name('gacha.play');
 
 

@@ -10,7 +10,7 @@ use App\Http\Controllers\Store;
  */
 
     # ホーム(home)
-    if( config('app.layout_app')=='store' ){
+    if( config('store.admin')=='admin' ){
 
         Route::get('/admin',
         [Store\AdminHomeController::class,'index'])

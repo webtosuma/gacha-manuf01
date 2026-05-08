@@ -64,6 +64,54 @@
 
 
 @section('script')
+
+    {{-- @php
+    # DB登録情報
+    $metas = \App\Models\Text::getMeta();
+
+    $meta_title = $category_code=='all' ? $metas['title'] : $category_name.'のガチャ一覧';
+
+    $meta_description = ($category_code=='all'
+        ? $metas['description']
+        : $category_name.'のガチャをまとめた一覧ページです。人気・新着・おすすめのガチャを今すぐチェック！' 
+    );
+    @endphp
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            
+            "name": "{{ $meta_title }}",
+            "description": "{{ $meta_description }}",
+            
+            "url": "{{ url()->current() }}",
+            
+            "inLanguage": "ja",
+            
+            "image": [
+                @foreach ($slides as $si => $slide)
+
+                "{{ $slide['image'] }}"@if(!$loop->last),@endif
+
+                @endforeach
+            ],
+            
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "{{ config('app.name') }}",
+                "url": "{{ config('app.url') }}"
+            },
+            
+            "about": {
+                "@type": "Thing",
+                "name": "{{ $category_code=='all' ? 'ガチャ' : $category_name }}"
+            }
+
+        }
+    </script> --}}
+
+    
     <!--X timeline-->
     {{-- <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> --}}
 
@@ -80,9 +128,9 @@
 @section('content')
 
 
-    {{-- <section class="bg- " style="height:4.2rem;"
+    <section class="bg- " style="height:4.2rem;"
     data-aos="fade-in"
-    ></section> --}}
+    ></section>
 
 
     <section class="overflow-hidden bg-rainbow-index"
@@ -120,7 +168,6 @@
         r_api_gacha_list="{{ route('gacha.api.list') }}"
         sm_card="{{$card_size=='sm'?1:0}}"
         card_size ="{{$card_size}}"
-
         ></u-gacha-list>
         {{-- is_desc_popularity="{{$search_key=='desc_popularity'?1:0}}" --}}
 
