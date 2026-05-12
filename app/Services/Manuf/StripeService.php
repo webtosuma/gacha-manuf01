@@ -9,6 +9,7 @@ use Stripe\StripeClient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 use App\Models\ManufPurchaseHistory;
 use App\Models\PointSail;
 use App\Models\PointHistory;
@@ -27,9 +28,11 @@ class StripeService
      * Checkoutセッション作成
      */
     public function createCheckoutSession(
-        User $user,
+        User    $user,
         ManufPurchaseHistory $history,//購入履歴
     ){
+        Stripe::setApiKey(config('stripe.secret_key'));
+
         # 顧客情報
         $customer = $user->createOrGetStripeCustomer();
         $stripe = new \Stripe\StripeClient(config('stripe.secret_key'));
@@ -37,9 +40,8 @@ class StripeService
             'email' => $user->email,//メールアドレスを利用する
         ]);
 
-
         # 決済名
-        $productName = number_format($point) . 'pt購入';
+        $productName = 'ガチャ購入';
 
 
         # 決済の種類($payment_method_types)
@@ -84,14 +86,16 @@ class StripeService
                         'name' => $productName,
 
                     ],
-                    'unit_amount' => $history->price,
+                    'unit_amount' => $history->total_fee,
                 ],
                 'quantity' => 1,
             ]],
             'automatic_tax' => [ 'enabled' => false, ],
 
-            'success_url' => route('manuf.gacha_title.purchase.comp'),
-            'cancel_url' => route('manuf.gacha_title.purchase.confirm'),
+            'success_url' => route('manuf.gacha_title.purchase.comp',$history->code),
+            'cancel_url'  => route('manuf.gacha_title.purchase.appliy' ,[
+                'gacha_key' => $history->items->first()->machine->key
+            ]),  
         ]);
 
 

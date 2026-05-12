@@ -1,7 +1,7 @@
 <section>
     <h5 class="fw-bold">お支払い金額</h5>
 
-    <div class="card card-body border">
+    <div class="card card-body bg-white border">
 
         <div class="d-flex justify-content-between">
             <div class="">商品小計(税込)</div>

@@ -1,0 +1,246 @@
+@extends('manuf.layouts.app')
+
+<!--title-->
+@section('title','購入完了')
+
+
+<!--meta-->
+@section('meta')
+    @php
+    $meta_title = $gacha_title->name;
+    $meta_image = $gacha_title->image_samune_path;
+    @endphp
+@endsection
+
+
+@section('style')
+<style>
+    /* ホバー時 */
+    .result-btn:hover{
+        opacity:0.8;
+        transform:scale(0.95);
+    }
+
+    .bg-rainbow {
+        background: linear-gradient(to right,
+            #ff5f7a,
+            #ff9f43,
+            #ffd93d,
+            #4cd97b,
+            #42bfff,
+            #5b7fff,
+            #a855f7,
+            #ff5f7a
+        ) 0 / 200%;
+
+        animation: rainbow 8s linear infinite;
+    }
+
+    .bg-rainbow {
+        background: linear-gradient(to right,
+            #ff2e63,
+            #ff7b00,
+            #ffc300,
+            #00c853,
+            #00a6ff,
+            #3d5afe,
+            #8e24aa,
+            #ff2e63
+        ) 0 / 200%;
+
+        animation: rainbow 8s linear infinite;
+    }
+
+</style>
+@endsection
+
+
+
+@section('script')
+    {{--- 紙吹雪　CDN ---}}
+    @include('includes.confetti_js')
+@endsection
+
+
+
+
+@section('content')
+
+
+    <!--breadcrumb-->
+    <div class="container mt-md-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('manuf') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ $gacha_title->r_show }}">{{$gacha_title->name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">購入完了</li>
+            </ol>
+        </nav>
+    </div>
+
+
+
+    <div class="container">
+        <div class="row mx-0 g-4 g-md-3 justify-content-center">
+
+
+            <!--flex-c2-1 -->
+            <div class="col-12 col-lg-7">
+                <div class="mx-auto py-5" style="max-width:768px;">
+                    
+
+
+    
+                    <h2 class="text-center pt-5 ">
+                        <div class="text-success mb-3" style="font-size:6rem;">
+                            <i class="bi bi-check-circle-fill "></i>
+                        </div>
+    
+                        <div class="fw-bold mb-3">購入手続きが完了しました</div>
+
+                        <p class="fs-5">
+                            ご利用ありがとうございます。<br>
+                            ガチャの結果を確認しましょう!
+                        </p>
+                    </h2>
+
+
+
+
+                    <div class="">
+
+
+
+
+    
+                        @switch($history->status)
+
+                            @case('paid')
+                            <div class="px-3">
+                                <img class="w-100"
+                                src="{{asset('storage/site/image/munf_purchase/comp01.png')}}" 
+                                alt="">    
+                            </div>
+                            <a href="" class="btn btn-lg bg-rainbow hover_anime
+                            fs-3 text-white fw-bold border-4 border-light py-2
+                            w-100 shadow rounded-pill my-2">
+                                <i class="fs-1 bi bi-stars"></i>
+                                <span class="mx-2">ガチャの結果を確認する</span>
+                                <i class="fs-1 bi bi-chevron-double-right"></i>
+                            </a>
+                            {{-- <img class="w-100"
+                            src="{{asset('storage/site/image/munf_purchase/result_btn.png')}}" 
+                            alt="結果を確認"> --}}
+
+                            <div class="text-center text-secondary small"
+                            >＊結果は、マイメニューの「ガチャ履歴」からも確認できます。</div>
+                            @break
+                        
+                            @case('pending')
+                            <a href="" class="btn btn-lg btn-secondary 
+                            disabled
+                            w-100 shadow rounded-pill mb-2">
+                                支払い未完了
+                            </a>
+                            <div class="text-center text-danger">
+                                ＊支払いの処理が完了いたしましたら、結果をご確認ください。<br>
+                                ＊結果は、マイメニューの「ガチャ履歴」からも確認できます。
+                            </div>
+                            @break
+
+                        @endswitch
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <!--flex-c2-2 -->
+            <aside class="col">
+                <div class="position-sticky" style="top: 2rem; ">
+
+                    <!--購入内容-->
+                    <section class="mb-4">
+                        <h5 class="fw-bold">購入内容</h5>
+
+                        <ul class="list-group bg-white">
+                            @foreach ($history->items as $item)
+                                @php
+                                $play_count        = $item->count;
+                                $machine           = $item->machine;
+                                $gacha_title_price = $machine->price;
+                                @endphp
+                                <li class="list-group-item bg-white p-3">                            
+                                    <div class="row">
+                                        <div class="col">
+                            
+                                            <div class="row g-3">
+                                                <div class="col-4 col-lg-2 text-center">
+                                            
+                                                    <ratio-image-component
+                                                    url="{{$gacha_title->image_samune_path}}"
+                                                    style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
+                                                    bg_size="contain"
+                                                    ></ratio-image-component>
+                                            
+                                            
+                                                </div>
+                                                <div class="col ">
+                                            
+                                            
+                                                    <div class="">
+                                            
+                                                        <!--discription head-->
+                                                        @include('manuf.gacha.common.title_discription.title_name')
+                                            
+                                            
+                                                        <h6 class="fw-bold m-0">ガチャマシーン</h6>
+                                                        <div class="card p-1 mb-4 ">{{$machine->name}}</div>
+                                                            
+                                            
+                                                    </div>
+                                            
+                                            
+                                            
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-3 text-end fw-bold">
+                                            <div class="">
+                                                1回/税込¥{{number_format($gacha_title_price)}}
+                                            </div>
+                                            <div class="">
+                                                {{number_format($play_count)}}点
+                                            </div>
+                                            <div class="mt-4">
+                                                商品小計
+                                                <span class="fs-3">¥{{number_format( $sub_total_fee )}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </section>
+
+
+                    <!--会計明細-->
+                    @include('manuf.gacha.purchase.common.account_details')
+
+
+
+                </div>
+            </aside>
+
+            
+        </div>
+    </div>
+
+
+
+
+
+@endsection

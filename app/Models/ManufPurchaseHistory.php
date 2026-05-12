@@ -109,7 +109,7 @@ class ManufPurchaseHistory extends Model
 
 
         /**
-         * 購入アイテム合計金額
+         * 購入アイテム合計金額 sub_total_fee
          */
         public function getSubTotalFeeAttribute(): int
         {
@@ -120,7 +120,7 @@ class ManufPurchaseHistory extends Model
 
 
         /**
-         * 購入アイテム + 発送料金
+         * 購入アイテム + 発送料金 total_fee
          */
         public function getTotalFeeAttribute(): int
         {

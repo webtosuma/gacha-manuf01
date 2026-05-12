@@ -1,7 +1,7 @@
 <ul class="list-group bg-white">
 
     <!-- お届け先 -->
-    <li class="list-group-item p-3">
+    <li class="list-group-item bg-white p-3">
 
         <div class="d-flex justify-content-between ">
 
@@ -38,7 +38,7 @@
 
 
     <!-- 購入ガチャタイトル -->
-    <li class="list-group-item p-3">
+    <li class="list-group-item bg-white p-3">
         <h5 class="fw-bold">購入ガチャタイトル</h5>
 
         <div class="row">
@@ -93,7 +93,7 @@
 
 
     <!-- 発送料金 -->
-    <li class="list-group-item p-3">
+    <li class="list-group-item bg-white p-3">
         <h5 class="fw-bold">発送料金</h5>
 
         <div class="text-end fw-bold">

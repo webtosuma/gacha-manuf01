@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manuf;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\ManufPurchaseHistory;
 use App\Services\Manuf\PurchaseService;
@@ -75,10 +76,13 @@ class PurchaseController extends Controller
      * @return \Illuminate\Http\Response
     */
     public function comp(
-        String $category_code, //カテゴリーコード名
-        String $title_code,    //ガチャタイトル・キー
-        String $code, //購入履歴コード
+        String $code
     ){
+        $user = Auth::user();
+
+        # 購入履歴の取得
+        $history = $this->purchaseService->gethistory($user,$code);
+
         # ガチャタイトル詳細情報の取得/カテゴリーのコードチェック
         $gacha_title = $this->gachaTitleService->getGachaTitle($title_code, $category_code);
 
@@ -94,11 +98,7 @@ class PurchaseController extends Controller
         ->firstOrFail();//データなしの場合、404
 
 
-        return view('manuf.gacha.purchase.confirm', compact(
-            'gacha_title',
-            'machine',
-            'history',
-        ));
+        return view('manuf.gacha.purchase.confirm', compact( 'history' ));
     }
 
 

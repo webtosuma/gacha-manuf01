@@ -56,8 +56,8 @@ class StripeController extends Controller
             $shipped_fee,
             $sub_total_fee,
             $total_fee,
-        ) = $this->purchaseService->getPurchaseData($request);
-
+        ) = array_values( $this->purchaseService->getPurchaseData($request) );
+        
 
         # 購入履歴の登録
         $history = $this->purchaseService->createhistory( 
@@ -70,18 +70,30 @@ class StripeController extends Controller
         $test = env('APP_DEBUG');
         if( $test )
         {
-            // # 決済完了のDB情報の登録メソッド
-            // $session_id = 'stripe_checkout_session_id';
-            // $this->stripeService->completedMethod( $point_sail, $user, $session_id );
+            # 決済完了のDB情報の登録メソッド
+            // $session_id = 'test';
+            // $this->stripeService->completedMethod( $user, $history, $session_id );
+            // $request->session()->regenerateToken();// 二重送信防止
 
-            // return redirect()->route('point_sail.comp',$point_sail->stripe_id);
+            return view('manuf.gacha.purchase.comp', [
+                'history'           => $history,
+                'gacha_title'       => $history->items->first()->machine->gacha_title,
+
+                // 'play_count'        => $play_count,
+                // 'machine'           => $machine,
+                // 'user_address'      => $user_address,
+                // 'gacha_title_price' => $gacha_title_price,
+                'shipped_fee'       => $history->shipped_fee,
+                'sub_total_fee'     => $history->sub_total_fee,
+                'total_fee'         => $history->total_fee,
+            ]);
         }
         
         # チェックアウトセッション
         $session = $this->stripeService
-        ->createCheckoutSession($user, $history);
+        ->createCheckoutSession( $user, $history );
 
-        return redirect()->to($session->url);
+        // return redirect()->to($session->url);
     }
 
 

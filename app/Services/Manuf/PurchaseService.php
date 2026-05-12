@@ -57,17 +57,30 @@ class PurchaseService
 
 
 
+    /* 購入履歴の取得 */
+    public function gethistory(
+        User   $user,
+        String $code
+    ): ManufPurchaseHistory
+    {
+        # 購入履歴(購入待ち)の新規登録
+        return ManufPurchaseHistory::where('code',$code)
+        ->where('user_id', $user->id)            
+        ->firstOrFail();//データなしの場合、404
+    }
+
+
+
     /**
      * 購入パラメーター情報取得
-     *
-     * @param Request $request
-     * @return array
      */
-    public function getPurchaseData(Request $request): array
+    public function getPurchaseData(
+        Request $request
+    ): array
     {
         # ユーザー
         $user = $request->user();
-
+        
         # ガチャPLAY数
         $play_count = $request->play_count;
 
