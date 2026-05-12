@@ -16,7 +16,7 @@
         </nav>
 
 
-        <section class="row g-2 mt-5">
+        {{-- <section class="row g-2 mt-5">
 
             <div class="col-6 col-md-3"><a class="btn text-start text-secondary bg-body rounded w-100"
             href="{{route('admin.gacha')}}">
@@ -72,12 +72,11 @@
                     <div class="fs-3">{{ number_format($sum_point_thismanth) }}</div>
                 </a></div>
             @endif
-        </section>
+        </section> --}}
 
 
 
-        <section class="carddd card-body p-3 bg-white my-3 overflow-auto">
-            {{-- <h5 class="m-0">公開中</h5> --}}
+        {{-- <section class="carddd card-body p-3 bg-white my-3 overflow-auto">
             <table class="table bg-white my-3">
                 <tbody>
                     <!--ヘッド（並べ替えボタン）-->
@@ -101,7 +100,6 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    {{-- @include('includes.point_icon') --}}
                                     <div class="">
                                         1回×
                                         <span class="fs-5">
@@ -142,7 +140,7 @@
                     {{ $gachas->links('vendor.pagination.bootstrap-4') }}
                 </div>
             @endif
-        </section>
+        </section> --}}
 
 
     </div>

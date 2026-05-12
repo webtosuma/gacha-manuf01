@@ -35,8 +35,8 @@ return new class extends Migration
 
             # 状態
             $table->string('status')
-                ->default('waiting')
-                ->comment('waiting:待機, pending:購入待ち paid:支払い済み cancel:キャンセル');
+                ->default('pending')
+                ->comment('pending:購入待ち paid:支払い済み cancel:キャンセル');
 
             # 発送情報
             $table->foreignId('shipped_id')

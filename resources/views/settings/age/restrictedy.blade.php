@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.sub_toggl')
 
 <!----- title ----->
 @section('title','このページには年齢制限があります')

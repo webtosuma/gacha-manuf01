@@ -88,7 +88,6 @@
             評価ランク<span class="text-danger">＊</span>
         </div>
 
-
         <select class="form-select" name="rank_id">
             <option value="">選択してください</option>
 

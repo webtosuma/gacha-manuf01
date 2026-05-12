@@ -40,7 +40,7 @@ class PurchaseService
             'user_id'     => $user->id,//
             'address_id'  => $user_address->id,
             'shipped_fee' => $shipped_fee,//発送料金
-            'status'      => 'waiting',//状態:待機
+            'status'      => 'pending',//状態:購入待ち
         ]);
 
         # 購入アイテムの新規登録

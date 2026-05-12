@@ -10,7 +10,7 @@ Route::middleware(['admin_auth'])->group(function () {
 
     # ガチャ一覧//通常用を非表示
     Route::get('/admin/gacha/l/{category_code?}',
-    function(){ return \App::abort(404); })
+    function(){ abort(404); })
     ->name('admin.gacha');
 
 

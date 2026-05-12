@@ -10,14 +10,18 @@
         <a class="navbar-brand" href="{{ route('manuf') }}">
             <img src="{{asset('storage/site/image/logo.png')}}" alt="{{ config('app.name') }}" 
             class=""
-            style="max-width:160px"
+            style="max-width:360px"
             >
         </a>        
     </div>
 
 
-    @include('manuf.includes.my_menu')
 
+    <div class="px-5 mb-4">
+
+        @include('manuf.includes.my_menu')
+
+    </div>
 
 
 
@@ -28,9 +32,7 @@
 
 
 
-    <div class="list-group-item border-0 p-2 px-0 text-start my-5"
-    style="width:240px"
-    >
+    <div class="list-group-item border-0 p-2 px-0 text-start my-5">
 
         <!--SNS Links-->
         @include('manuf.includes.sns_links')

@@ -195,4 +195,67 @@ class ManufGachaTitleMachine extends Model
         }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー Admin ルーティング
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * [ルーティング]show r_admin_show
+         */
+        public function getRAdminShowAttribute()
+        {
+            return route('admin.gacha_title.machine.show', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'machine' => $this->id,
+            ]);
+        }
+
+        /**
+         * [ルーティング]編集 r_admin_edit
+         */
+        public function getRAdminEditAttribute()
+        {
+            return route('admin.gacha_title.machine.edit', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'machine' => $this->id,
+            ]);
+        }
+
+        /**
+         * [ルーティング]更新 r_admin_update
+         */
+        public function getRAdminUpdateAttribute()
+        {
+            return route('admin.gacha_title.machine.update', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'machine' => $this->id,
+            ]);
+        }
+
+        /**
+         * [ルーティング]削除 r_admin_destroy
+         */
+        public function getRAdminDestroyAttribute()
+        {
+            return route('admin.gacha_title.machine.destroy', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'machine' => $this->id,
+            ]);
+        }
+
+        /**
+         * [ルーティング]コピー r_admin_copy
+         */
+        public function getRAdminCopyAttribute()
+        {
+            return route('admin.gacha_title.machine.copy', [
+                'gacha_title' => $this->manuf_gacha_title_id,
+                'machine' => $this->id,
+            ]);
+        }
+
+        
 }

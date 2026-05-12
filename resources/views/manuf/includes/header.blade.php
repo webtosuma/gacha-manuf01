@@ -18,7 +18,7 @@
             <div class="col  bg- warning">
                 <div class="row align-items-center justify-content-end g-0">
 
-                    <div class="col d-none d-sm-block">
+                    {{-- <div class="col d-none d-sm-block">
                         <button class="btn btn-sm border rounded-pill border-2 w-100"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvaSearch"
                         aria-controls="offcanvaSearch"
@@ -28,10 +28,10 @@
                                 キーワード検索
                             </div>
                         </button>
-                    </div>
+                    </div> --}}
 
                     <!-- 検索 mobile -->
-                    <div class="col-auto d-sm-none">
+                    {{-- <div class="col-auto d-sm-none">
                         <a href="#"
                         class="btn text- rounded-0 w-100  px-3
                         d-flex flex-column justify-content- center align-items-center
@@ -47,10 +47,10 @@
                             <div class="fw-bold mt-1" style="font-size:10px; line-height:10px;"
                             >{{ __('検 索') }}</div>
                         </a>
-                    </div>
+                    </div> --}}
 
                     <!-- 発送 -->
-                    <div class="col-auto">
+                    {{-- <div class="col-auto">
                         <a href="#"
                         class="btn text-secondary rounded-0 w-100  px-3
                         d-flex flex-column justify-content- center align-items-center
@@ -66,7 +66,7 @@
                             <div class="fw-bold mt-1" style="font-size:10px; line-height:10px;"
                             >{{ __('発 送') }}</div>
                         </a>
-                    </div>
+                    </div> --}}
 
 
                     <!-- ハンバーガーボタン -->

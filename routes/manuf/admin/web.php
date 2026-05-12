@@ -20,18 +20,20 @@ use App\Http\Controllers\Store;
     }
 
     # ガチャタイトル
-    include('web/gacha_title/index.php');//(基本情報)
-
-        # タイトル商品
-        include('web/gacha_title/title_prize.php');
 
         # 筺体
         include('web/gacha_title/machine.php');
 
-            # テストプレイ
+        # タイトル商品
+        include('web/gacha_title/title_prize.php');
+
+
+        # テストプレイ
 
         # その他
         include('web/gacha_title/other.php');
+
+        include('web/gacha_title/index.php');//(基本情報)
 
 
     // # ストアー商品

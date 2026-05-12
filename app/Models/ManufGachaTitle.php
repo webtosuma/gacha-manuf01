@@ -418,11 +418,15 @@ class ManufGachaTitle extends Model
                 # xx発送予定
                 case 1:
 
+                    // return $this->estimated_shipping_at
+                    // ? $this->estimated_shipping_at->format('n') . '月' . (
+                    //     $this->estimated_shipping_at->day <= 10 ? '上旬' :
+                    //     ($this->estimated_shipping_at->day <= 20 ? '中旬' : '下旬')
+                    // ) . '発送予定'
+                    // : '発送時期未定' ; break;
+
                     return $this->estimated_shipping_at
-                    ? $this->estimated_shipping_at->format('n') . '月' . (
-                        $this->estimated_shipping_at->day <= 10 ? '上旬' :
-                        ($this->estimated_shipping_at->day <= 20 ? '中旬' : '下旬')
-                    ) . '発送予定'
+                    ? $this->estimated_shipping_at->format('n') . '月より順次発送'
                     : '発送時期未定' ; break;
 
                 # すぐに発送

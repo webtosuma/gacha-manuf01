@@ -9,7 +9,7 @@ use App\Http\Controllers\Manuf;
 Route::middleware(['admin_auth'])->group(function () {
 
     # 一覧
-    Route::get('/admin/gacha_title/{gacha_title}/machine',
+    Route::get('/admin/gacha_title/{gacha_title}/machine/list',
     [Manuf\AdminGachaTitleMachineController ::class, 'index'])
     ->name('admin.gacha_title.machine');
 

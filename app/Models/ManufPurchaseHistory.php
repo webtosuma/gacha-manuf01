@@ -23,7 +23,7 @@ class ManufPurchaseHistory extends Model
         'user_id',     //
         'address_id',  //アドレスID(保存用)
         'shipped_fee', //発送料金
-        'status',      //状態 ('waiting:待機, pending:購入待ち paid:支払い済み cancel:キャンセル')
+        'status',      //状態 (pending:購入待ち paid:支払い済み cancel:キャンセル')
         
         'stripe_checkout_session_id',//Stripe Checkout Session ID
         'shipped_id',  //発送情報

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.sub_toggl')
 
 <!----- title ----->
 @section('title','誕生日の登録が完了しました')

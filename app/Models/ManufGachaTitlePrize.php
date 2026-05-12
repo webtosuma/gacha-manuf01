@@ -39,6 +39,7 @@ class ManufGachaTitlePrize extends Model
         'name',      //名前
         'image_path',
         'rank_id',   //ランクID
+        'rank_name',//ランク名 
         'discription_text',//ストレージ保存された文章（説明文）
         'discription_icon_path',//説明文モーダルアイコン
 
@@ -118,10 +119,18 @@ class ManufGachaTitlePrize extends Model
          * ランクID rank_id
          * @return String
         */
-        public function getRAdminankIdAttribute(){
+        public function getRankIdAttribute(){
             return $this->prize?->rank_id ?? null;
-        }
+        } 
 
+
+        /**
+         * ランク名 rank_name
+         * @return String
+        */
+        public function getRankNameAttribute(){
+            return $this->prize?->rank->name ?? null;
+        } 
 
 
         /**

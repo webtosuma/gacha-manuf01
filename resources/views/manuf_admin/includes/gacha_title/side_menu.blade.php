@@ -117,7 +117,7 @@
 
 
             <!--machine_menu-->
-            @if($menu['key']==='gacha_title.machine' && isset($machine) )
+            {{-- @if($menu['key']==='gacha_title.machine' && isset($machine) )
                 <div class="d-flex flex-column px-3 mb-4">
 
                     @foreach ($machine_menu_array as $menu)
@@ -134,7 +134,7 @@
                     @endforeach
 
                 </div>
-            @endif
+            @endif --}}
 
 
         @endforeach

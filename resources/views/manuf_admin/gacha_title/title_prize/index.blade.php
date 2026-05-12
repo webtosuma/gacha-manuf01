@@ -71,6 +71,10 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                             <div class="text-muted small">
                                 {{ $title_prize->code }} / {{ $title_prize->category->name }}
                             </div>
+
+                            <div class="small">
+                                {{ $title_prize->rank_name }}
+                            </div>
                         </td>
 
                         <td style="width:6rem;">
