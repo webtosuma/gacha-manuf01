@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.sub_toggl')
 
 <!--title-->
 @section('title','401 error')

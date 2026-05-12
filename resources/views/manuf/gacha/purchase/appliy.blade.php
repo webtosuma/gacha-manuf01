@@ -42,7 +42,8 @@
 
 
     <div class="container px-0">
-        <form action="{{ $gacha_title->r_purchase_confirm }}" method="post"
+        {{-- <form action="{{ $gacha_title->r_purchase_confirm }}" method="post" --}}
+        <form action="{{ route('manuf.gacha_title.purchase.confirm') }}" method="post"
         novalidate
         enctype="multipart/form-data" onsubmit="stopOnbeforeunload()"
         >

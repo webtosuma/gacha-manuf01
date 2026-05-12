@@ -8,69 +8,39 @@ use App\Http\Controllers\Manuf;
 ==========================================================================
 */
 
-    // Route::middleware(['user_rank'])->group(function () {
+# ガチャタイトルのカテゴリー選択
+Route::get('/m/{category_code?}',
+[Manuf\GachaTitleController::class, 'index'])
+->name('manuf');
 
-        // # API ガチャ一覧取得
-        // Route::post('/gacha/api/list',
-        // [App\Http\Controllers\GachaApiController::class, 'list'])
-        // ->name('gacha.api.list');
+# カテゴリー一覧
+Route::get('/g/{category_code?}',
+[Manuf\GachaTitleController::class, 'index'])
+->name('gacha_category');
 
-        # ガチャタイトルのカテゴリー選択
-        Route::get('/m/{category_code?}',
-        [Manuf\GachaTitleController::class, 'index'])
-        ->name('manuf');
+# 検索結果
+Route::get('/m/search',
+[Manuf\GachaTitleController::class, 'search'])
+->name('manuf.search');
 
-        # カテゴリー一覧
-        Route::get('/g/{category_code?}',
-        [Manuf\GachaTitleController::class, 'index'])
-        ->name('gacha_category');
+# ガチャタイトルの詳細表示
+Route::get('/m/{category_code}/{title_code}',
+[Manuf\GachaTitleController::class, 'show'])
+->name('manuf.gacha_title');
 
-        # 検索結果
-        Route::get('/m/search',
-        [Manuf\GachaTitleController::class, 'search'])
-        ->name('manuf.search');
+Route::middleware(['auth'])->group(function () {
 
-        # ガチャタイトルの詳細表示
-        Route::get('/m/{category_code}/{title_code}',
-        [Manuf\GachaTitleController::class, 'show'])
-        ->name('manuf.gacha_title');
+// # ガチャの結果履歴(SNS等の公開用)
+// Route::get('/result_history/{history_key}',
+// [App\Http\Controllers\GachaController::class, 'result_history'])
+// ->name('gacha.result_history');
 
+// # ガチャ回数のカスタム
+// Route::get('/g/custom_count/{category_code}/{gacha}/{key}',
+// [App\Http\Controllers\GachaController::class, 'custom_count'])
+// ->name('gacha.custom_count');
 
-        Route::middleware(['auth'])->group(function () {
-
-          # ガチャタイトルの筐体 購入[入力]
-          Route::get('m/{category_code}/{title_code}/machin/purchase/appliy',
-          [Manuf\GachaTitlePurchaseController::class, 'appliy'])
-          ->name('manuf.gacha_title.purchase.appliy');
-
-          # ガチャタイトルの筐体 購入[確認]
-          Route::post('m/{category_code}/{title_code}/machin/purchase/confirm',
-          [Manuf\GachaTitlePurchaseController::class, 'confirm'])
-          ->name('manuf.gacha_title.purchase.confirm');
-
-            # ガチャタイトルの筐体 購入[決済チェックアウト]
-            Route::post('m/{category_code}/{title_code}/machin/purchase/checkout',
-            [Manuf\GachaTitlePurchaseController::class, 'checkout'])
-            ->name('manuf.gacha_title.purchase.checkout');
-          
-          # ガチャタイトルの筐体 購入[完了]
-          Route::get('m/{category_code}/{title_code}/machin/purchase/comp',
-          [Manuf\GachaTitlePurchaseController::class, 'comp'])
-          ->name('manuf.gacha_title.purchase.comp');
-        
-
-
-        // # ガチャの結果履歴(SNS等の公開用)
-        // Route::get('/result_history/{history_key}',
-        // [App\Http\Controllers\GachaController::class, 'result_history'])
-        // ->name('gacha.result_history');
-
-        // # ガチャ回数のカスタム
-        // Route::get('/g/custom_count/{category_code}/{gacha}/{key}',
-        // [App\Http\Controllers\GachaController::class, 'custom_count'])
-        // ->name('gacha.custom_count');
-
-      });
+});
     // Route::middleware(['auth'])->group(function () {
 
 

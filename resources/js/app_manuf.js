@@ -5,7 +5,10 @@
 */
 import Vue from 'vue'
 
- 
+     /* 会員登録フォーム */
+     Vue.component('u-manuf-register-form',
+    require('./components/manuf/auth/RegisterFormConpornent.vue').default);
+    
     /* ガチャ一覧 */
     Vue.component('u-manuf-gacha-list',
     require('./components/manuf/gacha/list/IndexComponent.vue').default);

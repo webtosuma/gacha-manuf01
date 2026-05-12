@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\manuf;
-
+use Illuminate\Http\Request;
 use App\Models\ManufGachaTitle;
 use App\Models\ManufGachaTitleMachine;
 /*
@@ -15,8 +15,8 @@ class GachaTitleService
      * ガチャタイトル詳細情報の取得/カテゴリーのコードチェック
      */
     public function getGachaTitle(
-        $title_code,    //ガチャタイトルのコード
-        $category_code  //カテゴリーのコード
+        String $title_code,    //ガチャタイトルのコード
+        String $category_code  //カテゴリーのコード
     ): ManufGachaTitle
     {
         # ガチャタイトル
@@ -39,34 +39,19 @@ class GachaTitleService
      * ガチャタイトル詳細情報の取得/カテゴリーのコードチェック
      */
     public function getMachine(
-        $request,    //
-        $gacha_title //ガチャタイトル
-    ): Array
+        Request $request,    //
+        // ManufGachaTitle $gacha_title //ガチャタイトル
+    ): ManufGachaTitleMachine
     {
+        # ガチャキー
         $gacha_key = $request->gacha_key; 
 
-        $machine = ManufGachaTitleMachine::where('manuf_gacha_title_id', $gacha_title->id)
-        ->whereHas('gacha', function ($query) use ($gacha_key) {
+        # ガチャキーに該当するガチャ
+        return ManufGachaTitleMachine::whereHas('gacha', function ($query) use ($gacha_key) {
             $query->where('key', $gacha_key)
                 ->whereNotNull('published_at');
         })
-        ->first();
-
-
-        if( ! $machine ){
-            $message =  !$gacha_key 
-            ? 'ガチャマシーンが選択されていません。' 
-            : 'このガチャマシーンを選択することはできません。';
-        }
-        
-
-        # エラーメッセージ
-        $alert_array = ! $machine
-        ? ['alert-danger'=>$message,'icon'=>'bi-exclamation-circle']
-        : null ;
-
-        
-        return [$machine, $alert_array];
+        ->firstOrFail();//データなしの場合、404
     }
 
 

@@ -1,9 +1,19 @@
-@if( !config('store.admin') )
+@if( config('store.admin') )
 
-    @include('admin.layouts.apps.index')
+    {{-- EC管理者　レイアウト --}}
+    @include('store_admin.layouts.app'  )
+
+
+@elseif( config('manuf.app') )
+
+    {{-- Manuf管理者　レイアウト --}}
+    @include('manuf_admin.layouts.app'  )
+
 
 @else
 
-    @include('store_admin.layouts.app'  )
+    {{-- 管理者　レイアウト --}}
+    @include('admin.layouts.apps.index')
+
 
 @endif

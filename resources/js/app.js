@@ -58,6 +58,16 @@ require('./components/ExampleComponent.vue').default);
     require('./app_store.js');
 
 
+/*
+|=============================================
+| Manufacturer　コンポーネント
+|=============================================
+*/
+
+    require('./app_manuf.js');
+    require('./app_manuf_admin.js');
+
+
 
 /*
 |=============================================

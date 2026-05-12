@@ -1,9 +1,19 @@
-@if( config('app.layout_app')!='store' )
+@if( config('app.layout_app')=='store' )
 
-    @include('layouts.subs.index')
+    {{-- Store　レイアウト --}}
+    @include(config('app.layout_app').'.layouts.sub'  )
+
+
+@elseif( config('manuf.app') )
+
+    {{-- Manuf　レイアウト --}}
+    @include('manuf.layouts.sub'  )
+
 
 @else
 
-    @include(config('app.layout_app').'.layouts.sub'  )
+    {{-- デフォルト　レイアウト --}}
+    @include('layouts.subs.index')
+
 
 @endif

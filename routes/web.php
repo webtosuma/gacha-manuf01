@@ -21,3 +21,8 @@ if( config('store.admin') )
 }
 
 
+# Manufガチャ
+if( config('manuf.app') )
+{
+    include('manuf/web.php');
+}

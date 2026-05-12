@@ -9,62 +9,29 @@ use App\Http\Controllers;
 */
     # ガイド(guide)
     Route::get('guide',
-    function () { return view('footer_menu.guide.index'); })
+    [App\Http\Controllers\FooterMenuController::class,'guide'])
     ->name('guide');
 
     # 利用規約(trems)
     Route::get('/trems/{revision_date?}',
-    function ($revision_date='2024-02-16'){
-         return view('footer_menu.trems.index', compact('revision_date') );
-    })->name('trems');
+    [App\Http\Controllers\FooterMenuController::class,'trems'])
+    ->name('trems');
 
     # プライバシーポリシー(privacy_policy)
     Route::get('/privacy_policy/{revision_date?}',
-    function ($revision_date='2024-03-01') {
-        return view('footer_menu.privacy_policy.index', compact('revision_date') );
-    })->name('privacy_policy');
+    [App\Http\Controllers\FooterMenuController::class,'privacy_policy'])
+    ->name('privacy_policy');
 
     # 特定商取引法に基づく表記(tradelaw)
     Route::get('tradelaw/{revision_date?}',
-    function ($revision_date='2024-02-14') {
-        return view('footer_menu.tradelaw.index', compact('revision_date'));
-    })->name('tradelaw');
-
+    [App\Http\Controllers\FooterMenuController::class,'tradelaw'])
+    ->name('tradelaw');
 
     # 会員ランクとは(about_user_rank)
     Route::get('/about_user_rank',
-    function () {
-        return view('footer_menu.about_user_rank.index');
-    })->name('about_user_rank');
+    [App\Http\Controllers\FooterMenuController::class,'about_user_rank'])
+    ->name('about_user_rank');
 
-    /* 規約類のDB利用 */
-    if ( env('APP_DEBUG') === false )
-    {
-        # ガイド(guide)
-        Route::get('guide',
-        [App\Http\Controllers\FooterMenuController::class,'guide'])
-        ->name('guide');
-
-        # 利用規約(trems)
-        Route::get('/trems/{revision_date?}',
-        [App\Http\Controllers\FooterMenuController::class,'trems'])
-        ->name('trems');
-
-        # プライバシーポリシー(privacy_policy)
-        Route::get('/privacy_policy/{revision_date?}',
-        [App\Http\Controllers\FooterMenuController::class,'privacy_policy'])
-        ->name('privacy_policy');
-
-        # 特定商取引法に基づく表記(tradelaw)
-        Route::get('tradelaw/{revision_date?}',
-        [App\Http\Controllers\FooterMenuController::class,'tradelaw'])
-        ->name('tradelaw');
-
-        # 会員ランクとは(about_user_rank)
-        Route::get('/about_user_rank',
-        [App\Http\Controllers\FooterMenuController::class,'about_user_rank'])
-        ->name('about_user_rank');
-    }
 
 
  

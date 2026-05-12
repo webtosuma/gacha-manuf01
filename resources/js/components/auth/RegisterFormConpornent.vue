@@ -9,7 +9,9 @@
         <steps-component :card_num="card_num" />
 
         <!----- [ ステップ0 ] ----->
-        <step00-component :card_num="card_num"/>
+        <step00-component :card_num="card_num"
+        @add-card-num="addCardNum()"
+        />
 
         <!----- [ ステップ1 ] ----->
         <step01-component

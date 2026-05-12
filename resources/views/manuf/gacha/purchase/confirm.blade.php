@@ -42,17 +42,17 @@
 
 
     <div class="container px-0">
-        <form action="{{ $gacha_title->r_purchase_checkout }}" method="post"
+        <form action="{{ route('manuf.gacha_title.purchase.checkout') }}" 
+        method="post"
         novalidate
         enctype="multipart/form-data" onsubmit="stopOnbeforeunload()"
         >
             @csrf
 
-            <input type="hidden" 
-            name="gacha_key" 
-            value="{{$machine->key}}"
-            >
-        
+            <input type="hidden" name="gacha_key"  value="{{$machine->key}}">
+            <input type="hidden" name="play_count" value="{{$play_count}}">
+            <input type="hidden" name="user_address_id" value="{{$user_address->id}}">
+
 
             <div class="row mx-0 g-4 g-md-3 justify-content-center">
 

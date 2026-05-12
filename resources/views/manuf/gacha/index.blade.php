@@ -91,11 +91,11 @@
 
 
     <!--カテゴリー-->
-    @if($categories->count()>1)
+    {{-- @if($categories->count()>1)
         <div class="bg-">
             @include('manuf.gacha.section.category.index')
         </div>
-    @endif
+    @endif --}}
 
 
     <!--ガチャ-->
@@ -103,7 +103,7 @@
     data-aos="fade-in"
     >
 
-        <div class="row g-2 mb-4 justify-content- ">
+        {{-- <div class="row g-2 mb-4 justify-content- ">
             <div class="col-12">
                 <h5 class="fw-bold">発送予定から選択</h5>
             </div>
@@ -149,7 +149,7 @@
                 </button>
             </div>
 
-        </div>
+        </div> --}}
 
 
 
@@ -161,7 +161,7 @@
                     style="max-width:200px;"
                     >
 
-                        @php $machine_text = true; @endphp
+                        @php $machine_text = null; @endphp
                         @include('manuf.gacha.common.machine_icon')
 
 

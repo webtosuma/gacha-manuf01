@@ -1,9 +1,9 @@
 <template>
     <div v-if="card_num===1" class="anima-fadein-bottom">
 
+        
         <div class="card shadow border-0 w-100 p-3 mb-3 bg-white">
             <div class="card-body">
-
 
                 <div class="mb-3">
                     <label for="name" class=" col-form-label text-start">{{ 'アカウント名' }}</label>
@@ -83,6 +83,7 @@
 
             </div>
         </div>
+
     </div>
 </template>
 <script>

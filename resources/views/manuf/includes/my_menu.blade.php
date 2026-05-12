@@ -94,7 +94,7 @@
                     <li class="mb-2"><a
                     href="{{ route('settings.acount') }}"
                     class="list-group-item rounded-pill px-4 w-100 text-start
-                    btn btn-info text-white
+                    btn btn-info text-
                     ">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-person-circle fs-4"></i>
@@ -107,7 +107,7 @@
                     <li class="mb-2"><a
                     href="{{ route('settings.shipped_address') }}"
                     class="list-group-item rounded-pill px-4 w-100 text-start
-                    btn btn-info text-white
+                    btn btn-info text-
                     ">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-pin-map fs-4"></i>
@@ -120,7 +120,7 @@
                     <li class="mb-2"><a
                     href="{{ route('settings') }}"
                     class="list-group-item rounded-pill px-4 w-100 text-start
-                    btn btn-info text-white
+                    btn btn-info text-
                     ">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-gear fs-4"></i>
@@ -134,7 +134,7 @@
                         <form action="{{ route('admin_auth.logout') }}" method="POST">
                             @csrf
                             <button  class="list-group-item rounded-pill px-4 w-100 text-start
-                            btn btn-info text-white
+                            btn btn-info text-
                             " type="submit">
                                 <div class="d-flex align-items-center gap-2">
                                     <i class="bi bi-box-arrow-right fs-4"></i>
@@ -155,7 +155,7 @@
 
 
     <!--キーワード検索-->
-    <div class="">
+    {{-- <div class="">
         @php
         $menu = [
             'route' => '#',
@@ -183,11 +183,11 @@
             </div>
         </a>
 
-    </div>
+    </div> --}}
 
 
     <!--発送-->
-    <div class="">
+    {{-- <div class="">
         @php
         $menu = [
             'route' => '#',
@@ -211,7 +211,7 @@
 
             </div>
         </a>
-    </div>
+    </div> --}}
 
 
     <!--お知らせ-->

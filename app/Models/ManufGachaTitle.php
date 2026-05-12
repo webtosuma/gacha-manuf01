@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
 /*
 | =============================================
 |  Manufacturer用　ガチャタイトル モデル
@@ -546,6 +545,19 @@ class ManufGachaTitle extends Model
 
 
         /**
+         * [ルーティング]筐体 購入[購入履歴作成] r_purchase_create_history
+         * @return String
+        */
+        public function getRPurchaseCreateHistoryAttribute()
+        {
+            return route('manuf.gacha_title.purchase.create_history',[
+                'category_code' => $this->category->code_name,
+                'title_code'    => $this->code,
+            ]);
+        }
+
+
+        /**
          * [ルーティング]筐体 購入[確認] r_purchase_confirm 
          * @return String
         */
@@ -559,16 +571,18 @@ class ManufGachaTitle extends Model
         
 
         /**
-         * [ルーティング]筐体 購入[チェックアウト] r_purchase_checkout 
+         * [ルーティング]筐体 購入[完了] r_purchase_comp 
          * @return String
         */
-        public function getRPurchaseCheckoutAttribute()
+        public function getRPurchaseCompAttribute()
         {
-            return route('manuf.gacha_title.purchase.checkout',[
+            return route('manuf.gacha_title.purchase.comp',[
                 'category_code' => $this->category->code_name,
                 'title_code'    => $this->code,
             ]);
         }
+
+
 
     /* ~ */
 

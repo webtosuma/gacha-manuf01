@@ -19,18 +19,23 @@ Route::middleware([ /* ミドルウェアー */
   [Manuf\GachaTitleController::class, 'index'])
   ->name('home');
 
+
+  # ガチャ購入
+  include('web/purchase.php');
+
   # ガチャ
   include('web/gacha.php');
 
-    
-    // # 商品一覧
-    // include('web/index.php');
 
 
-    // # お知らせ(news)
-    // Route::get('store/infomation',
-    // [App\Http\Controllers\InfomationController::class,'store_index'])
-    // ->name('store.infomation');
+  // # 商品一覧
+  // include('web/index.php');
+
+
+  // # お知らせ(news)
+  // Route::get('store/infomation',
+  // [App\Http\Controllers\InfomationController::class,'store_index'])
+  // ->name('store.infomation');
 
 
 });//end middleware

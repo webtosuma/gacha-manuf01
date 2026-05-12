@@ -61,8 +61,8 @@
 
 
     <div class="col-auto">
-        <!--  -->
-        <button  class="list-group-item border p-2 px-3 mb-3
+
+        {{-- <button  class="list-group-item border p-2 px-3 mb-3
         fs-6 fw-bold w-100 text-start
         dropdown-toggle"
         data-bs-toggle="collapse" href="#collapseFooterMenu"
@@ -112,6 +112,49 @@
 
             </ul>
 
+        </div> --}}
+
+
+        <div class="d-flex flex-column align-items-center
+        text-center text-md-start">
+            <ul class="list-unstyled m-0 gap-3">
+
+
+                @if( \App\Models\Text::getGuide() )
+                    <li class="mb-2"><a class="text-secondary text-decoration-none"
+                    href="{{ route('guide') }}">利用ガイド</a></li>
+                @endif
+
+
+                <li class="mb-2"><a class="text-secondary text-decoration-none"
+                href="{{ route('trems') }}">利用規約</a></li>
+
+                <li class="mb-2"><a class="text-secondary text-decoration-none"
+                href="{{ route('privacy_policy') }}">プライバシーポリシー</a></li>
+
+                <li class="mb-2"><a class="text-secondary text-decoration-none"
+                href="{{ route('about_pwa') }}">PWAについて</a></li>
+
+                @php
+                $infomations_count =
+                \App\Http\Controllers\InfomationController::GetInfomationsQuery()
+                ->whereNotIn( 'type', ['ec'] )
+                ->limit(3)->count();
+                @endphp
+                @if( $infomations_count>0 )
+                    <li class="mb-2"><a class="text-secondary text-decoration-none"
+                    href="{{ route('infomation') }}">お知らせ</a></li>
+                @endif
+
+                <li class="mb-2"><a class="text-secondary text-decoration-none"
+                href="{{ route('contact') }}">お問い合わせ</a></li>
+
+                @if( config('app.company_url') )
+                    <li class="mb-2"><a class="text-secondary text-decoration-none"
+                    href="{{ config('app.company_url') }}">運営会社</a></li>
+                @endif
+
+            </ul>
         </div>
 
     </div>
