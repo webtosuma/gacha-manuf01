@@ -122,7 +122,7 @@ class PlayService
     /**
      * 最大ランク
      */
-    private function getMaxRank(array $ids): string
+    public function getMaxRank(array $ids): string
     {
         # 特殊なガチャランク優先
         $special_ranks = array_values( $this->specialRankService->getList() );
@@ -146,7 +146,7 @@ class PlayService
      * @param UserGachaHistory $history
      * @param String $max_rank
      */
-    private function decideMovie($history, $max_rank): UserGachaHistory
+    public function decideMovie($history, $max_rank): UserGachaHistory
     {
         $gacha = $history->gacha;
 

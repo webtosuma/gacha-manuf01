@@ -21,35 +21,27 @@
         transform:scale(0.95);
     }
 
-    .bg-rainbow {
-        background: linear-gradient(to right,
-            #ff5f7a,
-            #ff9f43,
-            #ffd93d,
-            #4cd97b,
-            #42bfff,
-            #5b7fff,
-            #a855f7,
-            #ff5f7a
-        ) 0 / 200%;
-
-        animation: rainbow 8s linear infinite;
+    .bg-rainbow { 
+    /* 200%の幅を持つグラデーション背景 */
+    background: linear-gradient(
+        to right, 
+        #ff2e63, #ff7b00, #ffc300, #00c853, #00a6ff, #3d5afe, #8e24aa, #ff2e63 
+    ) 0% 0% / 200% 100%; 
+    
+    /* アニメーションの適用 */
+    animation: rainbow-flow 8s linear infinite; 
     }
 
-    .bg-rainbow {
-        background: linear-gradient(to right,
-            #ff2e63,
-            #ff7b00,
-            #ffc300,
-            #00c853,
-            #00a6ff,
-            #3d5afe,
-            #8e24aa,
-            #ff2e63
-        ) 0 / 200%;
-
-        animation: rainbow 8s linear infinite;
+    /* 左から右に流れて見えるようにするキーフレーム */
+    @keyframes rainbow-flow {
+    0% {
+        background-position: 0% 0%;
     }
+    100% {
+        background-position: -200% 0%; /* 背景を左に引くことで、右へ流れる動きを作る */
+    }
+    }
+
 
 </style>
 @endsection
@@ -80,13 +72,13 @@
 
 
 
-    <div class="container">
+    <div class="containerxx mx-3">
         <div class="row mx-0 g-4 g-md-3 justify-content-center">
 
 
             <!--flex-c2-1 -->
             <div class="col-12 col-lg-7">
-                <div class="mx-auto py-5" style="max-width:768px;">
+                <div class="mx-auto pb-5" style="max-width:768px;">
                     
 
 
@@ -96,7 +88,7 @@
                             <i class="bi bi-check-circle-fill "></i>
                         </div>
     
-                        <div class="fw-bold mb-3">購入手続きが完了しました</div>
+                        <div class="fw-bold mb-3">購入が完了しました</div>
 
                         <p class="fs-5">
                             ご利用ありがとうございます。<br>
@@ -125,7 +117,8 @@
                             fs-3 text-white fw-bold border-4 border-light py-2
                             w-100 shadow rounded-pill my-2">
                                 <i class="fs-1 bi bi-stars"></i>
-                                <span class="mx-2">ガチャの結果を確認する</span>
+                                <span class="mx-2 d-md-none fs-5">結果を確認する</span>
+                                <span class="mx-2 d-none d-md-inline-block">ガチャの結果を確認する</span>
                                 <i class="fs-1 bi bi-chevron-double-right"></i>
                             </a>
                             {{-- <img class="w-100"
@@ -158,7 +151,7 @@
 
 
             <!--flex-c2-2 -->
-            <aside class="col">
+            <aside class="col" style="min-width:330px">
                 <div class="position-sticky" style="top: 2rem; ">
 
                     <!--購入内容-->
@@ -177,27 +170,25 @@
                                         <div class="col">
                             
                                             <div class="row g-3">
-                                                <div class="col-4 col-lg-2 text-center">
-                                            
-                                                    <ratio-image-component
-                                                    url="{{$gacha_title->image_samune_path}}"
-                                                    style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
-                                                    bg_size="contain"
-                                                    ></ratio-image-component>
-                                            
-                                            
-                                                </div>
                                                 <div class="col ">
                                             
                                             
                                                     <div class="">
-                                            
+
+                                                        <div style="max-width:100px;">
+                                                            <ratio-image-component
+                                                            url="{{$gacha_title->image_samune_path}}"
+                                                            style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
+                                                            bg_size="contain"
+                                                            ></ratio-image-component>    
+                                                        </div>
+    
                                                         <!--discription head-->
                                                         @include('manuf.gacha.common.title_discription.title_name')
                                             
                                             
-                                                        <h6 class="fw-bold m-0">ガチャマシーン</h6>
-                                                        <div class="card p-1 mb-4 ">{{$machine->name}}</div>
+                                                        <h6 class="m-0">ガチャマシーン</h6>
+                                                        <div class="border p-1 mb-4 rounded">{{$machine->name}}</div>
                                                             
                                             
                                                     </div>
@@ -208,15 +199,16 @@
                                             </div>
                                             
                                         </div>
-                                        <div class="col-3 text-end fw-bold">
+                                        <div class="col-auto text-end fw-bold">
                                             <div class="">
-                                                1回/税込¥{{number_format($gacha_title_price)}}
+                                                1回/税込<br>
+                                                ¥{{number_format($gacha_title_price)}}
                                             </div>
                                             <div class="">
                                                 {{number_format($play_count)}}点
                                             </div>
                                             <div class="mt-4">
-                                                商品小計
+                                                商品小計<br>
                                                 <span class="fs-3">¥{{number_format( $sub_total_fee )}}</span>
                                             </div>
                                         </div>
@@ -231,6 +223,12 @@
                     @include('manuf.gacha.purchase.common.account_details')
 
 
+
+                    <section class="mt-5">
+                        <a href="{{ $gacha_title->r_show }}" 
+                        class="btn btn-light border w-100 rounded-pill"
+                        >ガチャタイトル詳細に戻る</a>
+                    </section>
 
                 </div>
             </aside>

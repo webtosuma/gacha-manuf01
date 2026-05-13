@@ -461,7 +461,7 @@ class GachaController extends Controller
 
 
         # 抽選結果の取得
-        $user_gacha_history = $this->playService->index($request, $gacha, $key);
+        $user_gacha_history = $this->playService->index($request, $gacha, $key); 
 
 
         # ガチャ実行後の昇格の評価

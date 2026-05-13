@@ -26,7 +26,6 @@ class ManufPurchaseHistory extends Model
         'status',      //状態 (pending:購入待ち paid:支払い済み cancel:キャンセル')
         
         'stripe_checkout_session_id',//Stripe Checkout Session ID
-        'shipped_id',  //発送情報
         'paid_at',     //支払い完了日時
     ];
 
@@ -84,19 +83,6 @@ class ManufPurchaseHistory extends Model
             return $this->hasMany(
                 ManufPurchaseItem::class,'history_id'
             );
-        }
-
-
-        /**
-         * 発送情報
-         */
-        public function shipped()
-        {
-            return $this->belongsTo(
-                UserShipped::class,'shipped_id'
-            )           
-            ->withTrashed();//削除済みも含む
-
         }
 
 

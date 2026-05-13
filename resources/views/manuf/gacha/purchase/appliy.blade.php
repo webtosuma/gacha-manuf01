@@ -159,7 +159,7 @@
                                 <div class="col-12">
                                     <a href="{{ $gacha_title->r_show }}" 
                                     class="btn btn-light border w-100 rounded-pill"
-                                    >別のガチャを選択する</a>
+                                    >別のガチャマシンを選択する</a>
                                 </div>
                             
                             </div>

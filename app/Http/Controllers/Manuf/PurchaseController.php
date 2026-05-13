@@ -75,30 +75,20 @@ class PurchaseController extends Controller
      * 
      * @return \Illuminate\Http\Response
     */
-    public function comp(
-        String $code
-    ){
+    public function comp( String $code ){
         $user = Auth::user();
 
         # 購入履歴の取得
         $history = $this->purchaseService->gethistory($user,$code);
 
-        # ガチャタイトル詳細情報の取得/カテゴリーのコードチェック
-        $gacha_title = $this->gachaTitleService->getGachaTitle($title_code, $category_code);
+        return view('manuf.gacha.purchase.comp', [
+            'history'           => $history,
+            'gacha_title'       => $history->items->first()->machine->gacha_title,
 
-
-        # 選択されたガチャマシーン情報の取得
-        list( $machine, $alert_array ) 
-        = $this->gachaTitleService->getMachine($request, $gacha_title);
-        if( $alert_array ){ return redirect()->back()->with($alert_array); }//エラーメッセージ
-
-
-        # 購入履歴
-        $history = ManufPurchaseHistory::where('code',$code)
-        ->firstOrFail();//データなしの場合、404
-
-
-        return view('manuf.gacha.purchase.confirm', compact( 'history' ));
+            'shipped_fee'       => $history->shipped_fee,
+            'sub_total_fee'     => $history->sub_total_fee,
+            'total_fee'         => $history->total_fee,
+        ]);
     }
 
 

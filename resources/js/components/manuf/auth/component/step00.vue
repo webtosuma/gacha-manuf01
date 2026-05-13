@@ -31,7 +31,7 @@
                             >
 
                             <div class="form-check-label fs-5 ms-2">
-                                未成年者ではないこと
+                                未成年者ではない
                             </div>
 
                         </div>
@@ -50,7 +50,7 @@
                             >
 
                             <div class="form-check-label fs-5 ms-2">
-                                反社会的勢力関係者ではないこと
+                                反社会的勢力関係者ではない
                             </div>
 
                         </div>
@@ -69,7 +69,7 @@
                             >
 
                             <div class="form-check-label fs-5 ms-2">
-                                同一人物による重複登録ではないこと
+                                同一人物による重複登録ではない
                             </div>
 
                         </div>
@@ -88,7 +88,7 @@
                             >
 
                             <div class="form-check-label fs-5 ms-2">
-                                過去に資格取消、または利用制限を受けていないこと
+                                過去に資格取消、または利用制限を受けていない
                             </div>
 
                         </div>

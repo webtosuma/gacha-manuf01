@@ -196,14 +196,14 @@
                     @php $waiting_shippeds_count = Auth()->user()->admin->waiting_shippeds->count(); @endphp
                     @if ( $menu['key']=='shipped' && $waiting_shippeds_count )
                         <!--商品　未発送数-->
-                        <span class="badge rounded-pill bg-warning">{{$waiting_shippeds_count}}</span>
+                        <span class="badge rounded-pill bg-warning text-dark">{{$waiting_shippeds_count}}</span>
                     @endif
 
 
                     @php $unresponsed_contacts_count = Auth()->user()->admin->unresponsed_contacts->count(); @endphp
                     @if ( $menu['key']=='contact' && $unresponsed_contacts_count )
                         <!--お問い合わせ　未対応-->
-                        <span class="badge rounded-pill bg-warning">{{$unresponsed_contacts_count}}</span>
+                        <span class="badge rounded-pill bg-warning text-dark">{{$unresponsed_contacts_count}}</span>
                     @endif
 
                 </div>

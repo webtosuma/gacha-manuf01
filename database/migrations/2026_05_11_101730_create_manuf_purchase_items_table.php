@@ -15,6 +15,11 @@ return new class extends Migration
         Schema::create('manuf_purchase_items', function (Blueprint $table) {
             $table->id();
 
+            # コード
+            $table->string('code')
+            ->unique()
+            ->comment('コード');
+
             # ユーザー
             $table->foreignId('user_id')
                 ->constrained()
@@ -29,6 +34,19 @@ return new class extends Migration
             $table->foreignId('history_id')
                 ->constrained('manuf_purchase_histories')
                 ->cascadeOnDelete();
+
+            # 発送情報
+            $table->foreignId('shipped_id')
+                ->nullable()->default(null)
+                ->constrained('user_shippeds')
+                ->nullOnDelete();
+
+            # ガチャ履歴
+            $table->foreignId('gacha_history_id')
+                ->nullable()->default(null)
+                ->constrained('user_gacha_histories')//ガチャ履歴
+                ->nullOnDelete();
+
 
             # ガチャ利用回数
             $table->integer('count')

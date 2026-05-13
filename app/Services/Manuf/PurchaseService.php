@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Services\manuf;
+namespace App\Services\Manuf;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserAddressApiController;
+use Illuminate\Support\Facades\DB;
 use App\Models\ManufGachaTitleMachine;
 use App\Models\ManufPurchaseHistory;
 use App\Models\ManufPurchaseItem;
@@ -33,26 +34,41 @@ class PurchaseService
         int $shipped_fee
     ): ManufPurchaseHistory
     {
-        # 購入履歴(購入待ち)の新規登録
-        $model   = new ManufPurchaseHistory;
-        $history = ManufPurchaseHistory::create([
-            'code'        => $model->CreateCode(),//履歴コード
-            'user_id'     => $user->id,//
-            'address_id'  => $user_address->id,
-            'shipped_fee' => $shipped_fee,//発送料金
-            'status'      => 'pending',//状態:購入待ち
-        ]);
+        return DB::transaction(function () use (
+            $user, $machine, $user_address, $play_count, $shipped_fee
+        ){
 
-        # 購入アイテムの新規登録
-        $item = ManufPurchaseItem::create([
-            'user_id'     => $user->id,//
-            'machine_id'  => $machine->id,   
-            'history_id'  => $history->id,     
-            'count'       => $play_count,
-            'one_fee'     => $machine->price,          
-        ]);
+            # 筐体の取得/排他処理
+            $machine = ManufGachaTitleMachine::where('id', $machine->id)
+            ->lockForUpdate()
+            ->first();
 
-        return $history;
+            # 購入履歴(購入待ち)の新規登録
+            $model   = new ManufPurchaseHistory;
+            $history = ManufPurchaseHistory::create([
+                'code'        => $model->CreateCode(),//履歴コード
+                'user_id'     => $user->id,//
+                'address_id'  => $user_address->id,
+                'shipped_fee' => $shipped_fee,//発送料金
+                'status'      => 'pending',//状態:購入待ち
+            ]);
+
+            # 購入アイテムの新規登録
+            $model   = new ManufPurchaseItem;
+            ManufPurchaseItem::create([
+                'code'        => $model->CreateCode(),//履歴コード
+                'user_id'     => $user->id,//
+                'machine_id'  => $machine->id,   
+                'history_id'  => $history->id,     
+                'count'       => $play_count,
+                'one_fee'     => $machine->price,          
+            ]);
+
+            $history->refresh();//情報の再取得
+            return $history;
+
+        
+        });
     }
 
 

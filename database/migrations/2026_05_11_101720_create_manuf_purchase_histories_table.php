@@ -38,13 +38,6 @@ return new class extends Migration
                 ->default('pending')
                 ->comment('pending:購入待ち paid:支払い済み cancel:キャンセル');
 
-            # 発送情報
-            $table->foreignId('shipped_id')
-                ->nullable()
-                ->default(null)
-                ->constrained('user_shippeds')
-                ->nullOnDelete();
-
             # 支払い完了日時
             $table->timestamp('paid_at')
                 ->nullable();

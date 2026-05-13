@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\manuf;
+namespace App\Services\Manuf;
 use Illuminate\Http\Request;
 use App\Models\ManufGachaTitle;
 use App\Models\ManufGachaTitleMachine;

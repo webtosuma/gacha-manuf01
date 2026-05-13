@@ -56,11 +56,12 @@ class ShippedAppliController extends Controller
             ->with(['alert-warning'=>$message,'icon'=>'bi-exclamation-triangle']);
         }
 
-
         # 発送するユーザー商品を取得/データチェック
         $user_prizes = $this->service->findUserPrizes($id_array);
         if( !$user_prizes->count() ){ return abort(404); }//データがないとき
 
+
+        
         # 発送商品の合計ポイント上限
         $limit_prize_point = (Int) config('gacha.shipped.limit_prize_point',0);
         $total_prize_point = 0;

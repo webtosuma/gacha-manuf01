@@ -8,68 +8,43 @@ use App\Http\Controllers\Manuf;
 ==========================================================================
 */
 
-# ガチャタイトルのカテゴリー選択
-Route::get('/m/{category_code?}',
-[Manuf\GachaTitleController::class, 'index'])
-->name('manuf');
+  # ガチャタイトルのカテゴリー選択
+  Route::get('/m/{category_code?}',
+  [Manuf\GachaTitleController::class, 'index'])
+  ->name('manuf');
 
-# カテゴリー一覧
-Route::get('/g/{category_code?}',
-[Manuf\GachaTitleController::class, 'index'])
-->name('gacha_category');
+  # カテゴリー一覧
+  Route::get('/g/{category_code?}',
+  [Manuf\GachaTitleController::class, 'index'])
+  ->name('gacha_category');
 
-# 検索結果
-Route::get('/m/search',
-[Manuf\GachaTitleController::class, 'search'])
-->name('manuf.search');
+  # 検索結果
+  Route::get('/m/search',
+  [Manuf\GachaTitleController::class, 'search'])
+  ->name('manuf.search');
 
-# ガチャタイトルの詳細表示
-Route::get('/m/{category_code}/{title_code}',
-[Manuf\GachaTitleController::class, 'show'])
-->name('manuf.gacha_title');
+  # ガチャタイトルの詳細表示
+  Route::get('/m/{category_code}/{title_code}',
+  [Manuf\GachaTitleController::class, 'show'])
+  ->name('manuf.gacha_title');
 
+
+/* ログイン必須 */
 Route::middleware(['auth'])->group(function () {
 
-// # ガチャの結果履歴(SNS等の公開用)
-// Route::get('/result_history/{history_key}',
-// [App\Http\Controllers\GachaController::class, 'result_history'])
-// ->name('gacha.result_history');
+  # ガチャの演出動画表示
+  Route::get('/movie/{purchase_item}',
+  [Manuf\GachaTitleController::class, 'movie'])
+  ->name('gacha.movie');
 
-// # ガチャ回数のカスタム
-// Route::get('/g/custom_count/{category_code}/{gacha}/{key}',
-// [App\Http\Controllers\GachaController::class, 'custom_count'])
-// ->name('gacha.custom_count');
+
+  # ガチャの結果表示
+  Route::get('/result/{purchase_item}',
+  [Manuf\GachaTitleController::class, 'result'])
+  ->name('gacha.result');
+
 
 });
-    // Route::middleware(['auth'])->group(function () {
-
-
-    //     # ガチャで遊ぶ
-    //     Route::post('/g/play/{category_code}/{gacha}/{key}',
-    //     [App\Http\Controllers\GachaPlayController::class, 'play'])
-    //     ->name('gacha.play');
-
-
-    //     # ガチャの演出動画表示
-    //     Route::get('/movie/{user_gacha_history}',
-    //     [App\Http\Controllers\GachaController::class, 'movie'])
-    //     ->name('gacha.movie');
-
-
-    //     # ガチャの結果表示
-    //     Route::get('/result/{category_code}/{user_gacha_history}',
-    //     [App\Http\Controllers\GachaController::class, 'result'])
-    //     ->name('gacha.result');
-
-
-    //     # 商品のポイント交換
-    //     Route::patch('/g/exchange_points/{category_code}/{user_gacha_history}',
-    //     [App\Http\Controllers\GachaController::class, 'exchange_points'])
-    //     ->name('gacha.exchange_points');
-
-
-
-    // });
 
 
 
