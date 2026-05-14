@@ -15,5 +15,4 @@ Route::middleware([
 
     include('user/web.php');
 
-
 });

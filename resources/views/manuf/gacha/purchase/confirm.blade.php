@@ -1,13 +1,13 @@
 @extends('manuf.layouts.app')
 
 <!--title-->
-@section('title',$gacha_title->name)
+@section('title','購入確認')
 
 
 <!--meta-->
 @section('meta')
     @php
-    $meta_title = $gacha_title->name;
+    $meta_title = '購入確認';
     $meta_image = $gacha_title->image_samune_path;
     @endphp
 @endsection
@@ -34,7 +34,7 @@
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('manuf') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ $gacha_title->r_show }}">{{$gacha_title->name}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">確認</li>
+            <li class="breadcrumb-item active" aria-current="page">購入確認</li>
             </ol>
         </nav>
     </div>

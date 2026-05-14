@@ -1,13 +1,13 @@
 @extends('manuf.layouts.app')
 
 <!--title-->
-@section('title',$gacha_title->name)
+@section('title','購入のお手続き')
 
 
 <!--meta-->
 @section('meta')
     @php
-    $meta_title = $gacha_title->name;
+    $meta_title = '購入のお手続き';
     $meta_image = $gacha_title->image_samune_path;
     @endphp
 @endsection

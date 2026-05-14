@@ -7,10 +7,13 @@ use App\Http\Controllers\AdminBackGroundController;
 use App\Http\Controllers\GachaController;
 use App\Http\Controllers\GachaApiController;
 use App\Http\Controllers\InfomationController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\GachaCategory;
+use App\Models\Movie;
 use App\Models\Text;
 use App\Models\ManufGachaTitle;
+use App\Models\ManufPurchaseItem;
 use App\Services\Manuf\GachaTitleService;
 /*
 | =============================================
@@ -128,4 +131,107 @@ class GachaTitleController extends Controller
 
 
     
+    /**
+    * 演出動画 ManufPurchaseItem
+    *
+    * @param String $item_code
+    * @return \Illuminate\Http\Response
+    */
+    public function movie( $item_code )
+    {
+        # ユーザの結果のみを表示
+        $user = Auth::user();
+    
+        # 購入アイテム
+        $item = ManufPurchaseItem::where('code',$item_code)
+        ->where('user_id',$user->id)
+        ->firstOrFail();//データなしの場合、404
+
+
+        # ガチャ履歴
+        $gacha_history = $item->gacha_history;
+
+        # 変数定義
+        $movie_id = $gacha_history->movie_id;
+        $rank_up  = null;
+
+
+        # 動画パス
+        $movie = Movie::find($movie_id);
+        $movie_path = $movie ? [
+            'pc'      => $movie->pc,
+            'mobile'  => $movie->mobile,
+            'youtube' => $movie->youtube_url,
+        ] : [
+            'pc'      => null,
+            'mobile'  => null,
+            'youtube' => '',
+        ];
+
+
+        # パラメーター
+        $param = compact('item','gacha_history', 'movie_path', 'rank_up'  );
+
+        # youtube動画
+        if( $movie && $movie->youtube_url ){
+            return view('manuf.gacha.movie.youtube',$param  );
+        }
+
+        return view('manuf.gacha.movie.index',$param );
+    }
+
+
+
+    /**
+     * 結果表示
+     *
+     * @param Request $request
+     * @param String  $item_code
+     * @return \Illuminate\Http\Response
+     */
+    public function result( Request $request, $item_code )
+    {
+        # ユーザの結果のみを表示
+        $user = Auth::user();
+    
+        # 購入アイテム
+        $item = ManufPurchaseItem::where('code',$item_code)
+        ->where('user_id',$user->id)
+        ->firstOrFail();//データなしの場合、404
+
+        # ガチャ履歴
+        $gacha_history = $item->gacha_history;
+
+        # ガチャ
+        $gacha = $gacha_history->gacha;
+
+        # ページタイトル
+        // $page_title = '「'.$gacha->name.'」の結果';
+        $page_title = '抽選結果';
+
+        # 背景画像
+        $bg_image = AdminBackGroundController::getBgResult();
+
+        # ユーザーランク:昇格の評価結果受け取り
+        $rank_up = $request->rank_up;
+
+
+        ## 表示できるガチャ一覧
+        $category_code = $gacha->category->code_name;
+        $query = GachaApiController::getPublishedGachas( $category_code, $search_key=null );
+
+            ## イベントガチャ (is_event_gacha)
+            $query->where('type','<>','event');
+            // $query->where('type','event');
+
+        $gachas = $query->paginate(6);
+
+
+        return view('manuf.gacha.result',compact(
+            'gacha','gacha_history', 'page_title', 'bg_image', 'rank_up',
+            'gachas','category_code'
+        ));
+    }
+
+
 }

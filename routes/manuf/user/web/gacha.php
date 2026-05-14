@@ -33,13 +33,12 @@ use App\Http\Controllers\Manuf;
 Route::middleware(['auth'])->group(function () {
 
   # ガチャの演出動画表示
-  Route::get('/movie/{purchase_item}',
+  Route::get('movie/{item_code}/play',
   [Manuf\GachaTitleController::class, 'movie'])
   ->name('gacha.movie');
 
-
   # ガチャの結果表示
-  Route::get('/result/{purchase_item}',
+  Route::get('/result/{item_code}',
   [Manuf\GachaTitleController::class, 'result'])
   ->name('gacha.result');
 

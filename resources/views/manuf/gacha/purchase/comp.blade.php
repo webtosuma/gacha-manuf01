@@ -7,7 +7,7 @@
 <!--meta-->
 @section('meta')
     @php
-    $meta_title = $gacha_title->name;
+    $meta_title = '購入完了';
     $meta_image = $gacha_title->image_samune_path;
     @endphp
 @endsection
@@ -113,7 +113,8 @@
                                 src="{{asset('storage/site/image/munf_purchase/comp01.png')}}" 
                                 alt="">    
                             </div>
-                            <a href="" class="btn btn-lg bg-rainbow hover_anime
+                            <a href="{{route('gacha.movie',$history->items[0]->code)}}" 
+                            class="btn btn-lg bg-rainbow hover_anime
                             fs-3 text-white fw-bold border-4 border-light py-2
                             w-100 shadow rounded-pill my-2">
                                 <i class="fs-1 bi bi-stars"></i>
@@ -130,7 +131,7 @@
                             @break
                         
                             @case('pending')
-                            <a href="" class="btn btn-lg btn-secondary 
+                            <a class="btn btn-lg btn-secondary 
                             disabled
                             w-100 shadow rounded-pill mb-2">
                                 支払い未完了
