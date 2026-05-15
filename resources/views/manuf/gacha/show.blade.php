@@ -117,43 +117,6 @@
     </div>
 
 
-    {{-- <div class="container px-0">
-        <div class="row justify-content-center g-3 mx-0">
-            <div class="col-12 col-lg-10 ">
-
-
-                
-                @if( env('SHARE_BTNS') )
-                    <section class="list-group-item mb-5">
-                        <div class="fw-bold text-center mb-2">このガチャをシェアする</div>
-
-                        @php
-                        $sns_url  = request()->url();
-                        $sns_text = $gacha_title->name;
-                        @endphp
-                        @include('includes.sns_btn')
-                    </section>
-                @endif
-
-
-
-                <!-- その他のガチャ情報 -->
-                <div class="container my-5 mx-auto" style="max-width:600px;">
-
-                    @include('gacha.common.result_gachas')
-
-                </div>
-
-
-
-
-            </div>
-        </div>
-    </div> --}}
-
-
-
-
 
     <!--ボトムメニュー-->
     <div class="position-fixed bottom-0 end-0
@@ -164,14 +127,10 @@
             <!--購入ボタン-->
             @include('manuf.gacha.common.title_discription.purchase_button')
 
-            {{-- @include('manuf.gacha.show.price_metter') --}}
-
 
         </div>
     </div>
 
 
-    <!--ポップアップモーダル-->
-    {{-- @include('gacha.common.play_modal') --}}
 
 @endsection

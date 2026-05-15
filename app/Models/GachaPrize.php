@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 */
 class GachaPrize extends Model
 {
-    use HasFactory;
+    use HasFactory; 
     use SoftDeletes; //論理削除の利用
 
     public $timestamps = true;
@@ -117,7 +117,7 @@ class GachaPrize extends Model
                 $ratio = $gacha->max_count
                 ? $this->max_count/$gacha->max_count*100 :0;
 
-                 return round( $ratio, 2) .'%';
+                return number_format($ratio, 2) . '%';
             }
         }
 

@@ -75,12 +75,18 @@
                                 @include('manuf.gacha.purchase.common.title_card')
 
 
-                                <div class="mt-3 text-end">
+                                {{-- <div class="mt-3 text-end">
                                     <button class="btn btn-dark border rounded-pill " 
                                     type="button"
+                                    data-bs-toggle="offcanvas" href="#oc_prizes{{ $machine->id }}" role="button"
+                                    aria-controls="oc_prizes{{ $machine->id }}"
                                     >詳細を見る</button>        
                                 </div>
-                    
+
+                                <!--マシーン詳細　offcanvace-->
+                                @include('manuf.gacha.common.title_discription.machine_offcanvace') --}}
+
+
                             </div>
 
                         </section>

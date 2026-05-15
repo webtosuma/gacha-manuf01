@@ -29,12 +29,17 @@ Route::middleware(['auth'])->group(function () {
   ->name('manuf.gacha_title.purchase.appliy');
 
   # ガチャタイトルの筐体  購入[確認]( 購入履歴作成 )
-  Route::post('m/purchase/confirm/',
+  Route::post('m/purchase/confirm',
   [Manuf\PurchaseController::class, 'confirm'])
   ->name('manuf.gacha_title.purchase.confirm');
-  
+
+  # ガチャタイトルの筐体  購入[キャンセル]( 戻る用 )
+  Route::get('m/purchase/cancel/{code}',
+  [Manuf\PurchaseController::class, 'cancel'])
+  ->name('manuf.gacha_title.purchase.cancel');
+
   # ガチャタイトルの筐体 購入[完了]
-  Route::get('m/purchase/comp/{$code}',
+  Route::get('m/purchase/comp/{code}',
   [Manuf\PurchaseController::class, 'comp'])
   ->name('manuf.gacha_title.purchase.comp');
 

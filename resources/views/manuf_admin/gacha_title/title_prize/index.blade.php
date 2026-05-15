@@ -77,6 +77,12 @@ $active_gacha_menu = config('store.admin');//ECガチャ用Adminのとき
                             </div>
                         </td>
 
+                        <!-- 商品説明文 -->
+                        <td class="d-none d-md-table-cell">{{ \Illuminate\Support\Str::limit(
+                            $title_prize->prize->discription_text, 24, '...'
+                        ) }}</td>
+
+
                         <td style="width:6rem;">
                             <div class="d-flex gap-1">
 

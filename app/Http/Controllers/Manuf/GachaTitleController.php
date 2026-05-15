@@ -15,6 +15,7 @@ use App\Models\Text;
 use App\Models\ManufGachaTitle;
 use App\Models\ManufPurchaseItem;
 use App\Services\Manuf\GachaTitleService;
+use App\Services\Manuf\ValidationService;
 /*
 | =============================================
 |  Manufacturer:ガチャタイトル コントローラー
@@ -25,6 +26,7 @@ class GachaTitleController extends Controller
     # サービスの登録
     public function __construct(
         protected GachaTitleService $gachaTitleService,
+        protected ValidationService $validationService, // バリデーションサービス
     ) {}
 
 
@@ -109,6 +111,9 @@ class GachaTitleController extends Controller
     {
         # ガチャタイトル詳細情報の取得/カテゴリーのコードチェック
         $gacha_title = $this->gachaTitleService->getGachaTitle($title_code, $category_code);
+
+        # バリデーションチェック
+        $this->validationService->checkeGachaTitle($gacha_title);
 
         # 筐体
         $machines = $gacha_title->machines;

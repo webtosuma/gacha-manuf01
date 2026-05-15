@@ -117,7 +117,10 @@
                                             <!--画像-->
                                             <ratio-image-component
                                             style_class="ratio ratio-3x4 rounded-3"
-                                            :url=" prize.image_path " />
+                                            bg_size='contain'
+                                            :url=" prize.image_path " 
+
+                                            />
                                         </td>
                                         <td>{{ prize.code }}</td>
                                         <td>{{ prize.name }}</td>

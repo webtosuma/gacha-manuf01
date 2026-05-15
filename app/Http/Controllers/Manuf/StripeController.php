@@ -68,26 +68,29 @@ class StripeController extends Controller
 
         # テスト用完了メソッド 
         $test = env('APP_DEBUG');
-        if( $test )
-        {
-            return DB::transaction(function () use ( $history, $user, $request ) {
+        // $test = false;
+        // if( $test )
+        // {
+        //     return DB::transaction(function () use ( $history, $user, $request ) {
 
-                # 決済完了のDB情報の登録メソッド
-                $session_id = 'test';
+        //         # 決済完了のDB情報の登録メソッド
+        //         $session_id = 'test';
 
-                # 決済完了後の処理
-                $this->stripeService->completedMethod( $history, $user, $session_id );
-                // $request->session()->regenerateToken();// 二重送信防止
+        //         # 決済完了後の処理
+        //         $this->stripeService->completedMethod( $history, $user, $session_id );
+        //         // $request->session()->regenerateToken();// 二重送信防止
 
-                # ページ表示
-                return $this->purchaseController->comp($history->code);
-            });
-        }
+        //         # ページ表示
+        //         return $this->purchaseController->comp($history->code);
+        //     });
+        // }
         
 
         # チェックアウトセッション
         $session = $this->stripeService
         ->createCheckoutSession( $user, $history );
+
+        return redirect()->to($session->url);
     }
 
 

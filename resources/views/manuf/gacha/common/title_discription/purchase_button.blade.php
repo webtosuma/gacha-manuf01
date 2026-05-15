@@ -1,13 +1,7 @@
 <form action="{{$gacha_title->r_purchase_appliy}}" method="GET">
-    {{-- @csrf --}}
 
     <div class="row g-3">
 
-        {{-- <div class="col-auto">
-            <a href="{{ url()->previous() }}" class="btn btn-secondary border rounded-pill">
-                <i class="bi bi-chevron-left"></i>
-            </a>
-        </div>  --}}
         <div class="col-12">
             <select name="gacha_key" class="form-select">
                 <option value="">ガチャマシン選択</option>

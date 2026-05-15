@@ -102,10 +102,20 @@ class StripeService
             ]],
             'automatic_tax' => [ 'enabled' => false, ],
 
-            'success_url' => route('manuf.gacha_title.purchase.comp',$history->code),
-            'cancel_url'  => route('manuf.gacha_title.purchase.appliy' ,[
-                'gacha_key' => $history->items->first()->machine->key
-            ]),  
+
+
+            'success_url' => route(
+                'manuf.gacha_title.purchase.comp', $history->code
+            ),
+            'cancel_url'  => route(
+                'manuf.gacha_title.purchase.cancel', $history->code
+            ),
+
+            // 'cancel_url'  => route('manuf.gacha_title.purchase.appliy' ,[
+            //     'code' => $history->code,
+            //     'gacha_key' => $history->items->first()->machine->key
+            // ]),
+
         ]);
 
 

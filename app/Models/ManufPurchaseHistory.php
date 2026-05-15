@@ -86,6 +86,15 @@ class ManufPurchaseHistory extends Model
         }
 
 
+        /**
+         * UserAddressモデル リレーション
+         * @return \App\Models\PointHistory
+        */
+        public function user_address()
+        {
+            return $this->belongsTo(UserAddress::class,'address_id')
+            ->withTrashed(); //削除を含む
+        }
 
     /*
     |--------------------------------------------------------------------------

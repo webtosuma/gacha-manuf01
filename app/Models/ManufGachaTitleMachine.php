@@ -57,16 +57,41 @@ class ManufGachaTitleMachine extends Model
 
         public function gacha_title()
         {
-            return $this->belongsTo(ManufGachaTitle::class, 'manuf_gacha_title_id')
-            ->withTrashed();
+            return $this->belongsTo(
+                ManufGachaTitle::class, 'manuf_gacha_title_id'
+            )->withTrashed();
         }
 
+        /**　ガチャ*/
         public function gacha()
         {
             return $this->belongsTo(Gacha::class)
             ->withTrashed();
         }
 
+        /**　購入アイテム　*/
+        public function purchase_items()
+        {
+            return $this->hasMany( 
+                ManufPurchaseItem::class, 'machine_id'
+            );
+        }
+
+        # ガチャ商品 g_prizes
+        public function getGPrizesAttribute()
+        {
+            if (!$this->gacha) {
+                return collect();
+            }
+    
+            # prizeの登録が古い順
+            return $this->gacha->g_prizes()
+            ->with('prize')
+            ->join('prizes', 'gacha_prizes.prize_id', '=', 'prizes.id')
+            ->orderBy('prizes.created_at', 'asc')
+            ->select('gacha_prizes.*')
+            ->get();
+        }
 
     /*
     |--------------------------------------------------------------------------
@@ -162,21 +187,39 @@ class ManufGachaTitleMachine extends Model
         }
 
         # 残数比率
-        public function getRAdminemainingRatioAttribute()
+        public function getRemainingRatioAttribute()
         {
             return $this->gacha?->remaining_ratio ?? null;
         }
 
-        # 残数
-        public function getRAdminemainingCountAttribute()
+        # 残数 remaining_count
+        public function getRemainingCountAttribute()
         {
             return $this->gacha?->remaining_count ?? null;
         }
 
-        # 総口数
+        # 総口数 max_count
         public function getMaxCountAttribute()
         {
             return $this->gacha?->max_count ?? null;
+        }
+
+
+        # 待機中の数 pending_count
+        public function getPendingCountAttribute()
+        {
+            return $this->purchase_items()
+            ->whereHas('history', function ($query) {
+                $query->where('status', 'pending');
+            })->sum('count'); //PLAU数の合計数
+
+            // })->count(); 
+        }
+
+        # 購入可能な数 max_purchase_count
+        public function getMaxPurchaseCountAttribute()
+        {
+            return ($this->remaining_count) - ($this->pending_count);
         }
 
 

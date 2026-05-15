@@ -4,8 +4,11 @@ border-start border-info border-5
 
 
 <!--マシーン詳細　offcanvace-->
-@include('manuf.gacha.common.title_discription.machine_offcanvace')
+@foreach ($machines as $machine)
 
+    @include('manuf.gacha.common.title_discription.machine_offcanvace')
+
+@endforeach
 
 
 @if( $machines->count()>0 )

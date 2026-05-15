@@ -9,6 +9,9 @@ use App\Models\ManufPurchaseHistory;
 use App\Services\Manuf\PurchaseService;
 use App\Services\Manuf\GachaTitleService;
 use App\Services\Manuf\ShippedService;
+use App\Services\Manuf\ValidationService;
+use Illuminate\Support\Facades\Redirect;
+
 /*
 | =============================================
 |  Manufacturer:ガチャタイトル　購入 コントローラー
@@ -21,6 +24,7 @@ class PurchaseController extends Controller
         protected PurchaseService   $purchaseService,
         protected GachaTitleService $gachaTitleService, //
         protected ShippedService    $shippedService,    // 発送サービス
+        protected ValidationService $validationService, // バリデーションサービス
     ) {}
 
 
@@ -34,12 +38,38 @@ class PurchaseController extends Controller
      */
     public function appliy( Request $request )
     {
+        # 筐体コード入力チェック
+        if( ! $request->gacha_key ){
+            return redirect()->back()->with([
+                'alert-danger'=>'ガチャマシンを選択してください。',
+                'icon'=>'bi-exclamation-circle'
+            ]);
+        }
+
         # 選択されたガチャマシーン情報の取得
         $machine = $this->gachaTitleService->getMachine($request);
         $gacha_title = $machine->gacha_title;
 
+        # 筐体 バリデーションチェック
+        if( 
+            $message = $this->validationService->checkeMachine( $request, $machine, $admin=false )
+        ){
+            return redirect()->back()->with([
+                'alert-danger'=>$message, 'icon'=>'bi-exclamation-circle'
+            ]);
+        }
+
+
         # 発送料金
         $shipped_fee = $this->shippedService->calcShippedFee($play_count=1);
+
+
+        // dd([
+        //     '残数'       =>$machine->remaining_count,
+        //     '待機中の数'  =>$machine->pending_count,
+        //     '購入可能な数'=>$machine->max_purchase_count,
+        //     '総口数'     =>$machine->max_count,
+        // ]);
 
 
         return view('manuf.gacha.purchase.appliy', compact(
@@ -62,12 +92,31 @@ class PurchaseController extends Controller
         # 購入パラメーター
         $params = $this->purchaseService->getPurchaseData($request);
 
-
-
         return view('manuf.gacha.purchase.confirm', $params);
     }
 
 
+    
+    /**
+     * 購入[キャンセル]
+     * 
+     * @param String $code
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel($code)
+    {
+        # ユーザー情報
+        $user = Auth::user();
+
+        # キャンセル処理
+        $history = $this->purchaseService->gethistory($user,$code);
+        $history->update([ 'status' => 'cancel' ]);
+
+        # リダイレクト　->　[入力]
+        return redirect()->route('manuf.gacha_title.purchase.appliy',[
+            'gacha_key' => $history->items->first()->machine->key
+        ]);
+    }
 
 
     /**
@@ -75,10 +124,10 @@ class PurchaseController extends Controller
      * 
      * @return \Illuminate\Http\Response
     */
-    public function comp( String $code ){
-        $user = Auth::user();
-
+    public function comp( String $code )
+    {
         # 購入履歴の取得
+        $user = Auth::user();
         $history = $this->purchaseService->gethistory($user,$code);
 
         return view('manuf.gacha.purchase.comp', [

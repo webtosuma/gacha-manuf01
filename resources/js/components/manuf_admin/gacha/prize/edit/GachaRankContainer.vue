@@ -54,6 +54,7 @@
                                 <!-- 画像 -->
                                 <ratio-image-component
                                 style_class="ratio ratio-3x4 rounded-3"
+                                bg_size='contain'
                                 :url=" g_prize.prize.image_path " />
                             </td>
                             <td>{{ g_prize.prize.code }}</td>
@@ -110,6 +111,7 @@
                                 <!-- 画像 -->
                                 <ratio-image-component
                                 style_class="ratio ratio-3x4 rounded-3"
+                                bg_size='contain'
                                 :url=" prize.image_path " />
                             </td>
 

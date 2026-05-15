@@ -482,14 +482,46 @@ class ManufGachaTitle extends Model
     |
     */
         /**
-         * 販売開始日時テキスト(曜日入り)
+         * 公開判定 is_sales
+         */
+        public function getIsSalesAttribute(): bool
+        {
+            $now = now();
+
+            # 開始・終了　日時
+            $start = $this->sales_start_at;
+            $end   = $this->sales_end_at;
+
+
+            # start_at,end_at があって、end_atの方が小さい値になってしまっているとき
+            if ($start && $end && $start > $end) { return false; }
+
+            # 未入力
+            if (!$start && !$end) { return false; }
+
+            # startが未入力
+            if (!$start) { return false; }
+
+            # end_at があって、すでに終わっている場合 → 0
+            if ($end && $now > $end) { return false; }
+
+            # start_at があって、まだ始まっていない場合 → 2
+            if ($start && $now < $start) { return false; }
+
+
+            # ここまで来たら有効期間内（または片方nullで条件を満たす）
+            return true;
+        }
+
+        /**
+         * 販売開始日時テキスト(曜日入り) salse_start_at_text
          */
         public function getSalesStartAtTextAttribute(){
             return $this->formatJaDateTime($this->sales_start_at);
         }
 
         /**
-         * 販売終了日時テキスト(曜日入り)
+         * 販売終了日時テキスト(曜日入り) sales_end _at_text
          */
         public function getSalesEndAtTextAttribute(){
             return $this->formatJaDateTime($this->sales_end_at);
