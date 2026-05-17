@@ -1,7 +1,13 @@
 <a
-data-bs-toggle="offcanvas" href="#oc_prizes{{ $machine->id }}" role="button"
-aria-controls="oc_prizes{{ $machine->id }}"
-class="btn p-0 hover_anime"
+@unless($machine->not_purchase)
+    data-bs-toggle="offcanvas"
+    href="#oc_prizes{{ $machine->id }}"
+    role="button"
+    aria-controls="oc_prizes{{ $machine->id }}"
+@endunless
+
+class="btn p-0 hover_anime border-0
+{{ $machine->not_purchase ? 'disabled pe-none opacity-50' : '' }}"
 >
 
     <div class="d-inline-block rounded px-3

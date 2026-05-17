@@ -19,6 +19,16 @@
         </div>
         <div class="offcanvas-body">
 
+            <!--限定ガチャラベル-->
+            @if ( $machine->gacha->type_label && $machine->gacha->is_type_label_text)
+                <div>
+                    <span class="bg-info text-white px-2 rounded"
+                    >{{ $machine->gacha->type_label }}</span>
+                </div>
+            @endif
+
+
+            <!--残数表示-->
             <div class="row g-1 pt-2 text-center mb-3" style="font-size:14px;">
 
                 <!--在庫-->

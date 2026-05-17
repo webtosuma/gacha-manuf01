@@ -1,22 +1,24 @@
-<ul class="list-group bg-white">
+<!-- お届け先 -->
+<section class="mb-4">
 
-    <!-- お届け先 -->
-    <li class="list-group-item bg-white p-3">
+    <div class="d-flex justify-content-between ">
 
-        <div class="d-flex justify-content-between ">
+        <h5 class="fw-bold">お届け先</h5>
 
-            <h5 class="fw-bold">お届け先</h5>
+        {{-- @if(
+            Auth::user()->id === $user_address->user_id
+            && isset($user_shipped)
+            && $user_shipped->state_id==11//未発送
+        )
+            <a href="{{ route('settings.user_address.edit',$user_address ) }}"
+            class="">お届け先住所の変更</a>
+        @endif --}}
 
-            {{-- @if(
-                Auth::user()->id === $user_address->user_id
-                && isset($user_shipped)
-                && $user_shipped->state_id==11//未発送
-            )
-                <a href="{{ route('settings.user_address.edit',$user_address ) }}"
-                class="">お届け先住所の変更</a>
-            @endif --}}
+    </div>
 
-        </div>
+    <div class="card card-body bg-white">
+
+
 
 
         <input type="hidden" name="user_address_id" value="{{ $user_address->id }}">
@@ -34,73 +36,36 @@
 
 
         </div>
-    </li>
+
+    
+    </div>
+
+</section>
 
 
-    <!-- 購入ガチャタイトル -->
-    <li class="list-group-item bg-white p-3">
-        <h5 class="fw-bold">購入ガチャタイトル</h5>
 
-        <div class="row">
-            <div class="col">
+<!-- 購入ガチャタイトル -->
+<section class="mb-4">
 
-                <div class="row g-3">
-                    <div class="col-4 col-lg-2 text-center">
-                
-                        <ratio-image-component
-                        url="{{$gacha_title->image_samune_path}}"
-                        style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
-                        bg_size="contain"
-                        ></ratio-image-component>
-                
-                
-                    </div>
-                    <div class="col ">
-                
-                
-                        <div class="">
-                
-                            <!--discription head-->
-                            @include('manuf.gacha.common.title_discription.title_name')
-                
-                
-                            <h6 class="fw-bold m-0">ガチャマシーン</h6>
-                            <div class="card p-1 mb-4 ">{{$machine->name}}</div>
-                                
-                
-                        </div>
-                
-                
-                
-                    </div>
-                </div>
-                
-            </div>
-            <div class="col-3 text-end fw-bold">
-                <div class="">
-                    1回/税込¥{{number_format($gacha_title_price)}}
-                </div>
-                <div class="">
-                    {{number_format($play_count)}}点
-                </div>
-                <div class="mt-4">
-                    商品小計
-                    <span class="fs-3">¥{{number_format( $sub_total_fee )}}</span>
-                </div>
-            </div>
-        </div>
-    </li>
+    <h5 class="fw-bold">購入ガチャタイトル</h5>
+
+    @include('manuf.gacha.purchase.common.title_card')
+
+</section>
 
 
-    <!-- 発送料金 -->
-    <li class="list-group-item bg-white p-3">
-        <h5 class="fw-bold">発送料金</h5>
+
+<!-- 発送料金 -->
+<section class="mb-4">
+
+    <h5 class="fw-bold">発送料金</h5>
+
+    <div class="card card-body bg-white">
 
         <div class="text-end fw-bold">
             <span class="fs-6">¥{{number_format( $shipped_fee )}}</span>
         </div>
-    </li>
 
+    </div>
 
-</ul>
-
+</section>

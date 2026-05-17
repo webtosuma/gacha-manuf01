@@ -72,12 +72,12 @@
 
 
 
-    <div class="containerxx mx-3">
+    <div class="containerXX px-3">
         <div class="row mx-0 g-4 g-md-3 justify-content-center">
 
 
             <!--flex-c2-1 -->
-            <div class="col-12 col-lg-7">
+            <div class="col-12 col-lg" style="min-width:330px">
                 <div class="mx-auto pb-5" style="max-width:768px;">
                     
 
@@ -117,10 +117,12 @@
                             class="btn btn-lg bg-rainbow hover_anime
                             fs-3 text-white fw-bold border-4 border-light py-2
                             w-100 shadow rounded-pill my-2">
-                                <i class="fs-1 bi bi-stars"></i>
-                                <span class="mx-2 d-md-none fs-5">結果を確認する</span>
-                                <span class="mx-2 d-none d-md-inline-block">ガチャの結果を確認する</span>
-                                <i class="fs-1 bi bi-chevron-double-right"></i>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fs-1 bi bi-stars"></i>
+                                    <span class="mx-2 d-lg-none fs-5 fs-lg-3">結果を確認する</span>
+                                    <span class="mx-2 d-none d-lg-inline-block">結果を確認する</span>
+                                    <i class="fs-1 bi bi-chevron-double-right"></i>    
+                                </div>
                             </a>
                             {{-- <img class="w-100"
                             src="{{asset('storage/site/image/munf_purchase/result_btn.png')}}" 
@@ -152,24 +154,28 @@
 
 
             <!--flex-c2-2 -->
-            <aside class="col" style="min-width:330px">
+            <aside class="col-auto">
                 <div class="position-sticky" style="top: 2rem; ">
 
                     <!--購入内容-->
                     <section class="mb-4">
                         <h5 class="fw-bold">購入内容</h5>
 
-                        <ul class="list-group bg-white">
+                        {{-- <ul class="list-group bg-white"> --}}
                             @foreach ($history->items as $item)
                                 @php
                                 $play_count        = $item->count;
                                 $machine           = $item->machine;
                                 $gacha_title_price = $machine->price;
                                 @endphp
-                                <li class="list-group-item bg-white p-3">                            
-                                    <div class="row">
+                                {{-- <li class="list-group-item bg-white p-3">    --}}
+
+                                    @include('manuf.gacha.purchase.common.title_card')
+                        
+                                    {{-- <div class="row">
                                         <div class="col">
                             
+                                            
                                             <div class="row g-3">
                                                 <div class="col ">
                                             
@@ -213,10 +219,11 @@
                                                 <span class="fs-3">¥{{number_format( $sub_total_fee )}}</span>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </div> --}}
+
+                                {{-- </li> --}}
                             @endforeach
-                        </ul>
+                        {{-- </ul> --}}
                     </section>
 
 
@@ -228,7 +235,10 @@
                     <section class="mt-5">
                         <a href="{{ $gacha_title->r_show }}" 
                         class="btn btn-light border w-100 rounded-pill"
-                        >ガチャタイトル詳細に戻る</a>
+                        ><div class="d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-file-ruled fs-4"></i>
+                            <span>タイトル詳細に戻る</span>
+                        </div></a>
                     </section>
 
                 </div>

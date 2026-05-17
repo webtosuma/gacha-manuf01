@@ -59,6 +59,7 @@ class ValidationService{
     }
 
 
+
     /**
      * ガチャ筐体 チェック
     */
@@ -72,13 +73,55 @@ class ValidationService{
         $this->checkeGachaTitlePurchase($machine->gacha_title);
 
         # ガチャPlay チェック
-        $gacha = $machine->gacha;
-        return $this->gachaPlayValidationService->index( $request, $gacha, $admin );
+        $gacha   = $machine->gacha;
+        $message = $this->gachaPlayValidationService->index( $request, $gacha, $admin );
 
-        # 筐体在庫数チェック
+        # マシーンチェック - 購入可能な数の確認
+        if( $machine->not_purchase ){
+            $message = 'このガチャマシーンを購入することはできません。';
+        }
         
+        return $message;
     }
 
 
+
+    /**
+     * 購入確認ページ・チェックアウト チェック
+    */
+    public function purchaseConfirm(
+        Request $request,
+        ManufGachaTitleMachine $machine,
+        Bool $admin=false
+    ):? string
+    {
+        # ガチャ筐体 チェック
+        $message = $this->checkeMachine( $request, $machine, $admin );
+
+        # ガチャのPLAY数の確認
+        if( $machine->max_purchase_count < $request->play_count ){
+            $message = '版画販売できるガチャの在庫数が足りません。';
+        }
+
+        # 販売回数の入力チェック 0以上
+        if($request->play_count < 1){
+            $message ='0以上の購入数を指定してください。'; 
+        }
+
+        # 販売回数の入力チェック 上限
+        if( $request->play_count > config('manuf.purchase.max_playcount') ){
+            $message = '版画販売できるガチャ数の範囲を超えています。';
+        }
+
+        # 発送住所の確認
+        if( 
+            ! $request->user()->addresses->where('id',$request->user_address_id)
+            ->isNotEmpty()
+         ){ abort(404); }
+
+
+
+        return $message;
+    }
 
 }

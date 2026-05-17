@@ -51,16 +51,10 @@ class StripeService
         ]);
 
         # 決済名
-        $productName = 'ガチャ購入';
+        $productName = "ガチャ購入";
 
-
-        # 決済の種類($payment_method_types)
-        $payment_method_types = [];
-        $payment_types_settings =  config('stripe.payment_method_types');
-        $payment_keys = [ 'card','konbini','customer_balance' ];
-        foreach ( $payment_keys as $key) {
-            if( (bool) $payment_types_settings[$key] ){ $payment_method_types[] = $key; }
-        }
+        # 決済の種類($payment_method_types) //Manufにおいて、銀行振込・コンビニ決済は不可！
+        $payment_method_types = ['card'];
 
         # チェックアウトセッション
         return Session::create([

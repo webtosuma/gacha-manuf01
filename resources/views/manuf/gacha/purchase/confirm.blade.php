@@ -61,7 +61,7 @@
                 <div class="col-12 col-lg-8">
                     <div class="mx-auto" style="max-width:768px;">
                         
-                        <h5 class="fw-bold bg-warning p-2 ">内容をご確認ください。</h5>
+                        <h5 class="fw-bold bg-warning p-2 mb-4">内容をご確認ください。</h5>
 
                         @include('manuf.gacha.purchase.common.confirm_list')
 

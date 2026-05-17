@@ -204,6 +204,9 @@ class GachaTitleController extends Controller
         ->where('user_id',$user->id)
         ->firstOrFail();//データなしの場合、404
 
+        # ガチャタイトル
+        $gacha_title = $item->machine->gacha_title;
+
         # ガチャ履歴
         $gacha_history = $item->gacha_history;
 
@@ -233,7 +236,8 @@ class GachaTitleController extends Controller
 
 
         return view('manuf.gacha.result',compact(
-            'gacha','gacha_history', 'page_title', 'bg_image', 'rank_up',
+            'gacha_title',
+            'gacha','gacha_history','page_title', 'bg_image', 'rank_up',
             'gachas','category_code'
         ));
     }

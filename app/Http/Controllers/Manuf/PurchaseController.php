@@ -51,9 +51,9 @@ class PurchaseController extends Controller
         $gacha_title = $machine->gacha_title;
 
         # 筐体 バリデーションチェック
-        if( 
-            $message = $this->validationService->checkeMachine( $request, $machine, $admin=false )
-        ){
+        if( $message = $this->validationService->checkeMachine( 
+            $request, $machine, $admin=false 
+        ) ) {
             return redirect()->back()->with([
                 'alert-danger'=>$message, 'icon'=>'bi-exclamation-circle'
             ]);
@@ -62,14 +62,6 @@ class PurchaseController extends Controller
 
         # 発送料金
         $shipped_fee = $this->shippedService->calcShippedFee($play_count=1);
-
-
-        // dd([
-        //     '残数'       =>$machine->remaining_count,
-        //     '待機中の数'  =>$machine->pending_count,
-        //     '購入可能な数'=>$machine->max_purchase_count,
-        //     '総口数'     =>$machine->max_count,
-        // ]);
 
 
         return view('manuf.gacha.purchase.appliy', compact(
@@ -92,6 +84,18 @@ class PurchaseController extends Controller
         # 購入パラメーター
         $params = $this->purchaseService->getPurchaseData($request);
 
+
+        # 購入[確認] バリデーションチェック
+        $machine = $params['machine'];
+        if( $message = $this->validationService->purchaseConfirm(
+            $request, $machine, $admin=false
+        ) ) {
+            return redirect()->back()->with([
+                'alert-danger'=>$message, 'icon'=>'bi-exclamation-circle'
+            ]);
+        }
+        
+        
         return view('manuf.gacha.purchase.confirm', $params);
     }
 

@@ -7,10 +7,13 @@
                 <option value="">ガチャマシン選択</option>
 
                 @foreach ($machines as $machine)
+                    @if($machine->not_purchase)<!--販売不可は表示しない--> @continue  @endif
+
                     <option value="{{ $machine->key }}"
                     {{ old('machine_id') == $machine->key ? 'selected' : '' }}
                     >{{ $machine->name}}</option>
                 @endforeach
+
             </select>
         </div>
 

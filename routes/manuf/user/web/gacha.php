@@ -26,7 +26,7 @@ use App\Http\Controllers\Manuf;
   # ガチャタイトルの詳細表示
   Route::get('/m/{category_code}/{title_code}',
   [Manuf\GachaTitleController::class, 'show'])
-  ->name('manuf.gacha_title');
+  ->name('manuf.gacha_title'); 
 
 
 /* ログイン必須 */

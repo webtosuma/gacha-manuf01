@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 /*
 | =============================================
 |  Manufacturer用　ガチャタイトル筐体 モデル
@@ -38,11 +39,17 @@ class ManufGachaTitleMachine extends Model
         'is_published',
         'type_label',
         'type_label_admin',
+        'min_tmine',
+        'max_time',
+
+        /*残数*/
         'remaining_ratio',
         'remaining_count',
         'max_count',
-        'min_tmine',
-        'max_time',
+        'pending_count',     //待機中の数
+        'max_purchase_count',//購入可能な数 
+        'not_purchase',      //販売不可能か否か 
+
     ];
 
 
@@ -186,6 +193,29 @@ class ManufGachaTitleMachine extends Model
             return $this->gacha?->type_label_admin ?? null;
         }
 
+
+        # 表示時間下限 min_time
+        public function getMinTimeAttribute()
+        {
+            return $this->gacha?->min_time
+            ?? config( 'gacha.defaults.min_time', '00:00');
+        }
+
+        # 表示時間上限 max_time
+        public function getMaxTimeAttribute()
+        {
+            return $this->gacha?->max_time
+            ?? config( 'gacha.defaults.max_time', '24:00');
+        }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | アクセサー 残数
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
         # 残数比率
         public function getRemainingRatioAttribute()
         {
@@ -204,17 +234,19 @@ class ManufGachaTitleMachine extends Model
             return $this->gacha?->max_count ?? null;
         }
 
-
         # 待機中の数 pending_count
         public function getPendingCountAttribute()
-        {
+        {        
+            # 待機中のタイムアウト時間   
+            $timeout = now()->subSeconds( config('manuf.purchase.pending_timeout') );
+            
             return $this->purchase_items()
-            ->whereHas('history', function ($query) {
-                $query->where('status', 'pending');
+            ->whereHas('history', function ( $query )use($timeout) {
+                $query->where('status', 'pending')
+                ->where( 'created_at', '>=',$timeout );//タイムアウト
             })->sum('count'); //PLAU数の合計数
-
-            // })->count(); 
         }
+        
 
         # 購入可能な数 max_purchase_count
         public function getMaxPurchaseCountAttribute()
@@ -222,21 +254,31 @@ class ManufGachaTitleMachine extends Model
             return ($this->remaining_count) - ($this->pending_count);
         }
 
+        # 販売不可能か否か not_purchase
+        public function getNotPurchaseAttribute(): bool
+        { return ( 
+            # ガチャ売り切れ
+            $this->gacha->is_sold_out       
+            # (在庫-待機中) < 1
+            || $this->max_purchase_count<1  
 
-        # 表示時間下限 min_time
-        public function getMinTimeAttribute()
-        {
-            return $this->gacha?->min_time
-            ?? config( 'gacha.defaults.min_time', '00:00');
-        }
+            # [限定ガチャ]1回or10回限定
+            || ( $this->gacha->type=='one_chance'  && $this->gacha->played_one_time )
 
-        # 表示時間上限 max_time
-        public function getMaxTimeAttribute()
-        {
-            return $this->gacha?->max_time
-            ?? config( 'gacha.defaults.max_time', '24:00');
-        }
+            # [限定ガチャ]１回限定ガチャ
+            || ( $this->gacha->type=='one_time'    && $this->gacha->played_one_time )
 
+            # [限定ガチャ]一日一回限定限定ガチャ
+            || ( $this->gacha->type=='only_oneday' && $this->gacha->played_only_oneday )
+
+            # [限定ガチャ]新規登録ユーザー定限定ガチャ
+            || ( $this->gacha->type=='only_new_user' 
+                && ( Auth::user()->sevendays_affter_registar || $this->gacha->played_one_time )  
+            )
+            # [時間限定ガチャ]
+            || (!$this->gacha->is_show_timezone) /*-- (時間帯限定)表示可能か否か --*/
+
+        ); }
 
     /*
     |--------------------------------------------------------------------------
