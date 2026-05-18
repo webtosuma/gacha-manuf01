@@ -653,6 +653,11 @@ class ManufGachaTitle extends Model
                     $query->where('is_published', true);
                 })
                 
+
+                #表示順
+                ->orderByDesc('sales_start_at')
+                ->orderByDesc('created_at')
+
             ;
         }
 

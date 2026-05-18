@@ -40,5 +40,10 @@
 
     /* ガチャ販売機　頭部 */
     .ratio-6x1{ --bs-aspect-ratio:16.67%; }
+
+    .ratio-3x4{
+        --bs-aspect-ratio: 100% !important;
+    }
+
 </style>
 

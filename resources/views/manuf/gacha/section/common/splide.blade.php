@@ -9,7 +9,7 @@
 
 
                     <!--image-->
-                    <div class="ratio ratio-21x9 position-relative
+                    <div class="ratio {{config('app.info_ratio')}} position-relative
                     overflow-hidden rounded-4
                     "
                     >
@@ -24,7 +24,7 @@
                         @else
                             <div style="z-index:1;">
                                 <ratio-image-component
-                                style_class="ratio ratio-21x9 bg-whiteXX"
+                                style_class="ratio {{config('app.info_ratio')}} bg-whiteXX"
                                 url="{{ $slide['image'] }}"
                                 bg_size="contain"
                                 ></ratio-image-component>

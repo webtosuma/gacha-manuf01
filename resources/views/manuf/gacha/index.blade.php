@@ -104,9 +104,7 @@
 
 
     <!--スライダー-->
-
-
-    <section class="container overflow-hidden bg-rainbow-index mt-3 "
+    <section class="container overflow-hidden bg-rainbow-index mt-3"
     data-aos="fade-in"
     >
         @if( count($slides)>1 )
@@ -119,15 +117,17 @@
             @php $slide = $slides[0];@endphp
 
             <a href="{{ $slide['href'] }}"
-            class="ratio ratio-16x9">
+            class="ratio {{config('app.info_ratio')}}">
                 <ratio-image-component
-                style_class="ratio ratio-16x9"
+                style_class="ratio {{config('app.info_ratio')}} rounded-4"
                 url="{{ $slide['image'] }}"
                 bg_size="contain"
                 ></ratio-image-component>    
             </a>
         @endif
     </section>
+
+
 
 
 
@@ -266,7 +266,7 @@
 
 
     <!--お知らせ-->
-    @include('gacha.section.infomation')
+    @include('manuf.gacha.section.infomation')
 
 
 

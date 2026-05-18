@@ -74,7 +74,7 @@ class GachaTitleController extends Controller
             InfomationController::GetInfomationsQuery()
             ->whereNotIn( 'type', ['ec'] )
             ->limit(3)->get();
-            
+
             ## スライド
             $slides = [];
             $slide_infos = InfomationController::GetInfomationsQuery()
@@ -104,7 +104,7 @@ class GachaTitleController extends Controller
                 'data'  => $gacha_titles,
                 'link'  => '',
             ],
-            // # 新着順
+            # 新着順
             // 'new' => [
             //     'icon'  => 'bi-lightning',
             //     'label' => '新着順',

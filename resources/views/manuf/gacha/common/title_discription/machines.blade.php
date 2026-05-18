@@ -67,7 +67,7 @@ border-start border-info border-5
 
 
 
-@if( Auth::user()->admin )
+@if( $machines->count()<1 && Auth::user()->admin )
 
 
     <!--サイト管理者専用-->

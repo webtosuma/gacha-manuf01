@@ -43,6 +43,10 @@ return [
         # ガチャ画像比率
         'gacha_card_ratio'         => env('GACHA_CARD_RATIO', 'ratio-4x3'),
 
+        # お知らせ画像比率
+        'info_ratio'               => env('INFO_RATIO') ?? env('GACHA_CARD_RATIO', 'ratio-4x3'),
+
+
         # ユーザー商品の発送期限(日,数値)
         'user_prize_deadline_date' => (int) env('USER_PRIZE_DEADLINE_DATE', 0),
 

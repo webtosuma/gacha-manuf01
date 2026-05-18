@@ -88,9 +88,9 @@
                     
                     
                     <!--カード一覧-->
-                    <div class="gradient-bgxx shadowxx ">
+                    <div class="gradient-bgxx shadowxx " style="min-height: 90vh;">
                         <div class="gradient-bg-innerxx p-3">
-                            <u-gacha-result-form
+                            <u-manuf-gacha-result-form
                             show_change_btn="0"
                 
                             token="{{ csrf_token() }}"
@@ -101,7 +101,7 @@
                             no_exchange_point="1"
                             change_ticket    ="0"
                 
-                            ></u-gacha-result-form>    
+                            ></u-manuf-gacha-result-form>    
                         </div>
                     </div>
                     
