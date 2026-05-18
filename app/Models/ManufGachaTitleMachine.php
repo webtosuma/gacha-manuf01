@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Models;
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -343,4 +344,36 @@ class ManufGachaTitleMachine extends Model
         }
 
         
+
+    /*
+    |--------------------------------------------------------------------------
+    | スコープ
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * ユーザー表示用スコープ ->forUserPublished()
+        */
+        public function scopeForUserPublished(Builder $query): Builder
+        {
+            $now = Carbon::now();
+        
+            return $query
+            # 公開中のタイトルのみ
+    
+            # gacha が公開中のみ
+            ->whereHas('gacha', function ($query) use($now) {
+
+                # 公開開始
+                $query->where('published_at', '<=', $now);
+
+                #公開終了
+                $query->where(function ($query) use($now) {
+                    $query->where('end_published_at', '>=', $now)
+                    ->orWhere('end_published_at',null);
+                });
+
+            });
+        }
 }

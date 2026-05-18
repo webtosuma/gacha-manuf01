@@ -18,8 +18,14 @@
         </div>
 
         <div class="col-12">
-            <button class="btn btn-warning px-4 rounded-pill shadow w-100"
-            type="submit">このガチャを購入する</button>
+            @if ($gacha_title->is_sales)
+                <button class="btn btn-warning px-4 rounded-pill shadow w-100"
+                type="submit">このガチャを購入する</button>
+            @else
+                <button class="btn btn-secondary px-4 rounded-pill shadow w-100"
+                disabled
+                type="button">近日販売開始</button>
+            @endif
         </div>
     </div>
 

@@ -21,9 +21,17 @@
         /* サイトデフォルト背景 */
         #bgWindow{
             background-image: url({{ $bg_image }});
+            display: none;
+        }
+        /* md以上(768px〜)では表示 */
+        @media (min-width: 768px) {
+            #bgWindow {
+                display: block;
+            }
         }
 
 
+        
         /* ホバーすると回転する */
         .rotate-hover:hover
         /* ,

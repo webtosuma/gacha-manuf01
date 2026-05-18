@@ -13,6 +13,7 @@ use App\Models\GachaCategory;
 use App\Models\Movie;
 use App\Models\Text;
 use App\Models\ManufGachaTitle;
+use App\Models\ManufGachaTitleMachine;
 use App\Models\ManufPurchaseItem;
 use App\Services\Manuf\GachaTitleService;
 use App\Services\Manuf\ValidationService;
@@ -73,28 +74,76 @@ class GachaTitleController extends Controller
             InfomationController::GetInfomationsQuery()
             ->whereNotIn( 'type', ['ec'] )
             ->limit(3)->get();
-
+            
             ## スライド
-            $query = GachaApiController::getPublishedGachas( $category_code, $search_key );
-            $gachas = $query->where('is_slide',1)//スライドのみ
-            ->where('is_sold_out',0)             //売り切れを除く
-            ->where('published_at','<',now())    //予告を除く
-            ->limit(10)->get();
-            $slides = GachaController::getSlides($gachas);
+            $slides = [];
+            $slide_infos = InfomationController::GetInfomationsQuery()
+            ->where('is_slide',1)
+            ->limit(10)
+            ->get();
+
+            foreach ($slide_infos as $slide_info) {
+                $slides[] = [
+                    'type' => 'info',
+                    'href' => route('infomation.show',$slide_info),
+                    'image'=> $slide_info->image_path ??  asset( 'storage/site/image/no_image.jpg' ),
+                ];
+            }
 
         //
 
 
-        $gacha_titles = ManufGachaTitle::get();
+        # ガチャタイトル
+        $gacha_titles = ManufGachaTitle::forUserPublished()->get();
 
+        $gacha_title_sections =[
+            # すべて
+            'all' => [
+                'icon'  => 'bi-stars',
+                'label' => 'ラインナップ',
+                'data'  => $gacha_titles,
+                'link'  => '',
+            ],
+            // # 新着順
+            // 'new' => [
+            //     'icon'  => 'bi-lightning',
+            //     'label' => '新着順',
+            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'link'  => '',
+            // ],
+            
+            // # 人気順
+            // 'popular' => [
+            //     'icon'  => 'bi-trophy',
+            //     'label' => '人気順',
+            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'link'  => '',
+            // ],
 
+            // # すぐに発送
+            // 'ships_soon' => [
+            //     'icon'  => 'bi-truck',
+            //     'label' => 'すぐに発送',
+            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'link'  => '',
+            // ],
+
+            // # 近日販売
+            // 'ships_later' => [
+            //     'icon'  => 'bi-calendar3',
+            //     'label' => '近日販売',
+            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'link'  => '',
+            // ],
+
+        ];
         # viewの表示
         return view('manuf.gacha.index', compact(
             'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
             'search_key', 'searchs',
             'infomations',
             'slides',
-            'gacha_titles',
+            'gacha_titles','gacha_title_sections'
          ) );
 
     }
@@ -116,7 +165,11 @@ class GachaTitleController extends Controller
         $this->validationService->checkeGachaTitle($gacha_title);
 
         # 筐体
-        $machines = $gacha_title->machines;
+        $machines = ManufGachaTitleMachine::
+        where('manuf_gacha_title_id',$gacha_title->id)
+        ->forUserPublished()
+        ->get();
+
 
         # 背景画像
         $category = $gacha_title->category;

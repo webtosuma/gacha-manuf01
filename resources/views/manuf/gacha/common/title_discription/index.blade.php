@@ -21,7 +21,6 @@ style="background:rgba(255, 255, 255, 1);">
     <!--machines-->
     @include('manuf.gacha.common.title_discription.machines')
 
-
     <!--title_prize_table-->
     @include('manuf.gacha.common.title_discription.title_prize_table')
 

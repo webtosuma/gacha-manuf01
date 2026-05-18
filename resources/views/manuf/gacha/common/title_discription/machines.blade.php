@@ -11,7 +11,7 @@ border-start border-info border-5
 @endforeach
 
 
-@if( $machines->count()>0 )
+@if( $machines->count()>0 && $gacha_title->is_sales )
 
 
     <div class="card bg-white mb-4 py-3">
@@ -22,7 +22,7 @@ border-start border-info border-5
         d-none d-md-block w-100" aria-label="Splideの基本的なHTML">
 
             <div class="splide__track">
-                <ul class="splide__list">
+                <ul class="splide__list align-items-end">
                     @foreach ( $machines as  $machine )
                         <li class="splide__slide px-2 text-center">
 
@@ -55,8 +55,19 @@ border-start border-info border-5
 
     </div>
 
+@endif
 
-@elseif( Auth::user()->admin )
+
+
+@if (!$gacha_title->is_sales )
+
+    <div class="p-3 bg-body text-center">近日販売開始</div>
+
+@endif
+
+
+
+@if( Auth::user()->admin )
 
 
     <!--サイト管理者専用-->

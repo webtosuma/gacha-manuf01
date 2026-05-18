@@ -1,5 +1,4 @@
-{{-- @extends('layouts.app') --}}
-@extends('layouts.sub')
+@extends('layouts.sub_toggl')
 
 <!----- title ----->
 @section('title','アカウント設定')
@@ -47,7 +46,7 @@
 
                 <div class="my-5">
                     <div class="col-md-6 mx-auto my-3">
-                        <disabled-button style_class="btn btn-lg btn-warning text-white rounded-pill w-100"
+                        <disabled-button style_class="btn btn-lg btn-warning text-dark rounded-pill w-100"
                         btn_text="更新する"></button>
                     </div>
                     <div class="col-md-6 mx-auto my-3">

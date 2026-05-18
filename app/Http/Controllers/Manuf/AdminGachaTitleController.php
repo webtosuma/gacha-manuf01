@@ -8,6 +8,7 @@ use App\Http\Requests\Manuf\AdminGachaTitleRequest;
 use App\Models\GachaCategory;
 use App\Models\UserRankHistory;
 use App\Models\ManufGachaTitle;
+use App\Models\ManufGachaTitleMachine;
 use App\Services\Manuf\Admin\GachaTitleService;//サービス
 /*
 | =============================================
@@ -57,7 +58,11 @@ class AdminGachaTitleController extends Controller
      */
     public function show( ManufGachaTitle $gacha_title )
     {
-        $machines = $gacha_title->machines;
+        # 筐体
+        $machines = ManufGachaTitleMachine::
+        where('manuf_gacha_title_id',$gacha_title->id)
+        ->forUserPublished()
+        ->get();
 
         return view('manuf_admin.gacha_title.show', compact(
             'gacha_title','machines',

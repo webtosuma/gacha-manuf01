@@ -45,6 +45,11 @@
             'label' => 'カテゴリー',
         ],
         [
+            'route' => route('admin.movie'),
+            'key'   => 'movie',
+            'label' => '演出動画',
+        ],
+        [
             'route' => route('admin.infomation'),
             'key'   => 'infomation',
             'label' => 'お知らせ',
@@ -64,7 +69,7 @@
             'key'   => 'maintenance',
             'label' => 'メンテナンス設定',
         ],
-
+    
     ];
 
     # 操作履歴

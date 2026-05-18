@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Models;
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 /*
 | =============================================
 |  Manufacturer用　ガチャタイトル モデル
@@ -514,14 +514,14 @@ class ManufGachaTitle extends Model
         }
 
         /**
-         * 販売開始日時テキスト(曜日入り) salse_start_at_text
+         * 販売開始日時テキスト(曜日入り) sales_start_at_text
          */
         public function getSalesStartAtTextAttribute(){
             return $this->formatJaDateTime($this->sales_start_at);
         }
 
         /**
-         * 販売終了日時テキスト(曜日入り) sales_end _at_text
+         * 販売終了日時テキスト(曜日入り) sales_end_at_text
          */
         public function getSalesEndAtTextAttribute(){
             return $this->formatJaDateTime($this->sales_end_at);
@@ -618,6 +618,43 @@ class ManufGachaTitle extends Model
             ]);
         }
 
+
+
+    
+
+    /*
+    |--------------------------------------------------------------------------
+    | スコープ
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+        /**
+         * ユーザー表示用スコープ ->forUserPublished()
+        */
+        public function scopeForUserPublished(Builder $query): Builder
+        {
+            $now = Carbon::now();
+        
+            return $query
+
+                # 公開中開始
+                ->where('published_start_at', '<=', $now)
+        
+                # 公開終了
+                ->where(function ($query) use($now) {
+                    $query->where('sales_end_at', '>=', $now)
+                    ->orWhere('sales_end_at',null);
+                })
+                
+                
+                # category が公開中のみ
+                ->whereHas('category', function ($query) {
+                    $query->where('is_published', true);
+                })
+                
+            ;
+        }
 
 
     /* ~ */

@@ -87,11 +87,17 @@
 
 
             <div class="mt-4">
-                <a href="{{route(    
-                    'manuf.gacha_title.purchase.appliy',['gacha_key'=>$machine->key]
-                )}}" 
-                class="btn btn-warning px-4 rounded-pill shadow w-100"
-                >このガチャマシンを購入する</a>
+                @if ($gacha_title->is_sales)
+                    <a href="{{route(    
+                        'manuf.gacha_title.purchase.appliy',['gacha_key'=>$machine->key]
+                    )}}" 
+                    class="btn btn-warning px-4 rounded-pill shadow w-100"
+                    >このガチャマシンを購入する</a>
+                @else
+                    <button class="btn btn-secondary px-4 rounded-pill shadow w-100"
+                    disabled
+                    type="button">近日販売開始</button>
+                @endif
             </div>
             <div class="mt-3">
                 <button class="btn btn-sm btn-light border rounded-pill w-100"

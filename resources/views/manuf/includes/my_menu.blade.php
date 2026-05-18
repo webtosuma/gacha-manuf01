@@ -17,10 +17,10 @@
                 'icon'  => 'bi-person-fill',
                 'label' => 'ログイン/会員登録',
             ];
-            $icon_class = $menu['icon']." text-info bi fs-3";
+            $icon_class = $menu['icon']." text-warning bi fs-3";
             @endphp
             <a href="{{ $menu['route'] }}"
-            class="btn btn-dark text-info  w-100 fw-bold mb-1"
+            class="btn btn-dark text-warning  w-100 fw-bold mb-1"
             style="border-radius: 2rem  2rem;">
                 <div class="d-flex align-items-center gap-2">
 
@@ -33,7 +33,7 @@
                     </div> --}}
 
                     <div class="d-flex align-items-center justify-content-center
-                    bg-info rounded-pill"
+                    bg-warning rounded-pill"
                     style="width:2.6rem; height:2.6rem;">
                         <i class="{{$icon_class}} text-dark"></i>
                     </div>
@@ -187,10 +187,10 @@
 
 
     <!--発送-->
-    {{-- <div class="">
+    <div class="">
         @php
         $menu = [
-            'route' => '#',
+            'route' => route('shipped'),
             'icon'  => 'bi-box-seam',
             'label' => '発送',
         ];
@@ -211,7 +211,7 @@
 
             </div>
         </a>
-    </div> --}}
+    </div>
 
 
     <!--お知らせ-->

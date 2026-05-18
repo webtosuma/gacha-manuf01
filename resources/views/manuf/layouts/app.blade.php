@@ -58,7 +58,7 @@
         <!--背景画像-->
         <div id="bgWindow"
         class="position-fixed top-0 start-0 w-100 h-100
-        d-none d-sm-block
+        d-noneXX d-sm-block
         "
         style="z-index: -1;"
         ></div>
@@ -66,7 +66,7 @@
 
         @if ( config('app.debug') )
             <!--TEST MODE-->
-            <h4 class="text-danger p-2 text-center m-0 p-1 position-fixed w-100"  
+            <h4 class="text-danger p- fs-6 text-center m-0 p-1 position-fixed w-100"  
             style="z-index:101;"
             >TEST MODE</h4>
         @endif
