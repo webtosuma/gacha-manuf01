@@ -33,6 +33,7 @@
                             <ratio-image-component
                             style_class="ratio ratio-3x4 rounded-3"
                             :url="image_path"
+                            :bg_size="bg_size"
                             ></ratio-image-component>
                         </div>
 
@@ -71,6 +72,8 @@
         src_icon:    { type: String, default: '' },
         no_btn:      { type: [String,Number], default: 0 },
         bg_dark:     { type: [String,Number], default: 0 },
+        bg_size:     { type: String, default: 'contain',},//contain'cover'
+
     });
 
 

@@ -19,7 +19,8 @@
             noimg_path="{{asset('storage/site/image/no_image.jpg')}}"
             style_class="ratio {{config('app.gacha_card_ratio')}} rounded-3 border"
             name="image"
-            bg_size="contain"
+            bg_size="contain" 
+            kbite="10000"
             ></read-image-file-100k-component>
         </div>
 

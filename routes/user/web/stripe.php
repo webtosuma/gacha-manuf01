@@ -55,7 +55,7 @@ use App\Http\Controllers;
 
 
         # カスタマーポータル
-        Route::get('point_history/customer_portal',
+        Route::get('purchase_point/customer_portal',
         [Controllers\StripeController::class, 'customer_portal'])
         ->name('point_sail.customer_portal');
 

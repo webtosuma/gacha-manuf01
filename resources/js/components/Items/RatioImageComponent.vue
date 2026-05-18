@@ -32,7 +32,7 @@
             //クラス
             style_class:{ type: String, default: 'ratio ratio-1x1', },
 
-            bg_size:{ type: String, default: 'cover',},
+            bg_size:{ type: String, default: 'cover',},//contain
 
         },
         data() { return{

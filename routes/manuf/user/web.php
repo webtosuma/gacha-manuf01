@@ -26,6 +26,8 @@ Route::middleware([ /* ミドルウェアー */
   # ガチャ
   include('web/gacha.php');
 
+  # 発送申請履歴
+  include('web/shipped_history02.php');
 
 
   // # 商品一覧

@@ -38,8 +38,7 @@ class AdminGachaTitleController extends Controller
         if(!$gacha_category&&$category_code){ return abort(404); }//該当なし
 
         # タイトル一覧
-        $gacha_titles = ManufGachaTitle::orderByDesc('created_at')->get();
-
+        $gacha_titles = ManufGachaTitle::forAdmin($request)->get();
 
 
         return view('manuf_admin.gacha_title.index', compact(

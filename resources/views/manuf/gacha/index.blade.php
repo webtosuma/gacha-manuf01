@@ -132,11 +132,11 @@
 
 
     <!--カテゴリー-->
-    {{-- @if($categories->count()>1)
-        <div class="bg-">
+    @if($categories->count()>1)
+        <div class="col-md-10 mx-auto text-white">
             @include('manuf.gacha.section.category.index')
         </div>
-    @endif --}}
+    @endif
 
 
     <!--ガチャ-->

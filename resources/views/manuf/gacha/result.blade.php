@@ -88,16 +88,13 @@
                     
                     
                     <!--カード一覧-->
-                    <div class="gradient-bgxx shadowxx " style="min-height: 90vh;">
+                    <div class="gradient-bgxx shadowxx ">
                         <div class="gradient-bg-innerxx p-3">
                             <u-manuf-gacha-result-form
                             show_change_btn="0"
                 
                             token="{{ csrf_token() }}"
-                            r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show', $gacha_history) }}"
-                            r_gacha_category="{{ route('gacha_category',$gacha->category_code_name) }}"
-                            r_user_prize    ="{{route('user_prize')}}"
-                
+                            r_api_use_gacha_history_show="{{ route('api.use_gacha_history.show', $gacha_history) }}"                
                             no_exchange_point="1"
                             change_ticket    ="0"
                 
@@ -106,44 +103,48 @@
                     </div>
                     
 
-                    <div class="row g-3 mt-3 mb-5">
 
-                        <div class="col-12 col-md-6">
-                            <a href="{{route('shipped')}}" 
-                            class="btn btn-info text-white rounded-pill w-100"
-                            ><div class="d-flex align-items-center justify-content-center gap-2">
-                                <i class="bi bi-box-seam fs-4"></i>
-                                <span>発送一覧を見る</span>
-                            </div></a>
+                    <div data-aos="fade-in">
+
+                        <div class="row g-3 mt-3 mb-5">
+
+                            <div class="col-12 col-md-6">
+                                <a href="{{route('shipped')}}" 
+                                class="btn btn-info text-white rounded-pill w-100"
+                                ><div class="d-flex align-items-center justify-content-center gap-2">
+                                    <i class="bi bi-box-seam fs-4"></i>
+                                    <span>発送一覧を見る</span>
+                                </div></a>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <a href="{{$gacha_title->r_show}}" 
+                                class="btn btn-light border-info rounded-pill w-100"
+                                ><div class="d-flex align-items-center justify-content-center gap-2">
+                                    <i class="bi bi-file-ruled fs-4"></i>
+                                    <span>タイトル詳細に戻る</span>
+                                </div></a>
+                            </div>
+                            
                         </div>
 
-                        <div class="col-12 col-md-6">
-                            <a href="{{$gacha_title->r_show}}" 
-                            class="btn btn-light border-info rounded-pill w-100"
-                            ><div class="d-flex align-items-center justify-content-center gap-2">
-                                <i class="bi bi-file-ruled fs-4"></i>
-                                <span>タイトル詳細に戻る</span>
-                            </div></a>
-                        </div>
-                        
-                    </div>
 
-
-                    <div class="card card-body border mb-4 ">
-                        <div class="row">
-                            <div class="col-12 text-info">
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-truck fs-2"></i>
-                                    <span class="fw-bold">商品の配送について</span>
+                        <div class="card card-body border mb-4 ">
+                            <div class="row">
+                                <div class="col-12 text-info">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-truck fs-2"></i>
+                                        <span class="fw-bold">商品の配送について</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    所得した商品は、購入時にご指定いただいた住所へお送りいたします。<br>
+                                    発送状況は、マイメニューの発送一覧よりご確認ください。
                                 </div>
                             </div>
-                            <div class="col-12">
-                                所得した商品は、購入時にご指定いただいた住所へお送りいたします。<br>
-                                発送状況は、マイメニューの発送一覧よりご確認ください。
-                            </div>
                         </div>
-                    </div>
 
+                    </div>
 
 
                 </div>

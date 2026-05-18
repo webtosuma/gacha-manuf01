@@ -10,7 +10,7 @@
                 {{-- <span>戻る</span> --}}
                 </button>
             @else
-                <a href="{{route('gacha_category')}}" class="btn p-0 px-3 borderr rounded-pill text-primary
+                <a href="{{route('home')}}" class="btn p-0 px-3 borderr rounded-pill text-primary
                 d-flex flex-column gap-1 align-items-center py-0">
 
                     <i class="bi bi-arrow-left"></i>

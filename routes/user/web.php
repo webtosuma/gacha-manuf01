@@ -44,27 +44,20 @@ Route::middleware([ /* ミドルウェアー */
     ->name('mypage');
 
 
-    # 取得した商品
-    include('web/user_prize.php');
-
-
     # WPAローディングページ
     Route::get('/pwa',function(){
         return view('pwa');
     });
 
-    // Route::get('/ip',
-    // [Controllers\Auth\RegisterController::class, 'ipTest']);
+    if( ! config('manuf.app') )
+    {
+        # 取得した商品
+        include('web/user_prize.php');
 
+        # ガチャ
+        include('web/gacha.php'); 
 
-    // # 認証
-    // include('web/auth.php');
-
-    // # SNSログイン
-    // include('web/auth-sns.php');
-
-    # ガチャ
-    include('web/gacha.php');
+    }
 
     # ガチャ商品履歴
     include('web/gacha_prize_history.php');

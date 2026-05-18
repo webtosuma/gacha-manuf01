@@ -32,6 +32,7 @@ border-start border-info border-5
                         src_icon   ="{{ $title_prize->discription_icon_path }}"
                         no_btn     =""
                         bg_dark    =""
+                        
                         ></u-prize-discription>
                     </td>
                 </tr>

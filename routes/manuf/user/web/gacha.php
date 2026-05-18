@@ -9,14 +9,14 @@ use App\Http\Controllers\Manuf;
 */
 
   # ガチャタイトルのカテゴリー選択
-  Route::get('/m/{category_code?}',
+  Route::get('/m',
   [Manuf\GachaTitleController::class, 'index'])
   ->name('manuf');
 
-  # カテゴリー一覧
-  Route::get('/g/{category_code?}',
-  [Manuf\GachaTitleController::class, 'index'])
-  ->name('gacha_category');
+  // # カテゴリー一覧
+  // Route::get('/m/{category_code?}',
+  // [Manuf\GachaTitleController::class, 'index'])
+  // ->name('gacha_category');
 
   # 検索結果
   Route::get('/m/search',

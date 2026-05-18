@@ -35,12 +35,12 @@ class GachaTitleController extends Controller
      * カテゴリー選択・一覧表示
      *
      * @param \Illuminate\Http\Request $request
-     * @param String $category_code
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $category_code='all' )
+    public function index(Request $request )
     {
         # 表示できないページの処理
+        $category_code = $request->category_code ?? 'all';
         $category = GachaCategory::where('code_name', $category_code)->first();
         if( $category_code!='all' && !$category ){ return abort(404); }
 
@@ -51,7 +51,6 @@ class GachaTitleController extends Controller
             $category_name = $category ? $category->name : 'すべて';
 
             ## 背景画像
-            // $bg_image = $category ? $category->bg_image_path : AdminBackGroundController::getBgTop();
             $bg_image = $category && $category->bg_image_path
             ? $category->bg_image_path : AdminBackGroundController::getBgTop();
 
@@ -67,7 +66,6 @@ class GachaTitleController extends Controller
 
             ## 検索キーワード
             $searchs = GachaController::getsearchs();
-
 
             ## お知らせ
             $infomations =
@@ -94,7 +92,7 @@ class GachaTitleController extends Controller
 
 
         # ガチャタイトル
-        $gacha_titles = ManufGachaTitle::forUserPublished()->get();
+        $gacha_titles = ManufGachaTitle::forUser($request)->get();
 
         $gacha_title_sections =[
             # すべて
@@ -108,7 +106,7 @@ class GachaTitleController extends Controller
             // 'new' => [
             //     'icon'  => 'bi-lightning',
             //     'label' => '新着順',
-            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'data'  => ManufGachaTitle::forUser($request)->limit(6)->get(),
             //     'link'  => '',
             // ],
             
@@ -116,7 +114,7 @@ class GachaTitleController extends Controller
             // 'popular' => [
             //     'icon'  => 'bi-trophy',
             //     'label' => '人気順',
-            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'data'  => ManufGachaTitle::forUser($request)->limit(6)->get(),
             //     'link'  => '',
             // ],
 
@@ -124,7 +122,7 @@ class GachaTitleController extends Controller
             // 'ships_soon' => [
             //     'icon'  => 'bi-truck',
             //     'label' => 'すぐに発送',
-            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'data'  => ManufGachaTitle::forUser($request)->limit(6)->get(),
             //     'link'  => '',
             // ],
 
@@ -132,17 +130,19 @@ class GachaTitleController extends Controller
             // 'ships_later' => [
             //     'icon'  => 'bi-calendar3',
             //     'label' => '近日販売',
-            //     'data'  => ManufGachaTitle::forUserPublished()->limit(6)->get(),
+            //     'data'  => ManufGachaTitle::forUser($request)->limit(6)->get(),
             //     'link'  => '',
             // ],
 
         ];
+
+        
         # viewの表示
         return view('manuf.gacha.index', compact(
-            'category_code', 'category_name', 'bg_image',  'categories', 'card_size',
+            'category_code', 'category_name', 'bg_image',  
+            'categories', 'card_size',
+            'infomations','slides',
             'search_key', 'searchs',
-            'infomations',
-            'slides',
             'gacha_titles','gacha_title_sections'
          ) );
 
@@ -167,7 +167,7 @@ class GachaTitleController extends Controller
         # 筐体
         $machines = ManufGachaTitleMachine::
         where('manuf_gacha_title_id',$gacha_title->id)
-        ->forUserPublished()
+        ->forUser()
         ->get();
 
 

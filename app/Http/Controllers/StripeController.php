@@ -114,7 +114,7 @@ class StripeController extends Controller
      * @return \Illuminate\Http\Response
     */
     public function customer_portal()
-    {
+    {        
         # 顧客情報
         $user = Auth::user();
 

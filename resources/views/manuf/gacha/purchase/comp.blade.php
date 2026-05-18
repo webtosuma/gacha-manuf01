@@ -157,79 +157,25 @@
             <aside class="col-auto">
                 <div class="position-sticky" style="top: 2rem; ">
 
+
                     <!--購入内容-->
                     <section class="mb-4">
                         <h5 class="fw-bold">購入内容</h5>
 
-                        {{-- <ul class="list-group bg-white"> --}}
-                            @foreach ($history->items as $item)
-                                @php
-                                $play_count        = $item->count;
-                                $machine           = $item->machine;
-                                $gacha_title_price = $machine->price;
-                                @endphp
-                                {{-- <li class="list-group-item bg-white p-3">    --}}
+                        @foreach ($history->items as $item)
+                            @php
+                                $machine = $item->machine;
+                            @endphp
 
-                                    @include('manuf.gacha.purchase.common.title_card')
-                        
-                                    {{-- <div class="row">
-                                        <div class="col">
-                            
-                                            
-                                            <div class="row g-3">
-                                                <div class="col ">
-                                            
-                                            
-                                                    <div class="">
+                            @include('manuf.gacha.purchase.common.title_card')
 
-                                                        <div style="max-width:100px;">
-                                                            <ratio-image-component
-                                                            url="{{$gacha_title->image_samune_path}}"
-                                                            style_class="{{$gacha_title->ratio.' ratio bg-body'}}"
-                                                            bg_size="contain"
-                                                            ></ratio-image-component>    
-                                                        </div>
-    
-                                                        <!--discription head-->
-                                                        @include('manuf.gacha.common.title_discription.title_name')
-                                            
-                                            
-                                                        <h6 class="m-0">ガチャマシーン</h6>
-                                                        <div class="border p-1 mb-4 rounded">{{$machine->name}}</div>
-                                                            
-                                            
-                                                    </div>
-                                            
-                                            
-                                            
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="col-auto text-end fw-bold">
-                                            <div class="">
-                                                1回/税込<br>
-                                                ¥{{number_format($gacha_title_price)}}
-                                            </div>
-                                            <div class="">
-                                                {{number_format($play_count)}}点
-                                            </div>
-                                            <div class="mt-4">
-                                                商品小計<br>
-                                                <span class="fs-3">¥{{number_format( $sub_total_fee )}}</span>
-                                            </div>
-                                        </div>
-                                    </div> --}}
+                        @endforeach
 
-                                {{-- </li> --}}
-                            @endforeach
-                        {{-- </ul> --}}
                     </section>
 
 
                     <!--会計明細-->
                     @include('manuf.gacha.purchase.common.account_details')
-
 
 
                     <section class="mt-5">

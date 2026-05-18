@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -630,38 +631,88 @@ class ManufGachaTitle extends Model
     |
     */
         /**
-         * ユーザー表示用スコープ ->forUserPublished()
+         * ユーザー表示用スコープ ->forUser($request)
         */
-        public function scopeForUserPublished(Builder $query): Builder
-        {
-            $now = Carbon::now();
-        
+        public function scopeForUser(
+            Builder $query,
+            Request $request
+        ): Builder
+        {        
             return $query
 
-                # 公開中開始
-                ->where('published_start_at', '<=', $now)
-        
-                # 公開終了
-                ->where(function ($query) use($now) {
-                    $query->where('sales_end_at', '>=', $now)
-                    ->orWhere('sales_end_at',null);
-                })
-                
-                
+                # 検索絞り込み
+                ->search($request)
+            
+                # ユーザー：公開・並び順
+                ->userPublished()
+            ;
+        }
+
+            /* ユーザー：検索絞り込み  ->search($request) */
+            public function scopeSearch(
+                Builder $query,
+                Request $request
+            ): Builder
+            {
+                # カテゴリーID
+                $category_code = $request->category_code;
+                $category_id = GachaCategory::where('code_name', $category_code)->value('id');
+                if( $category_id ){
+                    $query->where('category_id',$category_id);
+                }
+            
                 # category が公開中のみ
-                ->whereHas('category', function ($query) {
+                return $query->whereHas('category', function ($query) {
                     $query->where('is_published', true);
-                })
-                
+                });
+            }
+    
+
+            /* ユーザー：公開・並び順 (GachaCategoryモデル) ->userPublished */
+            public function scopeUserPublished(Builder $query): Builder
+            {
+                return $query
+
+                    # 公開中開始
+                    ->where('published_start_at', '<=', now())
+            
+                    # 公開終了
+                    ->where(function ($query) {
+                        $query->where('published_end_at', '>=', now())
+                        ->orWhere('published_end_at',null);
+                    })
+                    
+                    #表示順
+                    ->orderByDesc('sales_start_at')
+                    ->orderByDesc('created_at')
+
+                ;
+            }
+
+
+
+
+        /**
+         * Admin表示用スコープ ->forAdmin($request)
+        */
+        public function scopeForAdmin
+        (
+            Builder $query,
+            Request $request
+        ): Builder
+        {        
+            return $query
+
+                # 検索絞り込み
+                ->search($request)
 
                 #表示順
                 ->orderByDesc('sales_start_at')
                 ->orderByDesc('created_at')
-
+                
             ;
         }
-
-
+  
     /* ~ */
 
 

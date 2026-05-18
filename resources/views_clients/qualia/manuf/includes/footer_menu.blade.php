@@ -20,7 +20,7 @@
             <ul class="list-unstyled fs-5 d-inline-block">
                 @foreach ($gacha_categories as $gacha_category)
                     <li><a class="text-secondary text-decoration-none"
-                    href="{{ route('gacha_category',$gacha_category->code_name) }}">
+                    href="{{ route('manuf',['category_code'=>$gacha_category->code_name,]) }}">
                         <div class="d-flex align-items-center gap-2 mb-2">
 
 
@@ -28,14 +28,21 @@
                                 <!--カテゴリーimg-->
                                 <div class="position-relative overflow-hidden h-100 rounded-pill" style="width:3rem;">
                                     <ratio-image-component
-                                    url="{{ $gacha_category->top_prize_image_path }}" style_class="ratio ratio-1x1 bg-body w-100"
+                                    url="{{ $gacha_category->manuf_gacha_title_image_path }}" style_class="ratio ratio-1x1 bg-body w-100 border"
                                     ></ratio-image-component>
 
-                                    <div class=" d-flex align-items-center justify-content-center
+                                    {{-- <div class=" d-flex align-items-center justify-content-center
                                     position-absolute top-0 start-0 w-100 h-100 fw-bold
                                     @if(isset($category_code) && $category_code==$gacha_category->code_name) bg-primary text-secondary @else text-secondary @endif"
                                     style="background:rgba(0, 0, 0, .8); opacity:.7;"
-                                    ></div>
+                                    ></div> --}}
+                                    @if( isset($category_code) && $category_code==$gacha_category->code_name )
+                                        <div class=" d-flex align-items-center justify-content-center
+                                        position-absolute top-0 start-0 w-100 h-100 bg-primary"
+                                        style="opacity:.8;"
+                                        ></div>
+                                    @endif
+                
                                 </div>
                             @endif
 

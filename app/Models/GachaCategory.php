@@ -149,6 +149,38 @@ class GachaCategory extends Model
 
             return $store_item ? $store_item->image_path : null;
         }
+
+
+        /**
+         * 高ポイントManufガチャタイトル　画像パス manuf_gacha_title_image_path
+         * @return String
+        */
+        public function getManufGachaTitleImagePathAttribute()
+        {
+            // return ;
+            $gacha_title = ManufGachaTitle::where('category_id',$this->id)
+
+                # ユーザー：公開・並び順 (GachaCategoryモデル) 
+                ->userPublished()
+            // # 公開中開始
+            // ->where('published_start_at', '<=', now())
+
+            // # 販売終了
+            // ->where(function ($query) {
+            //     $query->where('published_end_at', '>=', now() )
+            //     ->orWhere('published_end_at',null);
+            // })
+
+            // # 販売開始順
+            // ->orderByDesc('sales_start_at')
+            
+            ->first();
+
+            return $gacha_title ? $gacha_title->image_samune_path : null;
+        }
+
+
+
     /*
     |--------------------------------------------------------------------------
     | スコープ

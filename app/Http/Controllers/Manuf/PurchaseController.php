@@ -135,12 +135,14 @@ class PurchaseController extends Controller
         $history = $this->purchaseService->gethistory($user,$code);
 
         return view('manuf.gacha.purchase.comp', [
-            'history'           => $history,
-            'gacha_title'       => $history->items->first()->machine->gacha_title,
+            'history'       => $history,
+            'gacha_title'   => $history->items->first()->machine->gacha_title,
 
-            'shipped_fee'       => $history->shipped_fee,
-            'sub_total_fee'     => $history->sub_total_fee,
-            'total_fee'         => $history->total_fee,
+            'shipped_fee'   => $history->shipped_fee,
+            'sub_total_fee' => $history->sub_total_fee,
+            'total_fee'     => $history->total_fee,
+
+            'user_address'  => $history->user_address,
         ]);
     }
 
