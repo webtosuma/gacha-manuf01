@@ -7,7 +7,10 @@ use App\Http\Controllers\Manuf;
 ==========================================================================
 */
 
-// Route::middleware(['auth'])->group(function () {
+Route::middleware([  
+  'auth',       /* ログイン必須 */
+  'maintenance',//メンテナンス
+])->group(function () {
 
   # 一覧
   Route::get('shipped',
@@ -25,4 +28,4 @@ use App\Http\Controllers\Manuf;
   [Manuf\ShippedController::class,'api_index'])
   ->name('shipped.api');
 
-// });
+});

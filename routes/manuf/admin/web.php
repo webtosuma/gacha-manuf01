@@ -10,14 +10,11 @@ use App\Http\Controllers\Store;
  */
 
     # ホーム(home)
-    if( config('app.layout_app')=='store' ){
+    Route::get('/admin',
+    [Manuf\AdminHomeController::class,'index'])
+    ->middleware('admin_auth')
+    ->name('admin.home');
 
-        Route::get('/admin',
-        [Store\AdminHomeController::class,'index'])
-        ->middleware('admin_auth')
-        ->name('admin.home');
-
-    }
 
     # ガチャタイトル
 

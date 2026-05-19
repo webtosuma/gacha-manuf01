@@ -14,14 +14,16 @@ Route::post('stripe/webhook',
 [Manuf\StripeController::class, 'webhook']);
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware([
+  'auth',       /* ログイン必須 */
+  'maintenance',//メンテナンス
+])->group(function () {
 
   # ガチャタイトルの筐体 購入[決済チェックアウト] StripeController
   Route::post('m/purchase/checkout',
   [Manuf\StripeController::class, 'checkout'])
   ->name('manuf.gacha_title.purchase.checkout');
 
-  
   
   # ガチャタイトルの筐体 購入[入力]
   Route::get('m/purchase/appliy',

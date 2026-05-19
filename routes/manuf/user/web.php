@@ -9,14 +9,14 @@ use App\Http\Controllers\Manuf;
 ==========================================================================
 */
 
-Route::middleware([ /* ミドルウェアー */
-    'maintenance',           //メンテナンス
-    'user_session_validate', //1アカウント1ログイン(セッションIDチェック)
-])->group(function () {
+// Route::middleware([ 
+//   'maintenance',           //メンテナンス
+// ])->group(function () {
 
   # トップページ(製造業者用のみのとき)
   Route::get('/',
   [Manuf\GachaTitleController::class, 'index'])
+  ->middleware(['maintenance'])
   ->name('home');
 
 
@@ -30,14 +30,4 @@ Route::middleware([ /* ミドルウェアー */
   include('web/shipped_history02.php');
 
 
-  // # 商品一覧
-  // include('web/index.php');
-
-
-  // # お知らせ(news)
-  // Route::get('store/infomation',
-  // [App\Http\Controllers\InfomationController::class,'store_index'])
-  // ->name('store.infomation');
-
-
-});//end middleware
+// });//end middleware

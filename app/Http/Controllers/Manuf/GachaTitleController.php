@@ -167,7 +167,7 @@ class GachaTitleController extends Controller
         # 筐体
         $machines = ManufGachaTitleMachine::
         where('manuf_gacha_title_id',$gacha_title->id)
-        ->forUser()
+        ->forUserPublished() 
         ->get();
 
 

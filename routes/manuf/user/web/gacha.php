@@ -7,16 +7,14 @@ use App\Http\Controllers\Manuf;
   Manufacturer:ルーティング　web.gacha
 ==========================================================================
 */
+Route::middleware([ 
+  'maintenance',//メンテナンス
+])->group(function () {
 
   # ガチャタイトルのカテゴリー選択
   Route::get('/m',
   [Manuf\GachaTitleController::class, 'index'])
   ->name('manuf');
-
-  // # カテゴリー一覧
-  // Route::get('/m/{category_code?}',
-  // [Manuf\GachaTitleController::class, 'index'])
-  // ->name('gacha_category');
 
   # 検索結果
   Route::get('/m/search',
@@ -29,8 +27,15 @@ use App\Http\Controllers\Manuf;
   ->name('manuf.gacha_title'); 
 
 
-/* ログイン必須 */
-Route::middleware(['auth'])->group(function () {
+
+});//end middleware
+
+
+Route::middleware([
+  'auth',       /* ログイン必須 */
+  'maintenance',//メンテナンス
+])->group(function () {
+
 
   # ガチャの演出動画表示
   Route::get('movie/{item_code}/play',
